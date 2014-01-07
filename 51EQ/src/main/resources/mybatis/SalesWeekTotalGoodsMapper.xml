@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.SalesWeekTotalGoodsMyBatisDao">
+	<delete id="delSalesWeekTotalGoodsInfo_1">  
+        DELETE FROM t_sales_week_total_goods_1
+    </delete>
+    
+    <delete id="delSalesWeekTotalGoodsInfo_2">  
+        DELETE FROM t_sales_week_total_goods_2
+    </delete>
+    
+    <delete id="delSalesWeekTotalGoodsInfo_3">  
+        DELETE FROM t_sales_week_total_goods_3
+    </delete>
+    
+    <delete id="delSalesWeekTotalGoodsInfo_4">  
+        DELETE FROM t_sales_week_total_goods_4
+    </delete>
+</mapper>

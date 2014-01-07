@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.receipt.InvoiceMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_Invoice" type="com.tjhx.entity.receipt.Invoice">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="amt" property="amt" jdbcType="DECIMAL"/>
+        <result column="app_date" property="appDate" jdbcType="VARCHAR"/>
+        <result column="app_date_m" property="appDateM" jdbcType="VARCHAR"/>
+        <result column="app_date_show" property="appDateShow" jdbcType="VARCHAR"/>
+        <result column="app_date_y" property="appDateY" jdbcType="VARCHAR"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="customer_add" property="customerAdd" jdbcType="VARCHAR"/>
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR"/>
+        <result column="customer_tel" property="customerTel" jdbcType="VARCHAR"/>
+        <result column="desc_txt" property="descTxt" jdbcType="VARCHAR"/>
+        <result column="invoice_num" property="invoiceNum" jdbcType="VARCHAR"/>
+        <result column="invoice_src" property="invoiceSrc" jdbcType="VARCHAR"/>
+        <result column="invoice_status" property="invoiceStatus" jdbcType="VARCHAR"/>
+        <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR"/>
+        <result column="need_post" property="needPost" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="service_date_show" property="serviceDateShow" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	inv.uuid ,
+    	inv.amt ,
+    	inv.app_date ,
+    	inv.app_date_m ,
+    	inv.app_date_show ,
+    	inv.app_date_y ,
+    	inv.app_name ,
+    	inv.content ,
+    	inv.customer_add ,
+    	inv.customer_name ,
+    	inv.customer_tel ,
+    	inv.desc_txt ,
+    	inv.invoice_num ,
+    	inv.invoice_src ,
+    	inv.invoice_status ,
+    	inv.invoice_type ,
+    	inv.need_post ,
+    	inv.org_id ,
+    	inv.service_date_show ,
+    	inv.title ,
+    	org.org_name AS orgName
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			inv.org_id = org.org_id
+  			<if test="uuid != null and uuid !='' ">
+  			AND inv.uuid = #{uuid}
+  			</if>
+  			<if test="orgId != null and orgId !='' ">
+  			AND inv.org_id = #{orgId}
+  			</if>
+  			<if test="appDateY != null and appDateY !='' ">
+  			AND inv.app_date_y = #{appDateY}
+  			</if>
+  			<if test="appDateM != null and appDateM !='' ">
+  			AND inv.app_date_m = #{appDateM}
+  			</if>
+  			<if test="invoiceNum != null and invoiceNum !='' ">
+  			AND inv.invoice_num = #{invoiceNum}
+  			</if>
+	  	</where>
+  	</sql>
+	
+	<!-- 根据参数取得发票信息 -->
+	<select id="getInvoiceDrawList" parameterType="com.tjhx.entity.receipt.Invoice" resultMap="Result_Map_Invoice">
+		select
+		<include refid="Base_Column_List" />
+		from t_invoice inv, t_organization org
+		<include refid="Where_Clause" />
+	</select>
+</mapper>

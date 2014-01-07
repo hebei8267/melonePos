@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.accounts.StoreRunMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_StoreRun" type="com.tjhx.entity.accounts.StoreRun">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="audit_flg" property="auditFlg" jdbcType="BIT"/>
+        <result column="desc_txt" property="descTxt" jdbcType="VARCHAR"/>
+        <result column="into_date" property="intoDate" jdbcType="VARCHAR"/>
+        <result column="into_date_m" property="intoDateM" jdbcType="VARCHAR"/>
+        <result column="into_date_show" property="intoDateShow" jdbcType="VARCHAR"/>
+        <result column="into_date_y" property="intoDateY" jdbcType="VARCHAR"/>
+        <result column="opt_amt" property="optAmt" jdbcType="DECIMAL"/>
+        <result column="opt_per_name" property="optPerName" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="plan_date" property="planDate" jdbcType="VARCHAR"/>
+        <result column="plan_date_m" property="planDateM" jdbcType="VARCHAR"/>
+        <result column="plan_date_show" property="planDateShow" jdbcType="VARCHAR"/>
+        <result column="plan_date_y" property="planDateY" jdbcType="VARCHAR"/>
+        <result column="record_amt" property="recordAmt" jdbcType="DECIMAL"/>
+        <result column="record_date" property="recordDate" jdbcType="VARCHAR"/>
+        <result column="record_date_m" property="recordDateM" jdbcType="VARCHAR"/>
+        <result column="record_date_show" property="recordDateShow" jdbcType="VARCHAR"/>
+        <result column="record_date_y" property="recordDateY" jdbcType="VARCHAR"/>
+        <result column="record_no" property="recordNo" jdbcType="VARCHAR"/>
+        <result column="store_type" property="storeType" jdbcType="VARCHAR"/>
+        <result column="supplier_bw_id" property="supplierBwId" jdbcType="VARCHAR"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	store.uuid ,
+    	store.create_date ,
+    	store.create_user_id ,
+    	store.update_date ,
+    	store.update_user_id ,
+    	store.version ,
+    	store.audit_flg ,
+    	store.desc_txt ,
+    	store.into_date ,
+    	store.into_date_m ,
+    	store.into_date_show ,
+    	store.into_date_y ,
+    	store.opt_amt ,
+    	store.opt_per_name ,
+    	store.org_id ,
+    	store.plan_date ,
+    	store.plan_date_m ,
+    	store.plan_date_show ,
+    	store.plan_date_y ,
+    	store.record_amt ,
+    	store.record_date ,
+    	store.record_date_m ,
+    	store.record_date_show ,
+    	store.record_date_y ,
+    	store.record_no ,
+    	store.store_type ,
+    	store.supplier_bw_id ,
+    	store.supplier_h_id ,
+    	supplier.name AS supplierName,
+    	org.org_name AS orgName
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			store.supplier_bw_id = supplier.supplier_bw_id
+  			AND store.org_id = org.org_id
+  			<if test="orgId != null and orgId !='' ">
+  			AND store.org_id = #{orgId}
+  			</if>
+  			<if test="recordDateY != null and recordDateY !='' ">
+  			AND store.record_date_y = #{recordDateY}
+  			</if>
+  			<if test="recordDateM != null and recordDateM !='' ">
+  			AND store.record_date_m = #{recordDateM}
+  			</if>
+  			<if test="recordNo != null and recordNo !='' ">
+  			AND store.record_no = #{recordNo}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_store_run信息(根据参数) -->
+	<select id="getStoreRunList" parameterType="com.tjhx.entity.accounts.StoreRun" resultMap="Result_Map_StoreRun">
+		select
+		<include refid="Base_Column_List" />
+		from t_store_run store, t_supplier supplier, t_organization org
+		<include refid="Where_Clause" />
+		order by store.into_date , store.create_date desc
+	</select>
+</mapper>

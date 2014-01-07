@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.accounts.CashDailyMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_CashDaily" type="com.tjhx.entity.accounts.CashDaily">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="adjust_amt" property="adjustAmt" jdbcType="DECIMAL"/>
+        <result column="card_amt" property="cardAmt" jdbcType="DECIMAL"/>
+        <result column="card_amt_bw" property="cardAmtBw" jdbcType="DECIMAL"/>
+        <result column="card_num" property="cardNum" jdbcType="INTEGER"/>
+        <result column="deposit_amt" property="depositAmt" jdbcType="DECIMAL"/>
+        <result column="init_amt" property="initAmt" jdbcType="DECIMAL"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_show" property="optDateShow" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="retained_amt" property="retainedAmt" jdbcType="DECIMAL"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+        <result column="sale_cash_amt" property="saleCashAmt" jdbcType="DECIMAL"/>
+        <result column="bw_sale_amt" property="bwSaleAmt" jdbcType="DECIMAL"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="report_amt" property="reportAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	cash.uuid ,
+    	cash.create_date ,
+    	cash.create_user_id ,
+    	cash.update_date ,
+    	cash.update_user_id ,
+    	cash.version ,
+    	cash.adjust_amt ,
+    	cash.card_amt ,
+    	cash.card_amt_bw ,
+    	cash.card_num ,
+    	cash.deposit_amt ,
+    	cash.init_amt ,
+    	cash.opt_date ,
+    	cash.opt_date_m ,
+    	cash.opt_date_show ,
+    	cash.opt_date_y ,
+    	cash.org_id ,
+    	cash.retained_amt ,
+    	cash.sale_amt ,
+    	cash.sale_cash_amt ,
+    	cash.bw_sale_amt ,
+    	cash.report_amt ,
+    	org.org_name AS orgName
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			cash.org_id = org.org_id
+  			<![CDATA[ AND cash.opt_date >= #{optDateStart} AND cash.opt_date  <= #{optDateEnd} ]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND cash.org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_cash_daily信息(根据参数) -->
+	<select id="getCashDailyList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
+		select
+		<include refid="Base_Column_List" />
+		from t_cash_daily cash, t_organization org
+		<include refid="Where_Clause" />
+		order by cash.opt_date_show desc, cash.org_id 
+	</select>
+	
+	<!-- 取得t_cash_daily信息(根据参数) -->
+	<select id="getCashDailyChartList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
+		select
+			 cash.uuid ,
+			 cash.opt_date ,
+			 cash.report_amt ,
+    		 cash.sale_amt
+		from t_cash_daily cash, t_organization org
+		where
+			 cash.org_id = org.org_id
+  		AND	 cash.org_id = #{orgId}
+  		AND  cash.opt_date_y = #{optDateY}
+  		AND  cash.opt_date_m = #{optDateM}
+		order by cash.opt_date
+	</select>
+	
+	<!-- 取得销售流水日结信息(全机构) -->
+	<select id="getCashDailyListByAllOrg" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
+		select
+			cash.uuid ,
+	    	cash.create_date ,
+	    	cash.create_user_id ,
+	    	cash.update_date ,
+	    	cash.update_user_id ,
+	    	cash.version ,
+	    	cash.card_amt ,
+	    	cash.card_amt_bw ,
+	    	cash.card_num ,
+	    	cash.deposit_amt ,
+	    	cash.init_amt ,
+	    	cash.sale_cash_amt ,
+	    	cash.opt_date ,
+	    	cash.opt_date_m ,
+	    	#{optDateShow} AS opt_date_show ,
+	    	cash.opt_date_y ,
+	    	cash.org_id ,
+	    	cash.retained_amt ,
+	    	cash.sale_amt ,
+	    	cash.report_amt ,
+	    	org.org_name AS orgName
+		from 
+			t_organization org left join t_cash_daily cash on org.org_id = cash.org_id
+			and cash.opt_date_show = #{optDateShow}
+		where 
+			org.org_id != '000'
+		order by 
+			org.org_id
+	</select>
+	
+	<!-- 取得指定机构最终销售流水日结信息 -->
+	<select id="getLastCashDailyInfoByOrg" parameterType="String" resultMap="Result_Map_CashDaily">		    
+		SELECT
+		    MAX(cash.opt_date) AS opt_date,
+		    org.org_name       AS orgName
+		FROM
+		    t_cash_daily cash,
+		    t_organization org
+		WHERE
+		    cash.org_id = #{orgId}
+		AND cash.org_id = org.org_id
+	</select>
+	<delete id="delCashDailyInfo" parameterType="com.tjhx.entity.accounts.CashDaily">
+        DELETE FROM t_cash_daily WHERE opt_date = #{optDate} AND org_id = #{orgId}
+    </delete>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.accounts.CashRunMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_CashRun" type="com.tjhx.entity.accounts.CashRun">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="adjust_amt" property="adjustAmt" jdbcType="DECIMAL"/>
+        <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR"/>
+        <result column="card_amt" property="cardAmt" jdbcType="DECIMAL"/>
+        <result column="card_amt_bw" property="cardAmtBw" jdbcType="DECIMAL"/>
+        <result column="card_cert_no" property="cardCertNo" jdbcType="VARCHAR"/>
+        <result column="card_num" property="cardNum" jdbcType="INTEGER"/>
+        <result column="carrying_cash_amt" property="carryingCashAmt" jdbcType="DECIMAL"/>
+        <result column="cash_amt" property="cashAmt" jdbcType="DECIMAL"/>
+        <result column="daily_flg" property="dailyFlg" jdbcType="BIT"/>
+        <result column="deposit_amt" property="depositAmt" jdbcType="DECIMAL"/>
+        <result column="depositor" property="depositor" jdbcType="VARCHAR"/>
+        <result column="desc_txt" property="descTxt" jdbcType="VARCHAR"/>
+        <result column="init_amt" property="initAmt" jdbcType="DECIMAL"/>
+        <result column="job_type" property="jobType" jdbcType="INTEGER"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_show" property="optDateShow" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="retained_amt" property="retainedAmt" jdbcType="DECIMAL"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+        <result column="sale_cash_amt" property="saleCashAmt" jdbcType="DECIMAL"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        
+        <result column="report_amt" property="reportAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+		cash.uuid ,
+    	cash.create_date ,
+    	cash.create_user_id ,
+    	cash.update_date ,
+    	cash.update_user_id ,
+    	cash.version ,
+    	cash.adjust_amt ,
+    	cash.bank_card_no ,
+    	cash.card_amt ,
+    	cash.card_amt_bw ,
+    	cash.card_cert_no ,
+    	cash.card_num ,
+    	cash.carrying_cash_amt ,
+    	cash.cash_amt ,
+    	cash.daily_flg ,
+    	cash.deposit_amt ,
+    	cash.depositor ,
+    	cash.desc_txt ,
+    	cash.init_amt ,
+    	cash.job_type ,
+    	cash.opt_date ,
+    	cash.opt_date_m ,
+    	cash.opt_date_show ,
+    	cash.opt_date_y ,
+    	cash.org_id ,
+    	cash.retained_amt ,
+    	cash.sale_amt ,
+    	cash.sale_cash_amt ,
+    	cash.report_amt ,
+    	org.org_name AS orgName
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			cash.org_id = org.org_id
+  			<if test="optDate != null and optDate !='' ">
+  			AND cash.opt_date = #{optDate}
+  			</if>
+  			<if test="orgId != null and orgId !='' ">
+  			AND cash.org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_cash_run信息(根据参数) -->
+	<select id="getCashRunList" parameterType="com.tjhx.entity.accounts.CashRun" resultMap="Result_Map_CashRun">
+		select
+		<include refid="Base_Column_List" />
+		from t_cash_run cash, t_organization org
+		<include refid="Where_Clause" />
+		order by cash.job_type asc
+	</select>
+	
+	<!-- 查询条件 -->
+  	<sql id="Where_Clause_Report" >
+  		<where>
+  			user.uuid = cash.create_user_id
+    		AND cash.org_id = org.org_id
+  			<![CDATA[ AND cash.opt_date >= #{optDateStart} AND cash.opt_date  <= #{optDateEnd} ]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND cash.org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+	<!-- 取得t_cash_run信息(根据参数) -->
+	<select id="getCashRunList_OptDate_Interval" parameterType="com.tjhx.entity.accounts.CashRun" resultMap="Result_Map_CashRun">
+		SELECT
+    		cash.adjust_amt ,
+	    	cash.bank_card_no ,
+	    	cash.card_amt ,
+	    	cash.card_amt_bw ,
+	    	cash.card_cert_no ,
+	    	cash.card_num ,
+	    	cash.carrying_cash_amt ,
+	    	cash.cash_amt ,
+	    	cash.daily_flg ,
+	    	cash.deposit_amt ,
+	    	cash.depositor ,
+	    	cash.desc_txt ,
+	    	cash.init_amt ,
+	    	cash.job_type ,
+	    	cash.opt_date ,
+	    	cash.opt_date_m ,
+	    	cash.opt_date_show ,
+	    	cash.opt_date_y ,
+	    	cash.org_id ,
+	    	cash.retained_amt ,
+	    	cash.sale_amt ,
+	    	cash.sale_cash_amt ,
+	    	cash.report_amt ,
+    		user.name AS user_name,
+    		org.org_name AS orgName
+		FROM
+    		t_cash_run cash ,
+    		t_user user ,
+    		t_organization org
+		<include refid="Where_Clause_Report" />
+		ORDER BY
+    		cash.org_id ,
+    		cash.opt_date
+	</select>
+	
+	<delete id="delCashRunInfo" parameterType="com.tjhx.entity.accounts.CashRun">
+        DELETE FROM t_cash_run WHERE opt_date > #{optDate} AND org_id = #{orgId}
+    </delete>
+</mapper>

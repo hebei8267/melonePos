@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.SupplierCustomMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SupplierCustom" type="com.tjhx.entity.bw.SupplierCustom">
+        <result column="supcust_no" property="supcustNo" jdbcType="VARCHAR"/>
+        <result column="sup_name" property="supName" jdbcType="VARCHAR"/>
+        <result column="region_no" property="regionNo" jdbcType="VARCHAR"/>
+        <result column="display_flag" property="displayFlag" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+  	
+  	<!-- 取得供应商信息 -->
+	<select id="getSupplierCustomList" resultMap="Result_Map_SupplierCustom">
+	<![CDATA[
+		SELECT
+		    bi_t_supcust_info.supcust_no,
+		    bi_t_supcust_info.sup_name,
+		    bi_t_supcust_info.region_no,
+		    bi_t_region_info.region_name,
+		    bi_t_supcust_info.display_flag
+		FROM
+		    bi_t_supcust_info,
+		    bi_t_region_info
+		WHERE
+		    bi_t_supcust_info.region_no IN
+		    (
+		        SELECT
+		            region_no
+		        FROM
+		            bi_t_region_info
+		        WHERE
+		            (region_no LIKE '%')
+		        OR  (ISNULL(region_parent,'') LIKE '%'))
+		AND sup_type LIKE '%'
+		AND sale_no LIKE '%'
+		AND supcust_flag = 'S'
+		AND supcust_no <> '0'
+		AND supcust_no <> 'OtherSup'
+		AND bi_t_supcust_info.region_no = bi_t_region_info.region_no
+		ORDER BY
+		    bi_t_supcust_info.supcust_no
+	]]>
+	</select>
+</mapper>

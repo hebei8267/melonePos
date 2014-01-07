@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.GoodsMyBatisDao">
+	<update id="createTable"> 
+	<![CDATA[
+	CREATE TABLE
+    t_goods
+    (
+        uuid INT NOT NULL AUTO_INCREMENT,
+        create_date DATETIME NOT NULL,
+        create_user_id VARCHAR(32) NOT NULL,
+        update_date DATETIME NOT NULL,
+        update_user_id VARCHAR(32) NOT NULL,
+        version INT NOT NULL,
+        barcode VARCHAR(16),
+        item_no VARCHAR(8),
+        name VARCHAR(64),
+        py_name VARCHAR(32),
+        subno VARCHAR(16),
+        PRIMARY KEY (uuid),
+        CONSTRAINT subno UNIQUE (subno)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8
+    ]]>
+    </update>
+    
+    <update id="dropTable"> 
+        DROP TABLE t_goods
+    </update>
+</mapper>

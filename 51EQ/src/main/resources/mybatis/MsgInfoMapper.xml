@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.MsgInfoMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_MsgInfo" type="com.tjhx.entity.affair.MsgInfo">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="accept_name_set" property="acceptNameSet" jdbcType="VARCHAR"/>
+        <result column="accept_user_login_name" property="acceptUserLoginName" jdbcType="VARCHAR"/>
+        <result column="msg_batch_id" property="msgBatchId" jdbcType="VARCHAR"/>
+        <result column="msg_content" property="msgContent" jdbcType="VARCHAR"/>
+        <result column="msg_subject" property="msgSubject" jdbcType="VARCHAR"/>
+        <result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_show" property="optDateShow" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="read_flg" property="readFlg" jdbcType="VARCHAR"/>
+        <result column="send_user_login_name" property="sendUserLoginName" jdbcType="VARCHAR"/>
+        <result column="send_name_set" property="sendNameSet" jdbcType="VARCHAR"/>
+        <result column="week" property="week" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	uuid ,
+    	create_date ,
+    	create_user_id ,
+    	update_date ,
+    	update_user_id ,
+    	version ,
+    	accept_name_set ,
+    	accept_user_login_name ,
+    	msg_batch_id ,
+    	msg_content ,
+    	msg_subject ,
+    	msg_type ,
+    	opt_date_m ,
+    	opt_date_show ,
+    	opt_date_y ,
+    	read_flg ,
+    	send_name_set ,
+    	send_user_login_name ,
+    	week 
+	]]>
+  	</sql>
+  	
+  	
+  	<!-- 取得t_msg_info信息(根据参数) -->
+	<select id="getMsgInfoList_UnreadStatus" parameterType="String" resultMap="Result_Map_MsgInfo">
+		select
+		<include refid="Base_Column_List" />
+		from t_msg_info
+		where read_flg = '0'
+		and accept_user_login_name = #{login_name}
+	</select>
+	
+	<!-- 取得t_msg_info信息(根据参数) -->
+	<select id="getMsgInfoList" parameterType="com.tjhx.entity.affair.MsgInfo" resultMap="Result_Map_MsgInfo">
+		select
+		<include refid="Base_Column_List" />
+		from t_msg_info
+		<include refid="Where_Clause" />
+	</select>
+	
+	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<![CDATA[ opt_date >= #{optDateStart} AND opt_date  <= #{optDateEnd} ]]>
+  			<if test="msgType != null and msgType !='' ">
+	  			<if test="msgType == 1 ">
+	  			AND msg_type = '1'
+	  			AND send_user_login_name = #{sendUserLoginName}
+	  			</if>
+	  			<if test="msgType == 2 ">
+	  			AND msg_type = '2'
+	  			AND accept_user_login_name = #{acceptUserLoginName}
+	  			</if>
+  			</if>
+  			<if test="msgType == null or msgType =='' ">
+  			AND (
+        		msg_type = '2' AND accept_user_login_name = #{acceptUserLoginName} 
+        		)
+			OR  (
+        		msg_type = '1' AND send_user_login_name = #{sendUserLoginName}
+        		)
+  			</if>
+	  	</where>
+  	</sql>
+</mapper>

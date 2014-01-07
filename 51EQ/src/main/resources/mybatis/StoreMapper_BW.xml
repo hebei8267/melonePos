@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.StoreMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_Store" type="com.tjhx.entity.bw.Store">
+        <result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
+        <result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+        
+        <result column="stock_qty" property="stockQty" jdbcType="NUMERIC"/>
+        <result column="stock_amt" property="stockAmt" jdbcType="NUMERIC"/>
+        <result column="item_sale_amt" property="itemSaleAmt" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<!-- 取得库存信息 -->
+	<select id="getStoreInfoList" parameterType="String" resultMap="Result_Map_Store">
+	<![CDATA[
+		SELECT DISTINCT
+		    a.item_subno,
+		    a.item_barcode,
+		    a.item_name,
+		    b.stock_qty,
+		    b.stock_qty * b.cost_price AS stock_amt,
+		    b.stock_qty *
+		    CASE
+		        WHEN (
+		                SELECT
+		                    sys_var_value
+		                FROM
+		                    sys_t_system
+		                WHERE
+		                    sys_var_id = 'g_branch_no') = '00'
+		        AND LEFT(d.branch_no,2) <> '00'
+		        THEN ISNULL(
+		            (
+		                SELECT
+		                    item_price
+		                FROM
+		                    bi_t_item_price
+		                WHERE
+		                    price_type = 'S1'
+		                AND item_no = a.item_no
+		                AND branch_no = LEFT(d.branch_no,2)),a.item_sale_price)
+		        ELSE a.item_sale_price
+		    END AS item_sale_amt
+		FROM
+		    view_item_info a
+		CROSS JOIN
+		    bi_t_branch_info d
+		LEFT JOIN
+		    ic_t_branch_stock b
+		ON
+		    a.item_no=b.item_no
+		AND b.branch_no=d.branch_no
+		LEFT JOIN
+		    ic_t_branch_stock_target c
+		ON
+		    c.item_no=a.item_no
+		AND c.branch_no=d.branch_no
+		LEFT JOIN
+		    bi_t_item_space s
+		ON
+		    a.item_no = s.item_no
+		AND LEFT(d.branch_no,2) = s.branch_no
+		WHERE
+		    (
+		        LEN(d.branch_no) = 4 )
+		AND (
+		        CASE ISNULL(s.display_flag,'9')
+		            WHEN '9'
+		            THEN a.item_display_flag
+		            ELSE s.display_flag
+		        END <> '0'
+		    OR  '0'='1' )
+		AND (
+		        a.item_have_stock = '1' )
+		AND (
+		        ISNULL(b.stock_qty,0) <> 0
+		    OR  '0'='1' )
+		AND (
+		        a.item_combine_Sta IN ('0',
+		                               '5',
+		                               '6',
+		                               '7',
+		                               '8') )
+		AND (
+		        LEFT(d.branch_no,2) IN ( SELECT branch_no FROM fn_branch_area (#{bw_branch_no}) ))
+		ORDER BY
+		    a.item_subno
+	]]>
+	</select>
+</mapper>

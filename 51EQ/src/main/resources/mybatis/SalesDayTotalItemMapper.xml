@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.SalesDayTotalItemMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SalesDayTotalItem" type="com.tjhx.entity.info.SalesDayTotalItem">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+        <result column="give_qty" property="giveQty" jdbcType="DECIMAL"/>
+        <result column="item_cls_no" property="itemClsNo" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="ret_amt" property="retAmt" jdbcType="DECIMAL"/>
+        <result column="ret_qty" property="retQty" jdbcType="DECIMAL"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+        <result column="sale_price" property="salePrice" jdbcType="DECIMAL"/>
+        <result column="sale_qty" property="saleQty" jdbcType="DECIMAL"/>
+        <result column="sale_ramt" property="saleRamt" jdbcType="DECIMAL"/>
+        <result column="sale_rqty" property="saleRqty" jdbcType="DECIMAL"/>
+        
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+        <result column="item_short_name" property="itemShortName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<delete id="delSalesDayTotalInfo" parameterType="String">  
+        DELETE FROM t_sales_day_total_item WHERE opt_date = #{optDate}
+    </delete>
+    
+    <!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			sd.item_cls_no = it.item_no
+  			<![CDATA[ AND sd.opt_date >= #{optDateStart} AND sd.opt_date  <= #{optDateEnd} ]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND sd.org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_sales_day_total信息(根据参数) -->
+	<select id="getSumSaleRamtList" parameterType="com.tjhx.entity.info.SalesDayTotalItem" resultMap="Result_Map_SalesDayTotalItem">
+		SELECT
+			sd.item_cls_no,
+	    	it.item_short_name,
+	    	it.item_name,
+	    	SUM(sd.sale_ramt) AS sale_ramt
+		FROM
+			t_sales_day_total_item sd,
+    		t_item_type it
+		<include refid="Where_Clause" />
+		GROUP BY
+    		sd.item_cls_no
+		ORDER BY
+    		sale_ramt DESC
+	</select>
+	
+	<!-- 取得t_sales_day_total信息(根据参数) -->
+	<select id="getSumSaleRqtyList" parameterType="com.tjhx.entity.info.SalesDayTotalItem" resultMap="Result_Map_SalesDayTotalItem">
+		SELECT
+		    sd.item_cls_no,
+		    it.item_short_name,
+		    it.item_name,
+		    SUM(sd.sale_rqty) AS sale_rqty
+		FROM
+			t_sales_day_total_item sd,
+    		t_item_type it
+		<include refid="Where_Clause" />
+		GROUP BY
+    		sd.item_cls_no
+		ORDER BY
+    		sale_rqty DESC
+	</select>
+	
+	
+	<!-- 取得t_sales_day_total信息(根据参数) -->
+	<select id="getSumSalesMonthTotalList" parameterType="com.tjhx.entity.info.SalesDayTotalItem" resultMap="Result_Map_SalesDayTotalItem">
+		SELECT
+		    org_id,
+		    branch_no,
+		    item_cls_no,
+		    opt_date_m,
+		    opt_date_y,
+		    SUM(give_qty)   AS give_qty,
+		    SUM(ret_amt)    AS ret_amt,
+		    SUM(ret_qty)    AS ret_qty,
+		    SUM(sale_amt)   AS sale_amt,
+		    SUM(sale_price) AS sale_price,
+		    SUM(sale_qty)   AS sale_qty,
+		    SUM(sale_ramt)  AS sale_ramt,
+		    SUM(sale_rqty)  AS sale_rqty
+		FROM
+		    t_sales_day_total_item
+		WHERE
+		    org_id = #{orgId}
+		AND opt_date_y = #{optDateY}
+		AND opt_date_m = #{optDateM}
+		GROUP BY
+		    item_cls_no
+		ORDER BY
+		    item_cls_no
+	</select>
+	
+	
+	<!-- 查询条件 -->
+  	<sql id="Where_Clause2" >
+  		<where>
+  			sd.org_id = org.org_id
+  			<if test="orgId != null and orgId !='' ">
+  			AND sd.org_id = #{orgId}
+  			</if>
+  			<![CDATA[ AND sd.opt_date >= #{optDateStart} AND sd.opt_date  <= #{optDateEnd} ]]>
+	  	</where>
+  	</sql>
+	<!-- 取得t_sales_day_total信息(根据参数) -->
+	<select id="getSumSaleInfoList" parameterType="com.tjhx.entity.info.SalesDayTotalItem" resultMap="Result_Map_SalesDayTotalItem">
+		SELECT
+		    sd.org_id,
+		    org.org_name,
+		    SUM(sd.sale_ramt)                   AS sale_ramt,
+		    SUM(sd.sale_rqty)                   AS sale_rqty,
+		    SUM(sd.sale_ramt)/SUM(sd.sale_rqty) AS sale_price
+		FROM
+		    t_sales_day_total_item sd,
+		    t_organization org
+		<include refid="Where_Clause2" />
+		GROUP BY
+		    sd.org_id
+		ORDER BY
+		    sd.org_id
+	</select>
+</mapper>

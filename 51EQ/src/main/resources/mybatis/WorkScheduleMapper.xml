@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.WorkScheduleMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_WorkSchedule" type="com.tjhx.entity.affair.WorkSchedule">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="emp_code" property="empCode" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="schedule_date" property="scheduleDate" jdbcType="VARCHAR"/>
+        <result column="schedule_date_m" property="scheduleDateM" jdbcType="VARCHAR"/>
+        <result column="schedule_date_y" property="scheduleDateY" jdbcType="VARCHAR"/>
+        <result column="schedule_date_y_m" property="scheduleDateYM" jdbcType="VARCHAR"/>
+        <result column="schedule_show" property="scheduleShow" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="work_time" property="workTime" jdbcType="VARCHAR"/>
+        <result column="work_type_uuid" property="workTypeUuid" jdbcType="INTEGER"/>
+        <result column="org_uuid" property="orgUuid" jdbcType="INTEGER"/>
+        
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="emp_uuid" property="empUuid" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	ws.uuid ,
+    	ws.create_date ,
+    	ws.create_user_id ,
+    	ws.update_date ,
+    	ws.update_user_id ,
+    	ws.version ,
+    	ws.emp_code ,
+    	ws.end_time ,
+    	ws.schedule_date ,
+    	ws.schedule_date_m ,
+    	ws.schedule_date_y ,
+    	ws.schedule_date_y_m ,
+    	ws.schedule_show ,
+    	ws.start_time ,
+    	ws.work_time ,
+    	ws.work_type_uuid ,
+    	ws.org_uuid ,
+    	emp.uuid AS emp_uuid
+	]]>
+  	</sql>
+  	
+  	
+  	<!-- 取得t_work_schedule信息(根据参数) -->
+	<select id="getWorkScheduleListByDate" parameterType="com.tjhx.entity.affair.WorkSchedule" resultMap="Result_Map_WorkSchedule">
+		select
+		<include refid="Base_Column_List" />
+		from t_work_schedule ws,
+			 t_organization o,
+			 t_employee emp
+		where
+			ws.org_uuid = o.uuid
+		and ws.emp_code = emp.code
+		and ws.schedule_date >= #{scheduleDate}
+		and o.org_id = #{orgId}
+	</select>
+	
+	<!-- 取得t_work_schedule信息(根据参数) -->
+	<select id="getWorkScheduleListByDateYM" parameterType="com.tjhx.entity.affair.WorkSchedule" resultMap="Result_Map_WorkSchedule">
+		select
+		<include refid="Base_Column_List" />
+		from t_work_schedule ws,
+			 t_organization o,
+			 t_employee emp
+		where
+			ws.org_uuid = o.uuid
+		and ws.emp_code = emp.code
+		and ws.schedule_date_y_m = #{scheduleDateYM}
+		and o.org_id = #{orgId}
+	</select>
+</mapper>

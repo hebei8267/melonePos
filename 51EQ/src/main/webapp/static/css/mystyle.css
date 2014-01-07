@@ -1,0 +1,115 @@
+body {
+    background-color: #f5f5f5;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+input[type="text"], input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    padding: 7px 9px;
+}
+textarea{
+	font-size: 16px;
+	height: auto;
+    padding: 7px 9px;
+}
+select{
+	font-size: 16px;
+    height: auto;
+	width: 226px;
+	padding: 6px 4px;
+}
+.btn-large {
+    font-size: 20px;
+}
+.mytable th {
+    height: 26px;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #49afcd;
+    *background-color: #2f96b4;
+    background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
+    background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
+    background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
+    background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+    background-repeat: repeat-x;
+    border-color: #2f96b4 #2f96b4 #1f6377;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.mytable td {
+    height: 28px;
+    vertical-align: middle;
+}
+.mytable tbody tr td.center, .mytable thead  tr th.center {
+	text-align: center;
+}
+.mytable tbody tr td.right, .mytable thead  tr th.right {
+	text-align: right;
+}
+.right_text {
+	text-align: right;
+}
+.left-control-label {
+	float: left;
+	text-align: left;
+	padding-top: 5px;
+	padding-left: 24px;
+	font-weight: bold;
+	color: #04C;
+	font-size: 20px;
+}
+.warn_text {
+	color: #F89406;
+	font-weight: bold;
+}
+.warn2_text {
+	color: #FF6633;
+	font-weight: bold;
+}
+.cash_daily {
+	border-bottom: 3px solid #F89406;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+/************************ µ¯³öÐÅÏ¢¿ò ************************/
+.__model37 {
+	font-size: 22px;
+}
+.__model37 .info {
+	color: #3A87AD;
+}
+.__model37 .success {
+	color: #468847;
+}
+.__model37 .error {
+	color: #B94A48;
+}
+.control-group .checkbox {
+	padding-left: 10px;
+}
+.control-group .checkbox input[type="checkbox"] {
+	margin-left: 20px;
+	float: left;
+	width: 20px;
+	padding-top: 5px;
+	text-align: right;
+}
+/************************ jquery.validate ************************/
+label.error {
+	color: red;
+}
+div.error {
+	display: none;
+}
+input.error {
+	border: 1px dotted red;
+}
+textarea.error {
+	border: 1px dotted red;
+}
+select.error {
+	border: 1px dotted red;
+}

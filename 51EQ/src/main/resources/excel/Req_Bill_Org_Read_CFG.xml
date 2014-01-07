@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<workbook>
+	<worksheet name="Sheet1">
+		<section startRow="0" endRow="6">
+
+		</section>
+		<loop startRow="7" endRow="7" items="reqBillList" var="reqBill"
+			varType="com.tjhx.entity.order.ReqBill">
+			<section startRow="1" endRow="1">
+				<mapping row="1" col="1">reqBill.productNo</mapping><!-- 货号 -->
+				<mapping row="1" col="2">reqBill.barcode</mapping><!-- 条码 -->
+				<mapping row="1" col="3">reqBill.productName</mapping><!-- 商品名称 -->
+				<mapping row="1" col="4">reqBill.inventoryNum</mapping><!-- 库存数量 -->
+				<mapping row="1" col="5">reqBill.appNum</mapping><!-- 申请数量 -->
+				<mapping row="1" col="6">reqBill.refPrice</mapping><!-- 参考进价 -->
+				<mapping row="1" col="7">reqBill.supplierName</mapping><!-- 主供应商 -->
+				<mapping row="1" col="8">reqBill.remarks</mapping><!-- 备注 -->
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="0"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>

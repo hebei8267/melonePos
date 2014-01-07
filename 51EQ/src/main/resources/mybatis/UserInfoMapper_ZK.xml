@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daozk.UserInfoMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_UserInfo" type="com.tjhx.entity.zknet.UserInfo">
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
+        <result column="badgenumber" property="badgenumber" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="defaultdeptid" property="defaultdeptid" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	userid ,
+    	badgenumber ,
+    	name ,
+    	defaultdeptid
+	]]>
+  	</sql>
+  	
+  	<!-- 取得userinfo信息(根据参数) -->
+	<select id="getUserInfoList" resultMap="Result_Map_UserInfo">
+		select
+		<include refid="Base_Column_List" />
+		from userinfo
+	</select>
+</mapper>

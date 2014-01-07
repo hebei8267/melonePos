@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>Quartz的本地Cron式执行任务配置</description>
+
+	<!-- Quartz本地Schduler -->
+	<bean id="localQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<ref bean="punchClockJobCronTrigger" />
+				<ref bean="bwSaleAmtJobCronTrigger" />
+				<ref bean="orgStoreJobCronTrigger" />
+				<ref bean="goodsJobCronTrigger" />
+				<ref bean="orgSalesTotalItemJobCronTrigger" />
+				<ref bean="orgSalesTotalSupJobCronTrigger" />
+				<ref bean="orgSalesTotalGoodsJobCronTrigger" />
+			</list>
+		</property>
+		<!-- Quartz配置 -->
+		<property name="quartzProperties">
+			<props>
+				<!-- thread数量，不会动态增长(所有的JOB) -->
+				<prop key="org.quartz.threadPool.threadCount">3</prop>
+			</props>
+		</property>
+		<!-- 启动时延期3秒开始任务 -->
+		<property name="startupDelay" value="3" />
+	</bean>
+
+	<!-- ##################################### 打卡机  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="punchClockJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="punchClockJobCronJobDetail" />
+		<!-- 每天上午 9:00 触发 -->
+		<property name="cronExpression" value="0 0 9 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="punchClockJobCronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="punchClockJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="punchClockJob" class="com.tjhx.schedule.PunchClockJob" />
+	
+	<!-- ##################################### 百威系统销售额  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="bwSaleAmtJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="bwSaleAmtJobCronJobDetail" />
+		<!-- 每天上午 8:00 触发 -->
+		<property name="cronExpression" value="0 0 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="bwSaleAmtJobCronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bwSaleAmtJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="bwSaleAmtJob" class="com.tjhx.schedule.BwSaleAmtJob" />
+	
+	
+	<!-- ##################################### 门店库存信息  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="orgStoreJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orgStoreJobCronJobDetail" />
+		<!-- 每天上午 8:05 触发 -->
+		<property name="cronExpression" value="0 5 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="orgStoreJobCronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgStoreJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="orgStoreJob" class="com.tjhx.schedule.OrgStoreJob" />
+	
+	
+	
+	<!-- ##################################### 商品信息  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="goodsJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="goodsJobCronJobDetail" />
+		<!-- 每天上午 8:10 触发 -->
+		<property name="cronExpression" value="0 10 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="goodsJobCronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="goodsJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="goodsJob" class="com.tjhx.schedule.GoodsJob" />
+	
+	
+	<!-- ##################################### 门店日销售信息(按商品类别)  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="orgSalesTotalItemJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orgSalesTotalItemJobDetail" />
+		<!-- 每天上午 8:20 触发 -->
+		<property name="cronExpression" value="0 20 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="orgSalesTotalItemJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgSalesTotalItemJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="orgSalesTotalItemJob" class="com.tjhx.schedule.OrgSalesTotalItemJob" />
+	
+	
+	
+	<!-- ##################################### 门店日销售信息(按供应商)  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="orgSalesTotalSupJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orgSalesTotalSupJobDetail" />
+		<!-- 每天上午 8:35 触发 -->
+		<property name="cronExpression" value="0 35 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="orgSalesTotalSupJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgSalesTotalSupJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="orgSalesTotalSupJob" class="com.tjhx.schedule.OrgSalesTotalSupJob" />
+	
+	
+	
+	<!-- ##################################### 门店日销售信息(按商品)  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="orgSalesTotalGoodsJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orgSalesTotalGoodsJobDetail" />
+		<!-- 每天上午 8:45 触发 -->
+		<property name="cronExpression" value="0 45 8 * * ?" />
+	</bean>
+
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="orgSalesTotalGoodsJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgSalesTotalGoodsJob" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="orgSalesTotalGoodsJob" class="com.tjhx.schedule.OrgSalesTotalGoodsJob" />
+</beans>

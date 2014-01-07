@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.ItemGoodsMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_ItemGoods" type="com.tjhx.entity.bw.ItemGoods">
+		<!-- 商品名称 -->
+		<result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+		<!-- 短条码 -->
+		<result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
+		<!-- 长条码 -->
+		<result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+		<!-- 商品名称-拼音缩写 -->
+		<result column="item_subname" property="itemSubname" jdbcType="VARCHAR"/>
+		<!-- 商品种类编号 -->
+		<result column="item_clsno" property="itemClsno" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<!-- 取得商品信息 -->
+	<select id="getItemGoodsList" resultMap="Result_Map_ItemGoods">
+	<![CDATA[
+		SELECT
+		    item_subno ,
+			item_barcode ,
+			item_name ,
+			item_clsno ,
+			item_subname
+		FROM
+		    view_item_info
+	]]>
+	</select>
+</mapper>

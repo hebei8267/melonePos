@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.DailySaleTotalSupMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_DailySaleTotal" type="com.tjhx.entity.bw.DailySaleTotalSup">
+		<!-- 货商编码 -->
+		<result column="supcust_no" property="supcustNo" jdbcType="VARCHAR"/>
+		<!-- 区域编码 -->
+		<result column="region_no" property="regionNo" jdbcType="VARCHAR"/>
+		<!-- 前台销售数量 -->
+		<result column="pos_qty" property="posQty" jdbcType="NUMERIC"/>
+		<!-- 前台销售金额 -->
+		<result column="pos_amt" property="posAmt" jdbcType="NUMERIC"/>
+		<!-- 批发销售数量 -->
+		<result column="pf_qty" property="pfQty" jdbcType="NUMERIC"/>
+		<!-- 批发销售金额 -->
+		<result column="pf_amt" property="pfAmt" jdbcType="NUMERIC"/>
+		<!-- 合计销售数量 -->
+		<result column="sale_qty" property="saleQty" jdbcType="NUMERIC"/>
+		<!-- 合计销售金额 -->
+		<result column="sale_amt" property="saleAmt" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	
+	<!-- 取得指定门店指定日期的销售信息(按供货商分类) -->
+	<select id="getDailySaleTotalList" parameterType="com.tjhx.entity.bw.DailySaleTotalSup" resultMap="Result_Map_DailySaleTotal">
+	<![CDATA[
+		SELECT
+		    SUM(a.pos_qty)            AS pos_qty,
+		    SUM(a.pos_amt)            AS pos_amt,
+		    SUM(a.pf_qty)             AS pf_qty,
+		    SUM(a.pf_amt)             AS pf_amt,
+		    SUM(a.pos_qty + a.pf_qty) AS sale_qty,
+		    SUM(a.pos_amt + a.pf_amt) AS sale_amt,
+		    b.supcust_no,
+		    b.sup_name,
+		    b.region_no
+		FROM
+		    view_sale_total_sup a,
+		    view_sup_info b,
+		    view_item_info c
+		WHERE
+		    a.sup_no = b.supcust_no
+		AND a.item_no = c.item_no
+		AND a.oper_date >= #{optDateStart}
+		AND a.oper_date <= #{optDateEnd}
+		AND a.branch_no = #{branchNo}
+		GROUP BY
+		    b.supcust_no,
+		    b.sup_name,
+		    b.region_no
+		HAVING
+		   SUM(a.pos_qty)<>0
+		OR SUM(a.pos_amt)<>0
+		OR SUM(a.pf_qty)<>0
+		OR SUM(a.pf_amt)<>0
+		ORDER BY
+		    sale_amt DESC,
+		    b.supcust_no
+	]]>
+	</select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.SalesDayTotalSupMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SalesDayTotalSup" type="com.tjhx.entity.info.SalesDayTotalSup">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="pf_amt" property="pfAmt" jdbcType="DECIMAL"/>
+        <result column="pf_qty" property="pfQty" jdbcType="DECIMAL"/>
+        <result column="pos_amt" property="posAmt" jdbcType="DECIMAL"/>
+        <result column="pos_qty" property="posQty" jdbcType="DECIMAL"/>
+        <result column="region_code" property="regionCode" jdbcType="VARCHAR"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+        <result column="sale_qty" property="saleQty" jdbcType="DECIMAL"/>
+        <result column="supplier_bw_id" property="supplierBwId" jdbcType="VARCHAR"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<delete id="delSalesDayTotalInfo" parameterType="String">  
+        DELETE FROM t_sales_day_total_sup WHERE opt_date = #{optDate}
+    </delete>
+    
+    <!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			sd.supplier_bw_id = sup.supplier_bw_id
+  			<![CDATA[ AND sd.opt_date >= #{optDateStart} AND sd.opt_date  <= #{optDateEnd} ]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND sd.org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_sales_day_total_sup信息(根据参数) -->
+	<select id="getSumSaleRamtList" parameterType="com.tjhx.entity.info.SalesDayTotalSup" resultMap="Result_Map_SalesDayTotalSup">
+		select
+			sd.supplier_bw_id,
+	    	sup.name AS supplier_name,
+	    	SUM(sd.sale_amt) AS sale_amt
+		from 
+			t_sales_day_total_sup sd,
+    		t_supplier sup
+		<include refid="Where_Clause" />
+		GROUP BY
+		    sd.supplier_bw_id
+		ORDER BY
+		    sale_amt DESC
+	</select>
+	
+	<!-- 取得t_sales_day_total_sup信息(根据参数) -->
+	<select id="getSumSaleRqtyList" parameterType="com.tjhx.entity.info.SalesDayTotalSup" resultMap="Result_Map_SalesDayTotalSup">
+		SELECT
+		    sd.supplier_bw_id,
+		    sup.name AS supplier_name,
+		    SUM(sd.sale_qty) AS sale_qty
+		FROM
+			t_sales_day_total_sup sd,
+    		t_supplier sup
+		<include refid="Where_Clause" />
+		GROUP BY
+		    sd.supplier_bw_id
+		ORDER BY
+		    sale_qty DESC
+	</select>
+</mapper>

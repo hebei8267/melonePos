@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.InspectMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_Inspect" type="com.tjhx.entity.affair.Inspect">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="adjust_amt" property="adjustAmt" jdbcType="DECIMAL"/>
+        <result column="cash_amt" property="cashAmt" jdbcType="DECIMAL"/>
+        <result column="cash_conclusion" property="cashConclusion" jdbcType="INTEGER"/>
+        <result column="cash_conclusion_txt" property="cashConclusionTxt" jdbcType="VARCHAR"/>
+        <result column="cash_subtotal" property="cashSubtotal" jdbcType="DECIMAL"/>
+        <result column="clear_imprest_amt" property="clearImprestAmt" jdbcType="DECIMAL"/>
+        <result column="deposit_amt" property="depositAmt" jdbcType="DECIMAL"/>
+        <result column="duty_per" property="dutyPer" jdbcType="VARCHAR"/>
+        <result column="exp_imprest_amt" property="expImprestAmt" jdbcType="DECIMAL"/>
+        <result column="imprest_calance" property="imprestCalance" jdbcType="DECIMAL"/>
+        <result column="imprest_conclusion" property="imprestConclusion" jdbcType="INTEGER"/>
+        <result column="imprest_conclusion_txt" property="imprestConclusionTxt" jdbcType="VARCHAR"/>
+        <result column="imprest_subtotal1" property="imprestSubtotal1" jdbcType="DECIMAL"/>
+        <result column="imprest_subtotal2" property="imprestSubtotal2" jdbcType="DECIMAL"/>
+        <result column="init_amt" property="initAmt" jdbcType="DECIMAL"/>
+        <result column="inspect_per" property="inspectPer" jdbcType="VARCHAR"/>
+        <result column="job_type" property="jobType" jdbcType="INTEGER"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_show" property="optDateShow" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="opt_time" property="optTime" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="sale_cash_amt" property="saleCashAmt" jdbcType="DECIMAL"/>
+        <result column="trs_id" property="trsId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	uuid ,
+    	create_date ,
+    	create_user_id ,
+    	update_date ,
+    	update_user_id ,
+    	version ,
+    	adjust_amt ,
+    	cash_amt ,
+    	cash_conclusion ,
+    	cash_conclusion_txt ,
+    	cash_subtotal ,
+    	clear_imprest_amt ,
+    	deposit_amt ,
+    	duty_per ,
+    	exp_imprest_amt ,
+    	imprest_calance ,
+    	imprest_conclusion ,
+    	imprest_conclusion_txt ,
+    	imprest_subtotal1 ,
+    	imprest_subtotal2 ,
+    	init_amt ,
+    	inspect_per ,
+    	job_type ,
+    	opt_date ,
+    	opt_date_m ,
+    	opt_date_show ,
+    	opt_date_y ,
+    	opt_time ,
+    	org_id ,
+    	sale_cash_amt ,
+    	trs_id 
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<![CDATA[ opt_date >= #{optDateStart} AND opt_date  <= #{optDateEnd} ]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_inspect信息(根据参数) -->
+	<select id="getInspectList" parameterType="com.tjhx.entity.affair.Inspect" resultMap="Result_Map_Inspect">
+		select
+		<include refid="Base_Column_List" />
+		from t_inspect
+		<include refid="Where_Clause" />
+	</select>
+</mapper>

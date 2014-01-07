@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daozk.CheckInOutMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_CheckInOut" type="com.tjhx.entity.zknet.CheckInOut">
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
+        <result column="checktime" property="checktime" jdbcType="TIMESTAMP"/>
+        <result column="SN" property="sn" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	userid ,
+    	checktime ,
+    	SN
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<![CDATA[ checktime >= #{optDateStart} AND checktime  <= #{optDateEnd} ]]>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得checkinout信息 -->
+	<select id="getCheckInOutList" parameterType="com.tjhx.entity.zknet.CheckInOut" resultMap="Result_Map_CheckInOut">
+		select
+		<include refid="Base_Column_List" />
+		from checkinout
+		<include refid="Where_Clause" />
+		order by
+    		userid ,
+    		checktime
+	</select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts/">
+	<excludes>
+		<pattern>/static/*</pattern>
+	</excludes>
+
+	<decorator name="default" page="default.jsp">
+		<pattern>/sc*</pattern>
+	</decorator>
+
+	<decorator name="menu" page="menu.jsp" />
+
+</decorators>

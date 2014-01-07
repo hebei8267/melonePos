@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+	default-lazy-init="true">
+
+	<description>Spring公共配置</description>
+
+
+	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+	<!-- 通过exclude-filter 把所有 @Controller注解的表现层控制器组件排除 -->
+	<context:component-scan base-package="com.tjhx">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+
+	<!-- Jpa Entity Manager 配置 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="defaultPU" />
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+			</props>
+		</property>
+	</bean>
+	
+
+	<bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform">
+			<bean factory-method="getDialect" class="org.springside.modules.orm.Hibernates">
+				<constructor-arg ref="dataSource" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<!-- Spring Data Jpa配置 -->
+	<jpa:repositories base-package="com.tjhx" transaction-manager-ref="defaultTransactionManager"
+		entity-manager-factory-ref="entityManagerFactory" />
+		
+		
+	<!-- (oa)MyBatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描目录,省掉Configuration.xml里的手工配置Class名与缩写 -->
+		<property name="typeAliasesPackage" value="com.tjhx.entity" />
+		<!-- 没有把mapper文件放到与dao相同的深层目录，显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath:/mybatis/*Mapper.xml" />
+	</bean>
+	<!-- 在指定扫描所有接口, 动态生成MyBatis Dao接口实现-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tjhx.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
+	</bean>
+	
+	
+	
+	<!-- (zknet)MyBatis配置 -->
+	<bean id="zkSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="zkDataSource" />
+		<!-- 自动扫描目录,省掉Configuration.xml里的手工配置Class名与缩写 -->
+		<property name="typeAliasesPackage" value="com.tjhx.entity.zknet" />
+		<!-- 没有把mapper文件放到与dao相同的深层目录，显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath:/mybatis/*Mapper_ZK.xml" />
+	</bean>
+	<!-- 在指定扫描所有接口, 动态生成MyBatis Dao接口实现-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tjhx.daozk" />
+		<property name="sqlSessionFactoryBeanName" value="zkSqlSessionFactory" />
+	</bean>
+	
+	
+	
+	<!-- (智百威)MyBatis配置 -->
+	<bean id="bwSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="bwDataSource" />
+		<!-- 自动扫描目录,省掉Configuration.xml里的手工配置Class名与缩写 -->
+		<property name="typeAliasesPackage" value="com.tjhx.entity.bw" />
+		<!-- 没有把mapper文件放到与dao相同的深层目录，显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath:/mybatis/*Mapper_BW.xml" />
+	</bean>
+	<!-- 在指定扫描所有接口, 动态生成MyBatis Dao接口实现-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tjhx.daobw" />
+		<property name="sqlSessionFactoryBeanName" value="bwSqlSessionFactory" />
+	</bean>
+	
+	
+
+	<!-- 事务管理器配置, Jpa单数据源事务 -->
+	<bean id="defaultTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<!-- 另一个事务管理器(zknet), Jdbc单数据源事务 -->
+	<bean id="zkTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="zkDataSource" />
+	</bean>
+	
+	<!-- 另一个事务管理器(智百威), Jdbc单数据源事务 -->
+	<bean id="bwTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="bwDataSource" />
+	</bean>
+
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true" />
+	<tx:annotation-driven transaction-manager="zkTransactionManager" proxy-target-class="true" />
+	<tx:annotation-driven transaction-manager="bwTransactionManager" proxy-target-class="true" />
+
+
+	<!-- AOP -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+
+	<!-- 使用静态变量缓存 applicationContext -->
+	<bean class="org.springside.modules.utils.SpringContextHolder" lazy-init="false" />
+
+
+	<!-- 自定义消息资源 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		lazy-init="false">
+		<property name="basename">
+			<value>messages</value>
+		</property>
+	</bean>
+
+	
+	<!-- 系统配置信息Bean -->
+	<bean id="sysConfig" class="com.tjhx.globals.SysConfig">
+		<!-- 日结模式是否开启 -->
+		<property name="cashDailyModel" value="${cash.daily.model}" />
+		
+		<property name="defaultRetainedAmt" value="${cash.daily.default_retained_amt}" />
+		<!-- 模板文件路径 -->
+		<property name="excelTemplatePath" value="${excel.template.path}" />
+		<!-- 要货单 -->
+		<property name="reqBillSupplierOutputPath" value="${reqBill.supplier.output.path}" />
+		<property name="reqBillSupplierInputPath" value="${reqBill.supplier.input.path}" />
+		<!-- 货品图片路径 -->
+		<property name="productImgPath" value="${product.img.path}" />
+		<!-- 导出报表信息路径 -->
+		<property name="reportTmpPath" value="${report.tmp.path}" />
+		
+		
+		<!-- 考勤计算-开始有效时间(当日时间) -->
+		<property name="punchClockStart" value="${punch.clock.start}" />
+		<!-- 考勤计算-结束有效时间(次日时间) -->
+		<property name="punchClockEnd" value="${punch.clock.end}" />
+		<!-- 考勤计算-重计算天数 -->
+		<property name="punchClockRecalDays" value="${punch.clock.recal.days}" />
+		
+		
+		<!-- 同步百威销售额-重计算天数 -->
+		<property name="synBwSaleDays" value="${syn.bw.sale.days}" />
+		<!-- 与百威销售额-差额-额度 -->
+		<property name="bwSaleDifAmount" value="${bw.sale.difference.amount}" />
+		
+		<!-- 可排班天数 -->
+		<property name="workScheduleDays" value="${work.schedule.days}" />
+		<!-- 可查看排班天数 -->
+		<property name="workScheduleOverDays" value="${work.schedule.over.days}" />
+		
+		<!-- 门店备用金可编辑天数 -->
+		<property name="pettyCashEditDays" value="${petty.cash.edit.days}" />
+		<!-- 门店备用金可查看天数 -->
+		<property name="pettyCashViewDays" value="${petty.cash.view.days}" />
+		<!-- 门店备用金重计算天数 -->
+		<property name="pettyCashCalculateDays" value="${petty.cash.calculate.days}" />
+	
+		<!-- 门店日销售信息重计算天数(按类别) -->
+		<property name="salesDayTotalItemDays" value="${sales.day.total.item.days}" />
+		<!-- 门店月销售信息重计算月数(按类别) -->
+		<property name="salesMonthTotalItemMonths" value="${sales.month.total.item.months}" />
+		
+		<!-- 月销售信息对比(图形)页面年份显示个数 -->
+		<property name="salesMonthTotalShowYearNum" value="${sales.month.total.show.year.num}" />
+		<!-- 类别销售信息对比(图形)页面种类显示个数 -->
+		<property name="salesDayItemTotalShowNum" value="${sales.day.item.total.show.num}" />
+		<!-- 供应商销售信息对比(图形)页面种类显示个数 -->
+		<property name="salesDaySupTotalShowNum" value="${sales.day.sup.total.show.num}" />
+	
+	
+		<!-- 门店日销售信息重计算天数(按供应商) -->
+		<property name="salesDayTotalSupDays" value="${sales.day.total.sup.days}" />
+		
+		<!-- 门店日销售信息重计算天数(按商品) -->
+		<property name="salesDayTotalGoodsDays" value="${sales.day.total.goods.days}" />
+		
+	</bean>
+	
+	
+	<!-- production/local development环境 -->
+	<beans profile="production,development,test">
+		<context:property-placeholder
+			ignore-resource-not-found="true"
+			location="classpath*:/application.properties,
+          			  classpath*:/application.local.properties" />
+
+		<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<!-- Connection Info -->
+			<property name="driverClassName" value="${jdbc.driver}" />
+			<property name="url" value="${jdbc.url}" />
+			<property name="username" value="${jdbc.username}" />
+			<property name="password" value="${jdbc.password}" />
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+		
+		
+		<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+		<bean id="zkDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<!-- Connection Info -->
+			<property name="driverClassName" value="${zk.jdbc.driver}" />
+			<property name="url" value="${zk.jdbc.url}" />
+			<property name="username" value="${zk.jdbc.username}" />
+			<property name="password" value="${zk.jdbc.password}" />
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+		
+		
+		<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+		<bean id="bwDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<!-- Connection Info -->
+			<property name="driverClassName" value="${bw.jdbc.driver}" />
+			<property name="url" value="${bw.jdbc.url}" />
+			<property name="username" value="${bw.jdbc.username}" />
+			<property name="password" value="${bw.jdbc.password}" />
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+
+</beans>

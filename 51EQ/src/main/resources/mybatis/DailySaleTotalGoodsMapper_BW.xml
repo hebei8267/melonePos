@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.DailySaleTotalGoodsMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_DailySaleTotal" type="com.tjhx.entity.bw.DailySaleTotalGoods">
+		<!-- 机构资金编号 -->
+		<result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+		<!-- 商品名称 -->
+		<result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+		<!-- 短条码 -->
+		<result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
+		<!-- 长条码 -->
+		<result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+		<!-- 销售数量 -->
+		<result column="pos_qty" property="posQty" jdbcType="NUMERIC"/>
+		<!-- 销售金额 -->
+		<result column="pos_amt" property="posAmt" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	
+	<!-- 各店每日销售合计（按大类别）信息 -->
+	<select id="getDailySaleTotalList" parameterType="com.tjhx.entity.bw.DailySaleTotalGoods" resultMap="Result_Map_DailySaleTotal">
+	<![CDATA[
+		SELECT
+		    b.item_name ,
+		    b.item_subno ,
+		    b.item_barcode ,		    
+		    a.pos_qty - a.pos_ret_qty as pos_qty ,
+		    a.pos_amt - a.pos_ret_amt as pos_amt ,
+		    a.branch_no
+		FROM
+		    view_sale_daysum_item a ,
+		    view_item_info b
+		WHERE
+		    a.item_no = b.item_no
+		AND a.oper_date = #{optDate}
+		AND a.branch_no = #{branchNo}
+	]]>
+	</select>
+</mapper>

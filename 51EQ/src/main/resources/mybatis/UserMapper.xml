@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.member.UserMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_User" type="com.tjhx.entity.member.User">
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="org_uuid" property="orgUuid" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	u.login_name ,
+    	u.name ,
+    	org_uuid ,
+    	o.org_name AS org_name
+	]]>
+  	</sql>
+  	
+  	<!-- 取得t_user信息(根据参数) -->
+	<select id="getAllUserList" resultMap="Result_Map_User">
+		select
+		<include refid="Base_Column_List" />
+		from t_user u, t_organization o
+		where u.org_uuid = o.uuid
+		order by o.org_name, u.name
+	</select>
+	
+	<select id="getUserListByOrgUuid" parameterType="int" resultMap="Result_Map_User">
+		select
+		<include refid="Base_Column_List" />
+		from t_user u, t_organization o
+		where u.org_uuid = o.uuid
+		and o.uuid = #{org_uuid}
+	</select>
+</mapper>

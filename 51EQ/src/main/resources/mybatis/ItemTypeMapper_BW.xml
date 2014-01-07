@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.ItemTypeClsMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_ItemType" type="com.tjhx.entity.bw.ItemTypeCls">
+        <result column="item_clsno" property="itemClsno" jdbcType="VARCHAR"/>
+        <result column="item_clsname" property="itemClsname" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getItemTypeClsList" resultMap="Result_Map_ItemType">
+		SELECT
+		    item_clsname,
+		    item_clsno
+		FROM
+		    bi_t_item_cls
+		WHERE
+		    item_flag = '0'
+		ORDER BY
+		    item_clsno
+	</select>
+</mapper>

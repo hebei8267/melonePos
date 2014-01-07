@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.SalesDayTotalGoodsMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SalesDayTotalGoods" type="com.tjhx.entity.info.SalesDayTotalGoods">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+        <result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+        <result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="pos_amt" property="posAmt" jdbcType="DECIMAL"/>
+        <result column="pos_qty" property="posQty" jdbcType="DECIMAL"/>
+        
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="stock_qty" property="stockQty" jdbcType="DECIMAL"/>
+        <result column="stock_amt" property="stockAmt" jdbcType="DECIMAL"/>
+        <result column="item_sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+	
+	<delete id="delSalesDayTotalInfo" parameterType="String">  
+        DELETE FROM t_sales_day_total_goods WHERE opt_date = #{optDate}
+    </delete>
+  	
+    <!-- 取得t_sales_day_total_goods信息(根据参数) -->
+	<select id="getSumSaleInfoList" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+		SELECT
+		    g.branch_no ,
+		    sd.item_barcode ,
+		    sd.item_subno ,
+		    sd.org_id ,
+		    SUM(g.pos_amt) AS pos_amt ,
+		    SUM(g.pos_qty) AS pos_qty ,
+		    org.org_name ,
+		    sd.stock_qty ,
+		    sd.stock_amt ,
+		    sd.item_sale_amt ,
+		    gs.name AS goods_name
+		FROM
+		    t_organization org,
+		    t_store_detail sd LEFT JOIN t_sales_day_total_goods g ON sd.item_barcode = g.item_barcode
+																 AND sd.org_id = g.org_id
+													    		 AND g.opt_date >= #{optDateStart} 
+													    		 AND g.opt_date  <= #{optDateEnd} ,
+		    t_goods gs
+		WHERE
+		    org.org_id != '000'
+		AND ( sd.item_barcode = #{itemBarcode} OR  sd.item_subno = #{itemSubno} )
+		AND org.org_id = sd.org_id
+		AND sd.item_barcode = gs.barcode
+		GROUP BY
+		    org.org_id
+	]]>
+	</select>
+	
+	
+	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
+	<select id="getSumSaleInfoList_Week" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+	SELECT
+	    g.org_id ,
+	    g.branch_no ,
+	    g.item_subno ,
+	    g.item_barcode ,
+	    SUM(g.pos_qty) AS pos_qty
+	FROM
+	    t_sales_day_total_goods g
+	WHERE
+	    g.opt_date >= #{optDateStart}
+	AND g.opt_date <= #{optDateEnd}
+	GROUP BY
+    	g.org_id, g.item_subno
+    ]]>
+	</select>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.DailySaleTotalItemMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_DailySaleTotal" type="com.tjhx.entity.bw.DailySaleTotalItem">
+        
+		<!-- 机构资金编号 -->
+		<result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+		<!-- 类别编号 -->
+		<result column="item_clsno" property="itemClsNo" jdbcType="VARCHAR"/>
+		<!-- 类别名称 -->
+		<result column="item_clsname" property="itemClsName" jdbcType="VARCHAR"/>
+		<!-- 销售数量 -->
+		<result column="sale_qty" property="saleQty" jdbcType="NUMERIC"/>
+		<!-- 销售金额 -->
+		<result column="sale_amt" property="saleAmt" jdbcType="NUMERIC"/>
+		<!-- 退货数量 -->
+		<result column="ret_qty" property="retQty" jdbcType="NUMERIC"/>
+		<!-- 退货金额 -->
+		<result column="ret_amt" property="retAmt" jdbcType="NUMERIC"/>
+		<!-- 赠送数量 -->
+		<result column="give_qty" property="giveQty" jdbcType="NUMERIC"/>
+		<!-- 实销数量 -->
+		<result column="sale_rqty" property="saleRqty" jdbcType="NUMERIC"/>
+		<!-- 实销金额 -->
+		<result column="sale_ramt" property="saleRamt" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	
+	<!-- 各店每日销售合计（按大类别）信息 -->
+	<select id="getDailySaleTotalList" parameterType="com.tjhx.entity.bw.DailySaleTotalItem" resultMap="Result_Map_DailySaleTotal">
+	<![CDATA[
+		SELECT 
+			a.branch_no,
+	       	left(b.item_clsno, convert(int, '2')) as item_clsno,
+	       	c.item_clsname,
+	       	sum(a.sale_qty) as sale_qty,
+	       	sum(a.sale_ramount) as sale_amt,
+	       	sum(a.ret_qty) as ret_qty,
+	       	sum(a.ret_ramount) as ret_amt,
+	       	sum(a.give_qty) as give_qty,
+	       	sum(a.sale_qty - a.ret_qty + a.give_qty) as sale_rqty,
+	       	sum(a.sale_ramount - a.ret_ramount) as sale_ramt
+  		FROM 
+  			pos_t_daysum_item a, 
+  			view_item_info b, 
+  			view_item_clsno_info c
+ 		WHERE 
+ 			a.item_no = b.item_no and
+  			left(b.item_clsno, convert(int, '2')) = c.item_clsno 
+  		AND (len(b.item_clsno) >= convert(int, '2') OR b.item_clsno = '00') 
+  		AND (a.oper_date = #{optDate}) 
+  		AND (a.branch_no in(#{branchNo}))
+ 		GROUP by 
+ 			a.branch_no,
+  			left(b.item_clsno, convert(int, '2')), 
+  			c.item_clsname
+ 		ORDER by 2
+	]]>
+	</select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.StoreDetailMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_StoreDetail" type="com.tjhx.entity.info.StoreDetail">
+        <result column="bw_branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
+        <result column="_index" property="index" jdbcType="INTEGER"/>
+        <result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+        <result column="item_sale_amt" property="itemSaleAmt" jdbcType="DECIMAL"/>
+        <result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="stock_amt" property="stockAmt" jdbcType="DECIMAL"/>
+        <result column="stock_qty" property="stockQty" jdbcType="DECIMAL"/>
+        <result column="store_flg" property="storeFlg" jdbcType="VARCHAR"/>
+        
+        <result column="stock_total_qty" property="stockTotalQty" jdbcType="DECIMAL"/>
+        <result column="stock_total_amt" property="stockTotalAmt" jdbcType="DECIMAL"/>
+        <result column="item_sale_total_amt" property="itemSaleTotalAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	org_id ,
+	    bw_branch_no ,
+	    opt_date ,
+	    opt_date_y ,
+	    opt_date_m ,
+	    store_flg ,
+	    SUM(stock_qty) AS stock_total_qty ,
+	    SUM(stock_amt) AS stock_total_amt,
+	    SUM(item_sale_amt) AS item_sale_total_amt
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<if test="bwBranchNo != null and bwBranchNo !='' ">
+  			bw_branch_no = #{bwBranchNo}
+  			</if>
+  			<if test="optDate != null and optDate !='' ">
+  			AND opt_date = #{optDate}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_store_detail信息(根据参数) -->
+	<select id="getDayTotalList" parameterType="com.tjhx.entity.info.StoreDetail" resultMap="Result_Map_StoreDetail">
+		select
+		<include refid="Base_Column_List" />
+		from t_store_detail
+		<include refid="Where_Clause" />
+		GROUP BY store_flg
+	</select>
+	
+	<update id="createTable"> 
+	<![CDATA[
+	CREATE TABLE
+    t_store_detail
+    (
+        uuid INT NOT NULL AUTO_INCREMENT,
+        create_date DATETIME NOT NULL,
+        create_user_id VARCHAR(32) NOT NULL,
+        update_date DATETIME NOT NULL,
+        update_user_id VARCHAR(32) NOT NULL,
+        version INT NOT NULL,
+        bw_branch_no VARCHAR(8),
+        _index INT NOT NULL,
+        item_barcode VARCHAR(16),
+        item_name VARCHAR(128),
+        item_sale_amt DECIMAL(19,2),
+        item_subno VARCHAR(16),
+        opt_date VARCHAR(8) NOT NULL,
+        opt_date_m VARCHAR(2),
+        opt_date_y VARCHAR(4),
+        org_id VARCHAR(32) NOT NULL,
+        stock_amt DECIMAL(19,2),
+        stock_qty DECIMAL(19,2),
+        store_flg VARCHAR(1),
+        PRIMARY KEY (uuid),
+        CONSTRAINT _index UNIQUE (_index, opt_date, org_id),
+        INDEX item_barcode (item_barcode, org_id)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8
+    ]]>
+    </update>
+    
+    <update id="dropTable"> 
+        DROP TABLE t_store_detail
+    </update>
+</mapper>

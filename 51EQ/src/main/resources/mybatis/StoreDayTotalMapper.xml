@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.StoreDayTotalMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_StoreDayTotal" type="com.tjhx.entity.info.StoreDayTotal">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="bw_branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
+        <result column="item_sale_total_amt" property="itemSaleTotalAmt" jdbcType="DECIMAL"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="stock_total_amt" property="stockTotalAmt" jdbcType="DECIMAL"/>
+        <result column="stock_total_qty" property="stockTotalQty" jdbcType="DECIMAL"/>
+        <result column="store_flg" property="storeFlg" jdbcType="VARCHAR"/>
+        
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	store.uuid ,
+    	store.create_date ,
+    	store.create_user_id ,
+    	store.update_date ,
+    	store.update_user_id ,
+    	store.version ,
+    	store.bw_branch_no ,
+    	store.item_sale_total_amt ,
+    	store.opt_date ,
+    	store.opt_date_m ,
+    	store.opt_date_y ,
+    	store.org_id ,
+    	store.stock_total_amt ,
+    	store.stock_total_qty ,
+    	store.store_flg ,
+    	org.org_name
+	]]>
+  	</sql>
+  	
+  	<!-- 取得t_store_day_total信息(根据参数) -->
+	<select id="getMaxOptDate" resultMap="Result_Map_StoreDayTotal">
+		SELECT
+    		MAX(opt_date) AS opt_date
+		FROM
+    		t_store_day_total
+	</select>
+	
+	<!-- 取得t_store_day_total信息(根据参数) -->
+	<select id="getStoreDayTotalList" parameterType="String" resultMap="Result_Map_StoreDayTotal">
+		SELECT
+    		<include refid="Base_Column_List" />
+		FROM 
+			t_store_day_total store,
+			t_organization org
+    	WHERE 
+    		store.opt_date = #{optDate}
+    	AND store.org_id = org.org_id
+    	ORDER BY
+		    store.org_id,
+		    store.store_flg
+	</select>
+</mapper>
