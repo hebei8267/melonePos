@@ -406,6 +406,8 @@ public class PettyCashManager {
 			_pettyCash.setExamineFlg6(examineFlgs6[i]);
 			// 审查标记-装订正确
 			_pettyCash.setExamineFlg7(examineFlgs7[i]);
+
+			pettyCashJpaDao.save(_pettyCash);
 		}
 
 	}

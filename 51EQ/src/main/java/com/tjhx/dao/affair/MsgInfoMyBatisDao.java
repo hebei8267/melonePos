@@ -7,7 +7,7 @@ import com.tjhx.entity.affair.MsgInfo;
 public interface MsgInfoMyBatisDao {
 
 	/**
-	 * 取得未读状态的信息列表
+	 * 取得 公告/消息 信息列表（根据用户编号取得### 未读状态+已读状态>=4）
 	 * 
 	 * @param msgInfo
 	 * @return

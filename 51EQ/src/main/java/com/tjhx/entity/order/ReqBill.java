@@ -47,6 +47,8 @@ public class ReqBill extends IdEntity {
 	// -----------------------------------------------------
 	/** 机构编号列表 */
 	private List<String> orgIdList;
+	/** 销售数量-合计 */
+	private BigDecimal posQtyTotal;
 	/** 销售数量-近1周 */
 	private BigDecimal posQty1;
 	/** 销售数量-近2周 */
@@ -287,6 +289,24 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setOrgIdList(List<String> orgIdList) {
 		this.orgIdList = orgIdList;
+	}
+
+	/**
+	 * 取得销售数量-合计
+	 * 
+	 * @return posQtyTotal 销售数量-合计
+	 */
+	public BigDecimal getPosQtyTotal() {
+		return posQtyTotal;
+	}
+
+	/**
+	 * 设置销售数量-合计
+	 * 
+	 * @param posQtyTotal 销售数量-合计
+	 */
+	public void setPosQtyTotal(BigDecimal posQtyTotal) {
+		this.posQtyTotal = posQtyTotal;
 	}
 
 	/**

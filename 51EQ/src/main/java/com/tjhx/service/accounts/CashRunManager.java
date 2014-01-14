@@ -15,6 +15,7 @@ import org.springside.modules.utils.SpringContextHolder;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.accounts.CashDailyJpaDao;
 import com.tjhx.dao.accounts.CashRunJpaDao;
+import com.tjhx.dao.accounts.CashRunMyBatisDao;
 import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.accounts.CashRun;
 import com.tjhx.entity.member.User;
@@ -26,7 +27,8 @@ import com.tjhx.service.ServiceException;
 public class CashRunManager {
 	@Resource
 	private CashRunJpaDao cashRunJpaDao;
-
+	@Resource
+	private CashRunMyBatisDao cashRunMyBatisDao;
 	@Resource
 	private CashDailyJpaDao cashDailyJpaDao;
 
@@ -285,4 +287,32 @@ public class CashRunManager {
 		return _cashRun;
 	}
 
+	/**
+	 * 取得门店存款信息列表
+	 * 
+	 * @param cashRun
+	 * @return
+	 */
+	public List<CashRun> getBankCheckList(CashRun cashRun) {
+		return cashRunMyBatisDao.getBankCheckList(cashRun);
+	}
+
+	/**
+	 * 存款信息审核
+	 * 
+	 * @param uuids
+	 * @param bankCheckFlg
+	 */
+	@Transactional(readOnly = false)
+	public void auditBankCheckFlg(int[] uuids, int[] bankCheckFlg) {
+		for (int i = 0; i < uuids.length; i++) {
+			int uuid = uuids[i];
+
+			CashRun _cashRun = cashRunJpaDao.findOne(uuid);
+			_cashRun.setBankCheckFlg(bankCheckFlg[i]);
+
+			cashRunJpaDao.save(_cashRun);
+		}
+
+	}
 }

@@ -68,6 +68,8 @@ public class CashRun extends IdEntity {
 	private BigDecimal adjustAmt = new BigDecimal("0");
 	/** 汇报金额 */
 	private BigDecimal reportAmt = new BigDecimal("0");
+	/** 回单对账标记 1-已对账 0-未对账 */
+	private Integer bankCheckFlg = 0;
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -429,6 +431,24 @@ public class CashRun extends IdEntity {
 	 */
 	public void setCardCertNo(String cardCertNo) {
 		this.cardCertNo = cardCertNo;
+	}
+
+	/**
+	 * 取得回单对账标记1-已对账0-未对账
+	 * 
+	 * @return bankCheckFlg 回单对账标记1-已对账0-未对账
+	 */
+	public Integer getBankCheckFlg() {
+		return bankCheckFlg;
+	}
+
+	/**
+	 * 设置回单对账标记1-已对账0-未对账
+	 * 
+	 * @param bankCheckFlg 回单对账标记1-已对账0-未对账
+	 */
+	public void setBankCheckFlg(Integer bankCheckFlg) {
+		this.bankCheckFlg = bankCheckFlg;
 	}
 
 	/**

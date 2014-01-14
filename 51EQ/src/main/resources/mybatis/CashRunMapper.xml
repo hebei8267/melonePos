@@ -30,6 +30,9 @@
         <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
         <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
         <result column="retained_amt" property="retainedAmt" jdbcType="DECIMAL"/>
+        
+        <result column="bank_check_flg" property="bankCheckFlg" jdbcType="INTEGER"/>
+        
         <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
         <result column="sale_cash_amt" property="saleCashAmt" jdbcType="DECIMAL"/>
         <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
@@ -150,4 +153,29 @@
 	<delete id="delCashRunInfo" parameterType="com.tjhx.entity.accounts.CashRun">
         DELETE FROM t_cash_run WHERE opt_date > #{optDate} AND org_id = #{orgId}
     </delete>
+    
+    <select id="getBankCheckList" parameterType="com.tjhx.entity.accounts.CashRun" resultMap="Result_Map_CashRun">
+    <![CDATA[
+    	SELECT
+    		cash.uuid ,
+		    cash.opt_date_show ,
+		    cash.depositor ,
+		    cash.deposit_amt ,
+		    cash.bank_card_no ,
+		    cash.bank_check_flg
+		FROM
+		    t_cash_run cash ,
+		    t_cash_daily daily
+		WHERE
+		    cash.opt_date >= #{optDateStart}
+		AND cash.opt_date <= #{optDateEnd}
+		AND cash.org_id = #{orgId}
+		AND cash.deposit_amt IS NOT NULL
+		AND cash.deposit_amt > 0
+		AND cash.opt_date = daily.opt_date
+		AND cash.org_id = daily.org_id
+		ORDER BY
+		    cash.opt_date
+    ]]>
+    </select>
 </mapper>

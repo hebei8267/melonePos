@@ -323,7 +323,7 @@
 		    <div class="modal-body">
 		        <center>
 		            <p class="error">
-		                确定要提交审核信息吗？
+		                确定要提交审核(备用金)信息吗？
 		            </p>
 		        </center>
 		    </div>

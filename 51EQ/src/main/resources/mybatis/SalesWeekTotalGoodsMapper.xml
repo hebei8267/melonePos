@@ -17,4 +17,77 @@
     <delete id="delSalesWeekTotalGoodsInfo_4">  
         DELETE FROM t_sales_week_total_goods_4
     </delete>
+    
+    <resultMap id="Result_Map_SalesWeekTotal" type="com.tjhx.entity.order.ReqBill">
+    	<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        
+        <result column="pos_qty" property="posQtyTotal" jdbcType="DECIMAL"/>
+        <result column="pos_qty1" property="posQty1" jdbcType="DECIMAL"/>
+        <result column="pos_qty2" property="posQty2" jdbcType="DECIMAL"/>
+        <result column="pos_qty3" property="posQty3" jdbcType="DECIMAL"/>
+        <result column="pos_qty4" property="posQty4" jdbcType="DECIMAL"/>
+        <result column="stock_qty" property="stockQty" jdbcType="DECIMAL"/>
+	</resultMap>
+	<!-- 指定门店近四周销售数据及库存情况 -->
+	<select id="getSalesWeekGoodsTotalList_ByOrg" parameterType="String" resultMap="Result_Map_SalesWeekTotal">
+		SELECT
+    		t.*,
+    		(t.pos_qty1 + t.pos_qty2 + t.pos_qty3 + t.pos_qty4) AS pos_qty
+		FROM
+    	   (SELECT
+	            sd.item_subno as barcode,
+	            sd.item_name as product_name,
+	            sd.stock_qty,
+	            IF(sg1.pos_qty IS NULL, 0, sg1.pos_qty) AS pos_qty1,
+	            IF(sg2.pos_qty IS NULL, 0, sg2.pos_qty) AS pos_qty2,
+	            IF(sg3.pos_qty IS NULL, 0, sg3.pos_qty) AS pos_qty3,
+	            IF(sg4.pos_qty IS NULL, 0, sg4.pos_qty) AS pos_qty4
+	        FROM
+	            t_store_detail sd
+	        LEFT JOIN
+	            t_sales_week_total_goods_1 sg1 ON sd.item_subno = sg1.item_subno AND sd.org_id = sg1.org_id
+	        LEFT JOIN
+	            t_sales_week_total_goods_2 sg2 ON sd.item_subno = sg2.item_subno AND sd.org_id = sg2.org_id
+	        LEFT JOIN
+	            t_sales_week_total_goods_3 sg3 ON sd.item_subno = sg3.item_subno AND sd.org_id = sg3.org_id
+	        LEFT JOIN
+	            t_sales_week_total_goods_4 sg4 ON sd.item_subno = sg4.item_subno AND sd.org_id = sg4.org_id
+	        WHERE
+	            sd.org_id = #{orgId} ) AS t
+		ORDER BY
+    		pos_qty DESC
+	</select>
+	
+	<!-- 指定条码各门店近四周销售数据及库存情况 -->
+	<select id="getSalesWeekGoodsTotalList_ByBarcode" parameterType="String" resultMap="Result_Map_SalesWeekTotal">
+		SELECT
+    		t.*,
+    		(t.pos_qty1 + t.pos_qty2 + t.pos_qty3 + t.pos_qty4) AS pos_qty
+		FROM
+    	   (SELECT
+			    org.org_name as org_id,
+			    sd.item_subno as barcode,
+			    sd.item_name as product_name,
+			    sd.stock_qty,
+			    IF(sg1.pos_qty IS NULL, 0, sg1.pos_qty) AS pos_qty1,
+			    IF(sg2.pos_qty IS NULL, 0, sg2.pos_qty) AS pos_qty2,
+			    IF(sg3.pos_qty IS NULL, 0, sg3.pos_qty) AS pos_qty3,
+			    IF(sg4.pos_qty IS NULL, 0, sg4.pos_qty) AS pos_qty4
+			FROM
+				t_organization org,
+			    t_store_detail sd
+			LEFT JOIN
+			    t_sales_week_total_goods_1 sg1 ON sd.item_subno = sg1.item_subno AND sd.org_id = sg1.org_id
+			LEFT JOIN
+			    t_sales_week_total_goods_2 sg2 ON sd.item_subno = sg2.item_subno AND sd.org_id = sg2.org_id
+			LEFT JOIN
+			    t_sales_week_total_goods_3 sg3 ON sd.item_subno = sg3.item_subno AND sd.org_id = sg3.org_id
+			LEFT JOIN
+			    t_sales_week_total_goods_4 sg4 ON sd.item_subno = sg4.item_subno AND sd.org_id = sg4.org_id
+			WHERE
+			    sd.item_subno = #{barcode}
+			AND sd.org_id = org.org_id ) AS t
+	</select>
 </mapper>

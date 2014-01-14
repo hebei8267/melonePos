@@ -133,6 +133,9 @@
                             <c:if test="${_permIdList.contains('11')}">
                             <li class="divider"></li>
                             <li>
+		                    	<a href="${sc_ctx}/bankCheck/init">存款信息</a>
+		                 	</li>
+                            <li>
 		                    	<a href="${sc_ctx}/cashReport">销售信息(表格)</a>
 		                 	</li>
 		                  	<li>
@@ -166,6 +169,13 @@
                             <li class="divider"></li>
                             <li>
                                 <a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售金额对比(图形)</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
+                            </li>
+                            <li>
+                                <a href="${sc_ctx}/salesWeekTotal/reCalInit">商品周销售信息＆重计算</a>
                             </li>
                             </c:if>
                         </ul>

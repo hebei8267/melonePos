@@ -18,25 +18,23 @@
         <div class="container" style="padding-top: 10px;">
             <div class="row">
                 <c:forEach items="${msgInfoList}" var="msgInfo">
-                    <div class="span3 pricing-table animate go-up">
-                        <ul>
-                            <li class="pricing-header-row-1">
-                                <div class="package-title">
-                                    <h2 class="no-bold">${msgInfo.msgSubject}</h2>
-                                </div>
-                            </li>
-                            <li class="pricing-content-row-odd">
-                                ${msgInfo.msgContent}
-                            </li>
-                            <li class="pricing-content-row-even">
-                                发信人 : ${msgInfo.sendNameSet}
-                                <span style="float: right">${msgInfo.optDateShow}</span>
-                            </li>
-                            <li class="pricing-footer">
-                                <a href="${sc_ctx}/msgInfo/view/${msgInfo.uuid}" class="btn"><i class="icon-search"></i> 查看</a>
-                            </li>
-                        </ul>
-                    </div>
+                	
+                	<c:if test="${msgInfo.readFlg == 0}">
+                	<div class="span3 pricing6">
+                	</c:if>
+                	
+                	<c:if test="${msgInfo.readFlg == 1}">
+                	<div class="span3 pricing2">
+                	</c:if>
+                	
+		                <ul>
+		                    <li class="head"><h4>${msgInfo.msgSubject}</h4></li>
+		                    <li>${msgInfo.msgContent}</li>
+		                    <li>发信人 : ${msgInfo.sendNameSet}</li>
+		                    <li>${msgInfo.optDateShow}</li>
+		                    <li class="footer"><a href="${sc_ctx}/msgInfo/view/${msgInfo.uuid}" class="btn btn-large">查 看</a></li>
+		                </ul>
+		            </div>
                 </c:forEach>
             </div>
         </div>

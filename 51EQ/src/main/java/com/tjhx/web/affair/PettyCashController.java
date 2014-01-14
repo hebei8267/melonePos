@@ -391,6 +391,7 @@ public class PettyCashController extends BaseController {
 		int[] examineFlgs6 = ServletRequestUtils.getIntParameters(request, "examineFlg6");
 		int[] examineFlgs7 = ServletRequestUtils.getIntParameters(request, "examineFlg7");
 
+		// 备用金审核
 		pettyCashManager.auditPettyCash(uuids, examineFlgs1, examineFlgs2, examineFlgs3, examineFlgs4, examineFlgs5,
 				examineFlgs6, examineFlgs7);
 		return pettyCashSearch_Action(model, request);

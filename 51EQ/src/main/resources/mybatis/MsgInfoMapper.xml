@@ -53,11 +53,19 @@
   	
   	<!-- 取得t_msg_info信息(根据参数) -->
 	<select id="getMsgInfoList_UnreadStatus" parameterType="String" resultMap="Result_Map_MsgInfo">
-		select
+		(select
 		<include refid="Base_Column_List" />
 		from t_msg_info
 		where read_flg = '0'
 		and accept_user_login_name = #{login_name}
+		ORDER BY uuid DESC)
+		UNION
+		(select
+		<include refid="Base_Column_List" />
+		from t_msg_info
+		where read_flg = '1'
+		and accept_user_login_name = #{login_name}
+		ORDER BY uuid DESC limit 0,4)
 	</select>
 	
 	<!-- 取得t_msg_info信息(根据参数) -->

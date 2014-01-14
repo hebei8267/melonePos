@@ -1,5 +1,9 @@
 package com.tjhx.dao.info;
 
+import java.util.List;
+
+import com.tjhx.entity.order.ReqBill;
+
 public interface SalesWeekTotalGoodsMyBatisDao {
 
 	/**
@@ -21,4 +25,20 @@ public interface SalesWeekTotalGoodsMyBatisDao {
 	 * 清除近4周销售合计情况
 	 */
 	public void delSalesWeekTotalGoodsInfo_4();
+
+	/**
+	 * 取得指定门店近四周销售数据及库存情况
+	 * 
+	 * @param orgId 门店编号
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId);
+
+	/**
+	 * 取得指定条码各门店近四周销售数据及库存情况
+	 * 
+	 * @param barcode 商品条码
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode);
 }

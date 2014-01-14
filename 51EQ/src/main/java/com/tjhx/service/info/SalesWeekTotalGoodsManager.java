@@ -20,6 +20,7 @@ import com.tjhx.entity.info.SalesWeekTotalGoods_1;
 import com.tjhx.entity.info.SalesWeekTotalGoods_2;
 import com.tjhx.entity.info.SalesWeekTotalGoods_3;
 import com.tjhx.entity.info.SalesWeekTotalGoods_4;
+import com.tjhx.entity.order.ReqBill;
 
 @Service
 @Transactional(readOnly = true)
@@ -196,4 +197,25 @@ public class SalesWeekTotalGoodsManager {
 			salesWeekTotalGoods4JpaDao.save(_s);
 		}
 	}
+
+	/**
+	 * 取得指定门店近四周销售数据及库存情况
+	 * 
+	 * @param orgId 门店编号
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId) {
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg(orgId);
+	}
+
+	/**
+	 * 取得指定条码各门店近四周销售数据及库存情况
+	 * 
+	 * @param barcode 商品条码
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode) {
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(barcode);
+	}
+
 }

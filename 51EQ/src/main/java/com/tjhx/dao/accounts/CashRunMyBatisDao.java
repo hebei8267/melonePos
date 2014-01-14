@@ -17,4 +17,12 @@ public interface CashRunMyBatisDao {
 	 */
 	public void delCashRunInfo(CashRun cashRun);
 
+	/**
+	 * 取得门店存款信息列表
+	 * 
+	 * @param cashRun
+	 * @return
+	 */
+	public List<CashRun> getBankCheckList(CashRun cashRun);
+
 }
