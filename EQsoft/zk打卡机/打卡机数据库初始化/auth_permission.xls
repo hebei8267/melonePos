@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">id</Data></Cell>
+    <Cell><Data ss:Type="String">name</Data></Cell>
+    <Cell><Data ss:Type="String">content_type_id</Data></Cell>
+    <Cell><Data ss:Type="String">codename</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">Can add session</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">add_session</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">Can change session</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">change_session</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete session</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">delete_session</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">Can add permission</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">add_permission</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="String">Can change permission</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">change_permission</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete permission</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">delete_permission</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell><Data ss:Type="String">Can add group</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="String">add_group</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="String">Can change group</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="String">change_group</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete group</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="String">delete_group</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="String">Can add user</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">add_user</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">Can change user</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">change_user</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete user</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">delete_user</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">Can add message</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="String">add_message</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">Can change message</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="String">change_message</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete message</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="String">delete_message</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">Can add content type</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="String">add_contenttype</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
+    <Cell><Data ss:Type="String">Can change content type</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="String">change_contenttype</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete content type</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="String">delete_contenttype</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">19</Data></Cell>
+    <Cell><Data ss:Type="String">Can add log entry</Data></Cell>
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell><Data ss:Type="String">add_logentry</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="String">Can change log entry</Data></Cell>
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell><Data ss:Type="String">change_logentry</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete log entry</Data></Cell>
+    <Cell><Data ss:Type="Number">7</Data></Cell>
+    <Cell><Data ss:Type="String">delete_logentry</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">22</Data></Cell>
+    <Cell><Data ss:Type="String">Can add department</Data></Cell>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="String">add_department</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">23</Data></Cell>
+    <Cell><Data ss:Type="String">Can change department</Data></Cell>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="String">change_department</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">24</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete department</Data></Cell>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="String">delete_department</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">Can add device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">add_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">Can change device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">change_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">27</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">delete_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">28</Data></Cell>
+    <Cell><Data ss:Type="String">Pause device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">pause_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">Resume a resumed device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">resume_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">30</Data></Cell>
+    <Cell><Data ss:Type="String">Upgrade firmware</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">upgradefw_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">Copy data between device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">copyudata_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">32</Data></Cell>
+    <Cell><Data ss:Type="String">Upload data again</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">reloaddata_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">Upload transactions again</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">reloadlogdata_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">34</Data></Cell>
+    <Cell><Data ss:Type="String">Refresh device information</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">info_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">35</Data></Cell>
+    <Cell><Data ss:Type="String">Reboot device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">reboot_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">36</Data></Cell>
+    <Cell><Data ss:Type="String">Upload new data</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">loaddata_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">37</Data></Cell>
+    <Cell><Data ss:Type="String">Clear data in device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">cleardata_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">38</Data></Cell>
+    <Cell><Data ss:Type="String">Clear transactions in device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">clearlog_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">39</Data></Cell>
+    <Cell><Data ss:Type="String">Set options of device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">devoption_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="String">Reset Password in device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">resetPwd_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">41</Data></Cell>
+    <Cell><Data ss:Type="String">Restore employee to device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">restoreData_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="String">Output unlock signal</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">unlock_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">Terminate alarm signal</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">unalarm_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">44</Data></Cell>
+    <Cell><Data ss:Type="String">Can add admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="String">add_deptadmin</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">45</Data></Cell>
+    <Cell><Data ss:Type="String">Can change admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="String">change_deptadmin</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">46</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="String">delete_deptadmin</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">47</Data></Cell>
+    <Cell><Data ss:Type="String">Can add admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">add_iclockdept</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">48</Data></Cell>
+    <Cell><Data ss:Type="String">Can change admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">change_iclockdept</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">49</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete admin granted department</Data></Cell>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">delete_iclockdept</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">50</Data></Cell>
+    <Cell><Data ss:Type="String">Can add employee</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">add_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">51</Data></Cell>
+    <Cell><Data ss:Type="String">Can change employee</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">change_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">52</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete employee</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">delete_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">53</Data></Cell>
+    <Cell><Data ss:Type="String">Transfer employee to the device</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">toDev_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">54</Data></Cell>
+    <Cell><Data ss:Type="String">Transfer to the device templately</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">toDevWithin_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">55</Data></Cell>
+    <Cell><Data ss:Type="String">Delete employee from the device</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">delDev_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">56</Data></Cell>
+    <Cell><Data ss:Type="String">Employee leave</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">empLeave_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">57</Data></Cell>
+    <Cell><Data ss:Type="String">restore Employee leave</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">restoreEmpLeave_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">58</Data></Cell>
+    <Cell><Data ss:Type="String">Move employee to a new device</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">mvToDev_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">59</Data></Cell>
+    <Cell><Data ss:Type="String">Change employee's department</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">toDepart_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">60</Data></Cell>
+    <Cell><Data ss:Type="String">Enroll employee's fingerprint</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">enroll_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">61</Data></Cell>
+    <Cell><Data ss:Type="String">DataBase</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">optionsDatabase_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">62</Data></Cell>
+    <Cell><Data ss:Type="String">Can add fingerprint</Data></Cell>
+    <Cell><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">add_fptemp</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">63</Data></Cell>
+    <Cell><Data ss:Type="String">Can change fingerprint</Data></Cell>
+    <Cell><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">change_fptemp</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">64</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete fingerprint</Data></Cell>
+    <Cell><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">delete_fptemp</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">65</Data></Cell>
+    <Cell><Data ss:Type="String">Can add transaction</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">add_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">66</Data></Cell>
+    <Cell><Data ss:Type="String">Can change transaction</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">change_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">67</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete transaction</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">delete_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">68</Data></Cell>
+    <Cell><Data ss:Type="String">Clear Obsolete Data</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">clearObsoleteData_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">69</Data></Cell>
+    <Cell><Data ss:Type="String">Can add device operation log</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">add_oplog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">70</Data></Cell>
+    <Cell><Data ss:Type="String">Can change device operation log</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">change_oplog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">71</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete device operation log</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">delete_oplog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">72</Data></Cell>
+    <Cell><Data ss:Type="String">Transaction Monitor</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">monitor_oplog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">73</Data></Cell>
+    <Cell><Data ss:Type="String">Can add data from device</Data></Cell>
+    <Cell><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">add_devlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">74</Data></Cell>
+    <Cell><Data ss:Type="String">Can change data from device</Data></Cell>
+    <Cell><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">change_devlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">75</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete data from device</Data></Cell>
+    <Cell><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">delete_devlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">76</Data></Cell>
+    <Cell><Data ss:Type="String">Can add command to device</Data></Cell>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
+    <Cell><Data ss:Type="String">add_devcmds</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">77</Data></Cell>
+    <Cell><Data ss:Type="String">Can change command to device</Data></Cell>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
+    <Cell><Data ss:Type="String">change_devcmds</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">78</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete command to device</Data></Cell>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
+    <Cell><Data ss:Type="String">delete_devcmds</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">79</Data></Cell>
+    <Cell><Data ss:Type="String">Can add public information</Data></Cell>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">add_messages</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">80</Data></Cell>
+    <Cell><Data ss:Type="String">Can change public information</Data></Cell>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">change_messages</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">81</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete public information</Data></Cell>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">delete_messages</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">82</Data></Cell>
+    <Cell><Data ss:Type="String">Can add information subscription</Data></Cell>
+    <Cell><Data ss:Type="Number">19</Data></Cell>
+    <Cell><Data ss:Type="String">add_iclockmsg</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">83</Data></Cell>
+    <Cell><Data ss:Type="String">Can change information subscription</Data></Cell>
+    <Cell><Data ss:Type="Number">19</Data></Cell>
+    <Cell><Data ss:Type="String">change_iclockmsg</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">84</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete information subscription</Data></Cell>
+    <Cell><Data ss:Type="Number">19</Data></Cell>
+    <Cell><Data ss:Type="String">delete_iclockmsg</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">85</Data></Cell>
+    <Cell><Data ss:Type="String">Can add administration log</Data></Cell>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="String">add_adminlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">86</Data></Cell>
+    <Cell><Data ss:Type="String">Can change administration log</Data></Cell>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="String">change_adminlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">87</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete administration log</Data></Cell>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="String">delete_adminlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">88</Data></Cell>
+    <Cell><Data ss:Type="String">Can add transaction logs</Data></Cell>
+    <Cell><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">add_checkexact</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">89</Data></Cell>
+    <Cell><Data ss:Type="String">Can change transaction logs</Data></Cell>
+    <Cell><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">change_checkexact</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">90</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete transaction logs</Data></Cell>
+    <Cell><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">delete_checkexact</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">91</Data></Cell>
+    <Cell><Data ss:Type="String">Can add excnotes</Data></Cell>
+    <Cell><Data ss:Type="Number">22</Data></Cell>
+    <Cell><Data ss:Type="String">add_excnotes</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">92</Data></Cell>
+    <Cell><Data ss:Type="String">Can change excnotes</Data></Cell>
+    <Cell><Data ss:Type="Number">22</Data></Cell>
+    <Cell><Data ss:Type="String">change_excnotes</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">93</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete excnotes</Data></Cell>
+    <Cell><Data ss:Type="Number">22</Data></Cell>
+    <Cell><Data ss:Type="String">delete_excnotes</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">94</Data></Cell>
+    <Cell><Data ss:Type="String">Can add holidays</Data></Cell>
+    <Cell><Data ss:Type="Number">23</Data></Cell>
+    <Cell><Data ss:Type="String">add_holidays</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">95</Data></Cell>
+    <Cell><Data ss:Type="String">Can change holidays</Data></Cell>
+    <Cell><Data ss:Type="Number">23</Data></Cell>
+    <Cell><Data ss:Type="String">change_holidays</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">96</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete holidays</Data></Cell>
+    <Cell><Data ss:Type="Number">23</Data></Cell>
+    <Cell><Data ss:Type="String">delete_holidays</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">97</Data></Cell>
+    <Cell><Data ss:Type="String">Can add shift detail</Data></Cell>
+    <Cell><Data ss:Type="Number">24</Data></Cell>
+    <Cell><Data ss:Type="String">add_num_run_deil</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">98</Data></Cell>
+    <Cell><Data ss:Type="String">Can change shift detail</Data></Cell>
+    <Cell><Data ss:Type="Number">24</Data></Cell>
+    <Cell><Data ss:Type="String">change_num_run_deil</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">99</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete shift detail</Data></Cell>
+    <Cell><Data ss:Type="Number">24</Data></Cell>
+    <Cell><Data ss:Type="String">delete_num_run_deil</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">100</Data></Cell>
+    <Cell><Data ss:Type="String">Can add shift</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">add_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">101</Data></Cell>
+    <Cell><Data ss:Type="String">Can change shift</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">change_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">102</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete shift</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">delete_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">103</Data></Cell>
+    <Cell><Data ss:Type="String">Add time-table</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">addShiftTimeTable_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">104</Data></Cell>
+    <Cell><Data ss:Type="String">Delete time-table</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">deleteAllShiftTimeTbl_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">105</Data></Cell>
+    <Cell><Data ss:Type="String">Can add securitydetails</Data></Cell>
+    <Cell><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">add_securitydetails</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">106</Data></Cell>
+    <Cell><Data ss:Type="String">Can change securitydetails</Data></Cell>
+    <Cell><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">change_securitydetails</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">107</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete securitydetails</Data></Cell>
+    <Cell><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">delete_securitydetails</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">108</Data></Cell>
+    <Cell><Data ss:Type="String">Can add Scheduled shift</Data></Cell>
+    <Cell><Data ss:Type="Number">27</Data></Cell>
+    <Cell><Data ss:Type="String">add_shift</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">109</Data></Cell>
+    <Cell><Data ss:Type="String">Can change Scheduled shift</Data></Cell>
+    <Cell><Data ss:Type="Number">27</Data></Cell>
+    <Cell><Data ss:Type="String">change_shift</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">110</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete Scheduled shift</Data></Cell>
+    <Cell><Data ss:Type="Number">27</Data></Cell>
+    <Cell><Data ss:Type="String">delete_shift</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">111</Data></Cell>
+    <Cell><Data ss:Type="String">Can add empoyee shift</Data></Cell>
+    <Cell><Data ss:Type="Number">28</Data></Cell>
+    <Cell><Data ss:Type="String">add_user_of_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">112</Data></Cell>
+    <Cell><Data ss:Type="String">Can change empoyee shift</Data></Cell>
+    <Cell><Data ss:Type="Number">28</Data></Cell>
+    <Cell><Data ss:Type="String">change_user_of_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">113</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete empoyee shift</Data></Cell>
+    <Cell><Data ss:Type="Number">28</Data></Cell>
+    <Cell><Data ss:Type="String">delete_user_of_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">114</Data></Cell>
+    <Cell><Data ss:Type="String">Can add special leave</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">add_user_speday</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">115</Data></Cell>
+    <Cell><Data ss:Type="String">Can change special leave</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">change_user_speday</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">116</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete special leave</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">delete_user_speday</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">117</Data></Cell>
+    <Cell><Data ss:Type="String">Audit Sepcial Leave</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">leaveAudit_user_speday</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">118</Data></Cell>
+    <Cell><Data ss:Type="String">Can add temporary schedule</Data></Cell>
+    <Cell><Data ss:Type="Number">30</Data></Cell>
+    <Cell><Data ss:Type="String">add_user_temp_sch</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">119</Data></Cell>
+    <Cell><Data ss:Type="String">Can change temporary schedule</Data></Cell>
+    <Cell><Data ss:Type="Number">30</Data></Cell>
+    <Cell><Data ss:Type="String">change_user_temp_sch</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">120</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete temporary schedule</Data></Cell>
+    <Cell><Data ss:Type="Number">30</Data></Cell>
+    <Cell><Data ss:Type="String">delete_user_temp_sch</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">121</Data></Cell>
+    <Cell><Data ss:Type="String">Can add Leave Class</Data></Cell>
+    <Cell><Data ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">add_leaveclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">122</Data></Cell>
+    <Cell><Data ss:Type="String">Can change Leave Class</Data></Cell>
+    <Cell><Data ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">change_leaveclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">123</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete Leave Class</Data></Cell>
+    <Cell><Data ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">delete_leaveclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">124</Data></Cell>
+    <Cell><Data ss:Type="String">Can add report item</Data></Cell>
+    <Cell><Data ss:Type="Number">32</Data></Cell>
+    <Cell><Data ss:Type="String">add_leaveclass1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">125</Data></Cell>
+    <Cell><Data ss:Type="String">Can change report item</Data></Cell>
+    <Cell><Data ss:Type="Number">32</Data></Cell>
+    <Cell><Data ss:Type="String">change_leaveclass1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">126</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete report item</Data></Cell>
+    <Cell><Data ss:Type="Number">32</Data></Cell>
+    <Cell><Data ss:Type="String">delete_leaveclass1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">127</Data></Cell>
+    <Cell><Data ss:Type="String">Can add shift time-table</Data></Cell>
+    <Cell><Data ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">add_schclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">128</Data></Cell>
+    <Cell><Data ss:Type="String">Can change shift time-table</Data></Cell>
+    <Cell><Data ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">change_schclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">129</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete shift time-table</Data></Cell>
+    <Cell><Data ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">delete_schclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">130</Data></Cell>
+    <Cell><Data ss:Type="String">Can add attendance rule</Data></Cell>
+    <Cell><Data ss:Type="Number">34</Data></Cell>
+    <Cell><Data ss:Type="String">add_attparam</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">131</Data></Cell>
+    <Cell><Data ss:Type="String">Can change attendance rule</Data></Cell>
+    <Cell><Data ss:Type="Number">34</Data></Cell>
+    <Cell><Data ss:Type="String">change_attparam</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">132</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete attendance rule</Data></Cell>
+    <Cell><Data ss:Type="Number">34</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attparam</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">133</Data></Cell>
+    <Cell><Data ss:Type="String">Can add user used s classes</Data></Cell>
+    <Cell><Data ss:Type="Number">35</Data></Cell>
+    <Cell><Data ss:Type="String">add_userusedsclasses</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">134</Data></Cell>
+    <Cell><Data ss:Type="String">Can change user used s classes</Data></Cell>
+    <Cell><Data ss:Type="Number">35</Data></Cell>
+    <Cell><Data ss:Type="String">change_userusedsclasses</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">135</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete user used s classes</Data></Cell>
+    <Cell><Data ss:Type="Number">35</Data></Cell>
+    <Cell><Data ss:Type="String">delete_userusedsclasses</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">136</Data></Cell>
+    <Cell><Data ss:Type="String">Can add audited exc</Data></Cell>
+    <Cell><Data ss:Type="Number">36</Data></Cell>
+    <Cell><Data ss:Type="String">add_auditedexc</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">137</Data></Cell>
+    <Cell><Data ss:Type="String">Can change audited exc</Data></Cell>
+    <Cell><Data ss:Type="Number">36</Data></Cell>
+    <Cell><Data ss:Type="String">change_auditedexc</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">138</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete audited exc</Data></Cell>
+    <Cell><Data ss:Type="Number">36</Data></Cell>
+    <Cell><Data ss:Type="String">delete_auditedexc</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">139</Data></Cell>
+    <Cell><Data ss:Type="String">Can add att calc log</Data></Cell>
+    <Cell><Data ss:Type="Number">37</Data></Cell>
+    <Cell><Data ss:Type="String">add_attcalclog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">140</Data></Cell>
+    <Cell><Data ss:Type="String">Can change att calc log</Data></Cell>
+    <Cell><Data ss:Type="Number">37</Data></Cell>
+    <Cell><Data ss:Type="String">change_attcalclog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">141</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete att calc log</Data></Cell>
+    <Cell><Data ss:Type="Number">37</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attcalclog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">142</Data></Cell>
+    <Cell><Data ss:Type="String">Can add att exception</Data></Cell>
+    <Cell><Data ss:Type="Number">38</Data></Cell>
+    <Cell><Data ss:Type="String">add_attexception</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">143</Data></Cell>
+    <Cell><Data ss:Type="String">Can change att exception</Data></Cell>
+    <Cell><Data ss:Type="Number">38</Data></Cell>
+    <Cell><Data ss:Type="String">change_attexception</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">144</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete att exception</Data></Cell>
+    <Cell><Data ss:Type="Number">38</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attexception</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">145</Data></Cell>
+    <Cell><Data ss:Type="String">Can add attRecAbnormite</Data></Cell>
+    <Cell><Data ss:Type="Number">39</Data></Cell>
+    <Cell><Data ss:Type="String">add_attrecabnormite</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">146</Data></Cell>
+    <Cell><Data ss:Type="String">Can change attRecAbnormite</Data></Cell>
+    <Cell><Data ss:Type="Number">39</Data></Cell>
+    <Cell><Data ss:Type="String">change_attrecabnormite</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">147</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete attRecAbnormite</Data></Cell>
+    <Cell><Data ss:Type="Number">39</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attrecabnormite</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">148</Data></Cell>
+    <Cell><Data ss:Type="String">Can add att shifts</Data></Cell>
+    <Cell><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="String">add_attshifts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">149</Data></Cell>
+    <Cell><Data ss:Type="String">Can change att shifts</Data></Cell>
+    <Cell><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="String">change_attshifts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">150</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete att shifts</Data></Cell>
+    <Cell><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attshifts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">151</Data></Cell>
+    <Cell><Data ss:Type="String">Can add attpriReport</Data></Cell>
+    <Cell><Data ss:Type="Number">41</Data></Cell>
+    <Cell><Data ss:Type="String">add_attprireport</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">152</Data></Cell>
+    <Cell><Data ss:Type="String">Can change attpriReport</Data></Cell>
+    <Cell><Data ss:Type="Number">41</Data></Cell>
+    <Cell><Data ss:Type="String">change_attprireport</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">153</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete attpriReport</Data></Cell>
+    <Cell><Data ss:Type="Number">41</Data></Cell>
+    <Cell><Data ss:Type="String">delete_attprireport</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">154</Data></Cell>
+    <Cell><Data ss:Type="String">Can add accounts</Data></Cell>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="String">add_accounts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">155</Data></Cell>
+    <Cell><Data ss:Type="String">Can change accounts</Data></Cell>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="String">change_accounts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">156</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete accounts</Data></Cell>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="String">delete_accounts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">157</Data></Cell>
+    <Cell><Data ss:Type="String">Can add item define</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">add_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">158</Data></Cell>
+    <Cell><Data ss:Type="String">Can change item define</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">change_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">159</Data></Cell>
+    <Cell><Data ss:Type="String">Can delete item define</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">delete_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">160</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse AttException</Data></Cell>
+    <Cell><Data ss:Type="Number">38</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attexception</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">161</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse AttParam</Data></Cell>
+    <Cell><Data ss:Type="Number">34</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attparam</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">162</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse AuditedExc</Data></Cell>
+    <Cell><Data ss:Type="Number">36</Data></Cell>
+    <Cell><Data ss:Type="String">browse_auditedexc</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">163</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse ContentType</Data></Cell>
+    <Cell><Data ss:Type="Number">6</Data></Cell>
+    <Cell><Data ss:Type="String">browse_contenttype</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">164</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse DeptAdmin</Data></Cell>
+    <Cell><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="String">browse_deptadmin</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">165</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse EXCNOTES</Data></Cell>
+    <Cell><Data ss:Type="Number">22</Data></Cell>
+    <Cell><Data ss:Type="String">browse_excnotes</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">166</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse Group</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="String">browse_group</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">167</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse IclockDept</Data></Cell>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">browse_iclockdept</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">168</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse IclockMsg</Data></Cell>
+    <Cell><Data ss:Type="Number">19</Data></Cell>
+    <Cell><Data ss:Type="String">browse_iclockmsg</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">169</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse ItemDefine</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">browse_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">170</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse LeaveClass</Data></Cell>
+    <Cell><Data ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">browse_leaveclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">171</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse LeaveClass1</Data></Cell>
+    <Cell><Data ss:Type="Number">32</Data></Cell>
+    <Cell><Data ss:Type="String">browse_leaveclass1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">172</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse NUM_RUN</Data></Cell>
+    <Cell><Data ss:Type="Number">25</Data></Cell>
+    <Cell><Data ss:Type="String">browse_num_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">173</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse NUM_RUN_DEIL</Data></Cell>
+    <Cell><Data ss:Type="Number">24</Data></Cell>
+    <Cell><Data ss:Type="String">browse_num_run_deil</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">174</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse Permission</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">browse_permission</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">175</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse SECURITYDETAILS</Data></Cell>
+    <Cell><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">browse_securitydetails</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">176</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse SHIFT</Data></Cell>
+    <Cell><Data ss:Type="Number">27</Data></Cell>
+    <Cell><Data ss:Type="String">browse_shift</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">177</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse SchClass</Data></Cell>
+    <Cell><Data ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">browse_schclass</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">178</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse USER_OF_RUN</Data></Cell>
+    <Cell><Data ss:Type="Number">28</Data></Cell>
+    <Cell><Data ss:Type="String">browse_user_of_run</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">179</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse USER_SPEDAY</Data></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">browse_user_speday</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">180</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse USER_TEMP_SCH</Data></Cell>
+    <Cell><Data ss:Type="Number">30</Data></Cell>
+    <Cell><Data ss:Type="String">browse_user_temp_sch</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">181</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse User</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">browse_user</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">182</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse UserUsedSClasses</Data></Cell>
+    <Cell><Data ss:Type="Number">35</Data></Cell>
+    <Cell><Data ss:Type="String">browse_userusedsclasses</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">183</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse accounts</Data></Cell>
+    <Cell><Data ss:Type="Number">42</Data></Cell>
+    <Cell><Data ss:Type="String">browse_accounts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">184</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse adminLog</Data></Cell>
+    <Cell><Data ss:Type="Number">20</Data></Cell>
+    <Cell><Data ss:Type="String">browse_adminlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">185</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse attCalcLog</Data></Cell>
+    <Cell><Data ss:Type="Number">37</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attcalclog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">186</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse attRecAbnormite</Data></Cell>
+    <Cell><Data ss:Type="Number">39</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attrecabnormite</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">187</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse attShifts</Data></Cell>
+    <Cell><Data ss:Type="Number">40</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attshifts</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">188</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse attpriReport</Data></Cell>
+    <Cell><Data ss:Type="Number">41</Data></Cell>
+    <Cell><Data ss:Type="String">browse_attprireport</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">189</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse checkexact</Data></Cell>
+    <Cell><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">browse_checkexact</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">190</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse department</Data></Cell>
+    <Cell><Data ss:Type="Number">8</Data></Cell>
+    <Cell><Data ss:Type="String">browse_department</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">191</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse devcmds</Data></Cell>
+    <Cell><Data ss:Type="Number">17</Data></Cell>
+    <Cell><Data ss:Type="String">browse_devcmds</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">192</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse devlog</Data></Cell>
+    <Cell><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">browse_devlog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">193</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse employee</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">browse_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">194</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse fptemp</Data></Cell>
+    <Cell><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">browse_fptemp</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">195</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse holidays</Data></Cell>
+    <Cell><Data ss:Type="Number">23</Data></Cell>
+    <Cell><Data ss:Type="String">browse_holidays</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">196</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse iclock</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">browse_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">197</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse messages</Data></Cell>
+    <Cell><Data ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">browse_messages</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">198</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse oplog</Data></Cell>
+    <Cell><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="String">browse_oplog</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">199</Data></Cell>
+    <Cell><Data ss:Type="String">Can browse transaction</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">browse_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">200</Data></Cell>
+    <Cell><Data ss:Type="String">Init database</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">init_database</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">201</Data></Cell>
+    <Cell><Data ss:Type="String">Transfer employee of department to the device</Data></Cell>
+    <Cell><Data ss:Type="Number">9</Data></Cell>
+    <Cell><Data ss:Type="String">deptEmptoDev_iclock</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">202</Data></Cell>
+    <Cell><Data ss:Type="String">import employee</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">import_employee</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">203</Data></Cell>
+    <Cell><Data ss:Type="String">Audited Transaction</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">AuditedTrans_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">204</Data></Cell>
+    <Cell><Data ss:Type="String">user-defined report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">definedReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">205</Data></Cell>
+    <Cell><Data ss:Type="String">attrecabnormite report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">attrecReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">206</Data></Cell>
+    <Cell><Data ss:Type="String">attshifts report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">attshiftsReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">207</Data></Cell>
+    <Cell><Data ss:Type="String">attexception report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">attexceptReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">208</Data></Cell>
+    <Cell><Data ss:Type="String">attTotal report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">attTotalReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">209</Data></Cell>
+    <Cell><Data ss:Type="String">attDailyTotal report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">attDailyTotalReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">210</Data></Cell>
+    <Cell><Data ss:Type="String">exception report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">exceptReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">211</Data></Cell>
+    <Cell><Data ss:Type="String">Leaves report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">leaveReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">212</Data></Cell>
+    <Cell><Data ss:Type="String">Original report</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">OriginalReport_itemdefine</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">213</Data></Cell>
+    <Cell><Data ss:Type="String">Forget to clock in and out</Data></Cell>
+    <Cell><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">Forget_transaction</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">214</Data></Cell>
+    <Cell><Data ss:Type="String">ReCalculate Reports</Data></Cell>
+    <Cell><Data ss:Type="Number">43</Data></Cell>
+    <Cell><Data ss:Type="String">reCalcaluteReport_itemdefine</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

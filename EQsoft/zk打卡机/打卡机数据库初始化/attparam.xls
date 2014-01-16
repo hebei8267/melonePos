@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ParaName</Data></Cell>
+    <Cell><Data ss:Type="String">ParaType</Data></Cell>
+    <Cell><Data ss:Type="String">ParaValue</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsEarly</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">5</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsLate</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">10</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsNoBreakIn</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">60</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsNoBreakOut</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">60</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsNoIn</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">60</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsNoLeave</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">60</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsNotOverTime</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">60</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MinsWorkDay</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">480</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">NoBreakIn</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">1012</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">NoBreakOut</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">1012</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">NoIn</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">1001</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">NoLeave</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">1002</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">OutOverTime</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">TwoDay</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CheckInColor</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">16777151</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CheckOutColor</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">12910591</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">DBVersion</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">167</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">InstallDate</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2010-01-04 15:58:53</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">ADMSDBVersion</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">202</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
