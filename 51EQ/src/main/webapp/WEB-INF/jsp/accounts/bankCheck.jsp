@@ -116,6 +116,12 @@
                             <h3>存款信息</h3>
                         </legend>
                     </div>
+                    <div class="span12">
+                		<div class="alert alert-error">
+                		注意：单个门店同一天有2笔以上 (含2笔) 存款信息时 , 必须保持其审核信息一致 !
+						</div>
+                	</div>
+                	
                     <div class="span5">
                         <label class="control-label">销售日期 :</label>
                         <input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>

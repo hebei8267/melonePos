@@ -168,6 +168,12 @@
                                         	${cashDaily.cardNum}
                                         </td>
                                         <td>
+                                        	<c:if test="${cashDaily.depositAmt > 0 && cashDaily.bankCheckFlg == 1}">
+                                        		<i class="icon-ok" trigger="hover" data-toggle="popover" data-placement="right" title="已审核"></i>
+                                        	</c:if>
+                                        	<c:if test="${cashDaily.depositAmt > 0 && cashDaily.bankCheckFlg != 1}">
+                                        	<i class="icon-exclamation-sign" trigger="hover" data-toggle="popover" data-placement="right" title="未审核"></i>
+                                        	</c:if>
                                         	${cashDaily.depositAmt}
                                         </td>
                                         <td <c:if test="${cashDaily.retainedAmt > DEFAULT_RETAINED_AMT}">style="background-color:#FFDEAD;color:#00000"</c:if>>

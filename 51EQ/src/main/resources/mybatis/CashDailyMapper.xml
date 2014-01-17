@@ -27,6 +27,8 @@
         <result column="bw_sale_amt" property="bwSaleAmt" jdbcType="DECIMAL"/>
         <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
         <result column="report_amt" property="reportAmt" jdbcType="DECIMAL"/>
+        
+        <result column="bank_check_flg" property="bankCheckFlg" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -72,8 +74,9 @@
   	<!-- 取得t_cash_daily信息(根据参数) -->
 	<select id="getCashDailyList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
 		select
-		<include refid="Base_Column_List" />
-		from t_cash_daily cash, t_organization org
+		<include refid="Base_Column_List" /> ,
+		run.bank_check_flg
+		from t_cash_daily cash left join t_cash_run run on cash.opt_date = run.opt_date and cash.org_id = run.org_id and run.bank_check_flg = 1, t_organization org
 		<include refid="Where_Clause" />
 		order by cash.opt_date_show desc, cash.org_id 
 	</select>

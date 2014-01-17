@@ -64,6 +64,8 @@ public class CashDaily extends IdEntity {
 	private String optDateEnd;
 	/** 行号 */
 	private Integer index;
+	/** 回单对账标记 1-已对账 0-未对账 */
+	private Integer bankCheckFlg = 0;
 
 	/**
 	 * 取得机构编号
@@ -455,4 +457,22 @@ public class CashDaily extends IdEntity {
 		this.index = index;
 	}
 
+	/**
+	 * 取得回单对账标记1-已对账0-未对账
+	 * 
+	 * @return bankCheckFlg 回单对账标记1-已对账0-未对账
+	 */
+	@Transient
+	public Integer getBankCheckFlg() {
+		return bankCheckFlg;
+	}
+
+	/**
+	 * 设置回单对账标记1-已对账0-未对账
+	 * 
+	 * @param bankCheckFlg 回单对账标记1-已对账0-未对账
+	 */
+	public void setBankCheckFlg(Integer bankCheckFlg) {
+		this.bankCheckFlg = bankCheckFlg;
+	}
 }
