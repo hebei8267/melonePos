@@ -30,7 +30,10 @@
                     <li>
                         <a href="${sc_ctx}/member/initModPwd">密码修改</a>
                     </li>
-                    <c:if test="${_permIdList.contains('1') || _permIdList.contains('2') || _permIdList.contains('3') || _permIdList.contains('4')}">
+                    <c:if test="${_permIdList.contains('1') || _permIdList.contains('2') 
+                    	|| _permIdList.contains('3') || _permIdList.contains('4')
+                    	|| _permIdList.contains('5') || _permIdList.contains('6')
+                    	|| _permIdList.contains('7')}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">系统管理<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -38,51 +41,53 @@
                                     <li>
                                         <a href="${sc_ctx}/user">用户管理</a>
                                     </li>
+                                </c:if>
+                                <c:if test="${_permIdList.contains('2')}">
                                     <li>
                                         <a href="${sc_ctx}/employee">职员管理</a>
                                     </li>
                                 </c:if>
                                 <li class="divider"></li>
-                                <c:if test="${_permIdList.contains('2')}">
+                                <c:if test="${_permIdList.contains('3')}">
                                     <li>
                                         <a href="${sc_ctx}/organization">机构管理</a>
                                     </li>
                                 </c:if>
-                                <c:if test="${_permIdList.contains('3')}">
+                                <c:if test="${_permIdList.contains('4')}">
                                     <li>
                                         <a href="${sc_ctx}/supplier">供应商管理</a>
                                     </li>
                                 </c:if>
-                                <c:if test="${_permIdList.contains('4')}">
+                                <c:if test="${_permIdList.contains('5')}">
                                     <li>
                                         <a href="${sc_ctx}/bankCard">银行卡管理</a>
                                     </li>
-                                    <li class="divider"></li>
+                                </c:if>
+                                <li class="divider"></li>
+                                <c:if test="${_permIdList.contains('6')}">
                                     <li>
-                                        <a href="${sc_ctx}/goods">商品管理</a>
+                                    	<a href="${sc_ctx}/goods">商品管理</a>
                                     </li>
+                                </c:if>
+                                <c:if test="${_permIdList.contains('7')}">
                                     <li>
                                         <a href="${sc_ctx}/itemType">商品类别管理</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="${sc_ctx}/cashCounterDaily/init">反日结(销售信息)</a>
                                     </li>
                                 </c:if>
                             </ul>
                         </li>
                     </c:if>
 
-                    <c:if test="${_permIdList.contains('5') || _permIdList.contains('6')}">
+                    <c:if test="${_permIdList.contains('8') || _permIdList.contains('9')}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">销售信息<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <c:if test="${_permIdList.contains('5')}">
+                                <c:if test="${_permIdList.contains('8')}">
                                     <li>
                                         <a href="${sc_ctx}/cashRun">录入</a>
                                     </li>
                                 </c:if>
-                                <c:if test="${_permIdList.contains('6')}">
+                                <c:if test="${_permIdList.contains('9')}">
                                     <li>
                                         <a href="${sc_ctx}/cashDaily">日结</a>
                                     </li>
@@ -90,174 +95,205 @@
                             </ul>
                         </li>
                     </c:if>
-<!-- 
-                    <c:if test="${_permIdList.contains('7') || _permIdList.contains('8')}">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">入库信息<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <c:if test="${_permIdList.contains('7')}">
-                                    <li>
-                                        <a href="${sc_ctx}/storeRun">录入</a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${_permIdList.contains('8')}">
-                                    <li>
-                                        <a href="${sc_ctx}/storeRunAudit">审核</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </li>
-                    </c:if>
--->
-					<c:if test="${_permIdList.contains('9') || _permIdList.contains('10') || _permIdList.contains('11') || _permIdList.contains('12')}">
+
+					<c:if test="${_permIdList.contains('13') || _permIdList.contains('14') 
+					|| _permIdList.contains('15') || _permIdList.contains('16')
+					|| _permIdList.contains('17') || _permIdList.contains('18')
+					|| _permIdList.contains('19') || _permIdList.contains('20')
+					|| _permIdList.contains('21') || _permIdList.contains('26')
+					|| _permIdList.contains('40')}">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">报表<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">销售信息<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        	<!-- 
-                        	<c:if test="${_permIdList.contains('9')}">
-                            <li>
-                                <a href="${sc_ctx}/storeReport">入库信息</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('13')}">
+	                            <li>
+	                                <a href="${sc_ctx}/cardReport">刷卡信息</a>
+	                            </li>
                             </c:if>
-                            -->
-                            <c:if test="${_permIdList.contains('10')}">
-                            <li>
-                                <a href="${sc_ctx}/cardReport">刷卡信息</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('14')}">
+	                            <li>
+	                                <a href="${sc_ctx}/dailyReport">日结信息</a>
+	                            </li>
                             </c:if>
-                            <c:if test="${_permIdList.contains('12')}">
-                            <li>
-                                <a href="${sc_ctx}/dailyReport">日结信息</a>
-                            </li>
-                            </c:if>
-                            <c:if test="${_permIdList.contains('11')}">
-                            <li class="divider"></li>
-                            <li>
-		                    	<a href="${sc_ctx}/bankCheck/init">存款信息</a>
-		                 	</li>
-                            <li>
-		                    	<a href="${sc_ctx}/cashReport">销售信息(表格)</a>
-		                 	</li>
-		                  	<li>
-		                   		<a href="${sc_ctx}/cashChartReport">销售信息(图形)</a>
-		                  	</li>
+                            <c:if test="${_permIdList.contains('15')}">
+	                            <li>
+			                    	<a href="${sc_ctx}/bankCheck/init">存款信息</a>
+			                 	</li>
+			                 	<li class="divider"></li>
+			                </c:if>
+			                <c:if test="${_permIdList.contains('16')}">
+	                            <li>
+			                    	<a href="${sc_ctx}/cashReport">销售信息(表格)</a>
+			                 	</li>
+		                 	</c:if>
+		                 	<c:if test="${_permIdList.contains('17')}">
+			                  	<li>
+			                   		<a href="${sc_ctx}/cashChartReport">销售信息(图形)</a>
+			                  	</li>
+		                  	</c:if>
 		                  	<li class="divider"></li>
-		                  	<li>
-                                <a href="${sc_ctx}/storeChartReport/list">库存信息(表格)</a>
-                            </li>
-		                  	<li>
-                                <a href="${sc_ctx}/storeChartReport">库存信息(图形)</a>
-                            </li>
+		                  	<c:if test="${_permIdList.contains('18')}">
+			                  	<li>
+	                                <a href="${sc_ctx}/storeChartReport/list">库存信息(表格)</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('19')}">
+			                  	<li>
+	                                <a href="${sc_ctx}/storeChartReport">库存信息(图形)</a>
+	                            </li>
+                            </c:if>
                             <li class="divider"></li>
-                            <li>
-                                <a href="${sc_ctx}/salesDayGoodsReport">商品销售信息一览(按条码)</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="${sc_ctx}/salesDayItemChartReport/bar_init">类别销售信息一览(图形)</a>
-                            </li>
-                            <li>
-                                <a href="${sc_ctx}/salesDayItemChartReport/pie_init">类别销售金额对比(图形)</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="${sc_ctx}/salesDaySupChartReport/bar_init">货商销售信息一览(图形)</a>
-                            </li>
-                            <li>
-                                <a href="${sc_ctx}/salesDaySupChartReport/pie_init">货商销售金额对比(图形)</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售金额对比(图形)</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
-                            </li>
-                            <li>
-                                <a href="${sc_ctx}/salesWeekTotal/reCalInit">商品周销售信息＆重计算</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('20')}">
+	                            <li>
+	                                <a href="${sc_ctx}/salesDayGoodsReport">商品销售信息一览(按条码)</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('21')}">
+	                            <li>
+	                                <a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('26')}">
+                            	<li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/salesWeekTotal/reCalInit">商品周销售信息＆重计算</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('40')}">
+                            	<li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/cashCounterDaily/init">反日结(销售信息)</a>
+	                            </li>
                             </c:if>
                         </ul>
                     </li>
                     </c:if>
                     
-                    <c:if test="${_permIdList.contains('13') || _permIdList.contains('14') 
-                    || _permIdList.contains('15') || _permIdList.contains('16') || _permIdList.contains('17') 
-                    || _permIdList.contains('18') || _permIdList.contains('19') || _permIdList.contains('20')
-                    || _permIdList.contains('21')}">
+                    
+                    <c:if test="${_permIdList.contains('22') || _permIdList.contains('23') 
+                    || _permIdList.contains('24') || _permIdList.contains('25')
+                    || _permIdList.contains('41')}">
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <c:if test="${_permIdList.contains('22')}">
+	                            <li>
+	                                <a href="${sc_ctx}/salesDayItemChartReport/bar_init">类别销售信息一览(图形)</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('23')}">
+	                            <li>
+	                                <a href="${sc_ctx}/salesDayItemChartReport/pie_init">类别销售金额对比(图形)</a>
+	                            </li>
+                            </c:if>
+                            <li class="divider"></li>
+                            <c:if test="${_permIdList.contains('24')}">
+	                            <li>
+			                    	<a href="${sc_ctx}/salesDaySupChartReport/bar_init">货商销售信息一览(图形)</a>
+			                 	</li>
+			                </c:if>
+			                <c:if test="${_permIdList.contains('25')}">
+	                            <li>
+			                    	<a href="${sc_ctx}/salesDaySupChartReport/pie_init">货商销售金额对比(图形)</a>
+			                 	</li>
+		                 	</c:if>
+		                 	<li class="divider"></li>
+		                 	<c:if test="${_permIdList.contains('41')}">
+	                            <li>
+			                    	<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售金额对比(图形)</a>
+			                 	</li>
+		                 	</c:if>
+                        </ul>
+                    </li>
+                    
+                    </c:if>
+                    
+                    <c:if test="${_permIdList.contains('27') || _permIdList.contains('28') 
+                    || _permIdList.contains('29') || _permIdList.contains('30') || _permIdList.contains('31') 
+                    || _permIdList.contains('32') || _permIdList.contains('33') || _permIdList.contains('34')
+                    || _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
+                    || _permIdList.contains('38') || _permIdList.contains('39')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        	<c:if test="${_permIdList.contains('13')}">
-                            <li>
-                                <a href="${sc_ctx}/invoiceApply">发票申请</a>
-                            </li>
+                        	<c:if test="${_permIdList.contains('27')}">
+	                            <li>
+	                                <a href="${sc_ctx}/invoiceApply">发票申请</a>
+	                            </li>
                             </c:if>
-                            <c:if test="${_permIdList.contains('14')}">
-                            <li>
-                                <a href="${sc_ctx}/invoiceDraw">发票开具</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('28')}">
+	                            <li>
+	                                <a href="${sc_ctx}/invoiceDraw">发票开具</a>
+	                            </li>
                             </c:if>
-                            <c:if test="${_permIdList.contains('18')}">
-  							<li>
-                                <a href="${sc_ctx}/msgInfo">公告/消息</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('36')}">
+	  							<li>
+	                                <a href="${sc_ctx}/msgInfo">公告/消息</a>
+	                            </li>
                             </c:if>
-                            
-                            
-                            <c:if test="${_permIdList.contains('20')}">
-  							<li>
-                                <%//门店%>
-                                <a href="${sc_ctx}/pettyCash/list">门店备用金</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('37')}">
+	  							<li>
+	                                <%//门店%>
+	                                <a href="${sc_ctx}/pettyCash/list">门店备用金</a>
+	                            </li>
                             </c:if>
-                            
-                            <c:if test="${_permIdList.contains('21')}">
-                            <li class="divider"></li>
-  							<li>
-                                <%//总部%>
-                                <a href="${sc_ctx}/pettyCash/manageList">门店备用金</a>
-                                <a href="${sc_ctx}/pettyCash/carryOverInit">门店备用金(结转)</a>
-                            </li>
-                            <li class="divider"></li>
+                            <c:if test="${_permIdList.contains('38')}">
+	                            <li class="divider"></li>
+	  							<li>
+	                                <%//总部%>
+	                                <a href="${sc_ctx}/pettyCash/manageList">门店备用金</a>
+	                            </li>
+	                        </c:if>
+                            <c:if test="${_permIdList.contains('39')}">
+	                            <li>
+	                                <%//总部%>
+	                                <a href="${sc_ctx}/pettyCash/carryOverInit">门店备用金(结转)</a>
+	                            </li>
                             </c:if>
-                            
-                            
-                            <!-- 
-                            <li>
-                                <a href="${sc_ctx}/reqBill">门店要货单</a>
-                            </li>
-                            -->
-                            <c:if test="${_permIdList.contains('15')}">
-                            <li>
-                                <a href="${sc_ctx}/inspect">门店巡查报告</a>
-                            </li>
+                            <c:if test="${_permIdList.contains('29')}">
+                            	<li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/inspect">门店巡查报告</a>
+	                            </li>
                             </c:if>
                             
                             <%//门店%>
-	    					<c:if test="${_permIdList.contains('16')}">
-	    					<li class="divider"></li>
-	    					<li>
-		                 		<a href="${sc_ctx}/punchClock/list">考勤信息(查看)</a>
-		                 		<%String nowM =	DateUtils.getCurrentMonth(); %>
-		                 		<a href="${sc_ctx}/workSchedule/historyList/<%=nowM	%>">排班表(查看)</a>
-		                   	</li>
+	    					<c:if test="${_permIdList.contains('30')}">
+		    					<li class="divider"></li>
+		    					<li>
+			                 		<a href="${sc_ctx}/punchClock/list">考勤信息(查看)</a>
+			                   	</li>
 		                   	</c:if>
-		                   	<c:if test="${_permIdList.contains('19')}">
-	    					<li class="divider"></li>
-	    					<li>
-		                 		<a href="${sc_ctx}/workSchedule/list">排班表(维护)</a>
-		                   		<a href="${sc_ctx}/tmpEmployee/list">兼职信息(维护)</a>
-		                   		<a href="${sc_ctx}/workType/list">工作时间(维护)</a>
-		                   	</li>
+		                   	<%//门店%>
+	    					<c:if test="${_permIdList.contains('31')}">
+		    					<li>
+			                 		<%String nowM =	DateUtils.getCurrentMonth(); %>
+			                 		<a href="${sc_ctx}/workSchedule/historyList/<%=nowM	%>">排班表(查看)</a>
+			                   	</li>
+		                   	</c:if>
+		                   	<c:if test="${_permIdList.contains('32')}">
+	    						<li class="divider"></li>
+		    					<li>
+			                 		<a href="${sc_ctx}/workSchedule/list">排班表(维护)</a>
+			                   	</li>
+		                   	</c:if>
+		                   	<c:if test="${_permIdList.contains('33')}">
+		    					<li>
+			                   		<a href="${sc_ctx}/tmpEmployee/list">兼职信息(维护)</a>
+			                   	</li>
+		                   	</c:if>
+		                   	<c:if test="${_permIdList.contains('34')}">
+		    					<li>
+			                   		<a href="${sc_ctx}/workType/list">工作时间(维护)</a>
+			                   	</li>
 		                   	</c:if>
 		                    
 		                    <%//总部%>
-		                    <c:if test="${_permIdList.contains('17')}">
-		                	<li>
-		                   		<a href="${sc_ctx}/punchClock/manage">考勤信息(查看)</a>
-		                 	</li>
+		                    <c:if test="${_permIdList.contains('35')}">
+			                	<li>
+			                   		<a href="${sc_ctx}/punchClock/manage">考勤信息(查看)</a>
+			                 	</li>
 		                 	</c:if>
                         </ul>
                     </li>

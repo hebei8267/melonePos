@@ -15,6 +15,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
+	// 系统管理员
 	public void saveNewFun1() {
 		Function fun = new Function();
 		// 功能显示名称
@@ -27,7 +28,21 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
+	// 系统管理员
 	public void saveNewFun2() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("职员管理");
+		// 功能URL */
+		fun.setFunUrl("employee");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 系统管理员
+	public void saveNewFun3() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("机构管理");
@@ -39,7 +54,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun3() {
+	// 系统管理员
+	public void saveNewFun4() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("供应商管理");
@@ -51,7 +67,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun4() {
+	// 系统管理员
+	public void saveNewFun5() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("银行卡管理");
@@ -61,10 +78,37 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 		functionJpaDao.save(fun);
 	}
 
+	@Test
+	@Rollback(false)
+	// 系统管理员
+	public void saveNewFun6() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("商品管理");
+		// 功能URL */
+		fun.setFunUrl("goods");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 系统管理员
+	public void saveNewFun7() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("商品类别管理");
+		// 功能URL */
+		fun.setFunUrl("itemType");
+
+		functionJpaDao.save(fun);
+	}
+
 	// -------------------------------------------------------------
 	@Test
 	@Rollback(false)
-	public void saveNewFun5() {
+	// 门店
+	public void saveNewFun8() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("销售信息-录入");
@@ -76,7 +120,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun6() {
+	// 门店
+	public void saveNewFun9() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("销售信息-日结");
@@ -89,7 +134,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	// -------------------------------------------------------------
 	@Test
 	@Rollback(false)
-	public void saveNewFun7() {
+	// 门店
+	public void saveNewFun10() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("入库信息-录入");
@@ -101,7 +147,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun8() {
+	// 门店
+	public void saveNewFun11() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("入库信息-审核");
@@ -114,7 +161,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	// -------------------------------------------------------------
 	@Test
 	@Rollback(false)
-	public void saveNewFun9() {
+	// 总部
+	public void saveNewFun12() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("入库信息-报表");
@@ -126,10 +174,11 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun10() {
+	// 总部
+	public void saveNewFun13() {
 		Function fun = new Function();
 		// 功能显示名称
-		fun.setDisplayName("刷卡信息-报表");
+		fun.setDisplayName("刷卡信息");
 		// 功能URL */
 		fun.setFunUrl("cardReport");
 
@@ -138,10 +187,37 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun11() {
+	// 总部
+	public void saveNewFun14() {
 		Function fun = new Function();
 		// 功能显示名称
-		fun.setDisplayName("销售信息-报表");
+		fun.setDisplayName("日结信息");
+		// 功能URL */
+		fun.setFunUrl("dailyReport");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun15() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("存款信息");
+		// 功能URL */
+		fun.setFunUrl("bankCheck/init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun16() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("销售信息(表格)");
 		// 功能URL */
 		fun.setFunUrl("cashReport");
 
@@ -150,12 +226,130 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun12() {
+	// 总部
+	public void saveNewFun17() {
 		Function fun = new Function();
 		// 功能显示名称
-		fun.setDisplayName("日结信息-报表");
+		fun.setDisplayName("销售信息(图形)");
 		// 功能URL */
-		fun.setFunUrl("dailyReport");
+		fun.setFunUrl("cashChartReport");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun18() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("库存信息(表格)");
+		// 功能URL */
+		fun.setFunUrl("storeChartReport/list");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun19() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("库存信息(图形)");
+		// 功能URL */
+		fun.setFunUrl("storeChartReport");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun20() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("商品销售信息一览(按条码)");
+		// 功能URL */
+		fun.setFunUrl("salesDayGoodsReport");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun21() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("商品周销售信息一览");
+		// 功能URL */
+		fun.setFunUrl("salesWeekGoodsTotalReport/init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun22() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("类别销售信息一览(图形)");
+		// 功能URL */
+		fun.setFunUrl("salesDayItemChartReport/bar_init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun23() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("类别销售金额对比(图形)");
+		// 功能URL */
+		fun.setFunUrl("salesDayItemChartReport/pie_init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun24() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("货商销售信息一览(图形)");
+		// 功能URL */
+		fun.setFunUrl("salesDaySupChartReport/bar_init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun25() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("货商销售金额对比(图形)");
+		// 功能URL */
+		fun.setFunUrl("salesDaySupChartReport/pie_init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun26() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("商品周销售信息＆重计算");
+		// 功能URL */
+		fun.setFunUrl("salesWeekTotal/reCalInit");
 
 		functionJpaDao.save(fun);
 	}
@@ -163,7 +357,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	// -------------------------------------------------------------
 	@Test
 	@Rollback(false)
-	public void saveNewFun13() {
+	public void saveNewFun27() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("发票信息-申请");
@@ -175,7 +369,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun14() {
+	public void saveNewFun28() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("发票信息-开票");
@@ -187,7 +381,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun15() {
+	public void saveNewFun29() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("门店巡查报告");
@@ -199,7 +393,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun16() {
+	// 门店
+	public void saveNewFun30() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("考勤信息-查看");
@@ -211,10 +406,63 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun17() {
+	// 门店
+	public void saveNewFun31() {
 		Function fun = new Function();
 		// 功能显示名称
-		fun.setDisplayName("考勤信息-总部查看");
+		fun.setDisplayName("排班表(查看)");
+		// 功能URL */
+		fun.setFunUrl("workSchedule/historyList");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 门店
+	public void saveNewFun32() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("排班表(维护)");
+		// 功能URL */
+		fun.setFunUrl("workSchedule/list");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 门店
+	public void saveNewFun33() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("兼职信息(维护)");
+		// 功能URL */
+		fun.setFunUrl("tmpEmployee/list");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 门店
+	public void saveNewFun34() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("工作时间(维护)");
+		// 功能URL */
+		fun.setFunUrl("workType/list");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	// 总部
+	public void saveNewFun35() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("考勤信息(查看)");
 		// 功能URL */
 		fun.setFunUrl("punchClock/manage");
 
@@ -223,34 +471,19 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun18() {
+	public void saveNewFun36() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("公告/消息");
 		// 功能URL */
-		fun.setFunUrl("msgInfo/list");
+		fun.setFunUrl("msgInfo");
 
 		functionJpaDao.save(fun);
 	}
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun19() {
-		Function fun = new Function();
-		// 功能显示名称
-		fun.setDisplayName("排班表(维护)");
-		// 排班表(维护)
-		// 兼职信息(维护)
-		// 工作时间(维护)
-		// 功能URL */
-		// fun.setFunUrl();
-
-		functionJpaDao.save(fun);
-	}
-
-	@Test
-	@Rollback(false)
-	public void saveNewFun20() {
+	public void saveNewFun37() {
 		Function fun = new Function();
 		// 功能显示名称
 		// 门店-门店备用金
@@ -263,12 +496,48 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewFun21() {
+	public void saveNewFun38() {
 		Function fun = new Function();
 		// 功能显示名称
 		fun.setDisplayName("总部-门店备用金");
 		// 功能URL */
 		fun.setFunUrl("pettyCash/manageList");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	public void saveNewFun39() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("门店备用金(结转)");
+		// 功能URL */
+		fun.setFunUrl("pettyCash/carryOverInit");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	public void saveNewFun40() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("反日结(销售信息)");
+		// 功能URL */
+		fun.setFunUrl("cashCounterDaily/init");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	public void saveNewFun41() {
+		Function fun = new Function();
+		// 功能显示名称
+		fun.setDisplayName("月销售金额对比(图形)");
+		// 功能URL */
+		fun.setFunUrl("salesMonthItemChartReport/bar_init");
 
 		functionJpaDao.save(fun);
 	}
