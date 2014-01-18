@@ -73,7 +73,7 @@
   	
   	<!-- 取得t_cash_daily信息(根据参数) -->
 	<select id="getCashDailyList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
-		select
+		select distinct
 		<include refid="Base_Column_List" /> ,
 		run.bank_check_flg
 		from t_cash_daily cash left join t_cash_run run on cash.opt_date = run.opt_date and cash.org_id = run.org_id and run.bank_check_flg = 1, t_organization org
