@@ -202,10 +202,14 @@ public class SalesWeekTotalGoodsManager {
 	 * 取得指定门店近四周销售数据及库存情况
 	 * 
 	 * @param orgId 门店编号
+	 * @param barcode 货号/条码
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId) {
-		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg(orgId);
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId, String barcode) {
+		ReqBill param = new ReqBill();
+		param.setOrgId(orgId);
+		param.setBarcode(barcode);
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg(param);
 	}
 
 	/**

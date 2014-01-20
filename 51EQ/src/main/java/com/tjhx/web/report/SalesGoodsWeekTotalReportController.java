@@ -39,9 +39,11 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String barcode = ServletRequestUtils.getStringParameter(request, "barcode");
 		model.addAttribute("orgId", orgId);
+		model.addAttribute("barcode", barcode);
 
-		List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByOrg(orgId);
+		List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByOrg(orgId,barcode);
 		model.addAttribute("salesWeekGoodsList", salesWeekGoodsList);
 		return "report/salesWeekGoodsTotalReport";
 	}

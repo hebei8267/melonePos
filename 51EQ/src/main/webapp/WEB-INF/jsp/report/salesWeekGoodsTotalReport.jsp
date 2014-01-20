@@ -46,7 +46,7 @@
                             <h3>商品周销售信息一览</h3>
                         </legend>
                     </div>
-                    <div class="span7">
+                    <div class="span3">
                         <label class="control-label">机构 :</label>
                         <select name="orgId" class="input-medium">
                             <c:forEach items="${orgList}" var="org">
@@ -58,6 +58,10 @@
                                 </c:if>
                             </c:forEach>
                         </select>
+                    </div>
+                    <div class="span9">
+                        <label class="control-label">货号/条码 :</label>
+                        <input id="barcode" name="barcode" type="text" class="input-medium" value="${barcode }"/>
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                     <div class="span12"	style="margin-top: 10px;">

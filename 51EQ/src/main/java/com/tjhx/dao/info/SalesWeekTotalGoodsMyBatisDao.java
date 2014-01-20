@@ -30,10 +30,11 @@ public interface SalesWeekTotalGoodsMyBatisDao {
 	 * 取得指定门店近四周销售数据及库存情况
 	 * 
 	 * @param orgId 门店编号
+	 * @param barcode 货号/条码
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId);
-
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(ReqBill reqBill);
+ 
 	/**
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 

@@ -116,10 +116,10 @@
 	                            </li>
                             </c:if>
                             <c:if test="${_permIdList.contains('15')}">
+                            	<li class="divider"></li>
 	                            <li>
 			                    	<a href="${sc_ctx}/bankCheck/init">存款信息</a>
 			                 	</li>
-			                 	<li class="divider"></li>
 			                </c:if>
 			                <c:if test="${_permIdList.contains('16')}">
 	                            <li>
