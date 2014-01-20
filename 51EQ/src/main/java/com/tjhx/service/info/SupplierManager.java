@@ -14,10 +14,13 @@ import org.springside.modules.cache.memcached.SpyMemcachedClient;
 
 import com.tjhx.dao.info.RegionJpaDao;
 import com.tjhx.dao.info.SupplierJpaDao;
+import com.tjhx.dao.info.SupplierSignBillJpaDao;
+import com.tjhx.dao.info.SupplierSignBillMyBatisDao;
 import com.tjhx.daobw.SupplierCustomMyBatisDao;
 import com.tjhx.entity.bw.SupplierCustom;
 import com.tjhx.entity.info.Region;
 import com.tjhx.entity.info.Supplier;
+import com.tjhx.entity.info.SupplierSignBill;
 import com.tjhx.globals.MemcachedObjectType;
 import com.tjhx.service.ServiceException;
 
@@ -33,6 +36,10 @@ public class SupplierManager {
 	private SpyMemcachedClient spyMemcachedClient;
 	@Resource
 	private SupplierCustomMyBatisDao supplierCustomMyBatisDao;
+	@Resource
+	private SupplierSignBillMyBatisDao supplierSignBillMyBatisDao;
+	@Resource
+	private SupplierSignBillJpaDao supplierSignBillJpaDao;
 
 	/**
 	 * 取得所有货品供应商信息
@@ -218,6 +225,26 @@ public class SupplierManager {
 			return "1";
 		} else {
 			return "0";
+		}
+	}
+
+	/**
+	 * 同步挂账供应商信息
+	 */
+	public void signBillSupDataSyn(String[] supIdArray) {
+		// 删除所有挂账供应商信息
+		supplierSignBillMyBatisDao.delAllSignBillSupplierInfo();
+
+		for (int i = 0; i < supIdArray.length; i++) {
+			Supplier _supplier = supplierJpaDao.findBySupplierBwId(supIdArray[i]);
+
+			SupplierSignBill _supplierSignBill = new SupplierSignBill();
+			// 供应商编号-百威
+			_supplierSignBill.setSupplierBwId(_supplier.getSupplierBwId());
+			// 供应商名称
+			_supplierSignBill.setName(_supplier.getName());
+
+			supplierSignBillJpaDao.save(_supplierSignBill);
 		}
 	}
 

@@ -183,4 +183,20 @@ public class SupplierController extends BaseController {
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplier/list";
 	}
+
+	/**
+	 * 同步挂账供应商信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "signBillSupDataSynBtn")
+	public String signBillSupDataSyn_Action(@RequestParam("supplierBwIds") String supplierBwIds, Model model) {
+		String[] supIdArray = supplierBwIds.split(",");
+		// 同步挂账供应商信息
+		supplierManager.signBillSupDataSyn(supIdArray);
+
+		addInfoMsg(model, "TIP_MSG_SUPPLIER_002");
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplier/list";
+	}
 }

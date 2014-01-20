@@ -12,12 +12,45 @@
     <head>
         <script>
             $().ready(function() {
+            	$("#listForm").validate({
+                    rules : {
+                    	signBillSupBtn : {
+                            requiredSelect : 'supplierBwId'
+                        }
+                    }
+                });
+            	//-----------------------------------
+                // 全选/全部选
+                //-----------------------------------
+                $("#checkAll").click(function() {
+                    $('input[name="supplierBwId"]').attr("checked", this.checked);
+                });
+                var $subCheckBox = $("input[name='supplierBwId']");
+                $subCheckBox.click(function() {
+                    $("#checkAll").attr("checked", $subCheckBox.length == $("input[name='supplierBwId']:checked").length ? true : false);
+                });
+                
+                
                 $("#bwDataSynBtn").click(function() {
-                    $("input[type='text'],textarea").each(function(i) {
-                        this.value = $.trim(this.value);
-                    });
-
                     $("#listForm").attr("action", "${sc_ctx}/supplier/bwDataSynBtn");
+                    $("#listForm").submit();
+                });
+                
+                $("#signBillSupBtn").click(function() {
+                	var $subCheckBox = $("input[name='supplierBwId']");
+                    var supplierBwIds = "";
+                    $.each($subCheckBox, function(index, _checkBox) {
+                        if (_checkBox.checked) {
+                        	supplierBwIds += _checkBox.value + ",";
+                        }
+                    });
+                    if (supplierBwIds.length > 0) {
+                    	supplierBwIds = supplierBwIds.substring(0, supplierBwIds.length - 1);
+                    }
+
+                    $("#supplierBwIds").val(supplierBwIds);
+
+                    $("#listForm").attr("action", "${sc_ctx}/supplier/signBillSupDataSynBtn");
                     $("#listForm").submit();
                 });
             });
@@ -37,12 +70,18 @@
                     </div>
                     <div class="span12">
                         <button	id="bwDataSynBtn" class="btn btn-warning" type="button">数据同步 (百威)</button>
+                        <input type="button" id="signBillSupBtn" name="signBillSupBtn" class="btn btn-primary" value="数据同步 (挂账供应商)" />
                     </div>
+                    
+                    <input type="hidden" name="supplierBwIds" id="supplierBwIds"/>
                     <div class="span12"	style="margin-top: 10px;">
                         <input type="hidden" name="uuids" id="uuids"/>
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
+                                	<th	width="25" class="center">
+                                        <input id="checkAll" type="checkbox" />
+                                    </th>
                                     <th	width="45" class="center">
                                         序号
                                     </th>
@@ -66,6 +105,9 @@
                             <tbody>
                                 <c:forEach items="${supplierList}" var="supplier" varStatus="status">
                                     <tr>
+                                    	<td	class="center">
+                                        	<input type="checkbox" name="supplierBwId" value="${supplier.supplierBwId}"></input>
+                                        </td>
                                         <td	class="center">
                                             ${status.index + 1}
                                         </td>
