@@ -1,29 +1,39 @@
 package com.tjhx.entity.security;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-	private int 编号;
+import com.tjhx.entity.IdEntity;
 
-	private int 姓名;
-
-	private int 登录帐号;
-
-	private int 登录密码;
-
-	private int 性别;
-
-	private int 出生日期;
-
-	private int 手机号码;
-
-	private int 固定电话;
-
-	private int QQ号码;
-
-	private int 电子邮件;
-
-	private int 有效性;
-
-	private int 备注;
+/**
+ * 用户
+ */
+@Entity
+@Table(name = "T_USER")
+public class User extends IdEntity {
+	// 编号
+	private String code;
+	// 姓名
+	private String name;
+	// 登录帐号
+	private String loginName;
+	// 登录密码
+	private String passWord;
+	// 性别
+	private char sex;
+	// 出生日期
+	private String birthDay;
+	// 手机号码
+	private String phoneNum;
+	// 固定电话
+	private String telNum;
+	// QQ号码
+	private String qqNum;
+	// 电子邮件
+	private String emailAdd;
+	// 有效性
+	private byte valid;
+	// 备注
+	private String remark;
 
 }
