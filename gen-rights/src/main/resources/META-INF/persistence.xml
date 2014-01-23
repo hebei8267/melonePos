@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+	<!-- Keep this file empty, Spring will scan the @Entity classes -->
+	<persistence-unit name="defaultPU" transaction-type="RESOURCE_LOCAL">
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<properties>
+			<!-- 
+			validate			加载hibernate时,验证创建数据库表结构
+			create				每次加载hibernate,重新创建数据库表结构,这就是导致数据库表数据丢失的原因
+			create-drop			加载hibernate时创建,退出是删除表结构
+			update				加载hibernate自动更新数据库结构
+			-->
+            <property name="hibernate.hbm2ddl.auto" value="false" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+    	<!-- 	<property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.use_structured_entries" value ="true" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            <property name="hibernate.cache.provider_class" value="com.googlecode.hibernate.memcached.MemcachedCacheProvider" />
+            <property name="hibernate.memcached.servers" value="${memcached.url}" />
+            <property name="hibernate.memcached.cacheTimeSeconds" value="300" />
+             --><!-- 缓存失效时间,单位秒 -->
+        </properties>
+	</persistence-unit>
+</persistence>

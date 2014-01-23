@@ -50,7 +50,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.beans-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.context-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.context.support-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.core-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.core-3.1.1.RELEASE.jar" sourcepath="C:/Users/he_bei/.m2/repository/org/springframework/spring-core/3.1.1.RELEASE/spring-core-3.1.1.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.expression-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.jdbc-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.springframework.orm-3.1.1.RELEASE.jar"/>
