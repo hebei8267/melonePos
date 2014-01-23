@@ -76,7 +76,7 @@
         <script src="${ctx}/static/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
         <script src="${ctx}/static/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
         <script src="${ctx}/static/scripts/app.js" type="text/javascript"></script>
-        <script src="${ctx}/static/scripts/login-soft.js" type="text/javascript"></script>
+        <script src="${ctx}/static/jspExt/login.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <script>
             jQuery(document).ready(function() {
