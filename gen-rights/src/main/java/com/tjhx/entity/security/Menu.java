@@ -9,9 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ListIndexBase;
 import org.hibernate.annotations.NaturalId;
 
 import com.tjhx.entity.IdEntity;
@@ -27,11 +28,11 @@ public class Menu extends IdEntity {
 
 	/** 父菜单节点 */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "PARENT_MENU_H_ID")
+	@JoinColumn(name = "P_UUID")
 	private Menu parentMenu;
 
 	/** 父菜单编号 */
-	@Column(name = "PARENT_MENU_ID", length = 32)
+	@Column(name = "P_MENU_ID", length = 32)
 	private String parentId;
 
 	/** 菜单编号 */
@@ -51,8 +52,9 @@ public class Menu extends IdEntity {
 	private String remark;
 
 	/** 子菜单节点集合 */
-	@OneToMany(mappedBy = "parentMenu", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@OrderBy("index")
+	@OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ListIndexBase(1)
+	@OrderColumn(name = "_INDEX")
 	private List<Menu> subMenus;
 
 	/** 导航地址 */
@@ -79,6 +81,9 @@ public class Menu extends IdEntity {
 	 */
 	public void setParentMenu(Menu parentMenu) {
 		this.parentMenu = parentMenu;
+		if (null != parentMenu) {
+			this.parentId = parentMenu.getId();
+		}
 	}
 
 	/**
@@ -95,7 +100,7 @@ public class Menu extends IdEntity {
 	 * 
 	 * @param parentId 父菜单编号
 	 */
-	public void setParentId(String parentId) {
+	protected void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 

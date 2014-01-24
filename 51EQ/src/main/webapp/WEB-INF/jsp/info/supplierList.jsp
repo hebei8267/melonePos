@@ -106,7 +106,13 @@
                                 <c:forEach items="${supplierList}" var="supplier" varStatus="status">
                                     <tr>
                                     	<td	class="center">
-                                        	<input type="checkbox" name="supplierBwId" value="${supplier.supplierBwId}"></input>
+                                    		<c:if test="${empty	supplier._supplierBwId}" >
+                                    		<input type="checkbox" name="supplierBwId" value="${supplier.supplierBwId}"></input>
+                                    		</c:if>
+                                        	
+                                        	<c:if test="${!empty supplier._supplierBwId}" >
+                                    		<input type="checkbox" checked="true" name="supplierBwId" value="${supplier.supplierBwId}"></input>
+                                    		</c:if>
                                         </td>
                                         <td	class="center">
                                             ${status.index + 1}

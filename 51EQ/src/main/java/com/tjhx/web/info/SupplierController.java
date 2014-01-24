@@ -39,7 +39,7 @@ public class SupplierController extends BaseController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	public String supplierList_Action(Model model, HttpServletRequest request) {
-		List<Supplier> supplierList = supplierManager.getAllSupplier_DB();
+		List<Supplier> supplierList = supplierManager.getAllSupplierOfSignBill();
 
 		model.addAttribute("supplierList", supplierList);
 

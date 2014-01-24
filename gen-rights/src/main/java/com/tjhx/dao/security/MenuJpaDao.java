@@ -12,4 +12,6 @@ public interface MenuJpaDao extends CrudRepository<Menu, Integer> {
 
 	@SuppressWarnings("rawtypes")
 	public Iterable findAll(Sort sort);
+
+	public Menu findById(String menuId);
 }

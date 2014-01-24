@@ -66,6 +66,15 @@ public class SupplierManager {
 	}
 
 	/**
+	 * 取得所有货品供应商(含挂账)信息
+	 * 
+	 * @return
+	 */
+	public List<Supplier> getAllSupplierOfSignBill() {
+		return supplierSignBillMyBatisDao.getAllSupplierINfo_SignBill();
+	}
+
+	/**
 	 * 取得所有货品供应商信息
 	 * 
 	 * @return 货品供应商信息列表

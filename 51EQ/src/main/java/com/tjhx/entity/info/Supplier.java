@@ -40,6 +40,9 @@ public class Supplier extends IdEntity {
 	/** 显示标记 0-正常 1-删除 */
 	private String delFlg;
 
+	/** 挂账供应商编号-百威 */
+	private String _supplierBwId;
+
 	/**
 	 * 取得供应商编号-百威
 	 * 
@@ -196,6 +199,25 @@ public class Supplier extends IdEntity {
 	 */
 	public void setDelFlg(String delFlg) {
 		this.delFlg = delFlg;
+	}
+
+	/**
+	 * 取得挂账供应商编号-百威
+	 * 
+	 * @return _supplierBwId 挂账供应商编号-百威
+	 */
+	@Transient
+	public String get_supplierBwId() {
+		return _supplierBwId;
+	}
+
+	/**
+	 * 设置挂账供应商编号-百威
+	 * 
+	 * @param _supplierBwId 挂账供应商编号-百威
+	 */
+	public void set_supplierBwId(String _supplierBwId) {
+		this._supplierBwId = _supplierBwId;
 	}
 
 }
