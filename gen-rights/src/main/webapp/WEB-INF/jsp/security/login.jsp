@@ -7,7 +7,7 @@
 <html>
     <head>
         <link href="${ctx}/static/plugins/select2/select2_metro.css" rel="stylesheet" type="text/css" />
-        <link href="${ctx}/static/css/pages/login-soft.css" rel="stylesheet" type="text/css"/>
+        <link href="${ctx}/static/css/pages/login.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="login">
 
@@ -18,7 +18,7 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="login-form" action="index.html" method="post">
+            <form class="login-form" action="${sc_ctx}/userSecurity/login" method="post">
                 <h3 class="form-title">请输入用户名和密码</h3>
 
                 <div class="form-group">
@@ -70,7 +70,7 @@
         </div>
         <!-- END LOGIN -->
         
-        <%@ include file="/WEB-INF/layouts/commonFooter.jsp"%>
+        <%@ include file="/WEB-INF/layouts/loginFooter.jsp"%>
         
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <script src="${ctx}/static/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
