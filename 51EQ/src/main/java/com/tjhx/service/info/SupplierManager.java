@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -14,13 +15,13 @@ import org.springside.modules.cache.memcached.SpyMemcachedClient;
 
 import com.tjhx.dao.info.RegionJpaDao;
 import com.tjhx.dao.info.SupplierJpaDao;
-import com.tjhx.dao.info.SupplierSignBillJpaDao;
-import com.tjhx.dao.info.SupplierSignBillMyBatisDao;
+import com.tjhx.dao.info.SupplierSignJpaDao;
+import com.tjhx.dao.info.SupplierSignMyBatisDao;
 import com.tjhx.daobw.SupplierCustomMyBatisDao;
 import com.tjhx.entity.bw.SupplierCustom;
 import com.tjhx.entity.info.Region;
 import com.tjhx.entity.info.Supplier;
-import com.tjhx.entity.info.SupplierSignBill;
+import com.tjhx.entity.info.SupplierSign;
 import com.tjhx.globals.MemcachedObjectType;
 import com.tjhx.service.ServiceException;
 
@@ -37,9 +38,9 @@ public class SupplierManager {
 	@Resource
 	private SupplierCustomMyBatisDao supplierCustomMyBatisDao;
 	@Resource
-	private SupplierSignBillMyBatisDao supplierSignBillMyBatisDao;
+	private SupplierSignMyBatisDao supplierSignMyBatisDao;
 	@Resource
-	private SupplierSignBillJpaDao supplierSignBillJpaDao;
+	private SupplierSignJpaDao supplierSignJpaDao;
 
 	/**
 	 * 取得所有货品供应商信息
@@ -71,7 +72,7 @@ public class SupplierManager {
 	 * @return
 	 */
 	public List<Supplier> getAllSupplierOfSignBill() {
-		return supplierSignBillMyBatisDao.getAllSupplierINfo_SignBill();
+		return supplierSignMyBatisDao.getAllSupplierInfo_Sign();
 	}
 
 	/**
@@ -242,18 +243,19 @@ public class SupplierManager {
 	 */
 	public void signBillSupDataSyn(String[] supIdArray) {
 		// 删除所有挂账供应商信息
-		supplierSignBillMyBatisDao.delAllSignBillSupplierInfo();
+		supplierSignMyBatisDao.delAllSignSupplierInfo();
 
 		for (int i = 0; i < supIdArray.length; i++) {
+			if (StringUtils.isBlank(supIdArray[i])) {
+				continue;
+			}
 			Supplier _supplier = supplierJpaDao.findBySupplierBwId(supIdArray[i]);
 
-			SupplierSignBill _supplierSignBill = new SupplierSignBill();
+			SupplierSign _supplierSignBill = new SupplierSign();
 			// 供应商编号-百威
 			_supplierSignBill.setSupplierBwId(_supplier.getSupplierBwId());
-			// 供应商名称
-			_supplierSignBill.setName(_supplier.getName());
 
-			supplierSignBillJpaDao.save(_supplierSignBill);
+			supplierSignJpaDao.save(_supplierSignBill);
 		}
 	}
 

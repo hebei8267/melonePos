@@ -9,19 +9,17 @@ import org.hibernate.annotations.NaturalId;
 import com.tjhx.entity.IdEntity;
 
 /**
- * 挂账-货品供应商
+ * 特殊标记-货品供应商
  */
 @Entity
-@Table(name = "T_SUPPLIER_SIGN_BILL")
+@Table(name = "T_SUPPLIER_SIGN")
 // 默认的缓存策略.
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SupplierSignBill extends IdEntity {
+public class SupplierSign extends IdEntity {
 
 	private static final long serialVersionUID = -4395886566980678797L;
 	/** 供应商编号-百威 */
 	private String supplierBwId;
-	/** 供应商名称 */
-	private String name;
 
 	/**
 	 * 取得供应商编号-百威
@@ -41,24 +39,5 @@ public class SupplierSignBill extends IdEntity {
 	 */
 	public void setSupplierBwId(String supplierBwId) {
 		this.supplierBwId = supplierBwId;
-	}
-
-	/**
-	 * 取得供应商名称
-	 * 
-	 * @return name 供应商名称
-	 */
-	@Column(nullable = false, length = 32)
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * 设置供应商名称
-	 * 
-	 * @param name 供应商名称
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 }

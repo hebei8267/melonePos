@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.tjhx.dao.info.SupplierSignBillMyBatisDao">
-	<delete id="delAllSignBillSupplierInfo">
-        DELETE FROM t_supplier_sign_bill
+<mapper namespace="com.tjhx.dao.info.SupplierSignMyBatisDao">
+	<delete id="delAllSignSupplierInfo">
+        DELETE FROM t_supplier_sign
     </delete>
     
     
@@ -26,7 +26,7 @@
 	</resultMap>
     
     <!-- 取得所有货品供应商(含挂账)信息 -->
-	<select id="getAllSupplierINfo_SignBill" resultMap="Result_Map_Supplier">
+	<select id="getAllSupplierInfo_Sign" resultMap="Result_Map_Supplier">
 	<![CDATA[
 		SELECT
 		    s.uuid ,
@@ -44,7 +44,7 @@
 	    	s.region_uuid ,
 		    ss.supplier_bw_id as ss_supplier_bw_id
 		FROM
-		    t_supplier s left join t_supplier_sign_bill ss on s.supplier_bw_id = ss.supplier_bw_id
+		    t_supplier s left join t_supplier_sign ss on s.supplier_bw_id = ss.supplier_bw_id
 	]]>
 	</select>
 </mapper>

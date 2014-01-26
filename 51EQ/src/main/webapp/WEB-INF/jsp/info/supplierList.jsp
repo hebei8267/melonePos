@@ -12,13 +12,6 @@
     <head>
         <script>
             $().ready(function() {
-            	$("#listForm").validate({
-                    rules : {
-                    	signBillSupBtn : {
-                            requiredSelect : 'supplierBwId'
-                        }
-                    }
-                });
             	//-----------------------------------
                 // 全选/全部选
                 //-----------------------------------
@@ -70,7 +63,7 @@
                     </div>
                     <div class="span12">
                         <button	id="bwDataSynBtn" class="btn btn-warning" type="button">数据同步 (百威)</button>
-                        <input type="button" id="signBillSupBtn" name="signBillSupBtn" class="btn btn-primary" value="数据同步 (挂账供应商)" />
+                        <input type="button" id="signBillSupBtn" name="signBillSupBtn" class="btn btn-primary" value="数据同步 (标记供应商)" />
                     </div>
                     
                     <input type="hidden" name="supplierBwIds" id="supplierBwIds"/>
