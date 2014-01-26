@@ -18,4 +18,11 @@ public interface SupplierSignMyBatisDao {
 	 */
 	public List<Supplier> getAllSupplierInfo_Sign();
 
+	/**
+	 * 取得货品供应商列表
+	 * 
+	 * @param supplierSign
+	 * @return
+	 */
+	public List<Supplier> getSupplierList(String optYear);
 }

@@ -75,6 +75,16 @@ public class SupplierSignRun extends IdEntity {
 	/** 备注 */
 	private String descTxt;
 
+	public SupplierSignRun() {
+
+	}
+
+	public SupplierSignRun(String supplierBwId, String optDateY, String optDateM) {
+		this.supplierBwId = supplierBwId;
+		this.optDateY = optDateY;
+		this.optDateM = optDateM;
+	}
+
 	/**
 	 * 取得供应商编号-百威
 	 * 

@@ -294,6 +294,9 @@
 			                	<li>
 			                   		<a href="${sc_ctx}/punchClock/manage">考勤信息(查看)</a>
 			                 	</li>
+			                 	<li>
+	                                <a href="${sc_ctx}/supplierSignRun/init">挂账供应商结算进度表</a>
+	                            </li>
 		                 	</c:if>
                         </ul>
                     </li>
