@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tjhx.entity.info.SupplierSignRun_Show;
+import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.info.SupplierSignRunManager;
 import com.tjhx.web.BaseController;
 
@@ -22,6 +24,8 @@ import com.tjhx.web.BaseController;
 public class SupplierSignRunController extends BaseController {
 	@Resource
 	private SupplierSignRunManager supplierSignRunManager;
+	@Resource
+	private SupplierManager supplierManager;
 
 	private void initYearList(Model model) {
 		Map<String, String> yearList = new LinkedHashMap<String, String>();
@@ -69,5 +73,27 @@ public class SupplierSignRunController extends BaseController {
 
 		model.addAttribute("supSignRunList", _supSignRunList);
 		return "info/supplierSignRunList";
+	}
+
+	@RequestMapping(value = "editInit/{supId}/{optDateY}")
+	public String edit_Action(@PathVariable("supId") String supId, @PathVariable("optDateY") String optDateY,
+			Model model) {
+		model.addAttribute("supId", supId);
+		model.addAttribute("optDateY", optDateY);
+		model.addAttribute("supName", supplierManager.getSupplierByBwId(supId).getName());
+
+		return "info/supplierSignRunForm";
+	}
+
+	// 赊购挂账-不挂
+	@RequestMapping(value = "noLoan")
+	public String noLoan_Action(Model model, HttpServletRequest request) {
+		return null;
+	}
+
+	// 赊购挂账-挂账
+	@RequestMapping(value = "loan")
+	public String loan_Action(Model model, HttpServletRequest request) {
+		return null;
 	}
 }

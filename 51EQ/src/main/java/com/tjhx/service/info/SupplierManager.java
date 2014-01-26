@@ -67,6 +67,23 @@ public class SupplierManager {
 	}
 
 	/**
+	 * 取得所有货品供应商根据供应商百威编号
+	 * 
+	 * @param supplierBwId 供应商百威编号
+	 * @return
+	 */
+	public Supplier getSupplierByBwId(String supplierBwId) {
+		List<Supplier> _supplierList = getAllSupplier();
+
+		for (Supplier supplier : _supplierList) {
+			if (supplier.getSupplierBwId().equals(supplierBwId)) {
+				return supplier;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 取得所有货品供应商(含挂账)信息
 	 * 
 	 * @return

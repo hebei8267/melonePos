@@ -89,7 +89,7 @@
                             		<td></td>
                             		</c:forEach>
                             		<td rowspan="6">
-                            		<a href="${sc_ctx}/supplierSignRun/${supplier.supplierBwId}/${optDateY}" class="btn btn-warning" target="_blank"/>编辑</a>
+                            		<a href="${sc_ctx}/supplierSignRun/editInit/${supplier.supplierBwId}/${optDateY}" class="btn btn-warning" />编辑</a>
                             		</td>
                             	</tr>
                             	<tr>
