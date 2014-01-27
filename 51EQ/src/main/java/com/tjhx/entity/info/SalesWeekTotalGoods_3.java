@@ -32,6 +32,8 @@ public class SalesWeekTotalGoods_3 extends IdEntity {
 	private String itemBarcode;
 	/** 销售数量-近1周 */
 	private BigDecimal posQty;
+	/** 销售金额 */
+	private BigDecimal posAmt;
 
 	/**
 	 * 取得机构编号
@@ -149,4 +151,24 @@ public class SalesWeekTotalGoods_3 extends IdEntity {
 		this.posQty = posQty;
 	}
 
+	/**
+	 * 取得销售金额
+	 * 
+	 * @return posAmt 销售金额
+	 */
+	public BigDecimal getPosAmt() {
+		if (null == posAmt) {
+			return new BigDecimal(0);
+		}
+		return posAmt;
+	}
+
+	/**
+	 * 设置销售金额
+	 * 
+	 * @param posAmt 销售金额
+	 */
+	public void setPosAmt(BigDecimal posAmt) {
+		this.posAmt = posAmt;
+	}
 }

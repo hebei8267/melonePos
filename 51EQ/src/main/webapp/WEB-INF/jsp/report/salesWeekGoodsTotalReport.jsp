@@ -46,7 +46,23 @@
                             <h3>商品周销售信息一览</h3>
                         </legend>
                     </div>
-                    <div class="span3">
+                    <div class="span12">
+                        <label class="control-label">排序方式 :</label>
+                        <c:set var = "qty" value="qty"/>
+                      	<c:if test="${orderMode.equals(qty)}" >
+	                      	<input type="radio" name="orderMode" value="qty" checked="checked">
+				  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+				  			<input type="radio" name="orderMode" value="amt">
+				  			<span style="background-color: #62c462; padding: 5px">销售额</span>
+                      	</c:if>
+			            <c:if test="${!orderMode.equals(qty)}" >
+	                      	<input type="radio" name="orderMode" value="qty">
+				  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+				  			<input type="radio" name="orderMode" value="amt" checked="checked">
+				  			<span style="background-color: #62c462; padding: 5px">销售额</span>
+                      	</c:if>
+                    </div>
+                    <div class="span3" style="margin-top: 20px;">
                         <label class="control-label">机构 :</label>
                         <select name="orgId" class="input-medium">
                             <c:forEach items="${orgList}" var="org">
@@ -59,7 +75,7 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="span9">
+                    <div class="span9" style="margin-top: 20px;">
                         <label class="control-label">货号/条码 :</label>
                         <input id="barcode" name="barcode" type="text" class="input-medium" value="${barcode }"/>
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
@@ -68,32 +84,55 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th rowspan="2" class="center">
                                         货号
                                     </th>
-                                    <th>
+                                    <th rowspan="2" class="center">
                                         名称
                                     </th>
-                                    <th>
-                                        近一周(销量)
+                                    <th colspan="6" class="center">
+                                        销量(件)
                                     </th>
-                                    <th>
-                                        近两周(销量)
+                                    <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        销售额(元)
                                     </th>
-                                    <th>
-                                        近三周(销量)
+                                    <th	width="55" rowspan="2">
+                                        &nbsp;
                                     </th>
-                                    <th>
-                                        近四周(销量)
+                                </tr>
+                                <tr>
+                                	<th class="center">
+                                        近一周
                                     </th>
-                                    <th>
-                                        合计(销量)
+                                    <th class="center">
+                                        近二周
                                     </th>
-                                    <th>
+                                    <th class="center">
+                                        近三周
+                                    </th>
+                                    <th class="center">
+                                        近四周
+                                    </th>
+                                    <th class="center">
+                                        合计
+                                    </th>
+                                    <th class="center">
                                         库存量
                                     </th>
-                                    <th	width="55">
-                                        &nbsp;
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        近一周
+                                    </th>
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        近二周
+                                    </th>
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        近三周
+                                    </th>
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        近四周
+                                    </th>
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                        合计
                                     </th>
                                 </tr>
                             </thead>
@@ -125,6 +164,21 @@
                                         	${salesWeekGoods.stockQty}
                                         </td>
                                         <td>
+                                        	${salesWeekGoods.posAmt1}
+                                        </td>
+                                        <td>
+                                        	${salesWeekGoods.posAmt2}
+                                        </td>
+                                        <td>
+                                        	${salesWeekGoods.posAmt3}
+                                        </td>
+                                        <td>
+                                        	${salesWeekGoods.posAmt4}
+                                        </td>
+                                        <td>
+                                        	${salesWeekGoods.posAmtTotal}
+                                        </td>
+                                        <td>
                                             <a href="${sc_ctx}/salesWeekGoodsTotalReport/contrast/${salesWeekGoods.barcode}" target="_blank" class="btn btn-warning"/>对比</a>
                                         </td>
                                     </tr>
@@ -133,7 +187,7 @@
                             <c:if test="${empty	salesWeekGoodsList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="8"	class="rounded-foot-left">
+                                        <td	colspan="14" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>

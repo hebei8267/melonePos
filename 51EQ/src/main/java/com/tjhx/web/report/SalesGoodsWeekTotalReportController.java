@@ -31,6 +31,8 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 
+		model.addAttribute("orderMode", "qty");
+
 		return "report/salesWeekGoodsTotalReport";
 	}
 
@@ -40,10 +42,17 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String barcode = ServletRequestUtils.getStringParameter(request, "barcode");
+		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("barcode", barcode);
+		model.addAttribute("orderMode", orderMode);
 
-		List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByOrg(orgId,barcode);
+		List<ReqBill> salesWeekGoodsList = null;
+		if (orderMode.equals("qty")) {// 按销量排序
+			salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByOrg_OrderQty(orgId, barcode);
+		} else {// 按销售额排序
+			salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByOrg_OrderAmt(orgId, barcode);
+		}
 		model.addAttribute("salesWeekGoodsList", salesWeekGoodsList);
 		return "report/salesWeekGoodsTotalReport";
 	}

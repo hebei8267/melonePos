@@ -72,7 +72,8 @@
 	    g.branch_no ,
 	    g.item_subno ,
 	    g.item_barcode ,
-	    SUM(g.pos_qty) AS pos_qty
+	    SUM(g.pos_qty) AS pos_qty ,
+	    SUM(g.pos_amt) AS pos_amt
 	FROM
 	    t_sales_day_total_goods g
 	WHERE

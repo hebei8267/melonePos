@@ -27,14 +27,23 @@ public interface SalesWeekTotalGoodsMyBatisDao {
 	public void delSalesWeekTotalGoodsInfo_4();
 
 	/**
-	 * 取得指定门店近四周销售数据及库存情况
+	 * 取得指定门店近四周销售数据及库存情况-按销量排序
 	 * 
 	 * @param orgId 门店编号
 	 * @param barcode 货号/条码
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(ReqBill reqBill);
- 
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg_OrderQty(ReqBill reqBill);
+
+	/**
+	 * 取得指定门店近四周销售数据及库存情况-按销售额排序
+	 * 
+	 * @param orgId 门店编号
+	 * @param barcode 货号/条码
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg_OrderAmt(ReqBill reqBill);
+
 	/**
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 

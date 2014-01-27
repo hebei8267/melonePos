@@ -94,6 +94,8 @@ public class SalesWeekTotalGoodsManager {
 			_s.setItemBarcode(_salesGoods.getItemBarcode());
 			// 销售数量-近1周
 			_s.setPosQty(_salesGoods.getPosQty());
+			// 销售金额-近1周
+			_s.setPosAmt(_salesGoods.getPosAmt());
 
 			salesWeekTotalGoods1JpaDao.save(_s);
 		}
@@ -125,8 +127,10 @@ public class SalesWeekTotalGoodsManager {
 			_s.setItemSubno(_salesGoods.getItemSubno());
 			// 长条码
 			_s.setItemBarcode(_salesGoods.getItemBarcode());
-			// 销售数量-近1周
+			// 销售数量-近2周
 			_s.setPosQty(_salesGoods.getPosQty());
+			// 销售金额-近2周
+			_s.setPosAmt(_salesGoods.getPosAmt());
 
 			salesWeekTotalGoods2JpaDao.save(_s);
 		}
@@ -158,8 +162,10 @@ public class SalesWeekTotalGoodsManager {
 			_s.setItemSubno(_salesGoods.getItemSubno());
 			// 长条码
 			_s.setItemBarcode(_salesGoods.getItemBarcode());
-			// 销售数量-近1周
+			// 销售数量-近3周
 			_s.setPosQty(_salesGoods.getPosQty());
+			// 销售金额-近3周
+			_s.setPosAmt(_salesGoods.getPosAmt());
 
 			salesWeekTotalGoods3JpaDao.save(_s);
 		}
@@ -191,25 +197,41 @@ public class SalesWeekTotalGoodsManager {
 			_s.setItemSubno(_salesGoods.getItemSubno());
 			// 长条码
 			_s.setItemBarcode(_salesGoods.getItemBarcode());
-			// 销售数量-近1周
+			// 销售数量-近4周
 			_s.setPosQty(_salesGoods.getPosQty());
+			// 销售金额-近4周
+			_s.setPosAmt(_salesGoods.getPosAmt());
 
 			salesWeekTotalGoods4JpaDao.save(_s);
 		}
 	}
 
 	/**
-	 * 取得指定门店近四周销售数据及库存情况
+	 * 取得指定门店近四周销售数据及库存情况-按销量排序
 	 * 
 	 * @param orgId 门店编号
 	 * @param barcode 货号/条码
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg(String orgId, String barcode) {
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg_OrderQty(String orgId, String barcode) {
 		ReqBill param = new ReqBill();
 		param.setOrgId(orgId);
 		param.setBarcode(barcode);
-		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg(param);
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg_OrderQty(param);
+	}
+
+	/**
+	 * 取得指定门店近四周销售数据及库存情况-按销售额排序
+	 * 
+	 * @param orgId 门店编号
+	 * @param barcode 货号/条码
+	 * @return
+	 */
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByOrg_OrderAmt(String orgId, String barcode) {
+		ReqBill param = new ReqBill();
+		param.setOrgId(orgId);
+		param.setBarcode(barcode);
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByOrg_OrderAmt(param);
 	}
 
 	/**

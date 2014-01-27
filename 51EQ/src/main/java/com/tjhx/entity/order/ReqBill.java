@@ -64,6 +64,17 @@ public class ReqBill extends IdEntity {
 	/** 建议采购数量-高（平均值×2） */
 	private BigDecimal highPurchase;
 
+	/** 销售金额-合计 */
+	private BigDecimal posAmtTotal;
+	/** 销售金额-近1周 */
+	private BigDecimal posAmt1;
+	/** 销售金额-近2周 */
+	private BigDecimal posAmt2;
+	/** 销售金额-近3周 */
+	private BigDecimal posAmt3;
+	/** 销售金额-近4周 */
+	private BigDecimal posAmt4;
+
 	/**
 	 * 取得处理批次号
 	 * 
@@ -461,6 +472,101 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setHighPurchase(BigDecimal highPurchase) {
 		this.highPurchase = highPurchase;
+	}
+
+	/**
+	 * 取得销售金额-合计
+	 * 
+	 * @return posAmtTotal 销售金额-合计
+	 */
+	@Transient
+	public BigDecimal getPosAmtTotal() {
+		return posAmtTotal;
+	}
+
+	/**
+	 * 设置销售金额-合计
+	 * 
+	 * @param posAmtTotal 销售金额-合计
+	 */
+	public void setPosAmtTotal(BigDecimal posAmtTotal) {
+		this.posAmtTotal = posAmtTotal;
+	}
+
+	/**
+	 * 取得销售金额-近1周
+	 * 
+	 * @return posAmt1 销售金额-近1周
+	 */
+	@Transient
+	public BigDecimal getPosAmt1() {
+		return posAmt1;
+	}
+
+	/**
+	 * 设置销售金额-近1周
+	 * 
+	 * @param posAmt1 销售金额-近1周
+	 */
+	public void setPosAmt1(BigDecimal posAmt1) {
+		this.posAmt1 = posAmt1;
+	}
+
+	/**
+	 * 取得销售金额-近2周
+	 * 
+	 * @return posAmt2 销售金额-近2周
+	 */
+	@Transient
+	public BigDecimal getPosAmt2() {
+		return posAmt2;
+	}
+
+	/**
+	 * 设置销售金额-近2周
+	 * 
+	 * @param posAmt2 销售金额-近2周
+	 */
+	public void setPosAmt2(BigDecimal posAmt2) {
+		this.posAmt2 = posAmt2;
+	}
+
+	/**
+	 * 取得销售金额-近3周
+	 * 
+	 * @return posAmt3 销售金额-近3周
+	 */
+	@Transient
+	public BigDecimal getPosAmt3() {
+		return posAmt3;
+	}
+
+	/**
+	 * 设置销售金额-近3周
+	 * 
+	 * @param posAmt3 销售金额-近3周
+	 */
+	public void setPosAmt3(BigDecimal posAmt3) {
+		this.posAmt3 = posAmt3;
+	}
+
+	/**
+	 * 取得销售金额-近4周
+	 * 
+	 * @return posAmt4 销售金额-近4周
+	 */
+	@Transient
+	public BigDecimal getPosAmt4() {
+		return posAmt4;
+	}
+
+	/**
+	 * 设置销售金额-近4周
+	 * 
+	 * @param posAmt4 销售金额-近4周
+	 */
+	public void setPosAmt4(BigDecimal posAmt4) {
+		this.posAmt4 = posAmt4;
 	}
 
 }
