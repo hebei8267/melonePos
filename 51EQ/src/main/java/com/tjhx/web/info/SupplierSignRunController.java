@@ -14,7 +14,10 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tjhx.common.utils.DateUtils;
+import com.tjhx.entity.info.SupplierSignRun;
 import com.tjhx.entity.info.SupplierSignRun_Show;
+import com.tjhx.globals.Constants;
 import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.info.SupplierSignRunManager;
 import com.tjhx.web.BaseController;
@@ -95,5 +98,44 @@ public class SupplierSignRunController extends BaseController {
 	@RequestMapping(value = "loan")
 	public String loan_Action(Model model, HttpServletRequest request) {
 		return null;
+	}
+
+	/**
+	 * 对账通知保存
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "noticeSave")
+	public String noticeSave_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		// 供应商编号-百威
+		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
+		// 日期-年
+		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
+		// 日期-月
+		String optDateM = ServletRequestUtils.getStringParameter(request, "optDateM");
+		// 流水类型
+		String runType = ServletRequestUtils.getStringParameter(request, "runType");
+		// 通知时间
+		String checkNoticeDate = ServletRequestUtils.getStringParameter(request, "checkNoticeDate");
+		// 通知方式
+		String noticeMode = ServletRequestUtils.getStringParameter(request, "noticeMode");
+		// 备注
+		String descTxt = ServletRequestUtils.getStringParameter(request, "descTxt");
+
+		SupplierSignRun run = new SupplierSignRun();
+		run.setSupplierBwId(supplierBwId);
+		run.setOptDateY(optDateY);
+		run.setOptDateM(optDateM);
+		run.setRunType(runType);
+		run.setCheckDate(DateUtils.transDateFormat(checkNoticeDate, "yyyy-MM-dd", "yyyyMMdd"));
+		run.setNoticeMode(noticeMode);
+		run.setDescTxt(descTxt);
+		supplierSignRunManager.saveRunInfo(run);
+
+		//TODO
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
 	}
 }

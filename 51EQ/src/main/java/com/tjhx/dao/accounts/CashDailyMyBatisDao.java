@@ -12,6 +12,8 @@ public interface CashDailyMyBatisDao {
 
 	public List<CashDaily> getCashDailyChartList(CashDaily cashDaily);
 
+	public List<CashDaily> getAllOrgCashDailyChartList(CashDaily cashDaily);
+
 	/**
 	 * 取得指定机构最终销售流水日结信息
 	 * 

@@ -31,7 +31,7 @@ public class CashChartReportController extends BaseController {
 	@RequestMapping(value = { "list", "" })
 	public String cashChartReportList_Action(Model model) throws ServletRequestBindingException {
 
-		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		return "report/cashChartReport";
 	}
@@ -46,7 +46,7 @@ public class CashChartReportController extends BaseController {
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("optDateShow", optDateShow);
 
-		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		if (StringUtils.isNotBlank(orgId)) {
 			_cashDaily.setOrgId(orgId);
@@ -58,12 +58,18 @@ public class CashChartReportController extends BaseController {
 			_cashDaily.setOptDateM(DateUtils.transDateFormat(optDateShow, "yyyy-MM", "MM"));
 		}
 
-		List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportList(_cashDaily);
+		if (StringUtils.isNotBlank(orgId)) {// 单个机构
+			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportListByOrg(_cashDaily);
+			formatData(_cashDailyList);
+			JsonMapper mapper = new JsonMapper();
+			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
+		} else {// 所有机构
+			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportList(_cashDaily);
+			formatData(_cashDailyList);
+			JsonMapper mapper = new JsonMapper();
+			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
+		}
 
-		formatData(_cashDailyList);
-
-		JsonMapper mapper = new JsonMapper();
-		model.addAttribute("data_set", mapper.toJson(_cashDailyList));
 		model.addAttribute("showFlg", true);
 
 		return "report/cashChartReport";

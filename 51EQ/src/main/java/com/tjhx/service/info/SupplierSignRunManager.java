@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tjhx.dao.info.SupplierSignMyBatisDao;
+import com.tjhx.dao.info.SupplierSignRunJpaDao;
 import com.tjhx.entity.info.Supplier;
+import com.tjhx.entity.info.SupplierSignRun;
 import com.tjhx.entity.info.SupplierSignRun_Show;
 
 @Service
@@ -17,6 +19,8 @@ import com.tjhx.entity.info.SupplierSignRun_Show;
 public class SupplierSignRunManager {
 	@Resource
 	private SupplierSignMyBatisDao supplierSignMyBatisDao;
+	@Resource
+	private SupplierSignRunJpaDao supplierSignRunJpaDao;
 
 	/**
 	 * 取得特殊标记-货品供应商信息列表
@@ -48,5 +52,26 @@ public class SupplierSignRunManager {
 		}
 
 		return _list;
+	}
+
+	/**
+	 * 保存特殊标记-货品供应商 流水信息
+	 * 
+	 * @param run
+	 */
+	@Transactional(readOnly = false)
+	public void saveRunInfo(SupplierSignRun run) {
+		SupplierSignRun _dbRun = supplierSignRunJpaDao.findSupplierSignRunByNaturalId(run.getSupplierBwId(),
+				run.getOptDateY(), run.getOptDateM(), run.getRunType());
+
+		if (null == _dbRun) {// 新增
+			supplierSignRunJpaDao.save(run);
+		} else {// 更新
+			_dbRun.setCheckDate(run.getCheckDate());
+			_dbRun.setNoticeMode(run.getNoticeMode());
+			_dbRun.setDescTxt(run.getDescTxt());
+			supplierSignRunJpaDao.save(_dbRun);
+		}
+
 	}
 }

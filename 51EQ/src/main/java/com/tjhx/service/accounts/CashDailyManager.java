@@ -541,13 +541,23 @@ public class CashDailyManager {
 	}
 
 	/**
-	 * 取得销售流水日结信息(准备图形化显示数据)
+	 * 取得销售流水日结信息(准备图形化显示数据)--单个机构
+	 * 
+	 * @param cashDaily
+	 * @return
+	 */
+	public List<CashDaily> searchChartReportListByOrg(CashDaily cashDaily) {
+		return cashDailyMyBatisDao.getCashDailyChartList(cashDaily);
+	}
+	
+	/**
+	 * 取得销售流水日结信息(准备图形化显示数据)--所有机构
 	 * 
 	 * @param cashDaily
 	 * @return
 	 */
 	public List<CashDaily> searchChartReportList(CashDaily cashDaily) {
-		return cashDailyMyBatisDao.getCashDailyChartList(cashDaily);
+		return cashDailyMyBatisDao.getAllOrgCashDailyChartList(cashDaily);
 	}
 
 	/**

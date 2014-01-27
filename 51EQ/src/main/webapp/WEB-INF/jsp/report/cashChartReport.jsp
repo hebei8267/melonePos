@@ -20,9 +20,6 @@
                     	optDateShow : {
                     		required : true,
                     		date : true                    		
-                        },
-                        orgId : {
-                    		required : true                		
                         }
                     }
                 });

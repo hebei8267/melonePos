@@ -17,30 +17,62 @@
     	</style>
         <script>
         $(function() {
+        	// tab默认不显示
+        	$("#tabDiv").hide();
+        	
         	$('a[data-toggle="tab"]').on('shown', function (e) {
         		//alert(e.currentTarget.hash)
         	});
         	
+        	$("#optDateM").change(function(){
+        		var checkValue = $("#optDateM").val();
+        		if (checkValue == "00"){
+        			$("#tabDiv").hide();
+        		} else {
+        			$("#tabDiv").show();
+        			$("#noticeForm_optDateM").val(checkValue);
+        		}
+        	});
+        	
         	$('#myTab a:first').tab('show');
         	
+        	
+        	//=======================================================================
         	//赊购挂账-不挂
         	$("#noLoan").click(function() {
-
                 $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/noLoan");
                 $("#loanForm").submit();
             });
         	
         	//赊购挂账-挂账
         	$("#loan").click(function() {
-
                 $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/loan");
                 $("#loanForm").submit();
             });
             
-            $("#noticeForm").click(function() {//TODO ??????????????????? 效验
+            
+            //=======================================================================
+            $("#noticeForm").validate({
+                rules : {
+                	checkNoticeDate : {
+                        required : true,
+                        date : true
+                    },
+                    noticeMode : {
+                        required : true
+                    },
+                    descTxt : {
+                        maxlength : 255
+                    }
+                }
+            });
+            $("#notice_saveBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
 
-                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/loan");
-                $("#loanForm").submit();
+                $("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/noticeSave");
+                $("#noticeForm").submit();
             });
         });
         </script>
@@ -56,8 +88,10 @@
                  		<h3>挂账供应商结算进度 编辑</h3>
                		</legend>
               	</div>
-                    
-	      		<div class="span12"	style="margin-top: 10px;">
+                <div class="span2" style="padding-left: 35px;">
+		        	<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		    	</div>
+	      		<div class="span12"	style="margin-top: 20px;">
 		      		<form id="tmp1Form" class="form-horizontal">
 		            	<div class="control-group">
 		           			<label class="control-label">供应商 :</label>
@@ -74,7 +108,7 @@
 		              	<div class="control-group">
 		                    <label class="control-label">月份 :</label>
 		                 	<div class="controls">
-		                    	<select name="optDateM" class="input-small">
+		                    	<select id="optDateM" name="optDateM" class="input-small">
 		                    		<option value="00"></option>
 		                    		<option value="01">01</option>
 		                    		<option value="02">02</option>
@@ -89,10 +123,10 @@
 		                    		<option value="11">11</option>
 		                    		<option value="12">12</option>
 		                    	</select>
-		                 	</div>
+		                 	</div>		                 	
 		              	</div>
 		  			</form>
-		  			
+		  			<div id="tabDiv">
 		  			<ul id="myTab" class="nav nav-tabs">
 		              <li><a href="#loan" data-toggle="tab">赊购挂账</a></li>
 		              <li><a href="#notice" data-toggle="tab">对账通知</a></li>
@@ -108,14 +142,17 @@
 					  		<form id="loanForm" class="form-horizontal" action="">
 					  			<br>
 					  			<button id="noLoan" class="btn btn-large btn-success">不挂</button>&nbsp;
-								<button id="loan" class="btn btn-large btn-warning">挂账</button>&nbsp;
-								<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+								<button id="loan" class="btn btn-large btn-warning">挂账</button>
 							</form>
 				  		</div>
 				  		
 				  		
 				  		<div class="tab-pane" id="notice">
 				  			<form id="noticeForm" class="form-horizontal" action="">
+				  				<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="noticeForm_optDateM" value="">
+				  				<input type="hidden" name="runType" value="2">
 					  			<div class="control-group">
 	                            	<label class="control-label">通知时间 :</label>
 	                            	<div class="controls">
@@ -125,12 +162,13 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label">通知方式  :</label>
 	                            	<div class="controls">
-		                                <input type="radio" name="noticeMode" id="noticeMode1" value="1" >
-		  								电话
-		  								<input type="radio" name="noticeMode" id="noticeMode2" value="2">
-		  								网络
-		  								<input type="radio" name="noticeMode" id="noticeMode3" value="3">
-		  								捎信
+			                         	<input type="radio" name="noticeMode" id="noticeMode1" value="1">
+			  							电话
+			  							<input type="radio" name="noticeMode" id="noticeMode2" value="2">
+			  							网络
+			  							<input type="radio" name="noticeMode" id="noticeMode3" value="3">
+			  							捎信
+		                            	<label for="noticeMode" class="error" style="display: none;">请填写此字段</label>
 		                            </div>
 	                        	</div>
 	                        	<div class="control-group">
@@ -267,7 +305,7 @@
 				  			</form>
 				  		</div>
   					</div>
-            		
+            		</div>
 	           	</div>
        		</div>
         </div>

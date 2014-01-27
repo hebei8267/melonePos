@@ -97,6 +97,20 @@
 		order by cash.opt_date
 	</select>
 	
+	<!-- 取得t_cash_daily信息(根据参数) -->
+	<select id="getAllOrgCashDailyChartList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
+		SELECT
+		    cash.opt_date,
+		    SUM(cash.sale_amt) AS sale_amt
+		FROM
+		    t_cash_daily cash
+		WHERE
+		    cash.opt_date_y = #{optDateY}
+		AND cash.opt_date_m = #{optDateM}
+		GROUP BY cash.opt_date
+		ORDER BY cash.opt_date
+	</select>
+	
 	<!-- 取得销售流水日结信息(全机构) -->
 	<select id="getCashDailyListByAllOrg" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
 		select
