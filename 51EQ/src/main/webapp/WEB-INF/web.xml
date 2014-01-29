@@ -25,10 +25,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
- 	<listener>
-    	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
- 	</listener>
- 	 
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
 	<filter>
 		<filter-name>SecurityFilter</filter-name>
 		<filter-class>com.tjhx.common.filter.SecurityFilter</filter-class>
@@ -37,7 +37,7 @@
 		<filter-name>SecurityFilter</filter-name>
 		<url-pattern>/sc/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- Filter 定义 -->
 	<!-- Character Encoding filter -->
 	<filter>
@@ -55,8 +55,6 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 
 	<!-- SiteMesh Web-Page Layout filter -->
@@ -98,7 +96,7 @@
 		<servlet-name>springServlet</servlet-name>
 		<url-pattern>/sc/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 读取用户相片Servlet配置 -->
 	<servlet>
 		<servlet-name>PhotoContentServlet</servlet-name>

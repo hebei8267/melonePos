@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<style type="text/css">
+    	.cash_daily {
+			border-bottom: 3px solid #F89406;
+			margin-top: 40px;
+			margin-bottom: 10px;
+		}
+    	</style>
     	<link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
     	<script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
 
@@ -71,11 +78,22 @@
                         </select>
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
-                    <div class="span12"	style="margin-top: 10px;">
-                    	<c:if test="${showFlg == true}">
+                    
+                    <c:if test="${showFlg == true}">
+                    <div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额</h4></div>
+                    <div class="span12">
                         <div id="chart1" style="width:1050px;height:400px;border:1px solid #A4BED4;"></div>
-                        </c:if>
                     </div>
+                    <div class="span12 cash_daily"></div>
+                    </c:if>
+                    
+                    <c:forEach items="${orgNameList}" var="orgName" varStatus="status1">
+                    	<div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额</h4></div>
+                        <div class="span12">
+                            <div id="chart2${status1.index + 1}" style="width:1050px;height:400px;border:1px solid #A4BED4;"></div>
+                        </div>
+                        <div class="span12 cash_daily"></div>
+                    </c:forEach>
                 </div>
             </form>
         </div>
@@ -109,6 +127,36 @@
 				});
 				chart.parse(_data_set, "json");
 			});
+			
+			
+			<c:forEach items="${allSubOrgCashDailyList}" var="subOrgCashDailyList" varStatus="status1">
+			var _data_set${status1.index + 1} = ${subOrgCashDailyList}
+			$(function() {
+				var chart${status1.index + 1} = new dhtmlXChart({
+					view : "bar",
+					container : "chart2${status1.index + 1}",
+					value : "#saleAmt#",
+					label : "#saleAmt#",
+					radius : 0,
+					width : 20,
+					tooltip : {
+						template : "#saleAmt#元"
+					},
+					xAxis : {
+						title : "${optDateShow }",
+						template : "#optDate#",
+						lines : false
+					},
+					yAxis: {
+						title : "销 售 额"
+				    },
+					padding : {
+						left : 70
+					}
+				});
+				chart${status1.index + 1}.parse(_data_set${status1.index + 1}, "json");
+			});
+			</c:forEach>
 		</script>
 		</c:if>
     </body>

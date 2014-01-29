@@ -1,6 +1,7 @@
 package com.tjhx.web.report;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,6 +17,7 @@ import org.springside.modules.mapper.JsonMapper;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashDaily;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.accounts.CashDailyManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
@@ -63,16 +65,55 @@ public class CashChartReportController extends BaseController {
 			formatData(_cashDailyList);
 			JsonMapper mapper = new JsonMapper();
 			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
+
+			model.addAttribute("orgName", orgId);
 		} else {// 所有机构
 			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportList(_cashDaily);
 			formatData(_cashDailyList);
 			JsonMapper mapper = new JsonMapper();
 			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
+
+			model.addAttribute("orgName", "合计");
+
+			// 取得所有子机构销售信息Json列表
+			getAllSubOrgCashDailyList(model, optDateShow);
 		}
 
 		model.addAttribute("showFlg", true);
 
 		return "report/cashChartReport";
+	}
+
+	/**
+	 * 取得所有子机构销售信息Json列表
+	 * 
+	 * @param model
+	 * @param optDateShow
+	 * @return
+	 * @throws ParseException
+	 */
+	private void getAllSubOrgCashDailyList(Model model, String optDateShow) throws ParseException {
+		List<Organization> _orgList = orgManager.getSubOrganization();
+
+		List<String> _allSubOrgCashDailyList = new ArrayList<String>();
+		List<String> _orgNameList = new ArrayList<String>();
+		for (Organization org : _orgList) {
+			CashDaily _cashDaily = new CashDaily();
+			_cashDaily.setOrgId(org.getId());
+			// 日期-年
+			_cashDaily.setOptDateY(DateUtils.transDateFormat(optDateShow, "yyyy-MM", "yyyy"));
+			// 日期-月
+			_cashDaily.setOptDateM(DateUtils.transDateFormat(optDateShow, "yyyy-MM", "MM"));
+
+			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportListByOrg(_cashDaily);
+			formatData(_cashDailyList);
+			JsonMapper mapper = new JsonMapper();
+			_allSubOrgCashDailyList.add(mapper.toJson(_cashDailyList));
+			_orgNameList.add(org.getName());
+		}
+		model.addAttribute("allSubOrgCashDailyList", _allSubOrgCashDailyList);
+		model.addAttribute("orgNameList", _orgNameList);
+		model.addAttribute("subOrgShowFlg", true);
 	}
 
 	private void formatData(List<CashDaily> cashDailyList) throws ParseException {

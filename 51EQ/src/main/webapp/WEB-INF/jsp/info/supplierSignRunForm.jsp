@@ -16,12 +16,93 @@
 		}
     	</style>
         <script>
+        function getRunInfo(runType){
+        	$.post("${sc_ctx}/supplierSignRun/getRunInfo", {
+                "supplierBwId" : '${supId}' ,
+                "optDateY" :  '${optDateY}' ,
+                "optDateM" :  $("#optDateM").val() ,
+                "runType" :  runType 
+            }, function(result) {
+            	var _jsResult = jQuery.parseJSON(result);
+                if(null != _jsResult && _jsResult.runType == 2){// 通知对账
+                	$("#checkNoticeDate").val(_jsResult.checkNoticeDate);
+                	$('input[name="noticeMode"][value="' + _jsResult.noticeMode + '"]').attr('checked',true);
+                	$("#notice_descTxt").val(_jsResult.descTxt);
+                } else if(null != _jsResult && _jsResult.runType == 3){// 对账完成
+                	$("#checkDate").val(_jsResult.checkDate);
+                	$("#checkAmt").val(_jsResult.checkAmt);
+                	$("#check_descTxt").val(_jsResult.descTxt);
+                } else if(null != _jsResult && _jsResult.runType == 4){// 结算付款
+                	$("#paymentDate").val(_jsResult.paymentDate);
+                	$("#paymentAmt").val(_jsResult.paymentAmt);
+                	$("#payment_descTxt").val(_jsResult.descTxt);
+                } else if(null != _jsResult && _jsResult.runType == 5){// 退货申请
+                	$("#appDate").val(_jsResult.appDate);
+                	$("#appAmt").val(_jsResult.appAmt);
+                	$("#app_descTxt").val(_jsResult.descTxt);
+                } else if(null != _jsResult && _jsResult.runType == 6){// 退货确认
+                	$("#confirmDate").val(_jsResult.confirmDate);
+                	$("#confirmAmt").val(_jsResult.confirmAmt);
+                	$("#confirm_descTxt").val(_jsResult.descTxt);
+                } else {
+                	$("#checkNoticeDate").val('');
+                	$('input[name="noticeMode"]').attr('checked',false);
+                	$("#notice_descTxt").val('');
+                	
+                	$("#checkDate").val('');
+                	$("#checkAmt").val('');
+                	$("#check_descTxt").val('');
+                	
+                	$("#paymentDate").val('');
+                	$("#paymentAmt").val('');
+                	$("#payment_descTxt").val('');
+                	
+                	$("#appDate").val('');
+                	$("#appAmt").val('');
+                	$("#app_descTxt").val('');
+                	
+                	$("#confirmDate").val('');
+                	$("#confirmAmt").val('');
+                	$("#confirm_descTxt").val('');
+                }
+            });
+        }
         $(function() {
+        	$('#checkNoticeDate').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('#checkDate').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('#paymentDate').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('#appDate').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('#confirmDate').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+        	
         	// tab默认不显示
         	$("#tabDiv").hide();
         	
         	$('a[data-toggle="tab"]').on('shown', function (e) {
-        		//alert(e.currentTarget.hash)
+        		if("" == $("#optDateM").val()){//为选择操作月份
+        			return;
+        		}
+        		var tabId = e.currentTarget.hash;
+        		if(tabId == "#notice") {
+        			getRunInfo(2);
+        		} else if(tabId == "#check") {
+        			getRunInfo(3);
+        		} else if(tabId == "#payment") {
+        			getRunInfo(4);
+        		} else if(tabId == "#app") {
+        			getRunInfo(5);
+        		} else if(tabId == "#confirm") {
+        			getRunInfo(6);
+        		}
         	});
         	
         	$("#optDateM").change(function(){
@@ -30,11 +111,20 @@
         			$("#tabDiv").hide();
         		} else {
         			$("#tabDiv").show();
+        			
+        			// 显示第一个tab框
+        			$('#myTab a:first').tab('show');
+        			
+        			
         			$("#noticeForm_optDateM").val(checkValue);
+        			$("#check_optDateM").val(checkValue);
+        			$("#payment_optDateM").val(checkValue);
+        			$("#app_optDateM").val(checkValue);
+        			$("#confirm_optDateM").val(checkValue);
         		}
         	});
         	
-        	$('#myTab a:first').tab('show');
+        	
         	
         	
         	//=======================================================================
@@ -73,6 +163,106 @@
 
                 $("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/noticeSave");
                 $("#noticeForm").submit();
+            });
+            
+          	//=======================================================================
+            $("#checkForm").validate({
+                rules : {
+                	checkDate : {
+                        required : true,
+                        date : true
+                    },
+                    checkAmt : {
+                        required : true,
+                        money : true
+                    },
+                    descTxt : {
+                        maxlength : 255
+                    }
+                }
+            });
+            $("#check_saveBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+                $("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/checkSave");
+                $("#checkForm").submit();
+            });
+            
+          	//=======================================================================
+            $("#paymentForm").validate({
+                rules : {
+                	paymentDate : {
+                        required : true,
+                        date : true
+                    },
+                    paymentAmt : {
+                        required : true,
+                        money : true
+                    },
+                    descTxt : {
+                        maxlength : 255
+                    }
+                }
+            });
+            $("#payment_saveBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+                $("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/paymentSave");
+                $("#paymentForm").submit();
+            });
+            
+          	//=======================================================================
+            $("#appForm").validate({
+                rules : {
+                	appDate : {
+                        required : true,
+                        date : true
+                    },
+                    appAmt : {
+                        required : true,
+                        money : true
+                    },
+                    descTxt : {
+                        maxlength : 255
+                    }
+                }
+            });
+            $("#app_saveBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+                $("#appForm").attr("action", "${sc_ctx}/supplierSignRun/appSave");
+                $("#appForm").submit();
+            });
+            
+          	//=======================================================================
+            $("#confirmForm").validate({
+                rules : {
+                	confirmDate : {
+                        required : true,
+                        date : true
+                    },
+                    confirmAmt : {
+                        required : true,
+                        money : true
+                    },
+                    descTxt : {
+                        maxlength : 255
+                    }
+                }
+            });
+            $("#confirm_saveBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+                $("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/confirmSave");
+                $("#confirmForm").submit();
             });
         });
         </script>
@@ -148,7 +338,7 @@
 				  		
 				  		
 				  		<div class="tab-pane" id="notice">
-				  			<form id="noticeForm" class="form-horizontal" action="">
+				  			<form id="noticeForm" class="form-horizontal" action="" method="POST">
 				  				<input type="hidden" name="supplierBwId" value="${supId}">
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="noticeForm_optDateM" value="">
@@ -188,7 +378,11 @@
 				  		
 				  		
 				  		<div class="tab-pane" id="check">
-				  			<form id="checkForm" class="form-horizontal" action="">
+				  			<form id="checkForm" class="form-horizontal" action="" method="POST">
+				  				<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="check_optDateM" value="">
+				  				<input type="hidden" name="runType" value="3">
 				  				<div class="control-group">
 	                            	<label class="control-label">对账时间 :</label>
 	                            	<div class="controls">
@@ -218,7 +412,11 @@
 						
 						
 				  		<div class="tab-pane" id="payment">
-				  			<form id="paymentForm" class="form-horizontal" action="">
+				  			<form id="paymentForm" class="form-horizontal" action="" method="POST">
+				  				<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="payment_optDateM" value="">
+				  				<input type="hidden" name="runType" value="4">
 				  				<div class="control-group">
 	                            	<label class="control-label">付款时间 :</label>
 	                            	<div class="controls">
@@ -248,7 +446,11 @@
 				  		
 				  		
 				  		<div class="tab-pane" id="app">
-				  			<form id="appForm" class="form-horizontal" action="">
+				  			<form id="appForm" class="form-horizontal" action="" method="POST">
+				  				<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="app_optDateM" value="">
+				  				<input type="hidden" name="runType" value="5">
 				  				<div class="control-group">
 	                            	<label class="control-label">申请时间 :</label>
 	                            	<div class="controls">
@@ -277,7 +479,11 @@
 				  		</div>
 				  
 				  		<div class="tab-pane" id="confirm">
-				  			<form id="confirmForm" class="form-horizontal" action="">
+				  			<form id="confirmForm" class="form-horizontal" action="" method="POST">
+				  				<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="confirm_optDateM" value="">
+				  				<input type="hidden" name="runType" value="6">
 				  				<div class="control-group">
 	                            	<label class="control-label">确认时间 :</label>
 	                            	<div class="controls">

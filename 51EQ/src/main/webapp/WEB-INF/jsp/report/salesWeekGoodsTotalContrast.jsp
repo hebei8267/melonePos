@@ -1,5 +1,6 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
@@ -100,38 +101,38 @@
                                         	${salesWeekGoods.productName}
                                         </td>
                                         </c:if>
-                                        <td>
-                                        	${salesWeekGoods.posQty1}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posQty2}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posQty2}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posQty3}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posQty3}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posQty4}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posQty4}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posQtyTotal}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.stockQty}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posAmt1}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt1}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posAmt2}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt2}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posAmt3}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt3}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posAmt4}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt4}" maxFractionDigits="0"/>
                                         </td>
-                                        <td>
-                                        	${salesWeekGoods.posAmtTotal}
+                                        <td class="right">
+                                        	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
                                         </td>
                                     </tr>
                                 </c:forEach>
