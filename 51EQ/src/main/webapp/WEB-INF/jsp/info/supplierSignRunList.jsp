@@ -10,6 +10,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<style>
+        .myTip {
+        	color: #fbb450;
+        }
+    	</style>
         <script>
         $(function() {
         	$("#searchForm").validate({
@@ -23,6 +28,10 @@
                 $("#searchForm").attr("action", "${sc_ctx}/supplierSignRun/show");
                 $("#searchForm").submit();
             });
+        	
+        	$(".label").each(function(){
+        		$(this).popover({trigger:'hover', html:'true'});
+        	});
         });
         </script>
     </head>
@@ -35,7 +44,7 @@
                 <div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>挂账供应商结算进度表</h3>
+                            <h3>供应商(挂账)结算进度表</h3>
                         </legend>
                     </div>
                     <div class="span12">
@@ -86,7 +95,11 @@
                             		</td>
                             		<td class="center">赊购挂账</td>
                             		<c:forEach items="${supplier.loanList}" var="load">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty load.loanFlg}" >
+                            		<span class="label label-warning" data-toggle="popover"><i class="icon-inbox icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             		<td rowspan="6">
                             		<a href="${sc_ctx}/supplierSignRun/editInit/${supplier.supplierBwId}/${optDateY}" class="btn btn-warning" />编辑</a>
@@ -95,31 +108,51 @@
                             	<tr>
                             		<td class="center">对账通知</td>
                             		<c:forEach items="${supplier.noticeList}" var="notice">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty notice.noticeMode}" >
+                            		<span class="label label-warning" title="" data-content='通知时间: <span class="myTip">${notice.checkNoticeDate}</span> <br/> 通知方式: <c:if test="${notice.noticeMode == 1}" ><span class="myTip">电话</span></c:if><c:if test="${notice.noticeMode == 2}" ><span class="myTip">网络</span></c:if><c:if test="${notice.noticeMode == 3}" ><span class="myTip">捎信</span></c:if> <br/> 备注: <span class="myTip">${notice.descTxt}</span>' data-original-title="对账通知"><i class="icon-envelope icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             	</tr>
                             	<tr>
                             		<td class="center">对账完成</td>
                             		<c:forEach items="${supplier.checkSuccessList}" var="checkSuccess">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty checkSuccess.checkDate}" >
+                            		<span class="label label-warning" title="" data-content='完成时间: <span class="myTip">${checkSuccess.checkDate}</span> <br/> 对账金额: <span class="myTip">${checkSuccess.checkAmt}</span> <br/> 备注: <span class="myTip">${checkSuccess.descTxt}</span>' data-original-title="对账完成"><i class="icon-check icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             	</tr>
                             	<tr>
                             		<td class="center">结算付款</td>
                             		<c:forEach items="${supplier.payList}" var="pay">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty pay.paymentDate}" >
+                            		<span class="label label-warning" title="" data-content='付款时间: <span class="myTip">${pay.paymentDate}</span> <br/> 付款金额: <span class="myTip">${pay.paymentAmt}</span> <br/> 备注: <span class="myTip">${pay.descTxt}</span>' data-original-title="结算付款"><i class="icon-hand-up icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             	</tr>
                             	<tr>
                             		<td class="center">退货申请</td>
                             		<c:forEach items="${supplier.appList}" var="app">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty app.appDate}" >
+                            		<span class="label label-warning" title="" data-content='申请时间: <span class="myTip">${app.appDate}</span> <br/> 申请金额: <span class="myTip">${app.appAmt}</span> <br/> 备注: <span class="myTip">${app.descTxt}</span>' data-original-title="退货申请"><i class="icon-shopping-cart icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             	</tr>
                             	<tr>
                             		<td class="center">退货确认</td>
                             		<c:forEach items="${supplier.confirmList}" var="confirm">
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${!empty confirm.confirmDate}" >
+                            		<span class="label label-warning" title="" data-content='申请时间: <span class="myTip">${confirm.confirmDate}</span> <br/> 申请金额: <span class="myTip">${confirm.confirmAmt}</span> <br/> 备注: <span class="myTip">${confirm.descTxt}</span>' data-original-title="退货确认"><i class="icon-eye-open icon-white"></i></span>
+                            		</c:if>
+                            		</td>
                             		</c:forEach>
                             	</tr>
                             	</c:forEach>

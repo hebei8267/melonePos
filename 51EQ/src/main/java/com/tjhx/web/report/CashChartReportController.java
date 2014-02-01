@@ -66,7 +66,7 @@ public class CashChartReportController extends BaseController {
 			JsonMapper mapper = new JsonMapper();
 			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
 
-			model.addAttribute("orgName", orgId);
+			model.addAttribute("orgName", orgId.substring(3));
 		} else {// 所有机构
 			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportList(_cashDaily);
 			formatData(_cashDailyList);

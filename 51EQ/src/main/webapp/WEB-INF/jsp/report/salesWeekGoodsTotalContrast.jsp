@@ -150,11 +150,11 @@
                     </div>
                     
                     <div class="span12"	style="margin-top: 10px;">
-                    	<div id="chart2" style="width:1000px;height:800px;border:1px solid #A4BED4;"></div>
+                    	<div id="chart2" style="width:1000px;height:1000px;border:1px solid #A4BED4;"></div>
                     </div>
                     
                     <div class="span12"	style="margin-top: 10px;">
-                    	<div id="chart1" style="width:1000px;height:1000px;border:1px solid #A4BED4;"></div>
+                    	<div id="chart1" style="width:1000px;height:1200px;border:1px solid #A4BED4;"></div>
                     </div>
                 </div>
             </form>

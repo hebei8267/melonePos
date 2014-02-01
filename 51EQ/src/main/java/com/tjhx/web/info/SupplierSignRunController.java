@@ -39,7 +39,6 @@ public class SupplierSignRunController extends BaseController {
 		Map<String, String> yearList = new LinkedHashMap<String, String>();
 
 		yearList.put("", "");
-		yearList.put("2013", "2013");
 		yearList.put("2014", "2014");
 		yearList.put("2015", "2015");
 
@@ -54,9 +53,45 @@ public class SupplierSignRunController extends BaseController {
 	 */
 	@RequestMapping(value = "init")
 	public String init_Action(Model model, HttpServletRequest request) {
+		_init(model);
+
+		return "info/supplierSignRunList";
+	}
+
+	/**
+	 * 取得特殊标记-货品供应商页面
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "init_boss")
+	public String init_boss_Action(Model model, HttpServletRequest request) {
+		_init(model);
+
+		return "info/supplierSignRunList_Boss";
+	}
+
+	private void _init(Model model) {
 		model.addAttribute("showFlg", false);
 
 		initYearList(model);
+
+		model.addAttribute("optDateY", DateUtils.getCurrentYear());
+	}
+
+	/**
+	 * 显示特殊标记-货品供应商信息列表
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ServletRequestBindingException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	@RequestMapping(value = "show")
+	public String show_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			IllegalAccessException, InvocationTargetException {
+		_show_Action(model, request);
 
 		return "info/supplierSignRunList";
 	}
@@ -67,9 +102,19 @@ public class SupplierSignRunController extends BaseController {
 	 * @param model
 	 * @return
 	 * @throws ServletRequestBindingException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
 	 */
-	@RequestMapping(value = "show")
-	public String show_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	@RequestMapping(value = "show_boss")
+	public String show_boss_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			IllegalAccessException, InvocationTargetException {
+		_show_Action(model, request);
+
+		return "info/supplierSignRunList_Boss";
+	}
+
+	private void _show_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			IllegalAccessException, InvocationTargetException {
 		model.addAttribute("showFlg", true);
 
 		initYearList(model);
@@ -80,7 +125,6 @@ public class SupplierSignRunController extends BaseController {
 		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY);
 
 		model.addAttribute("supSignRunList", _supSignRunList);
-		return "info/supplierSignRunList";
 	}
 
 	/**
@@ -116,9 +160,9 @@ public class SupplierSignRunController extends BaseController {
 		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
 		// 日期-月
 		String optDateM = ServletRequestUtils.getStringParameter(request, "optDateM");
-		System.out.println("optDateM " + optDateM);
 		// 流水类型
 		String runType = ServletRequestUtils.getStringParameter(request, "runType");
+
 		SupplierSignRun _dbRun = supplierSignRunManager.findSupplierSignRunByNaturalId(supplierBwId, optDateY,
 				optDateM, runType);
 
@@ -143,109 +187,63 @@ public class SupplierSignRunController extends BaseController {
 	}
 
 	/**
-	 * 对账通知保存
+	 * 赊购挂账-不挂
 	 * 
 	 * @param model
 	 * @param request
 	 * @return
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
-	 * @throws ServletRequestBindingException
 	 */
-	@RequestMapping(value = "noticeSave")
-	public String noticeSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
+	@RequestMapping(value = "noLoanSave")
+	public String noLoanSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
 			InvocationTargetException {
 		SupplierSignRun run = new SupplierSignRun();
 
 		BeanUtils.populate(run, request.getParameterMap());
-		run.setCheckNoticeDate(DateUtils.transDateFormat(run.getCheckNoticeDate(), "yyyy-MM-dd", "yyyyMMdd"));
 
-		supplierSignRunManager.saveRunInfo(run);
+		supplierSignRunManager.delRunInfo(run);
 
-		// TODO
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
 	}
 
 	/**
-	 * 对账完成保存
+	 * 保存特殊标记-货品供应商 流水信息
+	 * 
+	 * <pre>
+	 * 特殊标记-货品供应商 流水类型
+	 * 1. 赊购挂账 -挂账
+	 * 2. 对账通知
+	 * 3. 对账完成
+	 * 4. 结算付款
+	 * 5. 退货申请
+	 * 6. 退货确认
+	 * </pre>
 	 * 
 	 * @param model
 	 * @param request
 	 * @return
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
 	 */
-	@RequestMapping(value = "checkSave")
-	public String checkSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
+	@RequestMapping(value = "defaultSave")
+	public String defaultSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
 			InvocationTargetException {
 		SupplierSignRun run = new SupplierSignRun();
 
 		BeanUtils.populate(run, request.getParameterMap());
-		run.setCheckDate(DateUtils.transDateFormat(run.getCheckDate(), "yyyy-MM-dd", "yyyyMMdd"));
-
+		if ("2".equals(run.getRunType())) {// 对账通知
+			run.setCheckNoticeDate(DateUtils.transDateFormat(run.getCheckNoticeDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		} else if ("3".equals(run.getRunType())) {// 对账完成
+			run.setCheckDate(DateUtils.transDateFormat(run.getCheckDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		} else if ("4".equals(run.getRunType())) {// 结算付款
+			run.setPaymentDate(DateUtils.transDateFormat(run.getPaymentDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		} else if ("5".equals(run.getRunType())) {// 退货申请
+			run.setAppDate(DateUtils.transDateFormat(run.getAppDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		} else if ("6".equals(run.getRunType())) {// 退货确认
+			run.setConfirmDate(DateUtils.transDateFormat(run.getConfirmDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		}
 		supplierSignRunManager.saveRunInfo(run);
 
-		// TODO
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
 	}
 
-	/**
-	 * 结算付款保存
-	 * 
-	 * @param model
-	 * @param request
-	 * @return
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 */
-	@RequestMapping(value = "paymentSave")
-	public String paymentSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
-		SupplierSignRun run = new SupplierSignRun();
-
-		BeanUtils.populate(run, request.getParameterMap());
-		run.setPaymentDate(DateUtils.transDateFormat(run.getPaymentDate(), "yyyy-MM-dd", "yyyyMMdd"));
-
-		supplierSignRunManager.saveRunInfo(run);
-
-		// TODO
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
-	}
-
-	/**
-	 * 退货申请保存
-	 * 
-	 * @param model
-	 * @param request
-	 * @return
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 */
-	@RequestMapping(value = "appSave")
-	public String appSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
-		SupplierSignRun run = new SupplierSignRun();
-
-		BeanUtils.populate(run, request.getParameterMap());
-		run.setAppDate(DateUtils.transDateFormat(run.getAppDate(), "yyyy-MM-dd", "yyyyMMdd"));
-
-		supplierSignRunManager.saveRunInfo(run);
-
-		// TODO
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
-	}
-
-	@RequestMapping(value = "confirmSave")
-	public String confirmSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
-		SupplierSignRun run = new SupplierSignRun();
-
-		BeanUtils.populate(run, request.getParameterMap());
-		run.setConfirmDate(DateUtils.transDateFormat(run.getConfirmDate(), "yyyy-MM-dd", "yyyyMMdd"));
-
-		supplierSignRunManager.saveRunInfo(run);
-
-		// TODO
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
-	}
 }

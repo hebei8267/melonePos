@@ -115,7 +115,7 @@ public class ReqBillManager {
 		if (!xlsFile.exists()) {// excel文件不存在
 			return;
 		}
-		System.out.println(filePath);
+		
 		// 声明一个工作薄
 		HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(xlsFile)));
 		// 生成一个表格

@@ -92,6 +92,12 @@
                                         <a href="${sc_ctx}/cashDaily">日结</a>
                                     </li>
                                 </c:if>
+                                <c:if test="${_permIdList.contains('21')}">
+                                <li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
+	                            </li>
+                            </c:if>
                             </ul>
                         </li>
                     </c:if>
@@ -100,7 +106,7 @@
 					|| _permIdList.contains('15') || _permIdList.contains('16')
 					|| _permIdList.contains('17') || _permIdList.contains('18')
 					|| _permIdList.contains('19') || _permIdList.contains('20')
-					|| _permIdList.contains('21') || _permIdList.contains('26')
+					|| _permIdList.contains('26')
 					|| _permIdList.contains('40')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">销售信息<b class="caret"></b></a>
@@ -213,7 +219,8 @@
                     || _permIdList.contains('29') || _permIdList.contains('30') || _permIdList.contains('31') 
                     || _permIdList.contains('32') || _permIdList.contains('33') || _permIdList.contains('34')
                     || _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
-                    || _permIdList.contains('38') || _permIdList.contains('39')}">
+                    || _permIdList.contains('38') || _permIdList.contains('39')
+                    || _permIdList.contains('42') || _permIdList.contains('43')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -294,10 +301,23 @@
 			                	<li>
 			                   		<a href="${sc_ctx}/punchClock/manage">考勤信息(查看)</a>
 			                 	</li>
-			                 	<li>
-	                                <a href="${sc_ctx}/supplierSignRun/init">挂账供应商结算进度表</a>
-	                            </li>
 		                 	</c:if>
+		                 	
+		                 	<%//总部-会计用%>
+		                    <c:if test="${_permIdList.contains('42')}">
+		                    	<li class="divider"></li>
+			                 	<li>
+	                                <a href="${sc_ctx}/supplierSignRun/init">供应商(挂账)结算进度表</a>
+	                            </li>
+		                    </c:if>
+		                    
+		                    <%//总部-BOSS用%>
+		                    <c:if test="${_permIdList.contains('43')}">
+		                    	<li class="divider"></li>
+			                 	<li>
+	                                <a href="${sc_ctx}/supplierSignRun/init_boss">供应商(挂账)结算进度表</a>
+	                            </li>
+		                    </c:if>
                         </ul>
                     </li>
                     </c:if>

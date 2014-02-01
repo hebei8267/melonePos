@@ -1,10 +1,12 @@
 package com.tjhx.service.info;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +28,11 @@ public class SupplierSignRunManager {
 	 * 取得特殊标记-货品供应商信息列表
 	 * 
 	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
 	 */
-	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear) {
+	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear) throws IllegalAccessException,
+			InvocationTargetException {
 		List<Supplier> _supList = supplierSignMyBatisDao.getSupplierList(optYear);
 
 		List<SupplierSignRun_Show> _supSignRunList = initSupplierSignRunList(_supList, optYear);
@@ -35,20 +40,56 @@ public class SupplierSignRunManager {
 		return _supSignRunList;
 	}
 
+	private void copyProperties(SupplierSignRun destObj, List<SupplierSignRun> origObjList)
+			throws IllegalAccessException, InvocationTargetException {
+
+		int _i = origObjList.indexOf(destObj);
+
+		if (-1 != _i) {
+			BeanUtils.copyProperties(destObj, origObjList.get(_i));
+		}
+	}
+
 	/**
 	 * 初始化特殊标记-货品供应商 流水信息（显示）
 	 * 
 	 * @param _supList
 	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
 	 */
-	private List<SupplierSignRun_Show> initSupplierSignRunList(List<Supplier> _supList, String optYear) {
+	private List<SupplierSignRun_Show> initSupplierSignRunList(List<Supplier> _supList, String optYear)
+			throws IllegalAccessException, InvocationTargetException {
 		List<SupplierSignRun_Show> _list = new ArrayList<SupplierSignRun_Show>();
 
+		// 初始化所有显示对象（特殊标记-货品供应商 流水信息）
 		for (Supplier supplier : _supList) {
-
 			SupplierSignRun_Show run = new SupplierSignRun_Show(supplier.getSupplierBwId(), supplier.getName(), optYear);
-			// TODO ?????????????????????
 			_list.add(run);
+		}
+
+		// 取得数据库中保存对象（特殊标记-货品供应商 流水信息）
+		List<SupplierSignRun> _dblist = supplierSignRunJpaDao.findAllByOptYear(optYear);
+
+		for (SupplierSignRun_Show _showObj : _list) {
+			for (SupplierSignRun loanObj : _showObj.getLoanList()) {
+				copyProperties(loanObj, _dblist);
+			}
+			for (SupplierSignRun noticeObj : _showObj.getNoticeList()) {
+				copyProperties(noticeObj, _dblist);
+			}
+			for (SupplierSignRun checkObj : _showObj.getCheckSuccessList()) {
+				copyProperties(checkObj, _dblist);
+			}
+			for (SupplierSignRun payObj : _showObj.getPayList()) {
+				copyProperties(payObj, _dblist);
+			}
+			for (SupplierSignRun appObj : _showObj.getAppList()) {
+				copyProperties(appObj, _dblist);
+			}
+			for (SupplierSignRun ConfirmObj : _showObj.getConfirmList()) {
+				copyProperties(ConfirmObj, _dblist);
+			}
 		}
 
 		return _list;
@@ -69,12 +110,12 @@ public class SupplierSignRunManager {
 	 * 
 	 * <pre>
 	 * 特殊标记-货品供应商 流水类型
-	 * 1. 赊购挂账 （逻辑型） 
-	 * 2. 对账通知 （日期型） 
-	 * 3. 对账完成 （日期与数字） 
-	 * 4. 结算付款 （日期与数字与文本备注） 
-	 * 5. 退货申请 （日期与数字） 
-	 * 6. 退货确认 （日期与数字）
+	 * 1. 赊购挂账
+	 * 2. 对账通知
+	 * 3. 对账完成
+	 * 4. 结算付款
+	 * 5. 退货申请
+	 * 6. 退货确认
 	 * </pre>
 	 * 
 	 * @param run
@@ -85,6 +126,9 @@ public class SupplierSignRunManager {
 				run.getOptDateM(), run.getRunType());
 
 		if (null == _dbRun) {// 新增
+			if ("1".equals(run.getRunType())) {// 赊购挂账
+				run.setLoanFlg("1");
+			}
 			supplierSignRunJpaDao.save(run);
 		} else {// 更新
 			if ("2".equals(run.getRunType())) {// 对账通知
@@ -108,5 +152,19 @@ public class SupplierSignRunManager {
 			supplierSignRunJpaDao.save(_dbRun);
 		}
 
+	}
+
+	/**
+	 * 删除特殊标记-货品供应商 流水信息
+	 * 
+	 * @param run
+	 */
+	@Transactional(readOnly = false)
+	public void delRunInfo(SupplierSignRun run) {
+		SupplierSignRun _dbRun = findSupplierSignRunByNaturalId(run.getSupplierBwId(), run.getOptDateY(),
+				run.getOptDateM(), run.getRunType());
+		if (null != _dbRun) {
+			supplierSignRunJpaDao.delete(_dbRun);
+		}
 	}
 }

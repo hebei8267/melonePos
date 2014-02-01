@@ -1622,8 +1622,8 @@
         selector = $this.attr('href')
         selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
       }
-
-      if ( $this.parent('li').hasClass('active') ) return
+      //2014-1-31删除，因为第一个选中后，再次显示时为触发show时间
+      //if ( $this.parent('li').hasClass('active') ) return
 
       previous = $ul.find('.active:last a')[0]
 

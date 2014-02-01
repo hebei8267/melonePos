@@ -53,8 +53,6 @@ public class SalesWeekTotalGoodsManager {
 		_res[0] = DateUtils.getNextDateFormatDate(_now, (week) * -7, "yyyyMMdd");
 		_res[1] = DateUtils.getNextDateFormatDate(_now, (week - 1) * -7 - 1, "yyyyMMdd");
 
-		System.out.println(_res[0]);
-		System.out.println(_res[1]);
 		return _res;
 	}
 

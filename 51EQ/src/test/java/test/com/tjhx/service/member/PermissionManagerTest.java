@@ -284,6 +284,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm41.setRole(role);
 		perm41.setFunction(fun41);
 		permissionJpaDao.save(perm41);
+
+		// ---------------------------------------------
+		// 挂账供应商结算进度表-会计用
+		// ---------------------------------------------
+		Permission perm42 = new Permission();
+		Function fun42 = functionJpaDao.findOne(42);
+		perm42.setRole(role);
+		perm42.setFunction(fun42);
+		permissionJpaDao.save(perm42);
 	}
 
 	// 总部人员-会计
@@ -432,6 +441,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm40.setRole(role);
 		perm40.setFunction(fun40);
 		permissionJpaDao.save(perm40);
+
+		// ---------------------------------------------
+		// 挂账供应商结算进度表-会计用
+		// ---------------------------------------------
+		Permission perm42 = new Permission();
+		Function fun42 = functionJpaDao.findOne(42);
+		perm42.setRole(role);
+		perm42.setFunction(fun42);
+		permissionJpaDao.save(perm42);
 
 	}
 
@@ -796,6 +814,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm41.setRole(role);
 		perm41.setFunction(fun41);
 		permissionJpaDao.save(perm41);
+
+		// ---------------------------------------------
+		// 挂账供应商结算进度表-BOSS用
+		// ---------------------------------------------
+		Permission perm43 = new Permission();
+		Function fun43 = functionJpaDao.findOne(43);
+		perm43.setRole(role);
+		perm43.setFunction(fun43);
+		permissionJpaDao.save(perm43);
 	}
 
 	// 店长
@@ -803,6 +830,16 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 	@Rollback(false)
 	public void saveNewPerm6() {
 		Role role = roleJpaDao.findOne(6);
+
+		// ---------------------------------------------
+		// 报表-商品周销售信息一览
+		// ---------------------------------------------
+		Permission perm21 = new Permission();
+		Function fun21 = functionJpaDao.findOne(21);
+		perm21.setRole(role);
+		perm21.setFunction(fun21);
+		permissionJpaDao.save(perm21);
+
 		// ---------------------------------------------
 		// 门店-销售信息-录入
 		// ---------------------------------------------

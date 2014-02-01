@@ -33,12 +33,18 @@ public class SupplierSignRun_Show {
 		for (int i = 0; i < 12; i++) {
 			this.supplierBwId = supplierBwId;
 			this.supplierName = supplierName;
-			this.loanList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
-			this.noticeList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
-			this.checkSuccessList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
-			this.payList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
-			this.appList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
-			this.confirmList.add(new SupplierSignRun(supplierBwId, optYear, String.valueOf(i + 1)));
+			// 1. 赊购挂账
+			this.loanList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "1"));
+			// 2. 对账通知
+			this.noticeList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "2"));
+			// 3. 对账完成
+			this.checkSuccessList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "3"));
+			// 4. 结算付款
+			this.payList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "4"));
+			// 5. 退货申请
+			this.appList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "5"));
+			// 6. 退货确认
+			this.confirmList.add(new SupplierSignRun(supplierBwId, optYear, String.format("%02d", (i + 1)), "6"));
 		}
 	}
 

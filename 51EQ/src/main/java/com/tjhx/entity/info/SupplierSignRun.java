@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.NaturalId;
 
 import com.tjhx.entity.IdEntity;
@@ -15,12 +16,12 @@ import com.tjhx.entity.IdEntity;
  * 
  * <pre>
  * 特殊标记-货品供应商 流水类型
- * 1. 赊购挂账 （逻辑型） 
- * 2. 对账通知 （日期型） 
- * 3. 对账完成 （日期与数字） 
- * 4. 结算付款 （日期与数字与文本备注） 
- * 5. 退货申请 （日期与数字） 
- * 6. 退货确认 （日期与数字）
+ * 1. 赊购挂账
+ * 2. 对账通知
+ * 3. 对账完成
+ * 4. 结算付款
+ * 5. 退货申请
+ * 6. 退货确认
  * </pre>
  */
 @Entity
@@ -79,10 +80,11 @@ public class SupplierSignRun extends IdEntity {
 
 	}
 
-	public SupplierSignRun(String supplierBwId, String optDateY, String optDateM) {
+	public SupplierSignRun(String supplierBwId, String optDateY, String optDateM, String runType) {
 		this.supplierBwId = supplierBwId;
 		this.optDateY = optDateY;
 		this.optDateM = optDateM;
+		this.runType = runType;
 	}
 
 	/**
@@ -388,4 +390,14 @@ public class SupplierSignRun extends IdEntity {
 		this.descTxt = descTxt;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof SupplierSignRun)) {
+			return false;
+		}
+		SupplierSignRun rhs = (SupplierSignRun) obj;
+		return new EqualsBuilder().append(this.getSupplierBwId(), rhs.getSupplierBwId())
+				.append(this.getOptDateY(), rhs.getOptDateY()).append(this.getOptDateM(), rhs.getOptDateM())
+				.append(this.getRunType(), rhs.getRunType()).isEquals();
+	}
 }

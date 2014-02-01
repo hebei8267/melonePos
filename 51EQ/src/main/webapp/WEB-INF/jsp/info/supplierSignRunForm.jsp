@@ -14,6 +14,20 @@
     	.left-control-label {
 			padding-left: 0px;
 		}
+		.form-horizontal .my-control-label {
+        	width: 150px;
+        }
+        .my-control-label h3 {
+        	width: 150px;
+        	text-align: center;
+        	padding: 5px;
+        }
+        .noLoan {
+        	background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+        }
+        .loan {
+        	background-image: linear-gradient(to bottom, #fbb450, #f89406);
+        }
     	</style>
         <script>
         function getRunInfo(runType){
@@ -24,7 +38,15 @@
                 "runType" :  runType 
             }, function(result) {
             	var _jsResult = jQuery.parseJSON(result);
-                if(null != _jsResult && _jsResult.runType == 2){// 通知对账
+            	if(null != _jsResult && _jsResult.runType == 1){// 赊购挂账
+                	$("#loan_txt").html("有赊购挂账");
+                	if($("#loan_txt").hasClass("noLoan")){
+                		$("#loan_txt").removeClass("noLoan")
+                	}
+                	if(!$("#loan_txt").hasClass("loan")){
+                		$("#loan_txt").addClass("loan")
+                	}
+                } else if(null != _jsResult && _jsResult.runType == 2){// 通知对账
                 	$("#checkNoticeDate").val(_jsResult.checkNoticeDate);
                 	$('input[name="noticeMode"][value="' + _jsResult.noticeMode + '"]').attr('checked',true);
                 	$("#notice_descTxt").val(_jsResult.descTxt);
@@ -45,6 +67,14 @@
                 	$("#confirmAmt").val(_jsResult.confirmAmt);
                 	$("#confirm_descTxt").val(_jsResult.descTxt);
                 } else {
+                	$("#loan_txt").html("无赊购挂账");
+                	if($("#loan_txt").hasClass("loan")){
+                		$("#loan_txt").removeClass("loan")
+                	}
+                	if(!$("#loan_txt").hasClass("noLoan")){
+                		$("#loan_txt").addClass("noLoan")
+                	}
+                	
                 	$("#checkNoticeDate").val('');
                 	$('input[name="noticeMode"]').attr('checked',false);
                 	$("#notice_descTxt").val('');
@@ -92,7 +122,9 @@
         			return;
         		}
         		var tabId = e.currentTarget.hash;
-        		if(tabId == "#notice") {
+        		if(tabId == "#loan") {
+        			getRunInfo(1);
+        		} else if(tabId == "#notice") {
         			getRunInfo(2);
         		} else if(tabId == "#check") {
         			getRunInfo(3);
@@ -115,7 +147,7 @@
         			// 显示第一个tab框
         			$('#myTab a:first').tab('show');
         			
-        			
+        			$("#loanForm_optDateM").val(checkValue);
         			$("#noticeForm_optDateM").val(checkValue);
         			$("#check_optDateM").val(checkValue);
         			$("#payment_optDateM").val(checkValue);
@@ -124,19 +156,17 @@
         		}
         	});
         	
-        	
-        	
-        	
+
         	//=======================================================================
         	//赊购挂账-不挂
-        	$("#noLoan").click(function() {
-                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/noLoan");
+        	$("#noLoan_saveBtn").click(function() {
+                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/noLoanSave");
                 $("#loanForm").submit();
             });
         	
         	//赊购挂账-挂账
-        	$("#loan").click(function() {
-                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/loan");
+        	$("#loan_saveBtn").click(function() {
+                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#loanForm").submit();
             });
             
@@ -161,7 +191,7 @@
                     this.value = $.trim(this.value);
                 });
 
-                $("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/noticeSave");
+                $("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#noticeForm").submit();
             });
             
@@ -186,7 +216,7 @@
                     this.value = $.trim(this.value);
                 });
 
-                $("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/checkSave");
+                $("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#checkForm").submit();
             });
             
@@ -211,7 +241,7 @@
                     this.value = $.trim(this.value);
                 });
 
-                $("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/paymentSave");
+                $("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#paymentForm").submit();
             });
             
@@ -236,7 +266,7 @@
                     this.value = $.trim(this.value);
                 });
 
-                $("#appForm").attr("action", "${sc_ctx}/supplierSignRun/appSave");
+                $("#appForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#appForm").submit();
             });
             
@@ -261,7 +291,7 @@
                     this.value = $.trim(this.value);
                 });
 
-                $("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/confirmSave");
+                $("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#confirmForm").submit();
             });
         });
@@ -275,12 +305,9 @@
        		<div class="row">
         		<div class="span12">
           			<legend>
-                 		<h3>挂账供应商结算进度 编辑</h3>
+                 		<h3>供应商(挂账)结算进度 编辑</h3>
                		</legend>
               	</div>
-                <div class="span2" style="padding-left: 35px;">
-		        	<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
-		    	</div>
 	      		<div class="span12"	style="margin-top: 20px;">
 		      		<form id="tmp1Form" class="form-horizontal">
 		            	<div class="control-group">
@@ -329,10 +356,16 @@
             		
             		<div id="myTabContent" class="tab-content">
 				  		<div class="tab-pane" id="loan">
-					  		<form id="loanForm" class="form-horizontal" action="">
+					  		<form id="loanForm" class="form-horizontal" action="" method="POST">
+					  			<input type="hidden" name="supplierBwId" value="${supId}">
+				  				<input type="hidden" name="optDateY" value="${optDateY}">
+				  				<input type="hidden" name="optDateM" id="loanForm_optDateM" value="">
+				  				<input type="hidden" name="runType" value="1">
+					  			<label class="my-control-label"><h3 id="loan_txt"></h3></label>
 					  			<br>
-					  			<button id="noLoan" class="btn btn-large btn-success">不挂</button>&nbsp;
-								<button id="loan" class="btn btn-large btn-warning">挂账</button>
+					  			<button id="noLoan_saveBtn" class="btn btn-large btn-primary">不挂</button>&nbsp;
+								<button id="loan_saveBtn" class="btn btn-large btn-warning">挂账</button>&nbsp;
+								<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 							</form>
 				  		</div>
 				  		
