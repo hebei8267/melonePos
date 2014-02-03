@@ -76,19 +76,6 @@
 	                            </c:if>
                             </c:forEach>
                         </select>
-                    </div>
-                    <div class="span9">
-                    	<label class="control-label">供应商 : </label>
-                        <select name="supplierBwId" class="input-medium">
-                        	<c:forEach items="${supList}" var="sup">
-	                        	<c:if test="${sup.key == supplierBwId}">
-	                                <option value="${sup.key }" selected>${sup.value }</option>
-	                            </c:if>
-	                            <c:if test="${sup.key != supplierBwId}">
-	                                <option value="${sup.key }">${sup.value }</option>
-	                            </c:if>
-                            </c:forEach>
-                        </select>
                         &nbsp;
                         <button	id="showBtn" class="btn	btn-primary" type="button">显示</button>
                     </div>
