@@ -49,7 +49,7 @@
 	</select>
 	
 	<!-- 取得货品供应商列表 -->
-	<select id="getSupplierList" parameterType="String" resultMap="Result_Map_Supplier">
+	<select id="getSupplierListByYear" parameterType="String" resultMap="Result_Map_Supplier">
 	<![CDATA[
 	SELECT
 	    s.supplier_bw_id,
@@ -68,6 +68,30 @@
 	            t_supplier_sign_run
 	        WHERE
 	            opt_date_y = #{optYear}) ss
+	WHERE
+	    s.supplier_bw_id = ss.supplier_bw_id
+	]]>
+	</select>
+	
+	<!-- 取得货品供应商列表 -->
+	<select id="getSupplierList" resultMap="Result_Map_Supplier">
+	<![CDATA[
+	SELECT
+	    s.supplier_bw_id,
+	    s.name
+	FROM
+	    t_supplier s,
+	    (
+	        SELECT
+	            supplier_bw_id
+	        FROM
+	            t_supplier_sign
+	        UNION
+	        SELECT DISTINCT
+	            supplier_bw_id
+	        FROM
+	            t_supplier_sign_run
+		) ss
 	WHERE
 	    s.supplier_bw_id = ss.supplier_bw_id
 	]]>

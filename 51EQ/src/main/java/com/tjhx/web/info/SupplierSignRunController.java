@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.mapper.JsonMapper;
 
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.info.SupplierSignRun;
 import com.tjhx.entity.info.SupplierSignRun_Show;
 import com.tjhx.globals.Constants;
@@ -43,6 +44,19 @@ public class SupplierSignRunController extends BaseController {
 		yearList.put("2015", "2015");
 
 		model.addAttribute("yearList", yearList);
+	}
+
+	private void initSupplierList(Model model) {
+		List<Supplier> _supList = supplierSignRunManager.getSupplierList();
+
+		Map<String, String> supList = new LinkedHashMap<String, String>();
+		supList.put("", "");
+		for (Supplier supplier : _supList) {
+
+			supList.put(supplier.getSupplierBwId(), supplier.getName());
+
+			model.addAttribute("supList", supList);
+		}
 	}
 
 	/**
@@ -75,6 +89,7 @@ public class SupplierSignRunController extends BaseController {
 		model.addAttribute("showFlg", false);
 
 		initYearList(model);
+		initSupplierList(model);
 
 		model.addAttribute("optDateY", DateUtils.getCurrentYear());
 	}
@@ -118,11 +133,14 @@ public class SupplierSignRunController extends BaseController {
 		model.addAttribute("showFlg", true);
 
 		initYearList(model);
+		initSupplierList(model);
 
 		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
 		model.addAttribute("optDateY", optDateY);
+		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
+		model.addAttribute("supplierBwId", supplierBwId);
 
-		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY);
+		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY,supplierBwId);
 
 		model.addAttribute("supSignRunList", _supSignRunList);
 	}
@@ -195,8 +213,8 @@ public class SupplierSignRunController extends BaseController {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-	@RequestMapping(value = "noLoanSave")
-	public String noLoanSave_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
+	@RequestMapping(value = "clean")
+	public String clean_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
 			InvocationTargetException {
 		SupplierSignRun run = new SupplierSignRun();
 

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.NaturalId;
@@ -75,6 +76,14 @@ public class SupplierSignRun extends IdEntity {
 
 	/** 备注 */
 	private String descTxt;
+
+	// ===========================================================================
+	/** 合计对账金额 */
+	private BigDecimal totalCheckAmt = new BigDecimal("0");
+	/** 合计付款金额 */
+	private BigDecimal totalPayAmt = new BigDecimal("0");
+	/** 最近一次付款时间 */
+	private String lastPaymentDate;
 
 	public SupplierSignRun() {
 
@@ -399,5 +408,62 @@ public class SupplierSignRun extends IdEntity {
 		return new EqualsBuilder().append(this.getSupplierBwId(), rhs.getSupplierBwId())
 				.append(this.getOptDateY(), rhs.getOptDateY()).append(this.getOptDateM(), rhs.getOptDateM())
 				.append(this.getRunType(), rhs.getRunType()).isEquals();
+	}
+
+	/**
+	 * 取得合计对账金额
+	 * 
+	 * @return totalCheckAmt 合计对账金额
+	 */
+	@Transient
+	public BigDecimal getTotalCheckAmt() {
+		return totalCheckAmt;
+	}
+
+	/**
+	 * 设置合计对账金额
+	 * 
+	 * @param totalCheckAmt 合计对账金额
+	 */
+	public void setTotalCheckAmt(BigDecimal totalCheckAmt) {
+		this.totalCheckAmt = totalCheckAmt;
+	}
+
+	/**
+	 * 取得合计付款金额
+	 * 
+	 * @return totalPayAmt 合计付款金额
+	 */
+	@Transient
+	public BigDecimal getTotalPayAmt() {
+		return totalPayAmt;
+	}
+
+	/**
+	 * 设置合计付款金额
+	 * 
+	 * @param totalPayAmt 合计付款金额
+	 */
+	public void setTotalPayAmt(BigDecimal totalPayAmt) {
+		this.totalPayAmt = totalPayAmt;
+	}
+
+	/**
+	 * 取得最近一次付款时间
+	 * 
+	 * @return lastPaymentDate 最近一次付款时间
+	 */
+	@Transient
+	public String getLastPaymentDate() {
+		return lastPaymentDate;
+	}
+
+	/**
+	 * 设置最近一次付款时间
+	 * 
+	 * @param lastPaymentDate 最近一次付款时间
+	 */
+	public void setLastPaymentDate(String lastPaymentDate) {
+		this.lastPaymentDate = lastPaymentDate;
 	}
 }

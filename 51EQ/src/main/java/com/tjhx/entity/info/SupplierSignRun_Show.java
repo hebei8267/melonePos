@@ -1,7 +1,10 @@
 package com.tjhx.entity.info;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 特殊标记-货品供应商 流水信息（显示）
@@ -24,6 +27,8 @@ public class SupplierSignRun_Show {
 	private List<SupplierSignRun> appList = new ArrayList<SupplierSignRun>();
 	/** 退货确认 */
 	private List<SupplierSignRun> confirmList = new ArrayList<SupplierSignRun>();
+	/** 最终结算付款信息 */
+	private SupplierSignRun lastSupplierSignRun;
 
 	public SupplierSignRun_Show() {
 
@@ -190,6 +195,53 @@ public class SupplierSignRun_Show {
 	 */
 	public void setConfirmList(List<SupplierSignRun> confirmList) {
 		this.confirmList = confirmList;
+	}
+
+	/**
+	 * 计算最终结算付款信息
+	 */
+	public void calLastSupplierSignRun() {
+		// 合计对账金额
+		BigDecimal totalCheckAmt = new BigDecimal("0");
+		for (SupplierSignRun checkRun : checkSuccessList) {
+			totalCheckAmt = totalCheckAmt.add(checkRun.getCheckAmt());
+		}
+		// 合计付款金额
+		BigDecimal totalPayAmt = new BigDecimal("0");
+		// 最近一次付款时间
+		String lastPaymentDate = null;
+		for (SupplierSignRun payRun : payList) {
+			totalPayAmt = totalPayAmt.add(payRun.getPaymentAmt());
+			if (StringUtils.isNotBlank(payRun.getPaymentDate())) {
+				lastPaymentDate = payRun.getPaymentDate();
+			}
+		}
+
+		if (totalCheckAmt.compareTo(BigDecimal.ZERO) == 1) {// 有对账金额
+			lastSupplierSignRun = new SupplierSignRun();
+			lastSupplierSignRun.setTotalCheckAmt(totalCheckAmt);
+			lastSupplierSignRun.setTotalPayAmt(totalPayAmt);
+			lastSupplierSignRun.setLastPaymentDate(lastPaymentDate);
+		}
+
+	}
+
+	/**
+	 * 取得最终结算付款信息
+	 * 
+	 * @return lastSupplierSignRun 最终结算付款信息
+	 */
+	public SupplierSignRun getLastSupplierSignRun() {
+		return lastSupplierSignRun;
+	}
+
+	/**
+	 * 设置最终结算付款信息
+	 * 
+	 * @param lastSupplierSignRun 最终结算付款信息
+	 */
+	public void setLastSupplierSignRun(SupplierSignRun lastSupplierSignRun) {
+		this.lastSupplierSignRun = lastSupplierSignRun;
 	}
 
 }
