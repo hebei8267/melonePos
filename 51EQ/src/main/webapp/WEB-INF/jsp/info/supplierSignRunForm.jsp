@@ -46,26 +46,38 @@
                 	if(!$("#loan_txt").hasClass("loan")){
                 		$("#loan_txt").addClass("loan")
                 	}
+                	
+                	$("#loanForm_uuid").val(_jsResult.uuid);
                 } else if(null != _jsResult && _jsResult.runType == 2){// 通知对账
                 	$("#checkNoticeDate").val(_jsResult.checkNoticeDate);
                 	$('input[name="noticeMode"][value="' + _jsResult.noticeMode + '"]').attr('checked',true);
                 	$("#notice_descTxt").val(_jsResult.descTxt);
+                	
+                	$("#noticeForm_uuid").val(_jsResult.uuid);
                 } else if(null != _jsResult && _jsResult.runType == 3){// 对账完成
                 	$("#checkDate").val(_jsResult.checkDate);
                 	$("#checkAmt").val(_jsResult.checkAmt);
                 	$("#check_descTxt").val(_jsResult.descTxt);
+                	
+                	$("#check_uuid").val(_jsResult.uuid);
                 } else if(null != _jsResult && _jsResult.runType == 4){// 结算付款
                 	$("#paymentDate").val(_jsResult.paymentDate);
                 	$("#paymentAmt").val(_jsResult.paymentAmt);
                 	$("#payment_descTxt").val(_jsResult.descTxt);
+
+                	$("#payment_uuid").val(_jsResult.uuid);
                 } else if(null != _jsResult && _jsResult.runType == 5){// 退货申请
                 	$("#appDate").val(_jsResult.appDate);
                 	$("#appAmt").val(_jsResult.appAmt);
                 	$("#app_descTxt").val(_jsResult.descTxt);
+                	
+                	$("#app_uuid").val(_jsResult.uuid);
                 } else if(null != _jsResult && _jsResult.runType == 6){// 退货确认
                 	$("#confirmDate").val(_jsResult.confirmDate);
                 	$("#confirmAmt").val(_jsResult.confirmAmt);
                 	$("#confirm_descTxt").val(_jsResult.descTxt);
+                	
+                	$("#confirm_uuid").val(_jsResult.uuid);
                 } else {
                 	$("#loan_txt").html("无赊购挂账");
                 	if($("#loan_txt").hasClass("loan")){
@@ -94,6 +106,14 @@
                 	$("#confirmDate").val('');
                 	$("#confirmAmt").val('');
                 	$("#confirm_descTxt").val('');
+                	
+                	
+                	$("#confirm_uuid").val('');
+                	$("#app_uuid").val('');
+                	$("#payment_uuid").val('');
+                	$("#check_uuid").val('');
+                	$("#noticeForm_uuid").val('');
+                	$("#loanForm_uuid").val('');
                 }
             });
         }
@@ -160,9 +180,29 @@
         	//=======================================================================
         	//赊购挂账-不挂
         	$("#noLoan_saveBtn").click(function() {
-                $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/noLoanSave");
-                $("#loanForm").submit();
+        		_tip_check(1);
             });
+        	//清除按钮
+        	$("#notice_cleanBtn").click(function() {
+        		_tip_check(2);
+        	});
+        	//清除按钮
+        	$("#check_cleanBtn").click(function() {
+        		_tip_check(3);
+        	});
+        	//清除按钮
+        	$("#payment_cleanBtn").click(function() {
+        		_tip_check(4);
+        	});
+        	//清除按钮
+        	$("#app_cleanBtn").click(function() {
+        		_tip_check(5);
+        	});
+        	//清除按钮
+        	$("#confirm_cleanBtn").click(function() {
+        		_tip_check(6);
+        	});
+        	
         	
         	//赊购挂账-挂账
         	$("#loan_saveBtn").click(function() {
@@ -295,6 +335,52 @@
                 $("#confirmForm").submit();
             });
         });
+        
+        function _tip_check(runType){
+        	if(runType == 1){// 赊购挂账
+        		if ($("#loanForm_uuid").val() == ''){
+        			$('#_tip_modal_2').modal('show');
+        		} else {
+        			$("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#loanForm").submit();
+        		}
+        	} else if(runType == 2){// 对账通知
+        		if ($("#noticeForm_uuid").val() == ''){
+        			$('#_tip_modal_1').modal('show');
+        		} else {
+        			$("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#noticeForm").submit();
+        		}
+        	} else if(runType == 3){// 对账完成
+        		if ($("#check_uuid").val() == ''){
+        			$('#_tip_modal_1').modal('show');
+        		} else {
+        			$("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#checkForm").submit();
+        		}
+        	} else if(runType == 4){// 结算付款
+        		if ($("#payment_uuid").val() == ''){
+        			$('#_tip_modal_1').modal('show');
+        		} else {
+        			$("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#paymentForm").submit();
+        		}
+        	} else if(runType == 5){// 退货申请
+        		if ($("#app_uuid").val() == ''){
+        			$('#_tip_modal_1').modal('show');
+        		} else {
+        			$("#appForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#appForm").submit();
+        		}
+        	} else if(runType == 6){// 退货确认
+        		if ($("#confirm_uuid").val() == ''){
+        			$('#_tip_modal_1').modal('show');
+        		} else {
+        			$("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
+                    $("#confirmForm").submit();
+        		}
+        	}
+        }
         </script>
     </head>
     <body>
@@ -361,9 +447,10 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="loanForm_optDateM" value="">
 				  				<input type="hidden" name="runType" value="1">
+				  				<input type="hidden" name="_uuid" id="loanForm_uuid" value="">
 					  			<label class="my-control-label"><h3 id="loan_txt"></h3></label>
 					  			<br>
-					  			<button id="noLoan_saveBtn" class="btn btn-large btn-primary">不挂</button>&nbsp;
+					  			<input type="button" id="noLoan_saveBtn" class="btn btn-large btn-primary" value="不挂" />&nbsp;
 								<button id="loan_saveBtn" class="btn btn-large btn-warning">挂账</button>&nbsp;
 								<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 							</form>
@@ -376,6 +463,7 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="noticeForm_optDateM" value="">
 				  				<input type="hidden" name="runType" value="2">
+				  				<input type="hidden" name="_uuid" id="noticeForm_uuid" value="">
 					  			<div class="control-group">
 	                            	<label class="control-label">通知时间 :</label>
 	                            	<div class="controls">
@@ -402,8 +490,9 @@
 	                        	</div>
 	                        	<div class="control-group">
 		                            <div class="controls">
-		                                <button	id="notice_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>
-		                                &nbsp;<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		                                <button	id="notice_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>&nbsp;
+		                                <input type="button" id="notice_cleanBtn" class="btn btn-large btn-danger" value="清除" />&nbsp;
+		                                <a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 		                            </div>
                         		</div>
 							</form>
@@ -416,6 +505,7 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="check_optDateM" value="">
 				  				<input type="hidden" name="runType" value="3">
+				  				<input type="hidden" name="_uuid" id="check_uuid" value="">
 				  				<div class="control-group">
 	                            	<label class="control-label">对账时间 :</label>
 	                            	<div class="controls">
@@ -436,8 +526,9 @@
 	                        	</div>
 	                        	<div class="control-group">
 		                            <div class="controls">
-		                                <button	id="check_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>
-		                                &nbsp;<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		                                <button	id="check_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>&nbsp;
+		                                <input type="button" id="check_cleanBtn" class="btn btn-large btn-danger" value="清除" />&nbsp;
+		                                <a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 		                            </div>
                         		</div>
 				  			</form>
@@ -450,6 +541,7 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="payment_optDateM" value="">
 				  				<input type="hidden" name="runType" value="4">
+				  				<input type="hidden" name="_uuid" id="payment_uuid" value="">
 				  				<div class="control-group">
 	                            	<label class="control-label">付款时间 :</label>
 	                            	<div class="controls">
@@ -470,8 +562,9 @@
 	                        	</div>
 	                        	<div class="control-group">
 		                            <div class="controls">
-		                                <button	id="payment_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>
-		                                &nbsp;<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		                                <button	id="payment_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>&nbsp;
+		                                <input type="button" id="payment_cleanBtn" class="btn btn-large btn-danger" value="清除" />&nbsp;
+		                                <a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 		                            </div>
                         		</div>
 				  			</form>
@@ -484,6 +577,7 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="app_optDateM" value="">
 				  				<input type="hidden" name="runType" value="5">
+				  				<input type="hidden" name="_uuid" id="app_uuid" value="">
 				  				<div class="control-group">
 	                            	<label class="control-label">申请时间 :</label>
 	                            	<div class="controls">
@@ -504,8 +598,9 @@
 	                        	</div>
 	                        	<div class="control-group">
 		                            <div class="controls">
-		                                <button	id="app_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>
-		                                &nbsp;<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		                                <button	id="app_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>&nbsp;
+		                                <input type="button" id="app_cleanBtn" class="btn btn-large btn-danger" value="清除" />&nbsp;
+		                                <a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 		                            </div>
                         		</div>
 				  			</form>
@@ -517,6 +612,7 @@
 				  				<input type="hidden" name="optDateY" value="${optDateY}">
 				  				<input type="hidden" name="optDateM" id="confirm_optDateM" value="">
 				  				<input type="hidden" name="runType" value="6">
+				  				<input type="hidden" name="_uuid" id="confirm_uuid" value="">
 				  				<div class="control-group">
 	                            	<label class="control-label">确认时间 :</label>
 	                            	<div class="controls">
@@ -537,8 +633,9 @@
 	                        	</div>
 	                        	<div class="control-group">
 		                            <div class="controls">
-		                                <button	id="confirm_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>
-		                                &nbsp;<a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
+		                                <button	id="confirm_saveBtn" class="btn btn-large btn-primary" type="submit">保存</button>&nbsp;
+		                                <input type="button" id="confirm_cleanBtn" class="btn btn-large btn-danger" value="清除" />&nbsp;
+		                                <a href="${sc_ctx}/supplierSignRun/init" class="btn btn-large">返回</a>
 		                            </div>
                         		</div>
 				  			</form>
@@ -548,5 +645,40 @@
 	           	</div>
        		</div>
         </div>
+        
+        
+        <div id="_tip_modal_1" class="modal hide fade __model37">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>系统消息</h3>
+		  </div>
+		  <div class="modal-body">
+		  	<center>
+	            <p class="error">
+	                无相关数据, 不需要清除! 
+	            </p>
+        	</center>
+		  </div>
+		  <div class="modal-footer">
+		    <a href="#" class="btn" data-dismiss="modal">关闭</a>
+		  </div>
+		</div>
+		
+		<div id="_tip_modal_2" class="modal hide fade __model37">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>系统消息</h3>
+		  </div>
+		  <div class="modal-body">
+		  	<center>
+	            <p class="error">
+	                无赊购挂账, 不需要解挂! 
+	            </p>
+        	</center>
+		  </div>
+		  <div class="modal-footer">
+		    <a href="#" class="btn" data-dismiss="modal">关闭</a>
+		  </div>
+		</div>
     </body>
 </html>

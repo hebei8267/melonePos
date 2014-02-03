@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,13 @@ public class SupplierSignRunManager {
 	@Resource
 	private SupplierSignRunJpaDao supplierSignRunJpaDao;
 
+	@Resource
+	private SupplierManager supplierManager;
+
+	public List<Supplier> getSupplierList() {
+		return supplierSignMyBatisDao.getSupplierList();
+	}
+
 	/**
 	 * 取得特殊标记-货品供应商信息列表
 	 * 
@@ -31,9 +39,16 @@ public class SupplierSignRunManager {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear) throws IllegalAccessException,
-			InvocationTargetException {
-		List<Supplier> _supList = supplierSignMyBatisDao.getSupplierList(optYear);
+	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear, String supplierBwId)
+			throws IllegalAccessException, InvocationTargetException {
+		List<Supplier> _supList = null;
+
+		if (StringUtils.isNotBlank(supplierBwId)) {
+			_supList = new ArrayList<Supplier>();
+			_supList.add(supplierManager.getSupplierByBwId(supplierBwId));
+		} else {
+			_supList = supplierSignMyBatisDao.getSupplierListByYear(optYear);
+		}
 
 		List<SupplierSignRun_Show> _supSignRunList = initSupplierSignRunList(_supList, optYear);
 

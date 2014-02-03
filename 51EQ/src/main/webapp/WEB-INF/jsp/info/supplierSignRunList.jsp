@@ -47,7 +47,7 @@
                             <h3>供应商(挂账)结算进度表</h3>
                         </legend>
                     </div>
-                    <div class="span12">
+                    <div class="span3">
                         <label class="control-label">年份 : </label>
                         <select name="optDateY" class="input-medium">
                         	<c:forEach items="${yearList}" var="year">
@@ -56,6 +56,19 @@
 	                            </c:if>
 	                            <c:if test="${year.key != optDateY}">
 	                                <option value="${year.key }">${year.value }</option>
+	                            </c:if>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="span9">
+                    	<label class="control-label">供应商 : </label>
+                        <select name="supplierBwId" class="input-medium">
+                        	<c:forEach items="${supList}" var="sup">
+	                        	<c:if test="${sup.key == supplierBwId}">
+	                                <option value="${sup.key }" selected>${sup.value }</option>
+	                            </c:if>
+	                            <c:if test="${sup.key != supplierBwId}">
+	                                <option value="${sup.key }">${sup.value }</option>
 	                            </c:if>
                             </c:forEach>
                         </select>
