@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>月销售金额对比(图形)</h3>
+                            <h3>月销售信息对比(图形)</h3>
                         </legend>
                     </div>
                     

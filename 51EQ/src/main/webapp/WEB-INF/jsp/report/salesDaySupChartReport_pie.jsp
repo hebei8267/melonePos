@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>货商销售金额对比(图形)</h3>
+                            <h3>货商销售信息对比(图形)</h3>
                         </legend>
                     </div>
                     <div class="span12">

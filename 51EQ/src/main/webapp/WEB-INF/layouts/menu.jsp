@@ -190,7 +190,7 @@
                             </c:if>
                             <c:if test="${_permIdList.contains('23')}">
 	                            <li>
-	                                <a href="${sc_ctx}/salesDayItemChartReport/pie_init">类别销售金额对比(图形)</a>
+	                                <a href="${sc_ctx}/salesDayItemChartReport/pie_init">类别销售信息对比(图形)</a>
 	                            </li>
                             </c:if>
                             <li class="divider"></li>
@@ -201,13 +201,16 @@
 			                </c:if>
 			                <c:if test="${_permIdList.contains('25')}">
 	                            <li>
-			                    	<a href="${sc_ctx}/salesDaySupChartReport/pie_init">货商销售金额对比(图形)</a>
+			                    	<a href="${sc_ctx}/salesDaySupChartReport/pie_init">货商销售信息对比(图形)</a>
 			                 	</li>
 		                 	</c:if>
 		                 	<li class="divider"></li>
 		                 	<c:if test="${_permIdList.contains('41')}">
+		                 		<li>
+			                    	<a href="${sc_ctx}/salesDayChartReport/init">日销售信息对比</a>
+			                 	</li>
 	                            <li>
-			                    	<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售金额对比(图形)</a>
+			                    	<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售信息对比(图形)</a>
 			                 	</li>
 		                 	</c:if>
                         </ul>

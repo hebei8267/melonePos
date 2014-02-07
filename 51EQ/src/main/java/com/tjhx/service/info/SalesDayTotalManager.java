@@ -137,7 +137,8 @@ public class SalesDayTotalManager {
 	 */
 	private void recalRanking(List<String> optDateList) {
 		for (String optDate : optDateList) {
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findByOptDate(optDate);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao
+					.findByOptDateOrderBy_Ranking(optDate);
 
 			int rank = 1;
 			for (SalesDayTotal _s : _sList) {
@@ -257,6 +258,16 @@ public class SalesDayTotalManager {
 			_optDateList.add(DateUtils.getNextDateFormatDate(_now, -i, "yyyyMMdd"));
 		}
 		return _optDateList;
+	}
+
+	/**
+	 * 取得每日各店销售汇总（根据日期）
+	 * 
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<SalesDayTotal> getSalesDayTotalListByOptDate(String optDate) {
+		return (List<SalesDayTotal>) salesDayTotalJpaDao.findByOptDate(optDate);
 	}
 
 }
