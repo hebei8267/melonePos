@@ -284,6 +284,25 @@ public class DateUtils {
 	}
 
 	/**
+	 * 取得指定月份天数
+	 * 
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static int getMonthDays(String year, String month) {
+		int _year = Integer.parseInt(year);
+		int _month = Integer.parseInt(month);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, _year);
+		cal.set(Calendar.MONTH, _month - 1);
+		cal.set(Calendar.DATE, 1);
+		cal.roll(Calendar.DATE, -1);
+
+		return cal.get(Calendar.DATE);
+	}
+
+	/**
 	 * 返回两个时间差的毫秒数
 	 * 
 	 * @param time1 早一点的时间

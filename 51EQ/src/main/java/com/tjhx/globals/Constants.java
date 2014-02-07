@@ -35,5 +35,6 @@ public class Constants {
 	public static final String ROOT_ORG_BW_ID = "00D";
 	/** 总部机构编号 */
 	public static final String ROOT_ORG_ID = "000";
-
+	/** 门店机构编号-13 */
+	public static final String ORG_ID_13 = "00013D";
 }

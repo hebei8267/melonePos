@@ -94,9 +94,9 @@ public class SalesMonthItemChartReportController extends BaseController {
 		List<String> _orgSumSalesJsonList = new ArrayList<String>();
 		List<String> _orgNameList = new ArrayList<String>();
 		_orgNameList.add("合计");
-		// 全部门店近三年销售数据
+		// 全部门店近4年销售数据
 		getSalesTotalList_ByYear(optDateYList, _orgSumSalesJsonList);
-		// 各店近三年销售数据
+		// 各店近4年销售数据
 		getSalesTotalList_ByOrgAndYear(_orgList, optDateYList, _orgSumSalesJsonList, _orgNameList);
 
 		for (int i = 0; i < _yearNum; i++) {

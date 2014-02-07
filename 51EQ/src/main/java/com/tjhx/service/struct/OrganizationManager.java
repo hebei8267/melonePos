@@ -59,6 +59,23 @@ public class OrganizationManager {
 	}
 
 	/**
+	 * 根据资金编号(百威)取得机构信息
+	 * 
+	 * @param bwBranchNo
+	 * @return
+	 */
+	public Organization getOrganizationByBwBranchNo(String bwBranchNo) {
+		List<Organization> _orgList = getAllOrganization();
+		for (Organization organization : _orgList) {
+			if (null != organization.getBwBranchNo() && organization.getBwBranchNo().equals(bwBranchNo)) {
+				return organization;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * 根据编号取得机构信息
 	 * 
 	 * @param uuid 机构编号
