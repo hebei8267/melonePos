@@ -232,7 +232,11 @@ public class SalesDayTotalManager {
 		}
 
 		if (null == _res) {
-			_res = new BigDecimal(0);
+			if (Constants.ORG_ID_13.equals(orgId)) {
+				_res = new BigDecimal(600000);
+			} else {
+				_res = new BigDecimal(100000);
+			}
 		}
 		return _res;
 	}
