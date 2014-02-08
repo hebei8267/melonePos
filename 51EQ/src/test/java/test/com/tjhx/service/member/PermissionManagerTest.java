@@ -293,6 +293,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm42.setRole(role);
 		perm42.setFunction(fun42);
 		permissionJpaDao.save(perm42);
+
+		// ---------------------------------------------
+		// 日销售信息对比
+		// ---------------------------------------------
+		Permission perm44 = new Permission();
+		Function fun44 = functionJpaDao.findOne(44);
+		perm44.setRole(role);
+		perm44.setFunction(fun44);
+		permissionJpaDao.save(perm44);
 	}
 
 	// 总部人员-会计
@@ -450,6 +459,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm42.setRole(role);
 		perm42.setFunction(fun42);
 		permissionJpaDao.save(perm42);
+
+		// ---------------------------------------------
+		// 日销售信息对比
+		// ---------------------------------------------
+		Permission perm44 = new Permission();
+		Function fun44 = functionJpaDao.findOne(44);
+		perm44.setRole(role);
+		perm44.setFunction(fun44);
+		permissionJpaDao.save(perm44);
 
 	}
 
@@ -823,6 +841,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm43.setRole(role);
 		perm43.setFunction(fun43);
 		permissionJpaDao.save(perm43);
+
+		// ---------------------------------------------
+		// 日销售信息对比
+		// ---------------------------------------------
+		Permission perm44 = new Permission();
+		Function fun44 = functionJpaDao.findOne(44);
+		perm44.setRole(role);
+		perm44.setFunction(fun44);
+		permissionJpaDao.save(perm44);
 	}
 
 	// 店长

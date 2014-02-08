@@ -541,7 +541,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 		functionJpaDao.save(fun);
 	}
-	
+
 	@Test
 	@Rollback(false)
 	public void saveNewFun42() {
@@ -553,6 +553,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 		functionJpaDao.save(fun);
 	}
+
 	@Test
 	@Rollback(false)
 	public void saveNewFun43() {
@@ -561,6 +562,18 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 		fun.setDisplayName("挂账供应商结算进度表-BOSS用");
 		// 功能URL */
 		fun.setFunUrl("supplierSignRun/init_boss");
+
+		functionJpaDao.save(fun);
+	}
+
+	@Test
+	@Rollback(false)
+	public void saveNewFun44() {
+		Function fun = new Function();
+		// 功能显示名称--会计、BOSS用
+		fun.setDisplayName("日销售信息对比");
+		// 功能URL */
+		fun.setFunUrl("salesDayChartReport/init");
 
 		functionJpaDao.save(fun);
 	}
