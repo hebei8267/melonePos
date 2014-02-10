@@ -31,7 +31,7 @@
 					<fmt:parseDate value="${optDateList[status1.index]}" var="_tmpDate" pattern="yyyyMMdd" />
 					<td><fmt:formatDate pattern="yyyy/MM/dd" value="${_tmpDate}" /></td>
 					<c:forEach items="${_posAmtRateList}" var="posAmtRate">
-					<td>${posAmtRate.posAmtRate }</td>
+					<td style="background-color: ${posAmtRate.htmlColor }">${posAmtRate.posAmtRate }</td>
 					</c:forEach>
 				</tr>
 				</c:forEach>

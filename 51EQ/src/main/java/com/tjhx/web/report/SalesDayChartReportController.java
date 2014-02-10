@@ -1,6 +1,7 @@
 package com.tjhx.web.report;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,7 @@ public class SalesDayChartReportController extends BaseController {
 		// 取得指定时间区间（近30天）
 		List<String> _optDateList = calOptDate(_optDate);
 		model.addAttribute("optDateList", _optDateList);
-		
+
 		// 取得指定机构近期(近30天)的销售增长率
 		List<List<SalesDayTotal>> _posAmtRateList = initPosAmtRateList(_optDateList, _orgList);
 
@@ -138,6 +139,36 @@ public class SalesDayChartReportController extends BaseController {
 		for (SalesDayTotal _dbObj : dbPosAmtRateList) {
 			if (_dbObj.equals(destObj)) {
 				BeanUtils.copyProperties(destObj, _dbObj);
+
+				BigDecimal _rate_b = destObj.getPosAmtRate();
+
+				if (_rate_b.compareTo(BigDecimal.ZERO) > 0) {
+					double _rate_d = _rate_b.doubleValue();
+					if (_rate_d < 20) {
+						_rate_d = 20;
+					} else if (_rate_d > 100) {
+						_rate_d = 100;
+					}
+					_rate_d = (100 - _rate_d) / 100 * 255;
+					String _rate_s = Integer.toHexString((int) _rate_d);
+					if (_rate_s.length() == 1) {
+						_rate_s = "0" + _rate_s;
+					}
+					destObj.setHtmlColor("#FF" + _rate_s + _rate_s);
+				} else {
+					double _rate_d = _rate_b.doubleValue() * -1;
+					if (_rate_d < 20) {
+						_rate_d = 20;
+					} else if (_rate_d > 100) {
+						_rate_d = 100;
+					}
+					_rate_d = (100 - _rate_d) / 100 * 255;
+					String _rate_s = Integer.toHexString((int) _rate_d);
+					if (_rate_s.length() == 1) {
+						_rate_s = "0" + _rate_s;
+					}
+					destObj.setHtmlColor("#" + _rate_s + "FF" + _rate_s);
+				}
 			}
 		}
 	}

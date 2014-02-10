@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.NaturalId;
@@ -51,6 +52,9 @@ public class SalesDayTotal extends IdEntity {
 	private BigDecimal dayNeededPosAmt;
 	/** 排名 */
 	private int ranking;
+	// ========================================================
+	/** 颜色 */
+	private String htmlColor;
 
 	public SalesDayTotal() {
 
@@ -336,6 +340,25 @@ public class SalesDayTotal extends IdEntity {
 	 */
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
+	}
+
+	/**
+	 * 取得颜色
+	 * 
+	 * @return htmlColor 颜色
+	 */
+	@Transient
+	public String getHtmlColor() {
+		return htmlColor;
+	}
+
+	/**
+	 * 设置颜色
+	 * 
+	 * @param htmlColor 颜色
+	 */
+	public void setHtmlColor(String htmlColor) {
+		this.htmlColor = htmlColor;
 	}
 
 	@Override

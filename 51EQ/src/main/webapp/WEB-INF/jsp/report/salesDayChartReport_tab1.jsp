@@ -70,8 +70,8 @@
 					<td class="center">${salesDayTotal.monthDays}</td>
 					<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 					<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-					<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FA8258"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #80FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
-					<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FA8258"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #80FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+					<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
+					<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
 					<td class="right">${salesDayTotal.dayNeededPosAmt}</td>
 					<td class="center">${salesDayTotal.ranking}</td>
 			 	</tr>
