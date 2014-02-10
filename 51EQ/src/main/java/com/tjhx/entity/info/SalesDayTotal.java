@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.NaturalId;
 
 import com.tjhx.entity.IdEntity;
@@ -50,6 +51,15 @@ public class SalesDayTotal extends IdEntity {
 	private BigDecimal dayNeededPosAmt;
 	/** 排名 */
 	private int ranking;
+
+	public SalesDayTotal() {
+
+	}
+
+	public SalesDayTotal(String optDate, String orgId) {
+		this.optDate = optDate;
+		this.orgId = orgId;
+	}
 
 	/**
 	 * 取得日期
@@ -326,6 +336,16 @@ public class SalesDayTotal extends IdEntity {
 	 */
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof SalesDayTotal)) {
+			return false;
+		}
+		SalesDayTotal rhs = (SalesDayTotal) obj;
+		return new EqualsBuilder().append(this.getOptDate(), rhs.getOptDate()).append(this.getOrgId(), rhs.getOrgId())
+				.isEquals();
 	}
 
 }
