@@ -18,12 +18,12 @@ public interface PettyCashJpaDao extends CrudRepository<PettyCash, Integer> {
 	 * 查询指定机构/更新时间之后的备用金信息
 	 * 
 	 * @param orgId 机构编号
-	 * @param updateDate 更新时间
+	 * @param createDate 创建时间
 	 * @param sort
 	 * @return
 	 */
-	@Query("select p from PettyCash p where p.orgId = :orgId and p.updateDate >= :updateDate")
-	public List<PettyCash> findByOrgId(@Param("orgId") String orgId, @Param("updateDate") Date updateDate, Sort sort);
+	@Query("select p from PettyCash p where p.orgId = :orgId and p.createDate >= :createDate")
+	public List<PettyCash> findByOrgId(@Param("orgId") String orgId, @Param("createDate") Date createDate, Sort sort);
 
 	/**
 	 * 根据查询条件 取得指定门店备用金余额（指定时间段内）
