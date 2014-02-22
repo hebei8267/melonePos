@@ -577,4 +577,16 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 
 		functionJpaDao.save(fun);
 	}
+
+	@Test
+	@Rollback(false)
+	public void saveNewFun45() {
+		Function fun = new Function();
+		// 功能显示名称--会计、BOSS用
+		fun.setDisplayName("销售排名信息(按类别)");
+		// 功能URL */
+		fun.setFunUrl("salesItemRankReport/init");
+
+		functionJpaDao.save(fun);
+	}
 }

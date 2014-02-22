@@ -22,7 +22,7 @@ public class UserManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewUser() {
+	public void saveNewUser0() {
 		User user = new User();
 		user.setLoginName("admin");
 		user.setName("系统管理员");

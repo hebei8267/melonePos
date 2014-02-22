@@ -16,7 +16,7 @@ public class OrganizationManagerTest extends SpringTransactionalTestCase {
 
 	@Test
 	@Rollback(false)
-	public void saveNewOrg() {
+	public void saveNewOrg0() {
 		Organization org = new Organization();
 		org.setName("总部");
 		org.setBwId("00D");
