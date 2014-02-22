@@ -65,13 +65,11 @@ public class PunchClockController extends BaseController {
 		return "affair/punchClockList";
 	}
 
-	private void _punchClockListAction(String orgId, String optDateY, String optDateM, Model model)
-			throws ParseException {
+	private void _punchClockListAction(String orgId, String optDateY, String optDateM, Model model) throws ParseException {
 		List<Employee> _empList = empManager.getEmployeeListByOrgId(orgId);
 		model.addAttribute("empList", _empList);
 
-		List<PunchClock_List_Show> _clockList = punchClockManager
-				.getPunchClockList(orgId, optDateY, optDateM, _empList);
+		List<PunchClock_List_Show> _clockList = punchClockManager.getPunchClockList(orgId, optDateY, optDateM, _empList);
 		model.addAttribute("punchClockList", _clockList);
 	}
 
@@ -104,8 +102,7 @@ public class PunchClockController extends BaseController {
 
 	@RequestMapping(value = "manage/export")
 	public void punchClockExport_Action(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException,
-			ParseException {
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
@@ -130,8 +127,8 @@ public class PunchClockController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());

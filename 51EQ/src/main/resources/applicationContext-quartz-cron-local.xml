@@ -54,8 +54,8 @@
 	<!-- Cron式Trigger定义 -->
 	<bean id="bwSaleAmtJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="bwSaleAmtJobCronJobDetail" />
-		<!-- 每天上午 8:00 触发 -->
-		<property name="cronExpression" value="0 0 8 * * ?" />
+		<!-- 每天上午 10:30 触发 -->
+		<property name="cronExpression" value="0 30 10 * * ?" />
 	</bean>
 
 	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->

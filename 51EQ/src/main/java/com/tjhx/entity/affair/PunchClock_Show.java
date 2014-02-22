@@ -27,6 +27,8 @@ public class PunchClock_Show {
 	private int empUuid;
 	/** 考勤状态 99-非预期加班 0-正常 1-迟到 2-早退 */
 	private int punchNormalState;
+	/** 工作时长 */
+	private double workHour;
 
 	public PunchClock_Show() {
 
@@ -219,9 +221,31 @@ public class PunchClock_Show {
 		this.punchNormalState = punchNormalState;
 	}
 
+	/**
+	 * 取得工作时长
+	 * 
+	 * @return 工作时长
+	 */
+	public double getWorkHour() {
+		return workHour;
+	}
+
+	/**
+	 * 设置工作时长
+	 * 
+	 * @param workHour 工作时长
+	 */
+	public void setWorkHour(double workHour) {
+		this.workHour = workHour;
+	}
+
 	public void copy(PunchClock clock) {
 		this.startClockTime = DateUtils.transDateFormat(clock.getStartClockTime(), "MM/dd HH:mm:ss");
 		this.endClockTime = DateUtils.transDateFormat(clock.getEndClockTime(), "MM/dd HH:mm:ss");
+		// 设置工作时长
+		if (null != clock.getStartClockTime() && null != clock.getEndClockTime()) {
+			setWorkHour(DateUtils.getDateSpanHour(clock.getStartClockTime(), clock.getEndClockTime()));
+		}
 	}
 
 	public void copy(WorkSchedule workSchedule) {
@@ -249,8 +273,8 @@ public class PunchClock_Show {
 			if (StringUtils.isBlank(startClockTime)) {
 				punchNormalState = 1;// 迟到
 			} else {
-				long timeBetween1 = DateUtils.timeBetween(startClockTime, "MM/dd HH:mm:ss",
-						scheduleDate.substring(4, 8) + " " + startScheduleTime, "MMdd HH:mm");
+				long timeBetween1 = DateUtils.timeBetween(startClockTime, "MM/dd HH:mm:ss", scheduleDate.substring(4, 8) + " "
+						+ startScheduleTime, "MMdd HH:mm");
 				if (timeBetween1 < 0) {
 					punchNormalState = 1;// 迟到
 				}
@@ -260,8 +284,8 @@ public class PunchClock_Show {
 			if (StringUtils.isBlank(endClockTime)) {
 				punchNormalState = 2;// 早退
 			} else {
-				long timeBetween2 = DateUtils.timeBetween(scheduleDate.substring(4, 8) + " " + endScheduleTime,
-						"MMdd HH:mm", endClockTime, "MM/dd HH:mm:ss");
+				long timeBetween2 = DateUtils.timeBetween(scheduleDate.substring(4, 8) + " " + endScheduleTime, "MMdd HH:mm",
+						endClockTime, "MM/dd HH:mm:ss");
 				if (timeBetween2 < 0) {
 					punchNormalState = 2;// 早退
 				}

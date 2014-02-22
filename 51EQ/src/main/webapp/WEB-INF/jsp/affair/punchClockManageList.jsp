@@ -159,6 +159,13 @@
 				                            	</c:if>
 			                            	</td>
 		                            	</tr>
+		                            	<tr>
+		                            		<td class="center" style="color:#F89406;font-weight: bold">
+		                            		<c:if test="${0.0 != subPunchClock.workHour}">
+			                            		工作时长：${subPunchClock.workHour} H
+				                       		</c:if>
+		                            		</td>
+		                            	</tr>
 	                            	</table>
                             	</td>
                             	</c:forEach>

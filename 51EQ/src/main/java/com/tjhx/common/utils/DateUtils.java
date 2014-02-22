@@ -94,8 +94,7 @@ public class DateUtils {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static synchronized String getNextDateFormatDate(String date, int addDay, String style)
-			throws ParseException {
+	public static synchronized String getNextDateFormatDate(String date, int addDay, String style) throws ParseException {
 		Calendar cal = Calendar.getInstance();
 		Date _date = stringToDate(date, style);
 		cal.setTime(_date);
@@ -112,8 +111,7 @@ public class DateUtils {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static synchronized String getNextYearFormatDate(String date, int addDay, String style)
-			throws ParseException {
+	public static synchronized String getNextYearFormatDate(String date, int addDay, String style) throws ParseException {
 		Calendar cal = Calendar.getInstance();
 		Date _date = stringToDate(date, style);
 		cal.setTime(_date);
@@ -227,6 +225,17 @@ public class DateUtils {
 	 */
 	public static long getDateSpanDay(Date dateFrom, Date dateTo) {
 		return (dateTo.getTime() - dateFrom.getTime()) / (1000 * 3600 * 24);
+	}
+
+	/**
+	 * 取得dateTo与dateFrom的日期间隔(返回结果-分钟)
+	 * 
+	 * @param dateFrom dateFrom
+	 * @param dateTo dateTo
+	 * @return 日期间隔
+	 */
+	public static double getDateSpanHour(Date dateFrom, Date dateTo) {
+		return (dateTo.getTime() - dateFrom.getTime()) / (1000 * 3600);
 	}
 
 	/**

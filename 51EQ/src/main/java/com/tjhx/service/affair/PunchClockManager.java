@@ -179,8 +179,8 @@ public class PunchClockManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<PunchClock_List_Show> getPunchClockList(String orgId, String clockTimeY, String clockTimeM,
-			List<Employee> empList) throws ParseException {
+	public List<PunchClock_List_Show> getPunchClockList(String orgId, String clockTimeY, String clockTimeM, List<Employee> empList)
+			throws ParseException {
 
 		PunchClock punchClock = new PunchClock();
 		punchClock.setOrgId(orgId);
@@ -198,20 +198,22 @@ public class PunchClockManager {
 	/**
 	 * 调整考勤信息表,准备页面显示
 	 * 
-	 * @param punchClockList
+	 * @param clockTimeY
+	 * @param clockTimeM
+	 * @param punchClockList 打卡信息列表
+	 * @param workScheduleList 排班信息列表
+	 * @param empList
 	 * @return
 	 * @throws ParseException
 	 */
 	private List<PunchClock_List_Show> formatPunchClockList(String clockTimeY, String clockTimeM,
-			List<PunchClock> punchClockList, List<WorkSchedule> workScheduleList, List<Employee> empList)
-			throws ParseException {
+			List<PunchClock> punchClockList, List<WorkSchedule> workScheduleList, List<Employee> empList) throws ParseException {
 		int days = DateUtils.getMonthDays(Integer.parseInt(clockTimeY), Integer.parseInt(clockTimeM));
 
 		List<PunchClock_Show> _punchClockList = new ArrayList<PunchClock_Show>();
 		for (int i = 1; i <= days; i++) {
 			for (Employee employee : empList) {
-				_punchClockList.add(new PunchClock_Show(clockTimeY, clockTimeM, String.format("%02d", i), employee
-						.getUuid()));
+				_punchClockList.add(new PunchClock_Show(clockTimeY, clockTimeM, String.format("%02d", i), employee.getUuid()));
 			}
 		}
 
@@ -253,8 +255,7 @@ public class PunchClockManager {
 		if (punchClock_Show.getEmpUuid() != workSchedule.getEmpUuid()) {
 			return false;
 		}
-		String clockTime = punchClock_Show.getClockTimeY() + punchClock_Show.getClockTimeM()
-				+ punchClock_Show.getClockTimeD();
+		String clockTime = punchClock_Show.getClockTimeY() + punchClock_Show.getClockTimeM() + punchClock_Show.getClockTimeD();
 		if (!clockTime.equals(workSchedule.getScheduleDate())) {
 			return false;
 		}
