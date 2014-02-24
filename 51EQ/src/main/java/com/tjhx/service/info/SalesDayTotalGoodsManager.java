@@ -53,8 +53,7 @@ public class SalesDayTotalGoodsManager {
 				_param.setOptDate(optDate);
 				_param.setBranchNo(org.getBwBranchNo());
 
-				List<DailySaleTotalGoods> _dailySaleTotalList = dailySaleTotalGoodsMyBatisDao
-						.getDailySaleTotalList(_param);
+				List<DailySaleTotalGoods> _dailySaleTotalList = dailySaleTotalGoodsMyBatisDao.getDailySaleTotalList(_param);
 
 				for (DailySaleTotalGoods _dailySale : _dailySaleTotalList) {
 					SalesDayTotalGoods _goods = new SalesDayTotalGoods();
@@ -116,7 +115,8 @@ public class SalesDayTotalGoodsManager {
 	public List<SalesDayTotalGoods> getSumSaleInfoList(SalesDayTotalGoods salesDayTotalGoods) throws ParseException {
 		// 取得各店指定时间区间内的销售信息（按商品）
 		List<SalesDayTotalGoods> _sumSaleList = salesDayTotalGoodsMyBatisDao.getSumSaleInfoList(salesDayTotalGoods);
-		Long _span = DateUtils.getDateSpanDay(salesDayTotalGoods.getOptDateStart(), salesDayTotalGoods.getOptDateEnd(), "yyyyMMdd");
+		Long _span = DateUtils.getDateSpanDay(salesDayTotalGoods.getOptDateStart(), salesDayTotalGoods.getOptDateEnd(),
+				"yyyyMMdd");
 		if (0 == _span) {
 			_span = (long) 1;
 		}
@@ -125,10 +125,29 @@ public class SalesDayTotalGoodsManager {
 			if (_salesGoods.getPosQty().compareTo(BigDecimal.ZERO) == 0) {
 				_salesGoods.setAverageDailySales(new BigDecimal(0));
 			} else {
-				_salesGoods.setAverageDailySales(_salesGoods.getPosQty().divide(new BigDecimal(_span), 2,
-						BigDecimal.ROUND_UP));
+				_salesGoods.setAverageDailySales(_salesGoods.getPosQty().divide(new BigDecimal(_span), 2, BigDecimal.ROUND_UP));
 			}
 		}
 		return _sumSaleList;
+	}
+
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)
+	 * 
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @param orgId
+	 * @param itemNo
+	 * @return
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderQty(String optDateStart, String optDateEnd, String orgId,
+			String itemNo) {
+		SalesDayTotalGoods param = new SalesDayTotalGoods();
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+		param.setOrgId(orgId);
+		param.setItemNo(itemNo);
+
+		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderQty(param);
 	}
 }

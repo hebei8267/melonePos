@@ -83,4 +83,41 @@
     	g.org_id, g.item_subno
     ]]>
 	</select>
+	
+	
+	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
+	<select id="getSalesItemRankInfoList_OrderQty" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+		SELECT
+		    sg.org_id ,
+		    SUM(sg.pos_amt) AS pos_amt ,
+		    SUM(sg.pos_qty) AS pos_qty ,
+		    sg.item_subno ,
+		    sg.item_barcode ,
+		    sg.opt_date ,
+		    g.name ,
+		    item_short_name
+		FROM
+		    t_sales_day_total_goods sg ,
+		    t_goods g ,
+		    t_item_type it
+		WHERE
+		    sg.item_subno = g.subno
+		AND g.item_no = it.item_no
+		AND g.item_no = #{itemNo}
+		AND sg.org_id = #{orgId}
+		AND opt_date >= #{optDateStart}
+		AND opt_date <= #{optDateEnd}
+		GROUP BY
+		    sg.item_subno
+		ORDER BY
+    		pos_qty DESC
+	]]>
+	</select>
+	
+	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
+	<select id="getSalesItemRankInfoList_OrderAmt" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+	]]>
+	</select>
 </mapper>

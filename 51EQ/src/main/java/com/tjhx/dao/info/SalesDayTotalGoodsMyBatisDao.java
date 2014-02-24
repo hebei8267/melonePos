@@ -27,4 +27,12 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	 * @return
 	 */
 	public List<SalesDayTotalGoods> getSumSaleInfoList_Week(SalesDayTotalGoods salesDayTotalGoods);
+
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)
+	 * 
+	 * @param salesDayTotalGoods
+	 * @return
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderQty(SalesDayTotalGoods salesDayTotalGoods);
 }

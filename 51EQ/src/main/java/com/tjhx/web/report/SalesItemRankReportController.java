@@ -5,14 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.ItemType;
+import com.tjhx.entity.info.SalesDayTotalGoods;
 import com.tjhx.service.info.ItemTypeManager;
+import com.tjhx.service.info.SalesDayTotalGoodsManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 
@@ -26,6 +32,8 @@ public class SalesItemRankReportController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private ItemTypeManager itemTypeManager;
+	@Resource
+	private SalesDayTotalGoodsManager salesDayTotalGoodsManager;
 
 	/**
 	 * 框架页面初始化
@@ -36,40 +44,16 @@ public class SalesItemRankReportController extends BaseController {
 	 */
 	@RequestMapping(value = { "init" })
 	public String init_Action(Model model) throws ServletRequestBindingException {
+		init_common(model);
 
 		return "report/salesItemRankReport";
 	}
 
 	/**
-	 * 单日统计页面初始化
+	 * 页面初始化-公共
 	 * 
 	 * @param model
-	 * @return
-	 * @throws ServletRequestBindingException
 	 */
-	@RequestMapping(value = { "init_tab1" })
-	public String init_tab1_Action(Model model) throws ServletRequestBindingException {
-
-		init_common(model);
-
-		return "report/salesItemRankReport_tab1";
-	}
-
-	/**
-	 * 时间区间统计页面初始化
-	 * 
-	 * @param model
-	 * @return
-	 * @throws ServletRequestBindingException
-	 */
-	@RequestMapping(value = { "init_tab2" })
-	public String init_tab2_Action(Model model) throws ServletRequestBindingException {
-
-		init_common(model);
-
-		return "report/salesItemRankReport_tab2";
-	}
-
 	private void init_common(Model model) {
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 		// 取得所有商品类别
@@ -94,25 +78,40 @@ public class SalesItemRankReportController extends BaseController {
 	}
 
 	/**
-	 * 单日统计页面-查询
+	 * 统计页面-查询
 	 * 
 	 * @return
+	 * @throws ServletRequestBindingException
 	 */
-	@RequestMapping(value = { "search_day" })
-	public String search_day_Action(Model model) {
+	@RequestMapping(value = { "search" })
+	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		init_common(model);
 
-		return "report/salesItemRankReport_tab1";
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String itemTypeNo = ServletRequestUtils.getStringParameter(request, "itemTypeNo");
+
+		model.addAttribute("optDateShow_start", optDateShow_end);
+		model.addAttribute("optDateShow_end", optDateShow_end);
+		model.addAttribute("orgId", orgId);
+		model.addAttribute("itemTypeNo", itemTypeNo);
+
+		String optDateStart = null;
+		String optDateEnd = null;
+		if (StringUtils.isNotBlank(optDateShow_start)) {
+			optDateStart = DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd");
+		}
+		if (StringUtils.isNotBlank(optDateShow_end)) {
+			optDateEnd = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
+		}
+
+		// TODO????? 全机构
+		List<SalesDayTotalGoods> goodList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd,
+				orgId, itemTypeNo);
+
+		model.addAttribute("goodList", goodList);
+		return "report/salesItemRankReport";
 	}
 
-	/**
-	 * 时间区间统计页面-查询
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = { "search_day_interval" })
-	public String search_day_interval_Action(Model model) {
-		init_common(model);
-		return "report/salesItemRankReport_tab2";
-	}
 }

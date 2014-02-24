@@ -57,6 +57,8 @@ public class SalesDayTotalGoods extends IdEntity {
 	private BigDecimal stockAmt;
 	/** 销售金额 */
 	private BigDecimal saleAmt;
+	/** 种类编号 */
+	private String itemNo;
 
 	/**
 	 * 取得机构编号
@@ -388,4 +390,22 @@ public class SalesDayTotalGoods extends IdEntity {
 		this.saleAmt = saleAmt;
 	}
 
+	/**
+	 * 取得种类编号
+	 * 
+	 * @return itemNo 种类编号
+	 */
+	@Transient
+	public String getItemNo() {
+		return itemNo;
+	}
+
+	/**
+	 * 设置种类编号
+	 * 
+	 * @param itemNo 种类编号
+	 */
+	public void setItemNo(String itemNo) {
+		this.itemNo = itemNo;
+	}
 }

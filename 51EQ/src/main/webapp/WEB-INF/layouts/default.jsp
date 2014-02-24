@@ -30,7 +30,8 @@
         <script src="${ctx}/static/js/bootstrap-datepicker.js"></script>
         <script src="${ctx}/static/js/jquery.validate-1.10.0.js"></script>
         <script src="${ctx}/static/js/jquery.validate_cn.js"></script>
-
+		
+		<link rel="shortcut icon" type="image/ico" href="${ctx}/static/img/favicon.ico" />
         <sitemesh:head />
     </head>
     <body>
