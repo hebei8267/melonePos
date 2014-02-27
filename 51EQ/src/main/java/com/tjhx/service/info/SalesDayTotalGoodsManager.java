@@ -132,7 +132,7 @@ public class SalesDayTotalGoodsManager {
 	}
 
 	/**
-	 * 取得指定店指定时间区间内销售信息排名(按类别)
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销量排序
 	 * 
 	 * @param optDateStart
 	 * @param optDateEnd
@@ -149,5 +149,25 @@ public class SalesDayTotalGoodsManager {
 		param.setItemNo(itemNo);
 
 		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderQty(param);
+	}
+
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序
+	 * 
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @param orgId
+	 * @param itemNo
+	 * @return
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt(String optDateStart, String optDateEnd, String orgId,
+			String itemNo) {
+		SalesDayTotalGoods param = new SalesDayTotalGoods();
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+		param.setOrgId(orgId);
+		param.setItemNo(itemNo);
+
+		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderAmt(param);
 	}
 }

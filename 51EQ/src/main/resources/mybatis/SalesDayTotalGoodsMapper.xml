@@ -89,35 +89,71 @@
 	<select id="getSalesItemRankInfoList_OrderQty" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
 	<![CDATA[
 		SELECT
-		    sg.org_id ,
-		    SUM(sg.pos_amt) AS pos_amt ,
-		    SUM(sg.pos_qty) AS pos_qty ,
-		    sg.item_subno ,
-		    sg.item_barcode ,
-		    sg.opt_date ,
-		    g.name ,
-		    item_short_name
+		    tt.*
 		FROM
-		    t_sales_day_total_goods sg ,
-		    t_goods g ,
-		    t_item_type it
-		WHERE
-		    sg.item_subno = g.subno
-		AND g.item_no = it.item_no
-		AND g.item_no = #{itemNo}
-		AND sg.org_id = #{orgId}
-		AND opt_date >= #{optDateStart}
-		AND opt_date <= #{optDateEnd}
-		GROUP BY
-		    sg.item_subno
-		ORDER BY
-    		pos_qty DESC
+		    (SELECT
+			    SUM(sg.pos_amt) AS pos_amt ,
+			    SUM(sg.pos_qty) AS pos_qty ,
+			    sg.item_subno ,
+			    sg.item_barcode ,
+			    sg.opt_date ,
+			    org.org_name ,
+			    sd.stock_qty ,
+			    g.name as goodsName
+			FROM
+				t_organization org ,
+			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno AND sd.org_id = sg.org_id ,
+			    t_goods g ,
+			    t_item_type it
+			WHERE
+			    sg.item_subno = g.subno
+			AND g.item_no = it.item_no
+			AND g.item_no = #{itemNo}
+			AND sg.org_id = #{orgId}
+			AND sg.org_id = org.org_id
+			AND sg.opt_date >= #{optDateStart}
+			AND sg.opt_date <= #{optDateEnd}
+			GROUP BY
+			    sg.item_subno
+			ORDER BY
+	    		pos_qty DESC
+	    	) tt LIMIT 10
 	]]>
 	</select>
 	
 	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
 	<select id="getSalesItemRankInfoList_OrderAmt" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
 	<![CDATA[
+		SELECT
+		    tt.*
+		FROM
+		    (SELECT
+			    SUM(sg.pos_amt) AS pos_amt ,
+			    SUM(sg.pos_qty) AS pos_qty ,
+			    sg.item_subno ,
+			    sg.item_barcode ,
+			    sg.opt_date ,
+			    org.org_name ,
+			    sd.stock_qty ,
+			    g.name as goodsName
+			FROM
+				t_organization org ,
+			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno AND sd.org_id = sg.org_id ,
+			    t_goods g ,
+			    t_item_type it
+			WHERE
+			    sg.item_subno = g.subno
+			AND g.item_no = it.item_no
+			AND g.item_no = #{itemNo}
+			AND sg.org_id = #{orgId}
+			AND sg.org_id = org.org_id
+			AND sg.opt_date >= #{optDateStart}
+			AND sg.opt_date <= #{optDateEnd}
+			GROUP BY
+			    sg.item_subno
+			ORDER BY
+	    		pos_amt DESC
+	    	) tt LIMIT 10
 	]]>
 	</select>
 </mapper>

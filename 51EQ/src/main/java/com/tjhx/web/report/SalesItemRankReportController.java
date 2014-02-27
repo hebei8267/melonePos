@@ -1,5 +1,6 @@
 package com.tjhx.web.report;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalGoods;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.info.ItemTypeManager;
 import com.tjhx.service.info.SalesDayTotalGoodsManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -91,11 +93,13 @@ public class SalesItemRankReportController extends BaseController {
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String itemTypeNo = ServletRequestUtils.getStringParameter(request, "itemTypeNo");
+		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
 
-		model.addAttribute("optDateShow_start", optDateShow_end);
+		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("itemTypeNo", itemTypeNo);
+		model.addAttribute("orderMode", orderMode);
 
 		String optDateStart = null;
 		String optDateEnd = null;
@@ -106,12 +110,44 @@ public class SalesItemRankReportController extends BaseController {
 			optDateEnd = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
 		}
 
-		// TODO????? 全机构
-		List<SalesDayTotalGoods> goodList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd,
-				orgId, itemTypeNo);
+		List<String> orgNameList = new ArrayList<String>();
+		List<List<SalesDayTotalGoods>> goodList = new ArrayList<List<SalesDayTotalGoods>>();
+		if (StringUtils.isBlank(orgId)) { // 全机构
+			List<Organization> _orgList = orgManager.getSubOrganization();
+			for (Organization org : _orgList) {
+				// 机构名称
+				orgNameList.add(org.getName());
 
+				if (orderMode.equals("qty")) {// 按销量排序
+					goodList.add(_search_OrderQty(optDateStart, optDateEnd, org.getId(), itemTypeNo));
+				} else {// 按销售额排序
+					goodList.add(_search_OrderAmt(optDateStart, optDateEnd, org.getId(), itemTypeNo));
+				}
+			}
+		} else { // 单机构
+			// 机构名称
+			orgNameList.add(orgId.substring(3));
+
+			if (orderMode.equals("qty")) {// 按销量排序
+				goodList.add(_search_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo));
+			} else {// 按销售额排序
+				goodList.add(_search_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo));
+			}
+		}
+
+		model.addAttribute("orgNameList", orgNameList);
 		model.addAttribute("goodList", goodList);
+
 		return "report/salesItemRankReport";
 	}
 
+	private List<SalesDayTotalGoods> _search_OrderQty(String optDateStart, String optDateEnd, String orgId, String itemTypeNo) {
+		// 取得指定店指定时间区间内销售信息排名(按类别)--按销量排序
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo);
+	}
+
+	private List<SalesDayTotalGoods> _search_OrderAmt(String optDateStart, String optDateEnd, String orgId, String itemTypeNo) {
+		// 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo);
+	}
 }

@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<style type="text/css">
+    	.cash_daily {
+			border-bottom: 3px solid #F89406;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+    	</style>
 		<script>
     		$(function() {
     			$('#optDateShow_start').datepicker({
@@ -64,12 +71,29 @@
 					<div class="span12">
 						<form method="post"	class="form-inline" id="listForm">
 				    		<div class="row">
-				    			<div class="span5">
+				    			<div class="span12">
+			                        <label class="control-label">排序方式 :</label>
+			                        <c:set var = "qty" value="qty"/>
+			                      	<c:if test="${orderMode.equals(qty)}" >
+				                      	<input type="radio" name="orderMode" value="qty" checked="checked">
+							  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+							  			<input type="radio" name="orderMode" value="amt">
+							  			<span style="background-color: #62c462; padding: 5px">销售额</span>
+			                      	</c:if>
+						            <c:if test="${!orderMode.equals(qty)}" >
+				                      	<input type="radio" name="orderMode" value="qty">
+							  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+							  			<input type="radio" name="orderMode" value="amt" checked="checked">
+							  			<span style="background-color: #62c462; padding: 5px">销售额</span>
+			                      	</c:if>
+			                    </div>
+                    
+				    			<div class="span5" style="margin-top: 20px;">
 				    				<label class="control-label">销售日期 :</label>
 				    				<input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
 				                        ～ <input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
 				    			</div>
-				    			<div class="span3">
+				    			<div class="span3" style="margin-top: 20px;">
 				    				<label class="control-label">商品类别 :</label>
 				    				<select name="itemTypeNo" class="input-medium">
 				    				<c:forEach items="${itemTypeList}" var="itemType">
@@ -82,7 +106,7 @@
 				                  	</c:forEach>
 				                  	</select>
 				    			</div>
-				    			<div class="span3">
+				    			<div class="span3" style="margin-top: 20px;">
 				    				<label class="control-label">机构 :</label>
 				    				<select name="orgId" class="input-medium">
 				              		<c:forEach items="${orgList}" var="org">
@@ -99,6 +123,56 @@
 				    		</div>
 				    	</form>
             		</div>
+                
+                	<c:forEach items="${goodList}" var="_goodList" varStatus="index1">
+                	<div class="span12 cash_daily"></div>
+                	<div class="span12"><h4>机构 : ${orgNameList.get(index1.index) }</h4></div>
+                	<div class="span12"	style="margin-top: 10px;">
+                		<table class="table	table-striped table-bordered table-condensed mytable">
+                            <thead>
+                                <tr>
+                                    <th class="center">
+                                        货号
+                                    </th>
+                                    <th class="center">
+                                        商品名称
+                                    </th>
+                                    <th class="center">
+                                        销量(件)
+                                    </th>
+                                    <th style="background-image: linear-gradient(to bottom,#62c462,#51a351);" class="center">
+                                        销售额(元)
+                                    </th>
+                                    <th class="center">
+                                        库存数量
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            <c:forEach items="${_goodList}" var="good" varStatus="status1">
+	                            <tr>
+                                    <td class="center">${good.itemSubno}</td>
+	                            	<td class="center">${good.goodsName}</td>
+	                            	<td class="center">${good.posQty}</td>
+	                            	<td class="right">${good.posAmt}</td>
+	                            	<td class="center">${good.stockQty}</td>
+	                           	</tr>
+                            </c:forEach>
+                            
+                            </tbody>
+                            <c:if test="${empty	_goodList}" >
+                           	<tfoot>
+                            	<tr>
+                              		<td	colspan="6"	class="rounded-foot-left">
+                                 	无记录信息
+                                 	</td>
+                            	</tr>
+                           	</tfoot>
+                            </c:if>
+                        </table>
+                	</div>
+                	</c:forEach>
                 </div>
             </form>
         </div>

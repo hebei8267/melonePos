@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EQ+
+        <title>Office Automation System
             <sitemesh:title />
         </title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -31,7 +31,8 @@
         <script src="${ctx}/static/js/jquery.validate-1.10.0.js"></script>
         <script src="${ctx}/static/js/jquery.validate_cn.js"></script>
 		
-		<link rel="shortcut icon" type="image/ico" href="${ctx}/static/img/favicon.ico" />
+		<link rel="shortcut icon" href="${ctx}/static/img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="${ctx}/static/img/favicon.ico" type="image/x-icon">
         <sitemesh:head />
     </head>
     <body>
