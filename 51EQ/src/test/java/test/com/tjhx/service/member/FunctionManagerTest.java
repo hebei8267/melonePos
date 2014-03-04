@@ -583,9 +583,21 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	public void saveNewFun45() {
 		Function fun = new Function();
 		// 功能显示名称--会计、BOSS用
-		fun.setDisplayName("销售排名信息(按类别)");
+		fun.setDisplayName("销售排名信息(按类别)--总部");
 		// 功能URL */
 		fun.setFunUrl("salesItemRankReport/init");
+
+		functionJpaDao.save(fun);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void saveNewFun46() {
+		Function fun = new Function();
+		// 功能显示名称--门店
+		fun.setDisplayName("日销售信息对比--门店");
+		// 功能URL */
+		fun.setFunUrl("salesDayChartReport/init_shop");
 
 		functionJpaDao.save(fun);
 	}

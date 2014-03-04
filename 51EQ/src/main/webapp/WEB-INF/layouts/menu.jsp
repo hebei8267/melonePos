@@ -78,7 +78,8 @@
                         </li>
                     </c:if>
 
-                    <c:if test="${_permIdList.contains('8') || _permIdList.contains('9')}">
+                    <c:if test="${_permIdList.contains('8') || _permIdList.contains('9')
+                    || _permIdList.contains('46')}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">销售信息<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -92,12 +93,17 @@
                                         <a href="${sc_ctx}/cashDaily">日结</a>
                                     </li>
                                 </c:if>
+                                <c:if test="${_permIdList.contains('46')}">
+                            		<li class="divider"></li>
+	                            	<li>
+	                                	<a href="${sc_ctx}/salesDayChartReport/init_shop">日销售信息对比</a>
+	                            	</li>
+                            	</c:if>
                                 <c:if test="${_permIdList.contains('21')}">
-                                <li class="divider"></li>
-	                            <li>
-	                                <a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
-	                            </li>
-                            </c:if>
+	                            	<li>
+	                                	<a href="${sc_ctx}/salesWeekGoodsTotalReport/init">商品周销售信息一览</a>
+	                            	</li>
+                            	</c:if>
                             </ul>
                         </li>
                     </c:if>
@@ -184,6 +190,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
                         <ul class="dropdown-menu">
+                        	
                             <c:if test="${_permIdList.contains('22')}">
 	                            <li>
 	                                <a href="${sc_ctx}/salesDayItemChartReport/bar_init">类别销售信息一览(图形)</a>

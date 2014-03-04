@@ -4,10 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +37,98 @@ public class SalesDayChartReportController extends BaseController {
 	private OrganizationManager orgManager;
 
 	/**
-	 * 初期化
+	 * 门店页面-初期化
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "init_shop")
+	public String init_shop_Action(Model model, HttpSession session) throws ParseException {
+		String _now = DateUtils.getCurFormatDate("yyyyMMdd");
+		// 统计日期-1
+		String _optDate1 = DateUtils.getNextDateFormatDate(_now, -1, "yyyyMMdd");
+		model.addAttribute("optDate1", _optDate1);
+		model.addAttribute("optDate1SalesList", _init_shop(_optDate1, model, getUserInfo(session).getOrganization().getId()));
+
+		// 统计日期-2
+		String _optDate2 = DateUtils.getNextDateFormatDate(_now, -2, "yyyyMMdd");
+		model.addAttribute("optDate2", _optDate2);
+		model.addAttribute("optDate2SalesList", _init_shop(_optDate2, model, getUserInfo(session).getOrganization().getId()));
+		// 统计日期-3
+		String _optDate3 = DateUtils.getNextDateFormatDate(_now, -3, "yyyyMMdd");
+		model.addAttribute("optDate3", _optDate3);
+		model.addAttribute("optDate3SalesList", _init_shop(_optDate3, model, getUserInfo(session).getOrganization().getId()));
+
+		return "report/salesDayChartReport_shop";
+	}
+
+	/**
+	 * 同期增长额Tab处理
+	 * 
+	 * @param optDate
+	 * @param model
+	 * @throws ParseException
+	 */
+	private List<SalesDayTotal> _init_shop(String optDate, Model model, String orgId) throws ParseException {
+		model.addAttribute("optDate", optDate);
+		// 取得每日各店销售汇总（根据日期）
+		List<SalesDayTotal> _dbSalesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
+
+		Map<String, SalesDayTotal> orgKeyMap = new HashMap<String, SalesDayTotal>();
+		for (SalesDayTotal saleInfo : _dbSalesDayTotalList) {
+			orgKeyMap.put(saleInfo.getOrgId(), saleInfo);
+		}
+
+		Map<Integer, SalesDayTotal> rankingKeyMap = new HashMap<Integer, SalesDayTotal>();
+		for (SalesDayTotal saleInfo : _dbSalesDayTotalList) {
+			rankingKeyMap.put(saleInfo.getRanking(), saleInfo);
+		}
+
+		int _orgRanking = getRankingByOrgId(orgKeyMap, orgId);
+
+		return initOrgRankingList(_orgRanking, rankingKeyMap);
+	}
+
+	private List<SalesDayTotal> initOrgRankingList(int orgRanking, Map<Integer, SalesDayTotal> rankingKeyMap) {
+		if (-1 == orgRanking) {
+			return null;
+		} else if (0 == orgRanking) {
+			List<SalesDayTotal> _res = new ArrayList<SalesDayTotal>();
+			_res.add(rankingKeyMap.get(orgRanking));
+			return _res;
+		} else if (1 == orgRanking) {
+			List<SalesDayTotal> _res = new ArrayList<SalesDayTotal>();
+
+			_res.add(rankingKeyMap.get(orgRanking));
+
+			_res.add(rankingKeyMap.get(orgRanking + 1));
+
+			return _res;
+		} else {
+			List<SalesDayTotal> _res = new ArrayList<SalesDayTotal>();
+
+			_res.add(rankingKeyMap.get(orgRanking - 1));
+
+			_res.add(rankingKeyMap.get(orgRanking));
+
+			_res.add(rankingKeyMap.get(orgRanking + 1));
+
+			return _res;
+		}
+	}
+
+	private int getRankingByOrgId(Map<String, SalesDayTotal> orgKeyMap, String orgId) {
+		SalesDayTotal saleInfo = orgKeyMap.get(orgId);
+		if (null != saleInfo) {
+			return saleInfo.getRanking();
+		} else {
+			return -1;
+		}
+	}
+
+	/**
+	 * 总部页面-初期化
 	 * 
 	 * @param model
 	 * @return
@@ -59,7 +153,7 @@ public class SalesDayChartReportController extends BaseController {
 		// 统计日期
 		String _optDate = DateUtils.getNextDateFormatDate(_now, -1, "yyyyMMdd");
 		// 同期增长额 Tab
-		_init1(_optDate, model);
+		_init_tab1(_optDate, model);
 
 		return "report/salesDayChartReport_tab1";
 	}
@@ -81,7 +175,7 @@ public class SalesDayChartReportController extends BaseController {
 			_optDate = DateUtils.transDateFormat(_optDate, "yyyy-MM-dd", "yyyyMMdd");
 		}
 		// 同期增长额 Tab
-		_init1(_optDate, model);
+		_init_tab1(_optDate, model);
 
 		return "report/salesDayChartReport_tab1";
 	}
@@ -93,7 +187,7 @@ public class SalesDayChartReportController extends BaseController {
 	 * @param model
 	 * @throws ParseException
 	 */
-	private void _init1(String optDate, Model model) throws ParseException {
+	private void _init_tab1(String optDate, Model model) throws ParseException {
 		model.addAttribute("optDate", optDate);
 		// 取得每日各店销售汇总（根据日期）
 		List<SalesDayTotal> salesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
@@ -110,8 +204,7 @@ public class SalesDayChartReportController extends BaseController {
 	 * @throws IllegalAccessException
 	 */
 	@RequestMapping(value = "init_tab2")
-	public String init_tab2_Action(Model model) throws ParseException, IllegalAccessException,
-			InvocationTargetException {
+	public String init_tab2_Action(Model model) throws ParseException, IllegalAccessException, InvocationTargetException {
 		String _now = DateUtils.getCurFormatDate("yyyyMMdd");
 		// 统计日期
 		String _optDate = DateUtils.getNextDateFormatDate(_now, -1, "yyyyMMdd");
@@ -133,8 +226,8 @@ public class SalesDayChartReportController extends BaseController {
 		return "report/salesDayChartReport_tab2";
 	}
 
-	private void copyProperties(SalesDayTotal destObj, List<SalesDayTotal> dbPosAmtRateList)
-			throws IllegalAccessException, InvocationTargetException {
+	private void copyProperties(SalesDayTotal destObj, List<SalesDayTotal> dbPosAmtRateList) throws IllegalAccessException,
+			InvocationTargetException {
 
 		for (SalesDayTotal _dbObj : dbPosAmtRateList) {
 			if (_dbObj.equals(destObj)) {

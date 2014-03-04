@@ -999,6 +999,13 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		perm37.setRole(role);
 		perm37.setFunction(fun37);
 		permissionJpaDao.save(perm37);
+
+		// 门店-销售排名信息(按类别)---------------------------------------------
+		Permission perm46 = new Permission();
+		Function fun46 = functionJpaDao.findOne(46);
+		perm46.setRole(role);
+		perm46.setFunction(fun46);
+		permissionJpaDao.save(perm46);
 	}
 
 	// 店助
