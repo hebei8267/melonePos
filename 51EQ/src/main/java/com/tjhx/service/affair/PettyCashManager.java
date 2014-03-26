@@ -3,7 +3,6 @@ package com.tjhx.service.affair;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,10 +163,10 @@ public class PettyCashManager {
 		// 门店备用金可查看天数
 		int editDays = sysConfig.getPettyCashEditDays();
 		int viewDays = sysConfig.getPettyCashViewDays() * -1;
-		Date beforeDate = DateUtils.getNextDateFormatDate(viewDays);
+		String beforeDate = DateUtils.getNextDateFormatDate(viewDays, "yyyyMMdd");
 
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgId(orgId, beforeDate, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgId(orgId, beforeDate, new Sort(new Sort.Order(Sort.Direction.DESC,
+				"optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
 
 		setEditFlg_PettyCashList(_list, editDays);
 
@@ -296,9 +295,10 @@ public class PettyCashManager {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 		// 门店备用金重计算天数
 		int calDays = sysConfig.getPettyCashCalculateDays();
-		Date beforeDate = DateUtils.getNextDateFormatDate(calDays * -1);
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgId(orgId, beforeDate, new Sort(new Sort.Order(
-				Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		String beforeDate = DateUtils.getNextDateFormatDate(calDays * -1, "yyyyMMdd");
+
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgId(orgId, beforeDate, new Sort(new Sort.Order(Sort.Direction.ASC,
+				"optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		BigDecimal _tmpBalanceAmt = null;
 		for (int i = 0; i < _list.size(); i++) {
@@ -326,8 +326,8 @@ public class PettyCashManager {
 	 * @return
 	 */
 	public List<PettyCash> searchPettyCashList(String orgId, String optDate_start, String optDate_end) {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end,
-				new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end, new Sort(
+				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 		return _list;
 	}
 
@@ -338,8 +338,8 @@ public class PettyCashManager {
 	 * @return
 	 */
 	public List<PettyCash> searchPettyCashList_noCarryOver(String orgId) {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndCarryOverFlg(orgId, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndCarryOverFlg(orgId, new Sort(new Sort.Order(Sort.Direction.DESC,
+				"optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
 		return _list;
 	}
 
@@ -359,8 +359,8 @@ public class PettyCashManager {
 			throw new ServiceException("ERR_MSG_INSPECT_002");
 		}
 
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndCarryOverFlg(orgId, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndCarryOverFlg(orgId, new Sort(new Sort.Order(Sort.Direction.DESC,
+				"optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
 
 		boolean carryOverFlg = false;
 		for (PettyCash pettyCash : _list) {
@@ -386,8 +386,8 @@ public class PettyCashManager {
 	 * @param examineFlgs7
 	 */
 	@Transactional(readOnly = false)
-	public void auditPettyCash(int[] uuids, int[] examineFlgs1, int[] examineFlgs2, int[] examineFlgs3,
-			int[] examineFlgs4, int[] examineFlgs5, int[] examineFlgs6, int[] examineFlgs7) {
+	public void auditPettyCash(int[] uuids, int[] examineFlgs1, int[] examineFlgs2, int[] examineFlgs3, int[] examineFlgs4,
+			int[] examineFlgs5, int[] examineFlgs6, int[] examineFlgs7) {
 		for (int i = 0; i < uuids.length; i++) {
 			int uuid = uuids[i];
 			PettyCash _pettyCash = pettyCashJpaDao.findOne(uuid);
@@ -423,10 +423,10 @@ public class PettyCashManager {
 	 * @throws InvalidFormatException
 	 * @throws ParsePropertyException
 	 */
-	public String createPettyCashFile(String orgId, String optDate_start, String optDate_end)
-			throws ParsePropertyException, InvalidFormatException, IOException {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end,
-				new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+	public String createPettyCashFile(String orgId, String optDate_start, String optDate_end) throws ParsePropertyException,
+			InvalidFormatException, IOException {
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end, new Sort(
+				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		// ---------------------------文件生成---------------------------
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -1,6 +1,5 @@
 package com.tjhx.dao.affair;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -22,8 +21,8 @@ public interface PettyCashJpaDao extends CrudRepository<PettyCash, Integer> {
 	 * @param sort
 	 * @return
 	 */
-	@Query("select p from PettyCash p where p.orgId = :orgId and p.createDate >= :createDate")
-	public List<PettyCash> findByOrgId(@Param("orgId") String orgId, @Param("createDate") Date createDate, Sort sort);
+	@Query("select p from PettyCash p where p.orgId = :orgId and p.optDate >= :optDate")
+	public List<PettyCash> findByOrgId(@Param("orgId") String orgId, @Param("optDate") String optDate, Sort sort);
 
 	/**
 	 * 根据查询条件 取得指定门店备用金余额（指定时间段内）
