@@ -46,6 +46,8 @@ public class User extends IdEntity {
 	// ############################################################################################
 	/** 用户关联机构名称 */
 	private String orgName;
+	/** 机构编号 */
+	private String orgId;
 	/** 角色编号 */
 	private String roleUuid;
 	/** 机构编号 */
@@ -246,6 +248,28 @@ public class User extends IdEntity {
 	 */
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
+	}
+
+	/**
+	 * 取得机构编号
+	 * 
+	 * @return orgId 机构编号
+	 */
+	@Transient
+	public String getOrgId() {
+		if (null != organization) {
+			return organization.getId();
+		}
+		return orgId;
+	}
+
+	/**
+	 * 设置机构编号
+	 * 
+	 * @param orgId 机构编号
+	 */
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
 	}
 
 	/**

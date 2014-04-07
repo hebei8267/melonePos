@@ -57,7 +57,7 @@
 					<th class="center">增长额</th>
 					<th class="center">增长率</th>
 					<th class="center">日需销售金额</th>
-					<th class="center">排名</th>
+					<th class="center">增长率排名</th>
 				</tr>			                			
 			</thead>
 			<tbody>

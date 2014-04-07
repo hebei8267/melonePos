@@ -48,13 +48,15 @@
 									<th class="center">增长额</th>
 									<th class="center">增长率</th>
 									<th class="center">日需销售金额</th>
-									<th class="center">排名</th>
+									<th class="center">增长率排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
 								<c:forEach items="${optDate1SalesList}" var="salesDayTotal">
 								<c:if test="${!empty salesDayTotal}" >
 								<tr>
+									<!-- 本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == salesDayTotal.orgId}" >
 									<td class="center">${salesDayTotal.orgId}</td>
 									<td class="right">${salesDayTotal.posAmt}</td>
 									<td class="right">${salesDayTotal.posAmtByNow}</td>
@@ -66,6 +68,22 @@
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
 									<td class="right">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>
+									
+									<!-- 非本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != salesDayTotal.orgId}" >
+									<td class="center">${salesDayTotal.orgId}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.nowDays}</td>
+									<td class="center">${salesDayTotal.monthDays}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>									
 							 	</tr>
 							 	</c:if>
 								</c:forEach>
@@ -102,13 +120,15 @@
 									<th class="center">增长额</th>
 									<th class="center">增长率</th>
 									<th class="center">日需销售金额</th>
-									<th class="center">排名</th>
+									<th class="center">增长率排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
 								<c:forEach items="${optDate2SalesList}" var="salesDayTotal">
 								<c:if test="${!empty salesDayTotal}" >
 								<tr>
+									<!-- 本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == salesDayTotal.orgId}" >
 									<td class="center">${salesDayTotal.orgId}</td>
 									<td class="right">${salesDayTotal.posAmt}</td>
 									<td class="right">${salesDayTotal.posAmtByNow}</td>
@@ -120,6 +140,22 @@
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
 									<td class="right">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>
+									
+									<!-- 非本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != salesDayTotal.orgId}" >
+									<td class="center">${salesDayTotal.orgId}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.nowDays}</td>
+									<td class="center">${salesDayTotal.monthDays}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>									
 							 	</tr>
 							 	</c:if>
 								</c:forEach>
@@ -156,13 +192,15 @@
 									<th class="center">增长额</th>
 									<th class="center">增长率</th>
 									<th class="center">日需销售金额</th>
-									<th class="center">排名</th>
+									<th class="center">增长率排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
 								<c:forEach items="${optDate3SalesList}" var="salesDayTotal">
 								<c:if test="${!empty salesDayTotal}" >
 								<tr>
+									<!-- 本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == salesDayTotal.orgId}" >
 									<td class="center">${salesDayTotal.orgId}</td>
 									<td class="right">${salesDayTotal.posAmt}</td>
 									<td class="right">${salesDayTotal.posAmtByNow}</td>
@@ -174,6 +212,22 @@
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
 									<td class="right">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>
+									
+									<!-- 非本店 -->
+									<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != salesDayTotal.orgId}" >
+									<td class="center">${salesDayTotal.orgId}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.nowDays}</td>
+									<td class="center">${salesDayTotal.monthDays}</td>
+									<td class="right">*******</td>
+									<td class="right">*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>*******</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">*******</td>
+									<td class="center">${salesDayTotal.ranking}</td>
+									</c:if>
 							 	</tr>
 							 	</c:if>
 								</c:forEach>
