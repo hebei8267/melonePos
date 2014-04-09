@@ -64,6 +64,30 @@
                           	</div>
                         </div>
                         <div class="control-group">
+                            <label class="control-label">支出类型 :</label>
+                            <div class="left-control-label">
+                            	<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他%>
+                                <c:if test="${pettyCash.expType == '01'}">
+	                           	房租
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '02'}">
+	                           	电费
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '03'}">
+	                           	水费
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '04'}">
+	                           	税费
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '05'}">
+	                           	工资
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '06'}">
+	                           	其他
+	                           	</c:if>
+                          	</div>
+                        </div>
+                        <div class="control-group">
                             <label class="control-label">支出事项 :</label>
                             <div class="left-control-label">
                             	${pettyCash.expReason}

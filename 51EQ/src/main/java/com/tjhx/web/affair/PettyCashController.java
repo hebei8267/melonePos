@@ -58,8 +58,7 @@ public class PettyCashController extends BaseController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	public String pettyCashList_Action(Model model, HttpSession session) {
-		List<PettyCash> pettyCashList = pettyCashManager.getPettyCashListByOrgId(getUserInfo(session).getOrganization()
-				.getId());
+		List<PettyCash> pettyCashList = pettyCashManager.getPettyCashListByOrgId(getUserInfo(session).getOrganization().getId());
 		model.addAttribute("pettyCashList", pettyCashList);
 
 		return "affair/pettyCashList";
@@ -73,8 +72,7 @@ public class PettyCashController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "view/{id}")
-	public String viewPettyCash_Action(@PathVariable("id") Integer id, Model model, HttpSession session)
-			throws ParseException {
+	public String viewPettyCash_Action(@PathVariable("id") Integer id, Model model, HttpSession session) throws ParseException {
 		PettyCash pettyCash = pettyCashManager.getPettyCashByUuid(id);
 		if (null == pettyCash) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCash/list";
@@ -84,7 +82,9 @@ public class PettyCashController extends BaseController {
 			if (0 == pettyCash.getOptType()) {// 支出
 				return "affair/pettyCashPayViewForm";
 			} else {// 拨入
+				// 初始化 操作类型下拉列表
 				initIncomeSourceList(model);
+
 				return "affair/pettyCashIncomeViewForm";
 			}
 		}
@@ -98,8 +98,7 @@ public class PettyCashController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "edit/{id}")
-	public String editPettyCash_Action(@PathVariable("id") Integer id, Model model, HttpSession session)
-			throws ParseException {
+	public String editPettyCash_Action(@PathVariable("id") Integer id, Model model, HttpSession session) throws ParseException {
 		PettyCash pettyCash = pettyCashManager.getPettyCashByUuid(id);
 		if (null == pettyCash) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCash/list";
@@ -110,9 +109,14 @@ public class PettyCashController extends BaseController {
 			model.addAttribute("pettyCash", pettyCash);
 
 			if (0 == pettyCash.getOptType()) {// 支出
+				// 初始化 支出类型下拉列表
+				initExpTypeList(model);
+
 				return "affair/pettyCashPayForm";
 			} else {// 拨入
+				// 初始化 操作类型下拉列表
 				initIncomeSourceList(model);
+
 				return "affair/pettyCashIncomeForm";
 			}
 		}
@@ -132,6 +136,9 @@ public class PettyCashController extends BaseController {
 		pettyCash.setOptAmtShow(null);
 		// 初始化门店备用金可编辑日期
 		initPettyCashEditDate(pettyCash);
+
+		// 初始化 支出类型下拉列表
+		initExpTypeList(model);
 
 		model.addAttribute("pettyCash", pettyCash);
 
@@ -172,9 +179,30 @@ public class PettyCashController extends BaseController {
 
 		model.addAttribute("pettyCash", pettyCash);
 
+		// 初始化 操作类型下拉列表
 		initIncomeSourceList(model);
 
 		return "affair/pettyCashIncomeForm";
+	}
+
+	/**
+	 * 初始化 支出类型下拉列表
+	 * 
+	 * @param model
+	 */
+	private void initExpTypeList(Model model) {
+
+		Map<String, String> _expTypeList = new LinkedHashMap<String, String>();
+
+		_expTypeList.put("", "");
+		_expTypeList.put("01", "房租");
+		_expTypeList.put("02", "电费");
+		_expTypeList.put("03", "水费");
+		_expTypeList.put("04", "税费");
+		_expTypeList.put("05", "工资");
+		_expTypeList.put("06", "其他");
+
+		model.addAttribute("expTypeList", _expTypeList);
 	}
 
 	/**
@@ -221,8 +249,8 @@ public class PettyCashController extends BaseController {
 	 * @throws InvocationTargetException
 	 */
 	@RequestMapping(value = "save")
-	public String savePettyCash_Action(@ModelAttribute("pettyCash") PettyCash pettyCash, Model model,
-			HttpSession session) throws ParseException {
+	public String savePettyCash_Action(@ModelAttribute("pettyCash") PettyCash pettyCash, Model model, HttpSession session)
+			throws ParseException {
 		// 操作类型0-支出1-拨入
 		if (0 == pettyCash.getOptType()) {// 支出
 			if (null == pettyCash.getUuid()) {// 新增操作
@@ -234,6 +262,9 @@ public class PettyCashController extends BaseController {
 
 					// 初始化门店备用金可编辑日期
 					initPettyCashEditDate(pettyCash);
+
+					// 初始化 支出类型下拉列表
+					initExpTypeList(model);
 
 					return "affair/pettyCashPayForm";
 				}
@@ -320,8 +351,8 @@ public class PettyCashController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -409,8 +440,7 @@ public class PettyCashController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "carryOverInit")
-	public String pettyCashCarryOverInit_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String pettyCashCarryOverInit_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -428,8 +458,7 @@ public class PettyCashController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "carryOverSearch")
-	public String pettyCashCarryOverSearch_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String pettyCashCarryOverSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -453,8 +482,7 @@ public class PettyCashController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "carryOverConfirm")
-	public String pettyCashCarryOverConfirm_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String pettyCashCarryOverConfirm_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		Integer uuid = ServletRequestUtils.getIntParameter(request, "uuid");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");

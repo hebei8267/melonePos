@@ -149,21 +149,22 @@
 						<table class="table	table-striped table-bordered table-condensed mytable">
 							<thead>
 								<tr>
-									<th width="45">UID</th>
-									<th width="35" class="center">星期</th>
+									<th width="45" class="center">UID</th>
+									<th width="45" class="center">星期</th>
 									<th width="90" class="center">业务日期</th>
 									<th width="90" class="center">填写日期</th>
-									<th width="130" class="right">支出/拨入(金额)</th>
-									<th>支出/拨入(事项)</th>
-									<th width="90" class="right">备用金余额</th>
-									<th width="30">&nbsp;</th>
-									<th width="30">账证对应</th>
-									<th width="30">书写规范</th>
-									<th width="30">摘要清晰</th>
-									<th width="30">附件监督</th>
-									<th width="30">记录序时</th>
-									<th width="30">UID正确</th>
-									<th width="30">装订正确</th>
+									<th width="100" class="center">支出/拨入<br/>(金额)</th>
+									<th width="80" class="center">支出<br/>类型</th>
+									<th class="center">支出/拨入<br/>(事项)</th>
+									<th width="90" class="center">备用金<br/>余额</th>
+									<th width="30" class="center">&nbsp;</th>
+									<th width="30" class="center">账证<br/>对应</th>
+									<th width="30" class="center">书写<br/>规范</th>
+									<th width="30" class="center">摘要<br/>清晰</th>
+									<th width="30" class="center">附件<br/>监督</th>
+									<th width="30" class="center">记录<br/>序时</th>
+									<th width="30" class="center">UID<br/>正确</th>
+									<th width="30" class="center">装订<br/>正确</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -198,6 +199,27 @@
 											${pettyCash.optAmt} 
 											</span>
 										</td>
+										<td class="center">
+	                                 		<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他%>
+	                                 		<c:if test="${pettyCash.expType == '01'}">
+		                            		<span class="_warn1">房租</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '02'}">
+		                            		<span class="_warn1">电费</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '03'}">
+		                            		<span class="_warn1">水费</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '04'}">
+		                            		<span class="_warn1">税费</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '05'}">
+		                            		<span class="_warn1">工资</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '06'}">
+		                            		<span class="_warn1">其他</span>
+		                            		</c:if>
+	                                 	</td>
 										<td>
 											<% //操作类型 0-支出 1-拨入 %>
 											<c:if test="${pettyCash.optType == 0}">

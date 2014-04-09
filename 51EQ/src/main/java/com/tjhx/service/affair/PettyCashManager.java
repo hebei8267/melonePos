@@ -141,6 +141,8 @@ public class PettyCashManager {
 		_dbPettyCash.setOptAmt(pettyCash.getOptAmtShow().multiply(new BigDecimal(-1)));
 		// 操作金额-全部为正数
 		_dbPettyCash.setOptAmtShow(pettyCash.getOptAmtShow());
+		// 支出类型
+		_dbPettyCash.setExpType(pettyCash.getExpType());
 		// 支出事项
 		_dbPettyCash.setExpReason(pettyCash.getExpReason());
 		// 备注

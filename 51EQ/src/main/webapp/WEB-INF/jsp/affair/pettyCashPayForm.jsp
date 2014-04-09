@@ -43,6 +43,9 @@
                             required : true,
                             money : true
                         },
+                        expType : {
+                        	required : true
+                        },
                         expReason : {
                             required : true,
                             maxlength : 255
@@ -128,6 +131,21 @@
                             <label class="control-label">支出金额 :</label>
                             <div class="controls">
                           		<form:input	path="optAmtShow" /> 元
+                          	</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">支出类型 :</label>
+                            <div class="controls">
+                          		<select id="expType" name="expType" class="input-medium">
+	                          		<c:forEach items="${expTypeList}" var="expType">
+	                            		<c:if test="${pettyCash.expType.equals(expType.key)}">
+	                            			<option value="${expType.key }" selected>${expType.value }</option>
+	                            		</c:if>
+	                            		<c:if test="${!pettyCash.expType.equals(expType.key)}">
+	                                   		<option value="${expType.key }">${expType.value }</option>
+	                                   	</c:if>
+	                         		</c:forEach>
+	                        	</select>
                           	</div>
                         </div>
                         <div class="control-group">

@@ -116,6 +116,9 @@
                                     <th width="150" class="right">
                                         支出/拨入(金额)
                                     </th>
+                                    <th width="80" class="center">
+                                        支出类型
+                                    </th>
                                     <th>
                                         支出/拨入(事项)
                                     </th>
@@ -156,6 +159,27 @@
                                         
                                         ${pettyCash.optAmt}
                                        	</span>
+                                 	</td>
+                                 	<td class="center">
+                                 		<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他%>
+                                 		<c:if test="${pettyCash.expType == '01'}">
+	                            		<span class="_warn1">房租</span>
+	                            		</c:if>
+	                            		<c:if test="${pettyCash.expType == '02'}">
+	                            		<span class="_warn1">电费</span>
+	                            		</c:if>
+	                            		<c:if test="${pettyCash.expType == '03'}">
+	                            		<span class="_warn1">水费</span>
+	                            		</c:if>
+	                            		<c:if test="${pettyCash.expType == '04'}">
+	                            		<span class="_warn1">税费</span>
+	                            		</c:if>
+	                            		<c:if test="${pettyCash.expType == '05'}">
+	                            		<span class="_warn1">工资</span>
+	                            		</c:if>
+	                            		<c:if test="${pettyCash.expType == '06'}">
+	                            		<span class="_warn1">其他</span>
+	                            		</c:if>
                                  	</td>
                                   	<td>
                                        	<%//操作类型 0-支出 1-拨入 %>
