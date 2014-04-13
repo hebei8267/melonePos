@@ -66,7 +66,7 @@
                         <div class="control-group">
                             <label class="control-label">支出类型 :</label>
                             <div class="left-control-label">
-                            	<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他%>
+                            	<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他%>
                                 <c:if test="${pettyCash.expType == '01'}">
 	                           	房租
 	                           	</c:if>
@@ -83,6 +83,9 @@
 	                           	工资
 	                           	</c:if>
 	                           	<c:if test="${pettyCash.expType == '06'}">
+	                           	网络/通讯费
+	                           	</c:if>
+	                           	<c:if test="${pettyCash.expType == '99'}">
 	                           	其他
 	                           	</c:if>
                           	</div>

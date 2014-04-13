@@ -154,10 +154,11 @@
         DELETE FROM t_cash_run WHERE opt_date > #{optDate} AND org_id = #{orgId}
     </delete>
     
+    
     <select id="getBankCheckList" parameterType="com.tjhx.entity.accounts.CashRun" resultMap="Result_Map_CashRun">
-    <![CDATA[
     	SELECT
     		cash.uuid ,
+    		cash.org_id ,
 		    cash.opt_date_show ,
 		    cash.depositor ,
 		    cash.deposit_amt ,
@@ -166,16 +167,26 @@
 		FROM
 		    t_cash_run cash ,
 		    t_cash_daily daily
-		WHERE
-		    cash.opt_date >= #{optDateStart}
-		AND cash.opt_date <= #{optDateEnd}
-		AND cash.org_id = #{orgId}
-		AND cash.deposit_amt IS NOT NULL
-		AND cash.deposit_amt > 0
-		AND cash.opt_date = daily.opt_date
-		AND cash.org_id = daily.org_id
+		<include refid="Where_getBankCheckList" />
 		ORDER BY
-		    cash.opt_date
-    ]]>
+		    cash.opt_date ,
+		    cash.org_id
     </select>
+    
+    <!-- 查询条件 -->
+  	<sql id="Where_getBankCheckList" >
+  		<where>
+  			<![CDATA[
+  				cash.opt_date >= #{optDateStart}
+			AND cash.opt_date <= #{optDateEnd}
+			]]>
+			<if test="orgId != null and orgId !='' ">
+  			AND cash.org_id = #{orgId}
+  			</if>
+			AND cash.deposit_amt IS NOT NULL
+			AND cash.deposit_amt > 0
+			AND cash.opt_date = daily.opt_date
+			AND cash.org_id = daily.org_id
+	  	</where>
+  	</sql>
 </mapper>

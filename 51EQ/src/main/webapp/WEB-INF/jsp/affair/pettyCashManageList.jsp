@@ -151,12 +151,12 @@
 								<tr>
 									<th width="45" class="center">UID</th>
 									<th width="45" class="center">星期</th>
-									<th width="90" class="center">业务日期</th>
-									<th width="90" class="center">填写日期</th>
-									<th width="100" class="center">支出/拨入<br/>(金额)</th>
-									<th width="80" class="center">支出<br/>类型</th>
+									<th width="80" class="center">业务日期</th>
+									<th width="80" class="center">填写日期</th>
+									<th width="80" class="center">支出/拨入<br/>(金额)</th>
+									<th width="60" class="center">支出<br/>类型</th>
 									<th class="center">支出/拨入<br/>(事项)</th>
-									<th width="90" class="center">备用金<br/>余额</th>
+									<th width="55" class="center">备用金<br/>余额</th>
 									<th width="30" class="center">&nbsp;</th>
 									<th width="30" class="center">账证<br/>对应</th>
 									<th width="30" class="center">书写<br/>规范</th>
@@ -200,7 +200,7 @@
 											</span>
 										</td>
 										<td class="center">
-	                                 		<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他%>
+	                                 		<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他 %>
 	                                 		<c:if test="${pettyCash.expType == '01'}">
 		                            		<span class="_warn1">房租</span>
 		                            		</c:if>
@@ -217,6 +217,9 @@
 		                            		<span class="_warn1">工资</span>
 		                            		</c:if>
 		                            		<c:if test="${pettyCash.expType == '06'}">
+		                            		<span class="_warn1">网络/通讯费</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '99'}">
 		                            		<span class="_warn1">其他</span>
 		                            		</c:if>
 	                                 	</td>

@@ -229,6 +229,12 @@
 			                    	<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售信息对比(图形)</a>
 			                 	</li>
 		                 	</c:if>
+		                 	<c:if test="${_permIdList.contains('47')}">
+		                 		<li class="divider"></li>
+		                 		<li>
+			                    	<a href="${sc_ctx}/pettyCash/analytics_init">门店备用金分析(图形)</a>
+			                 	</li>
+			                 </c:if>
                         </ul>
                     </li>
                     

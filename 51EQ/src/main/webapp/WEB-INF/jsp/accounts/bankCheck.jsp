@@ -1,5 +1,6 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
@@ -41,9 +42,6 @@
                     		required : true,
                     		date : true,
                     		compareDate : "#optDateShow_start"
-                        },
-                        orgId : {
-                    		required : true
                         }
                     }
                 });
@@ -145,6 +143,9 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
+                                	<th>
+                                        机构
+                                    </th>
                                     <th>
                                         销售日期
                                     </th>
@@ -165,6 +166,9 @@
                             <tbody>
                                 <c:forEach items="${cashRunList}" var="cashRun" varStatus="status1">
                                     <tr>
+                                    	<td>
+                                        	${fn:substring(cashRun.orgId,3,6)}
+                                        </td>
                                         <td>
                                         	${cashRun.optDateShow}
                                         </td>
