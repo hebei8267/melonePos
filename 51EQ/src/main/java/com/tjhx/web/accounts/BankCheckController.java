@@ -31,14 +31,14 @@ public class BankCheckController extends BaseController {
 
 	@RequestMapping(value = "init")
 	public String init_Action(Model model, HttpServletRequest request) {
-		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		return "accounts/bankCheck";
 	}
 
 	@RequestMapping(value = "search")
 	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
-		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");

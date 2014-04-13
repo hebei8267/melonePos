@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.dao.info.SalesMonthTotalItemMyBatisDao;
 import com.tjhx.entity.affair.PettyCash;
+import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
@@ -46,6 +49,8 @@ public class PettyCashController extends BaseController {
 	private PettyCashManager pettyCashManager;
 	@Resource
 	private OrganizationManager orgManager;
+	@Resource
+	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
 
 	// ----------------------------------------------------------------------
 	// 门店
@@ -200,7 +205,8 @@ public class PettyCashController extends BaseController {
 		_expTypeList.put("03", "水费");
 		_expTypeList.put("04", "税费");
 		_expTypeList.put("05", "工资");
-		_expTypeList.put("06", "其他");
+		_expTypeList.put("06", "网络/通讯费");
+		_expTypeList.put("99", "其他");
 
 		model.addAttribute("expTypeList", _expTypeList);
 	}
@@ -494,5 +500,80 @@ public class PettyCashController extends BaseController {
 			addInfoMsg(model, ex.getMessage());
 		}
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCash/carryOverSearch?orgId=" + orgId;
+	}
+
+	/**
+	 * 门店备用金分析(图形)初始化
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "analytics_init")
+	public String pettyCashAnalyticsInit_Action(Model model) {
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+
+		return "affair/pettyCashAnalytics";
+	}
+
+	/**
+	 * 门店备用金分析(图形)
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "analytics")
+	public String pettyCashAnalytics_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		model.addAttribute("orgId", orgId);
+		model.addAttribute("optDateShow_start", optDateShow_start);
+		model.addAttribute("optDateShow_end", optDateShow_end);
+
+		List<PettyCash> _pettyCashList = pettyCashManager.getPettyCashAnalyticsInfo(orgId,
+				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM", "yyyyMM"),
+				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM", "yyyyMM"));
+
+		for (PettyCash pettyCash : _pettyCashList) {
+			// 取得指定门店/月份合计销售信息
+			BigDecimal _saleRamt = getSalesTotalByOrgAndYearMonth(pettyCash.getOrgId(), pettyCash.getOptDate());
+
+			// 当月机构销售合计
+			pettyCash.setTotalSaleRamt(_saleRamt);
+
+			if (null != _saleRamt && _saleRamt.compareTo(BigDecimal.ZERO) != 0) {
+				// 机构-支出占销售合计百分比
+				pettyCash.setRate(pettyCash.getOptAmtShow().divide(_saleRamt, 2, BigDecimal.ROUND_UP)
+						.multiply(new BigDecimal(100)).toString());
+			} else {
+				pettyCash.setRate("0");
+			}
+		}
+
+		model.addAttribute("pettyCashList", _pettyCashList);
+
+		return "affair/pettyCashAnalytics";
+	}
+
+	/**
+	 * 取得指定门店/月份合计销售信息
+	 * 
+	 * @param orgId
+	 * @param optDateYM
+	 */
+	private BigDecimal getSalesTotalByOrgAndYearMonth(String orgId, String optDateYM) {
+		SalesMonthTotalItem param = new SalesMonthTotalItem();
+		param.setOptDateYM(optDateYM);
+		param.setOrgId(orgId);
+
+		// 取得指定门店/月份合计销售信息
+		SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
+		if (null != _salesTotal) {
+			return _salesTotal.getSaleRamt();
+		}
+		return null;
 	}
 }

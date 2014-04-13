@@ -22,6 +22,7 @@ import org.springside.modules.utils.SpringContextHolder;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.affair.InspectJpaDao;
 import com.tjhx.dao.affair.PettyCashJpaDao;
+import com.tjhx.dao.affair.PettyCashMyBatisDao;
 import com.tjhx.entity.affair.Inspect;
 import com.tjhx.entity.affair.PettyCash;
 import com.tjhx.entity.member.User;
@@ -34,7 +35,10 @@ public class PettyCashManager {
 	@Resource
 	private PettyCashJpaDao pettyCashJpaDao;
 	@Resource
+	private PettyCashMyBatisDao pettyCashMyBatisDao;
+	@Resource
 	private InspectJpaDao inspectJpaDao;
+
 	private final static String XML_CONFIG_PETTY_CASH = "/excel/Petty_Cash_Template.xls";
 
 	/**
@@ -323,12 +327,12 @@ public class PettyCashManager {
 	 * 根据查询条件 取得指定门店备用金余额（指定时间段内）
 	 * 
 	 * @param orgId 门店编号
-	 * @param optDate_start 开始时间(yyyyMMdd)
-	 * @param optDate_end 结束时间(yyyyMMdd)
+	 * @param optDateStart 开始时间(yyyyMMdd)
+	 * @param optDateEnd 结束时间(yyyyMMdd)
 	 * @return
 	 */
-	public List<PettyCash> searchPettyCashList(String orgId, String optDate_start, String optDate_end) {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end, new Sort(
+	public List<PettyCash> searchPettyCashList(String orgId, String optDateStart, String optDateEnd) {
+		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDateStart, optDateEnd, new Sort(
 				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 		return _list;
 	}
@@ -443,5 +447,23 @@ public class PettyCashManager {
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PETTY_CASH, map, tmpFilePath);
 
 		return tmpFileName;
+	}
+
+	/**
+	 * 取得门店备用金月度分析信息
+	 * 
+	 * @param orgId
+	 * @param optDateStart 开始时间(yyyyMMdd)
+	 * @param optDateEnd 结束时间(yyyyMMdd)
+	 * @return
+	 */
+	public List<PettyCash> getPettyCashAnalyticsInfo(String orgId, String optDateStart, String optDateEnd) {
+		PettyCash param = new PettyCash();
+		param.setOrgId(orgId);
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+
+		List<PettyCash> _list = pettyCashMyBatisDao.getPettyCashAnalyticsInfo(param);
+		return _list;
 	}
 }

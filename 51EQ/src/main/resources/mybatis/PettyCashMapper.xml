@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.PettyCashMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_PettyCash" type="com.tjhx.entity.affair.PettyCash">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="balance_amt" property="balanceAmt" jdbcType="DECIMAL"/>
+        <result column="carry_over_flg" property="carryOverFlg" jdbcType="BIT"/>
+        <result column="desc_txt" property="descTxt" jdbcType="VARCHAR"/>
+        <result column="examine_flg1" property="examineFlg1" jdbcType="INTEGER"/>
+        <result column="examine_flg2" property="examineFlg2" jdbcType="INTEGER"/>
+        <result column="examine_flg3" property="examineFlg3" jdbcType="INTEGER"/>
+        <result column="examine_flg4" property="examineFlg4" jdbcType="INTEGER"/>
+        <result column="examine_flg5" property="examineFlg5" jdbcType="INTEGER"/>
+        <result column="examine_flg6" property="examineFlg6" jdbcType="INTEGER"/>
+        <result column="examine_flg7" property="examineFlg7" jdbcType="INTEGER"/>
+        <result column="exp_reason" property="expReason" jdbcType="VARCHAR"/>
+        <result column="income_source" property="incomeSource" jdbcType="VARCHAR"/>
+        <result column="inspect_trs_id" property="inspectTrsId" jdbcType="VARCHAR"/>
+        <result column="opt_amt" property="optAmt" jdbcType="DECIMAL"/>
+        <result column="opt_amt_show" property="optAmtShow" jdbcType="DECIMAL"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_m" property="optDateM" jdbcType="VARCHAR"/>
+        <result column="opt_date_show" property="optDateShow" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="opt_type" property="optType" jdbcType="INTEGER"/>
+        <result column="opt_uid" property="optUid" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="week" property="week" jdbcType="VARCHAR"/>
+        <result column="exp_type" property="expType" jdbcType="VARCHAR"/>
+	</resultMap>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<![CDATA[
+  			    CONCAT(opt_date_y, opt_date_m) >= #{optDateStart}
+  			AND CONCAT(opt_date_y, opt_date_m) <= #{optDateEnd}
+  			]]>
+  			<if test="orgId != null and orgId !='' ">
+  			AND org_id = #{orgId}
+  			</if>
+  			AND org_id != '000' <!-- 非总部机构的支出合计 -->
+  			AND opt_Type='0'
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_petty_cash信息(根据参数) -->
+	<select id="getPettyCashAnalyticsInfo" parameterType="com.tjhx.entity.affair.PettyCash" resultMap="Result_Map_PettyCash">
+		SELECT
+		    org_id ,
+		    CONCAT(opt_date_y, opt_date_m) AS opt_date,
+		    SUM(opt_amt_show) AS opt_amt_show
+		FROM
+		    t_petty_cash
+		<include refid="Where_Clause" />
+		GROUP BY
+		    org_id,
+		    CONCAT(opt_date_y, opt_date_m)
+	</select>
+</mapper>

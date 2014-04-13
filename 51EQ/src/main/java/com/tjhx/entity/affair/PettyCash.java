@@ -41,7 +41,7 @@ public class PettyCash extends IdEntity {
 	private int optType;
 	/** 拨入来源 1-正常拨入 2-非常拨入 4-会计调帐 */
 	private String incomeSource;
-	/** 支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他 */
+	/** 支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他 */
 	private String expType;
 	/** 支出事项 */
 	private String expReason;
@@ -74,6 +74,14 @@ public class PettyCash extends IdEntity {
 	private boolean editFlg;
 	/** 业务日期 */
 	private String createDateStr;
+	/** 业务日期 */
+	private String optDateStart;
+	/** 业务日期 */
+	private String optDateEnd;
+	/** 机构-销售合计 */
+	private BigDecimal totalSaleRamt;
+	/** 机构-支出占销售合计百分比 */
+	private String rate;
 
 	/**
 	 * 取得巡查报告流水号
@@ -300,7 +308,7 @@ public class PettyCash extends IdEntity {
 	}
 
 	/**
-	 * 取得支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-其他
+	 * 取得支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他
 	 * 
 	 * @return expType 支出类型
 	 */
@@ -310,7 +318,7 @@ public class PettyCash extends IdEntity {
 	}
 
 	/**
-	 * 设置支出类型
+	 * 设置支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他
 	 * 
 	 * @param expReason 支出类型
 	 */
@@ -595,5 +603,81 @@ public class PettyCash extends IdEntity {
 	 */
 	public void setCreateDateStr(String createDateStr) {
 		this.createDateStr = createDateStr;
+	}
+
+	/**
+	 * 取得业务日期
+	 * 
+	 * @return optDateStart 业务日期
+	 */
+	@Transient
+	public String getOptDateStart() {
+		return optDateStart;
+	}
+
+	/**
+	 * 设置业务日期
+	 * 
+	 * @param optDateStart 业务日期
+	 */
+	public void setOptDateStart(String optDateStart) {
+		this.optDateStart = optDateStart;
+	}
+
+	/**
+	 * 取得业务日期
+	 * 
+	 * @return optDateEnd 业务日期
+	 */
+	@Transient
+	public String getOptDateEnd() {
+		return optDateEnd;
+	}
+
+	/**
+	 * 设置业务日期
+	 * 
+	 * @param optDateEnd 业务日期
+	 */
+	public void setOptDateEnd(String optDateEnd) {
+		this.optDateEnd = optDateEnd;
+	}
+
+	/**
+	 * 取得 当月机构销售合计
+	 * 
+	 * @return totalSaleRamt 当月机构销售合计
+	 */
+	@Transient
+	public BigDecimal getTotalSaleRamt() {
+		return totalSaleRamt;
+	}
+
+	/**
+	 * 设置 当月机构销售合计
+	 * 
+	 * @param totalSaleRamt 当月机构销售合计
+	 */
+	public void setTotalSaleRamt(BigDecimal totalSaleRamt) {
+		this.totalSaleRamt = totalSaleRamt;
+	}
+
+	/**
+	 * 取得 机构-支出占销售合计百分比
+	 * 
+	 * @return rate 机构-支出占销售合计百分比
+	 */
+	@Transient
+	public String getRate() {
+		return rate;
+	}
+
+	/**
+	 * 设置 机构-支出占销售合计百分比
+	 * 
+	 * @param rate 机构-支出占销售合计百分比
+	 */
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 }
