@@ -131,6 +131,9 @@
                 		<table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
+                                	<th width="50" class="center">
+                                        序号
+                                    </th>
                                     <th class="center">
                                         货号
                                     </th>
@@ -152,6 +155,7 @@
                             
                             <c:forEach items="${_goodList}" var="good" varStatus="status1">
 	                            <tr>
+	                            	<td class="center">${status1.index+1}</td>
                                     <td class="center">${good.itemSubno}</td>
 	                            	<td class="center">${good.goodsName}</td>
 	                            	<td class="center">${good.posQty}</td>

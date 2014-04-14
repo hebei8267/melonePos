@@ -41,7 +41,7 @@ public class PettyCash extends IdEntity {
 	private int optType;
 	/** 拨入来源 1-正常拨入 2-非常拨入 4-会计调帐 */
 	private String incomeSource;
-	/** 支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他 */
+	/** 支出类型 01-房租(门店) 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 07-房租(宿舍) 99-其他 */
 	private String expType;
 	/** 支出事项 */
 	private String expReason;
@@ -308,7 +308,7 @@ public class PettyCash extends IdEntity {
 	}
 
 	/**
-	 * 取得支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他
+	 * 取得支出类型 01-房租(门店) 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 07-房租(宿舍) 99-其他
 	 * 
 	 * @return expType 支出类型
 	 */
@@ -318,7 +318,7 @@ public class PettyCash extends IdEntity {
 	}
 
 	/**
-	 * 设置支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他
+	 * 设置支出类型 01-房租(门店) 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 07-房租(宿舍) 99-其他
 	 * 
 	 * @param expReason 支出类型
 	 */

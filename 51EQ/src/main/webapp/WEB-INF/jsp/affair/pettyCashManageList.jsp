@@ -200,9 +200,12 @@
 											</span>
 										</td>
 										<td class="center">
-	                                 		<%//支出类型 01-房租 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 99-其他 %>
+	                                 		<%//支出类型 01-房租(门店) 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 07-房租(宿舍) 99-其他 %>
 	                                 		<c:if test="${pettyCash.expType == '01'}">
-		                            		<span class="_warn1">房租</span>
+		                            		<span class="_warn1">房租(门店)</span>
+		                            		</c:if>
+		                            		<c:if test="${pettyCash.expType == '07'}">
+		                            		<span class="_warn1">房租(宿舍)</span>
 		                            		</c:if>
 		                            		<c:if test="${pettyCash.expType == '02'}">
 		                            		<span class="_warn1">电费</span>

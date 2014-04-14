@@ -200,7 +200,8 @@ public class PettyCashController extends BaseController {
 		Map<String, String> _expTypeList = new LinkedHashMap<String, String>();
 
 		_expTypeList.put("", "");
-		_expTypeList.put("01", "房租");
+		_expTypeList.put("01", "房租(门店)");
+		_expTypeList.put("07", "房租(宿舍)");
 		_expTypeList.put("02", "电费");
 		_expTypeList.put("03", "水费");
 		_expTypeList.put("04", "税费");
