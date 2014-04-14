@@ -25,6 +25,7 @@
         <result column="stock_qty" property="stockQty" jdbcType="DECIMAL"/>
         <result column="stock_amt" property="stockAmt" jdbcType="DECIMAL"/>
         <result column="item_sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+        <result column="sup_name" property="supName" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<delete id="delSalesDayTotalInfo" parameterType="String">  
@@ -99,11 +100,13 @@
 			    sg.opt_date ,
 			    org.org_name ,
 			    sd.stock_qty ,
-			    g.name as goodsName
+			    sup.name AS sup_name ,
+			    g.name as goods_name
 			FROM
 				t_organization org ,
 			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno AND sd.org_id = sg.org_id ,
 			    t_goods g ,
+			    t_supplier sup,
 			    t_item_type it
 			WHERE
 			    sg.item_subno = g.subno
@@ -113,6 +116,7 @@
 			AND sg.org_id = org.org_id
 			AND sg.opt_date >= #{optDateStart}
 			AND sg.opt_date <= #{optDateEnd}
+			AND g.supplier_bw_id = sup.supplier_bw_id
 			GROUP BY
 			    sg.item_subno
 			ORDER BY
@@ -135,11 +139,13 @@
 			    sg.opt_date ,
 			    org.org_name ,
 			    sd.stock_qty ,
-			    g.name as goodsName
+			    sup.name AS sup_name,
+			    g.name as goods_name
 			FROM
 				t_organization org ,
 			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno AND sd.org_id = sg.org_id ,
 			    t_goods g ,
+			    t_supplier sup,
 			    t_item_type it
 			WHERE
 			    sg.item_subno = g.subno
@@ -149,6 +155,7 @@
 			AND sg.org_id = org.org_id
 			AND sg.opt_date >= #{optDateStart}
 			AND sg.opt_date <= #{optDateEnd}
+			AND g.supplier_bw_id = sup.supplier_bw_id
 			GROUP BY
 			    sg.item_subno
 			ORDER BY

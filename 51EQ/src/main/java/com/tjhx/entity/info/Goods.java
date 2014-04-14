@@ -28,6 +28,8 @@ public class Goods extends IdEntity {
 	private String pyName;
 	/** 商品种类编号 */
 	private String itemNo;
+	/** 供应商编号-百威 */
+	private String supplierBwId;
 
 	/**
 	 * 取得短条码
@@ -125,4 +127,22 @@ public class Goods extends IdEntity {
 		this.itemNo = itemNo;
 	}
 
+	/**
+	 * 取得供应商编号-百威
+	 * 
+	 * @return supplierBwId 供应商编号-百威
+	 */
+	@Column(length = 16)
+	public String getSupplierBwId() {
+		return supplierBwId;
+	}
+
+	/**
+	 * 设置供应商编号-百威
+	 * 
+	 * @param supplierBwId 供应商编号-百威
+	 */
+	public void setSupplierBwId(String supplierBwId) {
+		this.supplierBwId = supplierBwId;
+	}
 }

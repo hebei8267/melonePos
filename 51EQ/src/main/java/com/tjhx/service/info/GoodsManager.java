@@ -67,6 +67,8 @@ public class GoodsManager {
 		_goods.setPyName(_itemGoods.getItemSubname());
 		// 商品种类编号
 		_goods.setItemNo(_itemGoods.getItemClsno());
+		// 供应商编号
+		_goods.setSupplierBwId(_itemGoods.getSupcustNo());
 
 		goodsJpaDao.save(_goods);
 

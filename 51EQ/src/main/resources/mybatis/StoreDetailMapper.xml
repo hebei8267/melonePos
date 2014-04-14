@@ -85,7 +85,8 @@
         store_flg VARCHAR(1),
         PRIMARY KEY (uuid),
         CONSTRAINT _index UNIQUE (_index, opt_date, org_id),
-        INDEX item_barcode (item_barcode, org_id)
+        INDEX item_barcode (item_barcode, org_id),
+        INDEX index_store_detail_org_id_item_subno (item_subno, org_id)
     )
     ENGINE=InnoDB DEFAULT CHARSET=utf8
     ]]>

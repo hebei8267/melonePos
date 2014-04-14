@@ -14,6 +14,8 @@
 		<result column="item_subname" property="itemSubname" jdbcType="VARCHAR"/>
 		<!-- 商品种类编号 -->
 		<result column="item_clsno" property="itemClsno" jdbcType="VARCHAR"/>
+		<!-- 供应商编号 -->
+		<result column="sup_no" property="supcustNo" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	
@@ -21,13 +23,17 @@
 	<select id="getItemGoodsList" resultMap="Result_Map_ItemGoods">
 	<![CDATA[
 		SELECT
-		    item_subno ,
-			item_barcode ,
-			item_name ,
-			item_clsno ,
-			item_subname
+		    vinfo.item_subno ,
+		    vinfo.item_barcode ,
+		    vinfo.item_name ,
+		    vinfo.item_clsno ,
+		    vinfo.item_subname ,
+		    tinfo.sup_no
 		FROM
-		    view_item_info
+		    view_item_info vinfo ,
+		    bi_t_item_info tinfo
+		WHERE
+		    vinfo.item_subno = tinfo.item_subno
 	]]>
 	</select>
 </mapper>

@@ -141,6 +141,9 @@
                                         商品名称
                                     </th>
                                     <th class="center">
+                                        供应商
+                                    </th>
+                                    <th class="center">
                                         销量(件)
                                     </th>
                                     <th style="background-image: linear-gradient(to bottom,#62c462,#51a351);" class="center">
@@ -158,6 +161,7 @@
 	                            	<td class="center">${status1.index+1}</td>
                                     <td class="center">${good.itemSubno}</td>
 	                            	<td class="center">${good.goodsName}</td>
+	                            	<td class="center">${good.supName}</td>
 	                            	<td class="center">${good.posQty}</td>
 	                            	<td class="right">${good.posAmt}</td>
 	                            	<td class="center">${good.stockQty}</td>

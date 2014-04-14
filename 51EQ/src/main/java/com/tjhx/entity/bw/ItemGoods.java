@@ -14,6 +14,8 @@ public class ItemGoods {
 	private String itemSubname;
 	/** 商品种类编号 */
 	private String itemClsno;
+	/** 供应商编号 */
+	private String supcustNo;
 
 	/**
 	 * 取得短条码
@@ -103,6 +105,24 @@ public class ItemGoods {
 	 */
 	public void setItemClsno(String itemClsno) {
 		this.itemClsno = itemClsno;
+	}
+
+	/**
+	 * 取得供应商编号
+	 * 
+	 * @return supcustNo 供应商编号
+	 */
+	public String getSupcustNo() {
+		return supcustNo;
+	}
+
+	/**
+	 * 设置供应商编号
+	 * 
+	 * @param supcustNo 供应商编号
+	 */
+	public void setSupcustNo(String supcustNo) {
+		this.supcustNo = supcustNo;
 	}
 
 }
