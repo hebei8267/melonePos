@@ -132,7 +132,7 @@
                                     <option value="${_msgType.key }">${_msgType.value }</option>
                                 </c:if>
                             </c:forEach>
-                        </select>
+                        </select>&nbsp;&nbsp;
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                 </form>

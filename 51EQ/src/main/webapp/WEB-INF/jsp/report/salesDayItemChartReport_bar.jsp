@@ -84,7 +84,7 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
+                        &nbsp;&nbsp;<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                     <c:if test="${showFlg == true}">
                         <div class="span12"	style="margin-top: 10px;">

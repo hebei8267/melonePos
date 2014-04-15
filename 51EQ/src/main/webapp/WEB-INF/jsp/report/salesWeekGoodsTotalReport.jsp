@@ -79,7 +79,7 @@
                     <div class="span9" style="margin-top: 20px;">
                         <label class="control-label">货号/条码 :</label>
                         <input id="barcode" name="barcode" type="text" class="input-medium" value="${barcode }"/>
-                        <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
+                        &nbsp;&nbsp;<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                     <div class="span12"	style="margin-top: 10px;">
                         <table class="table	table-striped table-bordered table-condensed mytable">

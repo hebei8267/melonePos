@@ -107,7 +107,7 @@
 
                     <div class="span6" style="padding-top: 10px; text-align: right;">
                         <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
-                        &nbsp;<a href="${sc_ctx}/tmpEmployee/list" class="btn btn-large">重置</a>
+                        &nbsp;&nbsp;<a href="${sc_ctx}/tmpEmployee/list" class="btn btn-large">重置</a>
                     </div>
                 </div>
 

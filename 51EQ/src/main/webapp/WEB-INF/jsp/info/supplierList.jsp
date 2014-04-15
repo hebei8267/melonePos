@@ -62,7 +62,7 @@
                         </legend>
                     </div>
                     <div class="span12">
-                        <button	id="bwDataSynBtn" class="btn btn-warning" type="button">数据同步 (百威)</button>
+                        <button	id="bwDataSynBtn" class="btn btn-warning" type="button">数据同步 (百威)</button>&nbsp;&nbsp;
                         <input type="button" id="signBillSupBtn" name="signBillSupBtn" class="btn btn-primary" value="数据同步 (标记供应商)" />
                     </div>
                     

@@ -61,7 +61,7 @@
                                     <option value="${org.key }">${org.value }</option>
                                 </c:if>
                             </c:forEach>
-                        </select>
+                        </select>&nbsp;&nbsp;
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                         <button	id="zkDataSynBtn" class="btn	btn-warning" type="button">数据同步 (中控)</button>
                     </div>

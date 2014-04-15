@@ -93,7 +93,7 @@
                                     <option value="${org.key }">${org.value }</option>
                                 </c:if>
                             </c:forEach>
-                        </select>
+                        </select>&nbsp;&nbsp;
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                         <button	id="exportBtn" class="btn	btn-warning" type="button">数据导出 (明细)</button>
                         <button	id="exportBtn2" class="btn	btn-warning" type="button">数据导出 (合计)</button>

@@ -123,7 +123,7 @@
                                     <option value="${org.key }">${org.value }</option>
                                 </c:if>
                             </c:forEach>
-                        </select>
+                        </select>&nbsp;&nbsp;
                         <button id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </form>
                 </div>
@@ -240,7 +240,7 @@
                     <div class="span12">
                     	<input type="hidden" name="orgId" id="orgId" value="${orgId}"/>
                         <label class="control-label_1">巡查报告流水号 :</label>&nbsp;
-                        <input type="text" id="inspectTrsId" name="inspectTrsId" class="input-medium">
+                        <input type="text" id="inspectTrsId" name="inspectTrsId" class="input-medium">&nbsp;&nbsp;
                         <input id="overBtn" name="overBtn" type="button" class="btn btn-danger" value="结转"/>
                     </div>
                 </form>

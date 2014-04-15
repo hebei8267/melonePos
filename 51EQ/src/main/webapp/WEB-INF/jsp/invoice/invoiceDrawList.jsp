@@ -61,7 +61,7 @@
                     <div class="span6">
                         <label class="control-label">发票号 :</label>
                         <input id="invoiceNum" name="invoiceNum" type="text" class="input-medium" value="${invoiceNum }"/>
-                        <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
+                        &nbsp;&nbsp;<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                     <div class="span12"	style="margin-top: 10px;">
                         <table class="table	table-striped table-bordered table-condensed mytable">

@@ -76,7 +76,7 @@
 	                            </c:if>
                             </c:forEach>
                         </select>
-                        &nbsp;
+                        &nbsp;&nbsp;
                         <button	id="showBtn" class="btn	btn-primary" type="button">显示</button>
                     </div>
                     

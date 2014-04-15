@@ -336,14 +336,16 @@ public class PettyCashController extends BaseController {
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String expType = ServletRequestUtils.getStringParameter(request, "expType");
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
+		model.addAttribute("expType", expType);
 
 		// 创建备用金信息文件
 		String downLoadFileName = pettyCashManager.createPettyCashFile(orgId,
 				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
+				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"), expType);
 
 		if (null == downLoadFileName) {
 			return;
@@ -394,13 +396,18 @@ public class PettyCashController extends BaseController {
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String expType = ServletRequestUtils.getStringParameter(request, "expType");
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
+		model.addAttribute("expType", expType);
+
+		// 初始化 支出类型下拉列表
+		initExpTypeList(model);
 
 		List<PettyCash> _pettyCashList = pettyCashManager.searchPettyCashList(orgId,
 				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
+				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"), expType);
 
 		for (PettyCash pettyCash : _pettyCashList) {
 			pettyCash.setCreateDateStr(DateUtils.transDateFormat(pettyCash.getCreateDate(), "yyyy-MM-dd"));

@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -331,10 +332,14 @@ public class PettyCashManager {
 	 * @param optDateEnd 结束时间(yyyyMMdd)
 	 * @return
 	 */
-	public List<PettyCash> searchPettyCashList(String orgId, String optDateStart, String optDateEnd) {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDateStart, optDateEnd, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
-		return _list;
+	public List<PettyCash> searchPettyCashList(String orgId, String optDateStart, String optDateEnd, String expType) {
+		if (StringUtils.isNotBlank(expType)) {
+			return pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDateStart, optDateEnd, expType, new Sort(
+					new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		} else {
+			return pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDateStart, optDateEnd, new Sort(new Sort.Order(
+					Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		}
 	}
 
 	/**
@@ -422,18 +427,36 @@ public class PettyCashManager {
 	 * 创建备用金信息文件
 	 * 
 	 * @param orgId
-	 * @param optDate_start
-	 * @param optDate_end
+	 * @param optDateStart
+	 * @param optDateEnd
 	 * @return
 	 * @throws IOException
 	 * @throws InvalidFormatException
 	 * @throws ParsePropertyException
 	 */
-	public String createPettyCashFile(String orgId, String optDate_start, String optDate_end) throws ParsePropertyException,
-			InvalidFormatException, IOException {
-		List<PettyCash> _list = pettyCashJpaDao.findByOrgIdAndOptDateInterval(orgId, optDate_start, optDate_end, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+	public String createPettyCashFile(String orgId, String optDateStart, String optDateEnd, String expType)
+			throws ParsePropertyException, InvalidFormatException, IOException {
+		List<PettyCash> _list = searchPettyCashList(orgId, optDateStart, optDateEnd, expType);
 
+		for (PettyCash pettyCash : _list) {
+			if ("01".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("房租(门店)");
+			} else if (" 07".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("房租(宿舍)");
+			} else if ("02".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("电费");
+			} else if ("03".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("水费");
+			} else if ("04".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("税费");
+			} else if ("05".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("电费");
+			} else if ("06".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("网络/通讯费");
+			} else if ("99".equals(pettyCash.getExpType())) {
+				pettyCash.setExpType("其他");
+			}
+		}
 		// ---------------------------文件生成---------------------------
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pettyCashList", _list);

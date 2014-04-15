@@ -123,12 +123,11 @@
 							<h3>门店备用金信息</h3>
 						</legend>
 					</div>
-					<div class="span5">
+					<div class="span12">
 						<label class="control-label">业务日期 :</label>
 						<input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }" /> ～ 
 						<input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }" />
-					</div>
-					<div class="span7">
+						&nbsp;&nbsp;
 						<label class="control-label">机构 :</label>
 						<select id="orgId" name="orgId" class="input-medium">
 							<c:forEach items="${orgList}" var="org">
@@ -140,6 +139,18 @@
 								</c:if>
 							</c:forEach>
 						</select>
+						&nbsp;&nbsp;
+						<label class="control-label">支出类型 :</label>
+						<select id="expType" name="expType" class="input-medium">
+		                  	<c:forEach items="${expTypeList}" var="_expType">
+		             			<c:if test="${expType.equals(_expType.key)}">
+		                 			<option value="${_expType.key }" selected>${_expType.value }</option>
+		                      	</c:if>
+		                  		<c:if test="${!expType.equals(_expType.key)}">
+		                      		<option value="${_expType.key }">${_expType.value }</option>
+		                    	</c:if>
+		                	</c:forEach>
+	                 	</select>&nbsp;&nbsp;
 						<button id="searchBtn" class="btn btn-primary" type="button">查询</button>
 						<button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
 						

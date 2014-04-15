@@ -42,7 +42,7 @@
     		<fmt:parseDate value="${optDate}" var="_optDate" pattern="yyyyMMdd" />
     		<label class="control-label">销售日期 :</label>
     		<input id="optDate" name="optDate" type="text" class="input-medium" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${_optDate}" />"/>
-    		<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
+    		&nbsp;&nbsp;<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
     	</form>
 		<table class="table	table-striped table-bordered table-condensed mytable">
 			<thead>
