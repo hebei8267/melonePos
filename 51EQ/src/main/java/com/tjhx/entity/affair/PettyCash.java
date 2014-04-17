@@ -79,7 +79,7 @@ public class PettyCash extends IdEntity {
 	/** 业务日期 */
 	private String optDateEnd;
 	/** 机构-销售合计 */
-	private BigDecimal totalSaleRamt;
+	private BigDecimal totalSaleRamt = new BigDecimal(0);
 	/** 机构-支出占销售合计百分比 */
 	private String rate;
 
