@@ -137,15 +137,14 @@ public class SalesDayTotalManager {
 	 */
 	private void recalRanking(List<String> optDateList) {
 		for (String optDate : optDateList) {
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao
-					.findByOptDateOrderBy_Ranking(optDate);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findByOptDateOrderBy_Ranking(optDate);
 
 			int rank = 1;
 			for (SalesDayTotal _s : _sList) {
-	/*			// 门店-13D不参加排名
-				if (Constants.ORG_ID_13.equals(_s.getOrgId())) {
-					continue;
-				}*/
+				/*
+				 * // 门店-13D不参加排名 if (Constants.ORG_ID_13.equals(_s.getOrgId()))
+				 * { continue; }
+				 */
 				// 排名
 				_s.setRanking(rank);
 				rank++;
@@ -172,8 +171,8 @@ public class SalesDayTotalManager {
 
 			BigDecimal _posAmtByNow = new BigDecimal(0);
 
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(
-					org.getId(), year, month);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(org.getId(), year,
+					month);
 			for (SalesDayTotal _salesDayTotal : _sList) {
 				_posAmtByNow = _posAmtByNow.add(_salesDayTotal.getPosAmt());
 
@@ -183,8 +182,8 @@ public class SalesDayTotalManager {
 				_salesDayTotal.setExpMonthPosAmt(_posAmtByNow.divide(new BigDecimal(_salesDayTotal.getNowDays()), 2,
 						BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(_salesDayTotal.getMonthDays())));
 				// 去年同期销售
-				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(),
-						String.valueOf(Integer.parseInt(year) - 1), month));
+				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(), String.valueOf(Integer.parseInt(year) - 1),
+						month));
 				// 销售增长额=预计本月销售-去年同期销售
 				_salesDayTotal.setPosAmtIncrease(_salesDayTotal.getExpMonthPosAmt().subtract(
 						_salesDayTotal.getPreYearMonthPosAmt()));
@@ -202,8 +201,7 @@ public class SalesDayTotalManager {
 				}
 				// 日需销售金额=(去年同期销售-截止金额)/(本月天数-截止天数)
 				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getPreYearMonthPosAmt()
-						.subtract(_salesDayTotal.getPosAmtByNow())
-						.divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
+						.subtract(_salesDayTotal.getPosAmtByNow()).divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
 
 				salesDayTotalJpaDao.save(_salesDayTotal);
 			}
@@ -231,12 +229,16 @@ public class SalesDayTotalManager {
 				_orgYMPosAmt.put(orgId + year + month, _res);
 			}
 		}
-
+		// FIXME 机构/年月销售额合计
 		if (null == _res) {
 			if (Constants.ORG_ID_13.equals(orgId)) {
 				_res = new BigDecimal(600000);
 			} else {
 				_res = new BigDecimal(100000);
+			}
+		} else {
+			if (Constants.ORG_ID_02.equals(orgId)) {
+				_res = _res.multiply(new BigDecimal(2));
 			}
 		}
 		return _res;
