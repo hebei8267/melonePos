@@ -321,11 +321,24 @@ public class PettyCashManager {
 		}
 	}
 
+	/**
+	 * 根据查询条件 取得指定门店备用金余额信息列表（指定时间段内）-所有支出类型
+	 * 
+	 * @param orgId
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @return
+	 */
+	public List<PettyCash> findByOrgIdAndOptDateInterval_AllExpType(String orgId, String optDateStart, String optDateEnd) {
+		return pettyCashJpaDao.findByOrgIdAndOptDateInterval_AllExpType(orgId, optDateStart, optDateEnd, new Sort(new Sort.Order(
+				Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+	}
+
 	// -------------------------------------------------------------------------
 	// -------------------------备用金信息结转-----------------------------------
 	// -------------------------------------------------------------------------
 	/**
-	 * 根据查询条件 取得指定门店备用金余额（指定时间段内）
+	 * 根据查询条件 取得指定门店备用金余额信息列表（指定时间段内）
 	 * 
 	 * @param orgId 门店编号
 	 * @param optDateStart 开始时间(yyyyMMdd)
@@ -473,20 +486,38 @@ public class PettyCashManager {
 	}
 
 	/**
-	 * 取得门店备用金月度分析信息
+	 * 取得门店备用金分析信息 统计方式-门店月次
 	 * 
 	 * @param orgId
 	 * @param optDateStart 开始时间(yyyyMMdd)
 	 * @param optDateEnd 结束时间(yyyyMMdd)
 	 * @return
 	 */
-	public List<PettyCash> getPettyCashAnalyticsInfo(String orgId, String optDateStart, String optDateEnd) {
+	public List<PettyCash> getPettyCashAnalyticsInfo_month(String orgId, String optDateStart, String optDateEnd) {
 		PettyCash param = new PettyCash();
 		param.setOrgId(orgId);
 		param.setOptDateStart(optDateStart);
 		param.setOptDateEnd(optDateEnd);
 
-		List<PettyCash> _list = pettyCashMyBatisDao.getPettyCashAnalyticsInfo(param);
+		List<PettyCash> _list = pettyCashMyBatisDao.getPettyCashAnalyticsInfo_month(param);
+		return _list;
+	}
+
+	/**
+	 * 取得门店备用金分析信息 统计方式-门店合计
+	 * 
+	 * @param orgId
+	 * @param optDateStart 开始时间(yyyyMMdd)
+	 * @param optDateEnd 结束时间(yyyyMMdd)
+	 * @return
+	 */
+	public List<PettyCash> getPettyCashAnalyticsInfo_total(String orgId, String optDateStart, String optDateEnd) {
+		PettyCash param = new PettyCash();
+		param.setOrgId(orgId);
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+
+		List<PettyCash> _list = pettyCashMyBatisDao.getPettyCashAnalyticsInfo_total(param);
 		return _list;
 	}
 }

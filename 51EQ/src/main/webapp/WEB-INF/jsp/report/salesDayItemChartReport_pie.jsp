@@ -95,8 +95,7 @@
 		<script>
 			$(function() {
 				<c:forEach items="${saleRamtJsonList}" var="saleRamtJson" varStatus="status1">
-				var _saleRamtJson${status1.index + 1} = ${saleRamtJson}
-				
+				var _saleRamtJson${status1.index + 1} = ${saleRamtJson}				
 				
 				var pieChart${status1.index + 1} = new dhtmlXChart({
 					view : "pie",

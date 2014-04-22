@@ -60,4 +60,15 @@ public interface PettyCashJpaDao extends CrudRepository<PettyCash, Integer> {
 	@Query("select p from PettyCash p where p.orgId = :orgId and p.carryOverFlg = 'false' ")
 	public List<PettyCash> findByOrgIdAndCarryOverFlg(@Param("orgId") String orgId, Sort sort);
 
+	/**
+	 * @param orgId
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @param sort
+	 * @return
+	 */
+	@Query("select p from PettyCash p where p.orgId = :orgId and CONCAT(p.optDateY, p.optDateM) >= :optDateStart and CONCAT(p.optDateY, p.optDateM) <= :optDateEnd and p.expType is not null ")
+	public List<PettyCash> findByOrgIdAndOptDateInterval_AllExpType(@Param("orgId") String orgId,
+			@Param("optDateStart") String optDateStart, @Param("optDateEnd") String optDateEnd, Sort sort);
+
 }

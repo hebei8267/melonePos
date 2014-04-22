@@ -76,4 +76,19 @@
 		    opt_date_y_m = #{optDateYM}
 		AND org_id = #{orgId}
 	</select>
+	
+	<!-- 各店指定月销售数据 -->
+	<select id="getSalesTotal_ByOrgAndYearMonthInterval" parameterType="com.tjhx.entity.info.SalesMonthTotalItem" resultMap="Result_Map_SalesMonthTotalItem">
+	<![CDATA[
+		SELECT
+		    org_id ,
+		    SUM(sale_ramt) AS sale_ramt
+		FROM
+		    t_sales_month_total_item
+		WHERE
+		    opt_date_y_m >= #{optDateStart}
+		AND opt_date_y_m >= #{optDateEnd}
+		AND org_id = #{orgId}
+	]]>
+	</select>
 </mapper>

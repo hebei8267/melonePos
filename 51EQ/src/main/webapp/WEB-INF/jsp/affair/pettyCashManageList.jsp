@@ -211,31 +211,7 @@
 											</span>
 										</td>
 										<td class="center">
-	                                 		<%//支出类型 01-房租(门店) 02-电费 03-水费 04-税费 05-工资 06-网络/通讯费 07-房租(宿舍) 99-其他 %>
-	                                 		<c:if test="${pettyCash.expType == '01'}">
-		                            		<span class="_warn1">房租(门店)</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '07'}">
-		                            		<span class="_warn1">房租(宿舍)</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '02'}">
-		                            		<span class="_warn1">电费</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '03'}">
-		                            		<span class="_warn1">水费</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '04'}">
-		                            		<span class="_warn1">税费</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '05'}">
-		                            		<span class="_warn1">工资</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '06'}">
-		                            		<span class="_warn1">网络/通讯费</span>
-		                            		</c:if>
-		                            		<c:if test="${pettyCash.expType == '99'}">
-		                            		<span class="_warn1">其他</span>
-		                            		</c:if>
+											<span class="_warn1">${pettyCash.expType}</span>
 	                                 	</td>
 										<td>
 											<% //操作类型 0-支出 1-拨入 %>

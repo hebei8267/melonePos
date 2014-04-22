@@ -51,8 +51,8 @@
 	  	</where>
   	</sql>
   	
-  	<!-- 取得t_petty_cash信息(根据参数) -->
-	<select id="getPettyCashAnalyticsInfo" parameterType="com.tjhx.entity.affair.PettyCash" resultMap="Result_Map_PettyCash">
+  	<!-- 取得t_petty_cash信息(根据参数) 统计方式-门店月次 -->
+	<select id="getPettyCashAnalyticsInfo_month" parameterType="com.tjhx.entity.affair.PettyCash" resultMap="Result_Map_PettyCash">
 		SELECT
 		    org_id ,
 		    CONCAT(opt_date_y, opt_date_m) AS opt_date,
@@ -63,5 +63,17 @@
 		GROUP BY
 		    org_id,
 		    CONCAT(opt_date_y, opt_date_m)
+	</select>
+	
+	<!-- 取得t_petty_cash信息(根据参数) 统计方式-门店合计 -->
+	<select id="getPettyCashAnalyticsInfo_total" parameterType="com.tjhx.entity.affair.PettyCash" resultMap="Result_Map_PettyCash">
+		SELECT
+		    org_id ,
+		    SUM(opt_amt_show) AS opt_amt_show
+		FROM
+		    t_petty_cash
+		<include refid="Where_Clause" />
+		GROUP BY
+		    org_id
 	</select>
 </mapper>

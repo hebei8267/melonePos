@@ -41,6 +41,7 @@
 					});
 		
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics");
+					$("#listForm").attr('target', '_self').submit();
 					$("#listForm").submit();
 				});
 				
@@ -50,9 +51,26 @@
 					});
 		
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics_export");
+					$("#listForm").attr('target', '_self').submit();
 					$("#listForm").submit();
 				});
 			});
+			
+			function detail_month(orgId, optDate) {
+				$("#optDate_detail_hidden").val(optDate);
+				alert(optDate)
+				alert($("#optDate_detail_hidden").val())
+				detail(orgId);
+			}
+			function detail(orgId) {
+				$("input[type='text'],textarea").each(function(i) {
+					this.value = $.trim(this.value);
+				});
+		
+				$("#orgId_detail_hidden").val(orgId);
+				$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics_detail");
+				$("#listForm").attr('target', '_blank').submit();
+			}
 		</script>
 	</head>
 	<body>
@@ -61,10 +79,12 @@
 		
 		<div class="container">
 			<form method="post" class="form-inline" id="listForm">
+				<input type="hidden" name="orgId_detail_hidden" id="orgId_detail_hidden" >
+				<input type="hidden" name="optDate_detail_hidden" id="optDate_detail_hidden" >
 				<div class="row">
 					<div class="span12">
 						<legend>
-							<h3>门店备用金分析(图形)</h3>
+							<h3>门店备用金分析</h3>
 						</legend>
 					</div>
 					<div class="span12">
@@ -148,10 +168,17 @@
                             		<td class="right">${pettyCash.optAmtShow}</td>
                             		<td class="right">${pettyCash.totalSaleRamt}</td>
                             		<td class="right">${pettyCash.rate} %</td>
-                            		<td></td>
+                            		<td>
+                            		<c:if test="${analyzeMode.equals(month)}" ><%//月份 %>
+                            		<a href="#" onclick="detail_month('${pettyCash.orgId}' , '${pettyCash.optDate}');" class="btn btn-warning">详细</a>
+                            		</c:if>
+									<c:if test="${!analyzeMode.equals(month)}" ><%//合计 %>
+									<a href="#" onclick="detail('${pettyCash.orgId}');" class="btn btn-warning">详细</a>
+									</c:if>
+                            		</td>
                             	</tr>
                             </c:forEach>
-                            <c:if test="${!empty	pettyCashList}" >
+                            <c:if test="${!empty pettyCashList}" >
                                <tr>
                             		<td class="center" colspan="2">合计</td>
                             		<td class="right">${totalPettyCash.optAmtShow}</td>

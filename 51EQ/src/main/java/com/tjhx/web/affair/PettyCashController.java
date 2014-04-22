@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
@@ -65,6 +67,10 @@ public class PettyCashController extends BaseController {
 	@RequestMapping(value = { "list", "" })
 	public String pettyCashList_Action(Model model, HttpSession session) {
 		List<PettyCash> pettyCashList = pettyCashManager.getPettyCashListByOrgId(getUserInfo(session).getOrganization().getId());
+
+		// 支出类型汉字化
+		formatPettyCashList_ExpType(pettyCashList);
+
 		model.addAttribute("pettyCashList", pettyCashList);
 
 		return "affair/pettyCashList";
@@ -86,6 +92,9 @@ public class PettyCashController extends BaseController {
 			model.addAttribute("pettyCash", pettyCash);
 
 			if (0 == pettyCash.getOptType()) {// 支出
+				// 支出类型汉字化
+				formatPettyCash_ExpType(pettyCash);
+
 				return "affair/pettyCashPayViewForm";
 			} else {// 拨入
 				// 初始化 操作类型下拉列表
@@ -413,6 +422,10 @@ public class PettyCashController extends BaseController {
 		for (PettyCash pettyCash : _pettyCashList) {
 			pettyCash.setCreateDateStr(DateUtils.transDateFormat(pettyCash.getCreateDate(), "yyyy-MM-dd"));
 		}
+
+		// 支出类型汉字化
+		formatPettyCashList_ExpType(_pettyCashList);
+
 		model.addAttribute("pettyCashList", _pettyCashList);
 
 		return "affair/pettyCashManageList";
@@ -525,6 +538,105 @@ public class PettyCashController extends BaseController {
 	}
 
 	/**
+	 * 门店备用金分析-明细(图形)
+	 * 
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "analytics_detail")
+	public String pettyCashAnalyticsDetail_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId_detail_hidden");
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String optDate = ServletRequestUtils.getStringParameter(request, "optDate_detail_hidden");
+		String analyzeMode = ServletRequestUtils.getStringParameter(request, "analyzeMode");
+
+		List<PettyCash> _pettyCashList = null;
+		if (analyzeMode.equals("month")) {// 统计方式-门店月次
+			_pettyCashList = pettyCashManager.findByOrgIdAndOptDateInterval_AllExpType(orgId, optDate, optDate);
+		} else {// 统计方式-门店合计
+			_pettyCashList = pettyCashManager.findByOrgIdAndOptDateInterval_AllExpType(orgId,
+					DateUtils.transDateFormat(optDateShow_start, "yyyy-MM", "yyyyMM"),
+					DateUtils.transDateFormat(optDateShow_end, "yyyy-MM", "yyyyMM"));
+		}
+
+		// 计算合计值
+		PettyCash _totalPettyCash = new PettyCash();
+
+		for (PettyCash pettyCash : _pettyCashList) {
+			pettyCash.setCreateDateStr(DateUtils.transDateFormat(pettyCash.getCreateDate(), "yyyy-MM-dd"));
+			// 计算合计
+			_totalPettyCash.setTotalSaleRamt(_totalPettyCash.getTotalSaleRamt().add(pettyCash.getOptAmt()));
+		}
+
+		model.addAttribute("pettyCashList", _pettyCashList);
+		model.addAttribute("totalPettyCash", _totalPettyCash);
+
+		model.addAttribute("pettyCashJsonList", formatPettyCashJsonList(_pettyCashList));
+		return "affair/pettyCashAnalyticsDetail";
+	}
+
+	/**
+	 * 支出类型汉字化
+	 * 
+	 * @param pettyCash
+	 */
+	private void formatPettyCash_ExpType(PettyCash pettyCash) {
+		if ("01".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("房租(门店)");
+		} else if ("07".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("房租(宿舍)");
+		} else if ("02".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("电费");
+		} else if ("03".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("水费");
+		} else if ("04".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("税费");
+		} else if ("05".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("工资");
+		} else if ("06".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("网络/通讯费");
+		} else if ("99".equals(pettyCash.getExpType())) {
+			pettyCash.setExpType("其他");
+		}
+	}
+
+	/**
+	 * 支出类型汉字化
+	 * 
+	 * @param pettyCashList
+	 */
+	private void formatPettyCashList_ExpType(List<PettyCash> pettyCashList) {
+		for (PettyCash pettyCash : pettyCashList) {
+			formatPettyCash_ExpType(pettyCash);
+		}
+	}
+
+	/**
+	 * @param pettyCashList
+	 * @return
+	 */
+	private String formatPettyCashJsonList(List<PettyCash> pettyCashList) {
+		// 支出类型汉字化
+		formatPettyCashList_ExpType(pettyCashList);
+
+		Map<String, PettyCash> _map = new HashMap<String, PettyCash>();
+		for (PettyCash pettyCash : pettyCashList) {
+
+			PettyCash _p = _map.get(pettyCash.getExpType());
+			if (null != _p) {
+				_p.setOptAmtShow(_p.getOptAmtShow().add(pettyCash.getOptAmtShow()));
+			} else {
+				_map.put(pettyCash.getExpType(), pettyCash);
+			}
+		}
+		List<PettyCash> resList = new ArrayList<PettyCash>(_map.values());
+
+		JsonMapper mapper = new JsonMapper();
+		return mapper.toJson(resList);
+	}
+
+	/**
 	 * 门店备用金分析(图形)
 	 * 
 	 * @param model
@@ -547,21 +659,17 @@ public class PettyCashController extends BaseController {
 		model.addAttribute("optDateShow_end", optDateShow_end);
 		model.addAttribute("analyzeMode", analyzeMode);
 
-		List<PettyCash> _pettyCashList = pettyCashManager.getPettyCashAnalyticsInfo(orgId,
-				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM", "yyyyMM"),
-				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM", "yyyyMM"));
-
-		// 取得门店/月份合计销售信息列表
-		List<OrgMonthSaleRamt> orgSaleRamtList = getOrgSaleRamt(_pettyCashList);
+		List<PettyCash> _pettyCashList = null;
+		if (analyzeMode.equals("month")) {// 统计方式-门店月次
+			_pettyCashList = formatPettyCashList1(orgId, DateUtils.transDateFormat(optDateShow_start, "yyyy-MM", "yyyyMM"),
+					DateUtils.transDateFormat(optDateShow_end, "yyyy-MM", "yyyyMM"));
+		} else {// 统计方式-门店合计
+			_pettyCashList = formatPettyCashList2(orgId, DateUtils.transDateFormat(optDateShow_start, "yyyy-MM", "yyyyMM"),
+					DateUtils.transDateFormat(optDateShow_end, "yyyy-MM", "yyyyMM"));
+		}
 
 		// 计算合计值
-		calTotalPettyCash(model, _pettyCashList, orgSaleRamtList);
-
-		if (analyzeMode.equals("month")) {// 统计方式-门店月次
-			_pettyCashList = formatPettyCashList1(model, _pettyCashList, orgSaleRamtList);
-		} else {// 统计方式-门店合计
-			_pettyCashList = formatPettyCashList2(model, _pettyCashList, orgSaleRamtList);
-		}
+		calTotalPettyCash(model, _pettyCashList);
 
 		model.addAttribute("pettyCashList", _pettyCashList);
 
@@ -575,89 +683,62 @@ public class PettyCashController extends BaseController {
 	 * @param pettyCashList
 	 * @return
 	 */
-	private List<PettyCash> formatPettyCashList1(Model model, List<PettyCash> pettyCashList,
-			List<OrgMonthSaleRamt> orgSaleRamtList) {
+	private List<PettyCash> formatPettyCashList1(String orgId, String optDateShowStart, String optDateShowEnd) {
+		List<PettyCash> _pettyCashList = pettyCashManager
+				.getPettyCashAnalyticsInfo_month(orgId, optDateShowStart, optDateShowEnd);
 
-		for (PettyCash pettyCash : pettyCashList) {
-			for (OrgMonthSaleRamt orgSaleRamt : orgSaleRamtList) {
-				if (orgSaleRamt.equals(pettyCash)) {
-					// 当月机构销售合计
-					pettyCash.setTotalSaleRamt(orgSaleRamt.saleRamt);
-				}
-			}
+		for (PettyCash pettyCash : _pettyCashList) {
+			// 取得指定门店/月份合计销售信息
+			BigDecimal _saleRamt = getSalesTotalByOrgAndYearMonth(pettyCash.getOrgId(), pettyCash.getOptDate());
 
-			if (null != pettyCash.getTotalSaleRamt() && pettyCash.getTotalSaleRamt().compareTo(BigDecimal.ZERO) != 0) {
+			if (null != _saleRamt && _saleRamt.compareTo(BigDecimal.ZERO) != 0) {
+				// 当月机构销售合计
+				pettyCash.setTotalSaleRamt(_saleRamt);
 				// 机构-支出占销售合计百分比
 				pettyCash.setRate(pettyCash.getOptAmtShow().divide(pettyCash.getTotalSaleRamt(), 2, BigDecimal.ROUND_UP)
 						.multiply(new BigDecimal(100)).toString());
 			} else {
+				// 当月机构销售合计
+				pettyCash.setTotalSaleRamt(new BigDecimal(0));
 				pettyCash.setRate("0");
 			}
 		}
-		return pettyCashList;
+
+		return _pettyCashList;
 	}
 
 	/**
 	 * 统计方式-门店合计
 	 * 
-	 * @param model
-	 * @param pettyCashList
+	 * @param orgId
+	 * @param optDateShowStart
+	 * @param optDateShowEnd
 	 * @return
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
 	 */
-	private List<PettyCash> formatPettyCashList2(Model model, List<PettyCash> pettyCashList,
-			List<OrgMonthSaleRamt> orgSaleRamtList) throws IllegalAccessException, InvocationTargetException {
+	private List<PettyCash> formatPettyCashList2(String orgId, String optDateShowStart, String optDateShowEnd) {
+		List<PettyCash> _pettyCashList = pettyCashManager
+				.getPettyCashAnalyticsInfo_total(orgId, optDateShowStart, optDateShowEnd);
 
-		List<PettyCash> _resList = new ArrayList<PettyCash>();
-		PettyCash _res = null;
+		for (PettyCash pettyCash : _pettyCashList) {
+			// 取得指定门店/月份合计销售信息
+			BigDecimal _saleRamt = getSalesTotalByOrgAndYearMonthInterval(pettyCash.getOrgId(), optDateShowStart, optDateShowEnd);
 
-		for (PettyCash pettyCash : pettyCashList) {// 同一个机构不同月份的备用金支付信息
-			if (null != _res && _res.getOrgId().equals(pettyCash.getOrgId())) {
-				_res.setOptAmtShow(_res.getOptAmtShow().add(pettyCash.getOptAmtShow()));
-			} else {
-				_res = new PettyCash();
-				_res.setOrgId(pettyCash.getOrgId());
-				_res.setOptAmtShow(pettyCash.getOptAmtShow());
-				_resList.add(_res);
-			}
-		}
-
-		for (PettyCash res : _resList) {
-			for (OrgMonthSaleRamt orgSaleRamt : orgSaleRamtList) {
-				if (orgSaleRamt.orgId.equals(res.getOrgId())) {
-					// 机构销售合计
-					res.setTotalSaleRamt(res.getTotalSaleRamt().add(orgSaleRamt.saleRamt));
-				}
-			}
-
-			if (null != res.getTotalSaleRamt() && res.getTotalSaleRamt().compareTo(BigDecimal.ZERO) != 0) {
+			if (null != _saleRamt && _saleRamt.compareTo(BigDecimal.ZERO) != 0) {
+				// 当月机构销售合计
+				pettyCash.setTotalSaleRamt(_saleRamt);
 				// 机构-支出占销售合计百分比
-				res.setRate(res.getOptAmtShow().divide(res.getTotalSaleRamt(), 2, BigDecimal.ROUND_UP)
+				pettyCash.setRate(pettyCash.getOptAmtShow().divide(pettyCash.getTotalSaleRamt(), 2, BigDecimal.ROUND_UP)
 						.multiply(new BigDecimal(100)).toString());
 			} else {
-				res.setRate("0");
+				// 当月机构销售合计
+				pettyCash.setTotalSaleRamt(new BigDecimal(0));
+				// 机构-支出占销售合计百分比
+				pettyCash.setRate("0");
 			}
 		}
-		return _resList;
-	}
 
-	/**
-	 * 取得门店/月份合计销售信息列表
-	 * 
-	 * @param pettyCashList
-	 * @return
-	 */
-	private List<OrgMonthSaleRamt> getOrgSaleRamt(List<PettyCash> pettyCashList) {
-		List<OrgMonthSaleRamt> _orgSaleRamtList = new ArrayList<OrgMonthSaleRamt>();
-		for (PettyCash pettyCash : pettyCashList) {
-			// 取得指定门店/月份合计销售信息
-			BigDecimal _saleRamt = getSalesTotalByOrgAndYearMonth(pettyCash.getOrgId(), pettyCash.getOptDate());
-			if (null != _saleRamt && _saleRamt.compareTo(BigDecimal.ZERO) != 0) {
-				_orgSaleRamtList.add(new OrgMonthSaleRamt(_saleRamt, pettyCash.getOrgId(), pettyCash.getOptDate()));
-			}
-		}
-		return _orgSaleRamtList;
+		return _pettyCashList;
+
 	}
 
 	/**
@@ -667,17 +748,13 @@ public class PettyCashController extends BaseController {
 	 * @param pettyCashList 门店备用金使用信息
 	 * @param orgSaleRamt 门店销售信息-按月此
 	 */
-	private void calTotalPettyCash(Model model, List<PettyCash> pettyCashList, List<OrgMonthSaleRamt> orgSaleRamtList) {
+	private void calTotalPettyCash(Model model, List<PettyCash> pettyCashList) {
 		PettyCash _totalPettyCash = new PettyCash();
 
 		for (PettyCash pettyCash : pettyCashList) {
 			// 计算合计
 			_totalPettyCash.setOptAmtShow(_totalPettyCash.getOptAmtShow().add(pettyCash.getOptAmtShow()));
-		}
-
-		for (OrgMonthSaleRamt _orgMonthSaleRamt : orgSaleRamtList) {
-			// 计算合计
-			_totalPettyCash.setTotalSaleRamt(_totalPettyCash.getTotalSaleRamt().add(_orgMonthSaleRamt.saleRamt));
+			_totalPettyCash.setTotalSaleRamt(_totalPettyCash.getTotalSaleRamt().add(pettyCash.getTotalSaleRamt()));
 		}
 
 		// 计算合计百分比
@@ -711,27 +788,25 @@ public class PettyCashController extends BaseController {
 		return null;
 	}
 
-	class OrgMonthSaleRamt {
-		// 月份合计销售额
-		BigDecimal saleRamt = new BigDecimal(0);
-		// 机构
-		String orgId;
-		// 年月信息
-		String optDateYM;
+	/**
+	 * 取得指定门店/月份区间合计销售信息
+	 * 
+	 * @param orgId
+	 * @param optDateYMStart
+	 * @param optDateYMEnd
+	 * @return
+	 */
+	private BigDecimal getSalesTotalByOrgAndYearMonthInterval(String orgId, String optDateYMStart, String optDateYMEnd) {
+		SalesMonthTotalItem param = new SalesMonthTotalItem();
+		param.setOptDateStart(optDateYMStart);
+		param.setOptDateEnd(optDateYMEnd);
+		param.setOrgId(orgId);
 
-		OrgMonthSaleRamt(BigDecimal saleRamt, String orgId, String optDateYM) {
-			this.saleRamt = saleRamt;
-			this.orgId = orgId;
-			this.optDateYM = optDateYM;
+		// 取得指定门店/月份合计销售信息
+		SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
+		if (null != _salesTotal) {
+			return _salesTotal.getSaleRamt();
 		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (!(obj instanceof PettyCash))
-				return false;
-
-			PettyCash _pc = (PettyCash) obj;
-			return this.orgId.equals(_pc.getOrgId()) && this.optDateYM.equals(_pc.getOptDate());
-		}
+		return null;
 	}
 }
