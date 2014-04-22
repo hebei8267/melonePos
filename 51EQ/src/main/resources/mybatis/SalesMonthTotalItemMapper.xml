@@ -87,7 +87,7 @@
 		    t_sales_month_total_item
 		WHERE
 		    opt_date_y_m >= #{optDateStart}
-		AND opt_date_y_m >= #{optDateEnd}
+		AND opt_date_y_m <= #{optDateEnd}
 		AND org_id = #{orgId}
 	]]>
 	</select>

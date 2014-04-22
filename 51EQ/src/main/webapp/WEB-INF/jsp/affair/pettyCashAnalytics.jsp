@@ -58,8 +58,6 @@
 			
 			function detail_month(orgId, optDate) {
 				$("#optDate_detail_hidden").val(optDate);
-				alert(optDate)
-				alert($("#optDate_detail_hidden").val())
 				detail(orgId);
 			}
 			function detail(orgId) {

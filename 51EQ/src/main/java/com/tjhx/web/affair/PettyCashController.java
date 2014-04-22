@@ -803,7 +803,7 @@ public class PettyCashController extends BaseController {
 		param.setOrgId(orgId);
 
 		// 取得指定门店/月份合计销售信息
-		SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
+		SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonthInterval(param);
 		if (null != _salesTotal) {
 			return _salesTotal.getSaleRamt();
 		}

@@ -38,7 +38,7 @@ public interface SalesMonthTotalItemMyBatisDao {
 	public SalesMonthTotalItem getSalesTotal_ByOrgAndYearMonth(SalesMonthTotalItem param);
 
 	/**
-	 * 取得指定门店/月份区间合计销售信息
+	 * 取得指定门店/月份合计销售信息(区间)
 	 * 
 	 * @param param
 	 * @return
