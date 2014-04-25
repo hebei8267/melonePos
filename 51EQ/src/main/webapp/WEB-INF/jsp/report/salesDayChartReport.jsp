@@ -33,7 +33,7 @@
 	            		</ul>
 						<div id="myTabContent" class="tab-content">
 							<div class="tab-pane fade" id="_tab1">
-								<iframe src="${sc_ctx}/salesDayChartReport/init_tab1" frameborder="0" width="100%" height="700"></iframe>
+								<iframe src="${sc_ctx}/salesDayChartReport/init_tab1" frameborder="0" width="100%" height="750"></iframe>
 			              	</div>
 							<div class="tab-pane fade" id="_tab2">
 								<iframe src="${sc_ctx}/salesDayChartReport/init_tab2" frameborder="0" width="100%" height="1300"></iframe>
