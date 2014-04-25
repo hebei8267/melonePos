@@ -2,6 +2,8 @@ package com.tjhx.web.member;
 
 import java.util.List;
 
+import javacryption.aes.AesCtr;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,8 +53,13 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "login")
 	public String userLogin_Action(HttpServletRequest request, Model model, HttpSession session)
 			throws ServletRequestBindingException {
-		String loginName = ServletRequestUtils.getStringParameter(request, "loginName");
-		String passWord = ServletRequestUtils.getStringParameter(request, "passWord");
+		String loginName = ServletRequestUtils.getStringParameter(request, "_loginName");
+		String passWord = ServletRequestUtils.getStringParameter(request, "_passWord");
+
+		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
+
+		loginName = AesCtr.decrypt(loginName, key, 256);
+		passWord = AesCtr.decrypt(passWord, key, 256);
 
 		User user = userManager.findByLoginName(loginName);
 
@@ -81,8 +88,13 @@ public class MemberController extends BaseController {
 	public String modPwd_Action(HttpServletRequest request, Model model, HttpSession session)
 			throws ServletRequestBindingException {
 		Integer userUuid = ServletRequestUtils.getIntParameter(request, "uuid");
-		String oldPassWord = ServletRequestUtils.getStringParameter(request, "oldPassWord");
-		String newPassWord = ServletRequestUtils.getStringParameter(request, "newPassWord");
+		String oldPassWord = ServletRequestUtils.getStringParameter(request, "_oldPassWord");
+		String newPassWord = ServletRequestUtils.getStringParameter(request, "_newPassWord");
+
+		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
+		oldPassWord = AesCtr.decrypt(oldPassWord, key, 256);
+		newPassWord = AesCtr.decrypt(newPassWord, key, 256);
+
 		try {
 			User user = userManager.modUserPwd(userUuid, oldPassWord, newPassWord);
 
@@ -102,7 +114,11 @@ public class MemberController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "initModPwd")
-	public String initModPwd_Action() {
+	public String initModPwd_Action(Model model, HttpSession session) {
+		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
+
+		model.addAttribute("_encrypt_key", key);
+
 		return "member/modPwd";
 	}
 

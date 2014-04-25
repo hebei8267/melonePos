@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<script src="${ctx}/static/js/jquery.jcryption-1.2.js"></script>
         <style type="text/css">
             body {
                 padding-top: 40px;
@@ -36,6 +37,22 @@
                 display: block;
             }
         </style>
+        <script>
+	        var _hashObj = new jsSHA(generateUUID(), "ASCII");
+	        var _key = _hashObj.getHash("SHA-512", "HEX");
+
+	        $(function() {
+		        $.jCryption.authenticate(_key, "${sc_ctx}/encrypt?generateKeyPair=true", "${sc_ctx}/encrypt?handshake=true",
+					function(AESKey) {
+						// Authentication ok
+					},
+					function() {
+						// Authentication failed
+						alert("无法取得通讯密码！请联系系统管理员。");
+					}
+				);
+        });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -43,9 +60,9 @@
                 <h2>用户登录</h2>
                 <input type="text" class="input-block-level" name="loginName" id="loginName" placeholder="User ID" value="">
                 <input type="password" class="input-block-level" name="passWord" id="passWord" placeholder="Password" value="">
+                <input type="hidden" name="_loginName" id="_loginName" >
+                <input type="hidden" name="_passWord" id="_passWord" >
                 <input type="submit" value="登录" id="loginBtn" class="btn btn-large btn-primary"/>
-                
-                
             </form>
             <center>
             <a href="${ctx}/map.jsp" target="_blank" title="各门店详细地址信息">
@@ -64,10 +81,6 @@
                         }
                     }
                 });
-                $("#loginBtn").click(function() {
-                    $("#inputForm").attr("action", "${sc_ctx}/member/login");
-                    $("#inputForm").submit();
-                });
 
                 $('#loginName').focus();
 
@@ -76,11 +89,32 @@
                         $('#passWord').focus();
                     }
                 });
+
                 $('#passWord').keydown(function(event) {
                     if (event.keyCode == 13) {
                         $("#loginBtn").click();
                     }
                 });
+                
+                $("#loginBtn").click(function() {
+		        	var _res = $("#inputForm").valid();
+		        	if(!_res){
+		        		return;
+		        	}
+		        	
+		        	var enLoginName = $.jCryption.encrypt($("#loginName").val(), _key);
+		        	var enPassWord = $.jCryption.encrypt($("#passWord").val(), _key);
+					
+					$("#loginName").val("????????");
+					$("#passWord").val("????????");
+					
+					$("#_loginName").val(enLoginName);
+					$("#_passWord").val(enPassWord);
+					
+					$("#inputForm").attr("action", "${sc_ctx}/member/login");
+	          		$("#inputForm").submit();
+
+	       		});
             });
         </script>
     </body>

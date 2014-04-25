@@ -38,7 +38,8 @@ public class SecurityFilter implements Filter {
 		logger.debug(url);
 
 		if (url.endsWith("index.html") || url.endsWith(Constants.PAGE_REQUEST_PREFIX + "/index")
-				|| url.endsWith(Constants.PAGE_REQUEST_PREFIX + "/member/login")) {// 对URL地址为此结尾的文件不过滤
+				|| url.endsWith(Constants.PAGE_REQUEST_PREFIX + "/member/login")
+				|| url.endsWith(Constants.PAGE_REQUEST_PREFIX + "/encrypt")) {// 对URL地址为此结尾的文件不过滤
 			chain.doFilter(request, _response);
 		} else {
 			User user = (User) request.getSession().getAttribute(Constants.SESSION_USER_INFO);
