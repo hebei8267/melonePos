@@ -84,38 +84,41 @@
 
                 $('#loginName').focus();
 
-                $('#loginName').keydown(function(event) {
+                $('#loginName').keyup(function(event) {
                     if (event.keyCode == 13) {
                         $('#passWord').focus();
                     }
                 });
 
-                $('#passWord').keydown(function(event) {
+                $('#passWord').keyup(function(event) {
                     if (event.keyCode == 13) {
-                        $("#loginBtn").click();
+                        _userLoginFun();
                     }
                 });
                 
                 $("#loginBtn").click(function() {
-		        	var _res = $("#inputForm").valid();
-		        	if(!_res){
-		        		return;
-		        	}
-		        	
-		        	var enLoginName = $.jCryption.encrypt($("#loginName").val(), _key);
-		        	var enPassWord = $.jCryption.encrypt($("#passWord").val(), _key);
-					
-					$("#loginName").val("????????");
-					$("#passWord").val("????????");
-					
-					$("#_loginName").val(enLoginName);
-					$("#_passWord").val(enPassWord);
-					
-					$("#inputForm").attr("action", "${sc_ctx}/member/login");
-	          		$("#inputForm").submit();
-
+		        	_userLoginFun();
 	       		});
             });
+            
+            function _userLoginFun() {
+            	var _res = $("#inputForm").valid();
+		        if(!_res){
+		        	return;
+		        }
+		        	
+		        var enLoginName = $.jCryption.encrypt($("#loginName").val(), _key);
+		        var enPassWord = $.jCryption.encrypt($("#passWord").val(), _key);
+					
+				$("#loginName").val("????????");
+				$("#passWord").val("????????");
+					
+				$("#_loginName").val(enLoginName);
+				$("#_passWord").val(enPassWord);
+					
+				$("#inputForm").attr("action", "${sc_ctx}/member/login");
+	          	$("#inputForm").submit();
+            }
         </script>
     </body>
 </html>
