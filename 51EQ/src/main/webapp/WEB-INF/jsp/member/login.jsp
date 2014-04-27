@@ -62,7 +62,7 @@
                 <input type="password" class="input-block-level" name="passWord" id="passWord" placeholder="Password" value="">
                 <input type="hidden" name="_loginName" id="_loginName" >
                 <input type="hidden" name="_passWord" id="_passWord" >
-                <input type="submit" value="登录" id="loginBtn" class="btn btn-large btn-primary"/>
+                <input type="button" value="登录" id="loginBtn" class="btn btn-large btn-primary"/>
             </form>
             <center>
             <a href="${ctx}/map.jsp" target="_blank" title="各门店详细地址信息">
@@ -84,20 +84,23 @@
 
                 $('#loginName').focus();
 
-                $('#loginName').keyup(function(event) {
+                $('#loginName').keydown(function(event) {
                     if (event.keyCode == 13) {
                         $('#passWord').focus();
+                        return false;                        
                     }
                 });
 
-                $('#passWord').keyup(function(event) {
+                $('#passWord').keydown(function(event) {
                     if (event.keyCode == 13) {
                         _userLoginFun();
+                        return false;
                     }
                 });
                 
                 $("#loginBtn").click(function() {
 		        	_userLoginFun();
+		        	return false;
 	       		});
             });
             
