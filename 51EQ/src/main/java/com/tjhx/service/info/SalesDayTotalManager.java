@@ -131,7 +131,7 @@ public class SalesDayTotalManager {
 	}
 
 	/**
-	 * 重计算每日各店销售汇总信息的排名（根据销售增长率）
+	 * 重计算每日各店销售汇总信息的排名（根据销售金额）
 	 * 
 	 * @param optDateList
 	 */
@@ -141,10 +141,12 @@ public class SalesDayTotalManager {
 
 			int rank = 1;
 			for (SalesDayTotal _s : _sList) {
-				/*
-				 * // 门店-13D不参加排名 if (Constants.ORG_ID_13.equals(_s.getOrgId()))
-				 * { continue; }
-				 */
+
+				// 门店-13D不参加排名
+				if (Constants.ORG_ID_13.equals(_s.getOrgId())) {
+					continue;
+				}
+
 				// 排名
 				_s.setRanking(rank);
 				rank++;
@@ -238,7 +240,7 @@ public class SalesDayTotalManager {
 			}
 		} else {
 			if (Constants.ORG_ID_02.equals(orgId)) {
-				_res = _res.multiply(new BigDecimal(2));
+				_res = _res.multiply(new BigDecimal(1.6));
 			}
 		}
 		return _res;

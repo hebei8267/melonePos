@@ -93,13 +93,11 @@ public class SalesDayChartReportController extends BaseController {
 	private List<SalesDayTotal> initOrgRankingList(int orgRanking, Map<Integer, SalesDayTotal> rankingKeyMap) {
 		if (-1 == orgRanking) {
 			return null;
-		}
-		// 20140408 重计算每日各店销售汇总信息的排名（根据 截止金额->销售增长率）
-		/* else if (0 == orgRanking) {
+		} else if (0 == orgRanking) {
 			List<SalesDayTotal> _res = new ArrayList<SalesDayTotal>();
 			_res.add(rankingKeyMap.get(orgRanking));
 			return _res;
-		}*/ else if (1 == orgRanking) {
+		} else if (1 == orgRanking) {
 			List<SalesDayTotal> _res = new ArrayList<SalesDayTotal>();
 
 			_res.add(rankingKeyMap.get(orgRanking));

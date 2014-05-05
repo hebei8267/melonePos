@@ -16,7 +16,7 @@ public interface SalesDayTotalJpaDao extends CrudRepository<SalesDayTotal, Integ
 	public Iterable<SalesDayTotal> findOneByOrgIdAndOptDateYM(@Param("orgId") String orgId,
 			@Param("optDateY") String optDateY, @Param("optDateM") String optDateM);
 
-	@Query("select s from SalesDayTotal s where s.optDate = :optDate order by posAmtRate desc")
+	@Query("select s from SalesDayTotal s where s.optDate = :optDate order by posAmtByNow desc")
 	public Iterable<SalesDayTotal> findByOptDateOrderBy_Ranking(@Param("optDate") String optDate);
 
 	@Query("select s from SalesDayTotal s where s.optDate = :optDate order by orgId ")
