@@ -1,5 +1,6 @@
 package com.tjhx.web.report;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class CashChartReportController extends BaseController {
 	}
 
 	@RequestMapping(value = "search")
-	public String cashChartReportSearch_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException, ParseException {
+	public String cashChartReportSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			ParseException {
 		CashDaily _cashDaily = new CashDaily();
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
@@ -67,6 +68,8 @@ public class CashChartReportController extends BaseController {
 			model.addAttribute("data_set", mapper.toJson(_cashDailyList));
 
 			model.addAttribute("orgName", orgId.substring(3));
+
+			model.addAttribute("total", calTotal(_cashDailyList));
 		} else {// 所有机构
 			List<CashDaily> _cashDailyList = cashDailyManager.searchChartReportList(_cashDaily);
 			formatData(_cashDailyList);
@@ -75,6 +78,8 @@ public class CashChartReportController extends BaseController {
 
 			model.addAttribute("orgName", "合计");
 
+			model.addAttribute("total", calTotal(_cashDailyList));
+
 			// 取得所有子机构销售信息Json列表
 			getAllSubOrgCashDailyList(model, optDateShow);
 		}
@@ -82,6 +87,21 @@ public class CashChartReportController extends BaseController {
 		model.addAttribute("showFlg", true);
 
 		return "report/cashChartReport";
+	}
+
+	/**
+	 * 销售额合计计算
+	 * 
+	 * @param _cashDailyList
+	 * @return
+	 */
+	private BigDecimal calTotal(List<CashDaily> _cashDailyList) {
+		BigDecimal _res = new BigDecimal(0);
+		for (CashDaily cashDaily : _cashDailyList) {
+			_res = _res.add(cashDaily.getSaleAmt());
+		}
+
+		return _res;
 	}
 
 	/**
@@ -97,6 +117,7 @@ public class CashChartReportController extends BaseController {
 
 		List<String> _allSubOrgCashDailyList = new ArrayList<String>();
 		List<String> _orgNameList = new ArrayList<String>();
+		List<BigDecimal> _totalList = new ArrayList<BigDecimal>();
 		for (Organization org : _orgList) {
 			CashDaily _cashDaily = new CashDaily();
 			_cashDaily.setOrgId(org.getId());
@@ -110,9 +131,12 @@ public class CashChartReportController extends BaseController {
 			JsonMapper mapper = new JsonMapper();
 			_allSubOrgCashDailyList.add(mapper.toJson(_cashDailyList));
 			_orgNameList.add(org.getName());
+
+			_totalList.add(calTotal(_cashDailyList));
 		}
 		model.addAttribute("allSubOrgCashDailyList", _allSubOrgCashDailyList);
 		model.addAttribute("orgNameList", _orgNameList);
+		model.addAttribute("totalList", _totalList);
 		model.addAttribute("subOrgShowFlg", true);
 	}
 

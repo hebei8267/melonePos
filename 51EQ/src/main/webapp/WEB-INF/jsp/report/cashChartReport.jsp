@@ -80,7 +80,7 @@
                     </div>
                     
                     <c:if test="${showFlg == true}">
-                    <div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额</h4></div>
+                    <div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额  (合计: ${total} 元)</h4></div>
                     <div class="span12">
                         <div id="chart1" style="width:1050px;height:400px;border:1px solid #A4BED4;"></div>
                     </div>
@@ -88,7 +88,7 @@
                     </c:if>
                     
                     <c:forEach items="${orgNameList}" var="orgName" varStatus="status1">
-                    	<div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额</h4></div>
+                    	<div class="span12" style="margin-top: 20px;"><h4>${orgName} - 销售金额  (合计: ${totalList[status1.index]} 元)</h4></div>
                         <div class="span12">
                             <div id="chart2${status1.index + 1}" style="width:1050px;height:400px;border:1px solid #A4BED4;"></div>
                         </div>
