@@ -32,10 +32,10 @@
 			              	<li><a href="#_tab2" data-toggle="tab">增长率折线图</a></li>
 	            		</ul>
 						<div id="myTabContent" class="tab-content">
-							<div class="tab-pane fade" id="_tab1">
+							<div class="tab-pane fade" id="_tab1" style="overflow: auto;-webkit-overflow-scrolling: touch;">
 								<iframe src="${sc_ctx}/salesDayChartReport/init_tab1" frameborder="0" width="100%" height="750"></iframe>
 			              	</div>
-							<div class="tab-pane fade" id="_tab2">
+							<div class="tab-pane fade" id="_tab2" style="overflow: auto;-webkit-overflow-scrolling: touch;">
 								<iframe src="${sc_ctx}/salesDayChartReport/init_tab2" frameborder="0" width="100%" height="1300"></iframe>
 	                		</div>
 	            		</div>

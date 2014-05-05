@@ -37,7 +37,7 @@
     	});
     	</script>
     </head>
-    <body>
+    <body style="overflow: auto;-webkit-overflow-scrolling: touch;">
     	<form method="post"	class="form-inline" id="listForm">
     		<fmt:parseDate value="${optDate}" var="_optDate" pattern="yyyyMMdd" />
     		<label class="control-label">销售日期 :</label>

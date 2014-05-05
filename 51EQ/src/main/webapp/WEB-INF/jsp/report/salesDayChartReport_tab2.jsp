@@ -13,7 +13,7 @@
 <html>
     <head>
     </head>
-    <body>
+    <body style="overflow: auto;-webkit-overflow-scrolling: touch;">
     	<fmt:parseDate value="${optDate}" var="_optDate" pattern="yyyyMMdd" />
     	<h4>统计日期 : <fmt:formatDate pattern="yyyy/MM/dd" value="${_optDate}" /></h4>
 		<table class="table	table-striped table-bordered table-condensed mytable">
