@@ -1,11 +1,20 @@
 package com.tjhx.web.report;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jxls.exception.ParsePropertyException;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +22,12 @@ import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
-import com.tjhx.dao.info.SalesMonthTotalItemMyBatisDao;
 import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.entity.info.SalesMonthTotal_Show;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.info.SalesMonthTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 
@@ -28,23 +37,23 @@ public class SalesMonthItemChartReportController extends BaseController {
 	@Resource
 	private OrganizationManager orgManager;
 	@Resource
-	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
+	private SalesMonthTotalItemManager salesMonthTotalItemManager;
 
 	/**
-	 * 全部门店近三年销售数据
+	 * 全部门店近4年销售数据
 	 * 
 	 * @param optDateYList
 	 * @param _orgSumSalesJsonList
 	 */
 	private void getSalesTotalList_ByYear(List<String> optDateYList, List<String> _orgSumSalesJsonList) {
 		JsonMapper mapper = new JsonMapper();
-		// 全部门店近三年销售数据
+		// 全部门店近4年销售数据
 		List<SalesMonthTotal_Show> _salesTotalShowList = new ArrayList<SalesMonthTotal_Show>();
 		initSalesTotalShowList(Constants.ROOT_ORG_ID, _salesTotalShowList, optDateYList);
 		for (String optDateY : optDateYList) {
 			SalesMonthTotalItem _param = new SalesMonthTotalItem();
 			_param.setOptDateY(optDateY);
-			List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemMyBatisDao.getSalesTotalList_ByYear(_param);
+			List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByYear(_param);
 
 			copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
 		}
@@ -52,7 +61,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 	}
 
 	/**
-	 * 各店近三年销售数据
+	 * 各店近4年销售数据
 	 * 
 	 * @param _orgList
 	 * @param optDateYList
@@ -62,7 +71,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 	private void getSalesTotalList_ByOrgAndYear(List<Organization> _orgList, List<String> optDateYList,
 			List<String> _orgSumSalesJsonList, List<String> _orgNameList) {
 		JsonMapper mapper = new JsonMapper();
-		// 各店近三年销售数据
+		// 各店近4年销售数据
 		for (Organization org : _orgList) {
 			List<SalesMonthTotal_Show> _salesTotalShowList = new ArrayList<SalesMonthTotal_Show>();
 			initSalesTotalShowList(org.getId(), _salesTotalShowList, optDateYList);
@@ -71,8 +80,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 				SalesMonthTotalItem _param = new SalesMonthTotalItem();
 				_param.setOptDateY(optDateY);
 				_param.setOrgId(org.getId());
-				List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemMyBatisDao
-						.getSalesTotalList_ByOrgAndYear(_param);
+				List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByOrgAndYear(_param);
 
 				copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
 			}
@@ -125,8 +133,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 		}
 	}
 
-	private void initSalesTotalShowList(String orgId, List<SalesMonthTotal_Show> _salesTotalShowList,
-			List<String> optDateYList) {
+	private void initSalesTotalShowList(String orgId, List<SalesMonthTotal_Show> _salesTotalShowList, List<String> optDateYList) {
 
 		for (int i = 1; i <= 12; i++) {
 			SalesMonthTotal_Show _salesTotalShow = new SalesMonthTotal_Show();
@@ -164,6 +171,52 @@ public class SalesMonthItemChartReportController extends BaseController {
 		}
 
 		return _optDateYList;
+	}
+
+	// ==============================================================================
+	// 数据导出
+	// ==============================================================================
+	@RequestMapping(value = "export")
+	public void export_Action(HttpServletResponse response) throws ParseException, ParsePropertyException,
+			InvalidFormatException, IOException {
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+		int _yearNum = sysConfig.getSalesMonthTotalShowYearNum();
+
+		List<Organization> _orgList = orgManager.getSubOrganization();
+		List<String> optDateYList = calOptDateY(_yearNum);
+
+		String downLoadFileName = salesMonthTotalItemManager.createReportFile(optDateYList, _orgList);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
 	}
 
 }

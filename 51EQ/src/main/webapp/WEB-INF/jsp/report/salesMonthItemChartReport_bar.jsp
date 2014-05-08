@@ -19,6 +19,18 @@
     	</style>
     	<link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
     	<script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
+    	<script>
+            $(function() {             
+                $("#exportBtn").click(function() {
+                    $("input[type='text'],textarea").each(function(i) {
+                        this.value = $.trim(this.value);
+                    });
+
+                    $("#listForm").attr("action", "${sc_ctx}/salesMonthItemChartReport/export");
+                    $("#listForm").submit();
+                });
+            });
+        </script>
     </head>
     <body>
         <%// 系统菜单  %>
@@ -31,6 +43,10 @@
                         <legend>
                             <h3>月销售信息对比(图形)</h3>
                         </legend>
+                    </div>
+                    
+                    <div class="span12">
+                        <button	id="exportBtn" class="btn	btn-warning" type="button">数据导出</button>
                     </div>
                     
                     <c:forEach items="${orgSumSalesJsonList}" var="orgSumSalesJson" varStatus="status1">

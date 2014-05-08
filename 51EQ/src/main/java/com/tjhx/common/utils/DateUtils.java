@@ -43,6 +43,15 @@ public class DateUtils {
 	public static String getCurrentYear() {
 		return getCurFormatDate("yyyy");
 	}
+	
+	/**
+	 * 取得当前时间
+	 * 
+	 * @return 当前日期（int yyyy）
+	 */
+	public static int getCurrentYearNum() {
+		return new Integer(getCurFormatDate("yyyy"));
+	}
 
 	/**
 	 * 取得当前时间的特定表示格式的字符串
