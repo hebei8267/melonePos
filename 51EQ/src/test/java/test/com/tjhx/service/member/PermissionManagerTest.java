@@ -311,15 +311,24 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm45.setRole(role);
 //		perm45.setFunction(fun45);
 //		permissionJpaDao.save(perm45);
-
+//
+//		// ---------------------------------------------
+//		// 门店备用金分析(图形)
+//		// ---------------------------------------------
+//		Permission perm47 = new Permission();
+//		Function fun47 = functionJpaDao.findOne(47);
+//		perm47.setRole(role);
+//		perm47.setFunction(fun47);
+//		permissionJpaDao.save(perm47);
+		
 		// ---------------------------------------------
-		// 门店备用金分析(图形)
+		// 代金卷类别管理
 		// ---------------------------------------------
-		Permission perm47 = new Permission();
-		Function fun47 = functionJpaDao.findOne(47);
-		perm47.setRole(role);
-		perm47.setFunction(fun47);
-		permissionJpaDao.save(perm47);
+		Permission perm48 = new Permission();
+		Function fun48 = functionJpaDao.findOne(48);
+		perm48.setRole(role);
+		perm48.setFunction(fun48);
+		permissionJpaDao.save(perm48);
 	}
 
 //	// 总部人员-会计
@@ -695,12 +704,12 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //
 //	}
 
-	// Boss
-	@Test
-	@Rollback(false)
-	public void saveNewPerm5() {
-		Role role = roleJpaDao.findOne(5);
-
+//	// Boss
+//	@Test
+//	@Rollback(false)
+//	public void saveNewPerm5() {
+//		Role role = roleJpaDao.findOne(5);
+//
 //		// ---------------------------------------------
 //		// 报表-刷卡信息
 //		// ---------------------------------------------
@@ -922,16 +931,16 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm45.setRole(role);
 //		perm45.setFunction(fun45);
 //		permissionJpaDao.save(perm45);
-
-		// ---------------------------------------------
-		// 门店备用金分析(图形)
-		// ---------------------------------------------
-		Permission perm47 = new Permission();
-		Function fun47 = functionJpaDao.findOne(47);
-		perm47.setRole(role);
-		perm47.setFunction(fun47);
-		permissionJpaDao.save(perm47);
-	}
+//
+//		// ---------------------------------------------
+//		// 门店备用金分析(图形)
+//		// ---------------------------------------------
+//		Permission perm47 = new Permission();
+//		Function fun47 = functionJpaDao.findOne(47);
+//		perm47.setRole(role);
+//		perm47.setFunction(fun47);
+//		permissionJpaDao.save(perm47);
+//	}
 
 //	// 店长
 //	@Test

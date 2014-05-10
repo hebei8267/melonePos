@@ -74,6 +74,12 @@
                                         <a href="${sc_ctx}/itemType">商品类别管理</a>
                                     </li>
                                 </c:if>
+                                <c:if test="${_permIdList.contains('48')}">
+                                	<li class="divider"></li>
+                                    <li>
+                                        <a href="${sc_ctx}/coupon/list">代金卷管理</a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </li>
                     </c:if>
