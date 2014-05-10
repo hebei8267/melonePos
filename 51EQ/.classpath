@@ -73,9 +73,10 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-ooxml-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-digester-1.7.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-jexl-2.1.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-core-1.0.2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-reader-1.0.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/quartz-1.8.4.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javacryption-1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-core-1.0.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-reader-1.0.5.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
