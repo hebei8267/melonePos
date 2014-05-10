@@ -25,6 +25,11 @@
 				padding: 5px;
 				background-color: #FFCC33;
 			}
+			.left-control-label {
+				font-size: 16px;
+				color: #000;
+				font-weight: normal;
+			}
         </style>
         <script>
             $(function() {
@@ -139,16 +144,16 @@
                         <form:hidden path="uuid"/>
                         <div class="control-group">
                             <label class="control-label">编号 :</label>
+                            <c:if test="${empty	coupon.uuid}">
                             <div class="controls">
-                                
-                                <c:if test="${empty	coupon.uuid}">
 		                        <form:input	path="couponNo" />
-		                        </c:if>
-		                        <c:if test="${!empty coupon.uuid}">
-		                        <form:hidden path="couponNo" />
-		                        ${coupon.couponNo}
-		                        </c:if>
-                            </div>
+		                    </div>
+		                    </c:if>
+		                    
+		                  	<c:if test="${!empty coupon.uuid}">
+		                 	<form:hidden path="couponNo" />  
+		                   	<label class="left-control-label">${coupon.couponNo}</label>
+		                   	</c:if>
                         </div>
                         <div class="control-group">
                             <label class="control-label">名称 :</label>
@@ -200,23 +205,26 @@
                         </div>
                         <div class="control-group">
                             <label class="control-label">统计至日销售额 :</label>
-                            <div class="controls">
-                            	<c:if test="${empty	coupon.uuid}">
+                            
+                          	<c:if test="${empty	coupon.uuid}">
+                            	<div class="controls">
 	                            	<form:radiobutton path="subTotalFlg" value="true"/>
 	                                <span class='_warn1'>统计</span>
 	                                <form:radiobutton path="subTotalFlg" value="false"/>
 	                                <span class='_warn2'>不统计</span>
-		                        </c:if>
-		                        <c:if test="${!empty coupon.uuid}">
-		                        	<form:hidden path="subTotalFlg" />
-                            		<c:if test="${coupon.subTotalFlg == true}">
-                                   		<span class='_warn1'>统计</span>
-                                  	</c:if>
-                                 	<c:if test="${coupon.subTotalFlg != true}">
-                                     	<span class='_warn2'>不统计</span>
-                                  	</c:if>
-                        		</c:if>
-                            </div>
+	                            </div>
+		                  	</c:if>
+		                        
+		                    <c:if test="${!empty coupon.uuid}">
+		                      	<form:hidden path="subTotalFlg" />
+                            	<c:if test="${coupon.subTotalFlg == true}">
+                            	<label class="left-control-label"><span class='_warn1'>统计</span></label>
+                              	</c:if>
+                              	
+                              	<c:if test="${coupon.subTotalFlg != true}">
+                              	<label class="left-control-label"><span class='_warn2'>不统计</span></label>
+                              	</c:if>
+                        	</c:if>
                         </div>
                         <div class="control-group">
                             <label class="control-label">有效标记 :</label>

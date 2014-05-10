@@ -34,7 +34,21 @@ public class CouponManager {
 	private CouponMyBatisDao couponMyBatisDao;
 
 	/**
-	 * 删除代金卷
+	 * 删除指定代金卷信息
+	 * 
+	 * @param couponNo
+	 */
+	@Transactional(readOnly = false)
+	public void delCouponInfo(String couponNo) {
+		// 消除代金卷信息缓存
+		spyMemcachedClient.delete(MemcachedObjectType.COUPON_TYPE_LIST.getObjKey());
+
+		// 删除指定代金卷信息
+		couponMyBatisDao.delCouponInfo(couponNo);
+	}
+
+	/**
+	 * 删除指定代金卷信息
 	 * 
 	 * @param uuid 代金卷uuid
 	 */
@@ -161,8 +175,6 @@ public class CouponManager {
 	 */
 	@Transactional(readOnly = false)
 	public void updateCoupon(Coupon coupon) {
-		// 消除代金卷信息缓存
-		spyMemcachedClient.delete(MemcachedObjectType.COUPON_TYPE_LIST.getObjKey());
 
 		List<Coupon> _dbCouponList = findByCouponNo(coupon.getCouponNo());
 		// 该代金卷不存在!
@@ -196,14 +208,4 @@ public class CouponManager {
 		}
 	}
 
-	/**
-	 * 删除指定代金卷信息
-	 * 
-	 * @param couponNo
-	 */
-	@Transactional(readOnly = false)
-	public void delCouponInfo(String couponNo) {
-		// 删除指定代金卷信息
-		couponMyBatisDao.delCouponInfo(couponNo);
-	}
 }
