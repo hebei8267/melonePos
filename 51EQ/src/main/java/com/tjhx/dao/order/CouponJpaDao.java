@@ -21,5 +21,5 @@ public interface CouponJpaDao extends CrudRepository<Coupon, Integer> {
 	 * @param couponNo 代金卷编号
 	 * @return
 	 */
-	public List<Coupon> findByCouponNo(String couponNo, Sort sort);
+	public List<Coupon> findByCouponNo(String couponNo,Sort sort);
 }

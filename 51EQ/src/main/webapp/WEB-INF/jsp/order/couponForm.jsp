@@ -42,6 +42,9 @@
                             required : true,
                             rate : true
                         },
+                        appOrgIds : {
+                            required : true
+                        },
                         descTxt : {
                             maxlength : 255
                         }
@@ -137,7 +140,14 @@
                         <div class="control-group">
                             <label class="control-label">编号 :</label>
                             <div class="controls">
-                                <form:input	path="couponNo" />
+                                
+                                <c:if test="${empty	coupon.uuid}">
+		                        <form:input	path="couponNo" />
+		                        </c:if>
+		                        <c:if test="${!empty coupon.uuid}">
+		                        <form:hidden path="couponNo" />
+		                        ${coupon.couponNo}
+		                        </c:if>
                             </div>
                         </div>
                         <div class="control-group">

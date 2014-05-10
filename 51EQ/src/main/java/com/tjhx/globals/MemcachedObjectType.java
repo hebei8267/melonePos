@@ -22,8 +22,8 @@ public enum MemcachedObjectType {
 	USER_LIST("User_List", 60 * 60 * 24), // 24小时
 	/** 商品种类列表 */
 	ITEM_TYPE_LIST("Item_Type_List", 60 * 60 * 24), // 24小时
-	/** 代金卷类别列表 */
-	COUPON_TYPE_LIST("Coupon_Type_List", 60 * 60 * 24) // 24小时
+	/** 代金卷种类列表 */
+	COUPON_TYPE_LIST("coupon_Type_List", 60 * 60 * 24)// 24小时
 	;
 
 	/** Memcached对象Key */

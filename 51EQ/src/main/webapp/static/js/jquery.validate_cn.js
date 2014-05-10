@@ -76,7 +76,7 @@ jQuery.validator.addMethod("negativeMoney", function(value, element) {
 //汇率验证
 jQuery.validator.addMethod("rate", function(value, element) {
 	return this.optional(element) || /^[0-9]+.?[0-9]*$/.test(value);
-}, "请输入正确的汇率");
+}, "请输入正确的金额");
 
 //大于零的整数验证
 jQuery.validator.addMethod("digits1", function(value, element) {

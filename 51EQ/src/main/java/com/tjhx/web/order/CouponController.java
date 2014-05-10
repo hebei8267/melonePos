@@ -101,23 +101,44 @@ public class CouponController extends BaseController {
 		} else {
 			model.addAttribute("coupon", _cList.get(0));
 
-			// 初始化备选/已选机构列表
-			init_allOrgList_appOrgList(_cList, model);
+			// 初始化备选/已选机构列表-----编辑代金卷操作时
+			init_allOrgList_appOrgList_edit(_cList, model);
 
 			return "order/couponForm";
 		}
 	}
 
 	/**
-	 * 初始化备选/已选机构列表
+	 * 初始化备选/已选机构列表-----编辑代金卷操作时
 	 * 
 	 * @param _cList
 	 * @param model
 	 */
-	private void init_allOrgList_appOrgList(List<Coupon> couponList, Model model) {
+	private void init_allOrgList_appOrgList_edit(List<Coupon> couponList, Model model) {
 		List<Organization> _appOrgList = new ArrayList<Organization>();
 		for (Coupon coupon : couponList) {
 			Organization _org = orgnManager.getOrganizationByOrgIdInCache(coupon.getOrgId());
+			if (null != _org) {
+				_appOrgList.add(_org);
+			}
+		}
+		model.addAttribute("appOrgList", _appOrgList);
+
+		List<Organization> _orgList = orgnManager.getSubOrganization();
+		_orgList.removeAll(_appOrgList);
+		model.addAttribute("allOrgList", _orgList);
+	}
+
+	/**
+	 * 初始化备选/已选机构列表-----新增代金卷操作时
+	 * 
+	 * @param appOrgIds
+	 * @param model
+	 */
+	private void init_allOrgList_appOrgList_add(String[] appOrgIds, Model model) {
+		List<Organization> _appOrgList = new ArrayList<Organization>();
+		for (String orgId : appOrgIds) {
+			Organization _org = orgnManager.getOrganizationByOrgIdInCache(orgId);
 			if (null != _org) {
 				_appOrgList.add(_org);
 			}
@@ -150,9 +171,8 @@ public class CouponController extends BaseController {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
-				List<Coupon> _cList = couponManager.findByCouponNo(coupon.getCouponNo());
 				// 初始化备选/已选机构列表
-				init_allOrgList_appOrgList(_cList, model);
+				init_allOrgList_appOrgList_add(coupon.getAppOrgIds(), model);
 
 				return "order/couponForm";
 			}
@@ -165,7 +185,7 @@ public class CouponController extends BaseController {
 
 				List<Coupon> _cList = couponManager.findByCouponNo(coupon.getCouponNo());
 				// 初始化备选/已选机构列表
-				init_allOrgList_appOrgList(_cList, model);
+				init_allOrgList_appOrgList_edit(_cList, model);
 
 				return "order/couponForm";
 			}
@@ -173,4 +193,5 @@ public class CouponController extends BaseController {
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/coupon/list";
 	}
+
 }

@@ -129,7 +129,7 @@
                                     <tr>
                                         <td	class="center">
                                           	<input type="checkbox" name="uuid" value="${coupon.uuid}">
-                                           	</input>
+                                                </input>
                                         </td>
                                         <td>
                                         	${coupon.couponNo}
