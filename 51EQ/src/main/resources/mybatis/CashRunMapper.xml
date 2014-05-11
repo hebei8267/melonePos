@@ -18,6 +18,8 @@
         <result column="card_num" property="cardNum" jdbcType="INTEGER"/>
         <result column="carrying_cash_amt" property="carryingCashAmt" jdbcType="DECIMAL"/>
         <result column="cash_amt" property="cashAmt" jdbcType="DECIMAL"/>
+        <result column="coupon_no" property="couponNo" jdbcType="VARCHAR"/>
+        <result column="coupon_value" property="couponValue" jdbcType="DECIMAL"/>
         <result column="daily_flg" property="dailyFlg" jdbcType="BIT"/>
         <result column="deposit_amt" property="depositAmt" jdbcType="DECIMAL"/>
         <result column="depositor" property="depositor" jdbcType="VARCHAR"/>
@@ -59,6 +61,8 @@
     	cash.card_num ,
     	cash.carrying_cash_amt ,
     	cash.cash_amt ,
+    	cash.coupon_no ,
+    	cash.coupon_value ,
     	cash.daily_flg ,
     	cash.deposit_amt ,
     	cash.depositor ,

@@ -46,7 +46,7 @@ public class CouponController extends BaseController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	public String couponList_Action(Model model, HttpSession session) throws ParseException {
-		List<Coupon> _list = couponManager.getAllCouponList();
+		List<Coupon> _list = couponManager.getAllCouponShowList();
 		model.addAttribute("couponList", _list);
 		return "order/couponList";
 	}

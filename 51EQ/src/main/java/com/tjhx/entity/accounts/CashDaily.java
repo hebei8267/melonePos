@@ -55,6 +55,8 @@ public class CashDaily extends IdEntity {
 	private String orgBranchNo;
 	/** 汇报金额 */
 	private BigDecimal reportAmt = new BigDecimal("0");
+	/** 代金卷面值 */
+	private BigDecimal couponValue = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -306,6 +308,24 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setReportAmt(BigDecimal reportAmt) {
 		this.reportAmt = reportAmt;
+	}
+
+	/**
+	 * 获取代金卷面值
+	 * 
+	 * @return couponValue 代金卷面值
+	 */
+	public BigDecimal getCouponValue() {
+		return couponValue;
+	}
+
+	/**
+	 * 设置代金卷面值
+	 * 
+	 * @param couponValue 代金卷面值
+	 */
+	public void setCouponValue(BigDecimal couponValue) {
+		this.couponValue = couponValue;
 	}
 
 	/**

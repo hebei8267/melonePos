@@ -91,9 +91,8 @@ public class CashRunManager {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<CashRun> getAllCashRunByOrgId(String orgId, String optDateY, String optDateM) throws ParseException {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao
-				.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(new Sort.Order(Sort.Direction.DESC,
-						"optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(
+				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
 
 		return _list;
 	}
@@ -184,8 +183,8 @@ public class CashRunManager {
 	@SuppressWarnings("unchecked")
 	public BigDecimal getInitAmt(String orgId, String optDate) throws ParseException {
 		// 取本日前班次余额（销售）信息
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(
-				new Sort.Order(Sort.Direction.DESC, "optDate")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
+				Sort.Direction.DESC, "optDate")));
 
 		if (null != _list && _list.size() > 0) {// 返回本日前班次余额（销售）信息
 			return ((CashRun) _list.get(0)).getRetainedAmt();
@@ -283,6 +282,12 @@ public class CashRunManager {
 			// _cashRun.setCardAmtBw(_cashRun.getCardAmtBw().add(cashRun.getCardAmtBw()));
 			// // 留存金额
 			// _cashRun.setRetainedAmt(_cashRun.getRetainedAmt().add(cashRun.getRetainedAmt()));
+
+			// 2014-5-11
+			// 代金卷面值
+			if (null != cashRun.getCouponValue()) {
+				_cashRun.setCouponValue(_cashRun.getCouponValue().add(cashRun.getCouponValue()));
+			}
 		}
 		return _cashRun;
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.accounts.CashDailyManager;
 import com.tjhx.service.info.BankManager;
+import com.tjhx.service.order.CouponManager;
 import com.tjhx.web.BaseController;
 
 @Controller
@@ -27,6 +29,8 @@ public class CashDailyController extends BaseController {
 	private CashDailyManager cashDailyManager;
 	@Resource
 	private BankManager bankManager;
+	@Resource
+	private CouponManager couponManager;
 
 	/**
 	 * 取得销售流水日结信息列表
@@ -37,12 +41,12 @@ public class CashDailyController extends BaseController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	public String cashDailyList_Action(Model model, HttpSession session) throws ParseException {
-		List<CashDaily> cashDailyList = cashDailyManager.getAllCashDailyByOrgId_1(getUserInfo(session)
-				.getOrganization().getId(), DateUtils.getCurrentDateShortStr());
+		List<CashDaily> cashDailyList = cashDailyManager.getAllCashDailyByOrgId_1(getUserInfo(session).getOrganization().getId(),
+				DateUtils.getCurrentDateShortStr());
 		model.addAttribute("cashDailyList", cashDailyList);
 
-		List<CashDaily> noCashDailyList = cashDailyManager.getAllNotCashDailyByOrgId(getUserInfo(session)
-				.getOrganization().getId());
+		List<CashDaily> noCashDailyList = cashDailyManager.getAllNotCashDailyByOrgId(getUserInfo(session).getOrganization()
+				.getId());
 		model.addAttribute("noCashDailyList", noCashDailyList);
 
 		return "accounts/cashDailyList";
@@ -58,12 +62,12 @@ public class CashDailyController extends BaseController {
 	@RequestMapping(value = "list/{date}")
 	public String cashDailyList_Date_Action(@PathVariable("date") String date, Model model, HttpSession session)
 			throws ParseException {
-		List<CashDaily> cashDailyList = cashDailyManager.getAllCashDailyByOrgId_2(getUserInfo(session)
-				.getOrganization().getId(), date);
+		List<CashDaily> cashDailyList = cashDailyManager.getAllCashDailyByOrgId_2(getUserInfo(session).getOrganization().getId(),
+				date);
 		model.addAttribute("cashDailyList", cashDailyList);
 
-		List<CashDaily> noCashDailyList = cashDailyManager.getAllNotCashDailyByOrgId(getUserInfo(session)
-				.getOrganization().getId());
+		List<CashDaily> noCashDailyList = cashDailyManager.getAllNotCashDailyByOrgId(getUserInfo(session).getOrganization()
+				.getId());
 		model.addAttribute("noCashDailyList", noCashDailyList);
 
 		return "accounts/cashDailyList";
@@ -92,14 +96,21 @@ public class CashDailyController extends BaseController {
 	 */
 	@RequestMapping(value = "detail/{date}")
 	public String cashDailyDetail_Action(@PathVariable("date") String optDate, Model model, HttpSession session) {
-		List<CashRun> _list = cashDailyManager.cashDailyDetail(optDate, getUserInfo(session).getOrganization().getId());
+		String orgId = getUserInfo(session).getOrganization().getId();
+		List<CashRun> _list = cashDailyManager.cashDailyDetail(optDate, orgId);
 
 		if (null != _list && _list.size() > 0) {
 			CashRun cashRun1 = _list.get(0);
+			if (StringUtils.isNotBlank(cashRun1.getCouponNo())) {
+				cashRun1.setCouponNo(couponManager.getCouponByNoInCache(cashRun1.getCouponNo(), orgId).getName());
+			}
 			model.addAttribute("cashRun1", cashRun1);
 		}
 		if (null != _list && _list.size() > 1) {
 			CashRun cashRun2 = _list.get(1);
+			if (StringUtils.isNotBlank(cashRun2.getCouponNo())) {
+				cashRun2.setCouponNo(couponManager.getCouponByNoInCache(cashRun2.getCouponNo(), orgId).getName());
+			}
 			model.addAttribute("cashRun2", cashRun2);
 		}
 		return "accounts/cashDailyForm";

@@ -48,32 +48,35 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="center">
                                         日期
                                     </th>
-                                    <th>
-                                        昨日余额
+                                    <th class="center">
+                                        昨日<br>余额
                                     </th>
-                                    <th>
-                                        现金盈亏
+                                    <th class="center">
+                                        现金<br>盈亏
                                     </th>
-                                    <th>
-                                        当日收现
+                                    <th class="center">
+                                        当日<br>收现
                                     </th>
-                                    <th>
-                                        刷卡金额(单)
+                                    <th class="center">
+                                        刷卡<br>金额(单)
                                     </th>
-                                    <th>
-                                        存款金额
+                                    <th class="center">
+                                        存款<br>金额
                                     </th>
-                                    <th>
-                                        留存金额
+                                    <th class="center">
+                                        留存<br>金额
                                     </th>
-                                    <th>
-                                        当日销售额
+                                    <th class="center">
+                                        当日销售额<br>(不含代金卷)
                                     </th>
-                                    <th>
-                                        商场汇报销售额
+                                    <th class="center">
+                                        代金卷<br>金额
+                                    </th>
+                                    <th class="center">
+                                        商场汇报<br>销售额
                                     </th>
                                     <th width="120">
                                         &nbsp;
@@ -83,7 +86,7 @@
                             <tbody>
                                 <c:forEach items="${noCashDailyList}" var="noCashDaily">
                                     <tr>
-                                        <td>
+                                        <td class="center">
                                             ${noCashDaily.optDateShow}
                                         </td>
                                         <td>
@@ -108,6 +111,9 @@
                                             ${noCashDaily.saleAmt}
                                         </td>
                                         <td>
+                                            ${noCashDaily.couponValue}
+                                        </td>
+                                        <td>
                                             ${noCashDaily.reportAmt}
                                         </td>
                                         <td>
@@ -120,7 +126,7 @@
                             <c:if test="${empty	noCashDailyList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="10" class="rounded-foot-left">
+                                        <td	colspan="11" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
@@ -141,32 +147,35 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="center">
                                         日期
                                     </th>
-                                    <th>
-                                        昨日余额
+                                    <th class="center">
+                                        昨日<br>余额
                                     </th>
-                                    <th>
-                                        现金盈亏
+                                    <th class="center">
+                                        现金<br>盈亏
                                     </th>
-                                    <th>
-                                        当日收现
+                                    <th class="center">
+                                        当日<br>收现
                                     </th>
-                                    <th>
-                                        刷卡金额(单)
+                                    <th class="center">
+                                        刷卡<br>金额(单)
                                     </th>
-                                    <th>
-                                        存款金额
+                                    <th class="center">
+                                        存款<br>金额
                                     </th>
-                                    <th>
-                                        留存金额
+                                    <th class="center">
+                                        留存<br>金额
                                     </th>
-                                    <th>
-                                        当日销售额
+                                    <th class="center">
+                                        当日销售额<br>(不含代金卷)
                                     </th>
-                                    <th>
-                                        商场汇报销售额
+                                    <th class="center">
+                                        代金卷<br>金额
+                                    </th>
+                                    <th class="center">
+                                        商场汇报<br>销售额
                                     </th>
                                     <th width="55">
                                         
@@ -177,7 +186,7 @@
                                 <c:if test="${empty	cashDailyList}" >
                                     <tfoot>
                                         <tr>
-                                            <td	colspan="10" class="rounded-foot-left">
+                                            <td	colspan="11" class="rounded-foot-left">
                                                 无记录信息
                                             </td>
                                         </tr>
@@ -208,6 +217,9 @@
                                         </td>
                                         <td>
                                             ${cashDaily.saleAmt}
+                                        </td>
+                                        <td>
+                                            ${cashDaily.couponValue}
                                         </td>
                                         <td>
                                             ${cashDaily.reportAmt}

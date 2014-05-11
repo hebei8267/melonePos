@@ -27,6 +27,7 @@
         <result column="bw_sale_amt" property="bwSaleAmt" jdbcType="DECIMAL"/>
         <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
         <result column="report_amt" property="reportAmt" jdbcType="DECIMAL"/>
+        <result column="coupon_value" property="couponValue" jdbcType="DECIMAL"/>
         
         <result column="bank_check_flg" property="bankCheckFlg" jdbcType="INTEGER"/>
 	</resultMap>
@@ -56,6 +57,7 @@
     	cash.sale_cash_amt ,
     	cash.bw_sale_amt ,
     	cash.report_amt ,
+    	cash.coupon_value ,
     	org.org_name AS orgName
 	]]>
   	</sql>

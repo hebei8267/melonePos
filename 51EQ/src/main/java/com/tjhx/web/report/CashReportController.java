@@ -29,6 +29,7 @@ import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.accounts.CashRun;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.accounts.CashDailyManager;
+import com.tjhx.service.order.CouponManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 
@@ -39,6 +40,8 @@ public class CashReportController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private CashDailyManager cashDailyManager;
+	@Resource
+	private CouponManager couponManager;
 
 	@RequestMapping(value = { "list", "" })
 	public String cashReportList_Action(Model model) throws ServletRequestBindingException {
@@ -71,8 +74,7 @@ public class CashReportController extends BaseController {
 		}
 	}
 
-	private void commonProcess(Model model, HttpServletRequest request, CashRun _cashRun)
-			throws ServletRequestBindingException {
+	private void commonProcess(Model model, HttpServletRequest request, CashRun _cashRun) throws ServletRequestBindingException {
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
@@ -123,8 +125,8 @@ public class CashReportController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -158,8 +160,7 @@ public class CashReportController extends BaseController {
 	 */
 	@RequestMapping(value = "export")
 	public void cashReportExport_Action(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException,
-			ParseException {
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
 
 		CashRun _cashRun = new CashRun();
 		commonProcess(model, request, _cashRun);
@@ -179,8 +180,8 @@ public class CashReportController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -200,8 +201,7 @@ public class CashReportController extends BaseController {
 	}
 
 	@RequestMapping(value = "search")
-	public String cashReportSearch_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String cashReportSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 
 		CashDaily _cashDaily = new CashDaily();
 		commonProcess(model, request, _cashDaily);
@@ -222,8 +222,7 @@ public class CashReportController extends BaseController {
 	}
 
 	@RequestMapping(value = "detail/{optDate}/{orgId}")
-	public String cashReportView_Action(@PathVariable("optDate") String optDate, @PathVariable("orgId") String orgId,
-			Model model) {
+	public String cashReportView_Action(@PathVariable("optDate") String optDate, @PathVariable("orgId") String orgId, Model model) {
 		CashRun _cashRun = new CashRun();
 		_cashRun.setOptDate(optDate);
 		_cashRun.setOrgId(orgId);
@@ -231,10 +230,16 @@ public class CashReportController extends BaseController {
 
 		if (null != _list && _list.size() > 0) {
 			CashRun cashRun1 = _list.get(0);
+			if (StringUtils.isNotBlank(cashRun1.getCouponNo())) {
+				cashRun1.setCouponNo(couponManager.getCouponByNoInCache(cashRun1.getCouponNo(), cashRun1.getOrgId()).getName());
+			}
 			model.addAttribute("cashRun1", cashRun1);
 		}
 		if (null != _list && _list.size() > 1) {
 			CashRun cashRun2 = _list.get(1);
+			if (StringUtils.isNotBlank(cashRun2.getCouponNo())) {
+				cashRun2.setCouponNo(couponManager.getCouponByNoInCache(cashRun2.getCouponNo(), cashRun2.getOrgId()).getName());
+			}
 			model.addAttribute("cashRun2", cashRun2);
 		}
 

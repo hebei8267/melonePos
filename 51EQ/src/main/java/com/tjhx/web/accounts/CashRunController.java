@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashRun;
 import com.tjhx.entity.info.BankCard;
+import com.tjhx.entity.order.Coupon;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.accounts.CashRunManager;
 import com.tjhx.service.info.BankCardManager;
+import com.tjhx.service.order.CouponManager;
 import com.tjhx.web.BaseController;
 
 @Controller
@@ -37,6 +39,8 @@ public class CashRunController extends BaseController {
 	private CashRunManager cashRunManager;
 	@Resource
 	private BankCardManager bankCardManager;
+	@Resource
+	private CouponManager couponManager;
 
 	/**
 	 * 计算班前余额
@@ -47,8 +51,8 @@ public class CashRunController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "calInitAmt")
-	public String calInitAmt_Action(HttpServletRequest request, HttpSession session)
-			throws ServletRequestBindingException, ParseException {
+	public String calInitAmt_Action(HttpServletRequest request, HttpSession session) throws ServletRequestBindingException,
+			ParseException {
 		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
 		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
 
@@ -91,8 +95,8 @@ public class CashRunController extends BaseController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	public String cashRunList_Action(Model model, HttpSession session) throws ParseException {
-		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_1(getUserInfo(session).getOrganization()
-				.getId(), DateUtils.getCurrentDateShortStr());
+		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_1(getUserInfo(session).getOrganization().getId(),
+				DateUtils.getCurrentDateShortStr());
 
 		model.addAttribute("cashRunList", cashRunList);
 
@@ -112,8 +116,7 @@ public class CashRunController extends BaseController {
 	@RequestMapping(value = "list/{date}")
 	public String cashRunList_Date_Action(@PathVariable("date") String date, Model model, HttpSession session)
 			throws ParseException {
-		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_2(getUserInfo(session).getOrganization()
-				.getId(), date);
+		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_2(getUserInfo(session).getOrganization().getId(), date);
 
 		model.addAttribute("cashRunList", cashRunList);
 
@@ -141,6 +144,9 @@ public class CashRunController extends BaseController {
 			initJobTypeList(model);
 			initBankCardList(model, getUserInfo(session).getOrganization().getId());
 
+			// 初始化代金卷信息列表
+			initCouponList(model, getUserInfo(session).getOrganization().getId());
+
 			return "accounts/cashRunForm";
 		}
 
@@ -163,12 +169,34 @@ public class CashRunController extends BaseController {
 		cashRun.setCardNum(null);
 		cashRun.setDepositAmt(null);
 		cashRun.setReportAmt(null);
+		cashRun.setCouponValue(null);
 		model.addAttribute("cashRun", cashRun);
 
 		initJobTypeList(model);
 		initBankCardList(model, getUserInfo(session).getOrganization().getId());
 
+		// 初始化代金卷信息列表
+		initCouponList(model, getUserInfo(session).getOrganization().getId());
+
 		return "accounts/cashRunForm";
+	}
+
+	/**
+	 * 初始化代金卷信息列表
+	 * 
+	 * @param model
+	 */
+	private void initCouponList(Model model, String orgId) {
+		List<Coupon> _couponList = couponManager.getCouponListInCache(orgId);
+
+		Map<String, String> couponList = new LinkedHashMap<String, String>();
+
+		couponList.put("", "");
+		for (Coupon coupon : _couponList) {
+			couponList.put(coupon.getCouponNo(), coupon.getName());
+		}
+
+		model.addAttribute("couponList", couponList);
 	}
 
 	/**
@@ -226,6 +254,9 @@ public class CashRunController extends BaseController {
 			initJobTypeList(model);
 			initBankCardList(model, getUserInfo(session).getOrganization().getId());
 
+			// 初始化代金卷信息列表
+			initCouponList(model, getUserInfo(session).getOrganization().getId());
+
 			return "accounts/cashRunForm";
 		}
 
@@ -239,6 +270,9 @@ public class CashRunController extends BaseController {
 				initJobTypeList(model);
 				initBankCardList(model, getUserInfo(session).getOrganization().getId());
 
+				// 初始化代金卷信息列表
+				initCouponList(model, getUserInfo(session).getOrganization().getId());
+
 				return "accounts/cashRunForm";
 			}
 		} else {// 修改操作
@@ -250,6 +284,9 @@ public class CashRunController extends BaseController {
 
 				initJobTypeList(model);
 				initBankCardList(model, getUserInfo(session).getOrganization().getId());
+
+				// 初始化代金卷信息列表
+				initCouponList(model, getUserInfo(session).getOrganization().getId());
 
 				return "accounts/cashRunForm";
 			}

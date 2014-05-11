@@ -85,6 +85,16 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun1.cardCertNo}</label>
                             </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
+                                <label class="left-control-label">${cashRun1.couponNo}</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
+                                <label class="left-control-label">${cashRun1.couponValue}</label>
+                            </div>
+                            
                             <div class="control-group">
                                 <label class="control-label">存款金额 :</label>
                                 <label class="left-control-label">${cashRun1.depositAmt} 元</label>
@@ -103,7 +113,8 @@
                             </div>
                             <div class="control-group">
                                 <label class="control-label">当班销售金额 :</label>
-                                <label class="left-control-label">${cashRun1.saleAmt} 元</label>
+                                <label class="left-control-label">${cashRun1.saleAmt} 元 </label>
+                                <label class="left-control-label" style="color:#FF6633;font-weight:bold;">注意：不含 [代金卷金额]</label>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>
@@ -117,7 +128,7 @@
                     </div>
                 </c:if>
 
-                <c:if test="${!empty	cashRun2}" >
+                <c:if test="${!empty cashRun2}" >
                     <div class="span12 cash_daily visible-phone"></div>
                     <div class="span6"	style="margin-top: 10px;">
                         <form:form method="POST" class="form-horizontal" id="inputForm2"	modelAttribute="cashRun2">
@@ -176,6 +187,16 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun2.cardCertNo}</label>
                             </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
+                                <label class="left-control-label">${cashRun2.couponNo}</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
+                                <label class="left-control-label">${cashRun2.couponValue}</label>
+                            </div>
+                            
                             <div class="control-group">
                                 <label class="control-label">存款金额 :</label>
                                 <label class="left-control-label">${cashRun2.depositAmt} 元</label>
@@ -195,6 +216,7 @@
                             <div class="control-group">
                                 <label class="control-label">当班销售金额 :</label>
                                 <label class="left-control-label">${cashRun2.saleAmt} 元</label>
+                                <label class="left-control-label" style="color:#FF6633;font-weight:bold;">注意：不含 [代金卷金额]</label>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>

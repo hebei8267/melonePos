@@ -77,6 +77,13 @@
                             myRequired : "#cardAmt",
                             maxlength : 32
                         },
+                        couponNo : {
+                            myRequired : "#couponValue"
+                        },
+                        couponValue : {
+                            required : true,
+                            money : true
+                        },
                         depositAmt : {
                             required : true,
                             money : true
@@ -270,6 +277,18 @@
                             </div>
                         </div>
                         <div class="control-group">
+                        	<label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
+                        	<div class="controls">
+                        		<form:select path="couponNo" items="${couponList}"/>
+                        	</div>
+                        </div>
+                        <div class="control-group">
+                        	<label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
+                        	<div class="controls">
+                        		<form:input	path="couponValue" />
+                        	</div>
+                        </div>
+                        <div class="control-group">
                             <label class="control-label">存款金额 :</label>
                             <div class="controls">
                                 <form:input	path="depositAmt" />
@@ -296,6 +315,7 @@
                         <div class="control-group">
                             <label class="control-label">当班销售金额 :</label>
                             <label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元</label>
+                            <label class="left-control-label" style="color:#FF6633;font-weight:bold;">&nbsp;&nbsp;&nbsp;注意：[当班销售金额] 不含 [代金卷金额]</label>
                             <form:hidden path="saleAmt"/>
                         </div>
                         <div class="control-group">

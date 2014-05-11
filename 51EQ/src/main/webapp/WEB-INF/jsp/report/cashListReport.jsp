@@ -102,41 +102,41 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="center">
                                         机构
                                     </th>
-                                    <th>
-                                        日结日期
+                                    <th class="center">
+                                        日结<br>日期
                                     </th>
-                                    <th>
-                                        昨日余额
+                                    <th class="center">
+                                        昨日<br>余额
                                     </th>
-                                    <th>
-                                        现金盈亏
+                                    <th class="center">
+                                        现金<br>盈亏
                                     </th>
-                                    <th>
-                                        当日收现
+                                    <th class="center">
+                                        当日<br>收现
                                     </th>
-                                    <th>
-                                        刷卡金额(单)
+                                    <th class="center">
+                                        刷卡<br>金额(单)
                                     </th>
-                                    <th>
-                                        刷卡笔数
+                                    <th class="center">
+                                        刷卡<br>笔数
                                     </th>
-                                    <th>
-                                        存款金额
+                                    <th class="center">
+                                        存款<br>金额
                                     </th>
-                                    <th>
-                                        留存金额
+                                    <th class="center">
+                                        留存<br>金额
                                     </th>
-                                    <th>
-                                        当日销售额
+                                    <th class="center">
+                                        当日销售额(现金/刷卡)<br>代金卷销售额
                                     </th>
-                                    <th>
-                                        百威对账
+                                    <th class="center">
+                                        百威<br>对账
                                     </th>
-                                    <th>
-                                        商场汇报销售额
+                                    <th class="center">
+                                        商场汇报<br>销售额
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -146,28 +146,28 @@
                             <tbody>
                                 <c:forEach items="${cashDailyList}" var="cashDaily">
                                     <tr>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.orgName}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.optDateShow}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.initAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.adjustAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.saleCashAmt}
                                         </td>
-                                        <td <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="center" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.cardAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.cardNum}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	<c:if test="${cashDaily.depositAmt > 0 && cashDaily.bankCheckFlg == 1}">
                                         		<i class="icon-ok" trigger="hover" data-toggle="popover" data-placement="right" title="已审核"></i>
                                         	</c:if>
@@ -176,17 +176,21 @@
                                         	</c:if>
                                         	${cashDaily.depositAmt}
                                         </td>
-                                        <td <c:if test="${cashDaily.retainedAmt > DEFAULT_RETAINED_AMT}">style="background-color:#FFDEAD;color:#00000"</c:if>>
+                                        <td class="center" <c:if test="${cashDaily.retainedAmt > DEFAULT_RETAINED_AMT}">style="background-color:#FFDEAD;color:#00000"</c:if>>
                                         	${cashDaily.retainedAmt}
                                         </td>
-                                        <c:set var="_difference" value="${cashDaily.saleAmt - cashDaily.bwSaleAmt }" />
-                                        <td <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#FF6633;color:#FFFFFF"</c:if>>
-                                        	${cashDaily.saleAmt}
+                                        <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.couponValue - cashDaily.bwSaleAmt }" />
+                                        <td class="center">
+                                     	<span <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#FF6633;color:#FFFFFF;padding:5px"</c:if>>
+                                        	合计 : ${cashDaily.saleAmt + cashDaily.couponValue}
+                                       	</span><br>
+                                        	${cashDaily.saleAmt}<br>
+                                        	${cashDaily.couponValue}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.bwSaleAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.reportAmt}
                                         </td>
                                         <td>

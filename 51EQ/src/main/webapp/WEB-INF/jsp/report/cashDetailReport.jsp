@@ -102,6 +102,16 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun1.cardCertNo}</label>
                             </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
+                                <label class="left-control-label">${cashRun1.couponNo}</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
+                                <label class="left-control-label">${cashRun1.couponValue}</label>
+                            </div>
+                            
                             <div class="control-group">
                                 <label class="control-label">存款金额 :</label>
                                 <label class="left-control-label">${cashRun1.depositAmt} 元</label>
@@ -214,6 +224,16 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun2.cardCertNo}</label>
                             </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
+                                <label class="left-control-label">${cashRun2.couponNo}</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
+                                <label class="left-control-label">${cashRun2.couponValue}</label>
+                            </div>
+                            
                             <div class="control-group">
                                 <label class="control-label">存款金额 :</label>
                                 <label class="left-control-label">${cashRun2.depositAmt} 元</label>

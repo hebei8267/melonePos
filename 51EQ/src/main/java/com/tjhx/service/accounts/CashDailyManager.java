@@ -100,6 +100,12 @@ public class CashDailyManager {
 			// _tmpCashDaily.setCardNum(_tmpCashDaily.getCardNum() +
 			// cashRun.getCardNum());
 
+			// 2014-5-11
+			// 代金卷面值
+			if (null != cashRun.getCouponValue()) {
+				_tmpCashDaily.setCouponValue(_tmpCashDaily.getCouponValue().add(cashRun.getCouponValue()));
+			}
+
 		}
 		return _noCashDailyList;
 	}
@@ -145,10 +151,9 @@ public class CashDailyManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private List<CashDaily> getAllCashDailyByOrgId(String orgId, String optDateY, String optDateM)
-			throws ParseException {
-		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY,
-				optDateM, new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
+	private List<CashDaily> getAllCashDailyByOrgId(String orgId, String optDateY, String optDateM) throws ParseException {
+		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM,
+				new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
 
 		return _list;
 	}
@@ -213,6 +218,12 @@ public class CashDailyManager {
 			// 百威系统机构编号
 			_cashDaily.setOrgBranchNo(bwBranchNo);
 			// ############ 20130817-追加 ################
+
+			// 2014-5-11
+			// 代金卷面值
+			if (null != cashRun.getCouponValue()) {
+				_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashRun.getCouponValue()));
+			}
 		}
 		// 生成销售日结信息
 		cashDailyJpaDao.save(_cashDaily);
@@ -227,8 +238,8 @@ public class CashDailyManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CashRun> cashDailyDetail(String optDate, String orgId) {
-		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
-				Sort.Direction.ASC, "jobType")));
+		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(Sort.Direction.ASC,
+				"jobType")));
 	}
 
 	/**
@@ -287,8 +298,8 @@ public class CashDailyManager {
 			_cashDaily.setCardNum(_cashDaily.getCardNum() + cashDaily.getCardNum());
 			// 存款金额
 			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(cashDaily.getDepositAmt()));
-			// 当日销售
-			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()));
+			// 当日销售+代价卷
+			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()).add(cashDaily.getCouponValue()));
 			// 当日销售BW
 			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(cashDaily.getBwSaleAmt()));
 			// 汇报金额
@@ -377,8 +388,8 @@ public class CashDailyManager {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public String createCardReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCardReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException, IOException,
+			ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -412,8 +423,7 @@ public class CashDailyManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public String createCashReportFile(CashDaily _cashDaily) throws ParsePropertyException, InvalidFormatException,
-			IOException {
+	public String createCashReportFile(CashDaily _cashDaily) throws ParsePropertyException, InvalidFormatException, IOException {
 		List<CashDaily> _cashDailyList = searchReportList(_cashDaily);
 		if (null == _cashDailyList || _cashDailyList.size() == 0) {
 			return null;
@@ -449,8 +459,8 @@ public class CashDailyManager {
 	 * @throws ParsePropertyException
 	 * @throws ParseException
 	 */
-	public String createCashReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCashReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException, IOException,
+			ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -549,7 +559,7 @@ public class CashDailyManager {
 	public List<CashDaily> searchChartReportListByOrg(CashDaily cashDaily) {
 		return cashDailyMyBatisDao.getCashDailyChartList(cashDaily);
 	}
-	
+
 	/**
 	 * 取得销售流水日结信息(准备图形化显示数据)--所有机构
 	 * 

@@ -96,38 +96,41 @@
                                     <th	width="25" class="center">
                                         <input id="checkAll" type="checkbox" />
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         日期
                                     </th>
-                                    <th>
-                                        上班类型
+                                    <th class="center">
+                                        上班<br>类型
+                                    </th>
+                                    <th class="center">
+                                        班前<br>余额
+                                    </th>
+                                    <th class="center">
+                                        实点<br>现金
                                     </th>
                                     <th>
-                                        班前余额
+                                        现金<br>盈亏
                                     </th>
-                                    <th>
-                                        实点现金
+                                    <th class="center">
+                                        销售<br>收现
                                     </th>
-                                    <th>
-                                        现金盈亏
+                                    <th class="center">
+                                        刷卡<br>金额(单)
                                     </th>
-                                    <th>
-                                        销售收现
+                                    <th class="center">
+                                        存款<br>金额
                                     </th>
-                                    <th>
-                                        刷卡金额(单)
+                                    <th class="center">
+                                        留存<br>金额
                                     </th>
-                                    <th>
-                                        存款金额
+                                    <th class="center">
+                                        当班销售额<br>(不含代金卷)
                                     </th>
-                                    <th>
-                                        留存金额
+                                    <th class="center">
+                                        代金卷<br>金额
                                     </th>
-                                    <th>
-                                        当班销售额
-                                    </th>
-                                    <th>
-                                        商场汇报销售额
+                                    <th class="center">
+                                        商场汇报<br>销售额
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -143,7 +146,7 @@
                                                 </input>
                                             </c:if>
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${cashRun.optDateShow}
                                         </td>
                                         <td>
@@ -182,6 +185,9 @@
                                             ${cashRun.saleAmt}
                                         </td>
                                         <td>
+                                            ${cashRun.couponValue}
+                                        </td>
+                                        <td>
                                             ${cashRun.reportAmt}
                                         </td>
                                         <td>
@@ -212,6 +218,9 @@
                                         <td>
                                             ${totalCashRun.saleAmt}
                                         </td>
+                                        <td>
+                                        	${totalCashRun.couponValue}
+                                        </td>
                                         <td colspan="2">
                                             ${totalCashRun.reportAmt}
                                         </td>
@@ -221,7 +230,7 @@
                             <c:if test="${empty	cashRunList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="13"	class="rounded-foot-left">
+                                        <td	colspan="14" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>

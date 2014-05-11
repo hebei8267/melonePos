@@ -68,10 +68,20 @@ public class CouponManager {
 	 * 
 	 * @return 代金卷信息列表
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Coupon> getAllCouponList() {
-		@SuppressWarnings("unchecked")
-		List<Coupon> _list = (List<Coupon>) couponJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "couponNo"),
-				new Sort.Order(Sort.Direction.ASC, "orgId")));
+		return (List<Coupon>) couponJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "couponNo"), new Sort.Order(
+				Sort.Direction.ASC, "orgId")));
+	}
+
+	/**
+	 * 取得代金卷信息列表
+	 * 
+	 * @return 代金卷信息列表
+	 */
+	public List<Coupon> getAllCouponShowList() {
+		// 从DB中取得代金卷信息列表
+		List<Coupon> _list = getAllCouponList();
 
 		List<Coupon> _relist = new ArrayList<Coupon>();
 
@@ -208,4 +218,68 @@ public class CouponManager {
 		}
 	}
 
+	/**
+	 * 根据机构编号取得代金卷信息列表（含删除标记为true）
+	 * 
+	 * @param orgId
+	 */
+	public List<Coupon> getAllCouponListInCache(String orgId) {
+		List<Coupon> _couponList = spyMemcachedClient.get(MemcachedObjectType.COUPON_TYPE_LIST.getObjKey());
+		if (null == _couponList) {
+			// 从数据库中取出全量代金卷信息(List格式)
+			_couponList = getAllCouponList();
+
+			// 将代金卷信息(List格式)保存到memcached
+			spyMemcachedClient.set(MemcachedObjectType.COUPON_TYPE_LIST.getObjKey(),
+					MemcachedObjectType.COUPON_TYPE_LIST.getExpiredTime(), _couponList);
+		}
+
+		List<Coupon> _reCouponList = new ArrayList<Coupon>();
+
+		// 取得适用该机构的代金卷信息列表（含删除标记为true）
+		for (Coupon coupon : _couponList) {
+			if (coupon.getOrgId().equals(orgId)) {
+				_reCouponList.add(coupon);
+			}
+		}
+
+		return _reCouponList;
+	}
+
+	/**
+	 * 根据机构编号取得代金卷信息列表（不含删除标记为true）
+	 * 
+	 * @param orgId
+	 * @return
+	 */
+	public List<Coupon> getCouponListInCache(String orgId) {
+		List<Coupon> _couponList = getAllCouponListInCache(orgId);
+
+		List<Coupon> _reCouponList = new ArrayList<Coupon>();
+		for (Coupon coupon : _couponList) {
+			if (!coupon.getDelFlg()) {
+				_reCouponList.add(coupon);
+			}
+		}
+
+		return _reCouponList;
+	}
+
+	/**
+	 * 取得代金卷信息
+	 * 
+	 * @param couponNo 代金卷编号
+	 * @param orgId
+	 * @return 代金卷信息
+	 */
+	public Coupon getCouponByNoInCache(String couponNo, String orgId) {
+		List<Coupon> _couponList = getAllCouponListInCache(orgId);
+
+		for (Coupon coupon : _couponList) {
+			if (coupon.getCouponNo().equals(couponNo)) {
+				return coupon;
+			}
+		}
+		return null;
+	}
 }

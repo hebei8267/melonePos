@@ -70,6 +70,10 @@ public class CashRun extends IdEntity {
 	private BigDecimal reportAmt = new BigDecimal("0");
 	/** 回单对账标记 1-已对账 0-未对账 */
 	private Integer bankCheckFlg = 0;
+	/** 代金卷编号 */
+	private String couponNo;
+	/** 代金卷面值 */
+	private BigDecimal couponValue = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -449,6 +453,43 @@ public class CashRun extends IdEntity {
 	 */
 	public void setBankCheckFlg(Integer bankCheckFlg) {
 		this.bankCheckFlg = bankCheckFlg;
+	}
+
+	/**
+	 * 获取代金卷编号
+	 * 
+	 * @return couponNo 代金卷编号
+	 */
+	@Column(length = 8)
+	public String getCouponNo() {
+		return couponNo;
+	}
+
+	/**
+	 * 设置代金卷编号
+	 * 
+	 * @param couponNo 代金卷编号
+	 */
+	public void setCouponNo(String couponNo) {
+		this.couponNo = couponNo;
+	}
+
+	/**
+	 * 获取代金卷面值
+	 * 
+	 * @return couponValue 代金卷面值
+	 */
+	public BigDecimal getCouponValue() {
+		return couponValue;
+	}
+
+	/**
+	 * 设置代金卷面值
+	 * 
+	 * @param couponValue 代金卷面值
+	 */
+	public void setCouponValue(BigDecimal couponValue) {
+		this.couponValue = couponValue;
 	}
 
 	/**
