@@ -123,7 +123,7 @@
                                     <th class="center">
                                         刷卡<br>笔数
                                     </th>
-                                    <th class="center">
+                                    <th class="center">1
                                         存款<br>金额
                                     </th>
                                     <th class="center">
