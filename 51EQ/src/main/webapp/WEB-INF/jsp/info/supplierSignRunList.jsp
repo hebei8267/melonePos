@@ -105,6 +105,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            	<c:set var="gzTotal" value="0"	/>
                             	<c:forEach items="${supSignRunList}" var="supplier" varStatus="status">
                             	<tr>
                             		<td rowspan="6" class="center">
@@ -125,6 +126,7 @@
                             		<c:if test="${!empty supplier.lastSupplierSignRun.totalCheckAmt || !empty supplier.lastSupplierSignRun.totalPayAmt}" >
 	                            		<br/>
 	                            		挂账金额: <span class="myTip2">${supplier.lastSupplierSignRun.totalCheckAmt - supplier.lastSupplierSignRun.totalPayAmt}</span>
+	                            		<c:set var="gzTotal" value="${gzTotal + supplier.lastSupplierSignRun.totalCheckAmt - supplier.lastSupplierSignRun.totalPayAmt}"/>
                             		</c:if>
                             		</td>
                             		<td class="center">赊购挂账</td>
@@ -195,6 +197,12 @@
                             		</c:forEach>
                             	</tr>
                             	</c:forEach>
+                            	<tr>
+                            		<td class="center">挂账合计金额：${gzTotal}
+                            		</td>
+                            		<td colspan="14">
+                            		</td>
+                            	</tr>
                             </tbody>
                             <c:if test="${empty	supSignRunList}" >
                                 <tfoot>
