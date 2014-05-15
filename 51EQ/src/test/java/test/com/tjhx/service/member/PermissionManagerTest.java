@@ -321,14 +321,44 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm47.setFunction(fun47);
 //		permissionJpaDao.save(perm47);
 		
+//		// ---------------------------------------------
+//		// 代金卷类别管理
+//		// ---------------------------------------------
+//		Permission perm48 = new Permission();
+//		Function fun48 = functionJpaDao.findOne(48);
+//		perm48.setRole(role);
+//		perm48.setFunction(fun48);
+//		permissionJpaDao.save(perm48);
+		
+		
+
+
 		// ---------------------------------------------
-		// 代金卷类别管理
+		// 排班表-维护
 		// ---------------------------------------------
-		Permission perm48 = new Permission();
-		Function fun48 = functionJpaDao.findOne(48);
-		perm48.setRole(role);
-		perm48.setFunction(fun48);
-		permissionJpaDao.save(perm48);
+		Permission perm32 = new Permission();
+		Function fun32 = functionJpaDao.findOne(32);
+		perm32.setRole(role);
+		perm32.setFunction(fun32);
+		permissionJpaDao.save(perm32);
+
+		// ---------------------------------------------
+		// 兼职信息-维护
+		// ---------------------------------------------
+		Permission perm33 = new Permission();
+		Function fun33 = functionJpaDao.findOne(33);
+		perm33.setRole(role);
+		perm33.setFunction(fun33);
+		permissionJpaDao.save(perm33);
+
+		// ---------------------------------------------
+		// 工作时间-维护
+		// ---------------------------------------------
+		Permission perm34 = new Permission();
+		Function fun34 = functionJpaDao.findOne(34);
+		perm34.setRole(role);
+		perm34.setFunction(fun34);
+		permissionJpaDao.save(perm34);
 	}
 
 //	// 总部人员-会计
