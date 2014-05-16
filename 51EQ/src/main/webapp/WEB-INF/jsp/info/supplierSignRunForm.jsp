@@ -206,6 +206,7 @@
         	
         	//赊购挂账-挂账
         	$("#loan_saveBtn").click(function() {
+        		$("#loanForm").attr('target', '_self');
                 $("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#loanForm").submit();
             });
@@ -231,6 +232,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#noticeForm").attr('target', '_self');
                 $("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#noticeForm").submit();
             });
@@ -256,6 +258,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#checkForm").attr('target', '_self');
                 $("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#checkForm").submit();
             });
@@ -281,6 +284,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#paymentForm").attr('target', '_self');
                 $("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#paymentForm").submit();
             });
@@ -306,6 +310,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#appForm").attr('target', '_self');
                 $("#appForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#appForm").submit();
             });
@@ -331,6 +336,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#confirmForm").attr('target', '_self');
                 $("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/defaultSave");
                 $("#confirmForm").submit();
             });
@@ -341,6 +347,7 @@
         		if ($("#loanForm_uuid").val() == ''){
         			$('#_tip_modal_2').modal('show');
         		} else {
+        			$("#loanForm").attr('target', '_self');
         			$("#loanForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#loanForm").submit();
         		}
@@ -348,6 +355,7 @@
         		if ($("#noticeForm_uuid").val() == ''){
         			$('#_tip_modal_1').modal('show');
         		} else {
+        			$("#noticeForm").attr('target', '_self');
         			$("#noticeForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#noticeForm").submit();
         		}
@@ -355,6 +363,7 @@
         		if ($("#check_uuid").val() == ''){
         			$('#_tip_modal_1').modal('show');
         		} else {
+        			$("#checkForm").attr('target', '_self');
         			$("#checkForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#checkForm").submit();
         		}
@@ -362,6 +371,7 @@
         		if ($("#payment_uuid").val() == ''){
         			$('#_tip_modal_1').modal('show');
         		} else {
+        			$("#paymentForm").attr('target', '_self');
         			$("#paymentForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#paymentForm").submit();
         		}
@@ -369,6 +379,7 @@
         		if ($("#app_uuid").val() == ''){
         			$('#_tip_modal_1').modal('show');
         		} else {
+        			$("#appForm").attr('target', '_self');
         			$("#appForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#appForm").submit();
         		}
@@ -376,6 +387,7 @@
         		if ($("#confirm_uuid").val() == ''){
         			$('#_tip_modal_1').modal('show');
         		} else {
+        			$("#confirmForm").attr('target', '_self');
         			$("#confirmForm").attr("action", "${sc_ctx}/supplierSignRun/clean");
                     $("#confirmForm").submit();
         		}

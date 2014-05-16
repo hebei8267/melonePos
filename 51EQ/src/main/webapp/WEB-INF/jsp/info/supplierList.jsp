@@ -25,6 +25,7 @@
                 
                 
                 $("#bwDataSynBtn").click(function() {
+                	$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/supplier/bwDataSynBtn");
                     $("#listForm").submit();
                 });
@@ -43,6 +44,7 @@
 
                     $("#supplierBwIds").val(supplierBwIds);
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/supplier/signBillSupDataSynBtn");
                     $("#listForm").submit();
                 });

@@ -29,6 +29,7 @@
                 }
             });
         	$("#showBtn").click(function() {
+        		$("#searchForm").attr('target', '_self');
                 $("#searchForm").attr("action", "${sc_ctx}/supplierSignRun/show_boss");
                 $("#searchForm").submit();
             });
