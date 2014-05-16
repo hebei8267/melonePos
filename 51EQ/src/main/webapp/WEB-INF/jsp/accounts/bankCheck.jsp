@@ -58,6 +58,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr("target", "_self");
                     $("#listForm").attr("action", "${sc_ctx}/bankCheck/search");
                     $("#listForm").submit();
                 });
@@ -80,6 +81,7 @@
 						this.value = $.trim(this.value);
 					});
 		
+					$("#listForm").attr("target", "_self");
 					$("#listForm").attr("action", "${sc_ctx}/bankCheck/audit");
 					$("#listForm").submit();
 				});

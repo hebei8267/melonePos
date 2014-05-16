@@ -23,6 +23,7 @@
 
             $(function() {
                 $("#confirmBtn").click(function() {
+                	$("#listForm").attr("target", "_self");
                     $("#listForm").attr("action", "${sc_ctx}/cashDaily/confirm/" + $('#dailyOptDate').val());
                     $("#listForm").submit();
                 });

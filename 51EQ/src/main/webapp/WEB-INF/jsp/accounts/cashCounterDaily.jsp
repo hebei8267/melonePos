@@ -30,6 +30,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr("target", "_self");
                     $("#listForm").attr("action", "${sc_ctx}/cashCounterDaily/search");
                     $("#listForm").submit();
                 });
@@ -39,6 +40,7 @@
                         this.value = $.trim(this.value);
                     });
                 	
+                	$("#listForm").attr("target", "_self");
                     $("#listForm").attr("action", "${sc_ctx}/cashCounterDaily/confirm");
                     $("#listForm").submit();
                 });
