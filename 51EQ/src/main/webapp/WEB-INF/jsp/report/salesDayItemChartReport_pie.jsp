@@ -52,6 +52,14 @@
                     $("#listForm").submit();
                 });
             });
+            
+            function setOrgId(orgId){
+            	$("#orgId").val(orgId);
+            	
+            	$("#listForm").attr("target", "_blank");
+            	$("#listForm").attr("action", "${sc_ctx}/salesDayItemChartReport/pie_detail_list");
+                $("#listForm").submit();
+            }
         </script>
     </head>
     <body>
@@ -76,14 +84,22 @@
 
                 </div>
 
+				<input type="hidden" name="orgId" id="orgId"/>
 				<c:forEach items="${saleRamtJsonList}" var="saleRamtJson" varStatus="status1">
 				<div class="row">
 					<div class="span12 cash_daily"></div>
-					<div class="span12"><h4>${orgNameList.get(status1.index) } - 销售金额</h4></div>
-					<div class="span6"	style="margin-top: 10px;">
+					
+					<div class="span12">
+						<h4>${orgNameList.get(status1.index) } - 销售金额</h4>
+						<c:if test="${status1.index != 0}" >
+						<a href="#" onclick="setOrgId('${orgIdList.get(status1.index) }');" class="btn btn-warning"/>详细</a>
+						</c:if>
+					</div>
+					
+					<div class="span6"	style="margin-top: 20px;">
 	                	<div id="chart1${status1.index + 1}" style="width:570px;height:400px;border:1px solid #A4BED4;"></div>
 	                </div>
-	                <div class="span6"	style="margin-top: 10px;">
+	                <div class="span6"	style="margin-top: 20px;">
 	                	<div id="chart2${status1.index + 1}" style="width:570px;height:400px;border:1px solid #A4BED4;"></div>
 	             	</div>
              	</div>

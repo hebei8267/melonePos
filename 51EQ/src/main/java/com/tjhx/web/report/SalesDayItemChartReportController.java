@@ -17,6 +17,7 @@ import org.springside.modules.utils.SpringContextHolder;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.struct.Organization;
+import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.info.SalesDayTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -92,23 +93,34 @@ public class SalesDayItemChartReportController extends BaseController {
 
 		List<String> _jsonStrList = new ArrayList<String>();
 		List<String> _orgNameList = new ArrayList<String>();
+		List<String> _orgIdList = new ArrayList<String>();
 		// 合计
 		_jsonStrList.add(getSumSaleRamtJsonStr(_startDate, _endDate));
 		_orgNameList.add("合计");
+		_orgIdList.add(Constants.ROOT_ORG_ID);
 
 		List<Organization> _orgList = orgManager.getSubOrganization();
 		for (Organization org : _orgList) {
 			// 各门店
 			_jsonStrList.add(getSumSaleRamtJsonStr(_startDate, _endDate, org.getId()));
 			_orgNameList.add(org.getName());
+			_orgIdList.add(org.getId());
 		}
 
 		model.addAttribute("saleRamtJsonList", _jsonStrList);
 		model.addAttribute("orgNameList", _orgNameList);
+		model.addAttribute("orgIdList", _orgIdList);
 
 		return "report/salesDayItemChartReport_pie";
 	}
 
+	/**
+	 * 取得合计机构指定时间区间的销售合计信息
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	private String getSumSaleRamtJsonStr(String startDate, String endDate) {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 		int num = sysConfig.getSalesDayItemTotalShowNum();
@@ -125,20 +137,71 @@ public class SalesDayItemChartReportController extends BaseController {
 		return mapper.toJson(_sumSaleRamtList);
 	}
 
-	private String getSumSaleRamtJsonStr(String startDate, String endDate, String orgId) {
-		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-		int num = sysConfig.getSalesDayItemTotalShowNum();
-
+	/**
+	 * 取得指定机构和时间区间的销售合计信息
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @param orgId
+	 * @return
+	 */
+	private List<SalesDayTotalItem> getSumSaleRamtList(String startDate, String endDate, String orgId) {
 		SalesDayTotalItem param = new SalesDayTotalItem();
 		param.setOptDateStart(startDate);
 		param.setOptDateEnd(endDate);
 		param.setOrgId(orgId);
+
 		// 取得合计实销金额（指定时间区间/机构）
 		List<SalesDayTotalItem> _sumSaleRamtList = salesDayTotalItemManager.getSumSaleRamtList(param);
+		return _sumSaleRamtList;
+	}
+
+	/**
+	 * 取得指定机构和时间区间的销售合计信息
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @param orgId
+	 * @return
+	 */
+	private String getSumSaleRamtJsonStr(String startDate, String endDate, String orgId) {
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+		int num = sysConfig.getSalesDayItemTotalShowNum();
+
+		List<SalesDayTotalItem> _sumSaleRamtList = getSumSaleRamtList(startDate, endDate, orgId);
+
 		if (null != _sumSaleRamtList && _sumSaleRamtList.size() > num) {
 			_sumSaleRamtList = _sumSaleRamtList.subList(0, num);
 		}
 		JsonMapper mapper = new JsonMapper();
 		return mapper.toJson(_sumSaleRamtList);
+	}
+
+	/**
+	 * 类别销售信息排名（按机构）
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "pie_detail_list")
+	public String salesDayChartReportDetailList_Action(Model model, HttpServletRequest request)
+			throws ServletRequestBindingException {
+		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+
+		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
+		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+		List<SalesDayTotalItem> _sumSaleRamtList = getSumSaleRamtList(_startDate, _endDate, orgId);
+
+		model.addAttribute("optDateStart", optDateStart);
+		model.addAttribute("optDateEnd", optDateEnd);
+		model.addAttribute("orgName", orgId.substring(3));
+		model.addAttribute("sumSaleRamtList", _sumSaleRamtList);
+
+		return "report/salesDayItemChartReport_pie_detail_list";
 	}
 }
