@@ -62,6 +62,8 @@
             }
 
             $("#uuids").val(uuids);
+            
+            $("#listForm").attr('target', '_self');
             $("#listForm").attr("action", "${sc_ctx}/invoiceApply/del");
             $("#listForm").submit();
         }

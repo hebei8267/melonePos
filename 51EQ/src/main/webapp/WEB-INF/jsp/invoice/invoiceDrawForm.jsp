@@ -40,6 +40,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#inputForm").attr('target', '_self');
                     $("#inputForm").attr("action", "${sc_ctx}/invoiceDraw/draw");
                     $("#inputForm").submit();
                 });
