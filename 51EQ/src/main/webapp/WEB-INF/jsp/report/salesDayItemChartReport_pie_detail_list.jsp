@@ -26,7 +26,7 @@
                     </div>
                     
                     <div class="span12">
-                    	<h5>统计时间  ${optDateStart} ～ ${optDateEnd}</h5>
+                    	<h4>统计时间  ${optDateStart} ～ ${optDateEnd}</h4>
                     	<table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
@@ -35,6 +35,9 @@
                                     </th>
                                     <th class="center">
                                         实销金额
+                                    </th>
+                                    <th class="center">
+                                        实销数量
                                     </th>
                                     <th	width="125">
                                         &nbsp;
@@ -49,6 +52,9 @@
                                   	</td>
                                   	<td class="center">
                                     	${sumSaleRamt.saleRamt}
+                                  	</td>
+                                  	<td class="center">
+                                    	${sumSaleRamt.saleRqty}
                                   	</td>
                                   	<td class="center">
                                     	<a href="#" onclick="setOrgId('${orgIdList.get(status1.index) }');" class="btn btn-warning"/>明细排名</a>

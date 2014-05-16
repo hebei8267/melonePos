@@ -100,6 +100,7 @@
 					$("#_oldPassWord").val(enOldPassWord);
 					$("#_newPassWord").val(enNewPassWord);
                 
+                	$("#inputForm").attr('target', '_self');
                     $("#inputForm").attr("action", "${sc_ctx}/member/modPwd");
                     $("#inputForm").submit();
                 });

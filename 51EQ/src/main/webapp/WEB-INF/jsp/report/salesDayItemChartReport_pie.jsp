@@ -48,6 +48,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/salesDayItemChartReport/pie_search");
                     $("#listForm").submit();
                 });

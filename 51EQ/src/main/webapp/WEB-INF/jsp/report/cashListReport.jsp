@@ -41,6 +41,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/cashReport/search");
                     $("#listForm").submit();
                 });
@@ -50,6 +51,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/cashReport/export");
                     $("#listForm").submit();
                 });
@@ -59,6 +61,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/cashReport/export2");
                     $("#listForm").submit();
                 });

@@ -80,6 +80,7 @@
 						_funIdsItem1[i].selected = true;
 					}
 
+					$("#inputForm").attr('target', '_self');
                     $("#inputForm").attr("action", "${sc_ctx}/coupon/save");
                     $("#inputForm").submit();
                 });

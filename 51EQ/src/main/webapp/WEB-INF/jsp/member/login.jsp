@@ -119,6 +119,7 @@
 				$("#_loginName").val(enLoginName);
 				$("#_passWord").val(enPassWord);
 					
+				$("#inputForm").attr('target', '_self');
 				$("#inputForm").attr("action", "${sc_ctx}/member/login");
 	          	$("#inputForm").submit();
             }

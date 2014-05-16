@@ -13,6 +13,7 @@
 		<script>
     	$(function() {
     		$("#reCalBtn").click(function() {
+    			$("#listForm").attr('target', '_self');
                 $("#listForm").attr("action", "${sc_ctx}/salesWeekTotal/reCal");
                 $("#listForm").submit();
             });

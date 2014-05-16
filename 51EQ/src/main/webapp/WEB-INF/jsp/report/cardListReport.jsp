@@ -38,6 +38,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/cardReport/search");
                     $("#listForm").submit();
                 });
@@ -47,6 +48,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/cardReport/export");
                     $("#listForm").submit();
                 });

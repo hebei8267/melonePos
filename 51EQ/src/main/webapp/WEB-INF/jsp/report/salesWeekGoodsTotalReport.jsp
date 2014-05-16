@@ -29,6 +29,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/salesWeekGoodsTotalReport/search");
                     $("#listForm").submit();
                 });

@@ -31,6 +31,7 @@
                     this.value = $.trim(this.value);
                 });
 
+				$("#listForm").attr('target', '_self');
                 $("#listForm").attr("action", "${sc_ctx}/salesDayChartReport/search_tab1");
                 $("#listForm").submit();
             });

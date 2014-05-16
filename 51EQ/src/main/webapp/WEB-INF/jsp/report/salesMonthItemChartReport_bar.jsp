@@ -26,6 +26,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/salesMonthItemChartReport/export");
                     $("#listForm").submit();
                 });

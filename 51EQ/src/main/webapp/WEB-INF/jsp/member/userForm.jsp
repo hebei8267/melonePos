@@ -39,6 +39,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#inputForm").attr('target', '_self');
                     $("#inputForm").attr("action", "${sc_ctx}/user/save");
                     $("#inputForm").submit();
                 });
