@@ -14,12 +14,7 @@
 <html>
     <head>
     <script>	 	
-	 	function detail_list(itemClsNo){
-	 		$("#itemClsNo").val(itemClsNo);
-            	
-         	$("#listForm").attr("target", "_blank");
-          	$("#listForm").attr("action", "${sc_ctx}/salesDayItemChartReport/org_goods_list");
-         	$("#listForm").submit();
+	 	function detail_list(){
 	 	}
  	</script>
     </head>
@@ -30,14 +25,10 @@
         
         <div class="container">
         	<form method="post"	class="form-inline" id="listForm">
-        		<input type="hidden" name="orgId" id="orgId" value="${orgId}"/>
-       			<input type="hidden" name="optDateShow_start" id="optDateShow_start" value="${optDateStart}"/>
-            	<input type="hidden" name="optDateShow_end" id="optDateShow_end" value="${optDateEnd}"/>
-            	<input type="hidden" name="itemClsNo" id="itemClsNo"/>
         		<div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>${orgName} 类别销售信息</h3>
+                            <h3>${orgName} 类别()销售排名</h3>
                         </legend>
                     </div>
                     
@@ -47,13 +38,25 @@
                             <thead>
                                 <tr>
                                     <th class="center">
-                                        种类名称
+                                        货号 / 商品名称
                                     </th>
                                     <th class="center">
-                                        实销金额
+                                        销售量
                                     </th>
                                     <th class="center">
-                                        实销数量
+                                        销售金额
+                                    </th>
+                                    <th class="center">
+                                        日均销量
+                                    </th>
+                                    <th class="center">
+                                        库存量
+                                    </th>
+                                    <th class="center">
+                                        库存金额
+                                    </th>
+                                    <th class="center">
+                                        进价 / 售价
                                     </th>
                                     <th	width="125">
                                         &nbsp;
@@ -61,23 +64,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<input type="hidden" name="orgId" id="orgId" value="${orgId}"/>
-                            	<input type="hidden" name="optDateStart" id="optDateStart" value="${optDateStart}"/>
-                            	<input type="hidden" name="optDateEnd" id="optDateEnd" value="${optDateEnd}"/>
-                            	<input type="hidden" name="itemClsNo" id="itemClsNo"/>
-                            	<c:forEach items="${sumSaleRamtList}" var="sumSaleRamt">
+                            	<c:forEach items="${topList}" var="goodsInfo">
                             	<tr>
                                  	<td class="center">
-                                 		${sumSaleRamt.itemShortName}
+                                 		${goodsInfo.itemBarcode} / ${goodsInfo.goodsName}
                                   	</td>
                                   	<td class="center">
-                                    	${sumSaleRamt.saleRamt}
+                                    	${goodsInfo.posQty}
                                   	</td>
                                   	<td class="center">
-                                    	${sumSaleRamt.saleRqty}
+                                    	${goodsInfo.posAmt}
                                   	</td>
                                   	<td class="center">
-                                    	<a href="#" onclick="detail_list('${sumSaleRamt.itemClsNo}');" class="btn btn-warning"/>明细排名</a>
+                                    	
                                   	</td>
                               	</tr>
                             	</c:forEach>

@@ -115,12 +115,28 @@ public class SalesDayTotalGoodsManager {
 	public List<SalesDayTotalGoods> getSumSaleInfoList(SalesDayTotalGoods salesDayTotalGoods) throws ParseException {
 		// 取得各店指定时间区间内的销售信息（按商品）
 		List<SalesDayTotalGoods> _sumSaleList = salesDayTotalGoodsMyBatisDao.getSumSaleInfoList(salesDayTotalGoods);
-		Long _span = DateUtils.getDateSpanDay(salesDayTotalGoods.getOptDateStart(), salesDayTotalGoods.getOptDateEnd(),
-				"yyyyMMdd");
+
+		// 计算日均销量
+		calAverageDailySales(_sumSaleList, salesDayTotalGoods.getOptDateStart(), salesDayTotalGoods.getOptDateEnd());
+
+		return _sumSaleList;
+	}
+
+	/**
+	 * 计算日均销量
+	 * 
+	 * @param sumSaleInfoList
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @throws ParseException
+	 */
+	private void calAverageDailySales(List<SalesDayTotalGoods> sumSaleInfoList, String optDateStart, String optDateEnd)
+			throws ParseException {
+		Long _span = DateUtils.getDateSpanDay(optDateStart, optDateEnd, "yyyyMMdd");
 		if (0 == _span) {
 			_span = (long) 1;
 		}
-		for (SalesDayTotalGoods _salesGoods : _sumSaleList) {
+		for (SalesDayTotalGoods _salesGoods : sumSaleInfoList) {
 			// 实销价格
 			if (_salesGoods.getPosQty().compareTo(BigDecimal.ZERO) == 0) {
 				_salesGoods.setAverageDailySales(new BigDecimal(0));
@@ -128,7 +144,6 @@ public class SalesDayTotalGoodsManager {
 				_salesGoods.setAverageDailySales(_salesGoods.getPosQty().divide(new BigDecimal(_span), 2, BigDecimal.ROUND_UP));
 			}
 		}
-		return _sumSaleList;
 	}
 
 	/**
@@ -169,5 +184,57 @@ public class SalesDayTotalGoodsManager {
 		param.setItemNo(itemNo);
 
 		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderAmt(param);
+	}
+
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（前15名）
+	 * 
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @param orgId
+	 * @param itemNo
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Top(String optDateStart, String optDateEnd, String orgId,
+			String itemNo) throws ParseException {
+		SalesDayTotalGoods param = new SalesDayTotalGoods();
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+		param.setOrgId(orgId);
+		param.setItemNo(itemNo);
+
+		List<SalesDayTotalGoods> _sumSaleList = salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderAmt_Top(param);
+
+		// 计算日均销量
+		calAverageDailySales(_sumSaleList, optDateStart, optDateEnd);
+
+		return _sumSaleList;
+	}
+
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（后15名）
+	 * 
+	 * @param optDateStart
+	 * @param optDateEnd
+	 * @param orgId
+	 * @param itemNo
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down(String optDateStart, String optDateEnd, String orgId,
+			String itemNo) throws ParseException {
+		SalesDayTotalGoods param = new SalesDayTotalGoods();
+		param.setOptDateStart(optDateStart);
+		param.setOptDateEnd(optDateEnd);
+		param.setOrgId(orgId);
+		param.setItemNo(itemNo);
+
+		List<SalesDayTotalGoods> _sumSaleList = salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderAmt_Down(param);
+
+		// 计算日均销量
+		calAverageDailySales(_sumSaleList, optDateStart, optDateEnd);
+
+		return _sumSaleList;
 	}
 }

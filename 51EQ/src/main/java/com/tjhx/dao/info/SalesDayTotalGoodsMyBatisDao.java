@@ -43,4 +43,20 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	 * @return
 	 */
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt(SalesDayTotalGoods salesDayTotalGoods);
+	
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（前15名）
+	 * 
+	 * @param salesDayTotalGoods
+	 * @return
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Top(SalesDayTotalGoods salesDayTotalGoods);
+	
+	/**
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（后15名）
+	 * 
+	 * @param salesDayTotalGoods
+	 * @return
+	 */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down(SalesDayTotalGoods salesDayTotalGoods);
 }

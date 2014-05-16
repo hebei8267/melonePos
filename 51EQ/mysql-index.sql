@@ -10,6 +10,9 @@ CREATE INDEX index_sales_day_total_goods_opt_date ON t_sales_day_total_goods(opt
 
 CREATE INDEX index_store_detail_org_id_item_subno ON t_store_detail(item_subno(16),org_id(32))
 
+CREATE INDEX index_sales_day_total_item_opt_date ON t_sales_day_total_item(opt_date(8))
+
+
 ALTER TABLE
     t_cash_run ADD (coupon_no VARCHAR(8))
 ALTER TABLE

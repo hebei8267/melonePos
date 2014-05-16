@@ -1,5 +1,6 @@
 package com.tjhx.web.report;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,12 @@ import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.entity.info.SalesDayTotalGoods;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.info.SalesDayTotalGoodsManager;
 import com.tjhx.service.info.SalesDayTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
@@ -30,6 +33,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private SalesDayTotalItemManager salesDayTotalItemManager;
+	@Resource
+	private SalesDayTotalGoodsManager salesDayTotalGoodsManager;
 
 	@RequestMapping(value = "bar_init")
 	public String salesDayChartReport1_Action(Model model) {
@@ -199,9 +204,46 @@ public class SalesDayItemChartReportController extends BaseController {
 
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
+		model.addAttribute("orgId", orgId);
 		model.addAttribute("orgName", orgId.substring(3));
 		model.addAttribute("sumSaleRamtList", _sumSaleRamtList);
 
 		return "report/salesDayItemChartReport_pie_detail_list";
+	}
+
+	/**
+	 * 某机构某商品大分类销售排名一览
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "org_goods_list")
+	public String orgGoodsList_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			ParseException {
+		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String itemNo = ServletRequestUtils.getStringParameter(request, "itemClsNo");
+
+		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
+		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top(_startDate, _endDate,
+				orgId, itemNo);
+		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down(_startDate,
+				_endDate, orgId, itemNo);
+
+		model.addAttribute("optDateStart", optDateStart);
+		model.addAttribute("optDateEnd", optDateEnd);
+		model.addAttribute("orgId", orgId);
+		model.addAttribute("orgName", orgId.substring(3));
+
+		model.addAttribute("topList", _topList);
+		model.addAttribute("downList", _downList);
+
+		return "report/salesDayItemChartReport_goods_list";
 	}
 }
