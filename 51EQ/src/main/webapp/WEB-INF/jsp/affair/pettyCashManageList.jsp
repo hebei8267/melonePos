@@ -58,6 +58,7 @@
 						this.value = $.trim(this.value);
 					});
 		
+					$("#listForm").attr('target', '_self');
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/search");
 					$("#listForm").submit();
 				});
@@ -80,6 +81,7 @@
 						this.value = $.trim(this.value);
 					});
 		
+					$("#listForm").attr('target', '_self');
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/audit");
 					$("#listForm").submit();
 				});
@@ -89,6 +91,7 @@
 						this.value = $.trim(this.value);
 					});
 		
+					$("#listForm").attr('target', '_self');
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/export");
 					$("#listForm").submit();
 				});

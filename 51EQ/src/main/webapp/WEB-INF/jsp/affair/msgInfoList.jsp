@@ -78,6 +78,7 @@
                         this.value = $.trim(this.value);
                     });
 
+					$("#searchForm").attr("target", "_self");
                     $("#searchForm").attr("action", "${sc_ctx}/msgInfo/search");
                     $("#searchForm").submit();
                 });
@@ -99,6 +100,8 @@
                 }
 
                 $("#uuids").val(uuids);
+                
+                $("#listForm").attr("target", "_self");
                 $("#listForm").attr("action", "${sc_ctx}/msgInfo/del");
                 $("#listForm").submit();
             }

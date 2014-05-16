@@ -44,6 +44,7 @@
 					this.value = $.trim(this.value);
 				});
 	
+				$("#searchForm").attr('target', '_self');
 				$("#searchForm").attr("action", "${sc_ctx}/pettyCash/carryOverSearch");
 				$("#searchForm").submit();
 			});
@@ -76,6 +77,7 @@
                     this.value = $.trim(this.value);
                 });
             	
+            	$("#listForm").attr('target', '_self');
                 $("#listForm").attr("action", "${sc_ctx}/pettyCash/carryOverConfirm");
                 $("#listForm").submit();
             });

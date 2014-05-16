@@ -41,7 +41,7 @@
 					});
 		
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics");
-					$("#listForm").attr('target', '_self').submit();
+					$("#listForm").attr('target', '_self');
 					$("#listForm").submit();
 				});
 				
@@ -51,7 +51,7 @@
 					});
 		
 					$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics_export");
-					$("#listForm").attr('target', '_self').submit();
+					$("#listForm").attr('target', '_self');
 					$("#listForm").submit();
 				});
 			});
@@ -67,7 +67,8 @@
 		
 				$("#orgId_detail_hidden").val(orgId);
 				$("#listForm").attr("action", "${sc_ctx}/pettyCash/analytics_detail");
-				$("#listForm").attr('target', '_blank').submit();
+				$("#listForm").attr('target', '_blank');
+				$("#listForm").submit();
 			}
 		</script>
 	</head>

@@ -183,6 +183,8 @@
                     $("input[type='text'],textarea").each(function(i) {
                         this.value = $.trim(this.value);
                     });
+                    
+                    $("#listForm").attr('target', '_self');
                     $("#listForm").attr("action", "${sc_ctx}/workType/save");
                     $("#listForm").submit();
                 });

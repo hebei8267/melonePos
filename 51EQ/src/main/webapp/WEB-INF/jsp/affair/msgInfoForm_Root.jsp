@@ -79,6 +79,7 @@
 						_funIdsItem2[i].selected = true;
 					}
 					
+					$("#inputForm").attr("target", "_self");
 					$("#inputForm").attr("action", "${sc_ctx}/msgInfo/save");
 					$("#inputForm").submit();
 				});

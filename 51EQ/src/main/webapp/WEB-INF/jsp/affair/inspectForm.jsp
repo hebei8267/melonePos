@@ -110,25 +110,26 @@
                      this.value = $.trim(this.value);
                  });
 
-                 $("#inputForm").attr("action", "${sc_ctx}/inspect/save");
-                 $("#inputForm").submit();
+				$("#inputForm").attr("target", "_self");
+				$("#inputForm").attr("action", "${sc_ctx}/inspect/save");
+				$("#inputForm").submit();
       		});
     		 
     		$("#initAmt").change(function() {
-    			 cashSubtotal();
-    			 adjustAmt();
+    			cashSubtotal();
+    			adjustAmt();
         	});
     		$("#cashAmt").change(function() {
-    			 cashSubtotal();
-    			 adjustAmt();
+    			cashSubtotal();
+    			adjustAmt();
          	});
     		$("#depositAmt").change(function() {
-    			 cashSubtotal();
-    			 adjustAmt();
+    			cashSubtotal();
+    			adjustAmt();
         	});
     		$("#saleCashAmt").change(function() {
-    			 cashSubtotal();
-    			 adjustAmt();
+    			cashSubtotal();
+    			adjustAmt();
          	});
     		
     		$("#imprestCalance").change(function() {
