@@ -50,7 +50,7 @@
                                         种类名称
                                     </th>
                                     <th class="center">
-                                        实销金额
+                                        实销金额 <span style="color: #FF9224">↓</span>
                                     </th>
                                     <th class="center">
                                         实销数量

@@ -168,35 +168,33 @@
 	<select id="getSalesItemRankInfoList_OrderAmt_Top" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
 	<![CDATA[
 		SELECT
-		    tt.*
+		    g.item_barcode,
+		    g.item_subno ,
+		    gs.name        AS goods_name,
+		    SUM(g.pos_amt) AS pos_amt ,
+		    SUM(g.pos_qty) AS pos_qty ,
+		    sup.name       AS sup_name ,
+		    sd.stock_qty
 		FROM
-		    (SELECT
-			    gs.name AS goods_name,
-			    g.item_barcode,
-			    SUM(g.pos_amt) AS pos_amt ,
-			    SUM(g.pos_qty) AS pos_qty,
-			    sd.stock_qty ,
-			    sd.stock_amt ,
-			    sup.name AS sup_name,
-			    sd.item_sale_amt
-			FROM
-			    t_sales_day_total_goods g,
-			    t_goods gs,
-			    t_supplier sup,
-			    t_store_detail sd
-			WHERE
-			    g.opt_date >= #{optDateStart}
-			AND g.opt_date <= #{optDateEnd}
-			AND g.org_id = #{orgId}
-			AND g.item_barcode = gs.barcode
-			AND gs.item_no = #{itemNo}
-			AND g.item_barcode = sd.item_barcode
-			AND gs.supplier_bw_id = sup.supplier_bw_id
-			GROUP BY
-			    g.item_barcode
-			ORDER BY
-			    pos_amt DESC
-	    	) tt LIMIT 20
+		    t_sales_day_total_goods g
+		LEFT JOIN
+		    t_store_detail sd
+		ON
+		    sd.item_subno = g.item_subno
+		AND sd.org_id = g.org_id,
+		    t_goods gs,
+		    t_supplier sup
+		WHERE
+		    g.opt_date >= #{optDateStart}
+		AND g.opt_date <= #{optDateEnd}
+		AND g.org_id = #{orgId}
+		AND g.item_barcode = gs.barcode
+		AND gs.item_no = #{itemNo}
+		AND gs.supplier_bw_id = sup.supplier_bw_id
+		GROUP BY
+		    g.item_barcode
+		ORDER BY
+		    pos_amt DESC LIMIT 20
 	]]>
 	</select>
 	
@@ -204,35 +202,33 @@
 	<select id="getSalesItemRankInfoList_OrderAmt_Down" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
 	<![CDATA[
 		SELECT
-		    tt.*
+		    g.item_barcode,
+		    g.item_subno ,
+		    gs.name        AS goods_name,
+		    SUM(g.pos_amt) AS pos_amt ,
+		    SUM(g.pos_qty) AS pos_qty ,
+		    sup.name       AS sup_name ,
+		    sd.stock_qty
 		FROM
-		    (SELECT
-			    gs.name AS goods_name,
-			    g.item_barcode,
-			    SUM(g.pos_amt) AS pos_amt ,
-			    SUM(g.pos_qty) AS pos_qty,
-			    sd.stock_qty ,
-			    sd.stock_amt ,
-			    sup.name AS sup_name,
-			    sd.item_sale_amt
-			FROM
-			    t_sales_day_total_goods g,
-			    t_goods gs,
-			    t_supplier sup,
-			    t_store_detail sd
-			WHERE
-			    g.opt_date >= #{optDateStart}
-			AND g.opt_date <= #{optDateEnd}
-			AND g.org_id = #{orgId}
-			AND g.item_barcode = gs.barcode
-			AND gs.item_no = #{itemNo}
-			AND g.item_barcode = sd.item_barcode
-			AND gs.supplier_bw_id = sup.supplier_bw_id
-			GROUP BY
-			    g.item_barcode
-			ORDER BY
-			    pos_amt ASC
-	    	) tt LIMIT 20
+		    t_sales_day_total_goods g
+		LEFT JOIN
+		    t_store_detail sd
+		ON
+		    sd.item_subno = g.item_subno
+		AND sd.org_id = g.org_id,
+		    t_goods gs,
+		    t_supplier sup
+		WHERE
+		    g.opt_date >= #{optDateStart}
+		AND g.opt_date <= #{optDateEnd}
+		AND g.org_id = #{orgId}
+		AND g.item_barcode = gs.barcode
+		AND gs.item_no = #{itemNo}
+		AND gs.supplier_bw_id = sup.supplier_bw_id
+		GROUP BY
+		    g.item_barcode
+		ORDER BY
+		    pos_amt ASC LIMIT 20
 	]]>
 	</select>
 </mapper>

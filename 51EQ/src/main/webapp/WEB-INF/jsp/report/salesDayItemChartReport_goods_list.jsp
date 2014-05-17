@@ -13,6 +13,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<style type="text/css">
+			._warn1 {
+				padding: 10px;
+				background-color: #00DB00;
+			}
+			._warn2 {
+				padding: 10px;
+				background-color: #FF9224;
+			}
+    	</style>
+    
     <script>	 	
 	 	function detail_list(){
 	 	}
@@ -34,17 +45,26 @@
                     
                     <div class="span12">
                     	<h4>统计时间  ${optDateStart} ～ ${optDateEnd}</h4>
+                    </div>
+                    
+                    <div class="span12">
+                    	<span class="_warn1">畅销商品</span>
+                    </div>
+                    <div class="span12">                    	
                     	<table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
+                                	<th class="center">
+                                        NO
+                                    </th>
                                     <th class="center">
-                                        货号 / 商品名称
+                                        货号商品名称
                                     </th>
                                     <th class="center">
                                         销售量
                                     </th>
                                     <th class="center">
-                                        销售金额
+                                        销售金额 <span style="color: #FF9224">↓</span>
                                     </th>
                                     <th class="center">
                                         日均销量
@@ -53,21 +73,21 @@
                                         库存量
                                     </th>
                                     <th class="center">
-                                        库存金额
+                                        供应商名称
                                     </th>
-                                    <th class="center">
-                                        进价 / 售价
-                                    </th>
-                                    <th	width="125">
+                                    <th	width="85">
                                         &nbsp;
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach items="${topList}" var="goodsInfo">
+                            	<c:forEach items="${topList}" var="goodsInfo" varStatus="status">
                             	<tr>
+                            		<td class="center">
+                                 		${status.index + 1}
+                                  	</td>
                                  	<td class="center">
-                                 		${goodsInfo.itemBarcode} / ${goodsInfo.goodsName}
+                                 		${goodsInfo.itemBarcode}<br>${goodsInfo.goodsName}
                                   	</td>
                                   	<td class="center">
                                     	${goodsInfo.posQty}
@@ -76,7 +96,82 @@
                                     	${goodsInfo.posAmt}
                                   	</td>
                                   	<td class="center">
-                                    	
+                                    	${goodsInfo.averageDailySales}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.stockQty}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.supName}
+                                  	</td>
+                                  	<td class="center">
+                                    	<a href="${sc_ctx}/salesWeekGoodsTotalReport/contrast/${goodsInfo.itemSubno}" target="_blank" class="btn btn-warning"/>门店对比</a>
+                                  	</td>
+                              	</tr>
+                            	</c:forEach>
+                            </tbody>
+                    	</table>
+                    </div>
+                    
+                    <div class="span12">
+                    	<span class="_warn2">滞销商品</span>
+                    </div>
+                    <div class="span12">
+                    	<table class="table	table-striped table-bordered table-condensed mytable">
+                            <thead>
+                                <tr>
+                                	<th class="center">
+                                        NO
+                                    </th>
+                                    <th class="center">
+                                        货号商品名称
+                                    </th>
+                                    <th class="center">
+                                        销售量
+                                    </th>
+                                    <th class="center">
+                                        销售金额 <span style="color: #FF9224">↓</span>
+                                    </th>
+                                    <th class="center">
+                                        日均销量
+                                    </th>
+                                    <th class="center">
+                                        库存量
+                                    </th>
+                                    <th class="center">
+                                        供应商名称
+                                    </th>
+                                    <th	width="85">
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<c:forEach items="${downList}" var="goodsInfo" varStatus="status">
+                            	<tr>
+                                 	<td class="center">
+                                 		${status.index + 1}
+                                  	</td>
+                                 	<td class="center">
+                                 		${goodsInfo.itemBarcode}<br>${goodsInfo.goodsName}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.posQty}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.posAmt}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.averageDailySales}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.stockQty}
+                                  	</td>
+                                  	<td class="center">
+                                    	${goodsInfo.supName}
+                                  	</td>
+                                  	<td class="center">
+                                    	<a href="${sc_ctx}/salesWeekGoodsTotalReport/contrast/${goodsInfo.itemSubno}" target="_blank" class="btn btn-warning"/>门店对比</a>
                                   	</td>
                               	</tr>
                             	</c:forEach>
