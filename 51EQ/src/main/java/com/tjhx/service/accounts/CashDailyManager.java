@@ -298,8 +298,10 @@ public class CashDailyManager {
 			_cashDaily.setCardNum(_cashDaily.getCardNum() + cashDaily.getCardNum());
 			// 存款金额
 			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(cashDaily.getDepositAmt()));
-			// 当日销售+代价卷
-			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()).add(cashDaily.getCouponValue()));
+			// 当日销售
+			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()));
+			// 代价卷
+			_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashDaily.getCouponValue()));
 			// 当日销售BW
 			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(cashDaily.getBwSaleAmt()));
 			// 汇报金额

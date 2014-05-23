@@ -133,7 +133,13 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额(现金/刷卡)<br>代金卷销售额
+                                        当日销售额<br>现金/刷卡
+                                    </th>
+                                    <th class="center">
+                                        代金卷<br>销售额
+                                    </th>
+                                    <th class="center">
+                                        当日销售额<br>合计
                                     </th>
                                     <th class="center">
                                         百威<br>对账
@@ -184,12 +190,16 @@
                                         </td>
                                         <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.couponValue - cashDaily.bwSaleAmt }" />
                                         <td class="center">
-                                     	<span <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#FF6633;color:#FFFFFF;padding:5px"</c:if>>
-                                        	合计 : ${cashDaily.saleAmt + cashDaily.couponValue}
-                                       	</span><br>
-                                        	${cashDaily.saleAmt}<br>
+                                        	${cashDaily.saleAmt}
+                                        </td>
+                                        <td class="center">
                                         	${cashDaily.couponValue}
                                         </td>
+                                        
+                                        <td class="center" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        	${cashDaily.saleAmt + cashDaily.couponValue}
+                                        </td>
+                                        
                                         <td class="center">
                                         	${cashDaily.bwSaleAmt}
                                         </td>
@@ -206,30 +216,31 @@
                                         <td	colspan="3">
                                             合计:
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${totalCashDaily.adjustAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${totalCashDaily.saleCashAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${totalCashDaily.cardAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${totalCashDaily.cardNum}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             ${totalCashDaily.depositAmt}
                                         </td>
-                                        <td>
+                                        <td></td>
+                                        <td class="center">${totalCashDaily.saleAmt}</td>
+                                        <td class="center">${totalCashDaily.couponValue}</td>
+                                        <td class="center">
+                                            ${totalCashDaily.saleAmt + totalCashDaily.couponValue}
                                         </td>
-                                        <td>
-                                            ${totalCashDaily.saleAmt}
-                                        </td>
-                                        <td>
+                                        <td class="center">
                                         	${totalCashDaily.bwSaleAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${totalCashDaily.reportAmt}
                                         </td>
                                         <td>
