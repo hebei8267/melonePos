@@ -303,6 +303,8 @@ public class CashDailyManager {
 			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()));
 			// 代价卷
 			_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashDaily.getCouponValue()));
+			// 代价卷
+			_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue().add(cashDaily.getCouponCashValue()));
 			// 当日销售BW
 			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(cashDaily.getBwSaleAmt()));
 			// 汇报金额
@@ -328,6 +330,9 @@ public class CashDailyManager {
 			_saleReport.setDepositAmt(_saleReport.getDepositAmt().add(saleReport.getDepositAmt()));
 			_saleReport.setSaleAmt(_saleReport.getSaleAmt().add(saleReport.getSaleAmt()));
 			_saleReport.setCardNum(_saleReport.getCardNum() + saleReport.getCardNum());
+
+			_saleReport.setCouponValue(_saleReport.getCouponValue().add(saleReport.getCouponValue()));
+			_saleReport.setCouponCashValue(_saleReport.getCouponCashValue().add(saleReport.getCouponCashValue()));
 		}
 		return _saleReport;
 	}

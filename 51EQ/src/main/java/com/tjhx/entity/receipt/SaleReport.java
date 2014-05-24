@@ -50,6 +50,10 @@ public class SaleReport {
 	private BigDecimal retainedAmt = new BigDecimal("0");
 	/** 当班销售-合计（销售现金+刷卡金额 ） */
 	private BigDecimal saleAmt = new BigDecimal("0");
+	/** 代金卷面值 */
+	private BigDecimal couponValue = new BigDecimal("0");
+	/** 代金卷实际值 */
+	private BigDecimal couponCashValue = new BigDecimal("0");
 
 	/**
 	 * 取得行号
@@ -411,6 +415,42 @@ public class SaleReport {
 		this.saleAmt = saleAmt;
 	}
 
+	/**
+	 * 获取代金卷面值
+	 * 
+	 * @return couponValue 代金卷面值
+	 */
+	public BigDecimal getCouponValue() {
+		return couponValue;
+	}
+
+	/**
+	 * 设置代金卷面值
+	 * 
+	 * @param couponValue 代金卷面值
+	 */
+	public void setCouponValue(BigDecimal couponValue) {
+		this.couponValue = couponValue;
+	}
+
+	/**
+	 * 获取代金卷实际值
+	 * 
+	 * @return couponCashValue 代金卷实际值
+	 */
+	public BigDecimal getCouponCashValue() {
+		return couponCashValue;
+	}
+
+	/**
+	 * 设置代金卷实际值
+	 * 
+	 * @param couponCashValue 代金卷实际值
+	 */
+	public void setCouponCashValue(BigDecimal couponCashValue) {
+		this.couponCashValue = couponCashValue;
+	}
+
 	public void addCashRunInfo_Cash(CashRun _cashRun) throws ParseException {
 		// 机构名称
 		this.orgName = _cashRun.getOrgName();
@@ -454,6 +494,11 @@ public class SaleReport {
 		this.saleAmt = _cashRun.getSaleAmt();
 		// 备注
 		this.descTxt = _cashRun.getDescTxt();
+
+		// 代金卷面值
+		this.couponValue = _cashRun.getCouponValue();
+		// 代金卷实际值
+		this.couponCashValue = _cashRun.getCouponCashValue();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {

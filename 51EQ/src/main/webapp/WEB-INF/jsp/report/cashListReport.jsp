@@ -1,5 +1,6 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
@@ -121,10 +122,7 @@
                                         当日<br>收现
                                     </th>
                                     <th class="center">
-                                        刷卡<br>金额(单)
-                                    </th>
-                                    <th class="center">
-                                        刷卡<br>笔数
+                                        刷卡<br>金额
                                     </th>
                                     <th class="center">
                                         存款<br>金额
@@ -139,13 +137,19 @@
                                         代金卷<br>销售额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>合计
+                                        代金卷<br>价值
+                                    </th>
+                                    <th class="center">
+                                        销售额<br>合计
                                     </th>
                                     <th class="center">
                                         百威<br>对账
                                     </th>
                                     <th class="center">
-                                        商场汇报<br>销售额
+                                        销售额<br>价值合计
+                                    </th>
+                                    <th class="center">
+                                        报商场<br>销售额
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -159,7 +163,7 @@
                                         	${cashDaily.orgName}
                                         </td>
                                         <td class="center">
-                                        	${cashDaily.optDateShow}
+                                        	${cashDaily.optDate}
                                         </td>
                                         <td class="center">
                                         	${cashDaily.initAmt}
@@ -172,9 +176,6 @@
                                         </td>
                                         <td class="center" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.cardAmt}
-                                        </td>
-                                        <td class="center">
-                                        	${cashDaily.cardNum}
                                         </td>
                                         <td class="center">
                                         	<c:if test="${cashDaily.depositAmt > 0 && cashDaily.bankCheckFlg == 1}">
@@ -195,6 +196,9 @@
                                         <td class="center">
                                         	${cashDaily.couponValue}
                                         </td>
+                                        <td class="center">
+                                        	${cashDaily.couponCashValue}
+                                        </td>
                                         
                                         <td class="center" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.saleAmt + cashDaily.couponValue}
@@ -202,6 +206,9 @@
                                         
                                         <td class="center">
                                         	${cashDaily.bwSaleAmt}
+                                        </td>
+                                        <td class="center">
+                                        	${cashDaily.saleAmt + cashDaily.couponCashValue}
                                         </td>
                                         <td class="center">
                                         	${cashDaily.reportAmt}
@@ -226,19 +233,20 @@
                                             ${totalCashDaily.cardAmt}
                                         </td>
                                         <td class="center">
-                                            ${totalCashDaily.cardNum}
-                                        </td>
-                                        <td class="center">
                                             ${totalCashDaily.depositAmt}
                                         </td>
                                         <td></td>
                                         <td class="center">${totalCashDaily.saleAmt}</td>
                                         <td class="center">${totalCashDaily.couponValue}</td>
+                                       	<td class="center">${totalCashDaily.couponCashValue}</td>
                                         <td class="center">
                                             ${totalCashDaily.saleAmt + totalCashDaily.couponValue}
                                         </td>
                                         <td class="center">
                                         	${totalCashDaily.bwSaleAmt}
+                                        </td>
+                                        <td class="center">
+                                            ${totalCashDaily.saleAmt + totalCashDaily.couponCashValue}
                                         </td>
                                         <td class="center">
                                         	${totalCashDaily.reportAmt}
