@@ -16,11 +16,13 @@ import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalGoods;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.info.ItemTypeManager;
 import com.tjhx.service.info.SalesDayTotalGoodsManager;
 import com.tjhx.service.info.SalesDayTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -35,6 +37,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	private SalesDayTotalItemManager salesDayTotalItemManager;
 	@Resource
 	private SalesDayTotalGoodsManager salesDayTotalGoodsManager;
+	@Resource
+	private ItemTypeManager itemTypeManager;
 
 	@RequestMapping(value = "bar_init")
 	public String salesDayChartReport1_Action(Model model) {
@@ -235,7 +239,9 @@ public class SalesDayItemChartReportController extends BaseController {
 				orgId, itemNo);
 		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down(_startDate,
 				_endDate, orgId, itemNo);
+		ItemType itemType = itemTypeManager.getByItemNo(itemNo);
 
+		model.addAttribute("itemType", itemType);
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
 		model.addAttribute("orgId", orgId);

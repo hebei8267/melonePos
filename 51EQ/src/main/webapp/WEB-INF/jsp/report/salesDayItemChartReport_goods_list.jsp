@@ -39,7 +39,7 @@
         		<div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>${orgName} 类别()销售排名</h3>
+                            <h3>${orgName} (${itemType.itemShortName})类别 销售排名</h3>
                         </legend>
                     </div>
                     

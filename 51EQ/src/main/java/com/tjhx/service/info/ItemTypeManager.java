@@ -28,6 +28,22 @@ public class ItemTypeManager {
 	@Resource
 	private ItemTypeClsMyBatisDao itemTypeClsMyBatisDao;
 
+	/**取得商品种类信息
+	 * @param itemNo 商品编号种类
+	 * @return
+	 */
+	public ItemType getByItemNo(String itemNo) {
+		List<ItemType> _itemTypeList = getAllItemType();
+
+		for (ItemType itemType : _itemTypeList) {
+			if (itemType.getItemNo().equals(itemNo)) {
+				return itemType;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * 取得所有商品种类信息
 	 * 
@@ -39,8 +55,7 @@ public class ItemTypeManager {
 
 		if (null == _itemTypeList) {
 			// 从数据库中取出商品种类信息(List格式)
-			_itemTypeList = (List<ItemType>) itemTypeJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC,
-					"itemNo")));
+			_itemTypeList = (List<ItemType>) itemTypeJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "itemNo")));
 			// 将商品种类信息Map保存到memcached
 			spyMemcachedClient.set(MemcachedObjectType.ITEM_TYPE_LIST.getObjKey(),
 					MemcachedObjectType.ITEM_TYPE_LIST.getExpiredTime(), _itemTypeList);
@@ -59,8 +74,8 @@ public class ItemTypeManager {
 	@Transactional(readOnly = false)
 	public void bwDataSyn() {
 		List<ItemTypeCls> _bwList = itemTypeClsMyBatisDao.getItemTypeClsList();
-		List<ItemType> _itemTypeList = (List<ItemType>) itemTypeJpaDao.findAll(new Sort(new Sort.Order(
-				Sort.Direction.ASC, "itemNo")));
+		List<ItemType> _itemTypeList = (List<ItemType>) itemTypeJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC,
+				"itemNo")));
 
 		for (ItemTypeCls itemTypeCls : _bwList) {
 			// 见ItemTypeCls.java的equals实现
