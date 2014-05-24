@@ -95,7 +95,7 @@ public class CouponController extends BaseController {
 	@RequestMapping(value = "edit/{couponNo}")
 	public String editUser_Action(@PathVariable("couponNo") String couponNo, Model model) {
 
-		List<Coupon> _cList = couponManager.findByCouponNo(couponNo);
+		List<Coupon> _cList = couponManager.getByCouponNo(couponNo);
 		if (null == _cList || _cList.size() == 0) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/coupon/list";
 		} else {
@@ -183,7 +183,7 @@ public class CouponController extends BaseController {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
-				List<Coupon> _cList = couponManager.findByCouponNo(coupon.getCouponNo());
+				List<Coupon> _cList = couponManager.getByCouponNo(coupon.getCouponNo());
 				// 初始化备选/已选机构列表
 				init_allOrgList_appOrgList_edit(_cList, model);
 

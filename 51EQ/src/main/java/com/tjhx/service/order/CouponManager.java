@@ -134,7 +134,21 @@ public class CouponManager {
 	 * @param couponNo 代金卷编号
 	 * @return 代金卷信息
 	 */
-	public List<Coupon> findByCouponNo(String couponNo) {
+	public Coupon getOneByCouponNo(String couponNo) {
+		List<Coupon> _list = getByCouponNo(couponNo);
+		if (null != _list && _list.size() > 0) {
+			return _list.get(0);
+		}
+		return null;
+	}
+
+	/**
+	 * 取得代金卷信息
+	 * 
+	 * @param couponNo 代金卷编号
+	 * @return 代金卷信息
+	 */
+	public List<Coupon> getByCouponNo(String couponNo) {
 		return couponJpaDao.findByCouponNo(couponNo, new Sort(new Sort.Order(Sort.Direction.ASC, "orgId")));
 	}
 
@@ -148,7 +162,7 @@ public class CouponManager {
 		// 消除代金卷信息缓存
 		spyMemcachedClient.delete(MemcachedObjectType.COUPON_TYPE_LIST.getObjKey());
 
-		List<Coupon> _dbCouponList = findByCouponNo(coupon.getCouponNo());
+		List<Coupon> _dbCouponList = getByCouponNo(coupon.getCouponNo());
 		// 该代金卷已存在!
 		if (null != _dbCouponList && _dbCouponList.size() > 0) {
 			throw new ServiceException("ERR_MSG_COUPON_001");
@@ -186,7 +200,7 @@ public class CouponManager {
 	@Transactional(readOnly = false)
 	public void updateCoupon(Coupon coupon) {
 
-		List<Coupon> _dbCouponList = findByCouponNo(coupon.getCouponNo());
+		List<Coupon> _dbCouponList = getByCouponNo(coupon.getCouponNo());
 		// 该代金卷不存在!
 		if (null == _dbCouponList || _dbCouponList.size() == 0) {
 			throw new ServiceException("ERR_MSG_COUPON_002");

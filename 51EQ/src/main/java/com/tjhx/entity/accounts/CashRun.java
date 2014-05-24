@@ -74,6 +74,8 @@ public class CashRun extends IdEntity {
 	private String couponNo;
 	/** 代金卷面值 */
 	private BigDecimal couponValue = new BigDecimal("0");
+	/** 代金卷实际值 */
+	private BigDecimal couponCashValue = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -490,6 +492,24 @@ public class CashRun extends IdEntity {
 	 */
 	public void setCouponValue(BigDecimal couponValue) {
 		this.couponValue = couponValue;
+	}
+
+	/**
+	 * 获取代金卷实际值
+	 * 
+	 * @return couponCashValue 代金卷实际值
+	 */
+	public BigDecimal getCouponCashValue() {
+		return couponCashValue;
+	}
+
+	/**
+	 * 设置代金卷实际值
+	 * 
+	 * @param couponCashValue 代金卷实际值
+	 */
+	public void setCouponCashValue(BigDecimal couponCashValue) {
+		this.couponCashValue = couponCashValue;
 	}
 
 	/**

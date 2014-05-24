@@ -223,6 +223,7 @@ public class CashDailyManager {
 			// 代金卷面值
 			if (null != cashRun.getCouponValue()) {
 				_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashRun.getCouponValue()));
+				_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue().add(cashRun.getCouponCashValue()));
 			}
 		}
 		// 生成销售日结信息

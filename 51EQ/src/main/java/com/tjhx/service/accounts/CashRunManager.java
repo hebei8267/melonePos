@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,10 @@ import com.tjhx.dao.accounts.CashRunMyBatisDao;
 import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.accounts.CashRun;
 import com.tjhx.entity.member.User;
+import com.tjhx.entity.order.Coupon;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
+import com.tjhx.service.order.CouponManager;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,6 +34,8 @@ public class CashRunManager {
 	private CashRunMyBatisDao cashRunMyBatisDao;
 	@Resource
 	private CashDailyJpaDao cashDailyJpaDao;
+	@Resource
+	private CouponManager couponManager;
 
 	/**
 	 * 取得所有销售流水信息
@@ -168,8 +173,26 @@ public class CashRunManager {
 		cashRun.setOptDateY(DateUtils.transDateFormat(_date, "yyyyMMdd", "yyyy"));
 		// 日期-月
 		cashRun.setOptDateM(DateUtils.transDateFormat(_date, "yyyyMMdd", "MM"));
+		// 代金卷实际值
+		cashRun.setCouponCashValue(calCouponCashValue(cashRun));
 
 		cashRunJpaDao.save(cashRun);
+	}
+
+	/**
+	 * 计算代金卷实际值
+	 * 
+	 * @param cashRun
+	 * @return
+	 */
+	private BigDecimal calCouponCashValue(CashRun cashRun) {
+		if (StringUtils.isNotBlank(cashRun.getCouponNo())) {
+			Coupon coupon = couponManager.getOneByCouponNo(cashRun.getCouponNo());
+
+			return coupon.getRate().multiply(cashRun.getCouponValue());
+		}
+
+		return new BigDecimal("0");
 	}
 
 	/**
@@ -248,6 +271,11 @@ public class CashRunManager {
 		_dbCashRun.setSaleCashAmt(cashRun.getSaleCashAmt());
 		// 汇报金额
 		_dbCashRun.setReportAmt(cashRun.getReportAmt());
+		// -------------------------------2014-5-24
+		// 代金卷面值
+		_dbCashRun.setCouponValue(cashRun.getCouponValue());
+		// 代金卷实际值
+		_dbCashRun.setCouponCashValue(calCouponCashValue(cashRun));
 
 		cashRunJpaDao.save(_dbCashRun);
 	}
