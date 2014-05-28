@@ -53,8 +53,7 @@ public class SalesDayTotalItemManager {
 				_param.setOptDate(optDate);
 				_param.setBranchNo(org.getBwBranchNo());
 
-				List<DailySaleTotalItem> _dailySaleTotalList = dailySaleTotalItemMyBatisDao
-						.getDailySaleTotalList(_param);
+				List<DailySaleTotalItem> _dailySaleTotalList = dailySaleTotalItemMyBatisDao.getDailySaleTotalList(_param);
 
 				for (DailySaleTotalItem _bwDailySaleTotal : _dailySaleTotalList) {
 					SalesDayTotalItem _salesDay = new SalesDayTotalItem();
@@ -91,8 +90,8 @@ public class SalesDayTotalItemManager {
 					if (_bwDailySaleTotal.getSaleRqty().compareTo(BigDecimal.ZERO) == 0) {
 						_salesDay.setSalePrice(new BigDecimal(0));
 					} else {
-						_salesDay.setSalePrice(_bwDailySaleTotal.getSaleRamt().divide(_bwDailySaleTotal.getSaleRqty(),
-								2, BigDecimal.ROUND_UP));
+						_salesDay.setSalePrice(_bwDailySaleTotal.getSaleRamt().divide(_bwDailySaleTotal.getSaleRqty(), 2,
+								BigDecimal.ROUND_UP));
 					}
 
 					salesDayTotalItemJpaDao.save(_salesDay);
@@ -153,8 +152,8 @@ public class SalesDayTotalItemManager {
 			if (salesDayTotalItem.getSaleRqty().compareTo(BigDecimal.ZERO) == 0) {
 				salesDayTotalItem.setSalePrice(new BigDecimal(0));
 			} else {
-				salesDayTotalItem.setSalePrice(salesDayTotalItem.getSaleRamt().divide(salesDayTotalItem.getSaleRqty(),
-						2, BigDecimal.ROUND_UP));
+				salesDayTotalItem.setSalePrice(salesDayTotalItem.getSaleRamt().divide(salesDayTotalItem.getSaleRqty(), 2,
+						BigDecimal.ROUND_UP));
 			}
 		}
 		return _res;

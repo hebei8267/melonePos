@@ -251,7 +251,8 @@
                     || _permIdList.contains('32') || _permIdList.contains('33') || _permIdList.contains('34')
                     || _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
                     || _permIdList.contains('38') || _permIdList.contains('39')
-                    || _permIdList.contains('42') || _permIdList.contains('43')}">
+                    || _permIdList.contains('42') || _permIdList.contains('43')
+                    || _permIdList.contains('49')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -347,6 +348,14 @@
 		                    	<li class="divider"></li>
 			                 	<li>
 	                                <a href="${sc_ctx}/supplierSignRun/init_boss">供应商(挂账)结算进度表</a>
+	                            </li>
+		                    </c:if>
+		                    
+		                    <%//总部-普通人员用%>
+		                    <c:if test="${_permIdList.contains('49')}">
+		                    	<li class="divider"></li>
+			                 	<li>
+	                                <a href="${sc_ctx}/monthSaleTarget/init">机构月销售目标管理</a>
 	                            </li>
 		                    </c:if>
                         </ul>

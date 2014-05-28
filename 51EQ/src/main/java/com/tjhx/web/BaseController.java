@@ -1,8 +1,10 @@
 package com.tjhx.web;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -157,5 +159,20 @@ public class BaseController {
 		user.getRole().initPermIdList(functionManager.getAllFunction());
 
 		session.setAttribute(Constants.SESSION_USER_INFO, user);
+	}
+
+	/**
+	 * 取得操作年信息列表
+	 * 
+	 * @return
+	 */
+	protected Map<String, String> getOptYearList() {
+		Map<String, String> yearList = new LinkedHashMap<String, String>();
+
+		yearList.put("", "");
+		yearList.put("2014", "2014");
+		yearList.put("2015", "2015");
+
+		return yearList;
 	}
 }

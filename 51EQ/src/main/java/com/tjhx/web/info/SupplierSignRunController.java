@@ -37,13 +37,7 @@ public class SupplierSignRunController extends BaseController {
 	private SupplierManager supplierManager;
 
 	private void initYearList(Model model) {
-		Map<String, String> yearList = new LinkedHashMap<String, String>();
-
-		yearList.put("", "");
-		yearList.put("2014", "2014");
-		yearList.put("2015", "2015");
-
-		model.addAttribute("yearList", yearList);
+		model.addAttribute("yearList", getOptYearList());
 	}
 
 	private void initSupplierList(Model model) {
@@ -140,7 +134,7 @@ public class SupplierSignRunController extends BaseController {
 		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
 		model.addAttribute("supplierBwId", supplierBwId);
 
-		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY,supplierBwId);
+		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY, supplierBwId);
 
 		model.addAttribute("supSignRunList", _supSignRunList);
 	}
@@ -154,8 +148,7 @@ public class SupplierSignRunController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "editInit/{supId}/{optDateY}")
-	public String edit_Action(@PathVariable("supId") String supId, @PathVariable("optDateY") String optDateY,
-			Model model) {
+	public String edit_Action(@PathVariable("supId") String supId, @PathVariable("optDateY") String optDateY, Model model) {
 		model.addAttribute("supId", supId);
 		model.addAttribute("optDateY", optDateY);
 		model.addAttribute("supName", supplierManager.getSupplierByBwId(supId).getName());
@@ -181,8 +174,7 @@ public class SupplierSignRunController extends BaseController {
 		// 流水类型
 		String runType = ServletRequestUtils.getStringParameter(request, "runType");
 
-		SupplierSignRun _dbRun = supplierSignRunManager.findSupplierSignRunByNaturalId(supplierBwId, optDateY,
-				optDateM, runType);
+		SupplierSignRun _dbRun = supplierSignRunManager.findSupplierSignRunByNaturalId(supplierBwId, optDateY, optDateM, runType);
 
 		if (null != _dbRun && StringUtils.isNotBlank(_dbRun.getCheckNoticeDate())) {
 			_dbRun.setCheckNoticeDate(DateUtils.transDateFormat(_dbRun.getCheckNoticeDate(), "yyyyMMdd", "yyyy-MM-dd"));
@@ -214,8 +206,7 @@ public class SupplierSignRunController extends BaseController {
 	 * @throws IllegalAccessException
 	 */
 	@RequestMapping(value = "clean")
-	public String clean_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
+	public String clean_Action(Model model, HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
 		SupplierSignRun run = new SupplierSignRun();
 
 		BeanUtils.populate(run, request.getParameterMap());
