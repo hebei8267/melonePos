@@ -52,6 +52,8 @@ public class SalesDayTotal extends IdEntity {
 	private BigDecimal dayNeededPosAmt;
 	/** 排名 */
 	private int ranking;
+	/** 月销售目标额 */
+	private BigDecimal saleTargetAmt = new BigDecimal(0);
 	// ========================================================
 	/** 颜色 */
 	private String htmlColor;
@@ -343,6 +345,24 @@ public class SalesDayTotal extends IdEntity {
 	}
 
 	/**
+	 * 获取月销售目标额
+	 * 
+	 * @return saleTargetAmt 月销售目标额
+	 */
+	public BigDecimal getSaleTargetAmt() {
+		return saleTargetAmt;
+	}
+
+	/**
+	 * 设置月销售目标额
+	 * 
+	 * @param saleTargetAmt 月销售目标额
+	 */
+	public void setSaleTargetAmt(BigDecimal saleTargetAmt) {
+		this.saleTargetAmt = saleTargetAmt;
+	}
+
+	/**
 	 * 取得颜色
 	 * 
 	 * @return htmlColor 颜色
@@ -367,8 +387,7 @@ public class SalesDayTotal extends IdEntity {
 			return false;
 		}
 		SalesDayTotal rhs = (SalesDayTotal) obj;
-		return new EqualsBuilder().append(this.getOptDate(), rhs.getOptDate()).append(this.getOrgId(), rhs.getOrgId())
-				.isEquals();
+		return new EqualsBuilder().append(this.getOptDate(), rhs.getOptDate()).append(this.getOrgId(), rhs.getOrgId()).isEquals();
 	}
 
 }

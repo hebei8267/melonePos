@@ -214,11 +214,11 @@ public class SalesDayChartReportController extends BaseController {
 		_orgList.remove(new Organization(Constants.ROOT_ORG_ID));
 		model.addAttribute("orgList", _orgList);
 
-		// 取得指定时间区间（近30天）
+		// 取得指定时间区间（近40天）
 		List<String> _optDateList = calOptDate(_optDate);
 		model.addAttribute("optDateList", _optDateList);
 
-		// 取得指定机构近期(近30天)的销售增长率
+		// 取得指定机构近期(近40天)的销售增长率
 		List<List<SalesDayTotal>> _posAmtRateList = initPosAmtRateList(_optDateList, _orgList);
 
 		model.addAttribute("posAmtRateList", _posAmtRateList);
@@ -300,7 +300,7 @@ public class SalesDayChartReportController extends BaseController {
 	}
 
 	/**
-	 * 取得指定时间区间（近30天）
+	 * 取得指定时间区间（近40天）
 	 * 
 	 * @param optDate
 	 * @return
@@ -309,7 +309,7 @@ public class SalesDayChartReportController extends BaseController {
 	private List<String> calOptDate(String optDate) throws ParseException {
 		List<String> _optDateList = new ArrayList<String>();
 		_optDateList.add(optDate);
-		for (int i = 1; i < 31; i++) {
+		for (int i = 1; i < 41; i++) {
 			String _optDate = DateUtils.getNextDateFormatDate(optDate, -i, "yyyyMMdd");
 
 			_optDateList.add(_optDate);

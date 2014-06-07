@@ -26,6 +26,7 @@ import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.accounts.MonthSaleTargetManager;
 import com.tjhx.service.struct.OrganizationManager;
 
 @Service
@@ -41,6 +42,8 @@ public class SalesDayTotalManager {
 	private SalesDayTotalMyBatisDao salesDayTotalMyBatisDao;
 	@Resource
 	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
+	@Resource
+	private MonthSaleTargetManager monthSaleTargetManager;
 
 	private Set<String> _calYM = new HashSet<String>();
 	private Map<String, BigDecimal> _orgYMPosAmt = new HashMap<String, BigDecimal>();
@@ -201,9 +204,13 @@ public class SalesDayTotalManager {
 				if (0 == _d) {
 					_d = 1;
 				}
-				// 日需销售金额=(去年同期销售-截止金额)/(本月天数-截止天数)
-				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getPreYearMonthPosAmt()
-						.subtract(_salesDayTotal.getPosAmtByNow()).divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
+				// 月销售目标额
+				_salesDayTotal.setSaleTargetAmt(monthSaleTargetManager.getMonthSaleTargetAmt(_salesDayTotal.getOrgId(),
+						_salesDayTotal.getOptDateY(), _salesDayTotal.getOptDateM()));
+
+				// 日需销售金额=(月销售目标额-截止金额)/(本月天数-截止天数)
+				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt().subtract(_salesDayTotal.getPosAmtByNow())
+						.divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
 
 				salesDayTotalJpaDao.save(_salesDayTotal);
 			}
