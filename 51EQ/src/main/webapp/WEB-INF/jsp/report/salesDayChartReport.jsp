@@ -36,7 +36,7 @@
 								<iframe src="${sc_ctx}/salesDayChartReport/init_tab1" frameborder="0" width="100%" height="800"></iframe>
 			              	</div>
 							<div class="tab-pane fade" id="_tab2" style="overflow: auto;-webkit-overflow-scrolling: touch;">
-								<iframe src="${sc_ctx}/salesDayChartReport/init_tab2" frameborder="0" width="100%" height="1300"></iframe>
+								<iframe src="${sc_ctx}/salesDayChartReport/init_tab2" frameborder="0" width="100%" height="1650"></iframe>
 	                		</div>
 	            		</div>
             		</div>

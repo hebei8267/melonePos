@@ -121,7 +121,7 @@
                 <form method="post"	class="form-inline"	id="searchForm">
                     <div class="span12">
                         <legend>
-                            <h3>门店巡查报告</h3>
+                            <h3>门店巡查报告(财务)</h3>
                         </legend>
                     </div>
                     <div class="span5">

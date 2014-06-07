@@ -355,15 +355,24 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm34.setRole(role);
 //		perm34.setFunction(fun34);
 //		permissionJpaDao.save(perm34);
+//		
+//		// ---------------------------------------------
+//		// 月销售目标管理
+//		// ---------------------------------------------
+//		Permission perm49 = new Permission();
+//		Function fun49 = functionJpaDao.findOne(49);
+//		perm49.setRole(role);
+//		perm49.setFunction(fun49);
+//		permissionJpaDao.save(perm49);
 		
 		// ---------------------------------------------
-		// 月销售目标管理
+		// 门店巡查报告(运营)
 		// ---------------------------------------------
-		Permission perm49 = new Permission();
-		Function fun49 = functionJpaDao.findOne(49);
-		perm49.setRole(role);
-		perm49.setFunction(fun49);
-		permissionJpaDao.save(perm49);
+		Permission perm50 = new Permission();
+		Function fun50 = functionJpaDao.findOne(50);
+		perm50.setRole(role);
+		perm50.setFunction(fun50);
+		permissionJpaDao.save(perm50);
 	}
 
 //	// 总部人员-会计
@@ -657,14 +666,23 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm44.setFunction(fun44);
 //		permissionJpaDao.save(perm44);
 //
+//		// ---------------------------------------------
+//		// 月销售目标管理
+//		// ---------------------------------------------
+//		Permission perm49 = new Permission();
+//		Function fun49 = functionJpaDao.findOne(49);
+//		perm49.setRole(role);
+//		perm49.setFunction(fun49);
+//		permissionJpaDao.save(perm49);
+		
 		// ---------------------------------------------
-		// 月销售目标管理
+		// 门店巡查报告(运营)
 		// ---------------------------------------------
-		Permission perm49 = new Permission();
-		Function fun49 = functionJpaDao.findOne(49);
-		perm49.setRole(role);
-		perm49.setFunction(fun49);
-		permissionJpaDao.save(perm49);
+		Permission perm50 = new Permission();
+		Function fun50 = functionJpaDao.findOne(50);
+		perm50.setRole(role);
+		perm50.setFunction(fun50);
+		permissionJpaDao.save(perm50);
 	}
 //
 //	// 总部人员-库管
@@ -983,15 +1001,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm47.setRole(role);
 //		perm47.setFunction(fun47);
 //		permissionJpaDao.save(perm47);
-		
-		// ---------------------------------------------
-		// 月销售目标管理
-		// ---------------------------------------------
-		Permission perm49 = new Permission();
-		Function fun49 = functionJpaDao.findOne(49);
-		perm49.setRole(role);
-		perm49.setFunction(fun49);
-		permissionJpaDao.save(perm49);
+//		
+//		// ---------------------------------------------
+//		// 月销售目标管理
+//		// ---------------------------------------------
+//		Permission perm49 = new Permission();
+//		Function fun49 = functionJpaDao.findOne(49);
+//		perm49.setRole(role);
+//		perm49.setFunction(fun49);
+//		permissionJpaDao.save(perm49);
 	}
 
 //	// 店长

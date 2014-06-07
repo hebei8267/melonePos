@@ -384,7 +384,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //	public void saveNewFun29() {
 //		Function fun = new Function();
 //		// 功能显示名称
-//		fun.setDisplayName("门店巡查报告");
+//		fun.setDisplayName("门店巡查报告(财务)");
 //		// 功能URL */
 //		fun.setFunUrl("inspect");
 //
@@ -625,15 +625,27 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun49() {
+//		Function fun = new Function();
+//		// 功能显示名称--门店
+//		fun.setDisplayName("月销售目标管理");
+//		// 功能URL */
+//		fun.setFunUrl("monthSaleTarget/init");
+//
+//		functionJpaDao.save(fun);
+//	}
 	
 	@Test
 	@Rollback(false)
-	public void saveNewFun49() {
+	public void saveNewFun50() {
 		Function fun = new Function();
 		// 功能显示名称--门店
-		fun.setDisplayName("月销售目标管理");
+		fun.setDisplayName("门店巡查报告(运营)");
 		// 功能URL */
-		fun.setFunUrl("monthSaleTarget/init");
+		fun.setFunUrl("runInspect/list");
 
 		functionJpaDao.save(fun);
 	}

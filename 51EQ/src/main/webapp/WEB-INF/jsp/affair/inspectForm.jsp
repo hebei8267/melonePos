@@ -202,7 +202,7 @@
             <div class="row">
             	<div class="span12">
                     <legend>
-                        <h3>门店巡查报告
+                        <h3>门店巡查报告(财务)
                         <c:if test="${empty	inspect.uuid}">
                             新增
                         </c:if>

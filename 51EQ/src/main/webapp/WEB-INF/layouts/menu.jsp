@@ -252,7 +252,7 @@
                     || _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
                     || _permIdList.contains('38') || _permIdList.contains('39')
                     || _permIdList.contains('42') || _permIdList.contains('43')
-                    || _permIdList.contains('49')}">
+                    || _permIdList.contains('49') || _permIdList.contains('50')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -293,7 +293,15 @@
                             <c:if test="${_permIdList.contains('29')}">
                             	<li class="divider"></li>
 	                            <li>
-	                                <a href="${sc_ctx}/inspect">门店巡查报告</a>
+	                                <a href="${sc_ctx}/inspect">门店巡查报告(财务)</a>
+	                            </li>
+                            </c:if>
+                            <c:if test="${!_permIdList.contains('29') && _permIdList.contains('50')}">
+                            	<li class="divider"></li>
+                            </c:if>
+                            <c:if test="${_permIdList.contains('50')}">
+	                            <li>
+	                                <a href="${sc_ctx}/runInspect/list">门店巡查报告(运营)</a>
 	                            </li>
                             </c:if>
                             
