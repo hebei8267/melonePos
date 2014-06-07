@@ -12,7 +12,7 @@ import org.hibernate.annotations.NaturalId;
 import com.tjhx.entity.IdEntity;
 
 /**
- * 门店巡查报告
+ * 门店巡查报告(财务)
  */
 @Entity
 @Table(name = "T_INSPECT")
