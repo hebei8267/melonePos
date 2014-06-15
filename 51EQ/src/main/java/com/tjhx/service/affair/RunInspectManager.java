@@ -27,19 +27,29 @@ public class RunInspectManager {
 	private RunInspectDetailMyBatisDao runInspectDetailMyBatisDao;
 
 	/**
-	 * 删除RunInspect信息
+	 * 删除门店巡查报告(运营)信息
 	 * 
 	 * @param uuid RunInspect编号
 	 */
 	@Transactional(readOnly = false)
 	public void delRunInspectByUuid(Integer uuid) {
-		RunInspect run = runInspectJpaDao.findOne(uuid);
+		RunInspect run = getRunInspectByUuid(uuid);
 
 		if (null != run) {
 			runInspectDetailMyBatisDao.delRunInspectInfo(run.getTrsId());
 		}
 
 		runInspectJpaDao.delete(run);
+	}
+
+	/**
+	 * 取得门店巡查报告(运营)信息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public RunInspect getRunInspectByUuid(Integer uuid) {
+		return runInspectJpaDao.findOne(uuid);
 	}
 
 	/**
@@ -116,6 +126,16 @@ public class RunInspectManager {
 	}
 
 	/**
+	 * 取得门店巡查报告(运营)-明细信息
+	 * 
+	 * @param trsId
+	 * @return
+	 */
+	public List<RunInspectDetail> getRunInspectDetailList(String trsId) {
+		return runInspectDetailJpaDao.getRunInspectDetailList(trsId);
+	}
+
+	/**
 	 * 添加门店巡查报告(运营)-明细信息
 	 * 
 	 * @param trsId
@@ -174,8 +194,52 @@ public class RunInspectManager {
 	@Transactional(readOnly = false)
 	public void updateRunInspect(String orgId, String dutyPerson, String optDate, String assessors, String comments,
 			String feedback, String goodsIssue, String penaltyCase, String trainingStatistics, String inventoryStatistics,
-			String[] typeNos, String[] ids, boolean[] itemSelect) {
-		// TODO Auto-generated method stub
+			String[] typeNos, String[] ids, boolean[] itemSelect, int score1, int score2) {
+		String trsId = optDate + orgId;
+
+		RunInspect _dbrun = runInspectJpaDao.findByTrsId(trsId);
+
+		if (null == _dbrun) {
+			throw new ServiceException("ERR_MSG_RUN_INSPECT_002");
+		}
+
+		// 门店巡查报告(运营)编号
+		_dbrun.setTrsId(trsId);
+		// 店铺名称
+		_dbrun.setOrgId(orgId);
+		// 当班负责人
+		_dbrun.setDutyPerson(dutyPerson);
+		// 评核日期
+		_dbrun.setOptDateY(DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy"));
+		// 评核日期
+		_dbrun.setOptDateM(DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM"));
+		// 评核日期
+		_dbrun.setOptDate(optDate);
+		// 评核员
+		_dbrun.setAssessors(assessors);
+		// 收银台礼仪-得分
+		_dbrun.setScore1(score1);
+		// 卖场巡检-得分
+		_dbrun.setScore2(score2);
+		// 意见或建议
+		_dbrun.setComments(comments);
+		// 店铺反馈问题及跟进
+		_dbrun.setFeedback(feedback);
+		// 货品问题的发现及跟进
+		_dbrun.setGoodsIssue(goodsIssue);
+		// 现场违纪违规及处罚情况
+		_dbrun.setPenaltyCase(penaltyCase);
+		// 培训统计
+		_dbrun.setTrainingStatistics(trainingStatistics);
+		// 库存统计
+		_dbrun.setInventoryStatistics(inventoryStatistics);
+
+		runInspectJpaDao.save(_dbrun);
+
+		runInspectDetailMyBatisDao.delRunInspectInfo(trsId);
+		for (int i = 0; i < typeNos.length; i++) {
+			addNewRunInspectDetail(trsId, typeNos[i], ids[i], itemSelect[i]);
+		}
 
 	}
 

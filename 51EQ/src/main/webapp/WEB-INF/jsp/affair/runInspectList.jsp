@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<style>
+    	.label {font-style: normal;}
+    	</style>
         <script>
         $(function() {
         	$("#listForm").validate({
@@ -65,6 +68,10 @@
                  	});
                	}
          	});
+         	
+         	$(".label").each(function(){
+        		$(this).popover({trigger:'hover', html:'true'});
+        	});
         });
         //-----------------------------------
     	// 删除
@@ -147,6 +154,9 @@
                                         评核员
                                     </th>
                                     <th class="center">
+                                        文字描述
+                                    </th>
+                                    <th class="center">
                                         收银台礼仪-得分
                                     </th>
                                     <th class="center">
@@ -177,13 +187,56 @@
                                         	${runInspect.assessors}
                                         </td>
                                         <td class="center">
+	                                        <c:if test="${empty runInspect.comments}" >
+	                                        <span class="label" title="" data-content='无' data-original-title="意见或建议"><i class="icon-headphones icon-white"></i></span>
+	                                        </c:if>
+	                                        <c:if test="${!empty runInspect.comments}" >
+	                                        <span class="label label-warning" title="" data-content='${runInspect.comments}' data-original-title="意见或建议"><i class="icon-headphones icon-white"></i></span>
+	                                        </c:if>
+                                        	
+                                        	<c:if test="${empty runInspect.feedback}" >
+                                        	<span class="label" title="" data-content='无' data-original-title="店铺反馈问题及跟进"><i class="icon-check icon-white"></i></span>
+                                        	</c:if>
+                                        	<c:if test="${!empty runInspect.feedback}" >
+                                        	<span class="label label-warning" title="" data-content='${runInspect.feedback}' data-original-title="店铺反馈问题及跟进"><i class="icon-check icon-white"></i></span>
+                                        	</c:if>
+                                        	
+                                        	<c:if test="${empty runInspect.goodsIssue}" >
+                                        	<span class="label" title="" data-content='无' data-original-title="货品问题的发现及跟进"><i class="icon-gift icon-white"></i></span>
+                                        	</c:if>
+                                        	<c:if test="${!empty runInspect.goodsIssue}" >
+                                        	<span class="label label-warning" title="" data-content='${runInspect.goodsIssue}' data-original-title="货品问题的发现及跟进"><i class="icon-gift icon-white"></i></span>
+                                        	</c:if>
+                                        	
+                                        	<c:if test="${empty runInspect.penaltyCase}" >
+                                        	<span class="label" title="" data-content='无' data-original-title="现场违纪违规及处罚情况"><i class="icon-eye-open icon-white"></i></span>
+                                        	</c:if>
+                                        	<c:if test="${!empty runInspect.penaltyCase}" >
+                                        	<span class="label label-warning" title="" data-content='${runInspect.penaltyCase}' data-original-title="现场违纪违规及处罚情况"><i class="icon-eye-open icon-white"></i></span>
+                                        	</c:if>
+                                        	
+                                        	<c:if test="${empty runInspect.trainingStatistics}" >
+                                        	<span class="label" title="" data-content='无' data-original-title="培训统计"><i class="icon-leaf icon-white"></i></span>
+                                        	</c:if>
+                                        	<c:if test="${!empty runInspect.trainingStatistics}" >
+                                        	<span class="label label-warning" title="" data-content='${runInspect.trainingStatistics}' data-original-title="培训统计"><i class="icon-leaf icon-white"></i></span>
+                                        	</c:if>
+                                        	
+                                        	<c:if test="${empty runInspect.inventoryStatistics}" >
+                                        	<span class="label" title="" data-content='无' data-original-title="库存统计"><i class="icon-hdd icon-white"></i></span>
+                                        	</c:if>
+                                        	<c:if test="${!empty runInspect.inventoryStatistics}" >
+                                        	<span class="label label-warning" title="" data-content='${runInspect.inventoryStatistics}' data-original-title="库存统计"><i class="icon-hdd icon-white"></i></span>
+                                        	</c:if>
+                                        </td>
+                                        <td class="center">
                                         	${runInspect.score1}
                                         </td>
                                         <td class="center">
                                         	${runInspect.score2}
                                         </td>
                                         <td>
-                                            <a href="${sc_ctx}/cashReport/detail/${cashDaily.optDate}/${cashDaily.orgId}" target="_blank" class="btn btn-warning"/>详细</a>
+                                            <a href="${sc_ctx}/runInspect/edit/${runInspect.uuid}" target="_self" class="btn btn-warning"/>详细</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -192,7 +245,7 @@
                             <c:if test="${empty	runInspectList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="8" class="rounded-foot-left">
+                                        <td	colspan="9" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>

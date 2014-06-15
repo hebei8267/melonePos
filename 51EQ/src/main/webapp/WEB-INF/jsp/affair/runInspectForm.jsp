@@ -32,6 +32,7 @@
 	    	$("#_score1").html(toltalScore1);
 	    	$("#score1").val(toltalScore1);
 	    }
+	    
 	    function cal_score2(){
 	    	var toltalScore2 = 0;
 			for (var i=0; i<typeNos.length; i++ ){
@@ -45,6 +46,7 @@
 	    	$("#_score2").html(toltalScore2);
 	    	$("#score2").val(toltalScore2);
 	    }
+	    
 	    $(function() {
 			$("input[name='typeNo']").each(function(i, o){
 			    typeNos[i] = $(o).val();			
@@ -62,7 +64,7 @@
 				cal_score1();
 				cal_score2();
 			});
-	    	
+			
 			
 
 	    	$('#optDateShow').datepicker({
@@ -221,6 +223,7 @@
         
         <div class="container">
         	<form class="form-signin" id="inputForm" method="post">
+        	<input type="hidden" name="uuid" value="${uuid}">
             <div class="row">
             	<div class="span12">
                     <legend>
@@ -267,11 +270,11 @@
 						<input type="hidden" name="score" value="10">
 						<td width="450">1. 面带微笑 眼神交流</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000001" value="0">
+							<input type="radio" class="radioItem" name="c0100000001" value="0" <c:if test="${!c0100000001}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000001" value="1">
+							<input type="radio" class="radioItem" name="c0100000001" value="1" <c:if test="${c0100000001}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;10分
 						</td>
 					</tr>
@@ -281,11 +284,11 @@
 						<input type="hidden" name="score" value="10">
 						<td>2. 迎声 您好欢迎光临EQ+/infancy</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000002" value="0">
+							<input type="radio" class="radioItem" name="c0100000002" value="0" <c:if test="${!c0100000002}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000002" value="1">
+							<input type="radio" class="radioItem" name="c0100000002" value="1" <c:if test="${c0100000002}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;10分
 						</td>
 					</tr>
@@ -295,11 +298,11 @@
 						<input type="hidden" name="score" value="20">
 						<td>3. 是否双手接物</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000003" value="0">
+							<input type="radio" class="radioItem" name="c0100000003" value="0" <c:if test="${!c0100000003}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000003" value="1">
+							<input type="radio" class="radioItem" name="c0100000003" value="1" <c:if test="${c0100000003}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;20分
 						</td>
 					</tr>
@@ -309,11 +312,11 @@
 						<input type="hidden" name="score" value="20">
 						<td>4. 跟顾客核对商品数量</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000004" value="0">
+							<input type="radio" class="radioItem" name="c0100000004" value="0" <c:if test="${!c0100000004}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000004" value="1">
+							<input type="radio" class="radioItem" name="c0100000004" value="1" <c:if test="${c0100000004}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;20分
 						</td>
 					</tr>
@@ -327,11 +330,11 @@
 								&nbsp;&nbsp;&nbsp;双手递还所有单据及银行卡
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000005" value="0">
+							<input type="radio" class="radioItem" name="c0100000005" value="0" <c:if test="${!c0100000005}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000005" value="1">
+							<input type="radio" class="radioItem" name="c0100000005" value="1" <c:if test="${c0100000005}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;20分
 						</td>
 					</tr>
@@ -341,11 +344,11 @@
 						<input type="hidden" name="score" value="10">
 						<td>6. 帮顾客打包核对商品，双手递出</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000006" value="0">
+							<input type="radio" class="radioItem" name="c0100000006" value="0" <c:if test="${!c0100000006}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000006" value="1">
+							<input type="radio" class="radioItem" name="c0100000006" value="1" <c:if test="${c0100000006}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;10分
 						</td>
 					</tr>
@@ -355,11 +358,11 @@
 						<input type="hidden" name="score" value="10">
 						<td>7. 送声 欢迎您下次光临 微笑目送</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000007" value="0">
+							<input type="radio" class="radioItem" name="c0100000007" value="0" <c:if test="${!c0100000007}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0100000007" value="1">
+							<input type="radio" class="radioItem" name="c0100000007" value="1" <c:if test="${c0100000007}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;10分
 						</td>
 					</tr>
@@ -388,11 +391,11 @@
 						<input type="hidden" name="score" value="5">
 						<td width="450">1. 头发束起</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000001" value="0">
+							<input type="radio" class="radioItem" name="c0200000001" value="0" <c:if test="${!c0200000001}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000001" value="1">
+							<input type="radio" class="radioItem" name="c0200000001" value="1" <c:if test="${c0200000001}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -402,11 +405,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>2. 工作服是否整洁干净</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000002" value="0">
+							<input type="radio" class="radioItem" name="c0200000002" value="0" <c:if test="${!c0200000002}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000002" value="1">
+							<input type="radio" class="radioItem" name="c0200000002" value="1" <c:if test="${c0200000002}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -416,11 +419,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>3. 精神面貌是否良好</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000003" value="0">
+							<input type="radio" class="radioItem" name="c0200000003" value="0" <c:if test="${!c0200000003}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000003" value="1">
+							<input type="radio" class="radioItem" name="c0200000003" value="1" <c:if test="${c0200000003}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -436,11 +439,11 @@
 						<input type="hidden" name="score" value="5">
 						<td width="450">1. 进店迎声 您好欢迎光临EQ+/infancy</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000004" value="0">
+							<input type="radio" class="radioItem" name="c0200000004" value="0" <c:if test="${!c0200000004}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000004" value="1">
+							<input type="radio" class="radioItem" name="c0200000004" value="1" <c:if test="${c0200000004}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -450,11 +453,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>2. 离店送声 慢走欢迎下次光临</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000005" value="0">
+							<input type="radio" class="radioItem" name="c0200000005" value="0" <c:if test="${!c0200000005}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000005" value="1">
+							<input type="radio" class="radioItem" name="c0200000005" value="1" <c:if test="${c0200000005}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -464,11 +467,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>3. 店内灯光是否柔和适度</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000006" value="0">
+							<input type="radio" class="radioItem" name="c0200000006" value="0" <c:if test="${!c0200000006}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000006" value="1">
+							<input type="radio" class="radioItem" name="c0200000006" value="1" <c:if test="${c0200000006}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -478,11 +481,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>4. 店内音乐是否让人听觉舒服</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000007" value="0">
+							<input type="radio" class="radioItem" name="c0200000007" value="0" <c:if test="${!c0200000007}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000007" value="1">
+							<input type="radio" class="radioItem" name="c0200000007" value="1" <c:if test="${c0200000007}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -492,11 +495,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>5. 店内温度让人体感觉舒适</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000008" value="0">
+							<input type="radio" class="radioItem" name="c0200000008" value="0" <c:if test="${!c0200000008}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000008" value="1">
+							<input type="radio" class="radioItem" name="c0200000008" value="1" <c:if test="${c0200000008}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -506,11 +509,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>6. 店铺整体感觉是否良好，有无货品，纸箱大量占道</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000009" value="0">
+							<input type="radio" class="radioItem" name="c0200000009" value="0" <c:if test="${!c0200000009}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000009" value="1">
+							<input type="radio" class="radioItem" name="c0200000009" value="1" <c:if test="${c0200000009}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -528,11 +531,11 @@
 						<input type="hidden" name="score" value="5">
 						<td width="450">1. 收银台是否整洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000010" value="0">
+							<input type="radio" class="radioItem" name="c0200000010" value="0" <c:if test="${!c0200000010}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000010" value="1">
+							<input type="radio" class="radioItem" name="c0200000010" value="1" <c:if test="${c0200000010}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -542,11 +545,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>2. 货架清洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000011" value="0">
+							<input type="radio" class="radioItem" name="c0200000011" value="0" <c:if test="${!c0200000011}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000011" value="1">
+							<input type="radio" class="radioItem" name="c0200000011" value="1" <c:if test="${c0200000011}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -556,11 +559,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>3. 堆码清洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000012" value="0">
+							<input type="radio" class="radioItem" name="c0200000012" value="0" <c:if test="${!c0200000012}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000012" value="1">
+							<input type="radio" class="radioItem" name="c0200000012" value="1" <c:if test="${c0200000012}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -570,11 +573,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>4. 商品清洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000013" value="0">
+							<input type="radio" class="radioItem" name="c0200000013" value="0" <c:if test="${!c0200000013}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000013" value="1">
+							<input type="radio" class="radioItem" name="c0200000013" value="1" <c:if test="${c0200000013}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -584,11 +587,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>5. 橱窗清洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000014" value="0">
+							<input type="radio" class="radioItem" name="c0200000014" value="0" <c:if test="${!c0200000014}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000014" value="1">
+							<input type="radio" class="radioItem" name="c0200000014" value="1" <c:if test="${c0200000014}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -598,11 +601,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>6. 地面清洁</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000015" value="0">
+							<input type="radio" class="radioItem" name="c0200000015" value="0" <c:if test="${!c0200000015}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000015" value="1">
+							<input type="radio" class="radioItem" name="c0200000015" value="1" <c:if test="${c0200000015}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -620,11 +623,11 @@
 						<input type="hidden" name="score" value="2">
 						<td width="450">1. 货架周围有无手写POP、过档物料及POP</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000016" value="0">
+							<input type="radio" class="radioItem" name="c0200000016" value="0" <c:if test="${!c0200000016}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000016" value="1">
+							<input type="radio" class="radioItem" name="c0200000016" value="1" <c:if test="${c0200000016}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -634,11 +637,11 @@
 						<input type="hidden" name="score" value="2">
 						<td>2. 货品标签及宣传标签张贴和摆放是否正确</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000017" value="0">
+							<input type="radio" class="radioItem" name="c0200000017" value="0" <c:if test="${!c0200000017}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000017" value="1">
+							<input type="radio" class="radioItem" name="c0200000017" value="1" <c:if test="${c0200000017}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;2分
 						</td>
 					</tr>
@@ -648,11 +651,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>3. 货品摆放位置是否合理</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000018" value="0">
+							<input type="radio" class="radioItem" name="c0200000018" value="0" <c:if test="${!c0200000018}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000018" value="1">
+							<input type="radio" class="radioItem" name="c0200000018" value="1" <c:if test="${c0200000018}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -662,11 +665,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>4. 货品摆放是否整齐</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000019" value="0">
+							<input type="radio" class="radioItem" name="c0200000019" value="0" <c:if test="${!c0200000019}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000019" value="1">
+							<input type="radio" class="radioItem" name="c0200000019" value="1" <c:if test="${c0200000019}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -676,11 +679,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>5. 员工是否清楚店内各种商品的库存量</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000020" value="0">
+							<input type="radio" class="radioItem" name="c0200000020" value="0" <c:if test="${!c0200000020}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000020" value="1">
+							<input type="radio" class="radioItem" name="c0200000020" value="1" <c:if test="${c0200000020}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -690,11 +693,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>6. 店内商品的定价是否存在问题</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000021" value="0">
+							<input type="radio" class="radioItem" name="c0200000021" value="0" <c:if test="${!c0200000021}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000021" value="1">
+							<input type="radio" class="radioItem" name="c0200000021" value="1" <c:if test="${c0200000021}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -704,11 +707,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>7. 店铺2个月内是否有最少一次的盘点</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000022" value="0">
+							<input type="radio" class="radioItem" name="c0200000022" value="0" <c:if test="${!c0200000022}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000022" value="1">
+							<input type="radio" class="radioItem" name="c0200000022" value="1" <c:if test="${c0200000022}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -725,11 +728,11 @@
 						<input type="hidden" name="score" value="5">
 						<td width="450">1. 服务用语</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000023" value="0">
+							<input type="radio" class="radioItem" name="c0200000023" value="0" <c:if test="${!c0200000023}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000023" value="1">
+							<input type="radio" class="radioItem" name="c0200000023" value="1" <c:if test="${c0200000023}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -739,11 +742,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>2. 服务主动性</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000024" value="0">
+							<input type="radio" class="radioItem" name="c0200000024" value="0" <c:if test="${!c0200000024}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000024" value="1">
+							<input type="radio" class="radioItem" name="c0200000024" value="1" <c:if test="${c0200000024}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -753,11 +756,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>3. 服务进度</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000025" value="0">
+							<input type="radio" class="radioItem" name="c0200000025" value="0" <c:if test="${!c0200000025}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000025" value="1">
+							<input type="radio" class="radioItem" name="c0200000025" value="1" <c:if test="${c0200000025}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>
@@ -767,11 +770,11 @@
 						<input type="hidden" name="score" value="5">
 						<td>4. 是否一站式服务</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000026" value="0">
+							<input type="radio" class="radioItem" name="c0200000026" value="0" <c:if test="${!c0200000026}">checked="checked"</c:if>>
 							<span>没有</span>&nbsp;&nbsp;0分
 						</td>
 						<td>&nbsp;
-							<input type="radio" class="radioItem" name="c0200000026" value="1">
+							<input type="radio" class="radioItem" name="c0200000026" value="1" <c:if test="${c0200000026}">checked="checked"</c:if>>
 							<span>有</span>&nbsp;&nbsp;5分
 						</td>
 					</tr>

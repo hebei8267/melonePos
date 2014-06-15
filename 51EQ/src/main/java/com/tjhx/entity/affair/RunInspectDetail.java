@@ -93,7 +93,7 @@ public class RunInspectDetail extends IdEntity {
 	 * 
 	 * @return selectFlg 选择标记false-未选true-已选
 	 */
-	public boolean isSelectFlg() {
+	public boolean getSelectFlg() {
 		return selectFlg;
 	}
 

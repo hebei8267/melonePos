@@ -9,15 +9,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.affair.RunInspect;
+import com.tjhx.entity.affair.RunInspectDetail;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.affair.RunInspectManager;
@@ -91,6 +94,62 @@ public class RunInspectController extends BaseController {
 	}
 
 	/**
+	 * 编辑销售流水信息
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "edit/{id}")
+	public String edit_Action(@PathVariable("id") Integer id, Model model) {
+
+		RunInspect runInspect = runInspectManager.getRunInspectByUuid(id);
+		if (null == runInspect) {
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/runInspect/list";
+		} else {
+			ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+
+			model.addAttribute("uuid", runInspect.getUuid());
+			// 店铺
+			model.addAttribute("orgId", runInspect.getOrgId());
+			// 当班负责人
+			model.addAttribute("dutyPerson", runInspect.getDutyPerson());
+			// 评核日期
+			model.addAttribute("optDateShow", DateUtils.transDateFormat(runInspect.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
+			// 评核员
+			model.addAttribute("assessors", runInspect.getAssessors());
+			// 收银台礼仪-得分
+			model.addAttribute("score1", runInspect.getScore1());
+			// 卖场巡检-得分
+			model.addAttribute("score2", runInspect.getScore2());
+			// 意见或建议
+			model.addAttribute("comments", runInspect.getComments());
+			// 店铺反馈问题及跟进
+			model.addAttribute("feedback", runInspect.getFeedback());
+			// 货品问题的发现及跟进
+			model.addAttribute("goodsIssue", runInspect.getGoodsIssue());
+			// 现场违纪违规及处罚情况
+			model.addAttribute("penaltyCase", runInspect.getPenaltyCase());
+			// 培训统计
+			model.addAttribute("trainingStatistics", runInspect.getTrainingStatistics());
+			// 库存统计
+			model.addAttribute("inventoryStatistics", runInspect.getInventoryStatistics());
+
+			init_model_detailList(model, runInspect.getTrsId());
+
+			return "affair/runInspectForm";
+		}
+
+	}
+
+	private void init_model_detailList(Model model, String trsId) {
+		List<RunInspectDetail> _detailList = runInspectManager.getRunInspectDetailList(trsId);
+
+		for (RunInspectDetail run : _detailList) {
+			model.addAttribute("c" + run.getTypeNo() + run.getId(), run.getSelectFlg());
+		}
+	}
+
+	/**
 	 * 新增门店巡查报告(运营)信息初始化
 	 * 
 	 * @param model
@@ -143,7 +202,7 @@ public class RunInspectController extends BaseController {
 
 		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
 
-		if (null == uuid) {// 新增操作
+		if (StringUtils.isBlank(uuid)) {// 新增操作
 			try {
 
 				runInspectManager.addNewRunInspect(orgId, dutyPerson, optDate, assessors, comments, feedback, goodsIssue,
@@ -157,14 +216,13 @@ public class RunInspectController extends BaseController {
 		} else {// 修改操作
 			try {
 				runInspectManager.updateRunInspect(orgId, dutyPerson, optDate, assessors, comments, feedback, goodsIssue,
-						penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect);
+						penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect, score1, score2);
 
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
-				// TODO
-				return "accounts/runInspectForm";
+				return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/runInspect/edit/" + uuid;
 			}
 		}
 
