@@ -49,19 +49,19 @@
 			<thead>
 				<tr>
 					<th class="center">机构</th>
-					<th class="center">当日销售</th>
-					<th class="center">截止金额</th>
-					<th class="center">截止天数</th>
-					<th class="center">本月天数</th>
-					<th class="center">预计本月销售</th>
-					<th class="center">去年同期销售</th>
-					<th class="center">增长额<br>比去年同期</th>
-					<th class="center">增长率<br>比去年同期</th>
-					<th class="center">当月销售任务</th>
-					<th class="center">增长额<br>比当月任务</th>
-					<th class="center">增长率<br>比当月任务</th>
-					<th class="center">日需销售金额</th>
-					<th class="center">销售额排名</th>
+					<th class="center">当日<br>销售</th>
+					<th class="center">截止<br>金额</th>
+					<th class="center">截止<br>天数</th>
+					<th class="center">本月<br>天数</th>
+					<th class="center">预计<br>本月销售</th>
+					<th class="center">去年<br>同期销售</th>
+					<th class="center">增长额<br>去年同期</th>
+					<th class="center">增长率<br>去年同期</th>
+					<th class="center">当月<br>销售任务</th>
+					<th class="center">增长额<br>当月任务</th>
+					<th class="center">增长率<br>当月任务</th>
+					<th class="center">日需<br>销售金额</th>
+					<th class="center">销售额<br>排名</th>
 				</tr>			                			
 			</thead>
 			<tbody>
