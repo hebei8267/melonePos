@@ -121,8 +121,10 @@ public class RunInspectController extends BaseController {
 			model.addAttribute("score1", runInspect.getScore1());
 			// 卖场巡检-得分
 			model.addAttribute("score2", runInspect.getScore2());
-			// 意见或建议
+			// 意见或建议-收银台礼仪
 			model.addAttribute("comments", runInspect.getComments());
+			// 意见或建议-卖场巡检
+			model.addAttribute("comments2", runInspect.getComments2());
 			// 店铺反馈问题及跟进
 			model.addAttribute("feedback", runInspect.getFeedback());
 			// 货品问题的发现及跟进
@@ -175,6 +177,7 @@ public class RunInspectController extends BaseController {
 	public String save_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		String uuid = ServletRequestUtils.getStringParameter(request, "uuid");
 		String comments = ServletRequestUtils.getStringParameter(request, "comments");
+		String comments2 = ServletRequestUtils.getStringParameter(request, "comments2");
 		String feedback = ServletRequestUtils.getStringParameter(request, "feedback");
 		String goodsIssue = ServletRequestUtils.getStringParameter(request, "goodsIssue");
 		String penaltyCase = ServletRequestUtils.getStringParameter(request, "penaltyCase");
@@ -205,8 +208,9 @@ public class RunInspectController extends BaseController {
 		if (StringUtils.isBlank(uuid)) {// 新增操作
 			try {
 
-				runInspectManager.addNewRunInspect(orgId, dutyPerson, optDate, assessors, comments, feedback, goodsIssue,
-						penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect, score1, score2);
+				runInspectManager.addNewRunInspect(orgId, dutyPerson, optDate, assessors, comments, comments2, feedback,
+						goodsIssue, penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect, score1,
+						score2);
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
@@ -215,8 +219,9 @@ public class RunInspectController extends BaseController {
 			}
 		} else {// 修改操作
 			try {
-				runInspectManager.updateRunInspect(orgId, dutyPerson, optDate, assessors, comments, feedback, goodsIssue,
-						penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect, score1, score2);
+				runInspectManager.updateRunInspect(orgId, dutyPerson, optDate, assessors, comments, comments2, feedback,
+						goodsIssue, penaltyCase, trainingStatistics, inventoryStatistics, typeNos, ids, itemSelect, score1,
+						score2);
 
 			} catch (ServiceException ex) {
 				// 添加错误消息

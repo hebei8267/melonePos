@@ -38,8 +38,10 @@ public class RunInspect extends IdEntity {
 	private int score1;
 	/** 卖场巡检-得分 */
 	private int score2;
-	/** 意见或建议 */
+	/** 意见或建议-收银台礼仪 */
 	private String comments;
+	/** 意见或建议-卖场巡检 */
+	private String comments2;
 	/** 店铺反馈问题及跟进 */
 	private String feedback;
 	/** 货品问题的发现及跟进 */
@@ -225,21 +227,39 @@ public class RunInspect extends IdEntity {
 	}
 
 	/**
-	 * 获取意见或建议
+	 * 获取意见或建议-收银台礼仪
 	 * 
-	 * @return comments 意见或建议
+	 * @return comments 意见或建议-收银台礼仪
 	 */
 	public String getComments() {
 		return comments;
 	}
 
 	/**
-	 * 设置意见或建议
+	 * 设置意见或建议-收银台礼仪
 	 * 
-	 * @param comments 意见或建议
+	 * @param comments 意见或建议-收银台礼仪
 	 */
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	/**
+	 * 获取意见或建议-卖场巡检
+	 * 
+	 * @return comments2 意见或建议-卖场巡检
+	 */
+	public String getComments2() {
+		return comments2;
+	}
+
+	/**
+	 * 设置意见或建议-卖场巡检
+	 * 
+	 * @param comments2 意见或建议-卖场巡检
+	 */
+	public void setComments2(String comments2) {
+		this.comments2 = comments2;
 	}
 
 	/**

@@ -73,8 +73,8 @@ public class RunInspectManager {
 	 */
 	@Transactional(readOnly = false)
 	public void addNewRunInspect(String orgId, String dutyPerson, String optDate, String assessors, String comments,
-			String feedback, String goodsIssue, String penaltyCase, String trainingStatistics, String inventoryStatistics,
-			String[] typeNos, String[] ids, boolean[] itemSelect, int score1, int score2) {
+			String comments2, String feedback, String goodsIssue, String penaltyCase, String trainingStatistics,
+			String inventoryStatistics, String[] typeNos, String[] ids, boolean[] itemSelect, int score1, int score2) {
 
 		String trsId = optDate + orgId;
 
@@ -104,8 +104,10 @@ public class RunInspectManager {
 		run.setScore1(score1);
 		// 卖场巡检-得分
 		run.setScore2(score2);
-		// 意见或建议
+		// 意见或建议-收银台礼仪
 		run.setComments(comments);
+		// 意见或建议-卖场巡检
+		run.setComments2(comments2);
 		// 店铺反馈问题及跟进
 		run.setFeedback(feedback);
 		// 货品问题的发现及跟进
@@ -193,8 +195,8 @@ public class RunInspectManager {
 	 */
 	@Transactional(readOnly = false)
 	public void updateRunInspect(String orgId, String dutyPerson, String optDate, String assessors, String comments,
-			String feedback, String goodsIssue, String penaltyCase, String trainingStatistics, String inventoryStatistics,
-			String[] typeNos, String[] ids, boolean[] itemSelect, int score1, int score2) {
+			String comments2, String feedback, String goodsIssue, String penaltyCase, String trainingStatistics,
+			String inventoryStatistics, String[] typeNos, String[] ids, boolean[] itemSelect, int score1, int score2) {
 		String trsId = optDate + orgId;
 
 		RunInspect _dbrun = runInspectJpaDao.findByTrsId(trsId);
@@ -221,8 +223,10 @@ public class RunInspectManager {
 		_dbrun.setScore1(score1);
 		// 卖场巡检-得分
 		_dbrun.setScore2(score2);
-		// 意见或建议
+		// 意见或建议-收银台礼仪
 		_dbrun.setComments(comments);
+		// 意见或建议-卖场巡检
+		_dbrun.setComments2(comments2);
 		// 店铺反馈问题及跟进
 		_dbrun.setFeedback(feedback);
 		// 货品问题的发现及跟进

@@ -188,10 +188,17 @@
                                         </td>
                                         <td class="center">
 	                                        <c:if test="${empty runInspect.comments}" >
-	                                        <span class="label" title="" data-content='无' data-original-title="意见或建议"><i class="icon-headphones icon-white"></i></span>
+	                                        <span class="label" title="" data-content='无' data-original-title="意见或建议(收银台礼仪)"><i class="icon-headphones icon-white"></i></span>
 	                                        </c:if>
 	                                        <c:if test="${!empty runInspect.comments}" >
-	                                        <span class="label label-warning" title="" data-content='${runInspect.comments}' data-original-title="意见或建议"><i class="icon-headphones icon-white"></i></span>
+	                                        <span class="label label-warning" title="" data-content='${runInspect.comments}' data-original-title="意见或建议(收银台礼仪)"><i class="icon-headphones icon-white"></i></span>
+	                                        </c:if>
+	                                        
+	                                        <c:if test="${empty runInspect.comments2}" >
+	                                        <span class="label" title="" data-content='无' data-original-title="意见或建议(卖场巡检)"><i class="icon-headphones icon-white"></i></span>
+	                                        </c:if>
+	                                        <c:if test="${!empty runInspect.comments2}" >
+	                                        <span class="label label-warning" title="" data-content='${runInspect.comments2}' data-original-title="意见或建议(卖场巡检)"><i class="icon-headphones icon-white"></i></span>
 	                                        </c:if>
                                         	
                                         	<c:if test="${empty runInspect.feedback}" >

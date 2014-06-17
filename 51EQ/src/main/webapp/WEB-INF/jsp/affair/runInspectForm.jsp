@@ -196,6 +196,9 @@
                      comments : {
                     	 maxlength : 255
                      },
+                     comments2 : {
+                    	 maxlength : 255
+                     },
 					 feedback : {
                     	 maxlength : 255
                      },
@@ -785,6 +788,11 @@
 				<div class="span8">
 				<b>得分 : <span id="_score2" class="_warn">${score2}</span> 分</b><br><br>
 				<input type="hidden" name="score2" id="score2" value="${score2}">
+				</div>
+				
+				<div class="span8">
+				<h5>意见或建议</h5>
+				<textarea name="comments2" class="input-xxlarge" rows="6">${comments2}</textarea>
 				</div>
 				
 				
