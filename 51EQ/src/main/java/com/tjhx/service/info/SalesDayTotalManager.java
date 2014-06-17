@@ -189,12 +189,12 @@ public class SalesDayTotalManager {
 				// 去年同期销售
 				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(), String.valueOf(Integer.parseInt(year) - 1),
 						month));
-				// 销售增长额=预计本月销售-去年同期销售
+				// 销售增长额(去年同期销售)=预计本月销售-去年同期销售
 				_salesDayTotal.setPosAmtIncrease(_salesDayTotal.getExpMonthPosAmt().subtract(
 						_salesDayTotal.getPreYearMonthPosAmt()));
-				// 销售增长率=销售增长额/去年同期销售
+				// 销售增长率(去年同期销售)=销售增长额/去年同期销售
 				BigDecimal _preYearMonthPosAmt = _salesDayTotal.getPreYearMonthPosAmt();
-				if (_preYearMonthPosAmt.compareTo(BigDecimal.ZERO) == 0) {
+				if (null == _preYearMonthPosAmt || _preYearMonthPosAmt.compareTo(BigDecimal.ZERO) == 0) {
 					_preYearMonthPosAmt = new BigDecimal(1);
 				}
 				_salesDayTotal.setPosAmtRate(_salesDayTotal.getPosAmtIncrease()
@@ -211,6 +211,16 @@ public class SalesDayTotalManager {
 				// 日需销售金额=(月销售目标额-截止金额)/(本月天数-截止天数)
 				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt().subtract(_salesDayTotal.getPosAmtByNow())
 						.divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
+
+				// 销售增长额(本月销售目标额)=预计本月销售-本月销售目标额
+				_salesDayTotal.setPosAmtIncrease2(_salesDayTotal.getExpMonthPosAmt().subtract(_salesDayTotal.getSaleTargetAmt()));
+				// 销售增长率(本月销售目标额)=销售增长额(本月销售目标额)/本月销售目标额
+				BigDecimal _saleTargetAmt = _salesDayTotal.getSaleTargetAmt();
+				if (null == _saleTargetAmt || _saleTargetAmt.compareTo(BigDecimal.ZERO) == 0) {
+					_saleTargetAmt = new BigDecimal(1);
+				}
+				_salesDayTotal.setPosAmtRate2(_salesDayTotal.getPosAmtIncrease2()
+						.divide(_saleTargetAmt, 4, BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
 
 				salesDayTotalJpaDao.save(_salesDayTotal);
 			}

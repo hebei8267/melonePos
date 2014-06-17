@@ -55,10 +55,12 @@
 					<th class="center">本月天数</th>
 					<th class="center">预计本月销售</th>
 					<th class="center">去年同期销售</th>
+					<th class="center">增长额<br>比去年同期</th>
+					<th class="center">增长率<br>比去年同期</th>
 					<th class="center">当月销售任务</th>
+					<th class="center">增长额<br>比当月任务</th>
+					<th class="center">增长率<br>比当月任务</th>
 					<th class="center">日需销售金额</th>
-					<th class="center">增长额</th>
-					<th class="center">增长率</th>
 					<th class="center">销售额排名</th>
 				</tr>			                			
 			</thead>
@@ -72,10 +74,12 @@
 					<td class="center">${salesDayTotal.monthDays}</td>
 					<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 					<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-					<td class="right">${salesDayTotal.saleTargetAmt}</td>
-					<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 					<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
-					<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+					<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>	
+					<td class="right">${salesDayTotal.saleTargetAmt}</td>
+					<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+					<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+					<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 					<td class="center">${salesDayTotal.ranking}</td>
 			 	</tr>
 				</c:forEach>

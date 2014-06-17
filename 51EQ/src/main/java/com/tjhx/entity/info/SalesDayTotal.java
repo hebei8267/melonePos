@@ -44,10 +44,14 @@ public class SalesDayTotal extends IdEntity {
 	private BigDecimal expMonthPosAmt;
 	/** 去年同期销售 */
 	private BigDecimal preYearMonthPosAmt;
-	/** 销售增长额 */
+	/** 销售增长额(去年同期销售) */
 	private BigDecimal posAmtIncrease;
-	/** 销售增长率 */
+	/** 销售增长率(去年同期销售) */
 	private BigDecimal posAmtRate;
+	/** 销售增长额(本月销售目标额) */
+	private BigDecimal posAmtIncrease2;
+	/** 销售增长率(本月销售目标额) */
+	private BigDecimal posAmtRate2;
 	/** 日需销售金额 */
 	private BigDecimal dayNeededPosAmt;
 	/** 排名 */
@@ -273,39 +277,75 @@ public class SalesDayTotal extends IdEntity {
 	}
 
 	/**
-	 * 取得销售增长额
+	 * 取得销售增长额-去年同期销售
 	 * 
-	 * @return posAmtIncrease 销售增长额
+	 * @return posAmtIncrease 销售增长额-去年同期销售
 	 */
 	public BigDecimal getPosAmtIncrease() {
 		return posAmtIncrease;
 	}
 
 	/**
-	 * 设置销售增长额
+	 * 设置销售增长额-去年同期销售
 	 * 
-	 * @param posAmtIncrease 销售增长额
+	 * @param posAmtIncrease 销售增长额-去年同期销售
 	 */
 	public void setPosAmtIncrease(BigDecimal posAmtIncrease) {
 		this.posAmtIncrease = posAmtIncrease;
 	}
 
 	/**
-	 * 取得销售增长率
+	 * 取得销售增长率-去年同期销售
 	 * 
-	 * @return posAmtRate 销售增长率
+	 * @return posAmtRate 销售增长率-去年同期销售
 	 */
 	public BigDecimal getPosAmtRate() {
 		return posAmtRate;
 	}
 
 	/**
-	 * 设置销售增长率
+	 * 设置销售增长率-去年同期销售
 	 * 
-	 * @param posAmtRate 销售增长率
+	 * @param posAmtRate 销售增长率-去年同期销售
 	 */
 	public void setPosAmtRate(BigDecimal posAmtRate) {
 		this.posAmtRate = posAmtRate;
+	}
+
+	/**
+	 * 获取销售增长额-本月销售目标额
+	 * 
+	 * @return posAmtIncrease2 销售增长额-本月销售目标额
+	 */
+	public BigDecimal getPosAmtIncrease2() {
+		return posAmtIncrease2;
+	}
+
+	/**
+	 * 设置销售增长额-本月销售目标额
+	 * 
+	 * @param posAmtIncrease2 销售增长额-本月销售目标额
+	 */
+	public void setPosAmtIncrease2(BigDecimal posAmtIncrease2) {
+		this.posAmtIncrease2 = posAmtIncrease2;
+	}
+
+	/**
+	 * 获取销售增长率(本月销售目标额)
+	 * 
+	 * @return posAmtRate2 销售增长率(本月销售目标额)
+	 */
+	public BigDecimal getPosAmtRate2() {
+		return posAmtRate2;
+	}
+
+	/**
+	 * 设置销售增长率(本月销售目标额)
+	 * 
+	 * @param posAmtRate2 销售增长率(本月销售目标额)
+	 */
+	public void setPosAmtRate2(BigDecimal posAmtRate2) {
+		this.posAmtRate2 = posAmtRate2;
 	}
 
 	/**
