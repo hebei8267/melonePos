@@ -379,7 +379,7 @@
 				</div>
 				
 				<div class="span8">
-				<h5>意见或建议</h5>
+				<h5>意见或建议：</h5>
 				<textarea name="comments" class="input-xxlarge" rows="6">${comments}</textarea>
 				</div>
 				
@@ -791,23 +791,23 @@
 				</div>
 				
 				<div class="span8">
-				<h5>意见或建议</h5>
+				<h5>意见或建议：</h5>
 				<textarea name="comments2" class="input-xxlarge" rows="6">${comments2}</textarea>
 				</div>
 				
 				
 				<div class="span8">
-				<h5>店铺反馈问题及跟进（人员，排休，货品问题，店铺硬件设施等）：</h5>
+				<h5>店铺反馈问题及跟进：（人员，排休，货品问题，店铺硬件设施等）</h5>
 				<textarea name="feedback"class="input-xxlarge" rows="6">${feedback}</textarea>
 				</div>
 				
 				<div class="span8" style="margin-top: 20px;">
-				<h5>货品问题的发现及跟进（价格，折扣，滞销，库存，协助调货安排，促销活动）：</h5>
+				<h5>货品问题的发现及跟进：（价格，折扣，滞销，库存，协助调货安排，促销活动）</h5>
 				<textarea name="goodsIssue" class="input-xxlarge" rows="6">${goodsIssue}</textarea>
 				</div>
 				
 				<div class="span8" style="margin-top: 20px;">
-				<h5>现场违纪违规及处罚情况（处罚标准：一般处罚20元，较严重问题50元，造成后果问题100元）：</h5>
+				<h5>现场违纪违规及处罚情况：（处罚标准：一般处罚20元，较严重问题50元，造成后果问题100元）</h5>
 				<textarea name="penaltyCase" class="input-xxlarge" rows="6">${penaltyCase}</textarea>
 				</div>
 				

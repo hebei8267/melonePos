@@ -87,7 +87,7 @@
 			<c:if test="${empty	salesDayTotalList}" >
 			<tfoot>
 		   		<tr>
-		      		<td	colspan="11" class="rounded-foot-left">
+		      		<td	colspan="14" class="rounded-foot-left">
 					无记录信息
 		       		</td>
 		  		</tr>

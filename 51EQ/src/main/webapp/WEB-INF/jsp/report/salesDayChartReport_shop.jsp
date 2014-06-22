@@ -39,17 +39,19 @@
 							<thead>
 								<tr>
 									<th class="center">机构</th>
-									<th class="center">当日销售</th>
-									<th class="center">截止金额</th>
-									<th class="center">截止天数</th>
-									<th class="center">本月天数</th>
-									<th class="center">预计本月销售</th>
-									<th class="center">去年同期销售</th>
-									<th class="center">当月销售任务</th>
-									<th class="center">日需销售金额</th>
-									<th class="center">增长额</th>
-									<th class="center">增长率</th>
-									<th class="center">销售额排名</th>
+									<th class="center">当日<br>销售</th>
+									<th class="center">截止<br>金额</th>
+									<th class="center">截止<br>天数</th>
+									<th class="center">本月<br>天数</th>
+									<th class="center">预计<br>本月销售</th>
+									<th class="center">去年<br>同期销售</th>
+									<th class="center">增长额<br>去年同期</th>
+									<th class="center">增长率<br>去年同期</th>
+									<th class="center">当月<br>销售任务</th>
+									<th class="center">增长额<br>当月任务</th>
+									<th class="center">增长率<br>当月任务</th>
+									<th class="center">日需<br>销售金额</th>
+									<th class="center">销售额<br>排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
@@ -65,10 +67,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 									
@@ -81,10 +85,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 							 	</tr>
@@ -94,7 +100,7 @@
 							<c:if test="${empty	optDate1SalesList}" >
 							<tfoot>
 						   		<tr>
-						      		<td	colspan="11" class="rounded-foot-left">
+						      		<td	colspan="14" class="rounded-foot-left">
 									无记录信息
 						       		</td>
 						  		</tr>
@@ -114,17 +120,19 @@
 							<thead>
 								<tr>
 									<th class="center">机构</th>
-									<th class="center">当日销售</th>
-									<th class="center">截止金额</th>
-									<th class="center">截止天数</th>
-									<th class="center">本月天数</th>
-									<th class="center">预计本月销售</th>
-									<th class="center">去年同期销售</th>
-									<th class="center">当月销售任务</th>
-									<th class="center">日需销售金额</th>
-									<th class="center">增长额</th>
-									<th class="center">增长率</th>
-									<th class="center">销售额排名</th>
+									<th class="center">当日<br>销售</th>
+									<th class="center">截止<br>金额</th>
+									<th class="center">截止<br>天数</th>
+									<th class="center">本月<br>天数</th>
+									<th class="center">预计<br>本月销售</th>
+									<th class="center">去年<br>同期销售</th>
+									<th class="center">增长额<br>去年同期</th>
+									<th class="center">增长率<br>去年同期</th>
+									<th class="center">当月<br>销售任务</th>
+									<th class="center">增长额<br>当月任务</th>
+									<th class="center">增长率<br>当月任务</th>
+									<th class="center">日需<br>销售金额</th>
+									<th class="center">销售额<br>排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
@@ -140,10 +148,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 									
@@ -156,10 +166,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 							 	</tr>
@@ -169,7 +181,7 @@
 							<c:if test="${empty	optDate2SalesList}" >
 							<tfoot>
 						   		<tr>
-						      		<td	colspan="11" class="rounded-foot-left">
+						      		<td	colspan="14" class="rounded-foot-left">
 									无记录信息
 						       		</td>
 						  		</tr>
@@ -189,17 +201,19 @@
 							<thead>
 								<tr>
 									<th class="center">机构</th>
-									<th class="center">当日销售</th>
-									<th class="center">截止金额</th>
-									<th class="center">截止天数</th>
-									<th class="center">本月天数</th>
-									<th class="center">预计本月销售</th>
-									<th class="center">去年同期销售</th>
-									<th class="center">当月销售任务</th>
-									<th class="center">日需销售金额</th>
-									<th class="center">增长额</th>
-									<th class="center">增长率</th>
-									<th class="center">销售额排名</th>
+									<th class="center">当日<br>销售</th>
+									<th class="center">截止<br>金额</th>
+									<th class="center">截止<br>天数</th>
+									<th class="center">本月<br>天数</th>
+									<th class="center">预计<br>本月销售</th>
+									<th class="center">去年<br>同期销售</th>
+									<th class="center">增长额<br>去年同期</th>
+									<th class="center">增长率<br>去年同期</th>
+									<th class="center">当月<br>销售任务</th>
+									<th class="center">增长额<br>当月任务</th>
+									<th class="center">增长率<br>当月任务</th>
+									<th class="center">日需<br>销售金额</th>
+									<th class="center">销售额<br>排名</th>
 								</tr>			                			
 							</thead>
 							<tbody>
@@ -215,10 +229,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 									
@@ -231,10 +247,12 @@
 									<td class="center">${salesDayTotal.monthDays}</td>
 									<td class="right">${salesDayTotal.expMonthPosAmt}</td>
 									<td class="right">${salesDayTotal.preYearMonthPosAmt}</td>
-									<td class="right">${salesDayTotal.saleTargetAmt}</td>
-									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease}</td>
 									<td class="right" <c:if test="${salesDayTotal.posAmtRate > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate}%</td>
+									<td class="right">${salesDayTotal.saleTargetAmt}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtIncrease2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtIncrease2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtIncrease2}</td>
+									<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
+									<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 									<td class="center">${salesDayTotal.ranking}</td>
 									</c:if>
 							 	</tr>
@@ -244,7 +262,7 @@
 							<c:if test="${empty	optDate3SalesList}" >
 							<tfoot>
 						   		<tr>
-						      		<td	colspan="11" class="rounded-foot-left">
+						      		<td	colspan="14" class="rounded-foot-left">
 									无记录信息
 						       		</td>
 						  		</tr>
