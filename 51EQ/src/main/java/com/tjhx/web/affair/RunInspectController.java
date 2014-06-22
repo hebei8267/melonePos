@@ -99,6 +99,58 @@ public class RunInspectController extends BaseController {
 	 * @param model
 	 * @return
 	 */
+	@RequestMapping(value = "view/{id}")
+	public String view_Action(@PathVariable("id") Integer id, Model model) {
+		RunInspect runInspect = runInspectManager.getRunInspectByUuid(id);
+		if (null == runInspect) {
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/runInspect/list";
+		} else {
+			getRunInspectInfo(runInspect, model);
+
+			return "affair/runInspectViewForm";
+		}
+	}
+
+	private void getRunInspectInfo(RunInspect runInspect, Model model) {
+		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+
+		model.addAttribute("uuid", runInspect.getUuid());
+		// 店铺
+		model.addAttribute("orgId", runInspect.getOrgId());
+		// 当班负责人
+		model.addAttribute("dutyPerson", runInspect.getDutyPerson());
+		// 评核日期
+		model.addAttribute("optDateShow", DateUtils.transDateFormat(runInspect.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
+		// 评核员
+		model.addAttribute("assessors", runInspect.getAssessors());
+		// 收银台礼仪-得分
+		model.addAttribute("score1", runInspect.getScore1());
+		// 卖场巡检-得分
+		model.addAttribute("score2", runInspect.getScore2());
+		// 意见或建议-收银台礼仪
+		model.addAttribute("comments", runInspect.getComments());
+		// 意见或建议-卖场巡检
+		model.addAttribute("comments2", runInspect.getComments2());
+		// 店铺反馈问题及跟进
+		model.addAttribute("feedback", runInspect.getFeedback());
+		// 货品问题的发现及跟进
+		model.addAttribute("goodsIssue", runInspect.getGoodsIssue());
+		// 现场违纪违规及处罚情况
+		model.addAttribute("penaltyCase", runInspect.getPenaltyCase());
+		// 培训统计
+		model.addAttribute("trainingStatistics", runInspect.getTrainingStatistics());
+		// 库存统计
+		model.addAttribute("inventoryStatistics", runInspect.getInventoryStatistics());
+
+		init_model_detailList(model, runInspect.getTrsId());
+	}
+
+	/**
+	 * 编辑销售流水信息
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "edit/{id}")
 	public String edit_Action(@PathVariable("id") Integer id, Model model) {
 
@@ -106,37 +158,7 @@ public class RunInspectController extends BaseController {
 		if (null == runInspect) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/runInspect/list";
 		} else {
-			ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
-
-			model.addAttribute("uuid", runInspect.getUuid());
-			// 店铺
-			model.addAttribute("orgId", runInspect.getOrgId());
-			// 当班负责人
-			model.addAttribute("dutyPerson", runInspect.getDutyPerson());
-			// 评核日期
-			model.addAttribute("optDateShow", DateUtils.transDateFormat(runInspect.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
-			// 评核员
-			model.addAttribute("assessors", runInspect.getAssessors());
-			// 收银台礼仪-得分
-			model.addAttribute("score1", runInspect.getScore1());
-			// 卖场巡检-得分
-			model.addAttribute("score2", runInspect.getScore2());
-			// 意见或建议-收银台礼仪
-			model.addAttribute("comments", runInspect.getComments());
-			// 意见或建议-卖场巡检
-			model.addAttribute("comments2", runInspect.getComments2());
-			// 店铺反馈问题及跟进
-			model.addAttribute("feedback", runInspect.getFeedback());
-			// 货品问题的发现及跟进
-			model.addAttribute("goodsIssue", runInspect.getGoodsIssue());
-			// 现场违纪违规及处罚情况
-			model.addAttribute("penaltyCase", runInspect.getPenaltyCase());
-			// 培训统计
-			model.addAttribute("trainingStatistics", runInspect.getTrainingStatistics());
-			// 库存统计
-			model.addAttribute("inventoryStatistics", runInspect.getInventoryStatistics());
-
-			init_model_detailList(model, runInspect.getTrsId());
+			getRunInspectInfo(runInspect, model);
 
 			return "affair/runInspectForm";
 		}

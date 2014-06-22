@@ -12,7 +12,7 @@
     <head>
     	<style type="text/css">
     	._warn {
-			color: #FFCC33;
+			color: #FF0000;
 		}
     	</style>
 	    <script>

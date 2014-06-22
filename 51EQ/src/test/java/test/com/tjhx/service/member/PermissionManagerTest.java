@@ -365,14 +365,14 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm49.setFunction(fun49);
 //		permissionJpaDao.save(perm49);
 		
-		// ---------------------------------------------
-		// 门店巡查报告(运营)
-		// ---------------------------------------------
-		Permission perm50 = new Permission();
-		Function fun50 = functionJpaDao.findOne(50);
-		perm50.setRole(role);
-		perm50.setFunction(fun50);
-		permissionJpaDao.save(perm50);
+//		// ---------------------------------------------
+//		// 门店巡查报告(运营)
+//		// ---------------------------------------------
+//		Permission perm50 = new Permission();
+//		Function fun50 = functionJpaDao.findOne(50);
+//		perm50.setRole(role);
+//		perm50.setFunction(fun50);
+//		permissionJpaDao.save(perm50);
 	}
 
 //	// 总部人员-会计
@@ -675,14 +675,14 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm49.setFunction(fun49);
 //		permissionJpaDao.save(perm49);
 		
-		// ---------------------------------------------
-		// 门店巡查报告(运营)
-		// ---------------------------------------------
-		Permission perm50 = new Permission();
-		Function fun50 = functionJpaDao.findOne(50);
-		perm50.setRole(role);
-		perm50.setFunction(fun50);
-		permissionJpaDao.save(perm50);
+//		// ---------------------------------------------
+//		// 门店巡查报告(运营)
+//		// ---------------------------------------------
+//		Permission perm50 = new Permission();
+//		Function fun50 = functionJpaDao.findOne(50);
+//		perm50.setRole(role);
+//		perm50.setFunction(fun50);
+//		permissionJpaDao.save(perm50);
 	}
 //
 //	// 总部人员-库管
@@ -1010,6 +1010,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm49.setRole(role);
 //		perm49.setFunction(fun49);
 //		permissionJpaDao.save(perm49);
+		
+		// ---------------------------------------------
+		// 门店巡查报告(运营)
+		// ---------------------------------------------
+		Permission perm50 = new Permission();
+		Function fun50 = functionJpaDao.findOne(50);
+		perm50.setRole(role);
+		perm50.setFunction(fun50);
+		permissionJpaDao.save(perm50);
 	}
 
 //	// 店长

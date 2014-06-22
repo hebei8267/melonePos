@@ -162,7 +162,7 @@
                                     <th class="center">
                                         卖场巡检-得分
                                     </th>
-                                    <th	width="55">
+                                    <th	width="117" class="center">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -244,6 +244,7 @@
                                         </td>
                                         <td>
                                             <a href="${sc_ctx}/runInspect/edit/${runInspect.uuid}" target="_self" class="btn btn-warning"/>详细</a>
+                                            <a href="${sc_ctx}/runInspect/view/${runInspect.uuid}" target="_blank" class="btn"/>查看</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
