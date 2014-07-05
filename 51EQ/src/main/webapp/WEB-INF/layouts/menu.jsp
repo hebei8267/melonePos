@@ -252,7 +252,8 @@
                     || _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
                     || _permIdList.contains('38') || _permIdList.contains('39')
                     || _permIdList.contains('42') || _permIdList.contains('43')
-                    || _permIdList.contains('49') || _permIdList.contains('50')}">
+                    || _permIdList.contains('49') || _permIdList.contains('50')
+                    || _permIdList.contains('51')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -366,6 +367,14 @@
 	                                <a href="${sc_ctx}/monthSaleTarget/init">机构月销售目标管理</a>
 	                            </li>
 		                    </c:if>
+		                    
+		                    <%//门店-顾客/会员预付款（充值、消费）信息 %>
+		                    <c:if test="${_permIdList.contains('51')}">
+		                    	<li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/prePayments/list">会员预付款信息</a>
+	                            </li>
+                            </c:if>
                         </ul>
                     </li>
                     </c:if>

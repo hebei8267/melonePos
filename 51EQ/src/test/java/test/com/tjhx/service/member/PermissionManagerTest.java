@@ -1011,21 +1011,21 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm49.setFunction(fun49);
 //		permissionJpaDao.save(perm49);
 		
-		// ---------------------------------------------
-		// 门店巡查报告(运营)
-		// ---------------------------------------------
-		Permission perm50 = new Permission();
-		Function fun50 = functionJpaDao.findOne(50);
-		perm50.setRole(role);
-		perm50.setFunction(fun50);
-		permissionJpaDao.save(perm50);
+//		// ---------------------------------------------
+//		// 门店巡查报告(运营)
+//		// ---------------------------------------------
+//		Permission perm50 = new Permission();
+//		Function fun50 = functionJpaDao.findOne(50);
+//		perm50.setRole(role);
+//		perm50.setFunction(fun50);
+//		permissionJpaDao.save(perm50);
 	}
 
-//	// 店长
-//	@Test
-//	@Rollback(false)
-//	public void saveNewPerm6() {
-//		Role role = roleJpaDao.findOne(6);
+	// 店长
+	@Test
+	@Rollback(false)
+	public void saveNewPerm6() {
+		Role role = roleJpaDao.findOne(6);
 //
 //		// ---------------------------------------------
 //		// 报表-商品周销售信息一览
@@ -1148,14 +1148,23 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm46.setRole(role);
 //		perm46.setFunction(fun46);
 //		permissionJpaDao.save(perm46);
-//	}
-//
-//	// 店助
-//	@Test
-//	@Rollback(false)
-//	public void saveNewPerm7() {
-//
-//		Role role = roleJpaDao.findOne(7);
+		
+		//---------------------------------------------
+		// 顾客/会员预付款（充值、消费）信息
+		//---------------------------------------------
+		Permission perm51 = new Permission();
+		Function fun51 = functionJpaDao.findOne(51);
+		perm51.setRole(role);
+		perm51.setFunction(fun51);
+		permissionJpaDao.save(perm51);
+	}
+
+	// 店助
+	@Test
+	@Rollback(false)
+	public void saveNewPerm7() {
+
+		Role role = roleJpaDao.findOne(7);
 //		// ---------------------------------------------
 //		// 门店-销售信息-录入
 //		// ---------------------------------------------
@@ -1224,5 +1233,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm46.setFunction(fun46);
 //		permissionJpaDao.save(perm46);
 //
-//	}
+		
+		
+		// ---------------------------------------------
+		// 顾客/会员预付款（充值、消费）信息
+		// ---------------------------------------------
+		Permission perm51 = new Permission();
+		Function fun51 = functionJpaDao.findOne(51);
+		perm51.setRole(role);
+		perm51.setFunction(fun51);
+		permissionJpaDao.save(perm51);
+	}
 }
