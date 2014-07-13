@@ -3,6 +3,7 @@ package com.tjhx.web.accounts;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springside.modules.mapper.JsonMapper;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashRun;
@@ -28,6 +30,7 @@ import com.tjhx.entity.order.Coupon;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.accounts.CashRunManager;
+import com.tjhx.service.accounts.PrePaymentsManager;
 import com.tjhx.service.info.BankCardManager;
 import com.tjhx.service.order.CouponManager;
 import com.tjhx.web.BaseController;
@@ -41,6 +44,8 @@ public class CashRunController extends BaseController {
 	private BankCardManager bankCardManager;
 	@Resource
 	private CouponManager couponManager;
+	@Resource
+	private PrePaymentsManager prePaymentsManager;
 
 	/**
 	 * 计算班前余额
@@ -57,7 +62,40 @@ public class CashRunController extends BaseController {
 		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
 
 		BigDecimal initAmt = cashRunManager.getInitAmt(getUserInfo(session).getOrganization().getId(), optDate);
-		return (initAmt == null ? "0" : initAmt.toString());
+
+		return initAmt == null ? "0" : initAmt.toString();
+	}
+
+	/**
+	 * 计算当班预付款合计
+	 * 
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws ServletRequestBindingException
+	 * @throws ParseException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "calPrePaymentsAmt")
+	public String calPrePaymentsAmt_Action(HttpServletRequest request, HttpSession session)
+			throws ServletRequestBindingException, ParseException {
+		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
+		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
+		Integer jobType = ServletRequestUtils.getIntParameter(request, "jobType");
+
+		// 取得顾客/会员预付款（现金充值）合计信息
+		BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(getUserInfo(session).getOrganization().getId(),
+				optDate, jobType);
+		// 取得顾客/会员预付款（现金充值）合计信息
+		BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(getUserInfo(session).getOrganization().getId(),
+				optDate, jobType);
+
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("cashAmt", cashAmt == null ? "0" : cashAmt.toString());
+		resultMap.put("cardAmt", cardAmt == null ? "0" : cardAmt.toString());
+
+		JsonMapper mapper = new JsonMapper();
+		return mapper.toJson(resultMap);
 	}
 
 	// @ResponseBody

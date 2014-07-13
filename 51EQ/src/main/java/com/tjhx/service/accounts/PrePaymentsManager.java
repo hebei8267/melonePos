@@ -1,5 +1,6 @@
 package com.tjhx.service.accounts;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -28,7 +29,7 @@ public class PrePaymentsManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PrePayments> getPrePaymentsList(String orgId, String optDateY, String optDateM) {
-		return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_optDateYM(orgId, optDateY, optDateM, new Sort(
+		return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateYM(orgId, optDateY, optDateM, new Sort(
 				new Sort.Order(Sort.Direction.DESC, "uuid")));
 	}
 
@@ -44,12 +45,14 @@ public class PrePaymentsManager {
 	@SuppressWarnings("unchecked")
 	public List<PrePayments> getPrePaymentsList(String orgId, String optDateShowStart, String optDateShowEnd, String phoneNum) {
 		if (StringUtils.isBlank(phoneNum)) {
-			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_optDateInterval(orgId, optDateShowStart,
-					optDateShowEnd, new Sort(new Sort.Order(Sort.Direction.DESC, "uuid")));
+			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateInterval(orgId, optDateShowStart,
+					optDateShowEnd, new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.DESC,
+							"uuid")));
 		} else {
 			phoneNum = "%" + phoneNum + "%";
-			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_optDateInterval(orgId, optDateShowStart,
-					optDateShowEnd, phoneNum, new Sort(new Sort.Order(Sort.Direction.DESC, "uuid")));
+			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateInterval(orgId, optDateShowStart,
+					optDateShowEnd, phoneNum, new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(
+							Sort.Direction.DESC, "uuid")));
 		}
 	}
 
@@ -90,4 +93,27 @@ public class PrePaymentsManager {
 		prePaymentsJpaDao.save(prePayments);
 	}
 
+	/**
+	 * 取得顾客/会员预付款（现金充值）合计信息
+	 * 
+	 * @param orgId 机构信息
+	 * @param optDate 业务日期
+	 * @param jobType 班次类型
+	 * @return
+	 */
+	public BigDecimal getOrgPrePaymentsInfo_By_Cash(String orgId, String optDate, Integer jobType) {
+		return prePaymentsJpaDao.getOrgPrePaymentsInfo_By_Cash(orgId, optDate, jobType);
+	}
+
+	/**
+	 * 取得顾客/会员预付款（刷卡充值）合计信息
+	 * 
+	 * @param orgId 机构信息
+	 * @param optDate 业务日期
+	 * @param jobType 班次类型
+	 * @return
+	 */
+	public BigDecimal getOrgPrePaymentsInfo_By_Card(String orgId, String optDate, Integer jobType) {
+		return prePaymentsJpaDao.getOrgPrePaymentsInfo_By_Card(orgId, optDate, jobType);
+	}
 }

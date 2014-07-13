@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.accounts.CashRunCouponMyBatisDao">
+	
+	<delete id="delCashRunCouponInfo" parameterType="com.tjhx.entity.accounts.CashRunCoupon">
+        DELETE FROM t_cash_run_coupon WHERE opt_date = #{optDate} AND org_id = #{orgId} AND job_type = #{jobType}
+    </delete>
+    
+</mapper>

@@ -74,7 +74,7 @@
                     <legend>
                         <h3>${sessionScope.__SESSION_USER_INFO.orgName} 顾客/会员预付款<span class="_warn1">(消费)</span>信息
                         <c:if test="${empty	prePayments.uuid}">
-                            新增
+                            新增--(朋派生活)
                         </c:if>
                         </h3>
                     </legend>

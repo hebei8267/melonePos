@@ -496,9 +496,9 @@ public class SaleReport {
 		this.descTxt = _cashRun.getDescTxt();
 
 		// 代金卷面值
-		this.couponValue = _cashRun.getCouponValue();
+		this.couponValue = _cashRun.getTotalCouponValue();
 		// 代金卷实际值
-		this.couponCashValue = _cashRun.getCouponCashValue();
+		this.couponCashValue = _cashRun.getTotalCouponCashValue();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {

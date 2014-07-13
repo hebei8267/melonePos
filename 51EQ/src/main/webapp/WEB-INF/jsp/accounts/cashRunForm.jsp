@@ -17,6 +17,16 @@
             .form-horizontal .controls {
                 margin-left: 145px;
             }
+            .mytable tbody tr td.right {
+				padding-right: 10px;
+			}
+			.mytable tbody tr td {
+				height: 40px;
+				valign : middle;
+			}
+			.cash_daily {
+				border-bottom: 3px solid #F89406;
+			}
         </style>
         <script>
             $(function() {
@@ -34,13 +44,49 @@
                     oldDateVal = $('#optDateShow').val();
 
                     if ("" != $('#optDateShow').val()) {
+                    	//置空上班类型
+                    	$('#jobType').get(0).selectedIndex = 0;
+                    	
                         $.post("${sc_ctx}/cashRun/calInitAmt", {
                             "optDateShow" : $('#optDateShow').val()
                         }, function(result) {
+
                             $('#_initAmt_label').html(result + " 元");
                             $('#initAmt').val(result);
+                            
                             calRetainedAmt();
                         });
+                    }
+                });
+                
+                $('#jobType').on('change', function(ev) {
+                    if ("" == $('#optDateShow').val()) {
+                        return;
+                    }
+
+                    if ("" != $('#jobType').val()) {
+                        $.post("${sc_ctx}/cashRun/calPrePaymentsAmt", {
+                            "optDateShow" : $('#optDateShow').val(),
+                            "jobType" : $('#jobType').val()
+                        }, function(result) {
+                        	var _result = $.parseJSON(result);
+                            
+                            $('#_prePayCardAmt_label').html(_result.cardAmt + " 元");
+                            $('#prePayCardAmt').val(_result.cardAmt);
+                            
+                            $('#_prePayCashAmt_label').html(_result.cashAmt + " 元");
+                            $('#prePayCashAmt').val(_result.cashAmt);
+                            
+                            calRetainedAmt();
+                        });
+                    } else {
+                    	$('#_prePayCardAmt_label').html(0 + " 元");
+                   		$('#prePayCardAmt').val(0);
+                            
+                       	$('#_prePayCashAmt_label').html(0 + " 元");
+                       	$('#prePayCashAmt').val(0);
+                            
+                      	calRetainedAmt();
                     }
                 });
 
@@ -77,11 +123,10 @@
                             myRequired : "#cardAmt",
                             maxlength : 32
                         },
-                        couponNo : {
+                        /*couponNo : {
                             myRequired : "#couponValue"
-                        },
+                        },*/
                         couponValue : {
-                            required : true,
                             money : true
                         },
                         depositAmt : {
@@ -134,11 +179,18 @@
 
                     adjustAmt();
                 });
+                
+                $("input[name$='couponValue']").each(function(){
+                	$(this).change(function() {
+                    	saleAmt();
+                	});
+                });
             });
 
-            // 账面应有现金 = 班前余额+外销收现
+            // 账面应有现金 = 班前余额+外销收现+预付款(收现)
             function carryingCashAmt() {
                 var _result = numAdd($("#initAmt").val(), $("#saleCashAmt").val());
+                _result = numAdd(_result, $("#prePayCashAmt").val());
 
                 $("#_carryingCashAmt").html(_result + " 元");
                 $("#carryingCashAmt").val(_result);
@@ -160,11 +212,17 @@
                 $("#retainedAmt").val(_result);
             }
 
-            // 当班销售金额 = 销售收现 + 刷卡金额(单据)
+            // 当班销售金额 = 销售收现 + 刷卡金额(单据) + 代金卷销售
             function saleAmt() {
                 var _result = numAdd($("#saleCashAmt").val(), $("#cardAmt").val());
+                
+                // 代金卷销售合计
+                var _result2 = 0;
+                $("input[name$='couponValue']").each(function(){
+                	_result2 = numAdd(_result2, $(this).val());
+                });
 
-                $("#_saleAmt").html(_result + " 元");
+                $("#_saleAmt").html(_result + " 元 + " + _result2 + " 元");
                 $("#saleAmt").val(_result);
             }
         </script>
@@ -188,156 +246,262 @@
                 </div>
                 <input type="hidden" id="_tomorrow_date" value="<%=DateUtils.getNextDateFormatDate(1, "yyyy-MM-dd")%>">
                 <div class="span12"	style="margin-top: 10px;">
-                    <form:form method="POST" class="form-horizontal" id="inputForm"	modelAttribute="cashRun">
+                    <form:form method="POST" id="inputForm"	modelAttribute="cashRun">
                         <form:hidden path="uuid"/>
-                        <div class="control-group">
-                            <label class="control-label">日期 :</label>
-                            <c:if test="${empty	cashRun.uuid}">
-                                <div class="controls">
-                                    <form:input	path="optDateShow" />
-                                </div>
-                            </c:if>
-                            <c:if test="${!empty cashRun.uuid}">
-                                <label class="left-control-label">${cashRun.optDateShow}</label>
-                                <form:hidden path="optDateShow"/>
-                            </c:if>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">上班类型 :</label>
-                            <c:if test="${empty	cashRun.uuid}">
-                                <div class="controls">
-                                    <form:select path="jobType" items="${jobTypeList}"/>
-                                </div>
-                            </c:if>
-                            <c:if test="${!empty cashRun.uuid}">
-                                <label class="left-control-label">
-                                    <c:if test="${cashRun.jobType == 1}">
-                                        早班
-                                    </c:if>
-                                    <c:if test="${cashRun.jobType == 2}">
-                                        晚班
-                                    </c:if>
-                                    <c:if test="${cashRun.jobType == 4}">
-                                        全天班
-                                    </c:if> </label>
-                            </c:if>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">班前余额 :</label>
-                            <label class="left-control-label" id="_initAmt_label">${cashRun.initAmt} 元</label>
-                            <form:hidden path="initAmt"/>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">销售收现 :</label>
-                            <div class="controls">
-                                <form:input	path="saleCashAmt" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">账面应有现金 :</label>
-                            <label class="left-control-label" id="_carryingCashAmt">${cashRun.carryingCashAmt} 元</label>
-                            <form:hidden path="carryingCashAmt"/>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">实点现金 :</label>
-                            <div class="controls">
-                                <form:input	path="cashAmt" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">现金盈亏 :</label>
-                            <label class="left-control-label" id="_adjustAmt" style="color:#FF6633">${cashRun.adjustAmt} 元</label>
-                            <form:hidden path="adjustAmt"/>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">刷卡金额(单据) :</label>
-                            <div class="controls">
-                                <form:input	path="cardAmt" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">刷卡金额(百威) :</label>
-                            <div class="controls">
-                                <form:input	path="cardAmtBw" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">刷卡笔数 :</label>
-                            <div class="controls">
-                                <form:input	path="cardNum" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">凭证号 :</label>
-                            <div class="controls">
-                                <form:input	path="cardCertNo" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                        	<label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷 :</label>
-                        	<div class="controls">
-                        		<form:select path="couponNo" items="${couponList}"/>
-                        	</div>
-                        </div>
-                        <div class="control-group">
-                        	<label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值 :</label>
-                        	<div class="controls">
-                        		<form:input	path="couponValue" />
-                        	</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">存款金额 :</label>
-                            <div class="controls">
-                                <form:input	path="depositAmt" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">存款人 :</label>
-                            <div class="controls">
-                                <form:input	path="depositor" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">存款银行卡号 :</label>
-                            <div class="controls">
-                                <form:select path="bankCardNo" items="${bankCardList}"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">留存金额 :</label>
-                            <label class="left-control-label" id="_retainedAmt_label">${cashRun.retainedAmt} 元</label>
-                            <form:hidden path="retainedAmt"/>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">当班销售金额 :</label>
-                            <label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元</label>
-                            <label class="left-control-label" style="color:#FF6633;font-weight:bold;">&nbsp;&nbsp;&nbsp;注意：[当班销售金额] 不含 [代金卷金额]</label>
-                            <form:hidden path="saleAmt"/>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">备注 :</label>
-                            <div class="controls">
-                                <form:textarea path="descTxt" class="input-xlarge" rows="4"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">商场汇报销售额 :</label>
-                            <div class="controls">
-                                <form:input	path="reportAmt" />
-                                元
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
-                                &nbsp;<a href="${sc_ctx}/cashRun" class="btn btn-large">返回</a>
-                            </div>
-                        </div>
+                        <table class="mytable">
+                        	<tr>
+                        		<td width="130" class="right">日期 :</td>
+                        		<td width="350">
+	                        		<c:if test="${empty	cashRun.uuid}">
+		                                <div class="controls">
+		                                    <form:input	path="optDateShow" />
+		                                </div>
+		                            </c:if>
+		                            <c:if test="${!empty cashRun.uuid}">
+		                                <label class="left-control-label">${cashRun.optDateShow}</label>
+		                                <form:hidden path="optDateShow"/>
+		                            </c:if>
+                        		</td>
+                        		<td width="130" class="right">上班类型 :</td>
+                        		<td width="350">
+                        			<c:if test="${empty	cashRun.uuid}">
+		                                <div class="controls">
+		                                    <form:select path="jobType" items="${jobTypeList}"/>
+		                                </div>
+		                            </c:if>
+		                            <c:if test="${!empty cashRun.uuid}">
+		                                <label class="left-control-label">
+		                                    <c:if test="${cashRun.jobType == 1}">
+		                                        早班
+		                                    </c:if>
+		                                    <c:if test="${cashRun.jobType == 2}">
+		                                        晚班
+		                                    </c:if>
+		                                    <c:if test="${cashRun.jobType == 4}">
+		                                        全天班
+		                                    </c:if> </label>
+		                            </c:if>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">预付款(收现) :</td>
+                        		<td>
+                        			<label class="left-control-label" id="_prePayCashAmt_label">${cashRun.prePayCashAmt} 元</label>
+                            		<form:hidden path="prePayCashAmt"/>
+								</td>
+                        		<td class="right">预付款(刷卡)</td>
+                        		<td>
+                        			<label class="left-control-label" id="_prePayCardAmt_label">${cashRun.prePayCardAmt} 元</label>
+                            		<form:hidden path="prePayCardAmt"/>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">班前余额 :</td>
+                        		<td>
+                        			<label class="left-control-label" id="_initAmt_label">${cashRun.initAmt} 元</label>
+                            		<form:hidden path="initAmt"/>
+                        		</td>
+                        		<td class="right">销售收现 :</td>
+                        		<td>
+                        			<form:input	path="saleCashAmt" />&nbsp;元
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">账面应有现金 :</td>
+                        		<td>
+                        			<label class="left-control-label" id="_carryingCashAmt">${cashRun.carryingCashAmt} 元</label>
+                            		<form:hidden path="carryingCashAmt"/>
+                        		</td>
+                        		<td class="right">实点现金 :</td>
+                        		<td>
+                        			<form:input	path="cashAmt" />&nbsp;元
+                                </td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">现金盈亏 :</td>
+                        		<td colspan="3">
+                        			<label class="left-control-label" id="_adjustAmt" style="color:#FF6633">${cashRun.adjustAmt} 元</label>
+                            		<form:hidden path="adjustAmt"/>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4" class="cash_daily"></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"><br></td>
+                        	</tr>
+                        	
+                        	
+                        	
+                        	<tr>
+                        		<td class="right">刷卡金额(单据) :</td>
+                        		<td>
+                        			<form:input	path="cardAmt" />&nbsp;元
+                        		</td>
+                        		<td class="right">刷卡金额(百威) :</td>
+                        		<td>
+                        			<form:input	path="cardAmtBw" />&nbsp;元
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">刷卡笔数 :</td>
+                        		<td><form:input	path="cardNum" /></td>
+                        		<td class="right">凭证号 :</td>
+                        		<td><form:input	path="cardCertNo" /></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4" class="cash_daily"></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"><br></td>
+                        	</tr>
+                        	
+                        	<tr>
+                        		<td class="right">代金卷1 :</td>
+                        		<td>
+                        			<select name="couponNo">
+			                            <c:forEach items="${couponList}" var="coupon">
+			                                <c:if test="${coupon.key == cashRun.couponNo[0]}">
+			                                    <option value="${coupon.key }" selected>${coupon.value }</option>
+			                                </c:if>
+			                                <c:if test="${coupon.key != cashRun.couponNo[0]}">
+			                                    <option value="${coupon.key }">${coupon.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        		<td class="right">代金卷面值1 :</td>
+                        		<td>
+                        			<input id="couponValue" name="couponValue" type="text" value="${cashRun.couponValue[0]}">
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">代金卷2 :</td>
+                        		<td>
+                        			<select name="couponNo">
+			                            <c:forEach items="${couponList}" var="coupon">
+			                                <c:if test="${coupon.key == cashRun.couponNo[1]}">
+			                                    <option value="${coupon.key }" selected>${coupon.value }</option>
+			                                </c:if>
+			                                <c:if test="${coupon.key != cashRun.couponNo[1]}">
+			                                    <option value="${coupon.key }">${coupon.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        		<td class="right">代金卷面值2 :</td>
+                        		<td>
+                        			<input id="couponValue" name="couponValue" type="text" value="${cashRun.couponValue[1]}">
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">代金卷3 :</td>
+                        		<td>
+                        			<select name="couponNo">
+			                            <c:forEach items="${couponList}" var="coupon">
+			                                <c:if test="${coupon.key == cashRun.couponNo[2]}">
+			                                    <option value="${coupon.key }" selected>${coupon.value }</option>
+			                                </c:if>
+			                                <c:if test="${coupon.key != cashRun.couponNo[2]}">
+			                                    <option value="${coupon.key }">${coupon.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        		<td class="right">代金卷面值3 :</td>
+                        		<td>
+                        			<input id="couponValue" name="couponValue" type="text" value="${cashRun.couponValue[2]}">
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">代金卷4 :</td>
+                        		<td>
+                        			<select name="couponNo">
+			                            <c:forEach items="${couponList}" var="coupon">
+			                                <c:if test="${coupon.key == cashRun.couponNo[3]}">
+			                                    <option value="${coupon.key }" selected>${coupon.value }</option>
+			                                </c:if>
+			                                <c:if test="${coupon.key != cashRun.couponNo[3]}">
+			                                    <option value="${coupon.key }">${coupon.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        		<td class="right">代金卷面值4 :</td>
+                        		<td>
+                        			<input id="couponValue" name="couponValue" type="text" value="${cashRun.couponValue[3]}">
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">代金卷5 :</td>
+                        		<td>
+                        			<select name="couponNo">
+			                            <c:forEach items="${couponList}" var="coupon">
+			                                <c:if test="${coupon.key == cashRun.couponNo[4]}">
+			                                    <option value="${coupon.key }" selected>${coupon.value }</option>
+			                                </c:if>
+			                                <c:if test="${coupon.key != cashRun.couponNo[4]}">
+			                                    <option value="${coupon.key }">${coupon.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        		<td class="right">代金卷面值5 :</td>
+                        		<td>
+                        			<input id="couponValue" name="couponValue" type="text" value="${cashRun.couponValue[4]}">
+                        		</td>
+                        	</tr>
+                        	
+                        	<tr>
+                        		<td colspan="4" class="cash_daily"></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"><br></td>
+                        	</tr>
+                        	
+                        	
+                        	<tr>
+                        		<td class="right">存款金额 :</td>
+                        		<td> <form:input path="depositAmt" />&nbsp;元</td>
+                        		<td class="right">存款人 :</td>
+                        		<td><form:input	path="depositor" /></td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">存款银行卡号 :</td>
+                        		<td colspan="3"><form:select path="bankCardNo" items="${bankCardList}"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">留存金额 :</td>
+                        		<td>
+                        			<label class="left-control-label" id="_retainedAmt_label">${cashRun.retainedAmt} 元</label>
+                        			<form:hidden path="retainedAmt"/>
+                        		</td>
+                        		<td class="right">当班销售金额 :</td>
+                        		<td>
+                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.totalCouponValue} 元</label>
+		                            <form:hidden path="saleAmt"/>
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">商场汇报销售额 :</td>
+                        		<td colspan="3"><form:input	path="reportAmt" />&nbsp;元</td>
+                        	</tr>
+                        	<tr>
+                        		<td class="right">备注 :</td>
+                        		<td colspan="3"><form:textarea path="descTxt" class="input-xlarge" rows="4"/></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"></td>
+                        	</tr>
+                        	<tr>
+                        		<td>&nbsp;</td>
+                        		<td colspan="3">
+                        			<button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
+                                	&nbsp;<a href="${sc_ctx}/cashRun" class="btn btn-large">返回</a>
+                        		</td>
+                        	</tr>
+                        </table>
+						<br>
                     </form:form>
                 </div>
             </div>

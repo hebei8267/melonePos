@@ -15,15 +15,15 @@ import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.accounts.CashDailyJpaDao;
+import com.tjhx.dao.accounts.CashRunCouponJpaDao;
 import com.tjhx.dao.accounts.CashRunJpaDao;
 import com.tjhx.dao.accounts.CashRunMyBatisDao;
 import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.accounts.CashRun;
+import com.tjhx.entity.accounts.CashRunCoupon;
 import com.tjhx.entity.member.User;
-import com.tjhx.entity.order.Coupon;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
-import com.tjhx.service.order.CouponManager;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,7 +35,11 @@ public class CashRunManager {
 	@Resource
 	private CashDailyJpaDao cashDailyJpaDao;
 	@Resource
-	private CouponManager couponManager;
+	private CashRunCouponJpaDao cashRunCouponJpaDao;
+	@Resource
+	private CashRunCouponManager cashRunCouponManager;
+	@Resource
+	private PrePaymentsManager prePaymentsManager;
 
 	/**
 	 * 取得所有销售流水信息
@@ -99,6 +103,18 @@ public class CashRunManager {
 		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(
 				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
 
+		for (CashRun cashRun : _list) {
+
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(cashRun.getOrgId(), cashRun.getOptDate(),
+					cashRun.getJobType());
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(cashRun.getOrgId(), cashRun.getOptDate(),
+					cashRun.getJobType());
+
+			cashRun.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+			cashRun.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+		}
 		return _list;
 	}
 
@@ -108,8 +124,35 @@ public class CashRunManager {
 	 * @param uuid 销售流水编号
 	 * @return 销售流水信息
 	 */
+	@SuppressWarnings("unchecked")
 	public CashRun getCashRunByUuid(Integer uuid) {
-		return cashRunJpaDao.findOne(uuid);
+		CashRun _cashRun = cashRunJpaDao.findOne(uuid);
+
+		BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(_cashRun.getOrgId(), _cashRun.getOptDate(),
+				_cashRun.getJobType());
+		_cashRun.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+
+		BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(_cashRun.getOrgId(), _cashRun.getOptDate(),
+				_cashRun.getJobType());
+		_cashRun.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+
+		// ====================================
+		List<CashRunCoupon> _list = (List<CashRunCoupon>) cashRunCouponJpaDao.getCashRunCouponList(_cashRun.getOrgId(),
+				_cashRun.getOptDate(), _cashRun.getJobType());
+
+		String[] couponNo = _cashRun.getCouponNo();
+		BigDecimal[] couponValue = _cashRun.getCouponValue();
+		for (int i = 0; i < _list.size(); i++) {
+			CashRunCoupon _c = _list.get(i);
+			couponNo[i] = _c.getCouponNo();
+			couponValue[i] = _c.getCouponValue();
+		}
+
+		_cashRun.setCouponNo(couponNo);
+		_cashRun.setCouponValue(couponValue);
+		// ====================================
+
+		return _cashRun;
 	}
 
 	/**
@@ -119,7 +162,12 @@ public class CashRunManager {
 	 */
 	@Transactional(readOnly = false)
 	public void delCashRunByUuid(Integer uuid) {
-		cashRunJpaDao.delete(uuid);
+
+		CashRun _cashRun = cashRunJpaDao.findOne(uuid);
+		// 删除销售流水-代金卷明细信息
+		cashRunCouponManager.delCashRunCoupon(_cashRun.getOrgId(), _cashRun.getOptDate(), _cashRun.getJobType());
+
+		cashRunJpaDao.delete(_cashRun);
 	}
 
 	private void checkNewCashRun(CashRun cashRun, User user, String _date) {
@@ -173,26 +221,29 @@ public class CashRunManager {
 		cashRun.setOptDateY(DateUtils.transDateFormat(_date, "yyyyMMdd", "yyyy"));
 		// 日期-月
 		cashRun.setOptDateM(DateUtils.transDateFormat(_date, "yyyyMMdd", "MM"));
-		// 代金卷实际值
-		cashRun.setCouponCashValue(calCouponCashValue(cashRun));
 
-		cashRunJpaDao.save(cashRun);
-	}
+		BigDecimal totalCouponValue = new BigDecimal("0");
+		BigDecimal totalCouponCashValue = new BigDecimal("0");
 
-	/**
-	 * 计算代金卷实际值
-	 * 
-	 * @param cashRun
-	 * @return
-	 */
-	private BigDecimal calCouponCashValue(CashRun cashRun) {
-		if (StringUtils.isNotBlank(cashRun.getCouponNo())) {
-			Coupon coupon = couponManager.getOneByCouponNo(cashRun.getCouponNo());
+		// 删除销售流水-代金卷明细信息
+		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), cashRun.getOptDate(), cashRun.getJobType());
 
-			return coupon.getRate().multiply(cashRun.getCouponValue());
+		for (int i = 0; i < cashRun.getCouponNo().length; i++) {
+			if (StringUtils.isBlank(cashRun.getCouponNo()[i]) || cashRun.getCouponValue()[i] == null) {
+				continue;
+			}
+			totalCouponValue = totalCouponValue.add(cashRun.getCouponValue()[i]);
+
+			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(
+					user.getOrganization().getId(), _date, cashRun.getJobType(), cashRun.getCouponNo()[i],
+					cashRun.getCouponValue()[i]));
 		}
 
-		return new BigDecimal("0");
+		// 代金卷实际值
+		cashRun.setTotalCouponValue(totalCouponValue);
+		cashRun.setTotalCouponCashValue(totalCouponCashValue);
+
+		cashRunJpaDao.save(cashRun);
 	}
 
 	/**
@@ -271,11 +322,21 @@ public class CashRunManager {
 		_dbCashRun.setSaleCashAmt(cashRun.getSaleCashAmt());
 		// 汇报金额
 		_dbCashRun.setReportAmt(cashRun.getReportAmt());
-		// -------------------------------2014-5-24
-		// 代金卷面值
-		_dbCashRun.setCouponValue(cashRun.getCouponValue());
+
+		// -------------------------------2014-7-13
+		BigDecimal totalCouponValue = new BigDecimal("0");
+		BigDecimal totalCouponCashValue = new BigDecimal("0");
+		for (int i = 0; i < cashRun.getCouponNo().length; i++) {
+			totalCouponValue = totalCouponValue.add(cashRun.getCouponValue()[i]);
+
+			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(
+					user.getOrganization().getId(), _dbCashRun.getOptDate(), cashRun.getJobType(), cashRun.getCouponNo()[i],
+					cashRun.getCouponValue()[i]));
+		}
+
 		// 代金卷实际值
-		_dbCashRun.setCouponCashValue(calCouponCashValue(cashRun));
+		cashRun.setTotalCouponValue(totalCouponValue);
+		cashRun.setTotalCouponCashValue(totalCouponCashValue);
 
 		cashRunJpaDao.save(_dbCashRun);
 	}
@@ -313,9 +374,13 @@ public class CashRunManager {
 
 			// 2014-5-11
 			// 代金卷面值
-			if (null != cashRun.getCouponValue()) {
-				_cashRun.setCouponValue(_cashRun.getCouponValue().add(cashRun.getCouponValue()));
+			if (null != cashRun.getTotalCouponValue()) {
+				_cashRun.setTotalCouponValue(_cashRun.getTotalCouponValue().add(cashRun.getTotalCouponValue()));
 			}
+			// 预付款(收现)
+			_cashRun.setPrePayCashAmt(_cashRun.getPrePayCashAmt().add(cashRun.getPrePayCashAmt()));
+			// 预付款(刷卡)
+			_cashRun.setPrePayCardAmt(_cashRun.getPrePayCardAmt().add(cashRun.getPrePayCardAmt()));
 		}
 		return _cashRun;
 	}

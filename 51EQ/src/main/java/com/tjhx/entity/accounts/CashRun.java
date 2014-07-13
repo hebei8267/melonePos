@@ -71,11 +71,13 @@ public class CashRun extends IdEntity {
 	/** 回单对账标记 1-已对账 0-未对账 */
 	private Integer bankCheckFlg = 0;
 	/** 代金卷编号 */
-	private String couponNo;
+	private String[] couponNo = new String[5];
 	/** 代金卷面值 */
-	private BigDecimal couponValue = new BigDecimal("0");
+	private BigDecimal[] couponValue = new BigDecimal[5];
+	/** 代金卷面值 */
+	private BigDecimal totalCouponValue = new BigDecimal("0");
 	/** 代金卷实际值 */
-	private BigDecimal couponCashValue = new BigDecimal("0");
+	private BigDecimal totalCouponCashValue = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -85,6 +87,10 @@ public class CashRun extends IdEntity {
 	private String optDateStart;
 	/** 日期-结束时间 */
 	private String optDateEnd;
+	/** 预付款(收现) */
+	private BigDecimal prePayCashAmt = new BigDecimal("0");
+	/** 预付款(刷卡) */
+	private BigDecimal prePayCardAmt = new BigDecimal("0");
 
 	/**
 	 * 取得机构编号
@@ -462,8 +468,8 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @return couponNo 代金卷编号
 	 */
-	@Column(length = 8)
-	public String getCouponNo() {
+	@Transient
+	public String[] getCouponNo() {
 		return couponNo;
 	}
 
@@ -472,7 +478,7 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @param couponNo 代金卷编号
 	 */
-	public void setCouponNo(String couponNo) {
+	public void setCouponNo(String[] couponNo) {
 		this.couponNo = couponNo;
 	}
 
@@ -481,7 +487,8 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @return couponValue 代金卷面值
 	 */
-	public BigDecimal getCouponValue() {
+	@Transient
+	public BigDecimal[] getCouponValue() {
 		return couponValue;
 	}
 
@@ -490,26 +497,46 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @param couponValue 代金卷面值
 	 */
-	public void setCouponValue(BigDecimal couponValue) {
+	public void setCouponValue(BigDecimal[] couponValue) {
 		this.couponValue = couponValue;
+	}
+
+	/**
+	 * 获取代金卷面值
+	 * 
+	 * @return totalCouponValue 代金卷面值
+	 */
+	@Column(name = "COUPON_VALUE")
+	public BigDecimal getTotalCouponValue() {
+		return totalCouponValue;
+	}
+
+	/**
+	 * 设置代金卷面值
+	 * 
+	 * @param totalCouponValue 代金卷面值
+	 */
+	public void setTotalCouponValue(BigDecimal totalCouponValue) {
+		this.totalCouponValue = totalCouponValue;
 	}
 
 	/**
 	 * 获取代金卷实际值
 	 * 
-	 * @return couponCashValue 代金卷实际值
+	 * @return totalCouponCashValue 代金卷实际值
 	 */
-	public BigDecimal getCouponCashValue() {
-		return couponCashValue;
+	@Column(name = "COUPON_CASH_VALUE")
+	public BigDecimal getTotalCouponCashValue() {
+		return totalCouponCashValue;
 	}
 
 	/**
 	 * 设置代金卷实际值
 	 * 
-	 * @param couponCashValue 代金卷实际值
+	 * @param totalCouponCashValue 代金卷实际值
 	 */
-	public void setCouponCashValue(BigDecimal couponCashValue) {
-		this.couponCashValue = couponCashValue;
+	public void setTotalCouponCashValue(BigDecimal totalCouponCashValue) {
+		this.totalCouponCashValue = totalCouponCashValue;
 	}
 
 	/**
@@ -658,5 +685,43 @@ public class CashRun extends IdEntity {
 	 */
 	public void setOptDateEnd(String optDateEnd) {
 		this.optDateEnd = optDateEnd;
+	}
+
+	/**
+	 * 获取预付款(收现)
+	 * 
+	 * @return prePayCashAmt 预付款(收现)
+	 */
+	@Transient
+	public BigDecimal getPrePayCashAmt() {
+		return prePayCashAmt;
+	}
+
+	/**
+	 * 设置预付款(收现)
+	 * 
+	 * @param prePayCashAmt 预付款(收现)
+	 */
+	public void setPrePayCashAmt(BigDecimal prePayCashAmt) {
+		this.prePayCashAmt = prePayCashAmt;
+	}
+
+	/**
+	 * 获取预付款(刷卡)
+	 * 
+	 * @return prePayCardAmt 预付款(刷卡)
+	 */
+	@Transient
+	public BigDecimal getPrePayCardAmt() {
+		return prePayCardAmt;
+	}
+
+	/**
+	 * 设置预付款(刷卡)
+	 * 
+	 * @param prePayCardAmt 预付款(刷卡)
+	 */
+	public void setPrePayCardAmt(BigDecimal prePayCardAmt) {
+		this.prePayCardAmt = prePayCardAmt;
 	}
 }

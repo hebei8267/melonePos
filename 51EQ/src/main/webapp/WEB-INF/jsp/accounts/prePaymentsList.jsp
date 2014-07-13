@@ -116,7 +116,7 @@
 			<div class="row">
          		<div class="span12">
                		<legend>
-                   		<h3>会员预付款信息</h3>
+                   		<h3>会员预付款信息--(朋派生活)</h3>
                  	</legend>
              	</div>
                     
@@ -208,13 +208,12 @@
 										<c:if test="${prePayments.jobType == 2}">
 										晚班
 										</c:if>
-										<c:if test="${prePayments.jobType == 2}">
+										<c:if test="${prePayments.jobType == 4}">
 										全天班
 										</c:if>
                                    	</td>
                                    	<td	class="center">
-                                   		<fmt:formatDate value="${prePayments.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss" />
-                                   		${createDate}
+                                   		${prePayments.optDate}
                                    	</td>
                                 </tr>
                             	</c:forEach>

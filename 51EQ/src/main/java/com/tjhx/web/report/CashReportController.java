@@ -230,16 +230,16 @@ public class CashReportController extends BaseController {
 
 		if (null != _list && _list.size() > 0) {
 			CashRun cashRun1 = _list.get(0);
-			if (StringUtils.isNotBlank(cashRun1.getCouponNo())) {
-				cashRun1.setCouponNo(couponManager.getCouponByNoInCache(cashRun1.getCouponNo(), cashRun1.getOrgId()).getName());
-			}
+//			if (StringUtils.isNotBlank(cashRun1.getCouponNo())) {//TODO ？？？？？？？？？？？？？？？
+//				cashRun1.setCouponNo(couponManager.getCouponByNoInCache(cashRun1.getCouponNo(), cashRun1.getOrgId()).getName());
+//			}
 			model.addAttribute("cashRun1", cashRun1);
 		}
 		if (null != _list && _list.size() > 1) {
 			CashRun cashRun2 = _list.get(1);
-			if (StringUtils.isNotBlank(cashRun2.getCouponNo())) {
-				cashRun2.setCouponNo(couponManager.getCouponByNoInCache(cashRun2.getCouponNo(), cashRun2.getOrgId()).getName());
-			}
+//			if (StringUtils.isNotBlank(cashRun2.getCouponNo())) {
+//				cashRun2.setCouponNo(couponManager.getCouponByNoInCache(cashRun2.getCouponNo(), cashRun2.getOrgId()).getName());
+//			}
 			model.addAttribute("cashRun2", cashRun2);
 		}
 

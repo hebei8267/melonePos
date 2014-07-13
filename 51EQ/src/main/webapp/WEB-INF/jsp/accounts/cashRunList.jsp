@@ -108,6 +108,12 @@
                                         班前<br>余额
                                     </th>
                                     <th class="center">
+                                        预存<br>现金
+                                    </th>
+                                    <th class="center">
+                                        预存<br>刷卡
+                                    </th>
+                                    <th class="center">
                                         实点<br>现金
                                     </th>
                                     <th>
@@ -129,7 +135,7 @@
                                         当班销售额<br>(不含代金卷)
                                     </th>
                                     <th class="center">
-                                        代金卷<br>金额
+                                        代金卷<br>销售额
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -166,6 +172,12 @@
                                             ${cashRun.initAmt}
                                         </td>
                                         <td>
+                                            ${cashRun.prePayCashAmt}
+                                        </td>
+                                        <td>
+                                           	${cashRun.prePayCardAmt}
+                                        </td>
+                                        <td>
                                             ${cashRun.cashAmt}
                                         </td>
                                         <td>
@@ -187,7 +199,7 @@
                                             ${cashRun.saleAmt}
                                         </td>
                                         <td>
-                                            ${cashRun.couponValue}
+                                            ${cashRun.totalCouponValue}
                                         </td>
                                         <td>
                                             ${cashRun.reportAmt}
@@ -201,9 +213,16 @@
                                 </c:forEach>
                                 <c:if test="${!empty cashRunList}" >
                                     <tr>
-                                        <td	colspan="5">
+                                        <td	colspan="4">
                                             合计:
                                         </td>
+                                        <td>
+                                            ${totalCashRun.prePayCashAmt}
+                                        </td>
+                                        <td>
+                                            ${totalCashRun.prePayCardAmt}
+                                        </td>
+                                        <td></td>
                                         <td>
                                             ${totalCashRun.adjustAmt}
                                         </td>
@@ -221,7 +240,7 @@
                                             ${totalCashRun.saleAmt}
                                         </td>
                                         <td>
-                                        	${totalCashRun.couponValue}
+                                        	${totalCashRun.totalCouponValue}
                                         </td>
                                         <td colspan="2">
                                             ${totalCashRun.reportAmt}
@@ -232,7 +251,7 @@
                             <c:if test="${empty	cashRunList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="14" class="rounded-foot-left">
+                                        <td	colspan="16" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
