@@ -56,6 +56,12 @@
                                         昨日<br>余额
                                     </th>
                                     <th class="center">
+                                        预存<br>现金
+                                    </th>
+                                    <th class="center">
+                                        预存<br>刷卡
+                                    </th>
+                                    <th class="center">
                                         现金<br>盈亏
                                     </th>
                                     <th class="center">
@@ -74,7 +80,7 @@
                                         当日销售额<br>(不含代金卷)
                                     </th>
                                     <th class="center">
-                                        代金卷<br>金额
+                                        代金卷<br>销售额
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -92,6 +98,12 @@
                                         </td>
                                         <td>
                                             ${noCashDaily.initAmt}
+                                        </td>
+                                        <td>
+                                            ${noCashDaily.prePayCashAmt}
+                                        </td>
+                                        <td>
+                                            ${noCashDaily.prePayCardAmt}
                                         </td>
                                         <td>
                                             ${noCashDaily.adjustAmt}
@@ -127,7 +139,7 @@
                             <c:if test="${empty	noCashDailyList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="11" class="rounded-foot-left">
+                                        <td	colspan="13" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
@@ -155,6 +167,12 @@
                                         昨日<br>余额
                                     </th>
                                     <th class="center">
+                                        预存<br>现金
+                                    </th>
+                                    <th class="center">
+                                        预存<br>刷卡
+                                    </th>
+                                    <th class="center">
                                         现金<br>盈亏
                                     </th>
                                     <th class="center">
@@ -173,7 +191,7 @@
                                         当日销售额<br>(不含代金卷)
                                     </th>
                                     <th class="center">
-                                        代金卷<br>金额
+                                        代金卷<br>销售额
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -187,7 +205,7 @@
                                 <c:if test="${empty	cashDailyList}" >
                                     <tfoot>
                                         <tr>
-                                            <td	colspan="11" class="rounded-foot-left">
+                                            <td	colspan="13" class="rounded-foot-left">
                                                 无记录信息
                                             </td>
                                         </tr>
@@ -200,6 +218,12 @@
                                         </td>
                                         <td>
                                             ${cashDaily.initAmt}
+                                        </td>
+                                        <td>
+                                            ${cashDaily.prePayCashAmt}
+                                        </td>
+                                        <td>
+                                            ${cashDaily.prePayCardAmt}
                                         </td>
                                         <td>
                                             ${cashDaily.adjustAmt}

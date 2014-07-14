@@ -1,6 +1,7 @@
 package com.tjhx.service.accounts;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +46,8 @@ public class CashDailyManager {
 	private CashDailyMyBatisDao cashDailyMyBatisDao;
 	@Resource
 	private DailySaleMyBatisDao dailySaleMyBatisDao;
+	@Resource
+	private PrePaymentsManager prePaymentsManager;
 
 	private final static String XML_CONFIG_CASH_DAILY = "/excel/Cash_Daily_Template.xls";
 	private final static String XML_CONFIG_CASH_DAILY_2 = "/excel/Cash_Daily_Template_2.xls";
@@ -69,7 +72,8 @@ public class CashDailyManager {
 				_tmpOptDate = cashRun.getOptDate();
 				_tmpCashDaily = new CashDaily();
 				_noCashDailyList.add(_tmpCashDaily);
-
+				// 机构编号
+				_tmpCashDaily.setOrgId(cashRun.getOrgId());
 				// 日期
 				_tmpCashDaily.setOptDate(cashRun.getOptDate());
 				_tmpCashDaily.setOptDateShow(cashRun.getOptDateShow());
@@ -106,6 +110,16 @@ public class CashDailyManager {
 				_tmpCashDaily.setCouponValue(_tmpCashDaily.getCouponValue().add(cashRun.getTotalCouponValue()));
 			}
 
+		}
+
+		for (CashDaily cashDaily : _noCashDailyList) {
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(cashDaily.getOrgId(), cashDaily.getOptDate());
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(cashDaily.getOrgId(), cashDaily.getOptDate());
+
+			cashDaily.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+			cashDaily.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
 		}
 		return _noCashDailyList;
 	}
@@ -155,6 +169,15 @@ public class CashDailyManager {
 		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM,
 				new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
 
+		for (CashDaily cashDaily : _list) {
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(cashDaily.getOrgId(), cashDaily.getOptDate());
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(cashDaily.getOrgId(), cashDaily.getOptDate());
+
+			cashDaily.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+			cashDaily.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+		}
 		return _list;
 	}
 
@@ -260,7 +283,19 @@ public class CashDailyManager {
 	 * @return
 	 */
 	public List<CashDaily> searchReportList(CashDaily cashDaily) {
-		return cashDailyMyBatisDao.getCashDailyList(cashDaily);
+		List<CashDaily> _list = cashDailyMyBatisDao.getCashDailyList(cashDaily);
+
+		for (CashDaily _cashDaily : _list) {
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(_cashDaily.getOrgId(), _cashDaily.getOptDate());
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(_cashDaily.getOrgId(), _cashDaily.getOptDate());
+
+			_cashDaily.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+			_cashDaily.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+		}
+
+		return _list;
 	}
 
 	/**
@@ -309,6 +344,10 @@ public class CashDailyManager {
 			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(cashDaily.getBwSaleAmt()));
 			// 汇报金额
 			_cashDaily.setReportAmt(_cashDaily.getReportAmt().add(cashDaily.getReportAmt()));
+			// 预付款(收现)
+			_cashDaily.setPrePayCashAmt(_cashDaily.getPrePayCashAmt().add(cashDaily.getPrePayCashAmt()));
+			// 预付款(刷卡)
+			_cashDaily.setPrePayCardAmt(_cashDaily.getPrePayCardAmt().add(cashDaily.getPrePayCardAmt()));
 		}
 		return _cashDaily;
 	}

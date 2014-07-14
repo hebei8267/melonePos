@@ -19,8 +19,8 @@
         <result column="carrying_cash_amt" property="carryingCashAmt" jdbcType="DECIMAL"/>
         <result column="cash_amt" property="cashAmt" jdbcType="DECIMAL"/>
         <result column="coupon_no" property="couponNo" jdbcType="VARCHAR"/>
-        <result column="coupon_value" property="couponValue" jdbcType="DECIMAL"/>
-        <result column="coupon_cash_value" property="couponCashValue" jdbcType="DECIMAL"/>
+        <result column="coupon_value" property="totalCouponValue" jdbcType="DECIMAL"/>
+        <result column="coupon_cash_value" property="totalCouponCashValue" jdbcType="DECIMAL"/>
         <result column="daily_flg" property="dailyFlg" jdbcType="BIT"/>
         <result column="deposit_amt" property="depositAmt" jdbcType="DECIMAL"/>
         <result column="depositor" property="depositor" jdbcType="VARCHAR"/>

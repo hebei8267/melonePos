@@ -70,6 +70,10 @@ public class CashDaily extends IdEntity {
 	private Integer index;
 	/** 回单对账标记 1-已对账 0-未对账 */
 	private Integer bankCheckFlg = 0;
+	/** 预付款(收现) */
+	private BigDecimal prePayCashAmt = new BigDecimal("0");
+	/** 预付款(刷卡) */
+	private BigDecimal prePayCardAmt = new BigDecimal("0");
 
 	/**
 	 * 取得机构编号
@@ -514,5 +518,43 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setBankCheckFlg(Integer bankCheckFlg) {
 		this.bankCheckFlg = bankCheckFlg;
+	}
+
+	/**
+	 * 获取预付款(收现)
+	 * 
+	 * @return prePayCashAmt 预付款(收现)
+	 */
+	@Transient
+	public BigDecimal getPrePayCashAmt() {
+		return prePayCashAmt;
+	}
+
+	/**
+	 * 设置预付款(收现)
+	 * 
+	 * @param prePayCashAmt 预付款(收现)
+	 */
+	public void setPrePayCashAmt(BigDecimal prePayCashAmt) {
+		this.prePayCashAmt = prePayCashAmt;
+	}
+
+	/**
+	 * 获取预付款(刷卡)
+	 * 
+	 * @return prePayCardAmt 预付款(刷卡)
+	 */
+	@Transient
+	public BigDecimal getPrePayCardAmt() {
+		return prePayCardAmt;
+	}
+
+	/**
+	 * 设置预付款(刷卡)
+	 * 
+	 * @param prePayCardAmt 预付款(刷卡)
+	 */
+	public void setPrePayCardAmt(BigDecimal prePayCardAmt) {
+		this.prePayCardAmt = prePayCardAmt;
 	}
 }

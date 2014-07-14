@@ -106,6 +106,17 @@ public class PrePaymentsManager {
 	}
 
 	/**
+	 * 取得顾客/会员预付款（现金充值）合计信息
+	 * 
+	 * @param orgId 机构信息
+	 * @param optDate 业务日期
+	 * @return
+	 */
+	public BigDecimal getOrgPrePaymentsInfo_By_Cash(String orgId, String optDate) {
+		return prePaymentsJpaDao.getOrgPrePaymentsInfo_By_Cash(orgId, optDate);
+	}
+
+	/**
 	 * 取得顾客/会员预付款（刷卡充值）合计信息
 	 * 
 	 * @param orgId 机构信息
@@ -115,5 +126,16 @@ public class PrePaymentsManager {
 	 */
 	public BigDecimal getOrgPrePaymentsInfo_By_Card(String orgId, String optDate, Integer jobType) {
 		return prePaymentsJpaDao.getOrgPrePaymentsInfo_By_Card(orgId, optDate, jobType);
+	}
+
+	/**
+	 * 取得顾客/会员预付款（刷卡充值）合计信息
+	 * 
+	 * @param orgId 机构信息
+	 * @param optDate 业务日期
+	 * @return
+	 */
+	public BigDecimal getOrgPrePaymentsInfo_By_Card(String orgId, String optDate) {
+		return prePaymentsJpaDao.getOrgPrePaymentsInfo_By_Card(orgId, optDate);
 	}
 }

@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -27,8 +28,11 @@ import org.springside.modules.utils.SpringContextHolder;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.accounts.CashRun;
+import com.tjhx.entity.accounts.CashRunCoupon;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.accounts.CashDailyManager;
+import com.tjhx.service.accounts.CashRunCouponManager;
+import com.tjhx.service.accounts.PrePaymentsManager;
 import com.tjhx.service.order.CouponManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
@@ -42,6 +46,10 @@ public class CashReportController extends BaseController {
 	private CashDailyManager cashDailyManager;
 	@Resource
 	private CouponManager couponManager;
+	@Resource
+	private CashRunCouponManager cashRunCouponManager;
+	@Resource
+	private PrePaymentsManager prePaymentsManager;
 
 	@RequestMapping(value = { "list", "" })
 	public String cashReportList_Action(Model model) throws ServletRequestBindingException {
@@ -230,16 +238,60 @@ public class CashReportController extends BaseController {
 
 		if (null != _list && _list.size() > 0) {
 			CashRun cashRun1 = _list.get(0);
-//			if (StringUtils.isNotBlank(cashRun1.getCouponNo())) {//TODO ？？？？？？？？？？？？？？？
-//				cashRun1.setCouponNo(couponManager.getCouponByNoInCache(cashRun1.getCouponNo(), cashRun1.getOrgId()).getName());
-//			}
+
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(orgId, optDate, cashRun1.getJobType());
+			cashRun1.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(orgId, optDate, cashRun1.getJobType());
+			cashRun1.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+
+			List<CashRunCoupon> _couponList = cashRunCouponManager.getCashRunCouponList(cashRun1.getOrgId(),
+					cashRun1.getOptDate(), cashRun1.getJobType());
+
+			if (null != _couponList && _couponList.size() > 0) {
+				String[] couponNo = new String[_couponList.size()];
+				BigDecimal[] couponValue = new BigDecimal[_couponList.size()];
+
+				for (int i = 0; i < _couponList.size(); i++) {
+					CashRunCoupon _c = _couponList.get(i);
+					couponNo[i] = couponManager.getCouponByNoInCache(_c.getCouponNo(), orgId).getName();
+					couponValue[i] = _c.getCouponValue();
+				}
+				cashRun1.setCouponNo(couponNo);
+				cashRun1.setCouponValue(couponValue);
+			}
+
 			model.addAttribute("cashRun1", cashRun1);
 		}
 		if (null != _list && _list.size() > 1) {
 			CashRun cashRun2 = _list.get(1);
-//			if (StringUtils.isNotBlank(cashRun2.getCouponNo())) {
-//				cashRun2.setCouponNo(couponManager.getCouponByNoInCache(cashRun2.getCouponNo(), cashRun2.getOrgId()).getName());
-//			}
+
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(orgId, optDate, cashRun2.getJobType());
+			cashRun2.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(orgId, optDate, cashRun2.getJobType());
+			cashRun2.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+
+			List<CashRunCoupon> _couponList = cashRunCouponManager.getCashRunCouponList(cashRun2.getOrgId(),
+					cashRun2.getOptDate(), cashRun2.getJobType());
+
+			if (null != _couponList && _couponList.size() > 0) {
+				String[] couponNo = new String[_couponList.size()];
+				BigDecimal[] couponValue = new BigDecimal[_couponList.size()];
+
+				for (int i = 0; i < _couponList.size(); i++) {
+					CashRunCoupon _c = _couponList.get(i);
+					couponNo[i] = couponManager.getCouponByNoInCache(_c.getCouponNo(), orgId).getName();
+					couponValue[i] = _c.getCouponValue();
+				}
+				cashRun2.setCouponNo(couponNo);
+				cashRun2.setCouponValue(couponValue);
+			}
+
 			model.addAttribute("cashRun2", cashRun2);
 		}
 

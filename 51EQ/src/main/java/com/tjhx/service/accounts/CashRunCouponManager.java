@@ -1,6 +1,7 @@
 package com.tjhx.service.accounts;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -89,5 +90,18 @@ public class CashRunCouponManager {
 		}
 
 		return new BigDecimal("0");
+	}
+
+	/**
+	 * 取得销售流水-代金卷明细列表
+	 * 
+	 * @param orgId
+	 * @param optDate
+	 * @param jobType
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CashRunCoupon> getCashRunCouponList(String orgId, String optDate, Integer jobType) {
+		return (List<CashRunCoupon>) cashRunCouponJpaDao.getCashRunCouponList(orgId, optDate, jobType);
 	}
 }
