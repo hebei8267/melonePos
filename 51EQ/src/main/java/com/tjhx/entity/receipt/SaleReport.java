@@ -54,6 +54,10 @@ public class SaleReport {
 	private BigDecimal couponValue = new BigDecimal("0");
 	/** 代金卷实际值 */
 	private BigDecimal couponCashValue = new BigDecimal("0");
+	/** 预付款(收现) */
+	private BigDecimal prePayCashAmt = new BigDecimal("0");
+	/** 预付款(刷卡) */
+	private BigDecimal prePayCardAmt = new BigDecimal("0");
 
 	/**
 	 * 取得行号
@@ -451,6 +455,42 @@ public class SaleReport {
 		this.couponCashValue = couponCashValue;
 	}
 
+	/**
+	 * 获取预付款(收现)
+	 * 
+	 * @return prePayCashAmt 预付款(收现)
+	 */
+	public BigDecimal getPrePayCashAmt() {
+		return prePayCashAmt;
+	}
+
+	/**
+	 * 设置预付款(收现)
+	 * 
+	 * @param prePayCashAmt 预付款(收现)
+	 */
+	public void setPrePayCashAmt(BigDecimal prePayCashAmt) {
+		this.prePayCashAmt = prePayCashAmt;
+	}
+
+	/**
+	 * 获取预付款(刷卡)
+	 * 
+	 * @return prePayCardAmt 预付款(刷卡)
+	 */
+	public BigDecimal getPrePayCardAmt() {
+		return prePayCardAmt;
+	}
+
+	/**
+	 * 设置预付款(刷卡)
+	 * 
+	 * @param prePayCardAmt 预付款(刷卡)
+	 */
+	public void setPrePayCardAmt(BigDecimal prePayCardAmt) {
+		this.prePayCardAmt = prePayCardAmt;
+	}
+
 	public void addCashRunInfo_Cash(CashRun _cashRun) throws ParseException {
 		// 机构名称
 		this.orgName = _cashRun.getOrgName();
@@ -499,6 +539,11 @@ public class SaleReport {
 		this.couponValue = _cashRun.getTotalCouponValue();
 		// 代金卷实际值
 		this.couponCashValue = _cashRun.getTotalCouponCashValue();
+
+		// 预付款(收现)
+		this.prePayCashAmt = _cashRun.getPrePayCashAmt();
+		// 预付款(刷卡)
+		this.prePayCardAmt = _cashRun.getPrePayCardAmt();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {

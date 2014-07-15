@@ -305,7 +305,21 @@ public class CashDailyManager {
 	 * @return
 	 */
 	public List<CashRun> searchSaleReportList(CashRun cashRun) {
-		return cashRunMyBatisDao.getCashRunList_OptDate_Interval(cashRun);
+		List<CashRun> _list = cashRunMyBatisDao.getCashRunList_OptDate_Interval(cashRun);
+
+		for (CashRun _cashRun : _list) {
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(_cashRun.getOrgId(), _cashRun.getOptDate(),
+					_cashRun.getJobType());
+			// 取得顾客/会员预付款（现金充值）合计信息
+			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(_cashRun.getOrgId(), _cashRun.getOptDate(),
+					_cashRun.getJobType());
+
+			_cashRun.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
+			_cashRun.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
+		}
+
+		return _list;
 	}
 
 	/**
@@ -372,6 +386,9 @@ public class CashDailyManager {
 
 			_saleReport.setCouponValue(_saleReport.getCouponValue().add(saleReport.getCouponValue()));
 			_saleReport.setCouponCashValue(_saleReport.getCouponCashValue().add(saleReport.getCouponCashValue()));
+
+			_saleReport.setPrePayCashAmt(_saleReport.getPrePayCashAmt().add(saleReport.getPrePayCashAmt()));
+			_saleReport.setPrePayCardAmt(_saleReport.getPrePayCardAmt().add(saleReport.getPrePayCardAmt()));
 		}
 		return _saleReport;
 	}
