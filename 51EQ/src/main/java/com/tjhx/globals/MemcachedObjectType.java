@@ -6,6 +6,8 @@ package com.tjhx.globals;
 public enum MemcachedObjectType {
 	/** 供应商列表 */
 	SUPPLIER_LIST("Supplier_List", 60 * 60 * 24), // 24小时
+	/** 供应商列表 */
+	ALL_SUPPLIER_LIST("All_Supplier_List", 60 * 60 * 24), // 24小时
 	/** 银行列表 */
 	BANK_LIST("Bank_List", 60 * 60 * 24),
 	/** 银行卡Map */

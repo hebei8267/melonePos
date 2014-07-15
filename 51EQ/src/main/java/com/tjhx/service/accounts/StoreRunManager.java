@@ -107,7 +107,7 @@ public class StoreRunManager {
 	 * @return 供应商信息
 	 */
 	private Map<String, Supplier> getSupplierInfo() {
-		List<Supplier> _supplierList = supplierManager.getAllSupplier();
+		List<Supplier> _supplierList = supplierManager.getSupplierList();
 
 		Map<String, Supplier> _supplierMap = new HashMap<String, Supplier>();
 		for (Supplier _supplier : _supplierList) {

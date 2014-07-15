@@ -8,9 +8,25 @@ import com.tjhx.entity.info.Supplier;
 
 public interface SupplierJpaDao extends CrudRepository<Supplier, Integer> {
 
+	/**
+	 * 取得所有货品供应商(不含已删除供应商)
+	 * 
+	 * @param sort
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	@Query("select s from Supplier s where s.delFlg = '0'")
 	public Iterable findSupplierList(Sort sort);
+
+	/**
+	 * 取得所有货品供应商
+	 * 
+	 * @param sort
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@Query("select s from Supplier s")
+	public Iterable findAllSupplierList(Sort sort);
 
 	/**
 	 * 取得货品供应商信息

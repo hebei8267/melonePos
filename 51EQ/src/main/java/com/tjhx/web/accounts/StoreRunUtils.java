@@ -32,7 +32,7 @@ public class StoreRunUtils {
 	 */
 	protected static void initSupplierList(Model model, SupplierManager supplierManager) {
 
-		List<Supplier> _supplierList = supplierManager.getAllSupplier();
+		List<Supplier> _supplierList = supplierManager.getSupplierList();
 
 		Map<String, String> supplier = new LinkedHashMap<String, String>();
 		supplier.put("", "");

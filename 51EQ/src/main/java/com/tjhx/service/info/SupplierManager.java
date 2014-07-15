@@ -43,21 +43,45 @@ public class SupplierManager {
 	private SupplierSignJpaDao supplierSignJpaDao;
 
 	/**
-	 * 取得所有货品供应商信息
+	 * 取得所有货品供应商信息(不含已删除供应商)
 	 * 
 	 * @return 货品供应商信息列表
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Supplier> getAllSupplier() {
+	public List<Supplier> getSupplierList() {
 		List<Supplier> _supplierList = spyMemcachedClient.get(MemcachedObjectType.SUPPLIER_LIST.getObjKey());
 
 		if (null == _supplierList) {
 			// 从数据库中取出全量供应商信息(List格式)
-			_supplierList = (List<Supplier>) supplierJpaDao.findSupplierList(new Sort(new Sort.Order(
-					Sort.Direction.ASC, "name")));
+			_supplierList = (List<Supplier>) supplierJpaDao
+					.findSupplierList(new Sort(new Sort.Order(Sort.Direction.ASC, "name")));
 			// 将供应商信息Map保存到memcached
 			spyMemcachedClient.set(MemcachedObjectType.SUPPLIER_LIST.getObjKey(),
 					MemcachedObjectType.SUPPLIER_LIST.getExpiredTime(), _supplierList);
+
+			logger.debug("供应商信息不在 memcached中,从数据库中取出并放入memcached");
+		} else {
+			logger.debug("从memcached中取出供应商信息");
+		}
+		return _supplierList;
+	}
+
+	/**
+	 * 取得所有货品供应商信息(含已删除供应商)
+	 * 
+	 * @return 货品供应商信息列表
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Supplier> getAllSupplierList() {
+		List<Supplier> _supplierList = spyMemcachedClient.get(MemcachedObjectType.ALL_SUPPLIER_LIST.getObjKey());
+
+		if (null == _supplierList) {
+			// 从数据库中取出全量供应商信息(List格式)
+			_supplierList = (List<Supplier>) supplierJpaDao.findAllSupplierList(new Sort(new Sort.Order(Sort.Direction.ASC,
+					"name")));
+			// 将供应商信息Map保存到memcached
+			spyMemcachedClient.set(MemcachedObjectType.ALL_SUPPLIER_LIST.getObjKey(),
+					MemcachedObjectType.ALL_SUPPLIER_LIST.getExpiredTime(), _supplierList);
 
 			logger.debug("供应商信息不在 memcached中,从数据库中取出并放入memcached");
 		} else {
@@ -73,7 +97,7 @@ public class SupplierManager {
 	 * @return
 	 */
 	public Supplier getSupplierByBwId(String supplierBwId) {
-		List<Supplier> _supplierList = getAllSupplier();
+		List<Supplier> _supplierList = getAllSupplierList();
 
 		for (Supplier supplier : _supplierList) {
 			if (supplier.getSupplierBwId().equals(supplierBwId)) {
@@ -93,13 +117,12 @@ public class SupplierManager {
 	}
 
 	/**
-	 * 取得所有货品供应商信息
+	 * 取得所有货品供应商信息(不含已删除供应商)
 	 * 
 	 * @return 货品供应商信息列表
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Supplier> getAllSupplier_DB() {
-
+	public List<Supplier> getSupplierList_DB() {
 		return (List<Supplier>) supplierJpaDao.findSupplierList(new Sort(new Sort.Order(Sort.Direction.ASC, "uuid")));
 	}
 
