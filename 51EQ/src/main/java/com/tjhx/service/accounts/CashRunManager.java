@@ -326,17 +326,24 @@ public class CashRunManager {
 		// -------------------------------2014-7-13
 		BigDecimal totalCouponValue = new BigDecimal("0");
 		BigDecimal totalCouponCashValue = new BigDecimal("0");
+
+		// 删除销售流水-代金卷明细信息
+		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), _dbCashRun.getOptDate(), _dbCashRun.getJobType());
+
 		for (int i = 0; i < cashRun.getCouponNo().length; i++) {
+			if (StringUtils.isBlank(cashRun.getCouponNo()[i]) || cashRun.getCouponValue()[i] == null) {
+				continue;
+			}
 			totalCouponValue = totalCouponValue.add(cashRun.getCouponValue()[i]);
 
 			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(
-					user.getOrganization().getId(), _dbCashRun.getOptDate(), cashRun.getJobType(), cashRun.getCouponNo()[i],
+					user.getOrganization().getId(), _dbCashRun.getOptDate(), _dbCashRun.getJobType(), cashRun.getCouponNo()[i],
 					cashRun.getCouponValue()[i]));
 		}
 
 		// 代金卷实际值
-		cashRun.setTotalCouponValue(totalCouponValue);
-		cashRun.setTotalCouponCashValue(totalCouponCashValue);
+		_dbCashRun.setTotalCouponValue(totalCouponValue);
+		_dbCashRun.setTotalCouponCashValue(totalCouponCashValue);
 
 		cashRunJpaDao.save(_dbCashRun);
 	}
