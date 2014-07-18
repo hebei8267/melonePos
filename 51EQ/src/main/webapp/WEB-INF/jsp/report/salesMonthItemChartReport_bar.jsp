@@ -53,7 +53,7 @@
                     <c:forEach items="${orgSumSalesJsonList}" var="orgSumSalesJson" varStatus="status1">
                     	<div class="span12"><h4>${orgNameList.get(status1.index) } - 销售金额</h4></div>
                         <div class="span12"	style="margin-top: 10px;">
-                            <div id="chart1${status1.index + 1}" style="width:900px;height:900px;border:1px solid #A4BED4;"></div>
+                            <div id="chart1${status1.index + 1}" style="width:950px;height:900px;border:1px solid #A4BED4;"></div>
                         </div>
                         <div class="span12 cash_daily"></div>
                     </c:forEach>

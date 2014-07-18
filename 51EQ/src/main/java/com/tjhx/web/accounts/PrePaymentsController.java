@@ -21,13 +21,17 @@ import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.PrePayments;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.accounts.PrePaymentsManager;
+import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
+import com.tjhx.web.report.ReportUtils;
 
 @Controller
 @RequestMapping(value = "/prePayments")
 public class PrePaymentsController extends BaseController {
 	@Resource
 	private PrePaymentsManager prePaymentsManager;
+	@Resource
+	private OrganizationManager orgManager;
 
 	/**
 	 * 初始化上班类型列表
@@ -46,7 +50,7 @@ public class PrePaymentsController extends BaseController {
 	}
 
 	/**
-	 * 取得顾客/会员预付款（充值、消费）信息列表
+	 * 取得顾客/会员预付款（充值、消费）信息列表---门店
 	 * 
 	 * @param model
 	 * @param request
@@ -176,5 +180,69 @@ public class PrePaymentsController extends BaseController {
 		prePaymentsManager.addNewPrePayments(prePayments);
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/prePayments/list";
+	}
+
+	// ===============================================================================
+	// 总部
+	// ===============================================================================
+	/**
+	 * 取得顾客/会员预付款（充值、消费）信息列表---总部
+	 * 
+	 * @param model
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "managerList")
+	public String prePaymentsManagerList_Action(Model model, HttpServletRequest request, HttpSession session)
+			throws ServletRequestBindingException {
+		String optDateShow = DateUtils.getCurrentDateShortStr();
+
+		List<PrePayments> prePaymentsList = prePaymentsManager.getPrePaymentsList(null, optDateShow, optDateShow, null);
+
+		model.addAttribute("prePaymentsList", prePaymentsList);
+
+		model.addAttribute("optDateShow_start", DateUtils.transDateFormat(optDateShow, "yyyyMMdd", "yyyy-MM-dd"));
+		model.addAttribute("optDateShow_end", DateUtils.transDateFormat(optDateShow, "yyyyMMdd", "yyyy-MM-dd"));
+
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+
+		return "accounts/prePaymentsManagerList";
+	}
+
+	/**
+	 * 取得顾客/会员预付款（充值、消费）信息列表---总部
+	 * 
+	 * @param model
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws ParseException
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "managerSearch")
+	public String managerSearch_Action(Model model, HttpServletRequest request, HttpSession session) throws ParseException,
+			ServletRequestBindingException {
+
+		String optDateShowStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShowEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String phoneNum = ServletRequestUtils.getStringParameter(request, "phoneNum");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+
+		List<PrePayments> prePaymentsList = prePaymentsManager.getPrePaymentsList(orgId,
+				DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd"),
+				DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd"), phoneNum);
+
+		model.addAttribute("prePaymentsList", prePaymentsList);
+
+		model.addAttribute("optDateShow_start", optDateShowStart);
+		model.addAttribute("optDateShow_end", optDateShowEnd);
+		model.addAttribute("phoneNum", phoneNum);
+		model.addAttribute("orgId", orgId);
+
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+
+		return "accounts/prePaymentsManagerList";
 	}
 }

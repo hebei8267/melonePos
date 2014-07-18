@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
@@ -49,28 +50,7 @@
                     format : 'yyyy-mm-dd'
                 });
 
-				//-----------------------------------
-	            // 全选/全部选
-	            //-----------------------------------
-	            $("#checkAll").click(function() {
-	                $('input[name="uuid"]').attr("checked", this.checked);
-	            });
-	            var $subCheckBox = $("input[name='uuid']");
-	            $subCheckBox.click(function() {
-	                $("#checkAll").attr("checked", $subCheckBox.length == $("input[name='uuid']:checked").length ? true : false);
-	            });
-	            //-----------------------------------
-	            // 删除按钮点击
-	            //-----------------------------------
-	            $("#delBtn").click(function() {
-	                if ($("#listForm").valid()) {
-	                    $('#__del_confirm').modal({
-	                        backdrop : true,
-	                        keyboard : true,
-	                        show : true
-	                    });
-	                }
-	            });
+				
 				//--------------------------------------------------------------------
 				// 查询按钮点击
 				//--------------------------------------------------------------------
@@ -80,32 +60,12 @@
  					});
  					
  					$("#searchForm").attr('target', '_self');
-					$("#searchForm").attr("action", "${sc_ctx}/prePayments/search");
+					$("#searchForm").attr("action", "${sc_ctx}/prePayments/managerSearch");
 					$("#searchForm").submit();
 				});
 			});
 			
-			//-----------------------------------
-	        // 删除
-	        //-----------------------------------
-	        function _del_confirm() {
-	            var $subCheckBox = $("input[name='uuid']");
-	            var uuids = "";
-	            $.each($subCheckBox, function(index, _checkBox) {
-	                if (_checkBox.checked) {
-	                    uuids += _checkBox.value + ",";
-	                }
-	            });
-	            if (uuids.length > 0) {
-	                uuids = uuids.substring(0, uuids.length - 1);
-	            }
-	
-	            $("#uuids").val(uuids);
-	            
-	            $("#listForm").attr('target', '_self');
-	            $("#listForm").attr("action", "${sc_ctx}/prePayments/del");
-	            $("#listForm").submit();
-	        }
+			
 		</script>
 	</head>
 	<body>
@@ -130,25 +90,28 @@
                   	<label class="control-label">(顾客)电话号码 :</label>
                    	<input id="phoneNum" name="phoneNum" type="text" class="input-medium" value="${phoneNum }"/>
                   	&nbsp;&nbsp;
+                  	<label class="control-label">机构 :</label>
+                        <select name="orgId" class="input-medium">
+                    	<c:forEach items="${orgList}" var="org">
+                       		<c:if test="${org.key == orgId}">
+                         		<option value="${org.key }" selected>${org.value }</option>
+                          	</c:if>
+                          	<c:if test="${org.key != orgId}">
+                             	<option value="${org.key }">${org.value }</option>
+                          	</c:if>
+                      	</c:forEach>
+                        </select>&nbsp;&nbsp;
                 	<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
               	</div>
                	</form>
                     
                 
                 <form method="post"	class="form-inline"	id="listForm">
-              	<div class="span12" style="margin-top: 15px;">
-                	<a href="${sc_ctx}/prePayments/consumption"	class="btn btn-primary">消费</a>
-                 	<a href="${sc_ctx}/prePayments/recharge"	class="btn btn-warning">充值</a>
-                 	<input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
-              	</div>
               	<div class="span12"	style="margin-top: 10px;">
                  	<input type="hidden" name="uuids" id="uuids"/>
                         <table class="table	table-striped table-bordered table-condensed mytable">
                         	<thead>
                                 <tr>
-                                    <th	width="25" class="center">
-                                        <input id="checkAll" type="checkbox" />
-                                    </th>
                                     <th class="center">
                                         会员名称
                                     </th>
@@ -167,15 +130,15 @@
                                     <th class="center">
                                         业务时间
                                     </th>
+                                    <th class="center" width="125">
+                                        业务门店
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                             	
                             	<c:forEach items="${prePaymentsList}" var="prePayments">
                             	<tr>
-                               		<td	class="center">
-                                   		<input type="checkbox" name="uuid" value="${prePayments.uuid}">
-                                   	</td>
                                   	<td	class="center">
                                    		${prePayments.name}
                                    	</td>
@@ -215,13 +178,16 @@
                                    	<td	class="center">
                                    		${prePayments.optDate}
                                    	</td>
+                                   	<td	class="center">
+                                   		${fn:substring(prePayments.orgId,3,6)}
+                                   	</td>
                                 </tr>
                             	</c:forEach>
                             </tbody>
                             <c:if test="${empty	prePaymentsList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="5" class="rounded-foot-left">
+                                        <td	colspan="7" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>

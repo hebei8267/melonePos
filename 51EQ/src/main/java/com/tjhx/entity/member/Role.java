@@ -140,12 +140,12 @@ public class Role extends IdEntity {
 	public void initPermIdList(List<Function> allFunList) {
 		List<Function> _funList = Lists.newArrayList();
 		for (Permission permission : getPermissionSet()) {
-			permIdList.add(permission.getFunction().getUuid().toString());
-			_funList.add(permission.getFunction());
+			if (null != permission.getFunction()) {
+				permIdList.add(permission.getFunction().getUuid().toString());
+				_funList.add(permission.getFunction());
+			}
 		}
-
 		noPermList = (List<Function>) CollectionUtils.subtract(allFunList, _funList);
-
 	}
 
 	/**

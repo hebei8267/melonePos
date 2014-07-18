@@ -6,12 +6,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.accounts.PrePaymentsJpaDao;
+import com.tjhx.dao.accounts.PrePaymentsMyBatisDao;
 import com.tjhx.entity.accounts.PrePayments;
 
 @Service
@@ -19,22 +19,11 @@ import com.tjhx.entity.accounts.PrePayments;
 public class PrePaymentsManager {
 	@Resource
 	private PrePaymentsJpaDao prePaymentsJpaDao;
+	@Resource
+	private PrePaymentsMyBatisDao prePaymentsMyBatisDao;
 
 	/**
-	 * 取得顾客/会员预付款（充值、消费）信息
-	 * 
-	 * @param orgId 机构编号
-	 * @param optDate 业务日期（YYYYMM）
-	 * @return 顾客/会员预付款（充值、消费）信息信息列表
-	 */
-	@SuppressWarnings("unchecked")
-	public List<PrePayments> getPrePaymentsList(String orgId, String optDateY, String optDateM) {
-		return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateYM(orgId, optDateY, optDateM, new Sort(
-				new Sort.Order(Sort.Direction.DESC, "uuid")));
-	}
-
-	/**
-	 * 取得顾客/会员预付款（充值、消费）信息
+	 * 取得顾客/会员预付款（充值、消费）信息---总部/门店
 	 * 
 	 * @param orgId 机构编号
 	 * @param optDateShowStart 业务日期-开始YYYYMMDD
@@ -42,17 +31,18 @@ public class PrePaymentsManager {
 	 * @param phoneNum (顾客)电话号码
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<PrePayments> getPrePaymentsList(String orgId, String optDateShowStart, String optDateShowEnd, String phoneNum) {
+		PrePayments param = new PrePayments();
+		param.setOrgId(orgId);
+		param.setOptDateShow_start(optDateShowStart);
+		param.setOptDateShow_end(optDateShowEnd);
+
 		if (StringUtils.isBlank(phoneNum)) {
-			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateInterval(orgId, optDateShowStart,
-					optDateShowEnd, new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.DESC,
-							"uuid")));
+			return prePaymentsMyBatisDao.getPrePaymentsList(param);
 		} else {
-			phoneNum = "%" + phoneNum + "%";
-			return (List<PrePayments>) prePaymentsJpaDao.getPrePaymentsList_By_OptDateInterval(orgId, optDateShowStart,
-					optDateShowEnd, phoneNum, new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(
-							Sort.Direction.DESC, "uuid")));
+			param.setPhoneNum("%" + phoneNum + "%");
+
+			return prePaymentsMyBatisDao.getPrePaymentsList(param);
 		}
 	}
 

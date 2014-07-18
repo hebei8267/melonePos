@@ -253,7 +253,7 @@
                     || _permIdList.contains('38') || _permIdList.contains('39')
                     || _permIdList.contains('42') || _permIdList.contains('43')
                     || _permIdList.contains('49') || _permIdList.contains('50')
-                    || _permIdList.contains('51')}">
+                    || _permIdList.contains('51') || _permIdList.contains('52')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -373,6 +373,14 @@
 		                    	<li class="divider"></li>
 	                            <li>
 	                                <a href="${sc_ctx}/prePayments/list">会员预付款信息</a>
+	                            </li>
+                            </c:if>
+                            
+                            <%//总部-顾客/会员预付款（充值、消费）信息 %>
+		                    <c:if test="${_permIdList.contains('52')}">
+		                    	<li class="divider"></li>
+	                            <li>
+	                                <a href="${sc_ctx}/prePayments/managerList">会员预付款信息</a>
 	                            </li>
                             </c:if>
                         </ul>
