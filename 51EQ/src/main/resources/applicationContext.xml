@@ -201,6 +201,8 @@
 		<!-- 门店日销售信息重计算天数(按商品) -->
 		<property name="salesDayTotalGoodsDays" value="${sales.day.total.goods.days}" />
 		
+		<!-- 共享文件上传根目录 -->
+		<property name="uploadShareFilePath" value="${upload.share.file.path}" />
 	</bean>
 	
 	

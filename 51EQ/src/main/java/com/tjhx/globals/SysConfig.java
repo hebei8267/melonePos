@@ -54,6 +54,9 @@ public class SysConfig {
 	/** 门店日销售信息重计算天数(按供应商) */
 	private int salesDayTotalSupDays;
 
+	/** 共享文件上传根目录 */
+	private String uploadShareFilePath;
+
 	/**
 	 * 取得cashDailyModel
 	 * 
@@ -484,6 +487,24 @@ public class SysConfig {
 	 */
 	public void setSalesDayTotalGoodsDays(int salesDayTotalGoodsDays) {
 		this.salesDayTotalGoodsDays = salesDayTotalGoodsDays;
+	}
+
+	/**
+	 * 获取共享文件上传根目录
+	 * 
+	 * @return uploadShareFilePath 共享文件上传根目录
+	 */
+	public String getUploadShareFilePath() {
+		return uploadShareFilePath;
+	}
+
+	/**
+	 * 设置共享文件上传根目录
+	 * 
+	 * @param uploadShareFilePath 共享文件上传根目录
+	 */
+	public void setUploadShareFilePath(String uploadShareFilePath) {
+		this.uploadShareFilePath = uploadShareFilePath;
 	}
 
 }

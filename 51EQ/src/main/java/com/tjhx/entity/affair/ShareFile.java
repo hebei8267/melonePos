@@ -6,8 +6,10 @@ package com.tjhx.entity.affair;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NaturalId;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjhx.entity.IdEntity;
 
@@ -24,13 +26,13 @@ public class ShareFile extends IdEntity {
 	/** 文件名称 */
 	private String fileName;
 	/** 文件存储名称(磁盘中) */
-	private String fileStoreName;
-	/** 文件简称 */
-	private String fileShortName;
+	private String storeName;
+	/** 文件存储全路径(磁盘中) */
+	private String storePath;
 	/** 文件状态 00-在用 01-停用 99-废除 */
 	private String status;
-	/** 文件格式 00-xls 01-word 02-zip 03-rar */
-	private String format;
+	/** 共享文件 */
+	private MultipartFile shareFile;
 
 	/**
 	 * 获取文件编号
@@ -74,39 +76,39 @@ public class ShareFile extends IdEntity {
 	/**
 	 * 获取文件存储名称(磁盘中)
 	 * 
-	 * @return fileStoreName 文件存储名称(磁盘中)
+	 * @return storeName 文件存储名称(磁盘中)
 	 */
-	@Column(length = 32)
-	public String getFileStoreName() {
-		return fileStoreName;
+	@Column(length = 64)
+	public String getStoreName() {
+		return storeName;
 	}
 
 	/**
 	 * 设置文件存储名称(磁盘中)
 	 * 
-	 * @param fileStoreName 文件存储名称(磁盘中)
+	 * @param storeName 文件存储名称(磁盘中)
 	 */
-	public void setFileStoreName(String fileStoreName) {
-		this.fileStoreName = fileStoreName;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 	/**
-	 * 获取文件简称
+	 * 获取文件存储全路径(磁盘中)
 	 * 
-	 * @return fileShortName 文件简称
+	 * @return storePath 文件存储全路径(磁盘中)
 	 */
-	@Column(length = 32)
-	public String getFileShortName() {
-		return fileShortName;
+	@Column(length = 128)
+	public String getStorePath() {
+		return storePath;
 	}
 
 	/**
-	 * 设置文件简称
+	 * 设置文件存储全路径(磁盘中)
 	 * 
-	 * @param fileShortName 文件简称
+	 * @param storePath 文件存储全路径(磁盘中)
 	 */
-	public void setFileShortName(String fileShortName) {
-		this.fileShortName = fileShortName;
+	public void setStorePath(String storePath) {
+		this.storePath = storePath;
 	}
 
 	/**
@@ -129,22 +131,22 @@ public class ShareFile extends IdEntity {
 	}
 
 	/**
-	 * 获取文件格式00-xls01-word02-zip03-rar
+	 * 获取共享文件
 	 * 
-	 * @return format 文件格式00-xls01-word02-zip03-rar
+	 * @return shareFile 共享文件
 	 */
-	@Column(length = 2)
-	public String getFormat() {
-		return format;
+	@Transient
+	public MultipartFile getShareFile() {
+		return shareFile;
 	}
 
 	/**
-	 * 设置文件格式00-xls01-word02-zip03-rar
+	 * 设置共享文件
 	 * 
-	 * @param format 文件格式00-xls01-word02-zip03-rar
+	 * @param shareFile 共享文件
 	 */
-	public void setFormat(String format) {
-		this.format = format;
+	public void setShareFile(MultipartFile shareFile) {
+		this.shareFile = shareFile;
 	}
 
 }

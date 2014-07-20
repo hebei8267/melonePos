@@ -4,13 +4,51 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public class FileUtils {
+	/**
+	 * 从request中取得上传文件流
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static MultipartFile getMultipartFile(HttpServletRequest request) {
+		// 转型为MultipartHttpRequest：
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		// 获得文件
+		MultipartFile _file = multipartRequest.getFile("file");
+
+		return _file;
+	}
+
+	/**
+	 * 保存文件至磁盘
+	 * 
+	 * @param file
+	 * @param filePath
+	 * @param fileStoreName
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	public static void saveUploadFile(MultipartFile file, String filePath, String fileStoreName) throws IllegalStateException,
+			IOException {
+		if (0 == file.getSize() || null == file.getOriginalFilename()) {
+			return;
+		}
+
+		File _file = new File(filePath + fileStoreName);
+		file.transferTo(_file);
+	}
 
 	/**
 	 * 自动建立文件夹
