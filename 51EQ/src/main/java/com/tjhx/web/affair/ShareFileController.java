@@ -3,6 +3,10 @@
  */
 package com.tjhx.web.affair;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +14,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +25,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.FileUtils;
 import com.tjhx.entity.affair.ShareFile;
 import com.tjhx.globals.Constants;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.affair.ShareFileManager;
 import com.tjhx.web.BaseController;
@@ -146,7 +153,7 @@ public class ShareFileController extends BaseController {
 			}
 		} else {// 修改操作
 			try {
-				 shareFileManager.updateShareFile(shareFile);
+				shareFileManager.updateShareFile(shareFile);
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
@@ -174,6 +181,61 @@ public class ShareFileController extends BaseController {
 
 			return "affair/shareFileForm";
 		}
+	}
 
+	/**
+	 * 文件下载
+	 * 
+	 * @param id
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/downLoad/{id}")
+	public void downLoad_Action(@PathVariable("id") Integer id, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		if (null == id) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "id parameter is required.");
+			return;
+		}
+
+		ShareFile shareFile = shareFileManager.getShareFileByUuid(id);
+		// 该共享文件已存在!
+		if (null == shareFile) {
+			addInfoMsg(model, "ERR_MSG_SHARE_FILE_001");
+			return;
+		}
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getUploadShareFilePath() + shareFile.getStorePath();
+		String fileName = shareFile.getFileName() + FileUtils.getSuffix(shareFile.getStoreName());
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+		return;
 	}
 }

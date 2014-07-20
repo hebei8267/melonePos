@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tjhx.common.utils.Encrypter;
 import com.tjhx.entity.affair.MsgInfo;
+import com.tjhx.entity.affair.ShareFile;
 import com.tjhx.entity.member.User;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.affair.MsgInfoManager;
+import com.tjhx.service.affair.ShareFileManager;
 import com.tjhx.service.member.UserManager;
 import com.tjhx.web.BaseController;
 
@@ -30,6 +32,8 @@ public class MemberController extends BaseController {
 	private UserManager userManager;
 	@Resource
 	private MsgInfoManager msgInfoManager;
+	@Resource
+	private ShareFileManager shareFileManager;
 
 	/**
 	 * 用户退出
@@ -148,8 +152,13 @@ public class MemberController extends BaseController {
 	public String myspace_Action(Model model, HttpSession session) {
 		User user = getUserInfo(session);
 
+		// 取得 公告/消息 信息列表（根据用户编号取得### 未读状态+已读状态>=4）
 		List<MsgInfo> _msgInfoList = msgInfoManager.getDefaultMsgInfoList(user.getLoginName());
 		model.addAttribute("msgInfoList", _msgInfoList);
+
+		// 取得共享文件（在用）信息
+		List<ShareFile> _list = shareFileManager.getValidShareFileList();
+		model.addAttribute("shareFileList", _list);
 
 		return "member/myspace";
 	}

@@ -97,16 +97,6 @@
 		<url-pattern>/sc/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- 读取用户相片Servlet配置 -->
-	<servlet>
-		<servlet-name>PhotoContentServlet</servlet-name>
-		<servlet-class>com.tjhx.common.web.PhotoContentServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PhotoContentServlet</servlet-name>
-		<url-pattern>/photoServlet</url-pattern>
-	</servlet-mapping>
-
 
 	<!-- session 超时时间(单位：分钟),使用MemcachedSessionFilter时无效 -->
 	<session-config>

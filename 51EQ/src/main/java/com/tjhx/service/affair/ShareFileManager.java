@@ -28,8 +28,20 @@ public class ShareFileManager {
 	private ShareFileMyBatisDao shareFileMyBatisDao;
 
 	/**
-	 * 取得所有共享文件信息
+	 * 取得共享文件（在用）信息
 	 * 
+	 * @return
+	 */
+	public List<ShareFile> getValidShareFileList() {
+		ShareFile param = new ShareFile();
+		param.setStatus("00");
+		return shareFileMyBatisDao.getShareFileList(param);
+	}
+
+	/**
+	 * 取得共享文件信息
+	 * 
+	 * @param status 共享文件状态
 	 * @return 共享文件信息列表
 	 */
 	public List<ShareFile> getShareFileList(String status) {
