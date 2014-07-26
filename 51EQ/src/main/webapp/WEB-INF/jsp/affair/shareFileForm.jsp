@@ -20,6 +20,10 @@
 	                	},
 	                	fileName : {
 	                         required : true,
+	                         maxlength : 64
+	                	},
+	                	fileShortName : {
+	                         required : true,
 	                         maxlength : 32
 	                	},
 	                	status : {
@@ -70,7 +74,7 @@
                             <label class="control-label">编号 :</label>
                             <c:if test="${empty	shareFile.uuid}">
                                 <div class="controls">
-                                    <form:input	path="fileNo" />
+                                    <form:input	path="fileNo" class="input-medium"/>
                                 </div>
                             </c:if>
                             <c:if test="${!empty shareFile.uuid}">
@@ -80,7 +84,13 @@
                         <div class="control-group">
                             <label class="control-label">名称 :</label>
                          	<div class="controls">
-                           		<form:input	path="fileName" />
+                           		<form:input	path="fileName" class="input-xxlarge"/>
+                          	</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">简称 :</label>
+                         	<div class="controls">
+                           		<form:input	path="fileShortName" class="input-large"/>
                           	</div>
                         </div>
                         <div class="control-group">
@@ -112,7 +122,7 @@
                         <div class="control-group">
                             <div class="controls">
                             	<button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>&nbsp;
-                                <a href="${sc_ctx}/shareFile/list" class="btn btn-large">返回</a>
+                                <a href="${sc_ctx}/shareFile/managerList" class="btn btn-large">返回</a>
                             </div>
                         </div>
                     </form:form>

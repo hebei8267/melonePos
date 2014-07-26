@@ -46,12 +46,50 @@ public class ShareFileController extends BaseController {
 	private ShareFileManager shareFileManager;
 
 	/**
-	 * 共享文件信息列表
+	 * 共享文件信息列表-门店
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "list", "" })
+	@RequestMapping(value = "storeList")
+	public String storeList_Action(Model model, HttpServletRequest request) {
+
+		initStatusList(model);
+
+		return "affair/shareFileStoreList";
+	}
+
+	/**
+	 * 取得门店巡查报告(运营)信息列表-门店
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "storeSearch")
+	public String storeSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		String status = ServletRequestUtils.getStringParameter(request, "status");
+		model.addAttribute("status", status);
+
+		List<ShareFile> _list = shareFileManager.getShareFileList(status);
+		model.addAttribute("shareFileList", _list);
+
+		initStatusList(model);
+
+		return "affair/shareFileStoreList";
+	}
+
+	// -------------------------------------------------------------------------
+	// 总部
+	// -------------------------------------------------------------------------
+	/**
+	 * 共享文件信息列表-总部
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "managerList")
 	public String list_Action(Model model, HttpServletRequest request) {
 
 		initStatusList(model);
@@ -125,7 +163,7 @@ public class ShareFileController extends BaseController {
 			shareFileManager.delShareFileByUuid(Integer.parseInt(idArray[i]));
 		}
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/list";
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/managerList";
 	}
 
 	/**
@@ -160,7 +198,7 @@ public class ShareFileController extends BaseController {
 			}
 		}
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/list";
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/managerList";
 	}
 
 	/**
@@ -174,7 +212,7 @@ public class ShareFileController extends BaseController {
 
 		ShareFile shareFile = shareFileManager.getShareFileByUuid(id);
 		if (null == shareFile) {
-			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/list";
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/shareFile/managerList";
 		} else {
 			initStatusList(model);
 			model.addAttribute("shareFile", shareFile);

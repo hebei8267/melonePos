@@ -15,20 +15,7 @@
         <%// 系统菜单  %>
         <page:applyDecorator name="menu" />
 
-        <div class="container" style="padding-top: 10px;">
-        	<c:if test="${!empty shareFileList}">
-        	<div class="row">
-        		<div class="span12">
-                    <legend>
-                        <h3>共享文件</h3>
-                    </legend>
-                </div>
-        		<c:forEach items="${shareFileList}" var="shareFile">
-        		<div class="span3"><a href="${sc_ctx}/shareFile/downLoad/${shareFile.uuid}">${shareFile.fileName}</a></div>
-        		</c:forEach>
-        	</div>
-        	</c:if>
-        	
+        <div class="container" style="padding-top: 10px;">        	
         	<c:if test="${!empty msgInfoList}">
             <div class="row" style="padding-top: 10px;">
             	<div class="span12">

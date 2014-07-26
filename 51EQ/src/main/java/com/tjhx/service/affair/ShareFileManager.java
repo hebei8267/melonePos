@@ -115,7 +115,7 @@ public class ShareFileManager {
 			// 共享文件不存在!
 			throw new ServiceException("ERR_MSG_SHARE_FILE_002");
 		}
-
+		_dbShareFile.setFileShortName(shareFile.getFileShortName());
 		_dbShareFile.setFileName(shareFile.getFileName());
 		_dbShareFile.setStatus(shareFile.getStatus());
 

@@ -11,6 +11,7 @@
         <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+        <result column="file_short_name" property="fileShortName" jdbcType="VARCHAR"/>
         <result column="file_no" property="fileNo" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
@@ -27,6 +28,7 @@
     	update_user_id ,
     	version ,
     	file_name ,
+    	file_short_name ,
     	file_no ,
     	status ,
     	store_name ,

@@ -25,6 +25,8 @@ public class ShareFile extends IdEntity {
 	private String fileNo;
 	/** 文件名称 */
 	private String fileName;
+	/** 文件名称-简称 */
+	private String fileShortName;
 	/** 文件存储名称(磁盘中) */
 	private String storeName;
 	/** 文件存储全路径(磁盘中) */
@@ -59,7 +61,7 @@ public class ShareFile extends IdEntity {
 	 * 
 	 * @return fileName 文件名称
 	 */
-	@Column(length = 32)
+	@Column(length = 64)
 	public String getFileName() {
 		return fileName;
 	}
@@ -71,6 +73,25 @@ public class ShareFile extends IdEntity {
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	/**
+	 * 获取文件名称-简称
+	 * 
+	 * @return fileShortName 文件名称-简称
+	 */
+	@Column(length = 32)
+	public String getFileShortName() {
+		return fileShortName;
+	}
+
+	/**
+	 * 设置文件名称-简称
+	 * 
+	 * @param fileShortName 文件名称-简称
+	 */
+	public void setFileShortName(String fileShortName) {
+		this.fileShortName = fileShortName;
 	}
 
 	/**

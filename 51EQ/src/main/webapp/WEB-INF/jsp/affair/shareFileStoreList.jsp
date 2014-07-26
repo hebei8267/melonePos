@@ -41,56 +41,12 @@
                     });
 
 					$("#searchForm").attr("target", "_self");
-                    $("#searchForm").attr("action", "${sc_ctx}/shareFile/search");
+                    $("#searchForm").attr("action", "${sc_ctx}/shareFile/storeSearch");
                     $("#searchForm").submit();
-                });
-                
-                //-----------------------------------
-                // 全选/全部选
-                //-----------------------------------
-                $("#checkAll").click(function() {
-                    $('input[name="uuid"]').attr("checked", this.checked);
-                });
-                var $subCheckBox = $("input[name='uuid']");
-                $subCheckBox.click(function() {
-                    $("#checkAll").attr("checked", $subCheckBox.length == $("input[name='uuid']:checked").length ? true : false);
-                });
-
-                //-----------------------------------
-                // 删除按钮点击
-                //-----------------------------------
-                $("#delBtn").click(function() {
-                    if ($("#listForm").valid()) {
-                        $('#__del_confirm').modal({
-                            backdrop : true,
-                            keyboard : true,
-                            show : true
-                        });
-                    }
-                });
+                });                
             });
             
-          	//-----------------------------------
-            // 删除
-            //-----------------------------------
-            function _del_confirm() {
-                var $subCheckBox = $("input[name='uuid']");
-                var uuids = "";
-                $.each($subCheckBox, function(index, _checkBox) {
-                    if (_checkBox.checked) {
-                        uuids += _checkBox.value + ",";
-                    }
-                });
-                if (uuids.length > 0) {
-                    uuids = uuids.substring(0, uuids.length - 1);
-                }
-
-                $("#uuids").val(uuids);
-                
-                $("#listForm").attr("target", "_self");
-                $("#listForm").attr("action", "${sc_ctx}/shareFile/del");
-                $("#listForm").submit();
-            }
+          	
         </script>
     </head>
     <body>
@@ -122,19 +78,12 @@
                 </form>
                 
                 <form method="post" class="form-inline" id="listForm">
-                	<div class="span12" style="padding-top: 10px;">
-                        <a href="${sc_ctx}/shareFile/new"	class="btn btn-primary">新增</a>
-                        <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
-                    </div>
                     
                     <div class="span12"	style="margin-top: 10px;">
                         <input type="hidden" name="uuids" id="uuids"/>
                         <table class="table	table-striped table-bordered table-condensed mytable">
                         	<thead>
                                 <tr>
-                                    <th	width="25" class="center">
-                                        <input id="checkAll" type="checkbox" />
-                                    </th>
                                     <th class="center">
                                         编号
                                     </th>
@@ -150,7 +99,7 @@
                                     <th class="center">
                                         最后修改时间
                                     </th>
-                                    <th	width="55">
+                                    <th	width="65">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -158,9 +107,6 @@
                             <tbody>
                             	<c:forEach items="${shareFileList}" var="shareFile">
                             		<tr>
-                            			<td class="center">
-                            				<input type="checkbox" name="uuid" value="${shareFile.uuid}">
-                            			</td>
                                         <td>
                                             ${shareFile.fileNo}
                                         </td>
@@ -185,7 +131,7 @@
                                         	<fmt:formatDate value="${shareFile.updateDate}" pattern="yyyy年MM月dd日 HH时mm分ss秒 "/>
                                         </td>
                                         <td>
-                                      		<a href="${sc_ctx}/shareFile/edit/${shareFile.uuid}" class="btn btn-warning" target="_blank"/>编辑</a>
+                                        	<a class="btn btn-small btn-warning" href="${sc_ctx}/shareFile/downLoad/${shareFile.uuid}"><i class="icon-download-alt"></i>下载</a>
                                         </td>
                                     </tr>
                             	</c:forEach>
@@ -193,7 +139,7 @@
                             <c:if test="${empty	shareFileList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="6" class="rounded-foot-left">
+                                        <td	colspan="5" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
