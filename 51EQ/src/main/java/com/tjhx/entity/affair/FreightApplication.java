@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
+
 import com.tjhx.entity.IdEntity;
 
 /**
@@ -24,9 +26,9 @@ public class FreightApplication extends IdEntity {
 	/** 申请人 */
 	private String applicant;
 	/** 是否打包（1-已打包/0-未打包） */
-	private String packFlg;
+	private String packFlg = "0";
 	/** 打包件数（箱和袋） */
-	private int packNum;
+	private Integer packNum;
 	/** 打包件数（1-箱/2-袋） */
 	private String packUnit;
 	/** 调货目的机构 */
@@ -45,12 +47,15 @@ public class FreightApplication extends IdEntity {
 	private String expdeliveryDate;
 	/** 实际送达时间-运输 */
 	private String actDeliveryDate;
+	/** 货运申请状态-00申请 01已审批 02已送达 */
+	private String status;
 
 	/**
 	 * 获取申请日期
 	 * 
 	 * @return appDate 申请日期
 	 */
+	@NaturalId
 	@Column(length = 8)
 	public String getAppDate() {
 		return appDate;
@@ -70,6 +75,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return appOrgId 申请机构
 	 */
+	@NaturalId
 	@Column(length = 32)
 	public String getAppOrgId() {
 		return appOrgId;
@@ -127,7 +133,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return packNum 打包件数（箱和袋）
 	 */
-	public int getPackNum() {
+	public Integer getPackNum() {
 		return packNum;
 	}
 
@@ -136,7 +142,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @param packNum 打包件数（箱和袋）
 	 */
-	public void setPackNum(int packNum) {
+	public void setPackNum(Integer packNum) {
 		this.packNum = packNum;
 	}
 
@@ -164,6 +170,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return targetOrgId 调货目的机构
 	 */
+	@NaturalId
 	@Column(length = 32)
 	public String getTargetOrgId() {
 		return targetOrgId;
@@ -309,6 +316,25 @@ public class FreightApplication extends IdEntity {
 	 */
 	public void setActDeliveryDate(String actDeliveryDate) {
 		this.actDeliveryDate = actDeliveryDate;
+	}
+
+	/**
+	 * 获取货运申请状态-00申请01已审批02已送达
+	 * 
+	 * @return status 货运申请状态-00申请01已审批02已送达
+	 */
+	@Column(length = 2)
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * 设置货运申请状态-00申请01已审批02已送达
+	 * 
+	 * @param status 货运申请状态-00申请01已审批02已送达
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

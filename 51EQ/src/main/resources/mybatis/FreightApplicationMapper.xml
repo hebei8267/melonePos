@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.FreightApplicationMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_FreightApplication" type="com.tjhx.entity.affair.FreightApplication">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="act_delivery_date" property="actDeliveryDate" jdbcType="VARCHAR"/>
+        <result column="app_date" property="appDate" jdbcType="VARCHAR"/>
+        <result column="app_org_id" property="appOrgId" jdbcType="VARCHAR"/>
+        <result column="applicant" property="applicant" jdbcType="VARCHAR"/>
+        <result column="approver" property="approver" jdbcType="VARCHAR"/>
+        <result column="exp_receipt_date" property="expReceiptDate" jdbcType="VARCHAR"/>
+        <result column="expdelivery_date" property="expdeliveryDate" jdbcType="VARCHAR"/>
+        <result column="freight_type" property="freightType" jdbcType="VARCHAR"/>
+        <result column="known_flg" property="knownFlg" jdbcType="VARCHAR"/>
+        <result column="limited_date" property="limitedDate" jdbcType="VARCHAR"/>
+        <result column="pack_flg" property="packFlg" jdbcType="VARCHAR"/>
+        <result column="pack_num" property="packNum" jdbcType="INTEGER"/>
+        <result column="pack_unit" property="packUnit" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="target_org_id" property="targetOrgId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	uuid ,
+    	create_date ,
+    	create_user_id ,
+    	update_date ,
+    	update_user_id ,
+    	version ,
+    	act_delivery_date ,
+    	app_date ,
+    	app_org_id ,
+    	applicant ,
+    	approver ,
+    	exp_receipt_date ,
+    	expdelivery_date ,
+    	freight_type ,
+    	known_flg ,
+    	limited_date ,
+    	pack_flg ,
+    	pack_num ,
+    	pack_unit ,
+    	status ,
+    	target_org_id 
+	]]>
+  	</sql>
+  	
+  	<!-- 取得t_freight_application信息(根据参数) -->
+	<select id="getFreightApplicationList" parameterType="com.tjhx.entity.affair.FreightApplication" resultMap="Result_Map_FreightApplication">
+		select
+		<include refid="Base_Column_List" />
+		from t_freight_application
+		<where>
+  				(app_org_id = #{appOrgId}
+  			OR  target_org_id = #{targetOrgId})
+  			<if test="status != null and status !='' ">
+  			AND status = #{status}
+  			</if>
+	  	</where>
+	  	ORDER BY
+		    status ,
+		    app_date
+	</select>
+	
+	<!-- 取得t_freight_application信息(根据参数) -->
+	<select id="getFreightApplicationList_Manager" parameterType="com.tjhx.entity.affair.FreightApplication" resultMap="Result_Map_FreightApplication">
+		select
+		<include refid="Base_Column_List" />
+		from t_freight_application
+		<where>
+  			<if test="appOrgId != null and appOrgId !='' ">
+  			AND app_org_id = #{appOrgId}
+  			</if>
+  			<if test="targetOrgId != null and targetOrgId !='' ">
+  			AND target_org_id = #{targetOrgId}
+  			</if>
+  			<if test="status != null and status !='' ">
+  			AND status = #{status}
+  			</if>
+	  	</where>
+	  	ORDER BY
+		    status ,
+		    app_date
+	</select>
+</mapper>

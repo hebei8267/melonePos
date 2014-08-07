@@ -12,6 +12,26 @@ import com.tjhx.service.struct.OrganizationManager;
 
 public class ReportUtils {
 	/**
+	 * 取得所有机构信息-含总部-含空白
+	 * 
+	 * @param orgManager
+	 * @param model
+	 */
+	public static void initOrgList_Null_Root(OrganizationManager orgManager, Model model) {
+		List<Organization> _orgList = orgManager.getAllOrganization();
+
+		Map<String, String> orgList = new LinkedHashMap<String, String>();
+		orgList.put("", "");
+		for (Organization _org : _orgList) {
+
+			orgList.put(_org.getId(), _org.getName());
+
+		}
+
+		model.addAttribute("orgList", orgList);
+	}
+
+	/**
 	 * 取得所有机构信息-含总部-不含空白
 	 * 
 	 * @param orgManager

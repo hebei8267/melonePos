@@ -84,11 +84,19 @@ jQuery.validator.addMethod("digits1", function(value, element) {
 }, "请输入合法的数字");
 
 jQuery.validator.addMethod("dateLessThan", function(value, element, param) {
-    return value < param;
+	if(value == ''){
+		return true
+	} else {
+    	return value < param;
+    }
 }, '输入日期必须早于 {0}');
 
 jQuery.validator.addMethod("dateGreaterThan", function(value, element, param) {
-    return value > param;
+	if(value == ''){
+		return true
+	} else {
+    	return value > param;
+    }
 }, '输入日期必须晚于 {0}');
 
 jQuery.validator.addMethod("compareDate", function(value, element, param) {

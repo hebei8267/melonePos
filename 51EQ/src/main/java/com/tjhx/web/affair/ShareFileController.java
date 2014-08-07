@@ -98,7 +98,7 @@ public class ShareFileController extends BaseController {
 	}
 
 	/**
-	 * 取得门店巡查报告(运营)信息列表
+	 * 取得共享文件信息列表
 	 * 
 	 * @param model
 	 * @param request
