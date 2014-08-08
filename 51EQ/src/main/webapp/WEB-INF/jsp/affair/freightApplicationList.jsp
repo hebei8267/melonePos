@@ -1,6 +1,7 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
@@ -216,10 +217,13 @@
                                         预计<br>收货时间
                                     </th>
                                     <th class="center">
+                                        实际<br>收货时间
+                                    </th>
+                                    <th class="center">
                                         预计<br>送货时间
                                     </th>
                                     <th class="center">
-                                        实际<br>送达时间
+                                        实际<br>送货时间
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -248,10 +252,20 @@
                             				${freightApp.applicant}
                             			</td>
                             			<td class="center">
-                            				${freightApp.appOrgId}
+                            				<c:if test="${fn:length(freightApp.appOrgId) > 4}">
+					             			${fn:substring(freightApp.appOrgId,3,6)}
+					             			</c:if>
+					             			<c:if test="${fn:length(freightApp.appOrgId) < 4}">
+					             			总部
+					             			</c:if>
                             			</td>
                             			<td class="center">
-                            				${freightApp.targetOrgId}
+                            				<c:if test="${fn:length(freightApp.targetOrgId) > 4}">
+					             			${fn:substring(freightApp.targetOrgId,3,6)}
+					             			</c:if>
+					             			<c:if test="${fn:length(freightApp.targetOrgId) < 4}">
+					             			总部
+					             			</c:if>
                             			</td>
                             			<td class="center">
                             				<c:if test="${freightApp.freightType == '1'}">
@@ -279,6 +293,9 @@
                             				${freightApp.expReceiptDate}
                             			</td>
                             			<td class="center">
+                            				${freightApp.actReceiptDate}
+                            			</td>
+                            			<td class="center">
                             				${freightApp.expdeliveryDate}
                             			</td>
                             			<td class="center">
@@ -286,10 +303,13 @@
                             			</td>
                                         <td>
                                         <c:if test="${sessionScope.__SESSION_USER_INFO.orgId != _ROOT_ORG_ID}">
-                                      		<a href="${sc_ctx}/freight/edit/${freightApp.uuid}" class="btn btn-warning" target="_blank"/>编辑</a>
+                                        <c:if test="${freightApp.status == '00'}">
+                                      		<a href="${sc_ctx}/freight/edit/${freightApp.uuid}" class="btn btn-warning" target="_self"/>编辑</a>
                                       	</c:if>
+                                      	</c:if>
+                                      	
                                       	<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == _ROOT_ORG_ID}">
-                                      		<a href="${sc_ctx}/freight/edit/${freightApp.uuid}" class="btn btn-warning" target="_blank"/>审批</a>
+                                      		<a href="${sc_ctx}/freight/edit/${freightApp.uuid}" class="btn btn-warning" target="_self"/>审批</a>
                                         </c:if>
                                         </td>
                                     </tr>

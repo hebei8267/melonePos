@@ -1,5 +1,7 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
@@ -33,6 +35,7 @@
 				font-size: 16px;
 				color: #000;
 				font-weight: normal;
+				padding-left: 0px;
 			}
         </style>
 	    <script>
@@ -138,31 +141,53 @@
                         <c:if test="${sessionScope.__SESSION_USER_INFO.orgId != _ROOT_ORG_ID}">
                         <input id="status" name="status" type="hidden" value="00"/>
                         </c:if>
+                        
                         <div class="control-group">
                             <label class="control-label">调出机构 :</label>
                             <div class="controls">
-                            <c:if test="${sessionScope.__SESSION_USER_INFO.orgId == _ROOT_ORG_ID}">
-	                            <select name="appOrgId">
-			                  	<c:forEach items="${orgList}" var="org">
-			                  		<c:if test="${org.key == appOrgId}">
-			                   		<option value="${org.key }" selected>${org.value }</option>
-			                      	</c:if>
-			                		<c:if test="${org.key != appOrgId}">
-			                    	<option value="${org.key }">${org.value }</option>
-			                     	</c:if>
-			                	</c:forEach>
-			             		</select>
+                            <c:if test="${empty	freightApp.uuid}">
+	                            <c:if test="${sessionScope.__SESSION_USER_INFO.orgId == _ROOT_ORG_ID}">
+		                            <select name="appOrgId">
+				                  	<c:forEach items="${orgList}" var="org">
+				                  		<c:if test="${org.key == appOrgId}">
+				                   		<option value="${org.key }" selected>${org.value }</option>
+				                      	</c:if>
+				                		<c:if test="${org.key != appOrgId}">
+				                    	<option value="${org.key }">${org.value }</option>
+				                     	</c:if>
+				                	</c:forEach>
+				             		</select>
+			             		</c:if>
+			             		<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != _ROOT_ORG_ID}">
+			             			<input id="appOrgId" name="appOrgId" type="hidden" value="${sessionScope.__SESSION_USER_INFO.orgId}"/>
+			             			<input type="text" value="${sessionScope.__SESSION_USER_INFO.orgName}" readonly/>
+			             		</c:if>
 		             		</c:if>
-		             		<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != _ROOT_ORG_ID}">
-		             			<input id="appOrgId" name="appOrgId" type="hidden" value="${sessionScope.__SESSION_USER_INFO.orgId}"/>
-		             			<input type="text" value="${sessionScope.__SESSION_USER_INFO.orgName}" readonly/>
+		             		
+		             		<c:if test="${!empty freightApp.uuid}">
+		             			<input id="appOrgId" name="appOrgId" type="hidden" value="${freightApp.appOrgId}"/>
+		             			<c:if test="${fn:length(freightApp.appOrgId) > 4}">
+		             			<label class="left-control-label">${fn:substring(freightApp.appOrgId,3,6)}</label>
+		             			</c:if>
+		             			<c:if test="${fn:length(freightApp.appOrgId) < 4}">
+		             			<label class="left-control-label">总部</label>
+		             			</c:if>
 		             		</c:if>
 		             		</div>
                         </div>
                        	<div class="control-group">
                             <label class="control-label">申请日期 :</label>
                            	<div class="controls">
-                          		<form:input	path="appDate" />
+                           		<c:if test="${empty	freightApp.uuid}">
+                            	<form:input	path="appDate" />
+		                        </c:if>
+		                        
+		                        
+		                        <c:if test="${!empty freightApp.uuid}">
+		                        <input type="hidden" id="appDate" name="appDate" value="${freightApp.appDate}">
+		                        <fmt:parseDate value="${freightApp.appDate}" var="_appDate" pattern="yyyyMMdd" />
+		                        <label class="left-control-label"><fmt:formatDate pattern="yyyy-MM-dd" value="${_appDate}" /></label>
+		                        </c:if>
                         	</div>
                         </div>
                         <div class="control-group">
@@ -198,16 +223,29 @@
                         <div class="control-group">
                             <label class="control-label">调入机构 :</label>
                             <div class="controls">
-                            <select name="targetOrgId">
-		                  	<c:forEach items="${orgList}" var="org">
-		                  		<c:if test="${org.key == targetOrgId}">
-		                   		<option value="${org.key }" selected>${org.value }</option>
-		                      	</c:if>
-		                		<c:if test="${org.key != targetOrgId}">
-		                    	<option value="${org.key }">${org.value }</option>
-		                     	</c:if>
-		                	</c:forEach>
-		             		</select>
+                            <c:if test="${empty	freightApp.uuid}">
+	                            <select name="targetOrgId">
+			                  	<c:forEach items="${orgList}" var="org">
+			                  		<c:if test="${org.key == freightApp.targetOrgId}">
+			                   		<option value="${org.key }" selected>${org.value }</option>
+			                      	</c:if>
+			                		<c:if test="${org.key != freightApp.targetOrgId}">
+			                    	<option value="${org.key }">${org.value }</option>
+			                     	</c:if>
+			                	</c:forEach>
+			             		</select>
+		             		</c:if>
+		             		
+		             		<c:if test="${!empty freightApp.uuid}">
+		             			<input id="targetOrgId" name="targetOrgId" type="hidden" value="${freightApp.targetOrgId}"/>
+		             			
+		             			<c:if test="${fn:length(freightApp.targetOrgId) > 4}">
+		             			<label class="left-control-label">${fn:substring(freightApp.targetOrgId,3,6)}</label>
+		             			</c:if>
+		             			<c:if test="${fn:length(freightApp.targetOrgId) < 4}">
+		             			<label class="left-control-label">总部</label>
+		             			</c:if>
+		             		</c:if>
 		             		</div>
                         </div>
                         <div class="control-group">
@@ -222,7 +260,8 @@
                         <div class="control-group">
                             <label class="control-label">限时日期 :</label>
                            	<div class="controls">
-                          		<form:input	path="limitedDate" />
+                           		<fmt:parseDate value="${freightApp.limitedDate}" var="_limitedDate" pattern="yyyyMMdd" />
+                          		<input id="limitedDate" name="limitedDate" type="text" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${_limitedDate}" />"/>
                         	</div>
                         </div>
                         <c:if test="${sessionScope.__SESSION_USER_INFO.orgId == _ROOT_ORG_ID}">
