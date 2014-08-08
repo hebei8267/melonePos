@@ -39,10 +39,10 @@ public class FreightApplication extends IdEntity {
 	private String limitedDate;
 	/** 审批人 */
 	private String approver;
-	/** 是否已知-运输 （1-已知/0-未知） */
-	private String knownFlg;
 	/** 预计收货时间-运输 */
 	private String expReceiptDate;
+	/** 实际收货时间-运输 */
+	private String actReceiptDate;
 	/** 预计送货时间-运输 */
 	private String expdeliveryDate;
 	/** 实际送达时间-运输 */
@@ -243,25 +243,6 @@ public class FreightApplication extends IdEntity {
 	}
 
 	/**
-	 * 获取是否已知-运输（1-已知0-未知）
-	 * 
-	 * @return knownFlg 是否已知-运输（1-已知0-未知）
-	 */
-	@Column(length = 1)
-	public String getKnownFlg() {
-		return knownFlg;
-	}
-
-	/**
-	 * 设置是否已知-运输（1-已知0-未知）
-	 * 
-	 * @param knownFlg 是否已知-运输（1-已知0-未知）
-	 */
-	public void setKnownFlg(String knownFlg) {
-		this.knownFlg = knownFlg;
-	}
-
-	/**
 	 * 获取预计收货时间-运输
 	 * 
 	 * @return expReceiptDate 预计收货时间-运输
@@ -269,6 +250,25 @@ public class FreightApplication extends IdEntity {
 	@Column(length = 8)
 	public String getExpReceiptDate() {
 		return expReceiptDate;
+	}
+
+	/**
+	 * 获取实际收货时间-运输
+	 * 
+	 * @return actReceiptDate 实际收货时间-运输
+	 */
+	@Column(length = 8)
+	public String getActReceiptDate() {
+		return actReceiptDate;
+	}
+
+	/**
+	 * 设置实际收货时间-运输
+	 * 
+	 * @param actReceiptDate 实际收货时间-运输
+	 */
+	public void setActReceiptDate(String actReceiptDate) {
+		this.actReceiptDate = actReceiptDate;
 	}
 
 	/**

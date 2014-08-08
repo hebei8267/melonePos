@@ -191,31 +191,16 @@ public class FreightApplicationController extends BaseController {
 	@RequestMapping(value = "save")
 	public String saveFreightApp_Action(@ModelAttribute("freightApp") FreightApplication freightApp, Model model)
 			throws IllegalAccessException, InvocationTargetException {
+		// 限时日期
+		if (StringUtils.isNotBlank(freightApp.getLimitedDate())) {
+			freightApp.setLimitedDate(DateUtils.transDateFormat(freightApp.getLimitedDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		}
 
 		if (null == freightApp.getUuid()) {// 新增操作
 			try {
 				// 申请日期
 				if (StringUtils.isNotBlank(freightApp.getAppDate())) {
 					freightApp.setAppDate(DateUtils.transDateFormat(freightApp.getAppDate(), "yyyy-MM-dd", "yyyyMMdd"));
-				}
-				// 限时日期
-				if (StringUtils.isNotBlank(freightApp.getLimitedDate())) {
-					freightApp.setLimitedDate(DateUtils.transDateFormat(freightApp.getLimitedDate(), "yyyy-MM-dd", "yyyyMMdd"));
-				}
-				// 预计收货时间-运输
-				if (StringUtils.isNotBlank(freightApp.getExpReceiptDate())) {
-					freightApp.setExpReceiptDate(DateUtils.transDateFormat(freightApp.getExpReceiptDate(), "yyyy-MM-dd",
-							"yyyyMMdd"));
-				}
-				// 预计送货时间-运输
-				if (StringUtils.isNotBlank(freightApp.getExpdeliveryDate())) {
-					freightApp.setExpdeliveryDate(DateUtils.transDateFormat(freightApp.getExpdeliveryDate(), "yyyy-MM-dd",
-							"yyyyMMdd"));
-				}
-				// 实际送达时间-运输
-				if (StringUtils.isNotBlank(freightApp.getActDeliveryDate())) {
-					freightApp.setActDeliveryDate(DateUtils.transDateFormat(freightApp.getActDeliveryDate(), "yyyy-MM-dd",
-							"yyyyMMdd"));
 				}
 
 				freightApplicationManager.addNewFreightApplication(freightApp);

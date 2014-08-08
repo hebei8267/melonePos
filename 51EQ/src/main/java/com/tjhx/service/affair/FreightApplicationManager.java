@@ -112,19 +112,36 @@ public class FreightApplicationManager {
 	@Transactional(readOnly = false)
 	public void updateFreightApplication(FreightApplication freightApplication) throws IllegalAccessException,
 			InvocationTargetException {
-		// //----------------------------------------------------------------------------
-		// // TODO 修改开始
-		// FreightApplication _dbFreightApplication =
-		// freightApplicationJpaDao.findOne(freightApplication.getUuid());
-		// if (null == _dbFreightApplication) {
-		// // 货运申请不存在!
-		// throw new ServiceException("ERR_MSG_FREIGHT_APP_002");
-		// }
-		//
-		// _dbFreightApplication.setName(freightApplication.getName());
-		// _dbFreightApplication.setDescTxt(freightApplication.getDescTxt());
-		//
-		// //----------------------------------------------------------------------------
-		// freightApplicationJpaDao.save(_dbFreightApplication);
+
+		FreightApplication _dbFreightApplication = freightApplicationJpaDao.findOne(freightApplication.getUuid());
+		if (null == _dbFreightApplication) {
+			// 货运申请不存在!
+			throw new ServiceException("ERR_MSG_FREIGHT_APP_002");
+		}
+
+		// 申请日期
+		_dbFreightApplication.setAppDate(freightApplication.getAppDate());
+		// 申请机构
+		_dbFreightApplication.setAppOrgId(freightApplication.getAppOrgId());
+		// 申请人
+		_dbFreightApplication.setApplicant(freightApplication.getApplicant());
+		// 是否打包（1-已打包/0-未打包）
+		_dbFreightApplication.setPackFlg(freightApplication.getPackFlg());
+		// 打包件数（箱和袋）
+		_dbFreightApplication.setPackNum(freightApplication.getPackNum());
+		// 打包件数（1-箱/2-袋）
+		_dbFreightApplication.setPackUnit(freightApplication.getPackUnit());
+		// 调货目的机构
+		_dbFreightApplication.setTargetOrgId(freightApplication.getTargetOrgId());
+		// 调货类别（1-普通/2-限时）
+		_dbFreightApplication.setFreightType(freightApplication.getFreightType());
+		// 限时日期
+		_dbFreightApplication.setLimitedDate(freightApplication.getLimitedDate());
+		// 审批人
+		_dbFreightApplication.setApprover(freightApplication.getApprover());
+		// 货运申请状态-00申请 01已审批 02已送达
+		_dbFreightApplication.setStatus(freightApplication.getStatus());
+		// ----------------------------------------------------------------------------
+		freightApplicationJpaDao.save(_dbFreightApplication);
 	}
 }

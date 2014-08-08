@@ -11,6 +11,7 @@
         <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="act_delivery_date" property="actDeliveryDate" jdbcType="VARCHAR"/>
+        <result column="act_receipt_date" property="actReceiptDate" jdbcType="VARCHAR"/>
         <result column="app_date" property="appDate" jdbcType="VARCHAR"/>
         <result column="app_org_id" property="appOrgId" jdbcType="VARCHAR"/>
         <result column="applicant" property="applicant" jdbcType="VARCHAR"/>
@@ -18,7 +19,6 @@
         <result column="exp_receipt_date" property="expReceiptDate" jdbcType="VARCHAR"/>
         <result column="expdelivery_date" property="expdeliveryDate" jdbcType="VARCHAR"/>
         <result column="freight_type" property="freightType" jdbcType="VARCHAR"/>
-        <result column="known_flg" property="knownFlg" jdbcType="VARCHAR"/>
         <result column="limited_date" property="limitedDate" jdbcType="VARCHAR"/>
         <result column="pack_flg" property="packFlg" jdbcType="VARCHAR"/>
         <result column="pack_num" property="packNum" jdbcType="INTEGER"/>
@@ -37,6 +37,7 @@
     	update_user_id ,
     	version ,
     	act_delivery_date ,
+    	act_receipt_date ,
     	app_date ,
     	app_org_id ,
     	applicant ,
@@ -44,7 +45,6 @@
     	exp_receipt_date ,
     	expdelivery_date ,
     	freight_type ,
-    	known_flg ,
     	limited_date ,
     	pack_flg ,
     	pack_num ,
