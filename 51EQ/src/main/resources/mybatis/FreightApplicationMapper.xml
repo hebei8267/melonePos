@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.tjhx.dao.affair.FreightApplicationMyBatisDao">
+<mapper namespace="com.tjhx.dao.affair.FreightApplyMyBatisDao">
 	<!-- mybatis表结构与对象的映射关系 -->
-	<resultMap id="Result_Map_FreightApplication" type="com.tjhx.entity.affair.FreightApplication">
+	<resultMap id="Result_Map_FreightApply" type="com.tjhx.entity.affair.FreightApply">
         <result column="uuid" property="uuid" jdbcType="INTEGER"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
@@ -17,7 +17,7 @@
         <result column="applicant" property="applicant" jdbcType="VARCHAR"/>
         <result column="approver" property="approver" jdbcType="VARCHAR"/>
         <result column="exp_receipt_date" property="expReceiptDate" jdbcType="VARCHAR"/>
-        <result column="expdelivery_date" property="expdeliveryDate" jdbcType="VARCHAR"/>
+        <result column="exp_delivery_date" property="expDeliveryDate" jdbcType="VARCHAR"/>
         <result column="freight_type" property="freightType" jdbcType="VARCHAR"/>
         <result column="limited_date" property="limitedDate" jdbcType="VARCHAR"/>
         <result column="pack_flg" property="packFlg" jdbcType="VARCHAR"/>
@@ -43,7 +43,7 @@
     	applicant ,
     	approver ,
     	exp_receipt_date ,
-    	expdelivery_date ,
+    	exp_delivery_date ,
     	freight_type ,
     	limited_date ,
     	pack_flg ,
@@ -55,10 +55,10 @@
   	</sql>
   	
   	<!-- 取得t_freight_application信息(根据参数) -->
-	<select id="getFreightApplicationList" parameterType="com.tjhx.entity.affair.FreightApplication" resultMap="Result_Map_FreightApplication">
+	<select id="getFreightApplyList" parameterType="com.tjhx.entity.affair.FreightApply" resultMap="Result_Map_FreightApply">
 		select
 		<include refid="Base_Column_List" />
-		from t_freight_application
+		from t_freight_apply
 		<where>
   				(app_org_id = #{appOrgId}
   			OR  target_org_id = #{targetOrgId})
@@ -72,10 +72,10 @@
 	</select>
 	
 	<!-- 取得t_freight_application信息(根据参数) -->
-	<select id="getFreightApplicationList_Manager" parameterType="com.tjhx.entity.affair.FreightApplication" resultMap="Result_Map_FreightApplication">
+	<select id="getFreightApplyList_Manager" parameterType="com.tjhx.entity.affair.FreightApply" resultMap="Result_Map_FreightApply">
 		select
 		<include refid="Base_Column_List" />
-		from t_freight_application
+		from t_freight_apply
 		<where>
   			<if test="appOrgId != null and appOrgId !='' ">
   			AND app_org_id = #{appOrgId}
@@ -90,5 +90,47 @@
 	  	ORDER BY
 		    status ,
 		    app_date
+	</select>
+	
+	<!-- 取得已申请未审批（货运信息）数量 -->
+	<select id="getApplyNotApprovalCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '00'
+	</select>
+	
+	<!-- 取得已审批未完成（货运信息）数量 -->
+	<select id="getApprovalNotCompleteCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+	</select>
+	
+	<!-- 取得预计收货（货运信息）数量 -->
+	<select id="getExpReceiptCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and exp_receipt_date is not null
+	</select>
+	
+	<!-- 取得预计送货（货运信息）数量 -->
+	<select id="getExpDeliveryCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and exp_delivery_date is not null
 	</select>
 </mapper>

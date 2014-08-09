@@ -296,7 +296,7 @@
                             				${freightApp.actReceiptDate}
                             			</td>
                             			<td class="center">
-                            				${freightApp.expdeliveryDate}
+                            				${freightApp.expDeliveryDate}
                             			</td>
                             			<td class="center">
                             				${freightApp.actDeliveryDate}
