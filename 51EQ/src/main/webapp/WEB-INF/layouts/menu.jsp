@@ -30,6 +30,9 @@
                     <li>
                         <a href="${sc_ctx}/member/initModPwd">密码修改</a>
                     </li>
+                    <li>
+                        <a href="${sc_ctx}/freight/view">货运</a>
+                    </li>
                     <c:if test="${_permIdList.contains('1') || _permIdList.contains('2') 
                     	|| _permIdList.contains('3') || _permIdList.contains('4')
                     	|| _permIdList.contains('5') || _permIdList.contains('6')
