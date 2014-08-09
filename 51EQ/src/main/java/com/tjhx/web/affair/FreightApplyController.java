@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjhx.common.utils.DateUtils;
-import com.tjhx.entity.affair.FreightApplication;
+import com.tjhx.entity.affair.FreightApply;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
-import com.tjhx.service.affair.FreightApplicationManager;
+import com.tjhx.service.affair.FreightApplyManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 import com.tjhx.web.report.ReportUtils;
 
 @Controller
 @RequestMapping(value = "/freight")
-public class FreightApplicationController extends BaseController {
+public class FreightApplyController extends BaseController {
 	@Resource
-	private FreightApplicationManager freightApplicationManager;
+	private FreightApplyManager freightApplyManager;
 	@Resource
 	private OrganizationManager orgManager;
 
@@ -47,7 +47,7 @@ public class FreightApplicationController extends BaseController {
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
 
-		return "affair/freightApplicationList";
+		return "affair/freightApplyList";
 	}
 
 	/**
@@ -87,10 +87,10 @@ public class FreightApplicationController extends BaseController {
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
 
-		List<FreightApplication> _list = freightApplicationManager.getAllFreightApplication(appOrgId, targetOrgId, status);
+		List<FreightApply> _list = freightApplyManager.getFreightApplyList(appOrgId, targetOrgId, status);
 		model.addAttribute("freightAppList", _list);
 
-		return "affair/freightApplicationList";
+		return "affair/freightApplyList";
 	}
 
 	/**
@@ -114,11 +114,10 @@ public class FreightApplicationController extends BaseController {
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
 
-		List<FreightApplication> _list = freightApplicationManager.getFreightApplicationList_Manager(appOrgId, targetOrgId,
-				status);
+		List<FreightApply> _list = freightApplyManager.getFreightApplyList_Manager(appOrgId, targetOrgId, status);
 		model.addAttribute("freightAppList", _list);
 
-		return "affair/freightApplicationList";
+		return "affair/freightApplyList";
 	}
 
 	/**
@@ -132,7 +131,7 @@ public class FreightApplicationController extends BaseController {
 	public String delFreightApp_Action(@RequestParam("uuids") String ids, Model model) {
 		String[] idArray = ids.split(",");
 		for (int i = 0; i < idArray.length; i++) {
-			freightApplicationManager.delFreightApplicationByUuid(Integer.parseInt(idArray[i]));
+			freightApplyManager.delFreightApplyByUuid(Integer.parseInt(idArray[i]));
 		}
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/list";
@@ -147,7 +146,7 @@ public class FreightApplicationController extends BaseController {
 	 */
 	@RequestMapping(value = "edit/{id}")
 	public String editFreightApp_Action(@PathVariable("id") Integer id, Model model) {
-		FreightApplication freightApp = freightApplicationManager.getFreightApplicationByUuid(id);
+		FreightApply freightApp = freightApplyManager.getFreightApplyByUuid(id);
 		if (null == freightApp) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/list";
 		} else {
@@ -157,7 +156,7 @@ public class FreightApplicationController extends BaseController {
 			// 初始化调货单状态下拉列表
 			initStatusList(model);
 
-			return "affair/freightApplicationForm";
+			return "affair/freightApplyForm";
 		}
 
 	}
@@ -170,7 +169,7 @@ public class FreightApplicationController extends BaseController {
 	 */
 	@RequestMapping(value = "new")
 	public String initFreightApp_Action(Model model) {
-		FreightApplication freightApp = new FreightApplication();
+		FreightApply freightApp = new FreightApply();
 		freightApp.setPackNum(null);
 		model.addAttribute("freightApp", freightApp);
 
@@ -178,7 +177,7 @@ public class FreightApplicationController extends BaseController {
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
 
-		return "affair/freightApplicationForm";
+		return "affair/freightApplyForm";
 	}
 
 	/**
@@ -189,7 +188,7 @@ public class FreightApplicationController extends BaseController {
 	 * @throws InvocationTargetException
 	 */
 	@RequestMapping(value = "save")
-	public String saveFreightApp_Action(@ModelAttribute("freightApp") FreightApplication freightApp, Model model)
+	public String saveFreightApp_Action(@ModelAttribute("freightApp") FreightApply freightApp, Model model)
 			throws IllegalAccessException, InvocationTargetException {
 		// 限时日期
 		if (StringUtils.isNotBlank(freightApp.getLimitedDate())) {
@@ -203,24 +202,123 @@ public class FreightApplicationController extends BaseController {
 					freightApp.setAppDate(DateUtils.transDateFormat(freightApp.getAppDate(), "yyyy-MM-dd", "yyyyMMdd"));
 				}
 
-				freightApplicationManager.addNewFreightApplication(freightApp);
+				freightApplyManager.addNewFreightApply(freightApp);
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
-				return "affair/freightApplicationForm";
+				return "affair/freightApplyForm";
 			}
 		} else {// 修改操作
 			try {
-				freightApplicationManager.updateFreightApplication(freightApp);
+				freightApplyManager.updateFreightApply(freightApp);
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
-				return "affair/freightApplicationForm";
+				return "affair/freightApplyForm";
 			}
 		}
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/list";
+	}
+
+	// ==========================================================================
+	// 货运-运输
+	// ==========================================================================
+	@RequestMapping(value = "view")
+	public String viewFreightApp_Action(Model model) {
+		// 已申请未审批（货运信息）数量
+		int applyNotApprovalCount = freightApplyManager.getApplyNotApprovalCount();
+		// 已审批未完成（货运信息）数量
+		int approvalNotCompleteCount = freightApplyManager.getApprovalNotCompleteCount();
+		// 预计收货（货运信息）数量
+		int expReceiptCount = freightApplyManager.getExpReceiptCount();
+		// 预计送货（货运信息）数量
+		int expDeliveryCount = freightApplyManager.getExpDeliveryCount();
+
+		model.addAttribute("applyNotApprovalCount", applyNotApprovalCount);
+		model.addAttribute("approvalNotCompleteCount", approvalNotCompleteCount);
+		model.addAttribute("expReceiptCount", expReceiptCount);
+		model.addAttribute("expDeliveryCount", expDeliveryCount);
+
+		return "affair/freightApplyView";
+	}
+
+	/**
+	 * 取得货运申请信息列表
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "viewList")
+	public String freightApplicationViewList_Action(Model model, HttpServletRequest request) {
+		ReportUtils.initOrgList_All_Null(orgManager, model);
+		// 初始化调货单状态下拉列表
+		initStatusList(model);
+
+		return "affair/freightApplyViewList";
+	}
+
+	/**
+	 * 取得货运申请信息列表
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "viewManagerSearch")
+	public String viewManagerSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		managerSearch_Action(model, request);
+
+		return "affair/freightApplyViewList";
+	}
+
+	/**
+	 * 编辑/审批货运申请信息
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "viewEdit/{id}/{editFlg}")
+	public String viewEditFreightApp_Action(@PathVariable("id") Integer id, @PathVariable("editFlg") Integer editFlg, Model model) {
+		FreightApply freightApp = freightApplyManager.getFreightApplyByUuid(id);
+		if (null == freightApp) {
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/viewList";
+		} else {
+			freightApp.setEditFlg(editFlg);
+			model.addAttribute("freightApp", freightApp);
+
+			ReportUtils.initOrgList_Null_Root(orgManager, model);
+			// 初始化调货单状态下拉列表
+			initStatusList(model);
+
+			return "affair/freightApplyViewForm";
+		}
+
+	}
+
+	/**
+	 * 修改 货运申请信息
+	 * 
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	@RequestMapping(value = "viewSave")
+	public String viewSaveFreightApp_Action(@ModelAttribute("freightApp") FreightApply freightApp, Model model) {
+
+		try {
+			freightApplyManager.updateFreightApply_view(freightApp);
+		} catch (ServiceException ex) {
+			// 添加错误消息
+			addInfoMsg(model, ex.getMessage());
+
+			return "affair/freightApplyViewForm";
+		}
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/viewList";
 	}
 }

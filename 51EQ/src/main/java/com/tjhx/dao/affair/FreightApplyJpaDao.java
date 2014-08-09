@@ -3,9 +3,9 @@ package com.tjhx.dao.affair;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 
-import com.tjhx.entity.affair.FreightApplication;
+import com.tjhx.entity.affair.FreightApply;
 
-public interface FreightApplicationJpaDao extends CrudRepository<FreightApplication, Integer> {
+public interface FreightApplyJpaDao extends CrudRepository<FreightApply, Integer> {
 
 	@SuppressWarnings("rawtypes")
 	public Iterable findAll(Sort sort);
@@ -18,5 +18,5 @@ public interface FreightApplicationJpaDao extends CrudRepository<FreightApplicat
 	 * @param targetOrgId 调货目的机构
 	 * @return
 	 */
-	public FreightApplication findByAppDateAndAppOrgIdAndTargetOrgId(String appDate, String appOrgId, String targetOrgId);
+	public FreightApply findByAppDateAndAppOrgIdAndTargetOrgId(String appDate, String appOrgId, String targetOrgId);
 }

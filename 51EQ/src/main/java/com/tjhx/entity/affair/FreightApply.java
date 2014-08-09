@@ -6,6 +6,7 @@ package com.tjhx.entity.affair;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -15,8 +16,8 @@ import com.tjhx.entity.IdEntity;
  * 货运申请
  */
 @Entity
-@Table(name = "T_FREIGHT_APPLICATION")
-public class FreightApplication extends IdEntity {
+@Table(name = "T_FREIGHT_APPLY")
+public class FreightApply extends IdEntity {
 
 	private static final long serialVersionUID = -4443650985744491393L;
 	/** 申请日期 */
@@ -44,11 +45,15 @@ public class FreightApplication extends IdEntity {
 	/** 实际收货时间-运输 */
 	private String actReceiptDate;
 	/** 预计送货时间-运输 */
-	private String expdeliveryDate;
+	private String expDeliveryDate;
 	/** 实际送达时间-运输 */
 	private String actDeliveryDate;
 	/** 货运申请状态-00申请 01已审批 02已送达 */
 	private String status;
+
+	// ====================================================================
+	/** 编辑标记（View用） */
+	private Integer editFlg;
 
 	/**
 	 * 获取申请日期
@@ -247,9 +252,18 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return expReceiptDate 预计收货时间-运输
 	 */
-	@Column(length = 8)
+	@Column(length = 16)
 	public String getExpReceiptDate() {
 		return expReceiptDate;
+	}
+
+	/**
+	 * 设置预计收货时间-运输
+	 * 
+	 * @param expReceiptDate 预计收货时间-运输
+	 */
+	public void setExpReceiptDate(String expReceiptDate) {
+		this.expReceiptDate = expReceiptDate;
 	}
 
 	/**
@@ -257,7 +271,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return actReceiptDate 实际收货时间-运输
 	 */
-	@Column(length = 8)
+	@Column(length = 16)
 	public String getActReceiptDate() {
 		return actReceiptDate;
 	}
@@ -272,22 +286,13 @@ public class FreightApplication extends IdEntity {
 	}
 
 	/**
-	 * 设置预计收货时间-运输
-	 * 
-	 * @param expReceiptDate 预计收货时间-运输
-	 */
-	public void setExpReceiptDate(String expReceiptDate) {
-		this.expReceiptDate = expReceiptDate;
-	}
-
-	/**
 	 * 获取预计送货时间-运输
 	 * 
 	 * @return expdeliveryDate 预计送货时间-运输
 	 */
-	@Column(length = 8)
-	public String getExpdeliveryDate() {
-		return expdeliveryDate;
+	@Column(length = 16)
+	public String getExpDeliveryDate() {
+		return expDeliveryDate;
 	}
 
 	/**
@@ -295,8 +300,8 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @param expdeliveryDate 预计送货时间-运输
 	 */
-	public void setExpdeliveryDate(String expdeliveryDate) {
-		this.expdeliveryDate = expdeliveryDate;
+	public void setExpDeliveryDate(String expDeliveryDate) {
+		this.expDeliveryDate = expDeliveryDate;
 	}
 
 	/**
@@ -304,7 +309,7 @@ public class FreightApplication extends IdEntity {
 	 * 
 	 * @return actDeliveryDate 实际送达时间-运输
 	 */
-	@Column(length = 8)
+	@Column(length = 16)
 	public String getActDeliveryDate() {
 		return actDeliveryDate;
 	}
@@ -335,6 +340,25 @@ public class FreightApplication extends IdEntity {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * 获取编辑标记（View用）
+	 * 
+	 * @return editFlg 编辑标记（View用）
+	 */
+	@Transient
+	public Integer getEditFlg() {
+		return editFlg;
+	}
+
+	/**
+	 * 设置编辑标记（View用）
+	 * 
+	 * @param editFlg 编辑标记（View用）
+	 */
+	public void setEditFlg(Integer editFlg) {
+		this.editFlg = editFlg;
 	}
 
 }
