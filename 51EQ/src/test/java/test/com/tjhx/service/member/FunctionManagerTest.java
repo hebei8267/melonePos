@@ -715,9 +715,9 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	public void saveNewFun56() {
 		Function fun = new Function();
 		// 功能显示名称--货运调货--门店
-		fun.setDisplayName("货运调货-总部-审批");
+		fun.setDisplayName("货运调货-货运/Boss");
 		// 功能URL */
-		fun.setFunUrl("freight/approval");
+		fun.setFunUrl("freight/view");
 
 		functionJpaDao.save(fun);
 	}

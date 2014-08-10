@@ -395,7 +395,7 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
+		// 货运调货-门店/总部
 		// ---------------------------------------------
 		Permission perm55 = new Permission();
 		Function fun55 = functionJpaDao.findOne(55);
@@ -404,7 +404,7 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		permissionJpaDao.save(perm55);
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-总部
+		// 货运调货-货运/Boss
 		// ---------------------------------------------
 		Permission perm56 = new Permission();
 		Function fun56 = functionJpaDao.findOne(56);
@@ -761,21 +761,14 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
+		// 货运调货-门店/总部
 		// ---------------------------------------------
 		Permission perm55 = new Permission();
 		Function fun55 = functionJpaDao.findOne(55);
 		perm55.setRole(role);
 		perm55.setFunction(fun55);
 		permissionJpaDao.save(perm55);
-		// ---------------------------------------------
-		// 文档管理(货运调货)-总部
-		// ---------------------------------------------
-		Permission perm56 = new Permission();
-		Function fun56 = functionJpaDao.findOne(56);
-		perm56.setRole(role);
-		perm56.setFunction(fun56);
-		permissionJpaDao.save(perm56);
+				
 	}
 
 	// 总部人员-库管
@@ -858,21 +851,14 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 	
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
+		// 货运调货-门店/总部
 		// ---------------------------------------------
 		Permission perm55 = new Permission();
 		Function fun55 = functionJpaDao.findOne(55);
 		perm55.setRole(role);
 		perm55.setFunction(fun55);
 		permissionJpaDao.save(perm55);
-		// ---------------------------------------------
-		// 文档管理(货运调货)-总部
-		// ---------------------------------------------
-		Permission perm56 = new Permission();
-		Function fun56 = functionJpaDao.findOne(56);
-		perm56.setRole(role);
-		perm56.setFunction(fun56);
-		permissionJpaDao.save(perm56);
+				
 
 	}
 
@@ -1150,16 +1136,10 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		permissionJpaDao.save(perm53);
 		
 		
+		
+				
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
-		// ---------------------------------------------
-		Permission perm55 = new Permission();
-		Function fun55 = functionJpaDao.findOne(55);
-		perm55.setRole(role);
-		perm55.setFunction(fun55);
-		permissionJpaDao.save(perm55);
-		// ---------------------------------------------
-		// 文档管理(货运调货)-总部
+		// 货运调货-货运/Boss
 		// ---------------------------------------------
 		Permission perm56 = new Permission();
 		Function fun56 = functionJpaDao.findOne(56);
@@ -1315,13 +1295,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		permissionJpaDao.save(perm54);
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
+		// 货运调货-门店/总部
 		// ---------------------------------------------
 		Permission perm55 = new Permission();
 		Function fun55 = functionJpaDao.findOne(55);
 		perm55.setRole(role);
 		perm55.setFunction(fun55);
 		permissionJpaDao.save(perm55);
+				
+			
 	}
 
 	// 店助
@@ -1418,12 +1400,31 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 		
 		
 		// ---------------------------------------------
-		// 文档管理(货运调货)-门店
+		// 货运调货-门店/总部
 		// ---------------------------------------------
 		Permission perm55 = new Permission();
 		Function fun55 = functionJpaDao.findOne(55);
 		perm55.setRole(role);
 		perm55.setFunction(fun55);
 		permissionJpaDao.save(perm55);
+				
+				
+	}
+	
+	// 物流
+	@Test
+	@Rollback(false)
+	public void saveNewPerm8() {
+
+		Role role = roleJpaDao.findOne(8);
+
+		// ---------------------------------------------
+		// 货运调货-货运/Boss
+		// ---------------------------------------------
+		Permission perm56 = new Permission();
+		Function fun56 = functionJpaDao.findOne(56);
+		perm56.setRole(role);
+		perm56.setFunction(fun56);
+		permissionJpaDao.save(perm56);
 	}
 }
