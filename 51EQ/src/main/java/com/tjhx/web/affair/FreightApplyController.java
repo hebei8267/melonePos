@@ -266,6 +266,8 @@ public class FreightApplyController extends BaseController {
 		ReportUtils.initOrgList_All_Null(orgManager, model);
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
+		
+		model.addAttribute("status", "01");
 
 		return "affair/freightApplyViewList";
 	}
