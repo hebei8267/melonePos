@@ -17,7 +17,7 @@
     	<link rel="stylesheet" href="${ctx}/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
         <script src="${ctx}/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${ctx}/static/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-        <c:if test="${freightApp.editFlg == 2}">
+        <c:if test="${(freightApp.editFlg == 2) || (freightApp.editFlg == 4)}">
         <link type="text/css" href="${ctx}/static/css/bootstrap-switch.css" rel="stylesheet">
         </c:if>
         <script src="${ctx}/static/js/bootstrap-switch.js"></script>
@@ -100,7 +100,7 @@
                             <label class="control-label">申请日期 :</label>
                            	<div class="controls">
 		                        <fmt:parseDate value="${freightApp.appDate}" var="_appDate" pattern="yyyyMMdd" />
-		                        <label class="left-control-label"><fmt:formatDate pattern="yyyy-MM-dd" value="${_appDate}" /></label>
+		                        <label class="left-control-label"><span class="_warn1"><fmt:formatDate pattern="yyyy-MM-dd" value="${_appDate}" /></span></label>
                         	</div>
                         </div>
                         
@@ -108,10 +108,10 @@
                             <label class="control-label">调出机构 :</label>
                             <div class="controls">
                             	<c:if test="${fn:length(freightApp.appOrgId) > 4}">
-		             			<label class="left-control-label">${fn:substring(freightApp.appOrgId,3,6)}</label>
+		             			<label class="left-control-label"><span class="_warn1">${fn:substring(freightApp.appOrgId,3,6)}</span></label>
 		             			</c:if>
 		             			<c:if test="${fn:length(freightApp.appOrgId) < 4}">
-		             			<label class="left-control-label">总部</label>
+		             			<label class="left-control-label"><span class="_warn1">总部</span></label>
 		             			</c:if>
 		             		</div>
                         </div>
@@ -120,10 +120,10 @@
                             <label class="control-label">调入机构 :</label>
                             <div class="controls">
 		             			<c:if test="${fn:length(freightApp.targetOrgId) > 4}">
-		             			<label class="left-control-label">${fn:substring(freightApp.targetOrgId,3,6)}</label>
+		             			<label class="left-control-label"><span class="_warn1">${fn:substring(freightApp.targetOrgId,3,6)}</span></label>
 		             			</c:if>
 		             			<c:if test="${fn:length(freightApp.targetOrgId) < 4}">
-		             			<label class="left-control-label">总部</label>
+		             			<label class="left-control-label"><span class="_warn1">总部</span></label>
 		             			</c:if>
 		             		</div>
                         </div>
@@ -139,26 +139,23 @@
                             <label class="control-label">是否打包 :</label>
                            	<div class="controls">
                            		<label class="left-control-label">
-                           		<c:if test="${freightApp.packFlg == 1}">已打包</c:if>
-                           		<c:if test="${freightApp.packFlg == 0}">未打包</c:if>
+                           		<c:if test="${freightApp.packFlg == 1}"><span class="_warn1">已打包</span></c:if>
+                           		<c:if test="${freightApp.packFlg == 0}"><span class="_warn2">未打包</span></c:if>
                            		</label>
                         	</div>
                         </div>
                         
                         <div class="control-group">
-                            <label class="control-label">打包件数 :</label>
+                            <label class="control-label">打包件数（箱）:</label>
                            	<div class="controls">
-                           		<label class="left-control-label">${freightApp.packNum}</label>
+                           		<label class="left-control-label"><span class="_warn1">${freightApp.boxNum}</span> 箱</label>
                         	</div>
                         </div>
                         
                         <div class="control-group">
-                            <label class="control-label">打包单位 :</label>
+                            <label class="control-label">打包件数（袋）:</label>
                            	<div class="controls">
-                           		<label class="left-control-label">
-                           		<c:if test="${freightApp.packUnit == 1}">箱</c:if>
-                           		<c:if test="${freightApp.packUnit == 2}">袋</c:if>
-                           		</label>
+                           		<label class="left-control-label"><span class="_warn1">${freightApp.bagNum}</span> 袋</label>
                         	</div>
                         </div>
                         
@@ -166,8 +163,8 @@
                             <label class="control-label">调货类别 :</label>
                            	<div class="controls">
                            		<label class="left-control-label">
-                           		<c:if test="${freightApp.freightType == 1}">普通</c:if>
-                           		<c:if test="${freightApp.freightType == 2}">限时</c:if>
+                           		<c:if test="${freightApp.freightType == 1}"><span class="_warn1">普通</span></c:if>
+                           		<c:if test="${freightApp.freightType == 2}"><span class="_warn1">限时</span></c:if>
                            		</label>
                         	</div>
                         </div>
@@ -178,7 +175,7 @@
                             <label class="control-label">限时日期 :</label>
                            	<div class="controls">
                            		<fmt:parseDate value="${freightApp.limitedDate}" var="_limitedDate" pattern="yyyyMMdd" />
-                           		<label class="left-control-label"><fmt:formatDate pattern="yyyy-MM-dd" value="${_limitedDate}" /></label>
+                           		<label class="left-control-label"><span class="_warn1"><fmt:formatDate pattern="yyyy-MM-dd" value="${_limitedDate}" /></span></label>
                            	</div>
                         </div>
                         </c:if>
@@ -219,8 +216,8 @@
                         <div class="control-group">
                             <label class="control-label">实际收货 :</label>
                             <div class="controls">
-								<div class="switch switch-large" data-on-label="收货" data-off-label="未收">
-                					<input name="actReceiptDateChkFlg" type="checkbox" value="1" />
+								<div class="switch switch-large" data-on-label="已收" data-off-label="未收">
+                					<input name="actReceiptDateChkFlg" type="checkbox" value="1" <c:if test="${freightApp.actReceiptDate != null}">checked</c:if>/>
             					</div>
 							</div>
 						</div>
@@ -238,7 +235,7 @@
                         <div class="control-group">
                             <label class="control-label">预计送货时间 :</label>
                             <div class="controls">
-                            	<input name="expDeliveryDate" type="text" value="${freightApp.expDeliveryDate}" readonly class="expDeliveryDate">
+                            	<input name="expDeliveryDate" type="text" value="${freightApp.expDeliveryDate}" class="expDeliveryDate">
 								<script type="text/javascript">
 								    $(".expDeliveryDate").datetimepicker({
 								    	format: 'yyyy-mm-dd hh:ii',
@@ -263,8 +260,8 @@
                         <div class="control-group">
                             <label class="control-label">实际送货 :</label>							
 							<div class="controls">
-								<div class="switch switch-large" data-on-label="送货" data-off-label="未送">
-                					<input name="actDeliveryDateChkFlg" type="checkbox" value="1" />
+								<div class="switch switch-large" data-on-label="已送" data-off-label="未送">
+                					<input name="actDeliveryDateChkFlg" type="checkbox" value="1" <c:if test="${freightApp.actDeliveryDate != null}">checked</c:if>/>
             					</div>
 							</div>
 						</div>

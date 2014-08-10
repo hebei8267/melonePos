@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.affair.FreightApplyJpaDao;
 import com.tjhx.dao.affair.FreightApplyMyBatisDao;
 import com.tjhx.entity.affair.FreightApply;
@@ -127,10 +126,10 @@ public class FreightApplyManager {
 		_dbFreightApply.setApplicant(freightApply.getApplicant());
 		// 是否打包（1-已打包/0-未打包）
 		_dbFreightApply.setPackFlg(freightApply.getPackFlg());
-		// 打包件数（箱和袋）
-		_dbFreightApply.setPackNum(freightApply.getPackNum());
-		// 打包件数（1-箱/2-袋）
-		_dbFreightApply.setPackUnit(freightApply.getPackUnit());
+		// 打包件数（箱）
+		_dbFreightApply.setBoxNum(freightApply.getBoxNum());
+		// 打包件数（袋）
+		_dbFreightApply.setBagNum(freightApply.getBagNum());
 		// 调货目的机构
 		_dbFreightApply.setTargetOrgId(freightApply.getTargetOrgId());
 		// 调货类别（1-普通/2-限时）
@@ -165,7 +164,7 @@ public class FreightApplyManager {
 		}
 		// 实际收货
 		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 2) {
-			_dbFreightApply.setActReceiptDate(DateUtils.getCurFormatDate("yyyy-MM-dd hh:mm"));
+			_dbFreightApply.setActReceiptDate(freightApp.getActReceiptDate());
 		}
 		// 预计送货
 		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 3) {
@@ -173,31 +172,37 @@ public class FreightApplyManager {
 		}
 		// 实际送货
 		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 4) {
-			_dbFreightApply.setActDeliveryDate(DateUtils.getCurFormatDate("yyyy-MM-dd hh:mm"));
+			_dbFreightApply.setActDeliveryDate(freightApp.getActDeliveryDate());
+
+			if (StringUtils.isNotBlank(freightApp.getActDeliveryDate())) {// 已送货，完结该笔调货申请
+				_dbFreightApply.setStatus("02");// 02已送达
+			} else {
+				_dbFreightApply.setStatus("01");// 01已审批
+			}
 		}
 		freightApplyJpaDao.save(_dbFreightApply);
 	}
 
 	/**
-	 * 取得已申请未审批（货运信息）数量
+	 * 取得已申请（货运信息）数量
 	 * 
 	 * @return
 	 */
-	public int getApplyNotApprovalCount() {
-		return freightApplyMyBatisDao.getApplyNotApprovalCount();
+	public int getApplyCount() {
+		return freightApplyMyBatisDao.getApplyCount();
 	}
 
 	/**
-	 * 取得已审批未完成（货运信息）数量
+	 * 取得已审批（货运信息）数量
 	 * 
 	 * @return
 	 */
-	public int getApprovalNotCompleteCount() {
-		return freightApplyMyBatisDao.getApprovalNotCompleteCount();
+	public int getApprovalCount() {
+		return freightApplyMyBatisDao.getApprovalCount();
 	}
 
 	/**
-	 * 取得预计收货（货运信息）数量
+	 * 取得预收货（货运信息）数量
 	 * 
 	 * @return
 	 */
@@ -206,12 +211,39 @@ public class FreightApplyManager {
 	}
 
 	/**
-	 * 取得预计送货（货运信息）数量
+	 * 取得已打包（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getPackedCount() {
+		return freightApplyMyBatisDao.getPackedCount();
+	}
+
+	/**
+	 * 取得已收货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActReceiptCount() {
+		return freightApplyMyBatisDao.getActReceiptCount();
+	}
+
+	/**
+	 * 取得预送货（货运信息）数量
 	 * 
 	 * @return
 	 */
 	public int getExpDeliveryCount() {
 		return freightApplyMyBatisDao.getExpDeliveryCount();
+	}
+
+	/**
+	 * 取得已送货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActDeliveryDate() {
+		return freightApplyMyBatisDao.getActDeliveryDate();
 	}
 
 }

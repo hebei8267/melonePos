@@ -28,10 +28,10 @@ public class FreightApply extends IdEntity {
 	private String applicant;
 	/** 是否打包（1-已打包/0-未打包） */
 	private String packFlg = "0";
-	/** 打包件数（箱和袋） */
-	private Integer packNum;
-	/** 打包件数（1-箱/2-袋） */
-	private String packUnit;
+	/** 打包件数（箱） */
+	private Integer boxNum;
+	/** 打包件数（袋） */
+	private Integer bagNum;
 	/** 调货目的机构 */
 	private String targetOrgId;
 	/** 调货类别（1-普通/2-限时） */
@@ -134,40 +134,39 @@ public class FreightApply extends IdEntity {
 	}
 
 	/**
-	 * 获取打包件数（箱和袋）
+	 * 获取打包件数（箱）
 	 * 
-	 * @return packNum 打包件数（箱和袋）
+	 * @return boxNum 打包件数（箱）
 	 */
-	public Integer getPackNum() {
-		return packNum;
+	public Integer getBoxNum() {
+		return boxNum;
 	}
 
 	/**
-	 * 设置打包件数（箱和袋）
+	 * 设置打包件数（箱）
 	 * 
-	 * @param packNum 打包件数（箱和袋）
+	 * @param boxNum 打包件数（箱）
 	 */
-	public void setPackNum(Integer packNum) {
-		this.packNum = packNum;
+	public void setBoxNum(Integer boxNum) {
+		this.boxNum = boxNum;
 	}
 
 	/**
-	 * 获取打包件数（1-箱/2-袋）
+	 * 获取打包件数（袋）
 	 * 
-	 * @return packUnit 打包件数（1-箱/2-袋）
+	 * @return bagNum 打包件数（袋）
 	 */
-	@Column(length = 1)
-	public String getPackUnit() {
-		return packUnit;
+	public Integer getBagNum() {
+		return bagNum;
 	}
 
 	/**
-	 * 设置打包件数（1-箱/2-袋）
+	 * 设置打包件数（袋）
 	 * 
-	 * @param packUnit 打包件数（1-箱/2-袋）
+	 * @param bagNum 打包件数（袋）
 	 */
-	public void setPackUnit(String packUnit) {
-		this.packUnit = packUnit;
+	public void setBagNum(Integer bagNum) {
+		this.bagNum = bagNum;
 	}
 
 	/**

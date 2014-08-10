@@ -18,31 +18,37 @@
         <%// 系统菜单  %>
         <page:applyDecorator name="menu" />
 
-        <div class="container" style="padding-top: 40px;">
-        	<div class="row" style="padding-top: 10px;">
-        		<div class="span12">
-        			<p><center><h2> 已提交调货申请、未审批数量为（${applyNotApprovalCount}）</h2><a class="btn btn-large btn-info" href="${sc_ctx}/freight/viewList"><i class="fa fa-angle-double-right"></i> 详细</a></center></p>
-	          	</div>
-        	</div>
+        <div class="container">
         	<div class="row-fluid" style="padding-top: 40px;">
-        		<div class="span3 alert alert-error">
-		            <h2 class="alert-heading"><i class="fa fa-comments"></i> 预计收货</h2>
-		            <p><h4 class="alert-heading"> 预计（${expReceiptCount}）/审批（${approvalNotCompleteCount}）</h4></p>
+        		<div class="span4 alert alert-error">
+		            <h2 class="alert-heading"><i class="fa fa-check-square-o"></i> 审批信息</h2>
+		            <p><h4 class="alert-heading">已审批 (${approvalCount}) / 申请 (${applyCount})</h4></p>
 	          	</div>
 	          	
-	        	<div class="span3 alert alert-block">
-					<h3 class="alert-heading"><i class="fa fa-shopping-cart"></i> 预计送货</h3>
-		            <p><h4 class="alert-heading"> 预计（${expDeliveryCount}）/审批（${approvalNotCompleteCount}）</h4></p>
+        		<div class="span4 alert alert-success">
+		            <h2 class="alert-heading"><i class="fa fa-paperclip"></i> 收货计划</h2>
+		            <p><h4 class="alert-heading">已打包 (${packedCount}) / 预收 (${expReceiptCount})</h4></p>
+	          	</div>
+	          	
+	          	<div class="span4 alert alert-info">
+		            <h2 class="alert-heading"><i class="fa fa-shopping-cart"></i> 收货信息</h2>
+		            <p><h4 class="alert-heading">已发 (<i class="fa fa-exclamation"></i> ) / 已收 (${actReceiptCount})</h4></p>
+	          	</div>
+			</div>
+        	<div class="row-fluid" style="padding-top: 10px;">
+				
+				<div class="span4 alert alert-success">
+					<h3 class="alert-heading"><i class="fa fa-paperclip"></i> 送货计划</h3>
+		            <p><h4 class="alert-heading">送达 (<i class="fa fa-exclamation"></i> ) / 预送 (${expDeliveryCount})</h4></p>
 				</div>
 				
-	        	<div class="span3 alert alert-success">
-	        		<h3 class="alert-heading"><i class="fa fa-flag"></i> 实际收货</h3>
-		            <p><h4 class="alert-heading"> 预计（${expReceiptCount}）</h4></p>
-				</div>
-				
-	        	<div class="span3 alert alert-info">
+	        	<div class="span4 alert alert-info">
 	        		<h3 class="alert-heading"><i class="fa fa-plane"></i> 实际送达</h3>
-		            <p><h4 class="alert-heading"> 预计（${expDeliveryCount}）</h4></p>
+		            <p><h4 class="alert-heading">签收 (<i class="fa fa-exclamation"></i> ) / 送达 (${actDeliveryDate})</h4></p>
+				</div>
+				
+				<div class="span4 alert alert-block">
+	        		<center><p><h1 class="alert-heading"><a href="${sc_ctx}/freight/viewList"><i class="fa fa-th-large"></i> 详细</a></h1></p></center>
 				</div>
 			</div>
         </div>

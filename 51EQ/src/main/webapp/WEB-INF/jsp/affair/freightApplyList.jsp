@@ -33,6 +33,13 @@
     	<script>
             $().ready(function() {
                 
+                $("#searchForm").validate({
+                    rules : {
+                        status : {
+                            required : true
+                        }
+                    }
+                });
               	//-----------------------------------
                 // 表单效验
                 //-----------------------------------
@@ -193,25 +200,28 @@
                                         <input id="checkAll" type="checkbox" />
                                     </th>
                                     <th class="center">
-                                        申请日期
+                                        申请<br>日期
                                     </th>
                                     <th class="center">
                                         申请人
                                     </th>
                                     <th class="center">
-                                        调出机构
+                                        调出<br>机构
                                     </th>
                                     <th class="center">
-                                        调入机构
+                                        调入<br>机构
                                     </th>
                                     <th class="center">
-                                        调货类别
+                                        调货<br>类别
                                     </th>
                                     <th class="center">
                                         审批人
                                     </th>
                                     <th class="center">
-                                        货运状态
+                                        货运<br>状态
+                                    </th>
+                                    <th class="center">
+                                        是否<br>打包
                                     </th>
                                     <th class="center">
                                         预计<br>收货时间
@@ -290,6 +300,14 @@
 					                      	</c:if>
                             			</td>
                             			<td class="center">
+                            				<c:if test="${freightApp.packFlg == '1'}">
+					                   		<span class="_warn1">已打包</span>
+					                      	</c:if>
+					                		<c:if test="${freightApp.packFlg == '0'}">
+					                   		<span class="_warn2">未打包</span>
+					                      	</c:if>
+                            			</td>
+                            			<td class="center">
                             				${freightApp.expReceiptDate}
                             			</td>
                             			<td class="center">
@@ -318,7 +336,7 @@
                             <c:if test="${empty	freightAppList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="12" class="rounded-foot-left">
+                                        <td	colspan="13" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>

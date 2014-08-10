@@ -23,31 +23,52 @@ public interface FreightApplyMyBatisDao {
 	public List<FreightApply> getFreightApplyList_Manager(FreightApply freightApply);
 
 	/**
-	 * 取得已申请未审批（货运信息）数量
+	 * 取得已申请（货运信息）数量
 	 * 
 	 * @return
 	 */
-	public int getApplyNotApprovalCount();
+	public int getApplyCount();
 
 	/**
-	 * 取得已审批未完成（货运信息）数量
+	 * 取得已审批（货运信息）数量
 	 * 
 	 * @return
 	 */
-	public int getApprovalNotCompleteCount();
+	public int getApprovalCount();
 
 	/**
-	 * 取得预计收货（货运信息）数量
+	 * 取得预收货（货运信息）数量
 	 * 
 	 * @return
 	 */
 	public int getExpReceiptCount();
 
 	/**
-	 * 取得预计送货（货运信息）数量
+	 * 取得已打包（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getPackedCount();
+
+	/**
+	 * 取得已收货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActReceiptCount();
+
+	/**
+	 * 取得预送货（货运信息）数量
 	 * 
 	 * @return
 	 */
 	public int getExpDeliveryCount();
+
+	/**
+	 * 取得已送货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActDeliveryDate();
 
 }

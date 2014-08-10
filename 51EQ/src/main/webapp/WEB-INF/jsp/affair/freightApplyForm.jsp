@@ -74,12 +74,11 @@
 	                	packFlg : {
 	                     	required : true
 	                   	},
-	                 	packNum : {
-	                     	required : true,
+	                 	boxNum : {
 	                     	number : true
 	                 	},
-	               		packUnit : {
-	                      	required : true
+	               		bagNum : {
+	                      	number : true
 	                   	},
 	                 	targetOrgId : {
 	                    	required : true
@@ -175,6 +174,34 @@
 		             		</c:if>
 		             		</div>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label">调入机构 :</label>
+                            <div class="controls">
+                            <c:if test="${empty	freightApp.uuid}">
+	                            <select name="targetOrgId">
+			                  	<c:forEach items="${orgList}" var="org">
+			                  		<c:if test="${org.key == freightApp.targetOrgId}">
+			                   		<option value="${org.key }" selected>${org.value }</option>
+			                      	</c:if>
+			                		<c:if test="${org.key != freightApp.targetOrgId}">
+			                    	<option value="${org.key }">${org.value }</option>
+			                     	</c:if>
+			                	</c:forEach>
+			             		</select>
+		             		</c:if>
+		             		
+		             		<c:if test="${!empty freightApp.uuid}">
+		             			<input id="targetOrgId" name="targetOrgId" type="hidden" value="${freightApp.targetOrgId}"/>
+		             			
+		             			<c:if test="${fn:length(freightApp.targetOrgId) > 4}">
+		             			<label class="left-control-label">${fn:substring(freightApp.targetOrgId,3,6)}</label>
+		             			</c:if>
+		             			<c:if test="${fn:length(freightApp.targetOrgId) < 4}">
+		             			<label class="left-control-label">总部</label>
+		             			</c:if>
+		             		</c:if>
+		             		</div>
+                        </div>
                        	<div class="control-group">
                             <label class="control-label">申请日期 :</label>
                            	<div class="controls">
@@ -206,48 +233,18 @@
                         	</div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">打包件数 :</label>
+                            <label class="control-label">打包件数（箱）:</label>
                            	<div class="controls">
-                          		<form:input	path="packNum" />
+                          		<form:input	path="boxNum" />
                         	</div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">打包单位 :</label>
+                            <label class="control-label">打包件数（袋）:</label>
                            	<div class="controls">
-                           		<form:radiobutton path="packUnit" value="1"/>
-	                                <span>箱</span>
-	                          	<form:radiobutton path="packUnit" value="2"/>
-	                                <span>袋</span>
+                          		<form:input	path="bagNum" />
                         	</div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">调入机构 :</label>
-                            <div class="controls">
-                            <c:if test="${empty	freightApp.uuid}">
-	                            <select name="targetOrgId">
-			                  	<c:forEach items="${orgList}" var="org">
-			                  		<c:if test="${org.key == freightApp.targetOrgId}">
-			                   		<option value="${org.key }" selected>${org.value }</option>
-			                      	</c:if>
-			                		<c:if test="${org.key != freightApp.targetOrgId}">
-			                    	<option value="${org.key }">${org.value }</option>
-			                     	</c:if>
-			                	</c:forEach>
-			             		</select>
-		             		</c:if>
-		             		
-		             		<c:if test="${!empty freightApp.uuid}">
-		             			<input id="targetOrgId" name="targetOrgId" type="hidden" value="${freightApp.targetOrgId}"/>
-		             			
-		             			<c:if test="${fn:length(freightApp.targetOrgId) > 4}">
-		             			<label class="left-control-label">${fn:substring(freightApp.targetOrgId,3,6)}</label>
-		             			</c:if>
-		             			<c:if test="${fn:length(freightApp.targetOrgId) < 4}">
-		             			<label class="left-control-label">总部</label>
-		             			</c:if>
-		             		</c:if>
-		             		</div>
-                        </div>
+                        
                         <div class="control-group">
                             <label class="control-label">调货类别 :</label>
                            	<div class="controls">

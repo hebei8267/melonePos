@@ -42,7 +42,7 @@ public class FreightApplyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "list")
-	public String freightApplicationList_Action(Model model, HttpServletRequest request) {
+	public String freightApplyList_Action(Model model, HttpServletRequest request) {
 		ReportUtils.initOrgList_All_Null(orgManager, model);
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
@@ -58,7 +58,7 @@ public class FreightApplyController extends BaseController {
 	private void initStatusList(Model model) {
 		Map<String, String> statusList = new LinkedHashMap<String, String>();
 
-		statusList.put("", "全状态");
+		statusList.put("", "");
 		statusList.put("00", "申请");
 		statusList.put("01", "已审批");
 		statusList.put("02", "已送达");
@@ -170,7 +170,8 @@ public class FreightApplyController extends BaseController {
 	@RequestMapping(value = "new")
 	public String initFreightApp_Action(Model model) {
 		FreightApply freightApp = new FreightApply();
-		freightApp.setPackNum(null);
+		freightApp.setBoxNum(null);
+		freightApp.setBagNum(null);
 		model.addAttribute("freightApp", freightApp);
 
 		ReportUtils.initOrgList_Null_Root(orgManager, model);
@@ -228,19 +229,28 @@ public class FreightApplyController extends BaseController {
 	// ==========================================================================
 	@RequestMapping(value = "view")
 	public String viewFreightApp_Action(Model model) {
-		// 已申请未审批（货运信息）数量
-		int applyNotApprovalCount = freightApplyManager.getApplyNotApprovalCount();
-		// 已审批未完成（货运信息）数量
-		int approvalNotCompleteCount = freightApplyManager.getApprovalNotCompleteCount();
-		// 预计收货（货运信息）数量
+		// 已申请（货运信息）数量
+		int applyCount = freightApplyManager.getApplyCount();
+		// 已审批（货运信息）数量
+		int approvalCount = freightApplyManager.getApprovalCount();
+		// 预收货（货运信息）数量
 		int expReceiptCount = freightApplyManager.getExpReceiptCount();
-		// 预计送货（货运信息）数量
+		// 已打包（货运信息）数量
+		int packedCount = freightApplyManager.getPackedCount();
+		// 已收货（货运信息）数量
+		int actReceiptCount = freightApplyManager.getActReceiptCount();
+		// 预送货（货运信息）数量
 		int expDeliveryCount = freightApplyManager.getExpDeliveryCount();
+		// 已送货（货运信息）数量
+		int actDeliveryDate = freightApplyManager.getActDeliveryDate();
 
-		model.addAttribute("applyNotApprovalCount", applyNotApprovalCount);
-		model.addAttribute("approvalNotCompleteCount", approvalNotCompleteCount);
+		model.addAttribute("applyCount", applyCount);
+		model.addAttribute("approvalCount", approvalCount);
 		model.addAttribute("expReceiptCount", expReceiptCount);
+		model.addAttribute("packedCount", packedCount);
+		model.addAttribute("actReceiptCount", actReceiptCount);
 		model.addAttribute("expDeliveryCount", expDeliveryCount);
+		model.addAttribute("actDeliveryDate", actDeliveryDate);
 
 		return "affair/freightApplyView";
 	}
@@ -252,7 +262,7 @@ public class FreightApplyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "viewList")
-	public String freightApplicationViewList_Action(Model model, HttpServletRequest request) {
+	public String freightApplyViewList_Action(Model model, HttpServletRequest request) {
 		ReportUtils.initOrgList_All_Null(orgManager, model);
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
@@ -304,13 +314,36 @@ public class FreightApplyController extends BaseController {
 	 * 修改 货运申请信息
 	 * 
 	 * @return
+	 * @throws ServletRequestBindingException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
 	@RequestMapping(value = "viewSave")
-	public String viewSaveFreightApp_Action(@ModelAttribute("freightApp") FreightApply freightApp, Model model) {
+	public String viewSaveFreightApp_Action(@ModelAttribute("freightApp") FreightApply freightApp, Model model,
+			HttpServletRequest request) throws ServletRequestBindingException {
 
 		try {
+
+			// 实际收货
+			if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 2) {
+				String actReceiptDateChkFlg = ServletRequestUtils.getStringParameter(request, "actReceiptDateChkFlg");
+				if (null != actReceiptDateChkFlg && actReceiptDateChkFlg.equals("1")) {
+					freightApp.setActReceiptDate(DateUtils.getCurFormatDate("yyyy-MM-dd HH:mm"));
+				} else {
+					freightApp.setActReceiptDate(null);
+				}
+			}
+
+			// 实际送货
+			if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 4) {
+				String actDeliveryDateChkFlg = ServletRequestUtils.getStringParameter(request, "actDeliveryDateChkFlg");
+				if (null != actDeliveryDateChkFlg && actDeliveryDateChkFlg.equals("1")) {
+					freightApp.setActDeliveryDate(DateUtils.getCurFormatDate("yyyy-MM-dd HH:mm"));
+				} else {
+					freightApp.setActDeliveryDate(null);
+				}
+			}
+
 			freightApplyManager.updateFreightApply_view(freightApp);
 		} catch (ServiceException ex) {
 			// 添加错误消息

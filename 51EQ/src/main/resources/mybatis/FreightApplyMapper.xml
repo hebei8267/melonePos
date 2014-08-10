@@ -16,13 +16,13 @@
         <result column="app_org_id" property="appOrgId" jdbcType="VARCHAR"/>
         <result column="applicant" property="applicant" jdbcType="VARCHAR"/>
         <result column="approver" property="approver" jdbcType="VARCHAR"/>
-        <result column="exp_receipt_date" property="expReceiptDate" jdbcType="VARCHAR"/>
+        <result column="bag_num" property="bagNum" jdbcType="INTEGER"/>
+        <result column="box_num" property="boxNum" jdbcType="INTEGER"/>
         <result column="exp_delivery_date" property="expDeliveryDate" jdbcType="VARCHAR"/>
+        <result column="exp_receipt_date" property="expReceiptDate" jdbcType="VARCHAR"/>
         <result column="freight_type" property="freightType" jdbcType="VARCHAR"/>
         <result column="limited_date" property="limitedDate" jdbcType="VARCHAR"/>
         <result column="pack_flg" property="packFlg" jdbcType="VARCHAR"/>
-        <result column="pack_num" property="packNum" jdbcType="INTEGER"/>
-        <result column="pack_unit" property="packUnit" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="target_org_id" property="targetOrgId" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -42,13 +42,13 @@
     	app_org_id ,
     	applicant ,
     	approver ,
-    	exp_receipt_date ,
+    	bag_num ,
+    	box_num ,
     	exp_delivery_date ,
+    	exp_receipt_date ,
     	freight_type ,
     	limited_date ,
     	pack_flg ,
-    	pack_num ,
-    	pack_unit ,
     	status ,
     	target_org_id 
 	]]>
@@ -92,8 +92,8 @@
 		    app_date
 	</select>
 	
-	<!-- 取得已申请未审批（货运信息）数量 -->
-	<select id="getApplyNotApprovalCount" resultType="int">
+	<!-- 取得已申请（货运信息）数量 -->
+	<select id="getApplyCount" resultType="int">
 		select
 			count(*)
 		from 
@@ -102,8 +102,8 @@
 			status = '00'
 	</select>
 	
-	<!-- 取得已审批未完成（货运信息）数量 -->
-	<select id="getApprovalNotCompleteCount" resultType="int">
+	<!-- 取得已审批（货运信息）数量 -->
+	<select id="getApprovalCount" resultType="int">
 		select
 			count(*)
 		from 
@@ -112,7 +112,7 @@
 			status = '01'
 	</select>
 	
-	<!-- 取得预计收货（货运信息）数量 -->
+	<!-- 取得预收货（货运信息）数量 -->
 	<select id="getExpReceiptCount" resultType="int">
 		select
 			count(*)
@@ -123,7 +123,31 @@
 		and exp_receipt_date is not null
 	</select>
 	
-	<!-- 取得预计送货（货运信息）数量 -->
+	<!-- 取得已打包（货运信息）数量 -->
+	<select id="getPackedCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and exp_receipt_date is not null
+		and pack_flg = '1'
+	</select>
+	
+	<!-- 取得已收货（货运信息）数量 -->
+	<select id="getActReceiptCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and act_receipt_date is not null
+	</select>
+	
+	
+	<!-- 取得预送货（货运信息）数量 -->
 	<select id="getExpDeliveryCount" resultType="int">
 		select
 			count(*)
@@ -132,5 +156,15 @@
 		where 
 			status = '01'
 		and exp_delivery_date is not null
+	</select>
+	
+	<!-- 取得已送货（货运信息）数量 -->
+	<select id="getActDeliveryDate" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '02'
 	</select>
 </mapper>

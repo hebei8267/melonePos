@@ -30,7 +30,13 @@
     	</style>
     	<script>
             $().ready(function() {
-                
+                $("#searchForm").validate({
+                    rules : {
+                        status : {
+                            required : true
+                        }
+                    }
+                });
                 $("#searchBtn").click(function() {
                     $("input[type='text'],textarea").each(function(i) {
                         this.value = $.trim(this.value);
@@ -112,19 +118,22 @@
                         	<thead>
                                 <tr>
                                     <th class="center">
-                                        申请日期
+                                        申请<br>日期
                                     </th>
                                     <th class="center">
-                                        调出机构
+                                        调出<br>机构
                                     </th>
                                     <th class="center">
-                                        调入机构
+                                        调入<br>机构
                                     </th>
                                     <th class="center">
-                                        调货类别
+                                        调货<br>类别
                                     </th>
                                     <th class="center">
-                                        货运状态
+                                        货运<br>状态
+                                    </th>
+                                    <th class="center">
+                                        是否<br>打包
                                     </th>
                                     <th class="center">
                                         预计<br>收货时间
@@ -185,19 +194,51 @@
 					                      	</c:if>
                             			</td>
                             			<td class="center">
+                            				<c:if test="${freightApp.packFlg == '1'}">
+					                   		<span class="_warn1">已打包</span>
+					                      	</c:if>
+					                		<c:if test="${freightApp.packFlg == '0'}">
+					                   		<span class="_warn2">未打包</span>
+					                      	</c:if>
+                            			</td>
+                            			<td class="center">
+                            			<%// （申请/已送达）状态-无法编辑  %>
+                            			<c:if test="${freightApp.status == '01'}">
                             				<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/1" class="btn" target="_self"/><i class="fa fa-comments"></i> 预收</a>
+                            				<c:if test="${freightApp.expReceiptDate != ''}">
+                            				<br>
+                            				</c:if>
+                            			</c:if>
                             				${freightApp.expReceiptDate}
                             			</td>
                             			<td class="center">
+                            			<%// （申请/已送达）状态-无法编辑  %>
+                            			<c:if test="${freightApp.status == '01'}">
                             				<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/2" class="btn" target="_self"/><i class="fa fa-flag"></i> 实收</a>
+                            				<c:if test="${freightApp.actReceiptDate != ''}">
+                            				<br>
+                            				</c:if>
+                            			</c:if>
                             				${freightApp.actReceiptDate}
                             			</td>
                             			<td class="center">
+                            			<%// （申请/已送达）状态-无法编辑  %>
+                            			<c:if test="${freightApp.status == '01'}">
                             				<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/3" class="btn" target="_self"/><i class="fa fa-shopping-cart"></i> 预送</a>
+                            				<c:if test="${freightApp.expDeliveryDate != ''}">
+                            				<br>
+                            				</c:if>
+                            			</c:if>
                             				${freightApp.expDeliveryDate}
                             			</td>
                             			<td class="center">
+                            			<%// （申请/已送达）状态-无法编辑  %>
+                            			<c:if test="${freightApp.status == '01'}">
                             				<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/4" class="btn" target="_self"/><i class="fa fa-plane"></i> 实送</a>
+                            				<c:if test="${freightApp.actDeliveryDate != ''}">
+                            				<br>
+                            				</c:if>
+                            			</c:if>
                             				${freightApp.actDeliveryDate}
                             			</td>
                                         <td>
