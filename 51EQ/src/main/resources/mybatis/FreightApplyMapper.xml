@@ -172,17 +172,6 @@
 		and act_delivery_date is not null
 	</select>
 	
-	<!-- 取得送货完结（货运信息）数量 -->
-	<select id="getActDeliveryCount_Complete" resultType="int">
-		select
-			count(*)
-		from 
-			t_freight_apply
-		where 
-			status = '02'
-		and act_delivery_date is not null
-	</select>
-	
 	<!-- 取得门店发货（货运信息）数量 -->
 	<select id="getOrgActDeliveryCount" resultType="int">
 		select
@@ -205,14 +194,13 @@
 		and org_act_receipt_date is not null
 	</select>
 	
-	<!-- 取得门店收货完结（货运信息）数量 -->
-	<select id="getOrgActReceiptCount_Complete" resultType="int">
+	<!-- 取得调货完结（货运信息）数量 -->
+	<select id="getCompleteCount" resultType="int">
 		select
 			count(*)
 		from 
 			t_freight_apply
 		where 
 			status = '02'
-		and org_act_receipt_date is not null
 	</select>
 </mapper>

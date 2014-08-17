@@ -38,13 +38,13 @@
         	<div class="row-fluid" style="padding-top: 10px;">
 				
 				<div class="span4 alert alert-success">
-					<h3 class="alert-heading"><i class="fa fa-paperclip"></i> 送货计划</h3>
+					<h3 class="alert-heading"><i class="fa fa-plane"></i> 送货信息</h3>
 		            <p><h4 class="alert-heading">签收 (${orgActReceiptCount}) / 送达 (${actDeliveryCount}) / 预送 (${expDeliveryCount})</h4></p>
 				</div>
 				
 	        	<div class="span4 alert alert-info">
-	        		<h3 class="alert-heading"><i class="fa fa-plane"></i> 实际送达</h3>
-		            <p><h4 class="alert-heading">签收 (${orgActReceiptCountComplete}) / 送达 (${actDeliveryCountComplete})</h4></p>
+	        		<h3 class="alert-heading"><i class="fa fa-thumbs-o-up"></i> 调货完成</h3>
+		            <p><h4 class="alert-heading">完成 (${completeCount})</h4></p>
 				</div>
 				
 				<div class="span4 alert alert-block">
