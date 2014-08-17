@@ -174,12 +174,24 @@ public class FreightApplyManager {
 		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 4) {
 			_dbFreightApply.setActDeliveryDate(freightApp.getActDeliveryDate());
 
-			if (StringUtils.isNotBlank(freightApp.getActDeliveryDate())) {// 已送货，完结该笔调货申请
-				_dbFreightApply.setStatus("02");// 02已送达
-			} else {
-				_dbFreightApply.setStatus("01");// 01已审批
-			}
 		}
+		// 门店发货
+		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 5) {
+			_dbFreightApply.setOrgActDeliveryDate(freightApp.getOrgActDeliveryDate());
+		}
+		// 门店收货
+		if (null != freightApp.getEditFlg() && freightApp.getEditFlg() == 6) {
+			_dbFreightApply.setOrgActReceiptDate(freightApp.getOrgActReceiptDate());
+		}
+
+		// 实际收货时间-门店 / 实际送达时间-运输
+		if (StringUtils.isNotBlank(_dbFreightApply.getOrgActReceiptDate())
+				&& StringUtils.isNotBlank(_dbFreightApply.getActDeliveryDate())) {// 已签收/已送货，完结该笔调货申请
+			_dbFreightApply.setStatus("02");// 02已送达
+		} else {
+			_dbFreightApply.setStatus("01");// 01已审批
+		}
+
 		freightApplyJpaDao.save(_dbFreightApply);
 	}
 
@@ -242,8 +254,43 @@ public class FreightApplyManager {
 	 * 
 	 * @return
 	 */
-	public int getActDeliveryDate() {
-		return freightApplyMyBatisDao.getActDeliveryDate();
+	public int getActDeliveryCount() {
+		return freightApplyMyBatisDao.getActDeliveryCount();
 	}
 
+	/**
+	 * 取得门店发货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActDeliveryCount() {
+		return freightApplyMyBatisDao.getOrgActDeliveryCount();
+	}
+
+	/**
+	 * 取得门店收货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActReceiptCount() {
+		return freightApplyMyBatisDao.getOrgActReceiptCount();
+	}
+
+	/**
+	 * 取得调货完结（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActDeliveryCount_Complete() {
+		return freightApplyMyBatisDao.getActDeliveryCount_Complete();
+	}
+
+	/**
+	 * 取得门店收货完结（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActReceiptCount_Complete() {
+		return freightApplyMyBatisDao.getOrgActReceiptCount_Complete();
+	}
 }

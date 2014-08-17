@@ -208,6 +208,8 @@ public class FreightApplyController extends BaseController {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
 
+				ReportUtils.initOrgList_All_Null(orgManager, model);
+
 				return "affair/freightApplyForm";
 			}
 		} else {// 修改操作
@@ -216,6 +218,8 @@ public class FreightApplyController extends BaseController {
 			} catch (ServiceException ex) {
 				// 添加错误消息
 				addInfoMsg(model, ex.getMessage());
+
+				ReportUtils.initOrgList_All_Null(orgManager, model);
 
 				return "affair/freightApplyForm";
 			}
@@ -242,7 +246,15 @@ public class FreightApplyController extends BaseController {
 		// 预送货（货运信息）数量
 		int expDeliveryCount = freightApplyManager.getExpDeliveryCount();
 		// 已送货（货运信息）数量
-		int actDeliveryDate = freightApplyManager.getActDeliveryDate();
+		int actDeliveryCount = freightApplyManager.getActDeliveryCount();
+		// 门店发货（货运信息）数量
+		int orgActDeliveryCount = freightApplyManager.getOrgActDeliveryCount();
+		// 门店收货（货运信息）数量
+		int orgActReceiptCount = freightApplyManager.getOrgActReceiptCount();
+		// 取得调货完结（货运信息）数量
+		int actDeliveryCountComplete = freightApplyManager.getActDeliveryCount_Complete();
+		// 门店收货完结（货运信息）数量
+		int orgActReceiptCountComplete = freightApplyManager.getOrgActReceiptCount_Complete();
 
 		model.addAttribute("applyCount", applyCount);
 		model.addAttribute("approvalCount", approvalCount);
@@ -250,7 +262,11 @@ public class FreightApplyController extends BaseController {
 		model.addAttribute("packedCount", packedCount);
 		model.addAttribute("actReceiptCount", actReceiptCount);
 		model.addAttribute("expDeliveryCount", expDeliveryCount);
-		model.addAttribute("actDeliveryDate", actDeliveryDate);
+		model.addAttribute("actDeliveryCount", actDeliveryCount);
+		model.addAttribute("orgActDeliveryCount", orgActDeliveryCount);
+		model.addAttribute("orgActReceiptCount", orgActReceiptCount);
+		model.addAttribute("actDeliveryCountComplete", actDeliveryCountComplete);
+		model.addAttribute("orgActReceiptCountComplete", orgActReceiptCountComplete);
 
 		return "affair/freightApplyView";
 	}
@@ -266,7 +282,7 @@ public class FreightApplyController extends BaseController {
 		ReportUtils.initOrgList_All_Null(orgManager, model);
 		// 初始化调货单状态下拉列表
 		initStatusList(model);
-		
+
 		model.addAttribute("status", "01");
 
 		return "affair/freightApplyViewList";
@@ -355,5 +371,30 @@ public class FreightApplyController extends BaseController {
 		}
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/viewList";
+	}
+
+	// ============================================================
+	// 门店发货
+	@RequestMapping(value = "orgActDelivery/{id}")
+	public String orgActDelivery_Action(@PathVariable("id") Integer id) {
+		FreightApply freightApp = new FreightApply();
+		freightApp.setUuid(id);
+		freightApp.setOrgActDeliveryDate(DateUtils.getCurFormatDate("yyyy-MM-dd HH:mm"));
+		freightApp.setEditFlg(5);
+		freightApplyManager.updateFreightApply_view(freightApp);
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/list";
+	}
+
+	// 门店收货
+	@RequestMapping(value = "orgActReceipt/{id}")
+	public String orgActReceipt_Action(@PathVariable("id") Integer id) {
+		FreightApply freightApp = new FreightApply();
+		freightApp.setUuid(id);
+		freightApp.setOrgActReceiptDate(DateUtils.getCurFormatDate("yyyy-MM-dd HH:mm"));
+		freightApp.setEditFlg(6);
+		freightApplyManager.updateFreightApply_view(freightApp);
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/list";
 	}
 }

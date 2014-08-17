@@ -65,10 +65,37 @@ public interface FreightApplyMyBatisDao {
 	public int getExpDeliveryCount();
 
 	/**
-	 * 取得已送货（货运信息）数量
+	 * 已送货（货运信息）数量
 	 * 
 	 * @return
 	 */
-	public int getActDeliveryDate();
+	public int getActDeliveryCount();
 
+	/**
+	 * 取得门店发货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActDeliveryCount();
+
+	/**
+	 * 取得门店收货（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActReceiptCount();
+
+	/**
+	 * 取得送货完结（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getActDeliveryCount_Complete();
+
+	/**
+	 * 取得门店收货完结（货运信息）数量
+	 * 
+	 * @return
+	 */
+	public int getOrgActReceiptCount_Complete();
 }

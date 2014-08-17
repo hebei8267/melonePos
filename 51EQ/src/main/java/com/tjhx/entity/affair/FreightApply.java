@@ -44,15 +44,19 @@ public class FreightApply extends IdEntity {
 	private String expReceiptDate;
 	/** 实际收货时间-运输 */
 	private String actReceiptDate;
+	/** 实际发货时间-门店 */
+	private String orgActDeliveryDate;
 	/** 预计送货时间-运输 */
 	private String expDeliveryDate;
 	/** 实际送达时间-运输 */
 	private String actDeliveryDate;
+	/** 实际收货时间-门店 */
+	private String orgActReceiptDate;
 	/** 货运申请状态-00申请 01已审批 02已送达 */
 	private String status;
 
 	// ====================================================================
-	/** 编辑标记（View用） */
+	/** 编辑标记（View用） 1-预计收货 2-实际收货 3-预计送货 4-实际送货 5-门店发货 6-门店收货 */
 	private Integer editFlg;
 
 	/**
@@ -342,9 +346,9 @@ public class FreightApply extends IdEntity {
 	}
 
 	/**
-	 * 获取编辑标记（View用）
+	 * 获取编辑标记（View用）1-预计收货 2-实际收货 3-预计送货 4-实际送货 5-门店发货 6-门店收货
 	 * 
-	 * @return editFlg 编辑标记（View用）
+	 * @return editFlg 编辑标记（View用）1-预计收货 2-实际收货 3-预计送货 4-实际送货 5-门店发货 6-门店收货
 	 */
 	@Transient
 	public Integer getEditFlg() {
@@ -352,12 +356,50 @@ public class FreightApply extends IdEntity {
 	}
 
 	/**
-	 * 设置编辑标记（View用）
+	 * 设置编辑标记（View用）1-预计收货 2-实际收货 3-预计送货 4-实际送货 5-门店发货 6-门店收货
 	 * 
-	 * @param editFlg 编辑标记（View用）
+	 * @param editFlg 编辑标记（View用）1-预计收货 2-实际收货 3-预计送货 4-实际送货 5-门店发货 6-门店收货
 	 */
 	public void setEditFlg(Integer editFlg) {
 		this.editFlg = editFlg;
+	}
+
+	/**
+	 * 获取实际发货时间-门店
+	 * 
+	 * @return orgActDeliveryDate 实际发货时间-门店
+	 */
+	@Column(length = 16)
+	public String getOrgActDeliveryDate() {
+		return orgActDeliveryDate;
+	}
+
+	/**
+	 * 设置实际发货时间-门店
+	 * 
+	 * @param orgActDeliveryDate 实际发货时间-门店
+	 */
+	public void setOrgActDeliveryDate(String orgActDeliveryDate) {
+		this.orgActDeliveryDate = orgActDeliveryDate;
+	}
+
+	/**
+	 * 获取实际收货时间-门店
+	 * 
+	 * @return orgActReceiptDate 实际收货时间-门店
+	 */
+	@Column(length = 16)
+	public String getOrgActReceiptDate() {
+		return orgActReceiptDate;
+	}
+
+	/**
+	 * 设置实际收货时间-门店
+	 * 
+	 * @param orgActReceiptDate 实际收货时间-门店
+	 */
+	public void setOrgActReceiptDate(String orgActReceiptDate) {
+		this.orgActReceiptDate = orgActReceiptDate;
 	}
 
 }
