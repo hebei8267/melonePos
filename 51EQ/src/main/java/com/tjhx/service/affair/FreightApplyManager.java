@@ -281,16 +281,7 @@ public class FreightApplyManager {
 	 * 
 	 * @return
 	 */
-	public int getActDeliveryCount_Complete() {
-		return freightApplyMyBatisDao.getActDeliveryCount_Complete();
-	}
-
-	/**
-	 * 取得门店收货完结（货运信息）数量
-	 * 
-	 * @return
-	 */
-	public int getOrgActReceiptCount_Complete() {
-		return freightApplyMyBatisDao.getOrgActReceiptCount_Complete();
+	public int getCompleteCount() {
+		return freightApplyMyBatisDao.getCompleteCount();
 	}
 }

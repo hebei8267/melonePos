@@ -252,9 +252,7 @@ public class FreightApplyController extends BaseController {
 		// 门店收货（货运信息）数量
 		int orgActReceiptCount = freightApplyManager.getOrgActReceiptCount();
 		// 取得调货完结（货运信息）数量
-		int actDeliveryCountComplete = freightApplyManager.getActDeliveryCount_Complete();
-		// 门店收货完结（货运信息）数量
-		int orgActReceiptCountComplete = freightApplyManager.getOrgActReceiptCount_Complete();
+		int completeCount = freightApplyManager.getCompleteCount();
 
 		model.addAttribute("applyCount", applyCount);
 		model.addAttribute("approvalCount", approvalCount);
@@ -265,8 +263,7 @@ public class FreightApplyController extends BaseController {
 		model.addAttribute("actDeliveryCount", actDeliveryCount);
 		model.addAttribute("orgActDeliveryCount", orgActDeliveryCount);
 		model.addAttribute("orgActReceiptCount", orgActReceiptCount);
-		model.addAttribute("actDeliveryCountComplete", actDeliveryCountComplete);
-		model.addAttribute("orgActReceiptCountComplete", orgActReceiptCountComplete);
+		model.addAttribute("completeCount", completeCount);
 
 		return "affair/freightApplyView";
 	}
