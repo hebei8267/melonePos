@@ -25,6 +25,8 @@
         <result column="pack_flg" property="packFlg" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="target_org_id" property="targetOrgId" jdbcType="VARCHAR"/>
+        <result column="org_act_delivery_date" property="orgActDeliveryDate" jdbcType="VARCHAR"/>
+        <result column="org_act_receipt_date" property="orgActReceiptDate" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -50,7 +52,9 @@
     	limited_date ,
     	pack_flg ,
     	status ,
-    	target_org_id 
+    	target_org_id ,
+    	org_act_delivery_date ,
+    	org_act_receipt_date
 	]]>
   	</sql>
   	
@@ -131,7 +135,6 @@
 			t_freight_apply
 		where 
 			status = '01'
-		and exp_receipt_date is not null
 		and pack_flg = '1'
 	</select>
 	
@@ -159,12 +162,57 @@
 	</select>
 	
 	<!-- 取得已送货（货运信息）数量 -->
-	<select id="getActDeliveryDate" resultType="int">
+	<select id="getActDeliveryCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and act_delivery_date is not null
+	</select>
+	
+	<!-- 取得送货完结（货运信息）数量 -->
+	<select id="getActDeliveryCount_Complete" resultType="int">
 		select
 			count(*)
 		from 
 			t_freight_apply
 		where 
 			status = '02'
+		and act_delivery_date is not null
+	</select>
+	
+	<!-- 取得门店发货（货运信息）数量 -->
+	<select id="getOrgActDeliveryCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and org_act_delivery_date is not null
+	</select>
+	
+	<!-- 取得门店收货（货运信息）数量 -->
+	<select id="getOrgActReceiptCount" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '01'
+		and org_act_receipt_date is not null
+	</select>
+	
+	<!-- 取得门店收货完结（货运信息）数量 -->
+	<select id="getOrgActReceiptCount_Complete" resultType="int">
+		select
+			count(*)
+		from 
+			t_freight_apply
+		where 
+			status = '02'
+		and org_act_receipt_date is not null
 	</select>
 </mapper>
