@@ -32,19 +32,19 @@
 	          	
 	          	<div class="span4 alert alert-info">
 		            <h2 class="alert-heading"><i class="fa fa-shopping-cart"></i> 收货信息</h2>
-		            <p><h4 class="alert-heading">已发 (<i class="fa fa-exclamation"></i> ) / 已收 (${actReceiptCount})</h4></p>
+		            <p><h4 class="alert-heading">已发 (${orgActDeliveryCount}) / 已收 (${actReceiptCount})</h4></p>
 	          	</div>
 			</div>
         	<div class="row-fluid" style="padding-top: 10px;">
 				
 				<div class="span4 alert alert-success">
 					<h3 class="alert-heading"><i class="fa fa-paperclip"></i> 送货计划</h3>
-		            <p><h4 class="alert-heading">送达 (<i class="fa fa-exclamation"></i> ) / 预送 (${expDeliveryCount})</h4></p>
+		            <p><h4 class="alert-heading">送达 (${actDeliveryCount}) / 预送 (${expDeliveryCount})</h4></p>
 				</div>
 				
 	        	<div class="span4 alert alert-info">
 	        		<h3 class="alert-heading"><i class="fa fa-plane"></i> 实际送达</h3>
-		            <p><h4 class="alert-heading">签收 (<i class="fa fa-exclamation"></i> ) / 送达 (${actDeliveryDate})</h4></p>
+		            <p><h4 class="alert-heading">签收 (${orgActReceiptCount}) / 送达 (${actDeliveryCountComplete})</h4></p>
 				</div>
 				
 				<div class="span4 alert alert-block">

@@ -91,6 +91,38 @@
                 });
             });
             
+            var _orgActReceiptUrl = null;
+            // 收货
+            function orgActReceipt(uuid){
+            	$('#__orgActReceipt_confirm').modal({
+                  	backdrop : true,
+                   	keyboard : true,
+                   	show : true
+             	});
+             	_orgActReceiptUrl = "${sc_ctx}/freight/orgActReceipt/" + uuid;
+            }
+            function _orgActReceipt_confirm() {
+            	$("#hideForm").attr("target", "_self");
+                $("#hideForm").attr("action", _orgActReceiptUrl);
+                $("#hideForm").submit();
+            }
+            
+            var _orgActDeliveryUrl = null;
+            // 发货
+            function orgActDelivery(uuid){
+            	$('#__orgActDelivery_confirm').modal({
+                    backdrop : true,
+                   	keyboard : true,
+                    show : true
+            	});
+            	_orgActDeliveryUrl = "${sc_ctx}/freight/orgActDelivery/" + uuid;
+            }
+            function _orgActDelivery_confirm() {
+            	$("#hideForm").attr("target", "_self");
+                $("#hideForm").attr("action", _orgActDeliveryUrl);
+                $("#hideForm").submit();
+            }
+            
           	//-----------------------------------
             // 删除
             //-----------------------------------
@@ -230,10 +262,16 @@
                                         实际<br>收货时间
                                     </th>
                                     <th class="center">
+                                        门店<br>发货时间
+                                    </th>
+                                    <th class="center">
                                         预计<br>送货时间
                                     </th>
                                     <th class="center">
                                         实际<br>送货时间
+                                    </th>
+                                    <th class="center">
+                                        门店<br>收货时间
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -314,14 +352,28 @@
                             				${freightApp.actReceiptDate}
                             			</td>
                             			<td class="center">
+                            				<c:if test="${(freightApp.status == '01') && (sessionScope.__SESSION_USER_INFO.orgId == freightApp.appOrgId)}">
+                            				<a href="#" onclick="javescript:orgActDelivery('${freightApp.uuid}');" class="btn" target="_self"/>发货</a>
+                            				<br>
+                            				</c:if>
+                            				${freightApp.orgActDeliveryDate}
+                            			</td>
+                            			<td class="center">
                             				${freightApp.expDeliveryDate}
                             			</td>
                             			<td class="center">
                             				${freightApp.actDeliveryDate}
                             			</td>
+                            			<td class="center">
+                            				<c:if test="${(freightApp.status == '01') && (sessionScope.__SESSION_USER_INFO.orgId == freightApp.targetOrgId)}">
+                            				<a href="#" onclick="javescript:orgActReceipt('${freightApp.uuid}');" class="btn" target="_self"/>收货</a>
+                            				<br>
+                            				</c:if>
+                            				${freightApp.orgActReceiptDate}
+                            			</td>
                                         <td>
                                         <c:if test="${sessionScope.__SESSION_USER_INFO.orgId != _ROOT_ORG_ID}">
-                                        <c:if test="${freightApp.status == '00'}">
+                                        <c:if test="${freightApp.status != '02'}">
                                       		<a href="${sc_ctx}/freight/edit/${freightApp.uuid}" class="btn btn-warning" target="_self"/>编辑</a>
                                       	</c:if>
                                       	</c:if>
@@ -336,7 +388,7 @@
                             <c:if test="${empty	freightAppList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="13" class="rounded-foot-left">
+                                        <td	colspan="15" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
@@ -345,7 +397,46 @@
                         </table>
                		</div>
                 </form>
+                
+                <form method="post" class="form-inline" id="hideForm">
+                </form>
             </div>
        	</div>
+       	
+       	<div class="modal hide fade  __model37" id="__orgActDelivery_confirm">
+		    <div class="modal-header">
+		        <a class="close" data-dismiss="modal">×</a>
+		        <h4>系统消息</h4>
+		    </div>
+		    <div class="modal-body">
+		        <center>
+		            <p class="error">
+		                确定已发出该调货信息吗？
+		            </p>
+		        </center>
+		    </div>
+		    <div class="modal-footer">
+		        <input type="button" class="btn btn-primary" id="__orgActDelivery_Btn" onclick="javescript:_orgActDelivery_confirm();" value="确定">
+		        <a href="#" class="btn" data-dismiss="modal">关闭</a>
+		    </div>
+		</div>
+		
+		<div class="modal hide fade  __model37" id="__orgActReceipt_confirm">
+		    <div class="modal-header">
+		        <a class="close" data-dismiss="modal">×</a>
+		        <h4>系统消息</h4>
+		    </div>
+		    <div class="modal-body">
+		        <center>
+		            <p class="error">
+		                确定已收取该调货信息吗？
+		            </p>
+		        </center>
+		    </div>
+		    <div class="modal-footer">
+		        <input type="button" class="btn btn-primary" id="__orgActReceipt_Btn" onclick="javescript:_orgActReceipt_confirm();" value="确定">
+		        <a href="#" class="btn" data-dismiss="modal">关闭</a>
+		    </div>
+		</div>
     </body>
 </html>

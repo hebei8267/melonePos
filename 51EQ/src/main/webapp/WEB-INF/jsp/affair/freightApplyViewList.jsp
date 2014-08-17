@@ -142,10 +142,16 @@
                                         实际<br>收货时间
                                     </th>
                                     <th class="center">
+                                        门店<br>发货时间
+                                    </th>
+                                    <th class="center">
                                         预计<br>送货时间
                                     </th>
                                     <th class="center">
                                         实际<br>送货时间
+                                    </th>
+                                    <th class="center">
+                                        门店<br>收货时间
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -222,6 +228,9 @@
                             				${freightApp.actReceiptDate}
                             			</td>
                             			<td class="center">
+                            				${freightApp.orgActDeliveryDate}
+                            			</td>
+                            			<td class="center">
                             			<%// （申请/已送达）状态-无法编辑  %>
                             			<c:if test="${freightApp.status == '01'}">
                             				<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/3" class="btn" target="_self"/><i class="fa fa-shopping-cart"></i> 预送</a>
@@ -240,6 +249,9 @@
                             				</c:if>
                             			</c:if>
                             				${freightApp.actDeliveryDate}
+                            			</td>
+                            			<td class="center">
+                            				${freightApp.orgActReceiptDate}
                             			</td>
                                         <td>
                                       		<a href="${sc_ctx}/freight/viewEdit/${freightApp.uuid}/0" class="btn" target="_self"/>明细</a>

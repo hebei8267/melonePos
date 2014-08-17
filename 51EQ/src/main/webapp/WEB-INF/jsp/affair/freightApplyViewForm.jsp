@@ -230,6 +230,12 @@
                         	</div>
                         </div>
                         </c:if>
+                        <div class="control-group">
+                        	<label class="control-label">门店发货时间 :</label>
+                           	<div class="controls">
+                           		<label class="left-control-label">${freightApp.orgActDeliveryDate}</label>
+                        	</div>
+                        </div>
                         
                         <c:if test="${freightApp.editFlg == 3}">
                         <div class="control-group">
@@ -274,6 +280,12 @@
                         	</div>
                         </div>
                         </c:if>
+                        <div class="control-group">
+                        	<label class="control-label">门店收货时间 :</label>
+                           	<div class="controls">
+                           		<label class="left-control-label">${freightApp.orgActReceiptDate}</label>
+                        	</div>
+                        </div>
                         
                         <div class="control-group">
                             <div class="controls">
