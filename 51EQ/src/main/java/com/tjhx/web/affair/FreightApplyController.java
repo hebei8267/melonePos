@@ -282,6 +282,13 @@ public class FreightApplyController extends BaseController {
 
 		model.addAttribute("status", "01");
 
+		// ===================================================================
+		// 增加默认调货单状态为已审查的信息查询
+		// ===================================================================
+		List<FreightApply> _list = freightApplyManager.getFreightApplyList_Manager(null, null, "01");
+		model.addAttribute("freightAppList", _list);
+		// ===================================================================
+
 		return "affair/freightApplyViewList";
 	}
 

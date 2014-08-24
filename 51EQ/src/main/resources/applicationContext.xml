@@ -203,6 +203,15 @@
 		
 		<!-- 共享文件上传根目录 -->
 		<property name="uploadShareFilePath" value="${upload.share.file.path}" />
+		
+		
+		<!-- 物流用户列表 -->
+		<property name="freightUserList">
+			<list>
+				<value>ycs</value>
+				<value>admin</value>
+			</list>
+		</property>
 	</bean>
 	
 	

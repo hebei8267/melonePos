@@ -13,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.Encrypter;
 import com.tjhx.entity.affair.MsgInfo;
 import com.tjhx.entity.member.User;
 import com.tjhx.globals.Constants;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.affair.MsgInfoManager;
 import com.tjhx.service.member.UserManager;
@@ -70,7 +72,13 @@ public class MemberController extends BaseController {
 			if (user.getFirstLoginFlg()) {// 第一次登录,修改默认密码
 				return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/member/initModPwd";
 			} else {
-				return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/member/myspace";
+				SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+				if (sysConfig.getFreightUserList().contains(loginName)) {
+					return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/freight/view";
+				} else {
+					return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/member/myspace";
+				}
+
 			}
 		} else {
 			addInfoMsg(model, "ERR_MSG_LOGIN_001");

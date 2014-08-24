@@ -1,6 +1,7 @@
 package com.tjhx.globals;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class SysConfig {
 	private boolean cashDailyModel = true;
@@ -12,6 +13,7 @@ public class SysConfig {
 	private String reqBillSupplierInputPath;
 	private String productImgPath;
 	private String reportTmpPath;
+	private List<String> freightUserList;
 
 	/** 考勤计算-开始有效时间(当日时间) */
 	private String punchClockStart;
@@ -505,6 +507,22 @@ public class SysConfig {
 	 */
 	public void setUploadShareFilePath(String uploadShareFilePath) {
 		this.uploadShareFilePath = uploadShareFilePath;
+	}
+
+	/** 
+	 * 获取物流用户列表 
+	 * @return freightUserList 物流用户列表 
+	 */
+	public List<String> getFreightUserList() {
+		return freightUserList;
+	}
+
+	/** 
+	 * 设置物流用户列表 
+	 * @param freightUserList 物流用户列表 
+	 */
+	public void setFreightUserList(List<String> freightUserList) {
+		this.freightUserList = freightUserList;
 	}
 
 }
