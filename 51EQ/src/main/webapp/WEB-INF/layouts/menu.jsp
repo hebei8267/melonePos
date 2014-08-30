@@ -261,10 +261,16 @@
                     || _permIdList.contains('49') || _permIdList.contains('50')
                     || _permIdList.contains('51') || _permIdList.contains('52')
                     || _permIdList.contains('53') || _permIdList.contains('54')
-                    || _permIdList.contains('55')}">
+                    || _permIdList.contains('55') || _permIdList.contains('57')}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
                         <ul class="dropdown-menu">
+                       	 	<c:if test="${_permIdList.contains('57')}">
+	                            <li>
+	                                <a href="${sc_ctx}/borrowItem/list">物件借还</a>
+	                            </li>
+	                            <li class="divider"></li>
+                            </c:if>
                         	<c:if test="${_permIdList.contains('27')}">
 	                            <li>
 	                                <a href="${sc_ctx}/invoiceApply">发票申请</a>

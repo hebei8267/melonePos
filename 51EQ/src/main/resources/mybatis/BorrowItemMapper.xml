@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.BorrowItemMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_BorrowItem" type="com.tjhx.entity.affair.BorrowItem">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="desc_txt" property="descTxt" jdbcType="VARCHAR"/>
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+        <result column="item_no" property="itemNo" jdbcType="VARCHAR"/>
+        <result column="item_type" property="itemType" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	uuid ,
+    	create_date ,
+    	create_user_id ,
+    	update_date ,
+    	update_user_id ,
+    	version ,
+    	desc_txt ,
+    	item_name ,
+    	item_no ,
+    	item_type ,
+    	opt_date ,
+    	org_id ,
+    	status 
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<if test="itemName != null and itemName !='' ">
+  			AND item_name LIKE #{itemName}
+  			</if>
+  			<if test="itemType != null and itemType !='' ">
+  			AND item_type = #{itemType}
+  			</if>
+  			<if test="orgId != null and orgId !='' ">
+  			AND org_id = #{orgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_borrow_item信息(根据参数) -->
+	<select id="getBorrowItemList" parameterType="com.tjhx.entity.affair.BorrowItem" resultMap="Result_Map_BorrowItem">
+		select
+		<include refid="Base_Column_List" />
+		from t_borrow_item
+		<include refid="Where_Clause" />
+	</select>
+</mapper>
