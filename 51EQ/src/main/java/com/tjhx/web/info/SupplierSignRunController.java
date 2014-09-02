@@ -252,7 +252,8 @@ public class SupplierSignRunController extends BaseController {
 		}
 		supplierSignRunManager.saveRunInfo(run);
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/init";
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/editInit/" + run.getSupplierBwId() + "/"
+				+ run.getOptDateY();
 	}
 
 }
