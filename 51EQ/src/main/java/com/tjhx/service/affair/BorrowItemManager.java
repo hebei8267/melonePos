@@ -55,6 +55,16 @@ public class BorrowItemManager {
 	}
 
 	/**
+	 * 根据编号取得借还物件信息
+	 * 
+	 * @param itemNo 物件编号
+	 * @return 借还物件信息
+	 */
+	public BorrowItem findByItemNo(String itemNo) {
+		return borrowItemJpaDao.findByItemNo(itemNo);
+	}
+
+	/**
 	 * 删除借还物件信息
 	 * 
 	 * @param uuid 物件编号
@@ -72,7 +82,7 @@ public class BorrowItemManager {
 	@Transactional(readOnly = false)
 	public void addNewBorrowItem(BorrowItem borrowItem) {
 
-		BorrowItem _dbBorrowItem = borrowItemJpaDao.findByItemNo(borrowItem.getItemNo());
+		BorrowItem _dbBorrowItem = findByItemNo(borrowItem.getItemNo());
 		// 该物件已存在!
 		if (null != _dbBorrowItem) {
 			throw new ServiceException("ERR_MSG_BORROW_ITEM_001");
@@ -108,6 +118,27 @@ public class BorrowItemManager {
 		_dbBorrowItem.setOptDate(borrowItem.getOptDate());
 		// 备注
 		_dbBorrowItem.setDescTxt(borrowItem.getDescTxt());
+
+		borrowItemJpaDao.save(_dbBorrowItem);
+	}
+
+	/**
+	 * 更新物件状态信息
+	 * 
+	 * @param borrowItem 物件信息
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	public void updateBorrowItemStatus(BorrowItem borrowItem) {
+		BorrowItem _dbBorrowItem = borrowItemJpaDao.findByItemNo(borrowItem.getItemNo());
+
+		if (null == _dbBorrowItem) {
+			// 物件不存在!
+			throw new ServiceException("ERR_MSG_BORROW_ITEM_002");
+		}
+
+		// 置物件状态1-在库0-借出
+		_dbBorrowItem.setStatus(borrowItem.getStatus());
 
 		borrowItemJpaDao.save(_dbBorrowItem);
 	}
