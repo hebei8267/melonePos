@@ -154,7 +154,7 @@
                                     <th class="center">
                                         物件状态
                                     </th>
-                                    <th	width="55">
+                                    <th	width="125">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -178,7 +178,7 @@
                             		公章
                             		</c:if>
                             		<c:if test="${borrowItem.itemType == '04'}" >
-                            		押金收
+                            		押金收据
                             		</c:if>
                             		<c:if test="${borrowItem.itemType == '99'}" >
                             		其他
@@ -203,8 +203,9 @@
                             		借出
                             		</c:if>
 									</td>
-									<td>
+									<td class="center">
 										<a href="${sc_ctx}/borrowItem/edit/${borrowItem.uuid}" class="btn btn-warning"/>修改</a>
+										<a href="${sc_ctx}/borrowItemRun/list/${borrowItem.itemNo}" class="btn" target="_blank"/>借还</a>
 									</td>
                             	</tr>
                             	</c:forEach>
