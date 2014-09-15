@@ -50,7 +50,7 @@ public class SalesDayTotalItemManager {
 
 			for (Organization org : _orgList) {
 				DailySaleTotalItem _param = new DailySaleTotalItem();
-				_param.setOptDate(optDate);
+				_param.setOptDate(DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
 				_param.setBranchNo(org.getBwBranchNo());
 
 				List<DailySaleTotalItem> _dailySaleTotalList = dailySaleTotalItemMyBatisDao.getDailySaleTotalList(_param);

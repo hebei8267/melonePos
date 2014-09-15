@@ -15,7 +15,7 @@
 				<ref bean="bwSaleAmtJobCronTrigger" />
 				<ref bean="orgStoreJobCronTrigger" />
 				<ref bean="goodsJobCronTrigger" />
-				<!-- <ref bean="orgSalesTotalItemJobCronTrigger" /> -->
+				<ref bean="orgSalesTotalItemJobCronTrigger" />
 				<ref bean="orgSalesTotalSupJobCronTrigger" />
 				<ref bean="orgSalesTotalGoodsJobCronTrigger" />
 			</list>
