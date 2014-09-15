@@ -66,8 +66,8 @@
     	store.store_type ,
     	store.supplier_bw_id ,
     	store.supplier_h_id ,
-    	supplier.name AS supplierName,
-    	org.org_name AS orgName
+    	supplier.name AS supplier_name,
+    	org.org_name AS org_name
 	]]>
   	</sql>
   	

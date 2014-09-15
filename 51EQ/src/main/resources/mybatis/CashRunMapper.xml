@@ -80,7 +80,7 @@
     	cash.sale_amt ,
     	cash.sale_cash_amt ,
     	cash.report_amt ,
-    	org.org_name AS orgName
+    	org.org_name AS org_name
 	]]>
   	</sql>
   	
@@ -109,8 +109,6 @@
 	<!-- 查询条件 -->
   	<sql id="Where_Clause_Report" >
   		<where>
-  			user.uuid = cash.create_user_id
-    		AND cash.org_id = org.org_id
   			<![CDATA[ AND cash.opt_date >= #{optDateStart} AND cash.opt_date  <= #{optDateEnd} ]]>
   			<if test="orgId != null and orgId !='' ">
   			AND cash.org_id = #{orgId}
@@ -147,11 +145,10 @@
 	    	cash.coupon_value ,
     		cash.coupon_cash_value ,
     		user.name AS user_name,
-    		org.org_name AS orgName
+    		org.org_name AS org_name
 		FROM
-    		t_cash_run cash ,
-    		t_user user ,
-    		t_organization org
+			t_cash_run cash LEFT JOIN t_organization org ON cash.org_id = org.org_id
+							LEFT JOIN t_user USER ON user.uuid = cash.create_user_id
 		<include refid="Where_Clause_Report" />
 		ORDER BY
     		cash.org_id ,

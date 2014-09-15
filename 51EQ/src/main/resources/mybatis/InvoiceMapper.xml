@@ -50,7 +50,7 @@
     	inv.org_id ,
     	inv.service_date_show ,
     	inv.title ,
-    	org.org_name AS orgName
+    	org.org_name AS org_name
 	]]>
   	</sql>
   	

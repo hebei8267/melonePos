@@ -60,7 +60,7 @@
     	cash.report_amt ,
     	cash.coupon_value ,
     	cash.coupon_cash_value ,
-    	org.org_name AS orgName
+    	org.org_name AS org_name
 	]]>
   	</sql>
   	
@@ -138,7 +138,7 @@
 	    	cash.retained_amt ,
 	    	cash.sale_amt ,
 	    	cash.report_amt ,
-	    	org.org_name AS orgName
+	    	org.org_name AS org_name
 		from 
 			t_organization org left join t_cash_daily cash on org.org_id = cash.org_id
 			and cash.opt_date_show = #{optDateShow}

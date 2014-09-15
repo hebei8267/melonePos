@@ -28,10 +28,8 @@
 	</resultMap>
 	
 	
-	<!-- 各店每日销售合计（按大类别）信息 -->
-	<select id="getDailySaleTotalList" parameterType="com.tjhx.entity.bw.DailySaleTotalItem" resultMap="Result_Map_DailySaleTotal">
-	<![CDATA[
-		SELECT 
+	<!--原有百威按类型抓取 
+	SELECT 
 			a.branch_no,
 	       	left(b.item_clsno, convert(int, '2')) as item_clsno,
 	       	c.item_clsname,
@@ -57,6 +55,37 @@
   			left(b.item_clsno, convert(int, '2')), 
   			c.item_clsname
  		ORDER by 2
+	 -->
+	<!-- 各店每日销售合计（按大类别）信息 -->
+	<select id="getDailySaleTotalList" parameterType="com.tjhx.entity.bw.DailySaleTotalItem" resultMap="Result_Map_DailySaleTotal">
+	<![CDATA[
+ 		SELECT
+    		a.branch_no                          AS branch_no,
+    		LEFT(b.item_clsno,CONVERT(INT,'2'))  AS item_clsno,
+    		c.item_clsname,
+    		SUM(a.sale_qty)                      AS sale_qty,
+    		SUM(a.sale_amt)                      AS sale_amt,
+    		SUM(a.ret_qty)                       AS ret_qty,
+    		SUM(a.ret_amt)                       AS ret_amt,
+    		SUM(a.give_qty)                      AS give_qty,
+    		SUM(a.sale_qty+a.ret_qty+a.give_qty) AS sale_rqty,
+    		SUM(a.sale_amt+a.ret_amt)            AS sale_ramt
+		FROM
+    		pos_t_daysum_item a ,
+    		view_item_info b,
+    		view_item_clsno_info c
+		WHERE
+    		a.item_no = b.item_no
+		AND a.sale_date = #{optDate}
+		AND LEFT(b.item_clsno,CONVERT(INT,'2')) = c.item_clsno
+		AND (LEN(b.item_clsno) >= CONVERT(INT,'2') OR b.item_clsno='00')
+		AND (a.branch_no IN(#{branchNo}))
+		GROUP BY
+    		a.branch_no,
+    		LEFT(b.item_clsno,CONVERT(INT,'2')),
+    		c.item_clsname
+		ORDER BY
+    		2
 	]]>
 	</select>
 </mapper>
