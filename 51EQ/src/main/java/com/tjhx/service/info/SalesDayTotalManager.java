@@ -164,8 +164,9 @@ public class SalesDayTotalManager {
 	 * 
 	 * @param year
 	 * @param month
+	 * @throws ParseException
 	 */
-	private void recalSalesDayTotalInfo(String year, String month) {
+	private void recalSalesDayTotalInfo(String year, String month) throws ParseException {
 		List<Organization> _orgList = organizationManager.getAllOrganization();
 
 		for (Organization org : _orgList) {
@@ -186,9 +187,8 @@ public class SalesDayTotalManager {
 				// 预计本月销售
 				_salesDayTotal.setExpMonthPosAmt(_posAmtByNow.divide(new BigDecimal(_salesDayTotal.getNowDays()), 2,
 						BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(_salesDayTotal.getMonthDays())));
-				// 去年同期销售
-				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(), String.valueOf(Integer.parseInt(year) - 1),
-						month));
+				// 去年同期/上月/认为指定的销售额
+				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(), year, month));
 				// 销售增长额(去年同期销售)=预计本月销售-去年同期销售
 				_salesDayTotal.setPosAmtIncrease(_salesDayTotal.getExpMonthPosAmt().subtract(
 						_salesDayTotal.getPreYearMonthPosAmt()));
@@ -233,34 +233,62 @@ public class SalesDayTotalManager {
 	 * 取得指定机构/年月销售额合计
 	 * 
 	 * @return
+	 * @throws ParseException
 	 */
-	private BigDecimal getOrgYMPosAmt(String orgId, String year, String month) {
-		BigDecimal _res = _orgYMPosAmt.get(orgId + year + month);
-		if (null == _res) {
+	private BigDecimal getOrgYMPosAmt(String orgId, String year, String month) throws ParseException {
+		// ========================================
+		// 取得去年同期销售
+		// ========================================
+		String _year = String.valueOf(Integer.parseInt(year) - 1);
+
+		BigDecimal _res1 = _orgYMPosAmt.get(orgId + _year + month);
+		if (null == _res1) {
 			SalesMonthTotalItem param = new SalesMonthTotalItem();
-			param.setOptDateYM(year + month);
+			param.setOptDateYM(_year + month);
 			param.setOrgId(orgId);
 
 			// 取得指定门店/月份合计销售信息
 			SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
 			if (null != _salesTotal) {
-				_res = _salesTotal.getSaleRamt();
-				_orgYMPosAmt.put(orgId + year + month, _res);
+				_res1 = _salesTotal.getSaleRamt();
+				_orgYMPosAmt.put(orgId + _year + month, _res1);
+
+				// FIXME 机构/年月销售额合计(人为设定销售目标)
+				if (Constants.ORG_ID_02.equals(orgId)) {
+					_res1 = _res1.multiply(new BigDecimal(1.6));
+				}
+
+				return _res1;
 			}
 		}
-		// FIXME 机构/年月销售额合计
-		if (null == _res) {
-			if (Constants.ORG_ID_13.equals(orgId)) {
-				_res = new BigDecimal(600000);
-			} else {
-				_res = new BigDecimal(100000);
+		// ========================================
+		// 取得上月销售
+		// ========================================
+		String _month = DateUtils.getNextMonthFormatDate(year + month, -1, "yyyyMM");
+		BigDecimal _res2 = _orgYMPosAmt.get(orgId + year + _month);
+		if (null == _res2) {
+			SalesMonthTotalItem param = new SalesMonthTotalItem();
+			param.setOptDateYM(year + _month);
+			param.setOrgId(orgId);
+			// 取得指定门店/月份合计销售信息
+			SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
+			if (null != _salesTotal) {
+				_res2 = _salesTotal.getSaleRamt();
+				_orgYMPosAmt.put(orgId + year + _month, _res2);
+
+				return _res2;
 			}
+		}
+
+		// ========================================
+		// FIXME 机构/年月销售额合计(人为设定销售目标)
+		// ========================================
+		if (Constants.ORG_ID_13.equals(orgId)) {
+			return new BigDecimal(600000);
 		} else {
-			if (Constants.ORG_ID_02.equals(orgId)) {
-				_res = _res.multiply(new BigDecimal(1.6));
-			}
+			return new BigDecimal(80000);
 		}
-		return _res;
+
 	}
 
 	/**

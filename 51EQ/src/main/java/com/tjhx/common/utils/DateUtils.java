@@ -43,7 +43,7 @@ public class DateUtils {
 	public static String getCurrentYear() {
 		return getCurFormatDate("yyyy");
 	}
-	
+
 	/**
 	 * 取得当前时间
 	 * 
@@ -130,7 +130,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * 取得指定天数后的日期（以当前时间为准）
+	 * 取得指定月数后的日期（以当前时间为准）
 	 * 
 	 * @param addMonth
 	 * @param style
@@ -139,6 +139,23 @@ public class DateUtils {
 	public static synchronized String getNextMonthFormatDate(int addMonth, String style) {
 		Calendar cal = Calendar.getInstance();
 		Date _date = getCurrentDate();
+		cal.setTime(_date);
+		cal.add(Calendar.MONTH, addMonth);
+		simpleDateFormat.applyPattern(style);
+		return simpleDateFormat.format(cal.getTime());
+	}
+
+	/**
+	 * 取得指定月数后的日期（以当前时间为准）
+	 * 
+	 * @param addMonth
+	 * @param style
+	 * @return
+	 * @throws ParseException
+	 */
+	public static synchronized String getNextMonthFormatDate(String date, int addMonth, String style) throws ParseException {
+		Calendar cal = Calendar.getInstance();
+		Date _date = stringToDate(date, style);
 		cal.setTime(_date);
 		cal.add(Calendar.MONTH, addMonth);
 		simpleDateFormat.applyPattern(style);
@@ -361,6 +378,6 @@ public class DateUtils {
 	}
 
 	public static void main(String[] args) throws ParseException {
-
+		System.out.println(DateUtils.getNextMonthFormatDate("201401", -1, "yyyyMM"));
 	}
 }
