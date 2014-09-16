@@ -264,17 +264,17 @@ public class SalesDayTotalManager {
 		// ========================================
 		// 取得上月销售
 		// ========================================
-		String _month = DateUtils.getNextMonthFormatDate(year + month, -1, "yyyyMM");
-		BigDecimal _res2 = _orgYMPosAmt.get(orgId + year + _month);
+		String _yearmonth = DateUtils.getNextMonthFormatDate(year + month, -1, "yyyyMM");
+		BigDecimal _res2 = _orgYMPosAmt.get(orgId + _yearmonth);
 		if (null == _res2) {
 			SalesMonthTotalItem param = new SalesMonthTotalItem();
-			param.setOptDateYM(year + _month);
+			param.setOptDateYM(_yearmonth);
 			param.setOrgId(orgId);
 			// 取得指定门店/月份合计销售信息
 			SalesMonthTotalItem _salesTotal = salesMonthTotalItemMyBatisDao.getSalesTotal_ByOrgAndYearMonth(param);
 			if (null != _salesTotal) {
 				_res2 = _salesTotal.getSaleRamt();
-				_orgYMPosAmt.put(orgId + year + _month, _res2);
+				_orgYMPosAmt.put(orgId + _yearmonth, _res2);
 
 				return _res2;
 			}
