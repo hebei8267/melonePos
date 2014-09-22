@@ -231,6 +231,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return comments 意见或建议-收银台礼仪
 	 */
+	@Column(length = 1024)
 	public String getComments() {
 		return comments;
 	}
@@ -249,6 +250,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return comments2 意见或建议-卖场巡检
 	 */
+	@Column(length = 1024)
 	public String getComments2() {
 		return comments2;
 	}
@@ -267,6 +269,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return feedback 店铺反馈问题及跟进
 	 */
+	@Column(length = 1024)
 	public String getFeedback() {
 		return feedback;
 	}
@@ -285,6 +288,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return goodsIssue 货品问题的发现及跟进
 	 */
+	@Column(length = 1024)
 	public String getGoodsIssue() {
 		return goodsIssue;
 	}
@@ -303,6 +307,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return penaltyCase 现场违纪违规及处罚情况
 	 */
+	@Column(length = 1024)
 	public String getPenaltyCase() {
 		return penaltyCase;
 	}
@@ -321,6 +326,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return trainingStatistics 培训统计
 	 */
+	@Column(length = 1024)
 	public String getTrainingStatistics() {
 		return trainingStatistics;
 	}
@@ -339,6 +345,7 @@ public class RunInspect extends IdEntity {
 	 * 
 	 * @return inventoryStatistics 库存统计
 	 */
+	@Column(length = 1024)
 	public String getInventoryStatistics() {
 		return inventoryStatistics;
 	}

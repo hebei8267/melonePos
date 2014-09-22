@@ -194,25 +194,25 @@
                          required : true
                      },
                      comments : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
                      comments2 : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
 					 feedback : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
 					 goodsIssue : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
 					 penaltyCase : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
 					 trainingStatistics : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      },
 					 inventoryStatistics : {
-                    	 maxlength : 255
+                    	 maxlength : 1024
                      }
                  }
      		});
