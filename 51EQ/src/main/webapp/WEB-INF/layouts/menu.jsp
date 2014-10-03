@@ -425,6 +425,19 @@
                         </ul>
                     </li>
                     </c:if>
+                    
+                    
+                    <c:if test="${_permIdList.contains('58')}">
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">行政人事<b class="caret"></b></a>
+	                        <ul class="dropdown-menu">
+	                    	<c:if test="${_permIdList.contains('58')}">
+		                        <li>
+		                            <a href="${sc_ctx}/employee2/list">员工管理</a>
+		                        </li>
+		                    </c:if>
+		            	</ul>
+                    </c:if>
                 </ul>
             </div>
         </div>

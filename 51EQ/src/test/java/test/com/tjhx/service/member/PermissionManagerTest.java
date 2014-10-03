@@ -411,16 +411,25 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm56.setRole(role);
 //		perm56.setFunction(fun56);
 //		permissionJpaDao.save(perm56);
-		
+//		
+//		
+//		// ---------------------------------------------
+//		// 物件借还
+//		// ---------------------------------------------
+//		Permission perm57 = new Permission();
+//		Function fun57 = functionJpaDao.findOne(57);
+//		perm57.setRole(role);
+//		perm57.setFunction(fun57);
+//		permissionJpaDao.save(perm57);
 		
 		// ---------------------------------------------
-		// 物件借还
+		// 人事管理
 		// ---------------------------------------------
-		Permission perm57 = new Permission();
-		Function fun57 = functionJpaDao.findOne(57);
-		perm57.setRole(role);
-		perm57.setFunction(fun57);
-		permissionJpaDao.save(perm57);
+		Permission perm58 = new Permission();
+		Function fun58 = functionJpaDao.findOne(58);
+		perm58.setRole(role);
+		perm58.setFunction(fun58);
+		permissionJpaDao.save(perm58);
 	}
 
 	// 总部人员-会计
@@ -598,15 +607,15 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		permissionJpaDao.save(perm45);
 //
 //		
-		
-		// ---------------------------------------------
-		// 月销售目标管理
-		// ---------------------------------------------
-		Permission perm49 = new Permission();
-		Function fun49 = functionJpaDao.findOne(49);
-		perm49.setRole(role);
-		perm49.setFunction(fun49);
-		permissionJpaDao.save(perm49);
+//		
+//		// ---------------------------------------------
+//		// 月销售目标管理
+//		// ---------------------------------------------
+//		Permission perm49 = new Permission();
+//		Function fun49 = functionJpaDao.findOne(49);
+//		perm49.setRole(role);
+//		perm49.setFunction(fun49);
+//		permissionJpaDao.save(perm49);
 //		// ---------------------------------------------
 //		// 顾客/会员预付款（充值、消费）信息(总部)
 //		// ---------------------------------------------
@@ -624,16 +633,25 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm53.setRole(role);
 //		perm53.setFunction(fun53);
 //		permissionJpaDao.save(perm53);
-		
+//		
+//		
+//		// ---------------------------------------------
+//		// 物件借还
+//		// ---------------------------------------------
+//		Permission perm57 = new Permission();
+//		Function fun57 = functionJpaDao.findOne(57);
+//		perm57.setRole(role);
+//		perm57.setFunction(fun57);
+//		permissionJpaDao.save(perm57);
 		
 		// ---------------------------------------------
-		// 物件借还
+		// 人事管理
 		// ---------------------------------------------
-		Permission perm57 = new Permission();
-		Function fun57 = functionJpaDao.findOne(57);
-		perm57.setRole(role);
-		perm57.setFunction(fun57);
-		permissionJpaDao.save(perm57);
+		Permission perm58 = new Permission();
+		Function fun58 = functionJpaDao.findOne(58);
+		perm58.setRole(role);
+		perm58.setFunction(fun58);
+		permissionJpaDao.save(perm58);
 	}
 
 	// 总部人员-普通
@@ -887,8 +905,6 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm55.setRole(role);
 //		perm55.setFunction(fun55);
 //		permissionJpaDao.save(perm55);
-				
-
 	}
 
 	// Boss
@@ -1455,5 +1471,22 @@ public class PermissionManagerTest extends SpringTransactionalTestCase {
 //		perm56.setRole(role);
 //		perm56.setFunction(fun56);
 //		permissionJpaDao.save(perm56);
+	}
+	
+	// 人事
+	@Test
+	@Rollback(false)
+	public void saveNewPerm9() {
+
+		Role role = roleJpaDao.findOne(9);
+
+		// ---------------------------------------------
+		// 人事管理
+		// ---------------------------------------------
+		Permission perm58 = new Permission();
+		Function fun58 = functionJpaDao.findOne(58);
+		perm58.setRole(role);
+		perm58.setFunction(fun58);
+		permissionJpaDao.save(perm58);
 	}
 }

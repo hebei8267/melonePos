@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.member.Employee2MyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_Employee2" type="com.tjhx.entity.member.Employee2">
+		<result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="account_local" property="accountLocal" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="basic_info_desc_txt" property="basicInfoDescTxt" jdbcType="VARCHAR"/>
+        <result column="contract_exp_time" property="contractExpTime" jdbcType="VARCHAR"/>
+        <result column="education" property="education" jdbcType="VARCHAR"/>
+        <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR"/>
+        <result column="emergency_phone" property="emergencyPhone" jdbcType="VARCHAR"/>
+        <result column="employ_form" property="employForm" jdbcType="VARCHAR"/>
+        <result column="entry_time" property="entryTime" jdbcType="VARCHAR"/>
+        <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR"/>
+        <result column="marital_status" property="maritalStatus" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="org_trans_record" property="orgTransRecord" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="pos" property="pos" jdbcType="VARCHAR"/>
+        <result column="pos_adjust_record" property="posAdjustRecord" jdbcType="VARCHAR"/>
+        <result column="pos_time" property="posTime" jdbcType="VARCHAR"/>
+        <result column="professional" property="professional" jdbcType="VARCHAR"/>
+        <result column="renew_time" property="renewTime" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="start_work_time" property="startWorkTime" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+		uuid ,
+    	account_local ,
+    	address ,
+    	basic_info_desc_txt ,
+    	contract_exp_time ,
+    	education ,
+    	emergency_contact ,
+    	emergency_phone ,
+    	employ_form ,
+    	entry_time ,
+    	id_card_no ,
+    	marital_status ,
+    	name ,
+    	org_id ,
+    	org_trans_record ,
+    	phone ,
+    	pos ,
+    	pos_adjust_record ,
+    	pos_time ,
+    	professional ,
+    	renew_time ,
+    	sex ,
+    	start_work_time 
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<if test="idCardNo != null and idCardNo !='' ">
+  			AND id_card_no LIKE #{idCardNo}
+  			</if>
+  			<if test="name != null and name !='' ">
+  			AND name LIKE #{name}
+  			</if>
+  			<if test="phone != null and phone !='' ">
+  			AND phone LIKE #{phone}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_employee_2信息(根据参数) -->
+	<select id="getEmployee2List" parameterType="com.tjhx.entity.member.Employee2" resultMap="Result_Map_Employee2">
+		select
+		<include refid="Base_Column_List" />
+		from t_employee_2
+		<include refid="Where_Clause" />
+	</select>
+</mapper>

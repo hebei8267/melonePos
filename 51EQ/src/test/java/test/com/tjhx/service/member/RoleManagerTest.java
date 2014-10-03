@@ -79,5 +79,13 @@ public class RoleManagerTest extends SpringTransactionalTestCase {
 		role.setName("物流");
 		roleManager.addNewRole(role);
 	}
+	
+	@Test
+	@Rollback(false)
+	public void saveNewRole9() {
+		Role role = new Role();
+		role.setName("人事专员");
+		roleManager.addNewRole(role);
+	}
 
 }

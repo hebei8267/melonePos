@@ -32,6 +32,11 @@ jQuery.validator.addMethod("length7", function(value, element) {
     var length = value.length;
     return (length == 7);
 }, "请输入长度为 7 的字符串");
+//固定长度效验验证
+jQuery.validator.addMethod("length18", function(value, element) {
+    var length = value.length;
+    return (length == 18);
+}, "请输入长度为 18 的字符串");
 
 // 列表删除,必选
 jQuery.validator.addMethod("requiredSelect", function(value, element, param) {
