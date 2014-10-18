@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <c:set var="sc_ctx">${ctx}/sc</c:set>
 <c:set var="pop_sc_ctx">${ctx}/popsc</c:set>
@@ -152,25 +153,31 @@
                                         <input type="checkbox" name="uuid" value="${employee.uuid}" />
                                     </td>
                                     <td class="center">
-                                        ${employee.orgId}
+                                    	<c:if test="${fn:length(employee.orgId) > 4}">
+			             					${fn:substring(employee.orgId,3,6)}
+			             				</c:if>
+			             				<c:if test="${fn:length(employee.orgId) < 4}">
+			             					总部
+			             				</c:if>
                                     </td>
-                                    <td>
+                                    <td class="center">
                                         ${employee.name}
                                     </td>
-                                    <td>
+                                    <td class="center">
                                         ${employee.phone}
                                     </td>
-                                    <td>
+                                    <td class="center">
                                         ${employee.address}
                                     </td>
-                                    <td>
+                                    <td class="center">
                                        	${employee.entryTime}
                                     </td>
-                                    <td>
+                                    <td class="center">
                                         ${employee.pos}
                                     </td>
-                                    <td>
-                                        ${employee.employForm}
+                                    <td class="center">
+                                    	<c:if test="${1 == employee.employForm}">正式</c:if>
+                						<c:if test="${2 == employee.employForm}">兼职</c:if>
                                     </td>
                                     <td>
                                    		<a href="${sc_ctx}/employee2/edit/${employee.uuid}" class="btn btn-warning"/>修改</a>

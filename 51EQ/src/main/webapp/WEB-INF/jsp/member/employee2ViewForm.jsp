@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="sc_ctx">${ctx}/sc</c:set>
 <c:set var="pop_sc_ctx">${ctx}/popsc</c:set>
@@ -97,7 +98,14 @@
                 		<tr>
                 			<td rowspan="6" class="center"><h4>入职信息</h4></td>
                 			<td class="right">所属机构 :</td>
-                			<td>${employee2.orgId}</td>
+                			<td>
+							<c:if test="${fn:length(employee2.orgId) > 4}">
+             					${fn:substring(employee2.orgId,3,6)}
+             				</c:if>
+             				<c:if test="${fn:length(employee2.orgId) < 4}">
+             					总部
+             				</c:if>
+							</td>
                 			<td class="right">担任职务 :</td>
                 			<td colspan="2">${employee2.pos}</td>
                 		</tr>
