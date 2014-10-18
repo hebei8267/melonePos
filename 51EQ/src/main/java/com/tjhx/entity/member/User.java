@@ -15,7 +15,7 @@ import com.tjhx.entity.IdEntity;
 import com.tjhx.entity.struct.Organization;
 
 /**
- * 用户
+ * 系统用户
  */
 @Entity
 @Table(name = "T_USER")

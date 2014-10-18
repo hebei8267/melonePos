@@ -6,6 +6,9 @@ package com.tjhx.entity.member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjhx.entity.IdEntity;
 
@@ -60,6 +63,10 @@ public class Employee2 extends IdEntity {
 	private String orgTransRecord;
 	/** 职位调整记录 */
 	private String posAdjustRecord;
+	/** 照片地址 */
+	private String photoUrl;
+	/** 照片文件 */
+	private MultipartFile imgFile;
 
 	/**
 	 * 获取员工姓名
@@ -479,4 +486,41 @@ public class Employee2 extends IdEntity {
 		this.posAdjustRecord = posAdjustRecord;
 	}
 
+	/**
+	 * 获取照片地址
+	 * 
+	 * @return photoUrl 照片地址
+	 */
+	@Column(length = 32)
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	/**
+	 * 设置照片地址
+	 * 
+	 * @param photoUrl 照片地址
+	 */
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
+
+	/**
+	 * 获取照片文件
+	 * 
+	 * @return imgFile 照片文件
+	 */
+	@Transient
+	public MultipartFile getImgFile() {
+		return imgFile;
+	}
+
+	/**
+	 * 设置共享文件
+	 * 
+	 * @param imgFile 照片文件
+	 */
+	public void setImgFile(MultipartFile imgFile) {
+		this.imgFile = imgFile;
+	}
 }

@@ -98,6 +98,15 @@
 	</servlet-mapping>
 
 
+	<servlet>
+		<servlet-name>ImgServlet</servlet-name>
+		<servlet-class>org.springside.modules.web.ImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ImgServlet</servlet-name>
+		<url-pattern>/imgservlet/*</url-pattern>
+	</servlet-mapping>
+	
 	<!-- session 超时时间(单位：分钟),使用MemcachedSessionFilter时无效 -->
 	<session-config>
 		<session-timeout>30</session-timeout>

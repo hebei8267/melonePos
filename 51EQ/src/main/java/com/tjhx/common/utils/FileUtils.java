@@ -45,7 +45,9 @@ public class FileUtils {
 		if (0 == file.getSize() || null == file.getOriginalFilename()) {
 			return;
 		}
-
+		
+		deleteFile(filePath + fileStoreName);
+		
 		File _file = new File(filePath + fileStoreName);
 		file.transferTo(_file);
 	}

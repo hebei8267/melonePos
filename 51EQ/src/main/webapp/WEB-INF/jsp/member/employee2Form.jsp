@@ -119,7 +119,28 @@
 					$("#inputForm").attr("action", "${sc_ctx}/employee2/save");
 					$("#inputForm").submit();
 				});
+				
+				$("#photoFile").change(function(){
+					var objUrl = getObjectURL(this.files[0]);
+					if (objUrl) {
+						$("#photoImg").attr("src", objUrl) ;
+					}
+				});
 			});
+		</script>
+		<script>
+		//建立一個可存取到該file的url
+		function getObjectURL(file) {
+			var url = null ; 
+			if (window.createObjectURL!=undefined) { // basic
+				url = window.createObjectURL(file) ;
+			} else if (window.URL!=undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file) ;
+			} else if (window.webkitURL!=undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file) ;
+			}
+			return url ;
+		}
 		</script>
 	</head>
 	<body>
@@ -141,7 +162,7 @@
                 </div>
                 
                 <div class="span12">
-                    <form:form method="POST" id="inputForm"	modelAttribute="employee2">
+                    <form:form method="POST" id="inputForm"	modelAttribute="employee2" enctype="multipart/form-data">
                         <form:hidden path="uuid"/>
                         <h4>基本信息</h4>
                         <table class="table table-bordered mytable">
@@ -153,7 +174,7 @@
 	                                </div>
                         		</td>
                         		<td width="130" class="right">性别 :</td>
-                        		<td width="200">
+                        		<td width="240">
                         			<div class="controls">
                         				<form:select path="sex">
                         					<option value=""></option>
@@ -161,6 +182,10 @@
 			                                <option value="2" <c:if test="${2 == employee2.sex}">selected</c:if>>女</option>
                         				</form:select>
 	                                </div>
+                        		</td>
+                        		<td rowspan="6" class="center">
+                        			<img src="${ctx}/imgservlet?FILE_PATH=${employee2.photoUrl}" id="photoImg" height="600" width="220"/>
+                        			<input type="file" name="photoFile" id="photoFile" />
                         		</td>
                         	</tr>
                         	<tr>
@@ -245,7 +270,7 @@
                         	</tr>
                         	<tr>
                         		<td class="right">备注 :</td>
-                        		<td colspan=3>
+                        		<td colspan=4>
 	                        		<div class="controls">
 	                                    <form:textarea	path="basicInfoDescTxt" class="input-xlarge" rows="6"/>
 	                                </div>

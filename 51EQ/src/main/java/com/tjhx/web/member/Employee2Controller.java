@@ -1,5 +1,6 @@
 package com.tjhx.web.member;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.member.Employee2;
@@ -76,7 +78,12 @@ public class Employee2Controller extends BaseController {
 
 		return "member/employee2List";
 	}
-
+	@RequestMapping(value = "view/{id}")
+	public String viewEmployee2_Action(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
+		editEmployee2_Action(id, model, request);
+		
+		return "member/employee2ViewForm";
+	}
 	/**
 	 * 编辑Employee2信息
 	 * 
@@ -107,7 +114,7 @@ public class Employee2Controller extends BaseController {
 			if (StringUtils.isNotBlank(employee2.getRenewTime())) {
 				employee2.setRenewTime(DateUtils.transDateFormat(employee2.getRenewTime(), "yyyyMMdd", "yyyy-MM-dd"));
 			}
-			
+
 			model.addAttribute("employee2", employee2);
 			return "member/employee2Form";
 		}
@@ -156,10 +163,16 @@ public class Employee2Controller extends BaseController {
 	 * @return
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
+	 * @throws IOException
+	 * @throws IllegalStateException
 	 */
 	@RequestMapping(value = "save")
-	public String saveEmployee2_Action(@ModelAttribute("employee2") Employee2 employee2, Model model, HttpServletRequest request)
-			throws IllegalAccessException, InvocationTargetException {
+	public String saveEmployee2_Action(@ModelAttribute("employee2") Employee2 employee2,
+			@RequestParam("photoFile") MultipartFile photoFile, Model model, HttpServletRequest request)
+			throws IllegalAccessException, InvocationTargetException, IllegalStateException, IOException {
+
+		employee2.setImgFile(photoFile);
+
 		if (StringUtils.isNotBlank(employee2.getStartWorkTime())) {
 			employee2.setStartWorkTime(DateUtils.transDateFormat(employee2.getStartWorkTime(), "yyyy-MM", "yyyyMM"));
 		}

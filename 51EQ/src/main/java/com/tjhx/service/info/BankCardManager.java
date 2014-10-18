@@ -72,7 +72,7 @@ public class BankCardManager {
 	@SuppressWarnings("unchecked")
 	public List<BankCard> getAllBankCard() {
 		List<BankCard> _bankCardList = (List<BankCard>) bankCardJpaDao.findAll(new Sort(new Sort.Order(
-				Sort.Direction.ASC, "uuid")));
+				Sort.Direction.ASC, "orgId")));
 		return _bankCardList;
 	}
 

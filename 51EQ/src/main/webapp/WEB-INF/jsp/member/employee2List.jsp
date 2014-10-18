@@ -140,7 +140,7 @@
                                     <th class="center">
                                         聘用形式
                                     </th>
-                                    <th	width="55">
+                                    <th	width="117">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -174,6 +174,7 @@
                                     </td>
                                     <td>
                                    		<a href="${sc_ctx}/employee2/edit/${employee.uuid}" class="btn btn-warning"/>修改</a>
+                                   		<a href="${sc_ctx}/employee2/view/${employee.uuid}" target="_blank" class="btn"/>查看</a>
                                     </td>
                                 </tr>
                             	</c:forEach>

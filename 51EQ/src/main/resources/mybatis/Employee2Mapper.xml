@@ -27,6 +27,7 @@
         <result column="renew_time" property="renewTime" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="VARCHAR"/>
         <result column="start_work_time" property="startWorkTime" jdbcType="VARCHAR"/>
+        <result column="photo_url" property="photoUrl" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -54,6 +55,7 @@
     	professional ,
     	renew_time ,
     	sex ,
+    	photo_url ,
     	start_work_time 
 	]]>
   	</sql>

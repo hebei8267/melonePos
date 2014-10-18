@@ -1,5 +1,6 @@
 package com.tjhx.service.member;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -7,10 +8,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
+import com.tjhx.common.utils.FileUtils;
 import com.tjhx.dao.member.Employee2JpaDao;
 import com.tjhx.dao.member.Employee2MyBatisDao;
 import com.tjhx.entity.member.Employee2;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
 
 @Service
@@ -54,10 +58,37 @@ public class Employee2Manager {
 	 * 添加新Employee2信息
 	 * 
 	 * @param employee2 Employee2信息
+	 * @throws IOException
+	 * @throws IllegalStateException
 	 */
 	@Transactional(readOnly = false)
-	public void addNewEmployee2(Employee2 employee2) {
+	public void addNewEmployee2(Employee2 employee2) throws IllegalStateException, IOException {
+		if (null != employee2.getImgFile()) {
+			employee2.setPhotoUrl(employee2.getIdCardNo() + FileUtils.getSuffix(employee2.getImgFile().getOriginalFilename()));
+		}
 		employee2JpaDao.save(employee2);
+
+		photoStore(employee2);
+	}
+
+	/**
+	 * 保存照片
+	 * 
+	 * @param employee2
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	private void photoStore(Employee2 employee2) throws IllegalStateException, IOException {
+		if (employee2.getImgFile() == null) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+		String uploadFilePath = sysConfig.getUploadShareFilePath();
+
+		// 自动建立文件夹
+		FileUtils.mkdir(uploadFilePath);
+		// 保存文件至磁盘
+		FileUtils.saveUploadFile(employee2.getImgFile(), uploadFilePath, employee2.getPhotoUrl());
 	}
 
 	/**
@@ -66,9 +97,12 @@ public class Employee2Manager {
 	 * @param employee2 Employee2信息
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
+	 * @throws IOException
+	 * @throws IllegalStateException
 	 */
 	@Transactional(readOnly = false)
-	public void updateEmployee2(Employee2 employee2) throws IllegalAccessException, InvocationTargetException {
+	public void updateEmployee2(Employee2 employee2) throws IllegalAccessException, InvocationTargetException,
+			IllegalStateException, IOException {
 
 		Employee2 _dbEmployee2 = employee2JpaDao.findOne(employee2.getUuid());
 		if (null == _dbEmployee2) {
@@ -119,6 +153,11 @@ public class Employee2Manager {
 		// 职位调整记录
 		_dbEmployee2.setPosAdjustRecord(employee2.getPosAdjustRecord());
 
+		if (null != employee2.getImgFile()) {
+			employee2.setPhotoUrl(employee2.getIdCardNo() + FileUtils.getSuffix(employee2.getImgFile().getOriginalFilename()));
+		}
 		employee2JpaDao.save(_dbEmployee2);
+
+		photoStore(employee2);
 	}
 }
