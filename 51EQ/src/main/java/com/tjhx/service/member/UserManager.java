@@ -142,7 +142,7 @@ public class UserManager {
 	@Transactional(readOnly = false)
 	public void addNewUser(User user) {
 
-		User _dbUser = findByLoginName(user.getName());
+		User _dbUser = findByLoginName(user.getLoginName());
 		// 该用户已存在!
 		if (null != _dbUser) {
 			throw new ServiceException("ERR_MSG_USER_001");
