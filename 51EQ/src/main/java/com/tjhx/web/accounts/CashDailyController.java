@@ -109,14 +109,6 @@ public class CashDailyController extends BaseController {
 		if (null != _list && _list.size() > 0) {
 			CashRun cashRun1 = _list.get(0);
 
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(orgId, optDate, cashRun1.getJobType());
-			cashRun1.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
-
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(orgId, optDate, cashRun1.getJobType());
-			cashRun1.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
-
 			List<CashRunCoupon> _couponList = cashRunCouponManager.getCashRunCouponList(cashRun1.getOrgId(),
 					cashRun1.getOptDate(), cashRun1.getJobType());
 
@@ -137,14 +129,6 @@ public class CashDailyController extends BaseController {
 		}
 		if (null != _list && _list.size() > 1) {
 			CashRun cashRun2 = _list.get(1);
-
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(orgId, optDate, cashRun2.getJobType());
-			cashRun2.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
-
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(orgId, optDate, cashRun2.getJobType());
-			cashRun2.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
 
 			List<CashRunCoupon> _couponList = cashRunCouponManager.getCashRunCouponList(cashRun2.getOrgId(),
 					cashRun2.getOptDate(), cashRun2.getJobType());

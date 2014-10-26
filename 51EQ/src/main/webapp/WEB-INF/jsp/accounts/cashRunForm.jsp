@@ -59,37 +59,6 @@
                     }
                 });
                 
-                $('#jobType').on('change', function(ev) {
-                    if ("" == $('#optDateShow').val()) {
-                        return;
-                    }
-
-                    if ("" != $('#jobType').val()) {
-                        $.post("${sc_ctx}/cashRun/calPrePaymentsAmt", {
-                            "optDateShow" : $('#optDateShow').val(),
-                            "jobType" : $('#jobType').val()
-                        }, function(result) {
-                        	var _result = $.parseJSON(result);
-                            
-                            $('#_prePayCardAmt_label').html(_result.cardAmt + " 元");
-                            $('#prePayCardAmt').val(_result.cardAmt);
-                            
-                            $('#_prePayCashAmt_label').html(_result.cashAmt + " 元");
-                            $('#prePayCashAmt').val(_result.cashAmt);
-                            
-                            calRetainedAmt();
-                        });
-                    } else {
-                    	$('#_prePayCardAmt_label').html(0 + " 元");
-                   		$('#prePayCardAmt').val(0);
-                            
-                       	$('#_prePayCashAmt_label').html(0 + " 元");
-                       	$('#prePayCashAmt').val(0);
-                            
-                      	calRetainedAmt();
-                    }
-                });
-
                 $("#inputForm").validate({
                     rules : {
                         optDateShow : {
@@ -130,6 +99,22 @@
                             money : true
                         },
                         depositAmt : {
+                            required : true,
+                            money : true
+                        },
+                        prePayCashAmt : {
+                            required : true,
+                            money : true
+                        },
+                        prePayCardAmt : {
+                            required : true,
+                            money : true
+                        },
+                        goldCardAmt : {
+                            required : true,
+                            money : true
+                        },
+                        rebateAmt : {
                             required : true,
                             money : true
                         },
@@ -185,6 +170,20 @@
                     	saleAmt();
                 	});
                 });
+                
+                $("#prePayCashAmt").change(function() {
+                	carryingCashAmt();
+
+                    adjustAmt();
+                });
+                
+                $("#goldCardAmt").change(function() {
+                	saleAmt();
+                });
+                
+                $("#rebateAmt").change(function() {
+                	saleAmt();
+                });
             });
 
             // 账面应有现金 = 班前余额+外销收现+预付款(收现)
@@ -212,9 +211,14 @@
                 $("#retainedAmt").val(_result);
             }
 
-            // 当班销售金额 = 销售收现 + 刷卡金额(单据) + 代金卷销售
+            // 当班销售金额 = 销售收现 + 刷卡金额(单据) + 代金卷销售 + 金卡余额消费 + 金卡返利金额
             function saleAmt() {
                 var _result = numAdd($("#saleCashAmt").val(), $("#cardAmt").val());
+                
+                //金卡消费金额
+                var _result3 = 0;
+                _result3 = numAdd(_result3, $("#goldCardAmt").val());
+                _result3 = numAdd(_result3, $("#rebateAmt").val());
                 
                 // 代金卷销售合计
                 var _result2 = 0;
@@ -222,7 +226,7 @@
                 	_result2 = numAdd(_result2, $(this).val());
                 });
 
-                $("#_saleAmt").html(_result + " 元 + " + _result2 + " 元");
+                $("#_saleAmt").html(_result + " 元 + " + _result3 + " 元 + " + _result2 + " 元");
                 $("#saleAmt").val(_result);
             }
         </script>
@@ -284,15 +288,13 @@
                         		</td>
                         	</tr>
                         	<tr>
-                        		<td class="right">预付款(收现) :</td>
+                        		<td class="right">金卡充值(收现) :</td>
                         		<td>
-                        			<label class="left-control-label" id="_prePayCashAmt_label">${cashRun.prePayCashAmt} 元</label>
-                            		<form:hidden path="prePayCashAmt"/>
+                            		<form:input	path="prePayCashAmt" />&nbsp;
 								</td>
-                        		<td class="right">预付款(刷卡)</td>
+                        		<td class="right">金卡充值(刷卡)</td>
                         		<td>
-                        			<label class="left-control-label" id="_prePayCardAmt_label">${cashRun.prePayCardAmt} 元</label>
-                            		<form:hidden path="prePayCardAmt"/>
+                            		<form:input	path="prePayCardAmt" />&nbsp;
                         		</td>
                         	</tr>
                         	<tr>
@@ -355,7 +357,18 @@
                         	<tr>
                         		<td colspan="4"><br></td>
                         	</tr>
-                        	
+                        	<tr>
+                        		<td class="right">金卡余额消费 :</td>
+                        		<td><form:input	path="goldCardAmt" />&nbsp;元</td>
+                        		<td class="right">金卡返利金额 :</td>
+                        		<td><form:input	path="rebateAmt" />&nbsp;元</td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4" class="cash_daily"></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"><br></td>
+                        	</tr>
                         	<tr>
                         		<td class="right">代金卷1 :</td>
                         		<td>
@@ -478,7 +491,7 @@
                         		</td>
                         		<td class="right">当班销售金额 :</td>
                         		<td>
-                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.totalCouponValue} 元</label>
+                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.goldCardAmt + cashRun.rebateAmt} 元 + ${cashRun.totalCouponValue} 元</label>
 		                            <form:hidden path="saleAmt"/>
                         		</td>
                         	</tr>

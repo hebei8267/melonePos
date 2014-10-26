@@ -56,10 +56,10 @@
                                         昨日<br>余额
                                     </th>
                                     <th class="center">
-                                        预存<br>现金
+                                        金卡预存<br>现金
                                     </th>
                                     <th class="center">
-                                        预存<br>刷卡
+                                        金卡预存<br>刷卡
                                     </th>
                                     <th class="center">
                                         现金<br>盈亏
@@ -77,10 +77,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>(不含代金卷)
-                                    </th>
-                                    <th class="center">
-                                        代金卷<br>销售额
+                                        当日销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -120,11 +117,8 @@
                                         <td>
                                             ${noCashDaily.retainedAmt}
                                         </td>
-                                        <td>
-                                            ${noCashDaily.saleAmt}
-                                        </td>
-                                        <td>
-                                            ${noCashDaily.couponValue}
+                                        <td class="center">
+                                            ${noCashDaily.saleAmt} / ${noCashDaily.goldCardAmt} / ${noCashDaily.rebateAmt} / ${noCashDaily.couponValue}<br>(${noCashDaily.saleAmt + noCashDaily.goldCardAmt + noCashDaily.rebateAmt + noCashDaily.couponValue})
                                         </td>
                                         <td>
                                             ${noCashDaily.reportAmt}
@@ -188,10 +182,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>(不含代金卷)
-                                    </th>
-                                    <th class="center">
-                                        代金卷<br>销售额
+                                        当日销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -240,11 +231,8 @@
                                         <td>
                                             ${cashDaily.retainedAmt}
                                         </td>
-                                        <td>
-                                            ${cashDaily.saleAmt}
-                                        </td>
-                                        <td>
-                                            ${cashDaily.couponValue}
+                                        <td class="center">
+                                            ${cashDaily.saleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}<br>(${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue})
                                         </td>
                                         <td>
                                             ${cashDaily.reportAmt}

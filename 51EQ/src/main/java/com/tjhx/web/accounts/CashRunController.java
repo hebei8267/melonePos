@@ -3,7 +3,6 @@ package com.tjhx.web.accounts;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springside.modules.mapper.JsonMapper;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashRun;
@@ -65,48 +63,6 @@ public class CashRunController extends BaseController {
 
 		return initAmt == null ? "0" : initAmt.toString();
 	}
-
-	/**
-	 * 计算当班预付款合计
-	 * 
-	 * @param request
-	 * @param session
-	 * @return
-	 * @throws ServletRequestBindingException
-	 * @throws ParseException
-	 */
-	@ResponseBody
-	@RequestMapping(value = "calPrePaymentsAmt")
-	public String calPrePaymentsAmt_Action(HttpServletRequest request, HttpSession session)
-			throws ServletRequestBindingException, ParseException {
-		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
-		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
-		Integer jobType = ServletRequestUtils.getIntParameter(request, "jobType");
-
-		// 取得顾客/会员预付款（现金充值）合计信息
-		BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(getUserInfo(session).getOrganization().getId(),
-				optDate, jobType);
-		// 取得顾客/会员预付款（现金充值）合计信息
-		BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(getUserInfo(session).getOrganization().getId(),
-				optDate, jobType);
-
-		Map<String, String> resultMap = new HashMap<String, String>();
-		resultMap.put("cashAmt", cashAmt == null ? "0" : cashAmt.toString());
-		resultMap.put("cardAmt", cardAmt == null ? "0" : cardAmt.toString());
-
-		JsonMapper mapper = new JsonMapper();
-		return mapper.toJson(resultMap);
-	}
-
-	// @ResponseBody
-	// @RequestMapping(value = "getBankCardNoList")
-	// public String getBankCardNoList_Action(HttpServletRequest request) throws
-	// ServletRequestBindingException {
-	// String bankId = ServletRequestUtils.getStringParameter(request,
-	// "bankId");
-	// List<BankCard> _list = bankCardManager.getAllBankCard(bankId);
-	// return new JsonMapper().toJson(_list);
-	// }
 
 	/**
 	 * 初始化银行卡列表
@@ -208,6 +164,12 @@ public class CashRunController extends BaseController {
 		cashRun.setDepositAmt(null);
 		cashRun.setReportAmt(null);
 		cashRun.setCouponValue(null);
+
+		cashRun.setPrePayCashAmt(null);
+		cashRun.setPrePayCardAmt(null);
+
+		cashRun.setGoldCardAmt(null);
+		cashRun.setRebateAmt(null);
 		model.addAttribute("cashRun", cashRun);
 
 		initJobTypeList(model);

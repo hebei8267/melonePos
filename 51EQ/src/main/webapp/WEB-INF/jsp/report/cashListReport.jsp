@@ -116,10 +116,10 @@
                                         昨日<br>余额
                                     </th>
                                     <th class="center">
-                                        预存<br>现金
+                                        金卡预存<br>现金
                                     </th>
                                     <th class="center">
-                                        预存<br>刷卡
+                                        金卡预存<br>刷卡
                                     </th>
                                     <th class="center">
                                         现金<br>盈亏
@@ -137,10 +137,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>现金/刷卡
-                                    </th>
-                                    <th class="center">
-                                        代金卷<br>销售额
+                                        当日销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         代金卷<br>价值
@@ -150,9 +147,6 @@
                                     </th>
                                     <th class="center">
                                         百威<br>对账
-                                    </th>
-                                    <th class="center">
-                                        销售额<br>价值合计
                                     </th>
                                     <th class="center">
                                         报商场<br>销售额
@@ -203,24 +197,18 @@
                                         </td>
                                         <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.couponValue - cashDaily.bwSaleAmt }" />
                                         <td class="center">
-                                        	${cashDaily.saleAmt}
-                                        </td>
-                                        <td class="center">
-                                        	${cashDaily.couponValue}
+                                        	${cashDaily.saleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}
                                         </td>
                                         <td class="center">
                                         	${cashDaily.couponCashValue}
                                         </td>
                                         
                                         <td class="center" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
-                                        	${cashDaily.saleAmt + cashDaily.couponValue}
+                                        	${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue}
                                         </td>
                                         
                                         <td class="center">
                                         	${cashDaily.bwSaleAmt}
-                                        </td>
-                                        <td class="center">
-                                        	${cashDaily.saleAmt + cashDaily.couponCashValue}
                                         </td>
                                         <td class="center">
                                         	${cashDaily.reportAmt}
@@ -254,17 +242,13 @@
                                             ${totalCashDaily.depositAmt}
                                         </td>
                                         <td></td>
-                                        <td class="center">${totalCashDaily.saleAmt}</td>
-                                        <td class="center">${totalCashDaily.couponValue}</td>
+                                        <td class="center">${totalCashDaily.saleAmt} / ${totalCashDaily.goldCardAmt} / ${totalCashDaily.rebateAmt} / ${totalCashDaily.couponValue}</td>
                                        	<td class="center">${totalCashDaily.couponCashValue}</td>
                                         <td class="center">
-                                            ${totalCashDaily.saleAmt + totalCashDaily.couponValue}
+                                            ${totalCashDaily.saleAmt + totalCashDaily.goldCardAmt + totalCashDaily.rebateAmt + totalCashDaily.couponValue}
                                         </td>
                                         <td class="center">
                                         	${totalCashDaily.bwSaleAmt}
-                                        </td>
-                                        <td class="center">
-                                            ${totalCashDaily.saleAmt + totalCashDaily.couponCashValue}
                                         </td>
                                         <td class="center">
                                         	${totalCashDaily.reportAmt}

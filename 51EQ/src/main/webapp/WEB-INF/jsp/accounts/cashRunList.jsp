@@ -108,10 +108,10 @@
                                         班前<br>余额
                                     </th>
                                     <th class="center">
-                                        预存<br>现金
+                                        金卡预存<br>现金
                                     </th>
                                     <th class="center">
-                                        预存<br>刷卡
+                                        金卡预存<br>刷卡
                                     </th>
                                     <th class="center">
                                         实点<br>现金
@@ -132,10 +132,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当班销售额<br>(不含代金卷)
-                                    </th>
-                                    <th class="center">
-                                        代金卷<br>销售额
+                                        当班销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -195,11 +192,8 @@
                                         <td>
                                             ${cashRun.retainedAmt}
                                         </td>
-                                        <td>
-                                            ${cashRun.saleAmt}
-                                        </td>
-                                        <td>
-                                            ${cashRun.totalCouponValue}
+                                        <td class="center">
+                                            ${cashRun.saleAmt} / ${cashRun.goldCardAmt} / ${cashRun.rebateAmt} / ${cashRun.totalCouponValue} <br>(${cashRun.saleAmt + cashRun.goldCardAmt + cashRun.rebateAmt + cashRun.totalCouponValue})
                                         </td>
                                         <td>
                                             ${cashRun.reportAmt}
@@ -236,11 +230,8 @@
                                             ${totalCashRun.depositAmt}
                                         </td>
                                         <td></td>
-                                        <td>
-                                            ${totalCashRun.saleAmt}
-                                        </td>
-                                        <td>
-                                        	${totalCashRun.totalCouponValue}
+                                        <td class="center">
+                                            ${totalCashRun.saleAmt} / ${totalCashRun.goldCardAmt} / ${totalCashRun.rebateAmt} / ${totalCashRun.totalCouponValue}<br>(${totalCashRun.saleAmt + totalCashRun.goldCardAmt + totalCashRun.rebateAmt + totalCashRun.totalCouponValue})
                                         </td>
                                         <td colspan="2">
                                             ${totalCashRun.reportAmt}

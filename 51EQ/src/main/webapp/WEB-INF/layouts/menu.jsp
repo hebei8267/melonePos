@@ -382,21 +382,6 @@
 	                            </li>
 		                    </c:if>
 		                    
-		                    <%//门店-顾客/会员预付款（充值、消费）信息 %>
-		                    <c:if test="${_permIdList.contains('51')}">
-		                    	<li class="divider"></li>
-	                            <li>
-	                                <a href="${sc_ctx}/prePayments/list">会员预付款信息</a>
-	                            </li>
-                            </c:if>
-                            
-                            <%//总部-顾客/会员预付款（充值、消费）信息 %>
-		                    <c:if test="${_permIdList.contains('52')}">
-		                    	<li class="divider"></li>
-	                            <li>
-	                                <a href="${sc_ctx}/prePayments/managerList">会员预付款信息</a>
-	                            </li>
-                            </c:if>
                             
                             <%//总部-共享文件管理 %>
 		                    <c:if test="${_permIdList.contains('53')}">

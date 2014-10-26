@@ -78,6 +78,15 @@ public class CashRun extends IdEntity {
 	private BigDecimal totalCouponValue = new BigDecimal("0");
 	/** 代金卷实际值 */
 	private BigDecimal totalCouponCashValue = new BigDecimal("0");
+
+	/** 金卡销售金额 */
+	private BigDecimal goldCardAmt = new BigDecimal("0");
+	/** 返利金额 */
+	private BigDecimal rebateAmt = new BigDecimal("0");
+	/** 预付款(收现) */
+	private BigDecimal prePayCashAmt = new BigDecimal("0");
+	/** 预付款(刷卡) */
+	private BigDecimal prePayCardAmt = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -87,10 +96,6 @@ public class CashRun extends IdEntity {
 	private String optDateStart;
 	/** 日期-结束时间 */
 	private String optDateEnd;
-	/** 预付款(收现) */
-	private BigDecimal prePayCashAmt = new BigDecimal("0");
-	/** 预付款(刷卡) */
-	private BigDecimal prePayCardAmt = new BigDecimal("0");
 
 	/**
 	 * 取得机构编号
@@ -692,7 +697,6 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @return prePayCashAmt 预付款(收现)
 	 */
-	@Transient
 	public BigDecimal getPrePayCashAmt() {
 		return prePayCashAmt;
 	}
@@ -711,7 +715,6 @@ public class CashRun extends IdEntity {
 	 * 
 	 * @return prePayCardAmt 预付款(刷卡)
 	 */
-	@Transient
 	public BigDecimal getPrePayCardAmt() {
 		return prePayCardAmt;
 	}
@@ -723,5 +726,41 @@ public class CashRun extends IdEntity {
 	 */
 	public void setPrePayCardAmt(BigDecimal prePayCardAmt) {
 		this.prePayCardAmt = prePayCardAmt;
+	}
+
+	/**
+	 * 获取金卡销售金额
+	 * 
+	 * @return goldCardAmt 金卡销售金额
+	 */
+	public BigDecimal getGoldCardAmt() {
+		return goldCardAmt;
+	}
+
+	/**
+	 * 设置金卡销售金额
+	 * 
+	 * @param goldCardAmt 金卡销售金额
+	 */
+	public void setGoldCardAmt(BigDecimal goldCardAmt) {
+		this.goldCardAmt = goldCardAmt;
+	}
+
+	/**
+	 * 获取返利金额
+	 * 
+	 * @return rebateAmt 返利金额
+	 */
+	public BigDecimal getRebateAmt() {
+		return rebateAmt;
+	}
+
+	/**
+	 * 设置返利金额
+	 * 
+	 * @param rebateAmt 返利金额
+	 */
+	public void setRebateAmt(BigDecimal rebateAmt) {
+		this.rebateAmt = rebateAmt;
 	}
 }

@@ -103,18 +103,6 @@ public class CashRunManager {
 		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(
 				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
 
-		for (CashRun cashRun : _list) {
-
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(cashRun.getOrgId(), cashRun.getOptDate(),
-					cashRun.getJobType());
-			// 取得顾客/会员预付款（现金充值）合计信息
-			BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(cashRun.getOrgId(), cashRun.getOptDate(),
-					cashRun.getJobType());
-
-			cashRun.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
-			cashRun.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
-		}
 		return _list;
 	}
 
@@ -127,14 +115,6 @@ public class CashRunManager {
 	@SuppressWarnings("unchecked")
 	public CashRun getCashRunByUuid(Integer uuid) {
 		CashRun _cashRun = cashRunJpaDao.findOne(uuid);
-
-		BigDecimal cashAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Cash(_cashRun.getOrgId(), _cashRun.getOptDate(),
-				_cashRun.getJobType());
-		_cashRun.setPrePayCashAmt(cashAmt == null ? new BigDecimal("0") : cashAmt);
-
-		BigDecimal cardAmt = prePaymentsManager.getOrgPrePaymentsInfo_By_Card(_cashRun.getOrgId(), _cashRun.getOptDate(),
-				_cashRun.getJobType());
-		_cashRun.setPrePayCardAmt(cardAmt == null ? new BigDecimal("0") : cardAmt);
 
 		// ====================================
 		List<CashRunCoupon> _list = (List<CashRunCoupon>) cashRunCouponJpaDao.getCashRunCouponList(_cashRun.getOrgId(),
@@ -345,6 +325,15 @@ public class CashRunManager {
 		_dbCashRun.setTotalCouponValue(totalCouponValue);
 		_dbCashRun.setTotalCouponCashValue(totalCouponCashValue);
 
+		// 预付款(收现)
+		_dbCashRun.setPrePayCashAmt(cashRun.getPrePayCashAmt());
+		// 预付款(刷卡)
+		_dbCashRun.setPrePayCardAmt(cashRun.getPrePayCardAmt());
+		// 金卡余额消费
+		_dbCashRun.setGoldCardAmt(cashRun.getGoldCardAmt());
+		// 金卡返利金额
+		_dbCashRun.setRebateAmt(cashRun.getRebateAmt());
+
 		cashRunJpaDao.save(_dbCashRun);
 	}
 
@@ -388,6 +377,11 @@ public class CashRunManager {
 			_cashRun.setPrePayCashAmt(_cashRun.getPrePayCashAmt().add(cashRun.getPrePayCashAmt()));
 			// 预付款(刷卡)
 			_cashRun.setPrePayCardAmt(_cashRun.getPrePayCardAmt().add(cashRun.getPrePayCardAmt()));
+
+			// 金卡余额消费
+			_cashRun.setGoldCardAmt(_cashRun.getGoldCardAmt().add(cashRun.getGoldCardAmt()));
+			// 金卡返利金额
+			_cashRun.setRebateAmt(_cashRun.getRebateAmt().add(cashRun.getRebateAmt()));
 		}
 		return _cashRun;
 	}

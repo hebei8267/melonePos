@@ -53,11 +53,11 @@
                                 <label class="left-control-label">${cashRun1.initAmt} 元</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">预付款(收现) :</label>
+                                <label class="control-label">金卡充值(收现) :</label>
                                 <label class="left-control-label">${cashRun1.prePayCashAmt} 元</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">预付款(刷卡) :</label>
+                                <label class="control-label">金卡充值(刷卡) :</label>
                                 <label class="left-control-label">${cashRun1.prePayCardAmt} 元</label>
                             </div>
                             <div class="control-group">
@@ -93,7 +93,14 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun1.cardCertNo}</label>
                             </div>
-                            
+                            <div class="control-group">
+                        		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡余额消费 :</label>
+                        		<label class="left-control-label">${cashRun1.goldCardAmt} 元</label>
+                        	</div>
+                        	<div class="control-group">
+                        		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡返利金额 :</label>
+                        		<label class="left-control-label">${cashRun1.rebateAmt} 元</label>
+                        	</div>
                             <c:set var="totalCouponValue1" value="0"/>
                             <c:forEach items="${cashRun1.couponNo}" var="_couponNo" varStatus="status">
                             <div class="control-group">
@@ -124,7 +131,7 @@
                             </div>
                             <div class="control-group">
                                 <label class="control-label">当班销售金额 :</label>
-                                <label class="left-control-label">${cashRun1.saleAmt} 元 + ${totalCouponValue1} 元</label>
+                                <label class="left-control-label">${cashRun1.saleAmt} 元 + ${cashRun1.goldCardAmt + cashRun1.rebateAmt} 元 + ${totalCouponValue1} 元</label>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>
@@ -165,11 +172,11 @@
                                 <label class="left-control-label">${cashRun2.initAmt} 元</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">预付款(收现) :</label>
+                                <label class="control-label">金卡充值(收现) :</label>
                                 <label class="left-control-label">${cashRun2.prePayCashAmt} 元</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">预付款(刷卡) :</label>
+                                <label class="control-label">金卡充值(刷卡) :</label>
                                 <label class="left-control-label">${cashRun2.prePayCardAmt} 元</label>
                             </div>
                             <div class="control-group">
@@ -205,6 +212,14 @@
                                 <label class="control-label">凭证号 :</label>
                                 <label class="left-control-label">${cashRun2.cardCertNo}</label>
                             </div>
+                            <div class="control-group">
+                        		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡余额消费 :</label>
+                        		<label class="left-control-label">${cashRun2.goldCardAmt} 元</label>
+                        	</div>
+                        	<div class="control-group">
+                        		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡返利金额 :</label>
+                        		<label class="left-control-label">${cashRun2.rebateAmt} 元</label>
+                        	</div>
                             <c:set var="totalCouponValue2" value="0"/>
                             <c:forEach items="${cashRun2.couponNo}" var="_couponNo" varStatus="status">
                             <div class="control-group">
@@ -235,7 +250,7 @@
                             </div>
                             <div class="control-group">
                                 <label class="control-label">当班销售金额 :</label>
-                                <label class="left-control-label">${cashRun2.saleAmt} 元 + ${totalCouponValue2} 元</label>
+                                <label class="left-control-label">${cashRun2.saleAmt} 元 + ${cashRun2.goldCardAmt + cashRun2.rebateAmt} 元 + ${totalCouponValue2} 元</label>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>
