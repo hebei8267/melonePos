@@ -270,7 +270,6 @@
                             </div>
                             <c:set var="totalCouponValue2" value="${totalCouponValue2 + cashRun2.couponValue[(status.index)]}"/>
                             </c:forEach>
-                            
                             <div class="control-group">
                                 <label class="control-label">存款金额 :</label>
                                 <label class="left-control-label">${cashRun2.depositAmt} 元</label>
