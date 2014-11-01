@@ -120,6 +120,8 @@
                         	</div>
                             <c:set var="totalCouponValue1" value="0"/>
                             <c:forEach items="${cashRun1.couponNo}" var="_couponNo" varStatus="status">
+                            
+                            <c:if test="${null != _couponNo}">
                             <div class="control-group">
                                 <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷${status.index+1} :</label>
                                 <label class="left-control-label">${_couponNo}</label>
@@ -128,6 +130,8 @@
                                 <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值${status.index+1} :</label>
                                 <label class="left-control-label">${cashRun1.couponValue[(status.index)]} 元</label>
                             </div>
+                            </c:if>
+                            
                             <c:set var="totalCouponValue1" value="${totalCouponValue1 + cashRun1.couponValue[(status.index)]}"/>
                             </c:forEach>
                             <div class="control-group">
@@ -260,6 +264,7 @@
                         	</div>
                             <c:set var="totalCouponValue2" value="0"/>
                             <c:forEach items="${cashRun2.couponNo}" var="_couponNo" varStatus="status">
+                            <c:if test="${null != _couponNo}">
                             <div class="control-group">
                                 <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷${status.index+1} :</label>
                                 <label class="left-control-label">${_couponNo}</label>
@@ -268,6 +273,7 @@
                                 <label class="control-label" style="color:#FF6633;font-weight:bold;">代金卷面值${status.index+1} :</label>
                                 <label class="left-control-label">${cashRun2.couponValue[(status.index)]} 元</label>
                             </div>
+                            </c:if>
                             <c:set var="totalCouponValue2" value="${totalCouponValue2 + cashRun2.couponValue[(status.index)]}"/>
                             </c:forEach>
                             <div class="control-group">
