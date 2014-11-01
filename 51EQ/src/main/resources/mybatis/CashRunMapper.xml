@@ -42,6 +42,11 @@
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         
         <result column="report_amt" property="reportAmt" jdbcType="DECIMAL"/>
+        
+        <result column="pre_pay_card_amt" property="prePayCardAmt" jdbcType="DECIMAL"/>
+		<result column="pre_pay_cash_amt" property="prePayCashAmt" jdbcType="DECIMAL"/>
+		<result column="gold_card_amt" property="goldCardAmt" jdbcType="DECIMAL"/>
+		<result column="rebate_amt" property="rebateAmt" jdbcType="DECIMAL"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -78,6 +83,10 @@
     	cash.sale_amt ,
     	cash.sale_cash_amt ,
     	cash.report_amt ,
+    	cash.pre_pay_card_amt ,
+	    cash.pre_pay_cash_amt ,
+	    cash.gold_card_amt ,
+	    cash.rebate_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>
@@ -142,6 +151,10 @@
 	    	cash.report_amt ,
 	    	cash.coupon_value ,
     		cash.coupon_cash_value ,
+    		cash.pre_pay_card_amt ,
+	    	cash.pre_pay_cash_amt ,
+	    	cash.gold_card_amt ,
+	    	cash.rebate_amt ,
     		user.name AS user_name,
     		org.org_name AS org_name
 		FROM

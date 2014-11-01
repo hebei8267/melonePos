@@ -58,6 +58,10 @@ public class SaleReport {
 	private BigDecimal prePayCashAmt = new BigDecimal("0");
 	/** 预付款(刷卡) */
 	private BigDecimal prePayCardAmt = new BigDecimal("0");
+	/** 金卡销售金额 */
+	private BigDecimal goldCardAmt = new BigDecimal("0");
+	/** 返利金额 */
+	private BigDecimal rebateAmt = new BigDecimal("0");
 
 	/**
 	 * 取得行号
@@ -491,6 +495,42 @@ public class SaleReport {
 		this.prePayCardAmt = prePayCardAmt;
 	}
 
+	/**
+	 * 获取金卡销售金额
+	 * 
+	 * @return goldCardAmt 金卡销售金额
+	 */
+	public BigDecimal getGoldCardAmt() {
+		return goldCardAmt;
+	}
+
+	/**
+	 * 设置金卡销售金额
+	 * 
+	 * @param goldCardAmt 金卡销售金额
+	 */
+	public void setGoldCardAmt(BigDecimal goldCardAmt) {
+		this.goldCardAmt = goldCardAmt;
+	}
+
+	/**
+	 * 获取返利金额
+	 * 
+	 * @return rebateAmt 返利金额
+	 */
+	public BigDecimal getRebateAmt() {
+		return rebateAmt;
+	}
+
+	/**
+	 * 设置返利金额
+	 * 
+	 * @param rebateAmt 返利金额
+	 */
+	public void setRebateAmt(BigDecimal rebateAmt) {
+		this.rebateAmt = rebateAmt;
+	}
+
 	public void addCashRunInfo_Cash(CashRun _cashRun) throws ParseException {
 		// 机构名称
 		this.orgName = _cashRun.getOrgName();
@@ -544,6 +584,9 @@ public class SaleReport {
 		this.prePayCashAmt = _cashRun.getPrePayCashAmt();
 		// 预付款(刷卡)
 		this.prePayCardAmt = _cashRun.getPrePayCardAmt();
+
+		this.rebateAmt = _cashRun.getRebateAmt();
+		this.goldCardAmt = _cashRun.getGoldCardAmt();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {

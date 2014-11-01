@@ -364,6 +364,12 @@ public class CashDailyManager {
 
 			_saleReport.setPrePayCashAmt(_saleReport.getPrePayCashAmt().add(saleReport.getPrePayCashAmt()));
 			_saleReport.setPrePayCardAmt(_saleReport.getPrePayCardAmt().add(saleReport.getPrePayCardAmt()));
+			
+	
+			// 金卡销售金额
+			_saleReport.setGoldCardAmt(_saleReport.getGoldCardAmt().add(saleReport.getGoldCardAmt()));
+			// 返利金额
+			_saleReport.setRebateAmt(_saleReport.getRebateAmt().add(saleReport.getRebateAmt()));
 		}
 		return _saleReport;
 	}

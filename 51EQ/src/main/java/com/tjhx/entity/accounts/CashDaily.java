@@ -64,9 +64,9 @@ public class CashDaily extends IdEntity {
 	private BigDecimal goldCardAmt = new BigDecimal("0");
 	/** 返利金额 */
 	private BigDecimal rebateAmt = new BigDecimal("0");
-	/** 预付款(收现) */
+	/** 金卡预付款(收现) */
 	private BigDecimal prePayCashAmt = new BigDecimal("0");
-	/** 预付款(刷卡) */
+	/** 金卡预付款(刷卡) */
 	private BigDecimal prePayCardAmt = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
