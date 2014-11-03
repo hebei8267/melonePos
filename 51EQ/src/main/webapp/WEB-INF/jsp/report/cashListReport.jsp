@@ -195,7 +195,7 @@
                                         <td class="center" <c:if test="${cashDaily.retainedAmt > DEFAULT_RETAINED_AMT}">style="background-color:#FFDEAD;color:#00000"</c:if>>
                                         	${cashDaily.retainedAmt}
                                         </td>
-                                        <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.couponValue - cashDaily.bwSaleAmt }" />
+                                        <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
                                         <td class="center">
                                         	${cashDaily.saleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}
                                         </td>
