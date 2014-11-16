@@ -26,7 +26,10 @@ public class ItemTypeCls {
 	 * @param itemClsno 种类编号
 	 */
 	public void setItemClsno(String itemClsno) {
-		this.itemClsno = itemClsno;
+		if (null != itemClsno) {
+			this.itemClsno = itemClsno.trim();
+		}
+
 	}
 
 	/**

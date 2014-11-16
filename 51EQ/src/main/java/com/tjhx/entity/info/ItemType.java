@@ -40,6 +40,9 @@ public class ItemType extends IdEntity {
 	 * @param itemNo 种类编号
 	 */
 	public void setItemNo(String itemNo) {
+		if (null != itemNo) {
+			this.itemNo = itemNo.trim();
+		}
 		this.itemNo = itemNo;
 	}
 

@@ -76,8 +76,7 @@
 					tags : itemTypeListJson
 				});
 			});
-			var itemTypeListJson = $ { itemTypeList
-			};
+			var itemTypeListJson = ${itemTypeList};
 			function initDateMode() {
 
 				var dateMode = $("input[name='dateMode']:checked").val();
@@ -184,15 +183,15 @@
 								<td class="center"> ${salesContrastVo.saleRamt2} </td>
 								<td class="center"> ${salesContrastVo.salePrice1} </td>
 								<td class="center"> ${salesContrastVo.salePrice2} </td>
-								<th class="center"> ${salesContrastVo.SalesContrast} </th>
+								<th class="center"> ${salesContrastVo.salesContrast} </th>
 							</tr>
 						</tbody>
 					</table>
 					
 				</div>
 			</div>
-			<c:forEach>
-			<c:forEach>
+			</c:forEach>
+			</c:forEach>
 		</div>
 
 		<div class="modal hide fade  __model37" id="__search_tip">

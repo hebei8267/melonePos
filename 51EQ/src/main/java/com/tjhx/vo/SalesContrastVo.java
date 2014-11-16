@@ -30,7 +30,7 @@ public class SalesContrastVo {
 	/** 实销均价2 */
 	private BigDecimal salePrice2;
 	/** 销售额增长/下降率 */
-	private BigDecimal SalesContrast;
+	private BigDecimal salesContrast;
 
 	/**
 	 * 获取机构名称
@@ -218,7 +218,7 @@ public class SalesContrastVo {
 	 * @return salesContrast 销售额增长/下降率
 	 */
 	public BigDecimal getSalesContrast() {
-		return SalesContrast;
+		return salesContrast;
 	}
 
 	/**
@@ -227,6 +227,6 @@ public class SalesContrastVo {
 	 * @param salesContrast 销售额增长/下降率
 	 */
 	public void setSalesContrast(BigDecimal salesContrast) {
-		SalesContrast = salesContrast;
+		this.salesContrast = salesContrast;
 	}
 }
