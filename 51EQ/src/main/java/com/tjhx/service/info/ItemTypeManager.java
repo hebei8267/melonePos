@@ -28,7 +28,9 @@ public class ItemTypeManager {
 	@Resource
 	private ItemTypeClsMyBatisDao itemTypeClsMyBatisDao;
 
-	/**取得商品种类信息
+	/**
+	 * 取得商品种类信息
+	 * 
 	 * @param itemNo 商品编号种类
 	 * @return
 	 */
@@ -99,11 +101,11 @@ public class ItemTypeManager {
 	private void addItemTypeInfo(ItemTypeCls itemTypeCls) {
 		ItemType _itemType = new ItemType();
 		// 种类编号
-		_itemType.setItemNo(itemTypeCls.getItemClsno());
+		_itemType.setItemNo(itemTypeCls.getItemClsno().trim());
 		// 种类名称
-		_itemType.setItemShortName(getItemShortName(itemTypeCls.getItemClsname()));
+		_itemType.setItemShortName(getItemShortName(itemTypeCls.getItemClsname().trim()));
 		// 种类名称
-		_itemType.setItemName(itemTypeCls.getItemClsname());
+		_itemType.setItemName(itemTypeCls.getItemClsname().trim());
 
 		itemTypeJpaDao.save(_itemType);
 	}
@@ -117,11 +119,11 @@ public class ItemTypeManager {
 	private void updateItemTypeInfo(ItemTypeCls itemTypeCls) {
 		ItemType _itemType = itemTypeJpaDao.findByItemNo(itemTypeCls.getItemClsno());
 		// 种类编号
-		_itemType.setItemNo(itemTypeCls.getItemClsno());
+		_itemType.setItemNo(itemTypeCls.getItemClsno().trim());
 		// 种类名称
-		_itemType.setItemShortName(getItemShortName(itemTypeCls.getItemClsname()));
+		_itemType.setItemShortName(getItemShortName(itemTypeCls.getItemClsname().trim()));
 		// 种类名称
-		_itemType.setItemName(itemTypeCls.getItemClsname());
+		_itemType.setItemName(itemTypeCls.getItemClsname().trim());
 
 		itemTypeJpaDao.save(_itemType);
 	}

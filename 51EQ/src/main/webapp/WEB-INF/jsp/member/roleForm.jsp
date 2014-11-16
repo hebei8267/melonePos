@@ -359,6 +359,14 @@
 					<h4>数据报表模块<br>
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
 						<tr>
+							<c:if test="${role.permIdList.contains('60')}">
+							<td><input type="checkbox" name="perm" value="60" checked>类别销售信息对比</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('60')}">
+							<td><input type="checkbox" name="perm" value="60">类别销售信息对比</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('22')}">
 							<td><input type="checkbox" name="perm" value="22" checked>类别销售信息一览(图形)</td>
 							</c:if>
