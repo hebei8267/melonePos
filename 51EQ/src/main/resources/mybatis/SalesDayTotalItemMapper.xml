@@ -142,7 +142,7 @@
 		SELECT
 		    it.org_id,
 		    og.org_name,
-		    tp.item_name,
+		    tp.item_short_name AS item_name,
 		    it.item_cls_no,
 		    SUM(sale_rqty) AS sale_rqty,
 		    SUM(sale_ramt) AS sale_ramt
@@ -153,7 +153,7 @@
 		LEFT JOIN
 		    t_item_type tp ON tp.item_no = it.item_cls_no
 		WHERE
-		    it.item_cls_no IN (#{itemType})
+		    it.item_cls_no IN (${itemType})
 		<![CDATA[	
 		AND opt_date >= #{optDateStart}
 		AND opt_date <= #{optDateEnd}

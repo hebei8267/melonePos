@@ -14,6 +14,13 @@
 		<link type="text/css" href="${ctx}/static/css/select2.css" rel="stylesheet">
 		<script src="${ctx}/static/js/select2.min.js"></script>
 		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
+		<style>
+		.font2 {
+			font-family : "Microsoft YaHei" ! important;
+			font-size : 16px;
+			font-weight :bold;
+		}
+		</style>
 		<script>
 			$(function() {
 				$("#listForm").validate({
@@ -157,40 +164,44 @@
 			</form>
 
 			<c:forEach items="${contrastList}" var="subContrastList">
-			<c:forEach items="${subContrastList}" var="salesContrastVo">
+			
 			<div class="row">
 				<div class="span12" style="margin-top: 10px;">
 					
 					<table class="table	table-striped table-bordered table-condensed mytable">
 						<thead>
 							<tr>
-								<th class="center"> 店号 </th>
-								<th class="center"> 销量-1 </th>
-								<th class="center"> 销量-2 </th>
-								<th class="center"> 销售额-1 </th>
-								<th class="center"> 销售额-2 </th>
-								<th class="center"> 均价-1 </th>
-								<th class="center"> 均价-2 </th>
-								<th class="center"> 销售额增长/下降率 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#ff6600,#ff6633);"> 类别 </th>
+								<th class="center"> 销量一 </th>
+								<th class="center"> 销量二 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额一 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额二 </th>
+								<th class="center"> 均价一 </th>
+								<th class="center"> 均价二 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach items="${subContrastList}" var="salesContrastVo">
 							<tr>
 								<td class="center"> ${salesContrastVo.orgName} </td>
-								<td class="center"> ${salesContrastVo.saleRqty1} </td>
-								<td class="center"> ${salesContrastVo.saleRqty2} </td>
+								<td class="center font2"> ${salesContrastVo.itemName} </td>
+								<td class="center font2"> ${salesContrastVo.saleRqty1} </td>
+								<td class="center font2"> ${salesContrastVo.saleRqty2} </td>
 								<td class="center"> ${salesContrastVo.saleRamt1} </td>
 								<td class="center"> ${salesContrastVo.saleRamt2} </td>
-								<td class="center"> ${salesContrastVo.salePrice1} </td>
-								<td class="center"> ${salesContrastVo.salePrice2} </td>
-								<th class="center"> ${salesContrastVo.salesContrast} </th>
+								<td class="center  font2"> ${salesContrastVo.salePrice1} </td>
+								<td class="center  font2"> ${salesContrastVo.salePrice2} </td>
+								<td class="center"> ${salesContrastVo.salesContrast} </td>
 							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					
 				</div>
 			</div>
-			</c:forEach>
+			
 			</c:forEach>
 		</div>
 
