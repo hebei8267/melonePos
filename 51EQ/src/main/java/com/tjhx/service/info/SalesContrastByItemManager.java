@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.dao.info.SalesDayTotalItemMyBatisDao;
+import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.struct.OrganizationManager;
@@ -24,6 +25,8 @@ public class SalesContrastByItemManager {
 	private SalesDayTotalItemMyBatisDao salesDayTotalItemMyBatisDao;
 	@Resource
 	private OrganizationManager orgManager;
+	@Resource
+	private ItemTypeManager itemTypeManager;
 
 	/**
 	 * 拷贝对比1的显示值
@@ -31,73 +34,129 @@ public class SalesContrastByItemManager {
 	 * @param list1
 	 * @return
 	 */
-	private List<SalesContrastVo> copyList_1_Value(List<SalesDayTotalItem> list1) {
-		List<SalesContrastVo> tmpList = Lists.newArrayList();
+	private void copyList1Value(List<SalesContrastVo> voList, String optDate1Start, String optDate1End, String orgId,
+			String itemNoArray) {
 
-		for (SalesDayTotalItem salesDayTotalItem : list1) {
-			SalesContrastVo vo = new SalesContrastVo();
+		Map<String, String> param = Maps.newHashMap();
+		param.put("optDateStart", optDate1Start);
+		param.put("optDateEnd", optDate1End);
+		param.put("orgId", orgId);
+		param.put("itemType", itemNoArray);
+		List<SalesDayTotalItem> list1 = salesDayTotalItemMyBatisDao.getContrastList(param);
 
-			// 机构名称
-			vo.setOrgName(salesDayTotalItem.getOrgName());
-			// 机构编号
-			vo.setOrgId(salesDayTotalItem.getOrgId());
-			// 类型编号
-			vo.setItemClsNo(salesDayTotalItem.getItemClsNo());
-			// 类型名称
-			vo.setItemName(salesDayTotalItem.getItemName());
-
-			// 实销数量1
-			vo.setSaleRqty1(salesDayTotalItem.getSaleRqty());
-			// 实销金额1
-			vo.setSaleRamt1(salesDayTotalItem.getSaleRamt());
-			// 实销均价1
-			vo.setSalePrice1(salesDayTotalItem.getSaleRamt().divide(salesDayTotalItem.getSaleRqty(), 2, BigDecimal.ROUND_UP));
-
-			// // 实销数量2
-			// vo.setSaleRqty2(saleRqty2);
-			// // 实销金额2
-			// vo.setSaleRamt2(saleRamt2);
-			// // 实销均价2
-			// vo.setSalePrice2(salePrice2);
-			// // 销售额增长/下降率
-			// vo.setSalesContrast(salesContrast);
-
-			tmpList.add(vo);
+		for (SalesContrastVo vo : voList) {
+			int _index = list1.indexOf(vo);
+			if (-1 != _index) {
+				SalesDayTotalItem value = list1.get(_index);
+				// 实销数量1
+				vo.setSaleRqty1(value.getSaleRqty());
+				// 实销金额1
+				vo.setSaleRamt1(value.getSaleRamt());
+				// 实销均价1
+				vo.setSalePrice1(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
+			}
 		}
 
-		return tmpList;
+		// // 实销数量2
+		// vo.setSaleRqty2(saleRqty2);
+		// // 实销金额2
+		// vo.setSaleRamt2(saleRamt2);
+		// // 实销均价2
+		// vo.setSalePrice2(salePrice2);
+		// // 销售额增长/下降率
+		// vo.setSalesContrast(salesContrast);
+
 	}
 
 	/**
-	 * @param optDate1_start
-	 * @param optDate1_end
-	 * @param optDate2_start
-	 * @param optDate2_end
-	 * @param itemType
+	 * @param optDate1Start
+	 * @param optDate1End
+	 * @param optDate2Start
+	 * @param optDate2End
+	 * @param itemNoArray
 	 * @param orgId
 	 * @return
 	 */
-	public List<List<SalesContrastVo>> search(String optDate1_start, String optDate1_end, String optDate2_start,
-			String optDate2_end, String itemType, String orgId) {
+	public List<List<SalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start, String optDate2End,
+			String itemNoArray, String orgId) {
 
-		Map<String, String> param1 = Maps.newHashMap();
-		param1.put("optDateStart", optDate1_start);
-		param1.put("optDateEnd", optDate1_end);
-		param1.put("orgId", orgId);
-		param1.put("itemType", itemType);
-		List<SalesDayTotalItem> list1 = salesDayTotalItemMyBatisDao.getContrastList(param1);
+		List<SalesContrastVo> voList = initBlankVoList(itemNoArray);
+		copyList1Value(voList, optDate1Start, optDate1End, orgId, itemNoArray);
+		copyList2Value(voList, optDate2Start, optDate2End, orgId, itemNoArray);
+		return formatVoList(voList);
+	}
 
-		Map<String, String> param2 = Maps.newHashMap();
-		param2.put("optDateStart", optDate2_start);
-		param2.put("optDateEnd", optDate2_end);
-		param2.put("orgId", orgId);
-		param2.put("itemType", itemType);
-		List<SalesDayTotalItem> list2 = salesDayTotalItemMyBatisDao.getContrastList(param1);
+	/**
+	 * @param voList
+	 * @param optDate1Start
+	 * @param optDate1End
+	 * @param orgId
+	 * @param itemNoArray
+	 */
+	private void copyList2Value(List<SalesContrastVo> voList, String optDate2Start, String optDate2End, String orgId,
+			String itemNoArray) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("optDateStart", optDate2Start);
+		param.put("optDateEnd", optDate2End);
+		param.put("orgId", orgId);
+		param.put("itemType", itemNoArray);
+		List<SalesDayTotalItem> list1 = salesDayTotalItemMyBatisDao.getContrastList(param);
 
-		List<SalesContrastVo> tmpList = copyList_1_Value(list1);
+		for (SalesContrastVo vo : voList) {
+			int _index = list1.indexOf(vo);
+			if (-1 != _index) {
+				SalesDayTotalItem value = list1.get(_index);
+				// 实销数量2
+				vo.setSaleRqty2(value.getSaleRqty());
+				// 实销金额2
+				vo.setSaleRamt2(value.getSaleRamt());
+				// 实销均价2
+				vo.setSalePrice2(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
 
-		List<List<SalesContrastVo>> tmpRsList = checkBlankOrgList(tmpList, itemType);
-		return tmpRsList;
+				// 销售额增长/下降率
+				if (vo.getSaleRamt1().compareTo(BigDecimal.ZERO) == 1) {
+					BigDecimal tmp = vo.getSaleRamt2().subtract(vo.getSaleRamt1());
+					tmp = tmp.divide(vo.getSaleRamt1(), 2, BigDecimal.ROUND_UP);
+					tmp = tmp.multiply(new BigDecimal("100"));
+					vo.setSalesContrast(tmp);
+				}
+
+			}
+		}
+
+	}
+
+	/**
+	 * 初始化空白销售信息对比VO对象列表
+	 * 
+	 * @param itemNoArray
+	 * @return
+	 */
+	private List<SalesContrastVo> initBlankVoList(String itemNoArray) {
+		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
+
+		List<SalesContrastVo> voList = Lists.newArrayList();
+
+		List<Organization> orgList = orgManager.getSubOrganization();
+		for (Organization org : orgList) {
+			for (String itemNo : itemNoList) {
+				SalesContrastVo vo = new SalesContrastVo();
+				// 机构编号
+				vo.setOrgId(org.getId());
+				// 机构名称
+				vo.setOrgName(org.getName());
+				// 类型编号
+				vo.setItemClsNo(itemNo);
+				// 类型名称
+				ItemType itemType = itemTypeManager.getByItemNo(itemNo);
+				if (null != itemType) {
+					vo.setItemName(itemType.getItemShortName());
+				}
+
+				voList.add(vo);
+			}
+		}
+		return voList;
 	}
 
 	/**
@@ -106,13 +165,12 @@ public class SalesContrastByItemManager {
 	 * @param tmpList
 	 * @return
 	 */
-	private List<List<SalesContrastVo>> checkBlankOrgList(List<SalesContrastVo> tmpList, String itemType) {
-		List<String> itemTypeList =Lists.newArrayList( itemType.split(","));
-		
+	private List<List<SalesContrastVo>> formatVoList(List<SalesContrastVo> voList) {
+
 		List<List<SalesContrastVo>> _list = Lists.newArrayList();
 		List<SalesContrastVo> _subList = null;
 		String tmpOrgId = null;
-		for (SalesContrastVo vo : tmpList) {
+		for (SalesContrastVo vo : voList) {
 			if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
 				tmpOrgId = vo.getOrgId();
 				_subList = Lists.newArrayList();
@@ -121,48 +179,6 @@ public class SalesContrastByItemManager {
 			}
 			_subList.add(vo);
 		}
-
-//		// 加空行(机构)
-//		List<Organization> orgList = orgManager.getSubOrganization();
-//		int index = 0;
-//
-//		List<List<SalesContrastVo>> _reList = Lists.newArrayList();
-//		for (List<SalesContrastVo> subList : _list) {
-//			if (null != subList && subList.size() > 0) {
-//				String tmpOrgId1 = subList.get(0).getOrgId();
-//				String tmpOrgId2 = orgList.get(index).getId();
-//				if (tmpOrgId2.equals(tmpOrgId1)) {
-//
-//					List<SalesContrastVo> _ttList = Lists.newArrayList();
-//					for (SalesContrastVo vo : subList) {
-//						if(itemTypeList.contains(_vo.getItemClsNo())){
-//							_ttList.add(vo);
-//						}else{
-//							SalesContrastVo _vo = new SalesContrastVo();
-//							_vo.setOrgId(tmpOrgId2);
-//							_vo.setItemClsNo(_itemType);
-//							_ttList.add(_vo);
-//						}
-//					}
-//					_reList.add(subList);
-//					
-//					
-//				} else {// 无该机构，加指定行数的对比信息
-//					List<SalesContrastVo> _ttList = Lists.newArrayList();
-//
-//					for (String _itemType : itemTypeList) {
-//						SalesContrastVo _vo = new SalesContrastVo();
-//						_vo.setOrgId(tmpOrgId2);
-//						_vo.setItemClsNo(_itemType);
-//						_ttList.add(_vo);
-//					}
-//
-//					_reList.add(_ttList);
-//				}
-//				index++;
-//			}
-//
-//		}
 
 		return _list;
 	}

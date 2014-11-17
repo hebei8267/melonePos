@@ -5,6 +5,10 @@ package com.tjhx.vo;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
+import com.tjhx.entity.info.SalesDayTotalItem;
+
 /** */
 public class SalesContrastVo {
 	/** 机构名称 */
@@ -17,20 +21,20 @@ public class SalesContrastVo {
 	private String itemName;
 
 	/** 实销数量1 */
-	private BigDecimal saleRqty1;
+	private BigDecimal saleRqty1 = new BigDecimal("0");
 	/** 实销金额1 */
-	private BigDecimal saleRamt1;
+	private BigDecimal saleRamt1 = new BigDecimal("0");
 	/** 实销均价1 */
-	private BigDecimal salePrice1;
+	private BigDecimal salePrice1 = new BigDecimal("0");
 
 	/** 实销数量2 */
-	private BigDecimal saleRqty2;
+	private BigDecimal saleRqty2 = new BigDecimal("0");
 	/** 实销金额2 */
-	private BigDecimal saleRamt2;
+	private BigDecimal saleRamt2 = new BigDecimal("0");
 	/** 实销均价2 */
-	private BigDecimal salePrice2;
+	private BigDecimal salePrice2 = new BigDecimal("0");
 	/** 销售额增长/下降率 */
-	private BigDecimal salesContrast;
+	private BigDecimal salesContrast = new BigDecimal("0");
 
 	/**
 	 * 获取机构名称
@@ -228,5 +232,15 @@ public class SalesContrastVo {
 	 */
 	public void setSalesContrast(BigDecimal salesContrast) {
 		this.salesContrast = salesContrast;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof SalesDayTotalItem)) {
+			return false;
+		}
+		SalesDayTotalItem rhs = (SalesDayTotalItem) obj;
+		return new EqualsBuilder().append(this.getOrgId(), rhs.getOrgId()).append(this.getItemClsNo(), rhs.getItemClsNo())
+				.isEquals();
 	}
 }

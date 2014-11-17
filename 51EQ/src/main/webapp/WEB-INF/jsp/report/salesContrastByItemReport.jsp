@@ -175,10 +175,13 @@
 								<th class="center" style="background-image: linear-gradient(to bottom,#ff6600,#ff6633);"> 类别 </th>
 								<th class="center"> 销量一 </th>
 								<th class="center"> 销量二 </th>
+								<th>趋势</th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额一 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额二 </th>
+								<th style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
 								<th class="center"> 均价一 </th>
 								<th class="center"> 均价二 </th>
+								<th>趋势</th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
 							</tr>
 						</thead>
@@ -186,14 +189,57 @@
 							<c:forEach items="${subContrastList}" var="salesContrastVo">
 							<tr>
 								<td class="center"> ${salesContrastVo.orgName} </td>
-								<td class="center font2"> ${salesContrastVo.itemName} </td>
+								<td class="center"> ${salesContrastVo.itemName} </td>
 								<td class="center font2"> ${salesContrastVo.saleRqty1} </td>
 								<td class="center font2"> ${salesContrastVo.saleRqty2} </td>
+								
+								<c:if test="${salesContrastVo.saleRqty2 > salesContrastVo.saleRqty1}" >
+								<td class="center font2" style="background : #FF0000">↑</td>
+								</c:if>
+								<c:if test="${salesContrastVo.saleRqty2 < salesContrastVo.saleRqty1}" >
+								<td class="center font2" style="background : #00FF00">↓</td>
+								</c:if>
+								<c:if test="${salesContrastVo.saleRqty2 == salesContrastVo.saleRqty1}" >
+								<td class="center font2">－</td>
+								</c:if>
+								
 								<td class="center"> ${salesContrastVo.saleRamt1} </td>
 								<td class="center"> ${salesContrastVo.saleRamt2} </td>
+								
+								<c:if test="${salesContrastVo.saleRamt2 > salesContrastVo.saleRamt1}" >
+								<td class="center font2" style="background : #FF0000">↑</td>
+								</c:if>
+								<c:if test="${salesContrastVo.saleRamt2 < salesContrastVo.saleRamt1}" >
+								<td class="center font2" style="background : #00FF00">↓</td>
+								</c:if>
+								<c:if test="${salesContrastVo.saleRamt2 == salesContrastVo.saleRamt1}" >
+								<td class="center font2">－</td>
+								</c:if>
+								
 								<td class="center  font2"> ${salesContrastVo.salePrice1} </td>
 								<td class="center  font2"> ${salesContrastVo.salePrice2} </td>
-								<td class="center"> ${salesContrastVo.salesContrast} </td>
+								
+								<c:if test="${salesContrastVo.salePrice2 > salesContrastVo.salePrice1}" >
+								<td class="center font2" style="background : #FF0000">↑</td>
+								</c:if>
+								<c:if test="${salesContrastVo.salePrice2 < salesContrastVo.salePrice1}" >
+								<td class="center font2" style="background : #00FF00">↓</td>
+								</c:if>
+								<c:if test="${salesContrastVo.salePrice2 == salesContrastVo.salePrice1}" >
+								<td class="center font2">－</td>
+								</c:if>
+								
+								
+								
+								<c:if test="${salesContrastVo.salesContrast > 0}" >
+								<td class="center" style="background : #FF0000"> ${salesContrastVo.salesContrast} %</td>
+								</c:if>
+								<c:if test="${salesContrastVo.salesContrast < 0}" >
+								<td class="center" style="background : #00FF00"> ${-salesContrastVo.salesContrast} %</td>
+								</c:if>
+								<c:if test="${salesContrastVo.salesContrast == 0}" >
+								<td class="center"> ${salesContrastVo.salesContrast} %</td>
+								</c:if>
 							</tr>
 							</c:forEach>
 						</tbody>
