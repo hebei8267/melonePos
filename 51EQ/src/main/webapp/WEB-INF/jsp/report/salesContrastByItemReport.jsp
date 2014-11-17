@@ -163,7 +163,7 @@
 				</div>
 			</form>
 
-			<c:forEach items="${contrastList}" var="subContrastList">
+			
 			
 			<div class="row">
 				<div class="span12" style="margin-top: 10px;">
@@ -186,6 +186,7 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach items="${contrastList}" var="subContrastList">
 							<c:forEach items="${subContrastList}" var="salesContrastVo">
 							<tr>
 								<td class="center"> ${salesContrastVo.orgName} </td>
@@ -194,10 +195,10 @@
 								<td class="center font2"> ${salesContrastVo.saleRqty2} </td>
 								
 								<c:if test="${salesContrastVo.saleRqty2 > salesContrastVo.saleRqty1}" >
-								<td class="center font2" style="background : #FF0000">↑</td>
+								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRqty2 < salesContrastVo.saleRqty1}" >
-								<td class="center font2" style="background : #00FF00">↓</td>
+								<td class="center font2" style="color : #00FF00">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRqty2 == salesContrastVo.saleRqty1}" >
 								<td class="center font2">－</td>
@@ -207,10 +208,10 @@
 								<td class="center"> ${salesContrastVo.saleRamt2} </td>
 								
 								<c:if test="${salesContrastVo.saleRamt2 > salesContrastVo.saleRamt1}" >
-								<td class="center font2" style="background : #FF0000">↑</td>
+								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRamt2 < salesContrastVo.saleRamt1}" >
-								<td class="center font2" style="background : #00FF00">↓</td>
+								<td class="center font2" style="color : #00FF00">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRamt2 == salesContrastVo.saleRamt1}" >
 								<td class="center font2">－</td>
@@ -220,10 +221,10 @@
 								<td class="center  font2"> ${salesContrastVo.salePrice2} </td>
 								
 								<c:if test="${salesContrastVo.salePrice2 > salesContrastVo.salePrice1}" >
-								<td class="center font2" style="background : #FF0000">↑</td>
+								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salePrice2 < salesContrastVo.salePrice1}" >
-								<td class="center font2" style="background : #00FF00">↓</td>
+								<td class="center font2" style="color : #00FF00">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salePrice2 == salesContrastVo.salePrice1}" >
 								<td class="center font2">－</td>
@@ -232,14 +233,18 @@
 								
 								
 								<c:if test="${salesContrastVo.salesContrast > 0}" >
-								<td class="center" style="background : #FF0000"> ${salesContrastVo.salesContrast} %</td>
+								<td class="center" style="color : #FF0000">↑ ${salesContrastVo.salesContrast} %</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salesContrast < 0}" >
-								<td class="center" style="background : #00FF00"> ${-salesContrastVo.salesContrast} %</td>
+								<td class="center" style="color : #00FF00">↓ ${-salesContrastVo.salesContrast} %</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salesContrast == 0}" >
 								<td class="center"> ${salesContrastVo.salesContrast} %</td>
 								</c:if>
+							</tr>
+							</c:forEach>
+							<tr>
+							<td colspan="12"></td>
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -247,8 +252,6 @@
 					
 				</div>
 			</div>
-			
-			</c:forEach>
 		</div>
 
 		<div class="modal hide fade  __model37" id="__search_tip">
