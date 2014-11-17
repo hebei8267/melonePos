@@ -198,7 +198,7 @@
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRqty2 < salesContrastVo.saleRqty1}" >
-								<td class="center font2" style="color : #00FF00">↓</td>
+								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRqty2 == salesContrastVo.saleRqty1}" >
 								<td class="center font2">－</td>
@@ -211,7 +211,7 @@
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRamt2 < salesContrastVo.saleRamt1}" >
-								<td class="center font2" style="color : #00FF00">↓</td>
+								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.saleRamt2 == salesContrastVo.saleRamt1}" >
 								<td class="center font2">－</td>
@@ -224,7 +224,7 @@
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salePrice2 < salesContrastVo.salePrice1}" >
-								<td class="center font2" style="color : #00FF00">↓</td>
+								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salePrice2 == salesContrastVo.salePrice1}" >
 								<td class="center font2">－</td>
@@ -236,7 +236,7 @@
 								<td class="center" style="color : #FF0000">↑ ${salesContrastVo.salesContrast} %</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salesContrast < 0}" >
-								<td class="center" style="color : #00FF00">↓ ${-salesContrastVo.salesContrast} %</td>
+								<td class="center" style="color : #5bc0de">↓ ${-salesContrastVo.salesContrast} %</td>
 								</c:if>
 								<c:if test="${salesContrastVo.salesContrast == 0}" >
 								<td class="center"> ${salesContrastVo.salesContrast} %</td>
