@@ -55,6 +55,8 @@ public class StoreDetail extends IdEntity {
 	private BigDecimal stockTotalAmt;
 	/** 售价金额-合计 */
 	private BigDecimal itemSaleTotalAmt;
+	/** 类别编号 */
+	private String itemClsNo;
 
 	/**
 	 * 取得机构编号
@@ -359,6 +361,25 @@ public class StoreDetail extends IdEntity {
 	 */
 	public void setItemSaleTotalAmt(BigDecimal itemSaleTotalAmt) {
 		this.itemSaleTotalAmt = itemSaleTotalAmt;
+	}
+
+	/**
+	 * 获取类别编号
+	 * 
+	 * @return itemClsNo 类别编号
+	 */
+	@Transient
+	public String getItemClsNo() {
+		return itemClsNo;
+	}
+
+	/**
+	 * 设置类别编号
+	 * 
+	 * @param itemClsNo 类别编号
+	 */
+	public void setItemClsNo(String itemClsNo) {
+		this.itemClsNo = itemClsNo;
 	}
 
 }

@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.dao.info.SalesDayTotalItemMyBatisDao;
+import com.tjhx.dao.info.StoreDetailMyBatisDao;
 import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalItem;
+import com.tjhx.entity.info.StoreDetail;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.vo.SalesContrastVo;
@@ -27,9 +29,11 @@ public class SalesContrastByItemManager {
 	private OrganizationManager orgManager;
 	@Resource
 	private ItemTypeManager itemTypeManager;
+	@Resource
+	private StoreDetailMyBatisDao storeDetailMyBatisDao;
 
 	/**
-	 * 拷贝对比1的显示值
+	 * 销售数据1设置
 	 * 
 	 * @param list1
 	 * @return
@@ -52,23 +56,18 @@ public class SalesContrastByItemManager {
 				vo.setSaleRqty1(value.getSaleRqty());
 				// 实销金额1
 				vo.setSaleRamt1(value.getSaleRamt());
-				// 实销均价1
-				vo.setSalePrice1(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
+				if (value.getSaleRqty().compareTo(BigDecimal.ZERO) == 1) {
+					// 实销均价1
+					vo.setSalePrice1(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
+				}
 			}
 		}
-
-		// // 实销数量2
-		// vo.setSaleRqty2(saleRqty2);
-		// // 实销金额2
-		// vo.setSaleRamt2(saleRamt2);
-		// // 实销均价2
-		// vo.setSalePrice2(salePrice2);
-		// // 销售额增长/下降率
-		// vo.setSalesContrast(salesContrast);
 
 	}
 
 	/**
+	 * 取得销售数据对比信息
+	 * 
 	 * @param optDate1Start
 	 * @param optDate1End
 	 * @param optDate2Start
@@ -83,10 +82,68 @@ public class SalesContrastByItemManager {
 		List<SalesContrastVo> voList = initBlankVoList(itemNoArray);
 		copyList1Value(voList, optDate1Start, optDate1End, orgId, itemNoArray);
 		copyList2Value(voList, optDate2Start, optDate2End, orgId, itemNoArray);
+		copyStore1Value(voList, optDate1End, orgId, itemNoArray);
+		copyStore2Value(voList, optDate2End, orgId, itemNoArray);
 		return formatVoList(voList);
 	}
 
 	/**
+	 * 库存数据2设置
+	 * 
+	 * @param voList
+	 * @param optDate1End
+	 * @param orgId
+	 * @param itemNoArray
+	 */
+	private void copyStore1Value(List<SalesContrastVo> voList, String optDate1End, String orgId, String itemNoArray) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("optDateEnd", optDate1End);
+		param.put("orgId", orgId);
+		param.put("itemType", itemNoArray);
+
+		List<StoreDetail> sList = storeDetailMyBatisDao.getContrastStoreList(param);
+
+		for (SalesContrastVo vo : voList) {
+			int _index = sList.indexOf(vo);
+			if (-1 != _index) {
+				StoreDetail sd = sList.get(_index);
+				// 库存数量1
+				vo.setStockTotalQty1(sd.getStockQty());
+
+			}
+		}
+	}
+
+	/**
+	 * 库存数据2设置
+	 * 
+	 * @param voList
+	 * @param optDate2End
+	 * @param orgId
+	 * @param itemNoArray
+	 */
+	private void copyStore2Value(List<SalesContrastVo> voList, String optDate2End, String orgId, String itemNoArray) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("optDateEnd", optDate2End);
+		param.put("orgId", orgId);
+		param.put("itemType", itemNoArray);
+
+		List<StoreDetail> sList = storeDetailMyBatisDao.getContrastStoreList(param);
+
+		for (SalesContrastVo vo : voList) {
+			int _index = sList.indexOf(vo);
+			if (-1 != _index) {
+				StoreDetail sd = sList.get(_index);
+				// 库存数量2
+				vo.setStockTotalQty2(sd.getStockQty());
+
+			}
+		}
+	}
+
+	/**
+	 * 销售数据2设置
+	 * 
 	 * @param voList
 	 * @param optDate1Start
 	 * @param optDate1End
@@ -110,9 +167,10 @@ public class SalesContrastByItemManager {
 				vo.setSaleRqty2(value.getSaleRqty());
 				// 实销金额2
 				vo.setSaleRamt2(value.getSaleRamt());
-				// 实销均价2
-				vo.setSalePrice2(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
-
+				if (value.getSaleRqty().compareTo(BigDecimal.ZERO) == 1) {
+					// 实销均价2
+					vo.setSalePrice2(value.getSaleRamt().divide(value.getSaleRqty(), 2, BigDecimal.ROUND_UP));
+				}
 				// 销售额增长/下降率
 				if (vo.getSaleRamt1().compareTo(BigDecimal.ZERO) == 1) {
 					BigDecimal tmp = vo.getSaleRamt2().subtract(vo.getSaleRamt1());
@@ -180,6 +238,78 @@ public class SalesContrastByItemManager {
 			_subList.add(vo);
 		}
 
+		return _list;
+	}
+
+	/**
+	 * 计算合计
+	 * 
+	 * @param voList
+	 * @return
+	 */
+	public List<SalesContrastVo> calTotal(List<List<SalesContrastVo>> voList, String itemNoArray) {
+		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
+
+		List<SalesContrastVo> _list = Lists.newArrayList();
+
+		for (String itemNo : itemNoList) {
+			SalesContrastVo vo = new SalesContrastVo();
+			// 机构名称
+			vo.setOrgName("合计");
+			// 类型编号
+			vo.setItemClsNo(itemNo);
+			_list.add(vo);
+		}
+		// ======================================================================================================
+
+		for (List<SalesContrastVo> salesContrastVo : voList) {
+
+			for (SalesContrastVo vo : salesContrastVo) {
+				int _index = _list.indexOf(vo);
+				if (-1 != _index) {
+					SalesContrastVo value = _list.get(_index);
+
+					// 类型名称
+					value.setItemName(vo.getItemName());
+
+					// 实销数量1
+					value.setSaleRqty1(value.getSaleRqty1().add(vo.getSaleRqty1()));
+					// 实销金额1
+					value.setSaleRamt1(value.getSaleRamt1().add(vo.getSaleRamt1()));
+
+					// 实销数量2
+					value.setSaleRqty2(value.getSaleRqty2().add(vo.getSaleRqty2()));
+					// 实销金额2
+					value.setSaleRamt2(value.getSaleRamt2().add(vo.getSaleRamt2()));
+
+					// 库存数量1
+					value.setStockTotalQty1(value.getStockTotalQty1().add(vo.getStockTotalQty1()));
+					// 库存数量2
+					value.setStockTotalQty2(value.getStockTotalQty2().add(vo.getStockTotalQty2()));
+				}
+
+			}
+
+		}
+
+		for (SalesContrastVo _vo : _list) {
+			if (_vo.getSaleRqty1().compareTo(BigDecimal.ZERO) == 1) {
+				// 实销均价1
+				_vo.setSalePrice1(_vo.getSaleRamt1().divide(_vo.getSaleRqty1(), 2, BigDecimal.ROUND_UP));
+			}
+			if (_vo.getSaleRqty2().compareTo(BigDecimal.ZERO) == 1) {
+				// 实销均价2
+				_vo.setSalePrice2(_vo.getSaleRamt2().divide(_vo.getSaleRqty2(), 2, BigDecimal.ROUND_UP));
+			}
+
+			if (_vo.getSaleRamt1().compareTo(BigDecimal.ZERO) == 1) {
+				// 销售额增长/下降率
+				BigDecimal tmp = _vo.getSaleRamt2().subtract(_vo.getSaleRamt1());
+				tmp = tmp.divide(_vo.getSaleRamt1(), 2, BigDecimal.ROUND_UP);
+				tmp = tmp.multiply(new BigDecimal("100"));
+				_vo.setSalesContrast(tmp);
+			}
+		}
 		return _list;
 	}
 }

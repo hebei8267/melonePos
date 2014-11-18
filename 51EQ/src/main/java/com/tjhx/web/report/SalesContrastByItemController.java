@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -90,6 +91,11 @@ public class SalesContrastByItemController extends BaseController {
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), itemType, orgId);
+
+		if (StringUtils.isBlank(orgId)) {
+			List<SalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemType);
+			voList.add(0, voTotalList);
+		}
 
 		model.addAttribute("contrastList", voList);
 

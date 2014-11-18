@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import com.tjhx.entity.info.SalesDayTotalItem;
+import com.tjhx.entity.info.StoreDetail;
 
 /** */
 public class SalesContrastVo {
@@ -35,6 +36,11 @@ public class SalesContrastVo {
 	private BigDecimal salePrice2 = new BigDecimal("0");
 	/** 销售额增长/下降率 */
 	private BigDecimal salesContrast = new BigDecimal("0");
+
+	/** 库存数量1 */
+	private BigDecimal stockTotalQty1 = new BigDecimal("0");
+	/** 库存数量2 */
+	private BigDecimal stockTotalQty2 = new BigDecimal("0");
 
 	/**
 	 * 获取机构名称
@@ -234,13 +240,60 @@ public class SalesContrastVo {
 		this.salesContrast = salesContrast;
 	}
 
+	/**
+	 * 获取库存数量1
+	 * 
+	 * @return stockTotalQty1 库存数量1
+	 */
+	public BigDecimal getStockTotalQty1() {
+		return stockTotalQty1;
+	}
+
+	/**
+	 * 设置库存数量1
+	 * 
+	 * @param stockTotalQty1 库存数量1
+	 */
+	public void setStockTotalQty1(BigDecimal stockTotalQty1) {
+		this.stockTotalQty1 = stockTotalQty1;
+	}
+
+	/**
+	 * 获取库存数量2
+	 * 
+	 * @return stockTotalQty2 库存数量2
+	 */
+	public BigDecimal getStockTotalQty2() {
+		return stockTotalQty2;
+	}
+
+	/**
+	 * 设置库存数量2
+	 * 
+	 * @param stockTotalQty2 库存数量2
+	 */
+	public void setStockTotalQty2(BigDecimal stockTotalQty2) {
+		this.stockTotalQty2 = stockTotalQty2;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof SalesDayTotalItem)) {
+		if (!(obj instanceof SalesDayTotalItem || obj instanceof StoreDetail || obj instanceof SalesContrastVo)) {
 			return false;
 		}
-		SalesDayTotalItem rhs = (SalesDayTotalItem) obj;
-		return new EqualsBuilder().append(this.getOrgId(), rhs.getOrgId()).append(this.getItemClsNo(), rhs.getItemClsNo())
-				.isEquals();
+
+		if (obj instanceof SalesDayTotalItem) {
+			SalesDayTotalItem rhs = (SalesDayTotalItem) obj;
+			return new EqualsBuilder().append(this.getOrgId(), rhs.getOrgId()).append(this.getItemClsNo(), rhs.getItemClsNo())
+					.isEquals();
+		} else if (obj instanceof StoreDetail) {
+			StoreDetail rhs = (StoreDetail) obj;
+			return new EqualsBuilder().append(this.getOrgId(), rhs.getOrgId()).append(this.getItemClsNo(), rhs.getItemClsNo())
+					.isEquals();
+		} else {
+			SalesContrastVo rhs = (SalesContrastVo) obj;
+			return new EqualsBuilder().append(this.getItemClsNo(), rhs.getItemClsNo()).isEquals();
+		}
+
 	}
 }

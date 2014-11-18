@@ -18,7 +18,7 @@
 		.font2 {
 			font-family : "Microsoft YaHei" ! important;
 			font-size : 16px;
-			font-weight :bold;
+			font-weight : bolder;
 		}
 		</style>
 		<script>
@@ -175,13 +175,16 @@
 								<th class="center" style="background-image: linear-gradient(to bottom,#ff6600,#ff6633);"> 类别 </th>
 								<th class="center"> 销量一 </th>
 								<th class="center"> 销量二 </th>
-								<th>趋势</th>
+								<th class="center">趋势</th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额一 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额二 </th>
 								<th style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
 								<th class="center"> 均价一 </th>
 								<th class="center"> 均价二 </th>
-								<th>趋势</th>
+								<th class="center">趋势</th>
+								<th class="center"> 库存量一 </th>
+								<th class="center"> 库存量二 </th>
+								<th class="center">趋势</th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
 							</tr>
 						</thead>
@@ -230,7 +233,18 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
+								<td class="center  font2"> ${salesContrastVo.stockTotalQty1} </td>
+								<td class="center  font2"> ${salesContrastVo.stockTotalQty2} </td>
 								
+								<c:if test="${salesContrastVo.stockTotalQty2 > salesContrastVo.stockTotalQty1}" >
+								<td class="center font2" style="color : #FF0000">↑</td>
+								</c:if>
+								<c:if test="${salesContrastVo.stockTotalQty2 < salesContrastVo.stockTotalQty1}" >
+								<td class="center font2" style="color : #5bc0de">↓</td>
+								</c:if>
+								<c:if test="${salesContrastVo.stockTotalQty2 == salesContrastVo.stockTotalQty1}" >
+								<td class="center font2">－</td>
+								</c:if>
 								
 								<c:if test="${salesContrastVo.salesContrast > 0}" >
 								<td class="center" style="color : #FF0000">↑ ${salesContrastVo.salesContrast} %</td>
@@ -244,7 +258,7 @@
 							</tr>
 							</c:forEach>
 							<tr>
-							<td colspan="12"></td>
+							<td colspan="15"></td>
 							</tr>
 							</c:forEach>
 						</tbody>
