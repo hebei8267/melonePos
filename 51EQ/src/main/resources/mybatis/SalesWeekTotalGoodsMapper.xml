@@ -117,7 +117,7 @@
 	</select>
 	
 	<!-- 指定条码各门店近四周销售数据及库存情况 -->
-	<select id="getSalesWeekGoodsTotalList_ByBarcode" parameterType="String" resultMap="Result_Map_SalesWeekTotal">
+	<select id="getSalesWeekGoodsTotalList_ByBarcode" parameterType="map" resultMap="Result_Map_SalesWeekTotal">
 		SELECT
     		t.*,
     		(t.pos_qty1 + t.pos_qty2 + t.pos_qty3 + t.pos_qty4) AS pos_qty,
@@ -149,6 +149,7 @@
 			    t_sales_week_total_goods_4 sg4 ON sd.item_subno = sg4.item_subno AND sd.org_id = sg4.org_id
 			WHERE
 			    sd.item_subno = #{barcode}
+			AND sd.opt_date = #{optDate}
 			AND sd.org_id = org.org_id ) AS t
 		order by t.org_id
 	</select>

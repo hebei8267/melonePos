@@ -2,12 +2,14 @@ package com.tjhx.service.info;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.SalesDayTotalGoodsMyBatisDao;
 import com.tjhx.dao.info.SalesWeekTotalGoods1JpaDao;
@@ -236,10 +238,15 @@ public class SalesWeekTotalGoodsManager {
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 
 	 * @param barcode 商品条码
+	 * @param optDate 库存日期
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode) {
-		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(barcode);
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode, String optDate) {
+		Map<String, String> paramMap = Maps.newHashMap();
+		paramMap.put("barcode", barcode);
+		paramMap.put("optDate", optDate);
+
+		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(paramMap);
 	}
 
 }

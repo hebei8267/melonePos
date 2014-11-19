@@ -1,6 +1,7 @@
 package com.tjhx.dao.info;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tjhx.entity.order.ReqBill;
 
@@ -48,7 +49,8 @@ public interface SalesWeekTotalGoodsMyBatisDao {
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 
 	 * @param barcode 商品条码
+	 * @param optDate 库存日期
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode);
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(Map<String, String> paramMap);
 }

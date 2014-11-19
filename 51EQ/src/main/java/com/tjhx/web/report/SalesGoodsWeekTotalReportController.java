@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springside.modules.mapper.JsonMapper;
 
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.order.ReqBill;
 import com.tjhx.service.info.SalesWeekTotalGoodsManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -59,7 +60,8 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 
 	@RequestMapping(value = "contrast/{barcode}")
 	public String contrast_Action(@PathVariable("barcode") String barcode, Model model) {
-		List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByBarcode(barcode);
+		List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByBarcode(barcode,
+				DateUtils.getNextDateFormatDate(-1, "yyyyMMdd"));
 		model.addAttribute("salesWeekGoodsList", salesWeekGoodsList);
 
 		JsonMapper mapper = new JsonMapper();
