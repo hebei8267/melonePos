@@ -16,148 +16,178 @@
     <head>
         <link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
     	<script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
+    	<script>
+			$().ready(function() {
+				$("#searchForm").validate({
+					rules : {
+						barcode : {
+							required : true
+						}
+					}
+				});
+
+				$("#searchBtn").click(function() {
+					$("input[type='text'],textarea").each(function(i) {
+						this.value = $.trim(this.value);
+					});
+
+					$("#searchForm").attr('target', '_self');
+					$("#searchForm").attr("action", "${sc_ctx}/salesWeekGoodsTotalReport/contrast/" + $("#barcode").val());
+					$("#searchForm").submit();
+				});
+			});
+		</script>
     </head>
     <body>
         <%// 系统菜单  %>
         <page:applyDecorator name="menu" />
 
         <div class="container">
-            <form method="post"	class="form-inline" id="listForm">
-                <div class="row">
-                    <div class="span12">
-                        <legend>
-                            <h3>商品周销售信息对比(按商品)</h3>
-                        </legend>
-                    </div>
-                    
-                    <div class="span12"	style="margin-top: 10px;">
-                        <table class="table	table-striped table-bordered table-condensed mytable">
-                            <thead>
-                                <tr>
-                                	<th rowspan="2" class="center">
-                                        机构
-                                    </th>
-                                    <th rowspan="2" class="center">
-                                        货号
-                                    </th>
-                                    <th rowspan="2" class="center">
-                                        名称
-                                    </th>
-                                    <th colspan="6" class="center">
-                                        销量(件)
-                                    </th>
-                                    <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        销售额(元)
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="center">
-                                        近一周
-                                    </th>
-                                    <th class="center">
-                                        近两周
-                                    </th>
-                                    <th class="center">
-                                        近三周
-                                    </th>
-                                    <th class="center">
-                                        近四周
-                                    </th>
-                                    <th class="center">
-                                        合计
-                                    </th>
-                                    <th class="center">
-                                        库存量
-                                    </th>
-                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        近一周
-                                    </th>
-                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        近二周
-                                    </th>
-                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        近三周
-                                    </th>
-                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        近四周
-                                    </th>
-                                    <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                        合计
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${salesWeekGoodsList}" var="salesWeekGoods" varStatus="status1">
-                                    <tr>
-                                    	<td class="center">
-                                        	${salesWeekGoods.orgId}
-                                        </td>
-                                        <c:if test="${status1.index == 0}" >
-                                        <td rowspan="${salesWeekGoodsList.size()}" class="center">
-                                        	${salesWeekGoods.barcode}
-                                        </td>
-                                        
-                                        <td rowspan="${salesWeekGoodsList.size()}" class="center">
-                                        	${salesWeekGoods.productName}
-                                        </td>
-                                        </c:if>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posQty2}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posQty3}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posQty4}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt1}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt2}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt3}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posAmt4}" maxFractionDigits="0"/>
-                                        </td>
-                                        <td class="right">
-                                        	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                            <c:if test="${empty	salesWeekGoodsList}" >
-                                <tfoot>
-                                    <tr>
-                                        <td	colspan="14" class="rounded-foot-left">
-                                            无记录信息
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </c:if>
-                        </table>
-                    </div>
-                    
-                    <div class="span12"	style="margin-top: 10px;">
-                    	<div id="chart2" style="width:1000px;height:1000px;border:1px solid #A4BED4;"></div>
-                    </div>
-                    
-                    <div class="span12"	style="margin-top: 10px;">
-                    	<div id="chart1" style="width:1000px;height:1200px;border:1px solid #A4BED4;"></div>
-                    </div>
+           
+            <div class="row">
+                <div class="span12">
+                    <legend>
+                        <h3>商品周销售信息对比(按商品)</h3>
+                    </legend>
                 </div>
-            </form>
+                <form method="post"	class="form-inline"	id="searchForm">
+					<div class="span8">
+						<label class="control-label">货号/条码 : </label>
+						<input id="barcode" name="barcode" type="text" class="input-medium"/>
+						&nbsp;&nbsp;
+						<button	id="searchBtn" class="btn btn-primary" type="button">
+							查询
+						</button>
+					</div>
+				</form>
+                <div class="span12"	style="margin-top: 10px;">
+                    <table class="table	table-striped table-bordered table-condensed mytable">
+                        <thead>
+                            <tr>
+                            	<th rowspan="2" class="center">
+                                    机构
+                                </th>
+                                <th rowspan="2" class="center">
+                                    货号
+                                </th>
+                                <th rowspan="2" class="center">
+                                    名称
+                                </th>
+                                <th colspan="6" class="center">
+                                    销量(件)
+                                </th>
+                                <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    销售额(元)
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="center">
+                                    近一周
+                                </th>
+                                <th class="center">
+                                    近两周
+                                </th>
+                                <th class="center">
+                                    近三周
+                                </th>
+                                <th class="center">
+                                    近四周
+                                </th>
+                                <th class="center">
+                                    合计
+                                </th>
+                                <th class="center">
+                                    库存量
+                                </th>
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    近一周
+                                </th>
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    近二周
+                                </th>
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    近三周
+                                </th>
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    近四周
+                                </th>
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    合计
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${salesWeekGoodsList}" var="salesWeekGoods" varStatus="status1">
+                                <tr>
+                                	<td class="center">
+                                    	${salesWeekGoods.orgId}
+                                    </td>
+                                    <c:if test="${status1.index == 0}" >
+                                    <td rowspan="${salesWeekGoodsList.size()}" class="center">
+                                    	${salesWeekGoods.barcode}
+                                    </td>
+                                    
+                                    <td rowspan="${salesWeekGoodsList.size()}" class="center">
+                                    	${salesWeekGoods.productName}
+                                    </td>
+                                    </c:if>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQty2}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQty3}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQty4}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmt1}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmt2}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmt3}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmt4}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                        <c:if test="${empty	salesWeekGoodsList}" >
+                            <tfoot>
+                                <tr>
+                                    <td	colspan="14" class="rounded-foot-left">
+                                        无记录信息
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </c:if>
+                    </table>
+                </div>
+                
+                <div class="span12"	style="margin-top: 10px;">
+                	<div id="chart2" style="width:1000px;height:1000px;border:1px solid #A4BED4;"></div>
+                </div>
+                
+                <div class="span12"	style="margin-top: 10px;">
+                	<div id="chart1" style="width:1000px;height:1200px;border:1px solid #A4BED4;"></div>
+                </div>
+            </div>
+          
         </div>
         
         <script>
