@@ -72,4 +72,38 @@
 		ORDER BY
 		    sale_qty DESC
 	</select>
+	
+	<select id="getContrastList" parameterType="map" resultMap="Result_Map_SalesDayTotalSup">		
+		SELECT
+		    ss.org_id,
+		    og.org_name,
+		    ss.supplier_bw_id,
+		    SUM(sale_qty) AS sale_qty,
+		    SUM(sale_amt) AS sale_amt
+		FROM
+		    t_sales_day_total_sup ss
+		LEFT JOIN
+		    t_organization og
+		ON
+		    ss.org_id = og.org_id
+		LEFT JOIN
+		    t_supplier su
+		ON
+		    su.supplier_bw_id = ss.supplier_bw_id
+		WHERE
+		    su.supplier_bw_id IN (${supplierBwId})
+		<![CDATA[	
+		AND opt_date >= #{optDateStart}
+		AND opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId != ''">
+        AND ss.org_id = #{orgId}
+        </if>
+		GROUP BY
+		    ss.org_id,
+		    ss.supplier_bw_id
+		ORDER BY
+		    org_id,
+		    supplier_bw_id
+    </select>
 </mapper>

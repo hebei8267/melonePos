@@ -10,8 +10,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.info.StoreDetail;
 
-/** */
-public class SalesContrastVo {
+public class ItemSalesContrastVo {
 	/** 机构名称 */
 	private String orgName;
 	/** 机构编号 */
@@ -278,7 +277,7 @@ public class SalesContrastVo {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof SalesDayTotalItem || obj instanceof StoreDetail || obj instanceof SalesContrastVo)) {
+		if (!(obj instanceof SalesDayTotalItem || obj instanceof StoreDetail || obj instanceof ItemSalesContrastVo)) {
 			return false;
 		}
 
@@ -291,7 +290,7 @@ public class SalesContrastVo {
 			return new EqualsBuilder().append(this.getOrgId(), rhs.getOrgId()).append(this.getItemClsNo(), rhs.getItemClsNo())
 					.isEquals();
 		} else {
-			SalesContrastVo rhs = (SalesContrastVo) obj;
+			ItemSalesContrastVo rhs = (ItemSalesContrastVo) obj;
 			return new EqualsBuilder().append(this.getItemClsNo(), rhs.getItemClsNo()).isEquals();
 		}
 

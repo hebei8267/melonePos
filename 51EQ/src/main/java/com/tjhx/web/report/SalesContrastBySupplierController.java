@@ -18,33 +18,30 @@ import org.springside.modules.mapper.JsonMapper;
 
 import com.google.common.collect.Lists;
 import com.tjhx.common.utils.DateUtils;
-import com.tjhx.entity.info.ItemType;
-import com.tjhx.service.info.ItemTypeManager;
-import com.tjhx.service.info.SalesContrastByItemManager;
+import com.tjhx.entity.info.Supplier;
+import com.tjhx.service.info.SalesContrastBySupplierManager;
+import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.struct.OrganizationManager;
-import com.tjhx.vo.ItemSalesContrastVo;
 import com.tjhx.vo.Select2Vo;
+import com.tjhx.vo.SupplierSalesContrastVo;
 import com.tjhx.web.BaseController;
 
-/**
- * 销售对比-按商品类别
- */
 @Controller
-@RequestMapping(value = "/salesContrastByItem")
-public class SalesContrastByItemController extends BaseController {
+@RequestMapping(value = "/salesContrastBySupplier")
+public class SalesContrastBySupplierController extends BaseController {
 	@Resource
 	private OrganizationManager orgManager;
 	@Resource
-	private ItemTypeManager itemTypeManager;
+	private SupplierManager supplierManager;
 	@Resource
-	private SalesContrastByItemManager salesContrastByItemManager;
+	private SalesContrastBySupplierManager salesContrastBySupplierManager;
 
 	@RequestMapping(value = "init")
 	public String init_Action(Model model) {
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
-		return "report/salesContrastByItemReport";
+		return "report/salesContrastBySupplierReport";
 	}
 
 	/**
@@ -56,15 +53,15 @@ public class SalesContrastByItemController extends BaseController {
 		// 初始化机构下拉菜单
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 		// 初始化类型下拉菜单
-		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
-		List<Select2Vo> itemTypeList = Lists.newArrayList();
-		for (ItemType itemType : _itemTypeList) {
-			Select2Vo vo = new Select2Vo(itemType.getItemNo().trim(), itemType.getItemShortName().trim());
+		List<Supplier> _supplierList = supplierManager.getAllSupplierList();
+		List<Select2Vo> supplierList = Lists.newArrayList();
+		for (Supplier supplier : _supplierList) {
+			Select2Vo vo = new Select2Vo(supplier.getSupplierBwId().trim(), supplier.getName().trim());
 
-			itemTypeList.add(vo);
+			supplierList.add(vo);
 		}
 		JsonMapper mapper = new JsonMapper();
-		model.addAttribute("itemTypeList", mapper.toJson(itemTypeList));
+		model.addAttribute("supplierList", mapper.toJson(supplierList));
 	}
 
 	@RequestMapping(value = "search")
@@ -73,33 +70,32 @@ public class SalesContrastByItemController extends BaseController {
 		String optDate2_end = ServletRequestUtils.getStringParameter(request, "optDate2_end");
 		String optDate1_end = ServletRequestUtils.getStringParameter(request, "optDate1_end");
 		String optDate1_start = ServletRequestUtils.getStringParameter(request, "optDate1_start");
-		String itemType = ServletRequestUtils.getStringParameter(request, "itemType");
+		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 
 		model.addAttribute("optDate2_start", optDate2_start);
 		model.addAttribute("optDate2_end", optDate2_end);
 		model.addAttribute("optDate1_end", optDate1_end);
 		model.addAttribute("optDate1_start", optDate1_start);
-		model.addAttribute("itemType", itemType);
+		model.addAttribute("supplier", supplier);
 		model.addAttribute("orgId", orgId);
 
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
-		List<List<ItemSalesContrastVo>> voList = salesContrastByItemManager.search(
+		List<List<SupplierSalesContrastVo>> voList = salesContrastBySupplierManager.search(
 				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), itemType, orgId);
+				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplier, orgId);
 
 		if (StringUtils.isBlank(orgId)) {
-			List<ItemSalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemType);
+			List<SupplierSalesContrastVo> voTotalList = salesContrastBySupplierManager.calTotal(voList, supplier);
 			voList.add(0, voTotalList);
 		}
 
 		model.addAttribute("contrastList", voList);
 
-		return "report/salesContrastByItemReport";
+		return "report/salesContrastBySupplierReport";
 	}
-
 }

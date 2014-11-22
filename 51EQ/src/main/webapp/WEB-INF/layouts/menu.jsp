@@ -201,7 +201,8 @@
 					<c:if test="${_permIdList.contains('22') || _permIdList.contains('23')
 					|| _permIdList.contains('24') || _permIdList.contains('25')
 					|| _permIdList.contains('41') || _permIdList.contains('44')
-					|| _permIdList.contains('45') || _permIdList.contains('60')}">
+					|| _permIdList.contains('45') || _permIdList.contains('60')
+					|| _permIdList.contains('61')}">
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
@@ -211,6 +212,13 @@
 										<a href="${sc_ctx}/salesContrastByItem/init">类别销售信息对比</a>
 									</li>
 								</c:if>
+								<c:if test="${_permIdList.contains('61')}">
+									<li>
+										<a href="${sc_ctx}/salesContrastBySupplier/init">货商销售信息对比</a>
+									</li>
+									<li class="divider"></li>
+								</c:if>
+								
 								<c:if test="${_permIdList.contains('22')}">
 									<li>
 										<a href="${sc_ctx}/salesDayItemChartReport/bar_init">类别销售信息一览(图形)</a>

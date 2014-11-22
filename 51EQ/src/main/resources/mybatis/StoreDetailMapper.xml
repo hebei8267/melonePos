@@ -22,6 +22,7 @@
         <result column="stock_total_amt" property="stockTotalAmt" jdbcType="DECIMAL"/>
         <result column="item_sale_total_amt" property="itemSaleTotalAmt" jdbcType="DECIMAL"/>
         <result column="item_no" property="itemClsNo" jdbcType="DECIMAL"/>
+        <result column="supplier_bw_id" property="supplierBwId" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -97,7 +98,7 @@
         DROP TABLE t_store_detail
     </update>
     
-    <select id="getContrastStoreList" parameterType="map" resultMap="Result_Map_StoreDetail">
+    <select id="getItemContrastStoreList" parameterType="map" resultMap="Result_Map_StoreDetail">
 	    SELECT
 		    sd.org_id,
 		    sd.opt_date,
@@ -115,9 +116,34 @@
 	    </if>
 		GROUP BY
 		    sd.org_id,
-		    g. item_no
+		    g.item_no
 		ORDER BY
 		    sd.org_id,
 		    g.item_no
+    </select>
+    
+    
+    <select id="getSupplierContrastStoreList" parameterType="map" resultMap="Result_Map_StoreDetail">
+	    SELECT
+		    sd.org_id,
+		    sd.opt_date,
+		    g.supplier_bw_id,
+		    SUM(sd.stock_qty) stock_qty
+		FROM
+		    t_store_detail sd,
+		    t_goods g
+		WHERE
+		    g.barcode = sd.item_barcode
+		AND g.supplier_bw_id IN (${supplierArray})
+		<![CDATA[AND opt_date = #{optDateEnd}]]>
+		<if test="orgId != null and orgId != ''">
+	    AND sd.org_id = #{orgId}
+	    </if>
+		GROUP BY
+		    sd.org_id,
+		    g.supplier_bw_id
+		ORDER BY
+		    sd.org_id,
+		    g.supplier_bw_id
     </select>
 </mapper>
