@@ -111,7 +111,7 @@
 		AND g.item_no IN (${itemType})
 		<![CDATA[AND opt_date = #{optDateEnd}]]>
 		<if test="orgId != null and orgId != ''">
-	    AND it.org_id = #{orgId}
+	    AND sd.org_id = #{orgId}
 	    </if>
 		GROUP BY
 		    sd.org_id,
