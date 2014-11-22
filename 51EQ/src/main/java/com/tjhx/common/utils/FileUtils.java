@@ -127,7 +127,11 @@ public class FileUtils {
 	public static File deleteFile(String fileFullPath) {
 		File _file = new File(fileFullPath);
 		if (_file.isFile() && _file.exists()) {
-			_file.delete();
+			 if (!_file.delete()) {
+                 System.out.println("请关闭使用该文件的所有进程或者流！！");
+             } else {
+                 System.out.println(_file.getName()+" 成功被删除！");
+             }
 		}
 
 		return _file;

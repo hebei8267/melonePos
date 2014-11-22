@@ -62,6 +62,8 @@ public class SaleReport {
 	private BigDecimal goldCardAmt = new BigDecimal("0");
 	/** 返利金额 */
 	private BigDecimal rebateAmt = new BigDecimal("0");
+	/** 汇报金额 */
+	private BigDecimal reportAmt = new BigDecimal("0");
 
 	/**
 	 * 取得行号
@@ -531,6 +533,24 @@ public class SaleReport {
 		this.rebateAmt = rebateAmt;
 	}
 
+	/**
+	 * 取得汇报金额
+	 * 
+	 * @return reportAmt 汇报金额
+	 */
+	public BigDecimal getReportAmt() {
+		return reportAmt;
+	}
+
+	/**
+	 * 设置汇报金额
+	 * 
+	 * @param reportAmt 汇报金额
+	 */
+	public void setReportAmt(BigDecimal reportAmt) {
+		this.reportAmt = reportAmt;
+	}
+
 	public void addCashRunInfo_Cash(CashRun _cashRun) throws ParseException {
 		// 机构名称
 		this.orgName = _cashRun.getOrgName();
@@ -587,6 +607,8 @@ public class SaleReport {
 
 		this.rebateAmt = _cashRun.getRebateAmt();
 		this.goldCardAmt = _cashRun.getGoldCardAmt();
+
+		this.reportAmt = _cashRun.getReportAmt();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {
