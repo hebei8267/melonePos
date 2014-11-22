@@ -154,10 +154,12 @@ public class Employee2Manager {
 		_dbEmployee2.setPosAdjustRecord(employee2.getPosAdjustRecord());
 
 		if (null != employee2.getImgFile()) {
-			employee2.setPhotoUrl(employee2.getIdCardNo() + FileUtils.getSuffix(employee2.getImgFile().getOriginalFilename()));
+			_dbEmployee2.setPhotoUrl(employee2.getIdCardNo() + FileUtils.getSuffix(employee2.getImgFile().getOriginalFilename()));
+
+			_dbEmployee2.setImgFile(employee2.getImgFile());
 		}
 		employee2JpaDao.save(_dbEmployee2);
 
-		photoStore(employee2);
+		photoStore(_dbEmployee2);
 	}
 }
