@@ -57,6 +57,8 @@ public class StoreDetail extends IdEntity {
 	private BigDecimal itemSaleTotalAmt;
 	/** 类别编号 */
 	private String itemClsNo;
+	/** 货商百威编号 */
+	private String supplierBwId;
 
 	/**
 	 * 取得机构编号
@@ -380,6 +382,25 @@ public class StoreDetail extends IdEntity {
 	 */
 	public void setItemClsNo(String itemClsNo) {
 		this.itemClsNo = itemClsNo;
+	}
+
+	/**
+	 * 获取货商百威编号
+	 * 
+	 * @return supplierBwId 货商百威编号
+	 */
+	@Transient
+	public String getSupplierBwId() {
+		return supplierBwId;
+	}
+
+	/**
+	 * 设置货商百威编号
+	 * 
+	 * @param supplierBwId 货商百威编号
+	 */
+	public void setSupplierBwId(String supplierBwId) {
+		this.supplierBwId = supplierBwId;
 	}
 
 }

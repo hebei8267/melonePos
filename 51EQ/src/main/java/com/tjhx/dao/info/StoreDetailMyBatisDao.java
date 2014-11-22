@@ -14,7 +14,15 @@ public interface StoreDetailMyBatisDao {
 	public void dropTable();
 
 	/**
-	 * 销售合计库存对比列表
+	 * 销售合计库存对比列表(商品类型)
 	 */
-	public List<StoreDetail> getContrastStoreList(Map<String, String> paramMap);
+	public List<StoreDetail> getItemContrastStoreList(Map<String, String> paramMap);
+
+	/**
+	 * 销售合计库存对比列表(货商)
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<StoreDetail> getSupplierContrastStoreList(Map<String, String> param);
 }

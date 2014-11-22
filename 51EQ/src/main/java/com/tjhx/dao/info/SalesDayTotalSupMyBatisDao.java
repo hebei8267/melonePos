@@ -1,6 +1,7 @@
 package com.tjhx.dao.info;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tjhx.entity.info.SalesDayTotalSup;
 
@@ -28,4 +29,12 @@ public interface SalesDayTotalSupMyBatisDao {
 	 * @return
 	 */
 	public List<SalesDayTotalSup> getSumSaleRqtyList(SalesDayTotalSup salesDayTotalSup);
+
+	/**
+	 * 销售合计对比列表
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<SalesDayTotalSup> getContrastList(Map<String, String> param);
 }
