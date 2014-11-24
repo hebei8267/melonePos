@@ -120,7 +120,7 @@
 		LEFT JOIN
 		    t_sales_week_total_goods_4 good4 ON bill.barcode = good4.item_barcode AND bill.org_id = good4.org_id
 		LEFT JOIN
-    		t_store_detail sd ON bill.barcode = sd.item_barcode AND bill.org_id = sd.org_id
+    		t_store_detail sd ON bill.barcode = sd.item_barcode AND bill.org_id = sd.org_id AND sd.opt_date = #{optDate}
 		WHERE
 		    batch_id = #{batchId}
 		AND supplier_name = #{supplierName}

@@ -74,6 +74,8 @@ public class ReqBill extends IdEntity {
 	private BigDecimal posAmt3;
 	/** 销售金额-近4周 */
 	private BigDecimal posAmt4;
+	/** 操作日期 */
+	private String optDate;
 
 	/**
 	 * 取得处理批次号
@@ -567,6 +569,25 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setPosAmt4(BigDecimal posAmt4) {
 		this.posAmt4 = posAmt4;
+	}
+
+	/**
+	 * 获取操作日期
+	 * 
+	 * @return optDate 操作日期
+	 */
+	@Transient
+	public String getOptDate() {
+		return optDate;
+	}
+
+	/**
+	 * 设置操作日期
+	 * 
+	 * @param optDate 操作日期
+	 */
+	public void setOptDate(String optDate) {
+		this.optDate = optDate;
 	}
 
 }
