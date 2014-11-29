@@ -2,6 +2,7 @@ package com.tjhx.service.info;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.StoreDayTotalJpaDao;
 import com.tjhx.dao.info.StoreDetailJpaDao;
@@ -49,7 +51,16 @@ public class StoreDetailManager {
 		// Organization org = _orgList.get(i);
 		// ----------------------------------------
 		for (Organization org : _orgList) {
-			List<Store> bwStoreList = storeMyBatisDao.getStoreInfoList(org.getBwBranchNo());
+			// 日期
+			String optDate = DateUtils.getCurrentDateShortStr();
+			String _optDate = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd");
+			String optDateY = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
+			String optDateM = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
+
+			Map<String, String> param = Maps.newHashMap();
+			param.put("bw_branch_no", org.getBwBranchNo());
+			param.put("oper_date", _optDate);
+			List<Store> bwStoreList = storeMyBatisDao.getStoreInfoList(param);
 
 			int _index = 0;
 			for (Store bwStore : bwStoreList) {
@@ -59,10 +70,6 @@ public class StoreDetailManager {
 				storeDetail.setOrgId(org.getId());
 				// 机构资金-百威
 				storeDetail.setBwBranchNo(org.getBwBranchNo());
-				// 日期
-				String optDate = DateUtils.getCurrentDateShortStr();
-				String optDateY = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
-				String optDateM = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
 
 				storeDetail.setOptDate(optDate);
 				// 日期-年
