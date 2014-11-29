@@ -46,58 +46,59 @@ public class StoreDetailManager {
 	@Transactional(readOnly = false)
 	public void getOrgStoreDetail() {
 		List<Organization> _orgList = orgManager.getSubOrganization();
-		// ----------------------------------------
-		// for (int i = 0; i < 2; i++) {
-		// Organization org = _orgList.get(i);
-		// ----------------------------------------
-		for (Organization org : _orgList) {
+
+		for (int i = 0; i < 30; i++) {
 			// 日期
-			String optDate = DateUtils.getCurrentDateShortStr();
+			// String optDate = DateUtils.getCurrentDateShortStr();
+			String optDate = DateUtils.getNextDateFormatDate(-i, "yyyyMMdd");
+
 			String _optDate = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd");
 			String optDateY = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
 			String optDateM = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
 
-			Map<String, String> param = Maps.newHashMap();
-			param.put("bw_branch_no", org.getBwBranchNo());
-			param.put("oper_date", _optDate);
-			List<Store> bwStoreList = storeMyBatisDao.getStoreInfoList(param);
+			for (Organization org : _orgList) {
 
-			int _index = 0;
-			for (Store bwStore : bwStoreList) {
-				StoreDetail storeDetail = new StoreDetail();
+				Map<String, String> param = Maps.newHashMap();
+				param.put("bw_branch_no", org.getBwBranchNo());
+				param.put("oper_date", _optDate);
+				List<Store> bwStoreList = storeMyBatisDao.getStoreInfoList(param);
 
-				// 机构编号
-				storeDetail.setOrgId(org.getId());
-				// 机构资金-百威
-				storeDetail.setBwBranchNo(org.getBwBranchNo());
+				int _index = 0;
+				for (Store bwStore : bwStoreList) {
+					StoreDetail storeDetail = new StoreDetail();
 
-				storeDetail.setOptDate(optDate);
-				// 日期-年
-				storeDetail.setOptDateY(optDateY);
-				// 日期-月
-				storeDetail.setOptDateM(optDateM);
-				// 库存标记 0-正库存 1-负库存
-				storeDetail.setStoreFlg(bwStore.getStockQty().compareTo(BigDecimal.ZERO) == 1 ? "0" : "1");
-				// Index
-				storeDetail.setIndex(++_index);
-				// 货号
-				storeDetail.setItemSubno(bwStore.getItemSubno());
-				// 条形码
-				storeDetail.setItemBarcode(bwStore.getItemBarcode());
-				// 商品名称
-				storeDetail.setItemName(bwStore.getItemName());
-				// 库存数量
-				storeDetail.setStockQty(bwStore.getStockQty());
-				// 库存金额
-				storeDetail.setStockAmt(bwStore.getStockAmt());
-				// 售价金额
-				storeDetail.setItemSaleAmt(bwStore.getItemSaleAmt());
+					// 机构编号
+					storeDetail.setOrgId(org.getId());
+					// 机构资金-百威
+					storeDetail.setBwBranchNo(org.getBwBranchNo());
 
-				storeDetailJpaDao.save(storeDetail);
+					storeDetail.setOptDate(optDate);
+					// 日期-年
+					storeDetail.setOptDateY(optDateY);
+					// 日期-月
+					storeDetail.setOptDateM(optDateM);
+					// 库存标记 0-正库存 1-负库存
+					storeDetail.setStoreFlg(bwStore.getStockQty().compareTo(BigDecimal.ZERO) == 1 ? "0" : "1");
+					// Index
+					storeDetail.setIndex(++_index);
+					// 货号
+					storeDetail.setItemSubno(bwStore.getItemSubno());
+					// 条形码
+					storeDetail.setItemBarcode(bwStore.getItemBarcode());
+					// 商品名称
+					storeDetail.setItemName(bwStore.getItemName());
+					// 库存数量
+					storeDetail.setStockQty(bwStore.getStockQty());
+					// 库存金额
+					storeDetail.setStockAmt(bwStore.getStockAmt());
+					// 售价金额
+					storeDetail.setItemSaleAmt(bwStore.getItemSaleAmt());
+
+					storeDetailJpaDao.save(storeDetail);
+				}
+
 			}
-
 		}
-
 	}
 
 	/**
