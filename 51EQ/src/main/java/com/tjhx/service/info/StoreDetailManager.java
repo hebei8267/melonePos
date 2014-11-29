@@ -47,10 +47,10 @@ public class StoreDetailManager {
 	public void getOrgStoreDetail() {
 		List<Organization> _orgList = orgManager.getSubOrganization();
 
-		for (int i = 0; i < 30; i++) {
+	//	for (int i = 0; i < 30; i++) {
 			// 日期
-			// String optDate = DateUtils.getCurrentDateShortStr();
-			String optDate = DateUtils.getNextDateFormatDate(-i, "yyyyMMdd");
+			 String optDate = DateUtils.getCurrentDateShortStr();
+			//String optDate = DateUtils.getNextDateFormatDate(-i, "yyyyMMdd");
 
 			String _optDate = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd");
 			String optDateY = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
@@ -98,7 +98,7 @@ public class StoreDetailManager {
 				}
 
 			}
-		}
+	//	}
 	}
 
 	/**

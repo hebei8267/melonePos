@@ -60,7 +60,7 @@
 		              OR '0' = '1' ) 
 		       AND ( b.item_combine_sta IN ( '0', '5', '6', '7', 
 		                                     '8', '9' ) ) 
-		       AND ( a.branch_no IN ( '#{bw_branch_no})', '*' ) ) 
+		       AND ( a.branch_no IN ( #{bw_branch_no}, '*' ) ) 
 	]]>
 	</select>
 </mapper>
