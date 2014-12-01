@@ -51,7 +51,8 @@ public class StoreDetailManager {
 		// String optDate = DateUtils.getNextDateFormatDate(-i, "yyyyMMdd");
 
 		// 日期
-		String optDate = DateUtils.getNextDateFormatDate(-1, "yyyy-MM-dd");
+		String _optDate = DateUtils.getNextDateFormatDate(-1, "yyyy-MM-dd");
+		String optDate = DateUtils.getNextDateFormatDate(-1, "yyyyMMdd");
 		String optDateY = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
 		String optDateM = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
 
@@ -59,7 +60,7 @@ public class StoreDetailManager {
 
 			Map<String, String> param = Maps.newHashMap();
 			param.put("bw_branch_no", org.getBwBranchNo());
-			param.put("oper_date", optDate);
+			param.put("oper_date", _optDate);
 			List<Store> bwStoreList = storeMyBatisDao.getStoreInfoList(param);
 
 			int _index = 0;
@@ -108,7 +109,7 @@ public class StoreDetailManager {
 		List<Organization> _orgList = orgManager.getSubOrganization();
 		for (Organization org : _orgList) {
 			// 日期
-			String optDate = DateUtils.getNextDateFormatDate(-1, "yyyy-MM-dd");
+			String optDate = DateUtils.getNextDateFormatDate(-1, "yyyyMMdd");
 			StoreDetail _param = new StoreDetail();
 			_param.setBwBranchNo(org.getBwBranchNo());
 			_param.setOptDate(optDate);
