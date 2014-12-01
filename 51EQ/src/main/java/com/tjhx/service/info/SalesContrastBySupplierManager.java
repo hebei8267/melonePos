@@ -135,6 +135,7 @@ public class SalesContrastBySupplierManager {
 	 * @return
 	 */
 	private List<List<SupplierSalesContrastVo>> formatVoList(List<SupplierSalesContrastVo> voList) {
+		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 		Collections.sort(voList, new Comparator<SupplierSalesContrastVo>() {
 			@Override
 			public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {

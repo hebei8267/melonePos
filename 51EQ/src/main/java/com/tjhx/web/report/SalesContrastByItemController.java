@@ -116,7 +116,7 @@ public class SalesContrastByItemController extends BaseController {
 
 		if (StringUtils.isBlank(orgId)) {
 			List<ItemSalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemNoArray);
-
+			System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 			Collections.sort(voTotalList, new Comparator<ItemSalesContrastVo>() {
 				@Override
 				public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {

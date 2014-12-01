@@ -236,6 +236,7 @@ public class SalesContrastByItemManager {
 	 * @return
 	 */
 	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList) {
+		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 		Collections.sort(voList, new Comparator<ItemSalesContrastVo>() {
 			@Override
 			public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {

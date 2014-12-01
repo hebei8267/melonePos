@@ -113,7 +113,7 @@ public class SalesContrastBySupplierController extends BaseController {
 		if (StringUtils.isBlank(orgId)) {
 			List<SupplierSalesContrastVo> voTotalList = salesContrastBySupplierManager.calTotal(voList, supplierNoArray);
 			voList.add(0, voTotalList);
-
+			System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 			Collections.sort(voTotalList, new Comparator<SupplierSalesContrastVo>() {
 				@Override
 				public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {
