@@ -245,8 +245,43 @@ public class SalesWeekTotalGoodsManager {
 		Map<String, String> paramMap = Maps.newHashMap();
 		paramMap.put("barcode", barcode);
 		paramMap.put("optDate", optDate);
+		List<ReqBill> list = salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(paramMap);
 
-		return salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(paramMap);
+		ReqBill totalReqBill = new ReqBill();
+		for (ReqBill reqBill : list) {
+			// 货号
+			totalReqBill.setBarcode(barcode);
+			// 名称
+
+			totalReqBill.setProductName(reqBill.getProductName());
+
+			// 销量(件) 近一周
+			totalReqBill.setPosQty1(totalReqBill.getPosQty1().add(reqBill.getPosQty1()));
+			// 销量(件) 近两周
+			totalReqBill.setPosQty2(totalReqBill.getPosQty2().add(reqBill.getPosQty2()));
+			// 销量(件) 近三周
+			totalReqBill.setPosQty3(totalReqBill.getPosQty3().add(reqBill.getPosQty3()));
+			// 销量(件) 近四周
+			totalReqBill.setPosQty4(totalReqBill.getPosQty4().add(reqBill.getPosQty4()));
+			// 销量(件) 合计
+			totalReqBill.setPosQtyTotal(totalReqBill.getPosQtyTotal().add(reqBill.getPosQtyTotal()));
+
+			// 库存量
+			totalReqBill.setStockQty(totalReqBill.getStockQty().add(reqBill.getStockQty()));
+			// 销售额(元) 近一周
+			totalReqBill.setPosAmt1(totalReqBill.getPosAmt1().add(reqBill.getPosAmt1()));
+			// 销售额(元) 近二周
+			totalReqBill.setPosAmt2(totalReqBill.getPosAmt2().add(reqBill.getPosAmt2()));
+			// 销售额(元) 近三周
+			totalReqBill.setPosAmt3(totalReqBill.getPosAmt3().add(reqBill.getPosAmt3()));
+			// 销售额(元) 近四周
+			totalReqBill.setPosAmt4(totalReqBill.getPosAmt4().add(reqBill.getPosAmt4()));
+			// 销售额(元)合计
+			totalReqBill.setPosAmtTotal(totalReqBill.getPosAmtTotal().add(reqBill.getPosAmtTotal()));
+		}
+
+		list.add(0, totalReqBill);
+		return list;
 	}
 
 }
