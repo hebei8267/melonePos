@@ -4,6 +4,8 @@
 package com.tjhx.service.info;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +135,16 @@ public class SalesContrastBySupplierManager {
 	 * @return
 	 */
 	private List<List<SupplierSalesContrastVo>> formatVoList(List<SupplierSalesContrastVo> voList) {
+		Collections.sort(voList, new Comparator<SupplierSalesContrastVo>() {
+			@Override
+			public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {
+				BigDecimal v1 = o1.getSaleRqty2();
+				BigDecimal v2 = o2.getSaleRqty2();
+
+				return v1.intValue() > v2.intValue() ? -1 : 1;
+			}
+		});
+
 		List<List<SupplierSalesContrastVo>> _list = Lists.newArrayList();
 		List<SupplierSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
@@ -318,5 +330,4 @@ public class SalesContrastBySupplierManager {
 
 		return voList;
 	}
-
 }

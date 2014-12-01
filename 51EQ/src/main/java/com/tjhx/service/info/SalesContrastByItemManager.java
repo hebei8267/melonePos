@@ -1,6 +1,8 @@
 package com.tjhx.service.info;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -198,7 +200,6 @@ public class SalesContrastByItemManager {
 		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
 		List<Organization> orgList = null;
 		if (StringUtils.isBlank(orgId)) {// 全机构
-
 			orgList = orgManager.getSubOrganization();
 		} else {
 			Organization org = orgManager.getOrganizationByOrgIdInCache(orgId);
@@ -235,6 +236,15 @@ public class SalesContrastByItemManager {
 	 * @return
 	 */
 	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList) {
+		Collections.sort(voList, new Comparator<ItemSalesContrastVo>() {
+			@Override
+			public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
+				BigDecimal v1 = o1.getSaleRqty2();
+				BigDecimal v2 = o2.getSaleRqty2();
+
+				return v1.intValue() > v2.intValue() ? -1 : 1;
+			}
+		});
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
 		List<ItemSalesContrastVo> _subList = null;

@@ -3,6 +3,9 @@
  */
 package com.tjhx.web.report;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -58,6 +61,8 @@ public class SalesContrastByItemController extends BaseController {
 		// 初始化类型下拉菜单
 		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
 		List<Select2Vo> itemTypeList = Lists.newArrayList();
+		itemTypeList.add(new Select2Vo("ALL", "所有类别"));
+
 		for (ItemType itemType : _itemTypeList) {
 			Select2Vo vo = new Select2Vo(itemType.getItemNo().trim(), itemType.getItemShortName().trim());
 
@@ -86,14 +91,41 @@ public class SalesContrastByItemController extends BaseController {
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
+		// =============================================================
+		// 含有所有类别
+		// =============================================================
+		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
+		if (itemNoList.contains("ALL")) {// 含有所有类别
+			List<ItemType> _itemList = itemTypeManager.getAllItemType();
+
+			itemNoList.clear();
+
+			for (ItemType _itemType : _itemList) {
+				itemNoList.add(_itemType.getItemNo().trim());
+			}
+		}
+
+		String itemNoArray = StringUtils.join(itemNoList, ",");
+		// =============================================================
+
 		List<List<ItemSalesContrastVo>> voList = salesContrastByItemManager.search(
 				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), itemType, orgId);
+				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), itemNoArray, orgId);
 
 		if (StringUtils.isBlank(orgId)) {
-			List<ItemSalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemType);
+			List<ItemSalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemNoArray);
+
+			Collections.sort(voTotalList, new Comparator<ItemSalesContrastVo>() {
+				@Override
+				public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
+					BigDecimal v1 = o1.getSaleRqty2();
+					BigDecimal v2 = o2.getSaleRqty2();
+
+					return v1.intValue() > v2.intValue() ? -1 : 1;
+				}
+			});
 			voList.add(0, voTotalList);
 		}
 

@@ -3,6 +3,9 @@
  */
 package com.tjhx.web.report;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -55,6 +58,8 @@ public class SalesContrastBySupplierController extends BaseController {
 		// 初始化类型下拉菜单
 		List<Supplier> _supplierList = supplierManager.getAllSupplierList();
 		List<Select2Vo> supplierList = Lists.newArrayList();
+		supplierList.add(new Select2Vo("ALL", "所有货商"));
+
 		for (Supplier supplier : _supplierList) {
 			Select2Vo vo = new Select2Vo(supplier.getSupplierBwId().trim(), supplier.getName().trim());
 
@@ -83,15 +88,41 @@ public class SalesContrastBySupplierController extends BaseController {
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
+		// =============================================================
+		// 含有所有货商
+		// =============================================================
+		List<String> supplierNoList = Lists.newArrayList(supplier.split(","));
+		if (supplierNoList.contains("ALL")) {// 含有所有货商
+			List<Supplier> _supplierList = supplierManager.getAllSupplierList();
+
+			supplierNoList.clear();
+
+			for (Supplier _supplier : _supplierList) {
+				supplierNoList.add(_supplier.getSupplierBwId().trim());
+			}
+		}
+		String supplierNoArray = StringUtils.join(supplierNoList, ",");
+		// =============================================================
+
 		List<List<SupplierSalesContrastVo>> voList = salesContrastBySupplierManager.search(
 				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplier, orgId);
+				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplierNoArray, orgId);
 
 		if (StringUtils.isBlank(orgId)) {
-			List<SupplierSalesContrastVo> voTotalList = salesContrastBySupplierManager.calTotal(voList, supplier);
+			List<SupplierSalesContrastVo> voTotalList = salesContrastBySupplierManager.calTotal(voList, supplierNoArray);
 			voList.add(0, voTotalList);
+
+			Collections.sort(voTotalList, new Comparator<SupplierSalesContrastVo>() {
+				@Override
+				public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {
+					BigDecimal v1 = o1.getSaleRqty2();
+					BigDecimal v2 = o2.getSaleRqty2();
+
+					return v1.intValue() > v2.intValue() ? -1 : 1;
+				}
+			});
 		}
 
 		model.addAttribute("contrastList", voList);
