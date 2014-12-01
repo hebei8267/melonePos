@@ -48,32 +48,32 @@ public class ReqBill extends IdEntity {
 	/** 机构编号列表 */
 	private List<String> orgIdList;
 	/** 销售数量-合计 */
-	private BigDecimal posQtyTotal;
+	private BigDecimal posQtyTotal = new BigDecimal("0");
 	/** 销售数量-近1周 */
-	private BigDecimal posQty1;
+	private BigDecimal posQty1 = new BigDecimal("0");
 	/** 销售数量-近2周 */
-	private BigDecimal posQty2;
+	private BigDecimal posQty2 = new BigDecimal("0");
 	/** 销售数量-近3周 */
-	private BigDecimal posQty3;
+	private BigDecimal posQty3 = new BigDecimal("0");
 	/** 销售数量-近4周 */
-	private BigDecimal posQty4;
+	private BigDecimal posQty4 = new BigDecimal("0");
 	/** 库存数量 */
-	private BigDecimal stockQty;
+	private BigDecimal stockQty = new BigDecimal("0");
 	/** 建议采购数量-低（平均值×1） */
-	private BigDecimal lowPurchase;
+	private BigDecimal lowPurchase = new BigDecimal("0");
 	/** 建议采购数量-高（平均值×2） */
-	private BigDecimal highPurchase;
+	private BigDecimal highPurchase = new BigDecimal("0");
 
 	/** 销售金额-合计 */
-	private BigDecimal posAmtTotal;
+	private BigDecimal posAmtTotal = new BigDecimal("0");
 	/** 销售金额-近1周 */
-	private BigDecimal posAmt1;
+	private BigDecimal posAmt1 = new BigDecimal("0");
 	/** 销售金额-近2周 */
-	private BigDecimal posAmt2;
+	private BigDecimal posAmt2 = new BigDecimal("0");
 	/** 销售金额-近3周 */
-	private BigDecimal posAmt3;
+	private BigDecimal posAmt3 = new BigDecimal("0");
 	/** 销售金额-近4周 */
-	private BigDecimal posAmt4;
+	private BigDecimal posAmt4 = new BigDecimal("0");
 	/** 操作日期 */
 	private String optDate;
 
@@ -330,9 +330,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getPosQty1() {
-		if (null == posQty1) {
-			return new BigDecimal(0);
-		}
 		return posQty1;
 	}
 
@@ -352,9 +349,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getPosQty2() {
-		if (null == posQty2) {
-			return new BigDecimal(0);
-		}
 		return posQty2;
 	}
 
@@ -374,9 +368,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getPosQty3() {
-		if (null == posQty3) {
-			return new BigDecimal(0);
-		}
 		return posQty3;
 	}
 
@@ -396,9 +387,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getPosQty4() {
-		if (null == posQty4) {
-			return new BigDecimal(0);
-		}
 		return posQty4;
 	}
 
@@ -418,9 +406,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getStockQty() {
-		if (null == stockQty) {
-			return new BigDecimal(0);
-		}
 		return stockQty;
 	}
 
@@ -440,9 +425,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getLowPurchase() {
-		if (null == lowPurchase) {
-			return new BigDecimal(0);
-		}
 		return lowPurchase;
 	}
 
@@ -462,9 +444,6 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getHighPurchase() {
-		if (null == highPurchase) {
-			return new BigDecimal(0);
-		}
 		return highPurchase;
 	}
 
