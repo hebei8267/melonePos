@@ -135,14 +135,18 @@ public class SalesContrastBySupplierManager {
 	 * @return
 	 */
 	private List<List<SupplierSalesContrastVo>> formatVoList(List<SupplierSalesContrastVo> voList) {
-		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+
 		Collections.sort(voList, new Comparator<SupplierSalesContrastVo>() {
 			@Override
 			public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {
 				BigDecimal v1 = o1.getSaleRqty2();
 				BigDecimal v2 = o2.getSaleRqty2();
 
-				return v1.intValue() > v2.intValue() ? -1 : 1;
+				if (v1.intValue() == v2.intValue()) {
+					return 0;
+				} else {
+					return v1.intValue() > v2.intValue() ? -1 : 1;
+				}
 			}
 		});
 

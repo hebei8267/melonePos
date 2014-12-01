@@ -236,14 +236,19 @@ public class SalesContrastByItemManager {
 	 * @return
 	 */
 	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList) {
-		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+
 		Collections.sort(voList, new Comparator<ItemSalesContrastVo>() {
 			@Override
 			public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
 				BigDecimal v1 = o1.getSaleRqty2();
 				BigDecimal v2 = o2.getSaleRqty2();
 
-				return v1.intValue() > v2.intValue() ? -1 : 1;
+				if (v1.intValue() == v2.intValue()) {
+					return 0;
+				} else {
+					return v1.intValue() > v2.intValue() ? -1 : 1;
+				}
+				
 			}
 		});
 

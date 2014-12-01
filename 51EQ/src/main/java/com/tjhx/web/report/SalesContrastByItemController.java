@@ -116,14 +116,18 @@ public class SalesContrastByItemController extends BaseController {
 
 		if (StringUtils.isBlank(orgId)) {
 			List<ItemSalesContrastVo> voTotalList = salesContrastByItemManager.calTotal(voList, itemNoArray);
-			System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+
 			Collections.sort(voTotalList, new Comparator<ItemSalesContrastVo>() {
 				@Override
 				public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
 					BigDecimal v1 = o1.getSaleRqty2();
 					BigDecimal v2 = o2.getSaleRqty2();
 
-					return v1.intValue() > v2.intValue() ? -1 : 1;
+					if (v1.intValue() == v2.intValue()) {
+						return 0;
+					} else {
+						return v1.intValue() > v2.intValue() ? -1 : 1;
+					}
 				}
 			});
 			voList.add(0, voTotalList);
