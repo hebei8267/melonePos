@@ -249,12 +249,11 @@ public class SalesWeekTotalGoodsManager {
 
 		ReqBill totalReqBill = new ReqBill();
 		for (ReqBill reqBill : list) {
+			totalReqBill.setOrgId("合计");
 			// 货号
 			totalReqBill.setBarcode(barcode);
 			// 名称
-
 			totalReqBill.setProductName(reqBill.getProductName());
-
 			// 销量(件) 近一周
 			totalReqBill.setPosQty1(totalReqBill.getPosQty1().add(reqBill.getPosQty1()));
 			// 销量(件) 近两周
