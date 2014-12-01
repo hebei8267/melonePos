@@ -153,15 +153,17 @@ public class SalesDayTotalGoodsManager {
 	 * @param optDateEnd
 	 * @param orgId
 	 * @param itemNo
+	 * @param orderMode
 	 * @return
 	 */
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderQty(String optDateStart, String optDateEnd, String orgId,
-			String itemNo) {
+			String itemNo, String orderMode) {
 		SalesDayTotalGoods param = new SalesDayTotalGoods();
 		param.setOptDateStart(optDateStart);
 		param.setOptDateEnd(optDateEnd);
 		param.setOrgId(orgId);
 		param.setItemNo(itemNo);
+		param.setOrderMode(orderMode);
 
 		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderQty(param);
 	}
@@ -173,16 +175,17 @@ public class SalesDayTotalGoodsManager {
 	 * @param optDateEnd
 	 * @param orgId
 	 * @param itemNo
+	 * @param orderMode
 	 * @return
 	 */
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt(String optDateStart, String optDateEnd, String orgId,
-			String itemNo) {
+			String itemNo, String orderMode) {
 		SalesDayTotalGoods param = new SalesDayTotalGoods();
 		param.setOptDateStart(optDateStart);
 		param.setOptDateEnd(optDateEnd);
 		param.setOrgId(orgId);
 		param.setItemNo(itemNo);
-
+		param.setOrderMode(orderMode);
 		return salesDayTotalGoodsMyBatisDao.getSalesItemRankInfoList_OrderAmt(param);
 	}
 

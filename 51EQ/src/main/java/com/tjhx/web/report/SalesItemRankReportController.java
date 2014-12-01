@@ -94,12 +94,14 @@ public class SalesItemRankReportController extends BaseController {
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String itemTypeNo = ServletRequestUtils.getStringParameter(request, "itemTypeNo");
 		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
+		String orderMode2 = ServletRequestUtils.getStringParameter(request, "orderMode2");
 
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("itemTypeNo", itemTypeNo);
 		model.addAttribute("orderMode", orderMode);
+		model.addAttribute("orderMode2", orderMode2);
 
 		String optDateStart = null;
 		String optDateEnd = null;
@@ -119,9 +121,9 @@ public class SalesItemRankReportController extends BaseController {
 				orgNameList.add(org.getName());
 
 				if (orderMode.equals("qty")) {// 按销量排序
-					goodList.add(_search_OrderQty(optDateStart, optDateEnd, org.getId(), itemTypeNo));
+					goodList.add(_search_OrderQty(optDateStart, optDateEnd, org.getId(), itemTypeNo, orderMode2));
 				} else {// 按销售额排序
-					goodList.add(_search_OrderAmt(optDateStart, optDateEnd, org.getId(), itemTypeNo));
+					goodList.add(_search_OrderAmt(optDateStart, optDateEnd, org.getId(), itemTypeNo, orderMode2));
 				}
 			}
 		} else { // 单机构
@@ -129,9 +131,9 @@ public class SalesItemRankReportController extends BaseController {
 			orgNameList.add(orgId.substring(3));
 
 			if (orderMode.equals("qty")) {// 按销量排序
-				goodList.add(_search_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo));
+				goodList.add(_search_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo, orderMode2));
 			} else {// 按销售额排序
-				goodList.add(_search_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo));
+				goodList.add(_search_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo, orderMode2));
 			}
 		}
 
@@ -141,13 +143,17 @@ public class SalesItemRankReportController extends BaseController {
 		return "report/salesItemRankReport";
 	}
 
-	private List<SalesDayTotalGoods> _search_OrderQty(String optDateStart, String optDateEnd, String orgId, String itemTypeNo) {
+	private List<SalesDayTotalGoods> _search_OrderQty(String optDateStart, String optDateEnd, String orgId, String itemTypeNo,
+			String orderMode2) {
 		// 取得指定店指定时间区间内销售信息排名(按类别)--按销量排序
-		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo);
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo,
+				orderMode2);
 	}
 
-	private List<SalesDayTotalGoods> _search_OrderAmt(String optDateStart, String optDateEnd, String orgId, String itemTypeNo) {
+	private List<SalesDayTotalGoods> _search_OrderAmt(String optDateStart, String optDateEnd, String orgId, String itemTypeNo,
+			String orderMode2) {
 		// 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序
-		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo);
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo,
+				orderMode2);
 	}
 }

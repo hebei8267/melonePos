@@ -309,6 +309,7 @@ public class ReqBill extends IdEntity {
 	 * 
 	 * @return posQtyTotal 销售数量-合计
 	 */
+	@Transient
 	public BigDecimal getPosQtyTotal() {
 		return posQtyTotal;
 	}

@@ -61,6 +61,7 @@ public class SalesDayTotalGoods extends IdEntity {
 	private String itemNo;
 	/** 供应商名称 */
 	private String supName;
+	private String orderMode;
 
 	/**
 	 * 取得机构编号
@@ -428,6 +429,25 @@ public class SalesDayTotalGoods extends IdEntity {
 	 */
 	public void setSupName(String supName) {
 		this.supName = supName;
+	}
+
+	/**
+	 * 获取orderMode
+	 * 
+	 * @return orderMode orderMode
+	 */
+	@Transient
+	public String getOrderMode() {
+		return orderMode;
+	}
+
+	/**
+	 * 设置orderMode
+	 * 
+	 * @param orderMode orderMode
+	 */
+	public void setOrderMode(String orderMode) {
+		this.orderMode = orderMode;
 	}
 
 }

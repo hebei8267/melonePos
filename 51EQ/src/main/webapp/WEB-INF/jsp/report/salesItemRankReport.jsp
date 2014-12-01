@@ -87,6 +87,20 @@
 							  			<input type="radio" name="orderMode" value="amt" checked="checked">
 							  			<span style="background-color: #62c462; padding: 5px">销售额</span>
 			                      	</c:if>
+			                      	
+			                      	<c:set var = "desc" value="desc"/>
+			                      	<c:if test="${orderMode2.equals(desc)}" >
+				                      	<input type="radio" name="orderMode2" value="desc" checked="checked">
+							  			<span>畅销</span>
+							  			<input type="radio" name="orderMode2" value="asc">
+							  			<span>滞销</span>
+			                      	</c:if>
+						            <c:if test="${!orderMode2.equals(desc)}" >
+				                      	<input type="radio" name="orderMode2" value="desc">
+							  			<span>畅销</span>
+							  			<input type="radio" name="orderMode2" value="asc" checked="checked">
+							  			<span>滞销</span>
+			                      	</c:if>
 			                    </div>
                     
 				    			<div class="span5" style="margin-top: 20px;">
