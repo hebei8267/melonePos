@@ -237,21 +237,6 @@ public class SalesContrastByItemManager {
 	 */
 	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList) {
 
-		Collections.sort(voList, new Comparator<ItemSalesContrastVo>() {
-			@Override
-			public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
-				BigDecimal v1 = o1.getSaleRqty2();
-				BigDecimal v2 = o2.getSaleRqty2();
-
-				if (v1.intValue() == v2.intValue()) {
-					return 0;
-				} else {
-					return v1.intValue() > v2.intValue() ? -1 : 1;
-				}
-				
-			}
-		});
-
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
 		List<ItemSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
@@ -265,6 +250,23 @@ public class SalesContrastByItemManager {
 			_subList.add(vo);
 		}
 
+		
+		for (List<ItemSalesContrastVo> _voList : _list) {
+			Collections.sort(_voList, new Comparator<ItemSalesContrastVo>() {
+				@Override
+				public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
+					BigDecimal v1 = o1.getSaleRqty2();
+					BigDecimal v2 = o2.getSaleRqty2();
+
+					if (v1.intValue() == v2.intValue()) {
+						return 0;
+					} else {
+						return v1.intValue() > v2.intValue() ? -1 : 1;
+					}
+					
+				}
+			});
+		}
 		return _list;
 	}
 
