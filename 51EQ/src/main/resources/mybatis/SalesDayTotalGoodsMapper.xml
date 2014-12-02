@@ -51,7 +51,7 @@
 		    t_organization org,
 		    t_store_detail sd LEFT JOIN t_sales_day_total_goods g ON sd.item_barcode = g.item_barcode
 																 AND sd.org_id = g.org_id
-																 AND sd.opt_date = date_sub(DATE_FORMAT(NOW(),'%Y%m%d'),interval 1 day) 
+																 AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d') 
 													    		 AND g.opt_date >= #{optDateStart} 
 													    		 AND g.opt_date  <= #{optDateEnd} ,
 		    t_goods gs
@@ -106,7 +106,7 @@
 			FROM
 				t_organization org ,
 			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno 
-			    													  AND sd.opt_date = date_sub(DATE_FORMAT(NOW(),'%Y%m%d'),interval 1 day) 
+			    													  AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 			                                                          AND sd.org_id = sg.org_id 
 			                                                          AND sd.opt_date = #{optDateEnd},
 			    t_goods g ,
@@ -148,7 +148,7 @@
 			FROM
 				t_organization org ,
 			    t_sales_day_total_goods sg LEFT JOIN t_store_detail sd ON sd.item_subno = sg.item_subno 
-			    													  AND sd.opt_date = date_sub(DATE_FORMAT(NOW(),'%Y%m%d'),interval 1 day) 
+			    													  AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d') 
 			                                                          AND sd.org_id = sg.org_id ,
 			    t_goods g ,
 			    t_supplier sup,
@@ -187,7 +187,7 @@
 		    t_store_detail sd
 		ON
 		    sd.item_subno = g.item_subno
-		AND sd.opt_date = date_sub(DATE_FORMAT(NOW(),'%Y%m%d'),interval 1 day) 
+		AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
