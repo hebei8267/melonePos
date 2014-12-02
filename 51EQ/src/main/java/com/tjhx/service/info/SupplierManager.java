@@ -78,7 +78,7 @@ public class SupplierManager {
 		if (null == _supplierList) {
 			// 从数据库中取出全量供应商信息(List格式)
 			_supplierList = (List<Supplier>) supplierJpaDao.findAllSupplierList(new Sort(new Sort.Order(Sort.Direction.ASC,
-					"name")));
+					"supplierBwId")));
 			// 将供应商信息Map保存到memcached
 			spyMemcachedClient.set(MemcachedObjectType.ALL_SUPPLIER_LIST.getObjKey(),
 					MemcachedObjectType.ALL_SUPPLIER_LIST.getExpiredTime(), _supplierList);
