@@ -67,4 +67,8 @@
 		    store.org_id,
 		    store.store_flg
 	</select>
+	
+	<delete id="delStoreDayTotal" parameterType="String">  
+        DELETE FROM t_store_day_total WHERE opt_date = #{optDate}
+    </delete>
 </mapper>

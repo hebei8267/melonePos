@@ -13,6 +13,8 @@ public interface StoreDetailMyBatisDao {
 
 	public void dropTable();
 
+	void delStoreDetail(String optDate);
+
 	/**
 	 * 销售合计库存对比列表(商品类型)
 	 */

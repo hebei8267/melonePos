@@ -21,4 +21,9 @@ public interface StoreDayTotalMyBatisDao {
 	 */
 	public List<StoreDayTotal> getStoreDayTotalList(String optDate);
 
+	/**
+	 * @param optDate
+	 */
+	public void delStoreDayTotal(String optDate);
+
 }

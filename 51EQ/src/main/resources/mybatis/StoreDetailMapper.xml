@@ -146,4 +146,8 @@
 		    sd.org_id,
 		    g.supplier_bw_id
     </select>
+    
+    <delete id="delStoreDetail" parameterType="String">  
+        DELETE FROM t_store_detail WHERE opt_date = #{optDate}
+    </delete>
 </mapper>
