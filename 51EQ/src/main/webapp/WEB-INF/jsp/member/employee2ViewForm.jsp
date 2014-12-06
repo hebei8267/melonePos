@@ -67,8 +67,8 @@
                 			<td>
                 				<c:if test="${1 == employee2.education}">小学</c:if>
                 				<c:if test="${2 == employee2.education}">初中</c:if>
-                				<c:if test="${2 == employee2.education}">高中</c:if>
-                				<c:if test="${2 == employee2.education}">大学</c:if>
+                				<c:if test="${3 == employee2.education}">高中</c:if>
+                				<c:if test="${4 == employee2.education}">大学</c:if>
                 			</td>
                 			<td class="right">专业 :</td>
                 			<td>${employee2.professional}</td>
