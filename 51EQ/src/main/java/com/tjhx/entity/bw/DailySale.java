@@ -10,6 +10,10 @@ public class DailySale {
 	private String orgBranchNo;
 	/** 百威系统销售额 */
 	private BigDecimal bwSaleAmt = new BigDecimal("0");
+	/** 金卡操作金额(合计) */
+	private BigDecimal operMoney = new BigDecimal("0");
+	/** 金卡操作类型 */
+	private String operType;
 
 	/**
 	 * 取得日期
@@ -63,6 +67,42 @@ public class DailySale {
 	 */
 	public void setBwSaleAmt(BigDecimal bwSaleAmt) {
 		this.bwSaleAmt = bwSaleAmt;
+	}
+
+	/**
+	 * 获取金卡操作金额(合计)
+	 * 
+	 * @return operMoney
+	 */
+	public BigDecimal getOperMoney() {
+		return operMoney;
+	}
+
+	/**
+	 * 设置金卡操作金额(合计)
+	 * 
+	 * @param operMoney 金卡操作金额(合计)
+	 */
+	public void setOperMoney(BigDecimal operMoney) {
+		this.operMoney = operMoney;
+	}
+
+	/**
+	 * 获取金卡操作类型
+	 * 
+	 * @return operType
+	 */
+	public String getOperType() {
+		return operType;
+	}
+
+	/**
+	 * 设置金卡操作类型
+	 * 
+	 * @param operType 金卡操作类型
+	 */
+	public void setOperType(String operType) {
+		this.operType = operType;
 	}
 
 }

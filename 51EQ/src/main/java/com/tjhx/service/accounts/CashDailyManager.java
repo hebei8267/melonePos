@@ -1,6 +1,7 @@
 package com.tjhx.service.accounts;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.accounts.CashDailyJpaDao;
 import com.tjhx.dao.accounts.CashDailyMyBatisDao;
@@ -364,8 +367,7 @@ public class CashDailyManager {
 
 			_saleReport.setPrePayCashAmt(_saleReport.getPrePayCashAmt().add(saleReport.getPrePayCashAmt()));
 			_saleReport.setPrePayCardAmt(_saleReport.getPrePayCardAmt().add(saleReport.getPrePayCardAmt()));
-			
-	
+
 			// 金卡销售金额
 			_saleReport.setGoldCardAmt(_saleReport.getGoldCardAmt().add(saleReport.getGoldCardAmt()));
 			// 返利金额
@@ -532,6 +534,52 @@ public class CashDailyManager {
 	}
 
 	/**
+	 * 同步百威金卡销售额
+	 * 
+	 * @throws ParseException
+	 */
+	public void synBwGoldCardSaleAmt() throws ParseException {
+		// 取得同步百威销售额-重计算天数
+		List<String> optDateList = calOptDate();
+
+		// List<String> optDateList = Lists.newArrayList();
+		// optDateList.add("20141116");
+		for (String optDate : optDateList) {
+			List<CashDaily> _cashDailyList = cashDailyJpaDao.findByOptDate(optDate);
+
+			Map<String, String> operDateParam = Maps.newHashMap();
+			operDateParam.put("oper_date", optDate);
+			operDateParam.put("oper_date_start", DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
+			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
+			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailyGoldCardSaleList(operDateParam);
+
+			for (CashDaily _cashDaily : _cashDailyList) {
+				_cashDaily.setPrePayTotalAmt(new BigDecimal("0"));
+				_cashDaily.setGoldCardTotalAmt(new BigDecimal("0"));
+
+				for (DailySale _dailySale : _bwDailySaleList) {
+					if (myEquals(_cashDaily, _dailySale)) {
+
+						if ("P".equals(_dailySale.getOperType())) {// 充值
+							// 金卡预付款(合计)
+							_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(_dailySale.getOperMoney()));
+						} else if ("SA".equals(_dailySale.getOperType())) {// 销售
+							// 金卡销售金额(合计)
+							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(_dailySale.getOperMoney()));
+						} else if ("SB".equals(_dailySale.getOperType())) {// 销售退货
+							// 金卡销售金额(合计)
+							_cashDaily
+									.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().subtract((_dailySale.getOperMoney())));
+						}
+
+					}
+				}
+				cashDailyJpaDao.save(_cashDaily);
+			}
+		}
+	}
+
+	/**
 	 * 同步百威销售额
 	 * 
 	 * @throws ParseException
@@ -651,4 +699,5 @@ public class CashDailyManager {
 			cashRunJpaDao.save(cashRun);
 		}
 	}
+
 }

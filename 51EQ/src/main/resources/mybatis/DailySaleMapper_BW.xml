@@ -7,6 +7,9 @@
         <result column="oper_date" property="operDate" jdbcType="VARCHAR"/>
         <result column="branch_no" property="orgBranchNo" jdbcType="VARCHAR"/>
         <result column="bw_sale_amt" property="bwSaleAmt" jdbcType="NUMERIC"/>
+        
+        <result column="oper_money" property="operMoney" jdbcType="NUMERIC"/>
+        <result column="oper_type" property="operType" jdbcType="NUMERIC"/>
 	</resultMap>
 	
   	
@@ -23,5 +26,35 @@
 		GROUP BY
     		branch_no,
     		oper_date
+	</select>
+	
+	<!-- 按日/门店编号取得百威系统金卡预存/销售额信息 -->
+	<select id="getDailyGoldCardSaleList" parameterType="map" resultMap="Result_Map_DailySale">
+	<![CDATA[
+		SELECT
+		    SUM(oper_money) - SUM(give_amt) AS oper_money,
+		    money_type,
+		    oper_type,
+		    branch_no+'01' AS branch_no,
+		    #{oper_date} as oper_date
+		FROM
+		    pos_t_vip_flow a
+		WHERE
+		    (
+		        oper_type IN('p',
+		                     'sa',
+		                     'sb' ) )
+		AND (
+		        oper_date >= #{oper_date_start})
+		AND (
+		        oper_date <= #{oper_date_end})
+		GROUP BY
+		    money_type,
+		    oper_type,
+		    branch_no
+		ORDER BY
+		    branch_no,
+		    money_type
+	]]>
 	</select>
 </mapper>

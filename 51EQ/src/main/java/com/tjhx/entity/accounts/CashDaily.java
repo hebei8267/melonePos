@@ -68,6 +68,10 @@ public class CashDaily extends IdEntity {
 	private BigDecimal prePayCashAmt = new BigDecimal("0");
 	/** 金卡预付款(刷卡) */
 	private BigDecimal prePayCardAmt = new BigDecimal("0");
+	/** 金卡销售金额(合计) */
+	private BigDecimal goldCardTotalAmt = new BigDecimal("0");
+	/** 金卡预付款(合计) */
+	private BigDecimal prePayTotalAmt = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -595,5 +599,41 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setRebateAmt(BigDecimal rebateAmt) {
 		this.rebateAmt = rebateAmt;
+	}
+
+	/**
+	 * 获取金卡销售金额(合计)
+	 * 
+	 * @return goldCardTotalAmt
+	 */
+	public BigDecimal getGoldCardTotalAmt() {
+		return goldCardTotalAmt;
+	}
+
+	/**
+	 * 设置金卡销售金额(合计)
+	 * 
+	 * @param goldCardTotalAmt 金卡销售金额(合计)
+	 */
+	public void setGoldCardTotalAmt(BigDecimal goldCardTotalAmt) {
+		this.goldCardTotalAmt = goldCardTotalAmt;
+	}
+
+	/**
+	 * 获取金卡预付款(合计)
+	 * 
+	 * @return prePayTotalAmt
+	 */
+	public BigDecimal getPrePayTotalAmt() {
+		return prePayTotalAmt;
+	}
+
+	/**
+	 * 设置金卡预付款(合计)
+	 * 
+	 * @param prePayTotalAmt 金卡预付款(合计)
+	 */
+	public void setPrePayTotalAmt(BigDecimal prePayTotalAmt) {
+		this.prePayTotalAmt = prePayTotalAmt;
 	}
 }
