@@ -34,6 +34,9 @@
 		<result column="pre_pay_cash_amt" property="prePayCashAmt" jdbcType="DECIMAL"/>
 		<result column="gold_card_amt" property="goldCardAmt" jdbcType="DECIMAL"/>
 		<result column="rebate_amt" property="rebateAmt" jdbcType="DECIMAL"/>
+		
+		<result column="gold_card_total_amt" property="goldCardTotalAmt" jdbcType="DECIMAL"/>
+		<result column="pre_pay_total_amt" property="prePayTotalAmt" jdbcType="DECIMAL"/>
         
         <result column="bank_check_flg" property="bankCheckFlg" jdbcType="INTEGER"/>
 	</resultMap>
@@ -69,6 +72,8 @@
     	cash.pre_pay_cash_amt ,
     	cash.gold_card_amt ,
     	cash.rebate_amt ,
+    	cash.gold_card_total_amt ,
+    	cash.pre_pay_total_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>
@@ -147,6 +152,8 @@
 	    	cash.retained_amt ,
 	    	cash.sale_amt ,
 	    	cash.report_amt ,
+	    	cash.gold_card_total_amt ,
+    		cash.pre_pay_total_amt ,
 	    	org.org_name AS org_name
 		from 
 			t_organization org left join t_cash_daily cash on org.org_id = cash.org_id
