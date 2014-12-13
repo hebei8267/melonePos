@@ -191,7 +191,55 @@ public class SalesDayChartReportController extends BaseController {
 		model.addAttribute("optDate", optDate);
 		// 取得每日各店销售汇总（根据日期）
 		List<SalesDayTotal> salesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
+
+		salesDayTotalList.add(0, calTotal(salesDayTotalList));
+
 		model.addAttribute("salesDayTotalList", salesDayTotalList);
+	}
+
+	private SalesDayTotal calTotal(List<SalesDayTotal> salesDayTotalList) {
+		SalesDayTotal total = new SalesDayTotal();
+		// 机构编号
+		total.setOrgId("合计");
+
+		for (SalesDayTotal salesDayTotal : salesDayTotalList) {
+			// 当日销售金额
+			total.setPosAmt(total.getPosAmt().add(salesDayTotal.getPosAmt()));
+			// 截止现在销售金额
+			total.setPosAmtByNow(total.getPosAmtByNow().add(salesDayTotal.getPosAmtByNow()));
+			// 截止天数
+			total.setNowDays(salesDayTotal.getNowDays());
+			// 本月天数
+			total.setMonthDays(salesDayTotal.getMonthDays());
+			// 预计本月销售
+			total.setExpMonthPosAmt(total.getExpMonthPosAmt().add(salesDayTotal.getExpMonthPosAmt()));
+			// 去年同期销售
+			total.setPreYearMonthPosAmt(total.getPreYearMonthPosAmt().add(salesDayTotal.getPreYearMonthPosAmt()));
+			// 销售增长额(去年同期销售)
+			total.setPosAmtIncrease(total.getPosAmtIncrease().add(salesDayTotal.getPosAmtIncrease()));
+			// 销售增长率(去年同期销售)=销售增长额/去年同期销售
+			BigDecimal _preYearMonthPosAmt = total.getPreYearMonthPosAmt();
+			if (null == _preYearMonthPosAmt || _preYearMonthPosAmt.compareTo(BigDecimal.ZERO) == 0) {
+				_preYearMonthPosAmt = new BigDecimal(1);
+			}
+			total.setPosAmtRate(total.getPosAmtIncrease().divide(_preYearMonthPosAmt, 4, BigDecimal.ROUND_HALF_EVEN)
+					.multiply(new BigDecimal(100)));
+			// 月销售目标额
+			total.setSaleTargetAmt(total.getSaleTargetAmt().add(salesDayTotal.getSaleTargetAmt()));
+			// 销售增长额(本月销售目标额)
+			total.setPosAmtIncrease2(total.getPosAmtIncrease2().add(salesDayTotal.getPosAmtIncrease2()));
+			// 销售增长率(本月销售目标额)=销售增长额(本月销售目标额)/本月销售目标额
+			BigDecimal _saleTargetAmt = total.getSaleTargetAmt();
+			if (null == _saleTargetAmt || _saleTargetAmt.compareTo(BigDecimal.ZERO) == 0) {
+				_saleTargetAmt = new BigDecimal(1);
+			}
+			total.setPosAmtRate2(total.getPosAmtIncrease2().divide(_saleTargetAmt, 4, BigDecimal.ROUND_HALF_EVEN)
+					.multiply(new BigDecimal(100)));
+
+			// 日需销售金额 */
+			total.setDayNeededPosAmt(total.getDayNeededPosAmt().add(salesDayTotal.getDayNeededPosAmt()));
+		}
+		return total;
 	}
 
 	/**

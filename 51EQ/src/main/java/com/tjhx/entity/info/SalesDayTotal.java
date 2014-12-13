@@ -33,31 +33,31 @@ public class SalesDayTotal extends IdEntity {
 	/** 机构资金编号 */
 	private String branchNo;
 	/** 当日销售金额 */
-	private BigDecimal posAmt;
+	private BigDecimal posAmt = new BigDecimal("0");
 	/** 截止现在销售金额 */
-	private BigDecimal posAmtByNow;
+	private BigDecimal posAmtByNow = new BigDecimal("0");
 	/** 截止天数 */
 	private int nowDays;
 	/** 本月天数 */
 	private int monthDays;
 	/** 预计本月销售 */
-	private BigDecimal expMonthPosAmt;
+	private BigDecimal expMonthPosAmt = new BigDecimal("0");
 	/** 去年同期销售 */
-	private BigDecimal preYearMonthPosAmt;
+	private BigDecimal preYearMonthPosAmt = new BigDecimal("0");
 	/** 销售增长额(去年同期销售) */
-	private BigDecimal posAmtIncrease;
+	private BigDecimal posAmtIncrease = new BigDecimal("0");
 	/** 销售增长率(去年同期销售) */
-	private BigDecimal posAmtRate;
+	private BigDecimal posAmtRate = new BigDecimal("0");
 	/** 销售增长额(本月销售目标额) */
-	private BigDecimal posAmtIncrease2;
+	private BigDecimal posAmtIncrease2 = new BigDecimal("0");
 	/** 销售增长率(本月销售目标额) */
-	private BigDecimal posAmtRate2;
+	private BigDecimal posAmtRate2 = new BigDecimal("0");
 	/** 日需销售金额 */
-	private BigDecimal dayNeededPosAmt;
+	private BigDecimal dayNeededPosAmt = new BigDecimal("0");
 	/** 排名 */
-	private int ranking;
+	private int ranking = -1;
 	/** 月销售目标额 */
-	private BigDecimal saleTargetAmt = new BigDecimal(0);
+	private BigDecimal saleTargetAmt = new BigDecimal("0");
 	// ========================================================
 	/** 颜色 */
 	private String htmlColor;
