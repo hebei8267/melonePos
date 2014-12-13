@@ -376,6 +376,12 @@ public class CashDailyManager {
 			_saleReport.setGoldCardAmt(_saleReport.getGoldCardAmt().add(saleReport.getGoldCardAmt()));
 			// 返利金额
 			_saleReport.setRebateAmt(_saleReport.getRebateAmt().add(saleReport.getRebateAmt()));
+			
+			// 金卡销售金额(合计)
+			_saleReport.setGoldCardTotalAmt(_saleReport.getGoldCardTotalAmt().add(saleReport.getGoldCardTotalAmt()));
+						// 金卡预付款(合计)
+			_saleReport.setPrePayTotalAmt(_saleReport.getPrePayTotalAmt().add(saleReport.getPrePayTotalAmt()));
+					
 		}
 		return _saleReport;
 	}
