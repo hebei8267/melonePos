@@ -140,7 +140,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
+                                        当日销售额<br><br>普通 <br>[金卡消费]<br>[金卡返利]<br>代金卷
                                     </th>
                                     <th class="center">
                                         金卡<br>消费<br>百威<br>对账
@@ -207,9 +207,9 @@
                                         </td>
                                         <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
                                         <td class="center">
-                                        	${cashDaily.saleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}
+                                        	${cashDaily.saleAmt}<br>${cashDaily.goldCardAmt}<br>${cashDaily.rebateAmt}<br>${cashDaily.couponValue}
                                         </td>
-                                        <c:set var="_difference_goldCarAmt" value="${cashDaily.goldCardAmt + cashDaily.rebateAmt - cashDaily.goldCardTotalAmt }" />
+                                        <c:set var="_difference_goldCarAmt" value="${cashDaily.goldCardAmt - cashDaily.goldCardTotalAmt }" />
                                         <td <c:if test="${(_difference_goldCarAmt > BW_SALE_DIF_AMOUNT) || (_difference_goldCarAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.goldCardTotalAmt}
                                         </td>
@@ -243,6 +243,9 @@
                                         <td>
                                             ${totalCashDaily.prePayCardAmt}
                                         </td>
+                                        <td>
+                                        
+                                        </td>
                                         <td class="center">
                                             ${totalCashDaily.adjustAmt}
                                         </td>
@@ -257,6 +260,9 @@
                                         </td>
                                         <td></td>
                                         <td class="center">${totalCashDaily.saleAmt} / ${totalCashDaily.goldCardAmt} / ${totalCashDaily.rebateAmt} / ${totalCashDaily.couponValue}</td>
+                                       	<td>
+                                        
+                                        </td>
                                        	<td class="center">${totalCashDaily.couponCashValue}</td>
                                         <td class="center">
                                             ${totalCashDaily.saleAmt + totalCashDaily.goldCardAmt + totalCashDaily.rebateAmt + totalCashDaily.couponValue}
@@ -275,7 +281,7 @@
                             <c:if test="${empty	cashDailyList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="15"	class="rounded-foot-left">
+                                        <td	colspan="17"	class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
