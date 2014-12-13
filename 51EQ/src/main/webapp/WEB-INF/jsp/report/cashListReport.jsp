@@ -244,7 +244,7 @@
                                             ${totalCashDaily.prePayCardAmt}
                                         </td>
                                         <td>
-                                        
+                                        	${totalCashDaily.prePayTotalAmt}
                                         </td>
                                         <td class="center">
                                             ${totalCashDaily.adjustAmt}
@@ -261,7 +261,7 @@
                                         <td></td>
                                         <td class="center">${totalCashDaily.saleAmt} / ${totalCashDaily.goldCardAmt} / ${totalCashDaily.rebateAmt} / ${totalCashDaily.couponValue}</td>
                                        	<td>
-                                        
+                                        	${totalCashDaily.goldCardTotalAmt}
                                         </td>
                                        	<td class="center">${totalCashDaily.couponCashValue}</td>
                                         <td class="center">

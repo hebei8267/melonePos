@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.accounts.CashDailyJpaDao;
@@ -340,6 +339,11 @@ public class CashDailyManager {
 			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(cashDaily.getGoldCardAmt()));
 			// 返利金额
 			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(cashDaily.getRebateAmt()));
+
+			// 金卡销售金额(合计)
+			_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(cashDaily.getGoldCardTotalAmt()));
+			// 金卡预付款(合计)
+			_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(cashDaily.getPrePayTotalAmt()));
 		}
 		return _cashDaily;
 	}
