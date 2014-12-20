@@ -2,6 +2,7 @@
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
 <c:set var="sc_ctx">${ctx}/sc</c:set>
@@ -114,27 +115,7 @@
 						</legend>
 					</div>
 					
-					<div class="span6">
-						<label class="control-label">销售日期(一) :</label>
-						<input id="optDate1_start" name="optDate1_start" type="text" class="input-medium" value="${optDate1_start }"/>
-						～
-						<input id="optDate1_end" name="optDate1_end" type="text" class="input-medium" value="${optDate1_end }"/>
-					</div>
-
-					<div class="span6">
-						<label class="control-label">销售日期(二) :</label>
-						<input id="optDate2_start" name="optDate2_start" type="text" class="input-medium" value="${optDate2_start }"/>
-						～
-						<input id="optDate2_end" name="optDate2_end" type="text" class="input-medium" value="${optDate2_end }"/>
-					</div>
-					
-					<div class="span4" style="margin-top: 20px;">
-						<label class="control-label">货商 :</label>
-
-						<input type="hidden" id="supplier" name="supplier" class="select2 input-xlarge" value="${supplier}">
-					</div>
-
-					<div class="span8" style="margin-top: 20px;">
+					<div class="span3">
 						<label class="control-label">机构 :</label>
 						<select name="orgId" class="input-medium">
 							<c:forEach items="${orgList}" var="org">
@@ -146,8 +127,47 @@
 								</c:if>
 							</c:forEach>
 						</select>
+					</div>
+					
+					<div class="span4">
+						<label class="control-label">货商 :</label>
 
-						&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="hidden" id="supplier" name="supplier" class="select2 input-xlarge" value="${supplier}">
+					</div>
+					
+					<div class="span5">
+						<label class="control-label">排序方式 :</label>
+
+						<c:set var = "amt" value="amt"/>
+						<c:if test="${orderMode.equals(amt)}" >
+						<input type="radio" name="orderMode" value="qty" >
+						<span style="background-color: #5bc0de; padding: 5px">销售量</span>
+						<input type="radio" name="orderMode" value="amt" checked="checked">
+						<span style="background-color: #62c462; padding: 5px">销售额</span>
+						</c:if>
+						<c:if test="${!orderMode.equals(amt)}" >
+						<input type="radio" name="orderMode" value="qty" checked="checked">
+						<span style="background-color: #5bc0de; padding: 5px">销售量</span>
+						<input type="radio" name="orderMode" value="amt">
+						<span style="background-color: #62c462; padding: 5px">销售额</span>
+						</c:if>
+					</div>
+					
+					<div class="span6" style="margin-top: 20px;">
+						<label class="control-label">销售日期(一) :</label>
+						<input id="optDate1_start" name="optDate1_start" type="text" class="input-medium" value="${optDate1_start }"/>
+						～
+						<input id="optDate1_end" name="optDate1_end" type="text" class="input-medium" value="${optDate1_end }"/>
+					</div>
+
+					<div class="span6" style="margin-top: 20px;">
+						<label class="control-label">销售日期(二) :</label>
+						<input id="optDate2_start" name="optDate2_start" type="text" class="input-medium" value="${optDate2_start }"/>
+						～
+						<input id="optDate2_end" name="optDate2_end" type="text" class="input-medium" value="${optDate2_end }"/>
+					</div>
+
+					<div class="span8" style="margin-top: 20px;">
 						<input type="radio" name="dateMode" value="week">
 						<span style="background-color: #5bc0de; padding: 5px">周对比</span>
 						<input type="radio" name="dateMode" value="month" >
@@ -192,62 +212,71 @@
 								<td class="center font2"> ${salesContrastVo.saleRqty1} </td>
 								<td class="center font2"> ${salesContrastVo.saleRqty2} </td>
 								
-								<c:if test="${salesContrastVo.saleRqty2 > salesContrastVo.saleRqty1}" >
+								<fmt:parseNumber var="saleRqty1" type="number" value="${salesContrastVo.saleRqty1}" />
+								<fmt:parseNumber var="saleRqty2" type="number" value="${salesContrastVo.saleRqty2}" />
+								<c:if test="${saleRqty2 > saleRqty1}" >
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
-								<c:if test="${salesContrastVo.saleRqty2 < salesContrastVo.saleRqty1}" >
+								<c:if test="${saleRqty2 < saleRqty1}" >
 								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
-								<c:if test="${salesContrastVo.saleRqty2 == salesContrastVo.saleRqty1}" >
+								<c:if test="${saleRqty2 == saleRqty1}" >
 								<td class="center font2">－</td>
 								</c:if>
 								
 								<td class="center"> ${salesContrastVo.saleRamt1} </td>
 								<td class="center"> ${salesContrastVo.saleRamt2} </td>
 								
-								<c:if test="${salesContrastVo.saleRamt2 > salesContrastVo.saleRamt1}" >
+								<fmt:parseNumber var="saleRamt1" type="number" value="${salesContrastVo.saleRamt1}" />
+								<fmt:parseNumber var="saleRamt2" type="number" value="${salesContrastVo.saleRamt2}" />
+								<c:if test="${saleRamt2 > saleRamt1}" >
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
-								<c:if test="${salesContrastVo.saleRamt2 < salesContrastVo.saleRamt1}" >
+								<c:if test="${saleRamt2 < saleRamt1}" >
 								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
-								<c:if test="${salesContrastVo.saleRamt2 == salesContrastVo.saleRamt1}" >
+								<c:if test="${saleRamt2 == saleRamt1}" >
 								<td class="center font2">－</td>
 								</c:if>
 								
 								<td class="center  font2"> ${salesContrastVo.salePrice1} </td>
 								<td class="center  font2"> ${salesContrastVo.salePrice2} </td>
 								
-								<c:if test="${salesContrastVo.salePrice2 > salesContrastVo.salePrice1}" >
+								<fmt:parseNumber var="salePrice1" type="number" value="${salesContrastVo.salePrice1}" />
+								<fmt:parseNumber var="salePrice2" type="number" value="${salesContrastVo.salePrice2}" />
+								<c:if test="${salePrice2 > salePrice1}" >
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
-								<c:if test="${salesContrastVo.salePrice2 < salesContrastVo.salePrice1}" >
+								<c:if test="${salePrice2 < salePrice1}" >
 								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
-								<c:if test="${salesContrastVo.salePrice2 == salesContrastVo.salePrice1}" >
+								<c:if test="${salePrice2 == salePrice1}" >
 								<td class="center font2">－</td>
 								</c:if>
 								
 								<td class="center  font2"> ${salesContrastVo.stockTotalQty1} </td>
 								<td class="center  font2"> ${salesContrastVo.stockTotalQty2} </td>
 								
-								<c:if test="${salesContrastVo.stockTotalQty2 > salesContrastVo.stockTotalQty1}" >
+								<fmt:parseNumber var="stockTotalQty1" type="number" value="${salesContrastVo.stockTotalQty1}" />
+								<fmt:parseNumber var="stockTotalQty2" type="number" value="${salesContrastVo.stockTotalQty2}" />
+								<c:if test="${stockTotalQty2 > stockTotalQty1}" >
 								<td class="center font2" style="color : #FF0000">↑</td>
 								</c:if>
-								<c:if test="${salesContrastVo.stockTotalQty2 < salesContrastVo.stockTotalQty1}" >
+								<c:if test="${stockTotalQty2 < stockTotalQty1}" >
 								<td class="center font2" style="color : #5bc0de">↓</td>
 								</c:if>
-								<c:if test="${salesContrastVo.stockTotalQty2 == salesContrastVo.stockTotalQty1}" >
+								<c:if test="${stockTotalQty2 == stockTotalQty1}" >
 								<td class="center font2">－</td>
 								</c:if>
 								
-								<c:if test="${salesContrastVo.salesContrast > 0}" >
+								<fmt:parseNumber var="salesContrast" type="number" value="${salesContrastVo.salesContrast}" />
+								<c:if test="${salesContrast > 0}" >
 								<td class="center" style="color : #FF0000">↑ ${salesContrastVo.salesContrast} %</td>
 								</c:if>
-								<c:if test="${salesContrastVo.salesContrast < 0}" >
+								<c:if test="${salesContrast < 0}" >
 								<td class="center" style="color : #5bc0de">↓ ${-salesContrastVo.salesContrast} %</td>
 								</c:if>
-								<c:if test="${salesContrastVo.salesContrast == 0}" >
+								<c:if test="${salesContrast == 0}" >
 								<td class="center"> ${salesContrastVo.salesContrast} %</td>
 								</c:if>
 							</tr>

@@ -3,9 +3,6 @@
  */
 package com.tjhx.web.report;
 
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -77,6 +74,7 @@ public class SalesContrastBySupplierController extends BaseController {
 		String optDate1_start = ServletRequestUtils.getStringParameter(request, "optDate1_start");
 		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
 
 		model.addAttribute("optDate2_start", optDate2_start);
 		model.addAttribute("optDate2_end", optDate2_end);
@@ -84,6 +82,7 @@ public class SalesContrastBySupplierController extends BaseController {
 		model.addAttribute("optDate1_start", optDate1_start);
 		model.addAttribute("supplier", supplier);
 		model.addAttribute("orgId", orgId);
+		model.addAttribute("orderMode", orderMode);
 
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
@@ -101,33 +100,14 @@ public class SalesContrastBySupplierController extends BaseController {
 				supplierNoList.add(_supplier.getSupplierBwId().trim());
 			}
 		}
-		String supplierNoArray = StringUtils.join(supplierNoList, ",");
-		// =============================================================
 
+		// =============================================================
+		String supplierNoArray = StringUtils.join(supplierNoList, ",");
 		List<List<SupplierSalesContrastVo>> voList = salesContrastBySupplierManager.search(
 				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplierNoArray, orgId);
-
-		if (StringUtils.isBlank(orgId)) {
-			List<SupplierSalesContrastVo> voTotalList = salesContrastBySupplierManager.calTotal(voList, supplierNoArray);
-			voList.add(0, voTotalList);
-
-			Collections.sort(voTotalList, new Comparator<SupplierSalesContrastVo>() {
-				@Override
-				public int compare(SupplierSalesContrastVo o1, SupplierSalesContrastVo o2) {
-					BigDecimal v1 = o1.getSaleRqty2();
-					BigDecimal v2 = o2.getSaleRqty2();
-
-					if (v1.intValue() == v2.intValue()) {
-						return 0;
-					} else {
-						return v1.intValue() > v2.intValue() ? -1 : 1;
-					}
-				}
-			});
-		}
+				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplierNoArray, orgId, orderMode);
 
 		model.addAttribute("contrastList", voList);
 

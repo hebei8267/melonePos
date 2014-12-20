@@ -77,17 +77,18 @@ public class SalesContrastByItemManager {
 	 * @param optDate2End
 	 * @param itemNoArray
 	 * @param orgId
+	 * @param orderMode
 	 * @return
 	 */
 	public List<List<ItemSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start,
-			String optDate2End, String itemNoArray, String orgId) {
+			String optDate2End, String itemNoArray, String orgId, String orderMode) {
 
 		List<ItemSalesContrastVo> voList = initBlankVoList(itemNoArray, orgId);
 		copyList1Value(voList, optDate1Start, optDate1End, orgId, itemNoArray);
 		copyList2Value(voList, optDate2Start, optDate2End, orgId, itemNoArray);
 		copyStore1Value(voList, optDate1End, orgId, itemNoArray);
 		copyStore2Value(voList, optDate2End, orgId, itemNoArray);
-		return formatVoList(voList);
+		return formatVoList(voList, orgId, itemNoArray, orderMode);
 	}
 
 	/**
@@ -235,7 +236,8 @@ public class SalesContrastByItemManager {
 	 * @param tmpList
 	 * @return
 	 */
-	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList) {
+	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList, String orgId, String itemNoArray,
+			String orderMode) {
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
 		List<ItemSalesContrastVo> _subList = null;
@@ -250,22 +252,24 @@ public class SalesContrastByItemManager {
 			_subList.add(vo);
 		}
 
-		
 		for (List<ItemSalesContrastVo> _voList : _list) {
-			Collections.sort(_voList, new Comparator<ItemSalesContrastVo>() {
-				@Override
-				public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
-					BigDecimal v1 = o1.getSaleRqty2();
-					BigDecimal v2 = o2.getSaleRqty2();
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(_voList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(_voList, new ItemSaleRqtyComparator());
+			}
 
-					if (v1.intValue() == v2.intValue()) {
-						return 0;
-					} else {
-						return v1.intValue() > v2.intValue() ? -1 : 1;
-					}
-					
-				}
-			});
+		}
+
+		// 计算合计
+		if (StringUtils.isBlank(orgId)) {
+			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray);
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
+			}
+			_list.add(0, voTotalList);
 		}
 		return _list;
 	}
@@ -276,7 +280,7 @@ public class SalesContrastByItemManager {
 	 * @param voList
 	 * @return
 	 */
-	public List<ItemSalesContrastVo> calTotal(List<List<ItemSalesContrastVo>> voList, String itemNoArray) {
+	private List<ItemSalesContrastVo> calTotal(List<List<ItemSalesContrastVo>> voList, String itemNoArray) {
 		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
 
 		List<ItemSalesContrastVo> _list = Lists.newArrayList();
@@ -341,4 +345,36 @@ public class SalesContrastByItemManager {
 		}
 		return _list;
 	}
+}
+
+class ItemSaleRqtyComparator implements Comparator<ItemSalesContrastVo> {
+
+	@Override
+	public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
+		BigDecimal v1 = o1.getSaleRqty2();
+		BigDecimal v2 = o2.getSaleRqty2();
+
+		if (v1.intValue() == v2.intValue()) {
+			return 0;
+		} else {
+			return v1.intValue() > v2.intValue() ? -1 : 1;
+		}
+	}
+
+}
+
+class ItemSaleRamtComparator implements Comparator<ItemSalesContrastVo> {
+
+	@Override
+	public int compare(ItemSalesContrastVo o1, ItemSalesContrastVo o2) {
+		BigDecimal v1 = o1.getSaleRamt2();
+		BigDecimal v2 = o2.getSaleRamt2();
+
+		if (v1.intValue() == v2.intValue()) {
+			return 0;
+		} else {
+			return v1.intValue() > v2.intValue() ? -1 : 1;
+		}
+	}
+
 }

@@ -77,13 +77,13 @@
 			                        <c:set var = "qty" value="qty"/>
 			                      	<c:if test="${orderMode.equals(qty)}" >
 				                      	<input type="radio" name="orderMode" value="qty" checked="checked">
-							  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+							  			<span style="background-color: #5bc0de; padding: 5px">销售量</span>
 							  			<input type="radio" name="orderMode" value="amt">
 							  			<span style="background-color: #62c462; padding: 5px">销售额</span>
 			                      	</c:if>
 						            <c:if test="${!orderMode.equals(qty)}" >
 				                      	<input type="radio" name="orderMode" value="qty">
-							  			<span style="background-color: #5bc0de; padding: 5px">销量</span>
+							  			<span style="background-color: #5bc0de; padding: 5px">销售量</span>
 							  			<input type="radio" name="orderMode" value="amt" checked="checked">
 							  			<span style="background-color: #62c462; padding: 5px">销售额</span>
 			                      	</c:if>
