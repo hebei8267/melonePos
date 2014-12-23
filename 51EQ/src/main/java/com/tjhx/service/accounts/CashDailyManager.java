@@ -548,6 +548,7 @@ public class CashDailyManager {
 	 * 
 	 * @throws ParseException
 	 */
+	@Transactional(readOnly = false)
 	public void synBwGoldCardSaleAmt() throws ParseException {
 		// 取得同步百威销售额-重计算天数
 		List<String> optDateList = calOptDate();
