@@ -202,11 +202,17 @@
 					|| _permIdList.contains('24') || _permIdList.contains('25')
 					|| _permIdList.contains('41') || _permIdList.contains('44')
 					|| _permIdList.contains('45') || _permIdList.contains('60')
-					|| _permIdList.contains('61')}">
+					|| _permIdList.contains('61') || _permIdList.contains('62')}">
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
 							<ul class="dropdown-menu">
+								<c:if test="${_permIdList.contains('62')}">
+									<li>
+										<a href="${sc_ctx}/salesOrdersDayTotalContrast/init">店铺指标</a>
+									</li>
+									<li class="divider"></li>
+								</c:if>
 								<c:if test="${_permIdList.contains('60')}">
 									<li>
 										<a href="${sc_ctx}/salesContrastByItem/init">类别销售信息对比</a>

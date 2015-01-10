@@ -24,4 +24,23 @@
         DELETE FROM t_sales_orders_day_total WHERE opt_date = #{optDate}
     </delete>
   	
+  	<!-- 取得t_sales_orders_day_total信息(根据参数) -->
+	<select id="getSalesOrdersDayTotalList" parameterType="map" resultMap="Result_Map_SalesOrdersDayTotal">
+		SELECT
+		    org_id,
+		    SUM(orders_num) AS orders_num,
+		    SUM(sale_amt)   AS sale_amt
+		FROM
+		    t_sales_orders_day_total
+		where
+		<![CDATA[
+  		 	opt_date >= #{optDateStart}
+		AND opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
+  		AND org_id = #{orgId}
+  		</if>
+		GROUP BY
+		    org_id
+	</select>
 </mapper>

@@ -1,5 +1,10 @@
 package com.tjhx.dao.info;
 
+import java.util.List;
+import java.util.Map;
+
+import com.tjhx.entity.info.SalesOrdersDayTotal;
+
 public interface SalesOrdersDayTotalMyBatisDao {
 
 	/**
@@ -8,4 +13,10 @@ public interface SalesOrdersDayTotalMyBatisDao {
 	 * @param optDate 日期
 	 */
 	public void delSalesOrdersDayTotalInfo(String optDate);
+
+	/**
+	 * @param param
+	 * @return
+	 */
+	public List<SalesOrdersDayTotal> getSalesOrdersDayTotalList(Map<String, String> param);
 }
