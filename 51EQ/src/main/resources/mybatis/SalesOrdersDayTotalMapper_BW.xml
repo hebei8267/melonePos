@@ -38,8 +38,8 @@
 		    b.oper_id=c.sale_man
 		WHERE
 		    a.sale_man = b.oper_id
-		AND a.oper_date>=#{startDate}
-		AND a.oper_date<=#{endDate}
+		AND a.oper_date>=CONVERT(VARCHAR,CONVERT(DATETIME,#{startDate}),112)
+		AND a.oper_date<=CONVERT(VARCHAR,CONVERT(DATETIME,#{endDate}),112)
 		AND a.branch_no = #{branchNo}
 		GROUP BY
 		    a.branch_no,

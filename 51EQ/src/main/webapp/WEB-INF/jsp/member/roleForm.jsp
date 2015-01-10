@@ -360,10 +360,10 @@
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
 						<tr>
 							<c:if test="${role.permIdList.contains('62')}">
-							<td><input type="checkbox" name="perm" value="62" checked>销售单信息对比</td>
+							<td><input type="checkbox" name="perm" value="62" checked>店铺指标</td>
 							</c:if>
 							<c:if test="${!role.permIdList.contains('62')}">
-							<td><input type="checkbox" name="perm" value="62">销售单信息对比</td>
+							<td><input type="checkbox" name="perm" value="62">店铺指标</td>
 							</c:if>
 						</tr>
 						<tr>

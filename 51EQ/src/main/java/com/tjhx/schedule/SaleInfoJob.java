@@ -124,7 +124,9 @@ public class SaleInfoJob implements IJob {
 		// =================================================================
 		// 销售单日汇总
 		// =================================================================
+		logger.info("计算销售单日汇总 Begin");
 		salesOrdersDayTotalManager.bwDataSyn();
+		logger.info("计算销售单日汇总 Begin");
 	}
 
 }
