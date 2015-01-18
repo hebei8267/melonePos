@@ -152,7 +152,9 @@
 						<span style="background-color: #62c462; padding: 5px">销售额</span>
 						</c:if>
 					</div>
-					
+				</div>
+				
+				<div class="row">
 					<div class="span6" style="margin-top: 20px;">
 						<label class="control-label">销售日期(一) :</label>
 						<input id="optDate1_start" name="optDate1_start" type="text" class="input-medium" value="${optDate1_start }"/>
