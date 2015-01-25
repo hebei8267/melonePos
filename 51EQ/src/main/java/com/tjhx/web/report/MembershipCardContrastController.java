@@ -15,26 +15,28 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tjhx.common.utils.DateUtils;
-import com.tjhx.service.info.SalesOrdersDayTotalManager;
+import com.tjhx.entity.bw.MembershipCard;
+import com.tjhx.service.info.MembershipCardContrastManager;
 import com.tjhx.service.struct.OrganizationManager;
-import com.tjhx.vo.OrgSalesQuota;
 import com.tjhx.web.BaseController;
 
+/**
+ * 会员卡信息对比
+ */
 @Controller
-@RequestMapping(value = "/salesOrdersDayTotalContrast")
-public class SalesOrdersDayTotalContrastController extends BaseController {
+@RequestMapping(value = "/membershipCardContrast")
+public class MembershipCardContrastController extends BaseController {
 	@Resource
 	private OrganizationManager orgManager;
 	@Resource
-	private SalesOrdersDayTotalManager salesOrdersDayTotalManager;
+	private MembershipCardContrastManager membershipCardContrastManager;
 
 	@RequestMapping(value = "init")
 	public String init_Action(Model model) {
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
-		return "report/salesOrdersDayTotalContrast";
+		return "report/membershipCardContrast";
 	}
 
 	/**
@@ -55,26 +57,21 @@ public class SalesOrdersDayTotalContrastController extends BaseController {
 		String optDate1_end = ServletRequestUtils.getStringParameter(request, "optDate1_end");
 		String optDate1_start = ServletRequestUtils.getStringParameter(request, "optDate1_start");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
-		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
 
 		model.addAttribute("optDate2_start", optDate2_start);
 		model.addAttribute("optDate2_end", optDate2_end);
 		model.addAttribute("optDate1_end", optDate1_end);
 		model.addAttribute("optDate1_start", optDate1_start);
 		model.addAttribute("orgId", orgId);
-		model.addAttribute("orderMode", orderMode);
 
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
-		List<OrgSalesQuota> _quotaList = salesOrdersDayTotalManager.getContrastList(
-				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), orgId, orderMode);
+		List<MembershipCard> _list = membershipCardContrastManager.getContrastList(optDate1_start, optDate1_end, optDate2_start,
+				optDate2_end, orgId);
 
-		model.addAttribute("quotaList", _quotaList);
+		model.addAttribute("membershipCardList", _list);
 
-		return "report/salesOrdersDayTotalContrast";
+		return "report/membershipCardContrast";
 	}
 }

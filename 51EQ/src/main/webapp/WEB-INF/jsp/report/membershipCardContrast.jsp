@@ -53,7 +53,7 @@
 					});
 
 					$("#listForm").attr('target', '_self');
-					$("#listForm").attr("action", "${sc_ctx}/salesOrdersDayTotalContrast/search");
+					$("#listForm").attr("action", "${sc_ctx}/membershipCardContrast/search");
 					$("#listForm").submit();
 				});
 			});
@@ -68,11 +68,28 @@
 				<div class="row">
 					<div class="span12">
 						<legend>
-							<h3>店铺指标</h3>
+							<h3>会员卡信息对比</h3>
 						</legend>
 					</div>
-
-					<div class="span12">
+				</div>
+				
+				<div class="row">
+					<div class="span6">
+						<label class="control-label">销售日期(一) :</label>
+						<input id="optDate1_start" name="optDate1_start" type="text" class="input-medium" value="${optDate1_start }"/>
+						～
+						<input id="optDate1_end" name="optDate1_end" type="text" class="input-medium" value="${optDate1_end }"/>
+					</div>
+					<div class="span6">
+						<label class="control-label">销售日期(二) :</label>
+						<input id="optDate2_start" name="optDate2_start" type="text" class="input-medium" value="${optDate2_start }"/>
+						～
+						<input id="optDate2_end" name="optDate2_end" type="text" class="input-medium" value="${optDate2_end }"/>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="span3" style="margin-top: 20px;">
 						<label class="control-label">机构 :</label>
 						<select name="orgId" class="input-medium">
 							<c:forEach items="${orgList}" var="org">
@@ -85,40 +102,8 @@
 							</c:forEach>
 						</select>
 					</div>
-				</div>
-				<div class="row">
-					<div class="span6" style="margin-top: 20px;">
-						<label class="control-label">销售日期(一) :</label>
-						<input id="optDate1_start" name="optDate1_start" type="text" class="input-medium" value="${optDate1_start }"/>
-						～
-						<input id="optDate1_end" name="optDate1_end" type="text" class="input-medium" value="${optDate1_end }"/>
-					</div>
-					<div class="span6" style="margin-top: 20px;">
-						<label class="control-label">销售日期(二) :</label>
-						<input id="optDate2_start" name="optDate2_start" type="text" class="input-medium" value="${optDate2_start }"/>
-						～
-						<input id="optDate2_end" name="optDate2_end" type="text" class="input-medium" value="${optDate2_end }"/>
-					</div>
 					
-					<div class="span4" style="margin-top: 20px;">
-						<label class="control-label">排序方式 :</label>
-
-						<c:set var = "amt" value="amt"/>
-						<c:if test="${orderMode.equals(amt)}" >
-							<input type="radio" name="orderMode" value="qty" >
-							<span style="background-color: #5bc0de; padding: 5px">客单数</span>
-							<input type="radio" name="orderMode" value="amt" checked="checked">
-							<span style="background-color: #62c462; padding: 5px">客单价</span>
-						</c:if>
-						<c:if test="${!orderMode.equals(amt)}" >
-							<input type="radio" name="orderMode" value="qty" checked="checked">
-							<span style="background-color: #5bc0de; padding: 5px">客单数</span>
-							<input type="radio" name="orderMode" value="amt">
-							<span style="background-color: #62c462; padding: 5px">客单价</span>
-						</c:if>
-					</div>
-					
-					<div class="span8" style="margin-top: 20px;">
+					<div class="span9" style="margin-top: 27px;">
 						<input type="radio" name="dateMode" value="week">
 						<span style="background-color: #5bc0de; padding: 5px">周对比</span>
 						<input type="radio" name="dateMode" value="month" >
@@ -130,6 +115,7 @@
 						</button>
 					</div>
 				</div>
+				
 
 			</form>
 
@@ -138,59 +124,54 @@
 					<table class="table	table-striped table-bordered table-condensed mytable">
 						<thead>
 							<tr>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>
-								<th class="center"> 上期客单数 </th>
-								<th class="center"> 本期客单数 </th>
+								<th class="center" rowspan="2" style="background-image: linear-gradient(to bottom,#62c462,#51a351); text"> 店号 </th>
+								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 发行 </th>
+								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 返利 </th>
+							</tr>
+							<tr>
+								<th class="center"> 上期发行量 </th>
+								<th class="center"> 本期发行量 </th>
 								<th class="center">趋势</th>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 上期客单价 </th>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 本期客单价 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 上周返利额 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 本周返利额 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${quotaList}" var="quota">
+							<c:forEach items="${membershipCardList}" var="mc">
 							<tr>
-								<td class="center"> ${quota.orgName} </td>
-								<td class="center"> ${quota.ordersNum1} </td>
-								<td class="center font2"> ${quota.ordersNum2} </td>
+								<td class="center"> ${mc.orgName} </td>
+								<td class="center"> ${mc.issueCnt1} </td>
+								<td class="center font2"> ${mc.issueCnt2} </td>
 								
 								<td class="center font2">
-								<c:if test="${quota.qtyTrend > 0}" >
+								<c:if test="${mc.issueCnt2 > mc.issueCnt1}" >
 								<span style="color : #FF0000">↑</span>
 								</c:if>
 								
-								<c:if test="${quota.qtyTrend < 0}" >
+								<c:if test="${mc.issueCnt2 < mc.issueCnt1}" >
 								<span style="color : #5bc0de">↓</span>
 								</c:if>
 								
-								<c:if test="${!empty quota.qtyTrend}" >
-								<c:if test="${quota.qtyTrend > 0}" >
-								<span style="color : #FF0000"><fmt:formatNumber value="${quota.qtyTrend}" pattern="##.##" minFractionDigits="2" />%</span>
-								</c:if>
-								<c:if test="${quota.qtyTrend < 0}" >
-								<span style="color : #5bc0de"><fmt:formatNumber value="${quota.qtyTrend}" pattern="##.##" minFractionDigits="2" />%</span>
-								</c:if>
+								<c:if test="${mc.issueCnt2 == mc.issueCnt1}" >
+								<span>-</span>
 								</c:if>
 								</td>
 								
-								<td class="center"> ${quota.ordersAvgPrice1} </td>
-								<td class="center font2"> ${quota.ordersAvgPrice2} </td>
-								<td class="center">
-								<c:if test="${quota.amtTrend > 0}" >
+								<td class="center"> ${mc.retAmt1} </td>
+								<td class="center font2"> ${mc.retAmt2} </td>
+								
+								<td class="center font2">
+								<c:if test="${mc.retAmt2 > mc.retAmt1}" >
 								<span style="color : #FF0000">↑</span>
 								</c:if>
 								
-								<c:if test="${quota.amtTrend < 0}" >
+								<c:if test="${mc.retAmt2 < mc.retAmt1}" >
 								<span style="color : #5bc0de">↓</span>
 								</c:if>
 								
-								<c:if test="${!empty quota.amtTrend}" >
-								<c:if test="${quota.amtTrend > 0}" >
-								<span style="color : #FF0000"><fmt:formatNumber value="${quota.amtTrend}" pattern="##.##" minFractionDigits="2" />%</span>
-								</c:if>
-								<c:if test="${quota.amtTrend < 0}" >
-								<span style="color : #5bc0de"><fmt:formatNumber value="${quota.amtTrend}" pattern="##.##" minFractionDigits="2" />%</span>
-								</c:if>
+								<c:if test="${mc.retAmt2 == mc.retAmt1}" >
+								<span>-</span>
 								</c:if>
 								</td>
 							</tr>

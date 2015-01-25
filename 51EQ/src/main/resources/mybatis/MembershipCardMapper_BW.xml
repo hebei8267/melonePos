@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.MembershipCardMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_MembershipCard" type="com.tjhx.entity.bw.MembershipCard">
+        <result column="issue_cnt" property="_issueCnt" jdbcType="INTEGER"/>
+        <result column="ret_amt" property="_retAmt" jdbcType="DECIMAL"/>
+        <result column="branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 取得金卡发行次数 -->
+	<select id="getMembershipCardIssueInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    COUNT(a.flow_no)        	AS issue_cnt,
+		    LEFT(a.branch_no,2) + '01'  AS branch_no
+		FROM
+		    pos_t_vip_flow a
+		WHERE
+		    a.oper_date >= #{optDateStart}
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		AND (
+		        a.oper_type IN ('B'))
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡返利 -->
+	<select id="getMembershipCardRetAmtInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+			LEFT(b.branch_no,2) + '01'  AS branch_no,
+		    SUM(b.ret_amt) 				AS ret_amt
+		FROM
+		    pos_t_vip_haveret b
+		WHERE
+		    (
+		        b.oper_date >= #{optDateStart})
+		AND (
+		        b.oper_date <= #{optDateEnd})
+		GROUP BY
+		    b.branch_no
+	]]>
+	</select>
+</mapper>

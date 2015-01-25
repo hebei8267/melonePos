@@ -127,15 +127,16 @@ public class SalesOrdersDayTotalManager {
 	/**
 	 * 取得门店销售指标
 	 * 
-	 * @param currentStartOptDate
-	 * @param currentEndOptDate
 	 * @param preStartOptDate
 	 * @param preEndOptDate
+	 * @param currentStartOptDate
+	 * @param currentEndOptDate
 	 * @param orgId
 	 * @param orderMode
+	 * @return
 	 */
-	public List<OrgSalesQuota> getContrastList(String currentStartOptDate, String currentEndOptDate, String preStartOptDate,
-			String preEndOptDate, String orgId, String orderMode) {
+	public List<OrgSalesQuota> getContrastList(String preStartOptDate, String preEndOptDate, String currentStartOptDate,
+			String currentEndOptDate, String orgId, String orderMode) {
 
 		List<OrgSalesQuota> voList = initBlankVoList(orgId);
 		copyList1Value(voList, preStartOptDate, preEndOptDate, orgId);
