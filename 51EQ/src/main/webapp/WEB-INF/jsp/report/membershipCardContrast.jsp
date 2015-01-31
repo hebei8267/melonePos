@@ -127,14 +127,26 @@
 								<th class="center" rowspan="2" style="background-image: linear-gradient(to bottom,#62c462,#51a351); text"> 店号 </th>
 								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 发行 </th>
 								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 返利 </th>
+								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 充值 </th>
+								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 客单量(金卡/全部) </th>
+								<th class="center" colspan="3" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 客单金额(金卡/全部) </th>
 							</tr>
 							<tr>
-								<th class="center"> 上期发行量 </th>
-								<th class="center"> 本期发行量 </th>
-								<th class="center">趋势</th>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 上周返利额 </th>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 本周返利额 </th>
-								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
+								<th class="center"> 上期 </th>
+								<th class="center"> 本期 </th>
+								<th class="center"> 趋势 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 上期 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 本期 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 趋势 </th>
+								<th class="center"> 上期 </th>
+								<th class="center"> 本期 </th>
+								<th class="center"> 趋势 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 上期 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 本期 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 趋势 </th>
+								<th class="center"> 上期 </th>
+								<th class="center"> 本期 </th>
+								<th class="center"> 趋势 </th>
 							</tr>
 						</thead>
 						<tbody>
@@ -162,15 +174,104 @@
 								<td class="center font2"> ${mc.retAmt2} </td>
 								
 								<td class="center font2">
-								<c:if test="${mc.retAmt2 > mc.retAmt1}" >
+								<fmt:parseNumber var="_retAmt1" type="number" value="${mc.retAmt1}" />
+								<fmt:parseNumber var="_retAmt2" type="number" value="${mc.retAmt2}" />
+								<c:if test="${_retAmt2 > _retAmt1}" >
 								<span style="color : #FF0000">↑</span>
 								</c:if>
 								
-								<c:if test="${mc.retAmt2 < mc.retAmt1}" >
+								<c:if test="${_retAmt2 < _retAmt1}" >
 								<span style="color : #5bc0de">↓</span>
 								</c:if>
 								
-								<c:if test="${mc.retAmt2 == mc.retAmt1}" >
+								<c:if test="${_retAmt2 == _retAmt1}" >
+								<span>-</span>
+								</c:if>
+								</td>
+								
+								
+								<td class="center"> ${mc.rechargeAmt1} </td>
+								<td class="center font2"> ${mc.rechargeAmt2} </td>
+								
+								<td class="center font2">
+								<fmt:parseNumber var="_rechargeAmt1" type="number" value="${mc.rechargeAmt1}" />
+								<fmt:parseNumber var="_rechargeAmt2" type="number" value="${mc.rechargeAmt2}" />
+								<c:if test="${_rechargeAmt2 > _rechargeAmt1}" >
+								<span style="color : #FF0000">↑</span>
+								</c:if>
+								
+								<c:if test="${_rechargeAmt2 < _rechargeAmt1}" >
+								<span style="color : #5bc0de">↓</span>
+								</c:if>
+								
+								<c:if test="${_rechargeAmt2 == _rechargeAmt1}" >
+								<span>-</span>
+								</c:if>
+								</td>
+								
+								<td class="center"> ${mc.consumeCnt1}/${mc.totalConsumeCnt1} </td>
+								<td class="center font2"> ${mc.consumeCnt2}/${mc.totalConsumeCnt2} </td>
+								
+								<td class="center font2">
+								<c:if test="${mc.consumeCnt2 > mc.consumeCnt1}" >
+								<span style="color : #FF0000">↑</span>
+								</c:if>
+								
+								<c:if test="${mc.consumeCnt2 < mc.consumeCnt1}" >
+								<span style="color : #5bc0de">↓</span>
+								</c:if>
+								
+								<c:if test="${mc.consumeCnt2 == mc.consumeCnt1}" >
+								<span>-</span>
+								</c:if>
+								
+								/
+								
+								<c:if test="${mc.totalConsumeCnt2 > mc.totalConsumeCnt1}" >
+								<span style="color : #FF0000">↑</span>
+								</c:if>
+								
+								<c:if test="${mc.totalConsumeCnt2 < mc.totalConsumeCnt1}" >
+								<span style="color : #5bc0de">↓</span>
+								</c:if>
+								
+								<c:if test="${mc.totalConsumeCnt2 == mc.totalConsumeCnt1}" >
+								<span>-</span>
+								</c:if>
+								</td>
+								
+								
+								<td class="center"> ${mc.saleAmt1}/${mc.totalSaleAmt1} </td>
+								<td class="center font2"> ${mc.saleAmt2}/${mc.totalSaleAmt2} </td>
+								
+								<td class="center font2">
+								<fmt:parseNumber var="_saleAmt1" type="number" value="${mc.saleAmt1}" />
+								<fmt:parseNumber var="_saleAmt2" type="number" value="${mc.saleAmt2}" />
+								<c:if test="${_saleAmt2 > _saleAmt1}" >
+								<span style="color : #FF0000">↑</span>
+								</c:if>
+								
+								<c:if test="${_saleAmt2 < _saleAmt1}" >
+								<span style="color : #5bc0de">↓</span>
+								</c:if>
+								
+								<c:if test="${_saleAmt2 == _saleAmt1}" >
+								<span>-</span>
+								</c:if>
+								
+								/
+								
+								<fmt:parseNumber var="_totalSaleAmt1" type="number" value="${mc.totalSaleAmt1}" />
+								<fmt:parseNumber var="_totalSaleAmt2" type="number" value="${mc.totalSaleAmt2}" />
+								<c:if test="${_totalSaleAmt2 > _totalSaleAmt1}" >
+								<span style="color : #FF0000">↑</span>
+								</c:if>
+								
+								<c:if test="${_totalSaleAmt2 < _totalSaleAmt1}" >
+								<span style="color : #5bc0de">↓</span>
+								</c:if>
+								
+								<c:if test="${_totalSaleAmt2 == _totalSaleAmt1}" >
 								<span>-</span>
 								</c:if>
 								</td>

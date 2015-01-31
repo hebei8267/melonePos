@@ -25,4 +25,44 @@ public interface MembershipCardMyBatisDao {
 	 * @return
 	 */
 	public List<MembershipCard> getMembershipCardRetAmtInfoList(Map<String, String> param);
+
+	/**
+	 * 取得金卡充值金额
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<MembershipCard> getMembershipCardRechargeAmtInfoList(Map<String, String> param);
+
+	/**
+	 * 取得金卡消费次数
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<MembershipCard> getMembershipCardConsumeCntInfoList(Map<String, String> param);
+
+	/**
+	 * 取得消费次数
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<MembershipCard> getTotalConsumeCntInfoList(Map<String, String> param);
+
+	/**
+	 * 取得金卡消费金额
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<MembershipCard> getMembershipCardConsumeAmtInfoList(Map<String, String> param);
+
+	/**
+	 * 取得消费金额
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<MembershipCard> getTotalConsumeAmtInfoList(Map<String, String> param);
 }
