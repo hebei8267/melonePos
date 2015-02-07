@@ -90,14 +90,14 @@
 	]]>
 	</select>
 	
-	<!-- 取得金卡消费次数 -->
+	<!-- 取得消费次数 -->
 	<select id="getTotalConsumeCntInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
 	<![CDATA[
 		SELECT
 		    COUNT(a.flow_no)			AS total_consume_cnt,
     		LEFT(a.branch_no,2) + '01'  AS branch_no
 		FROM
-		    pos_t_vip_flow a
+		    pos_t_saleflow a
 		WHERE
 		    a.oper_date >= #{optDateStart}
 		AND (
