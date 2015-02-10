@@ -145,6 +145,15 @@ public class MembershipCard {
 	 * 
 	 * @return retAmt1
 	 */
+	public BigDecimal _getRetAmt1() {
+		return retAmt1;
+	}
+
+	/**
+	 * 获取金卡返利-1
+	 * 
+	 * @return retAmt1
+	 */
 	public String getRetAmt1() {
 		if (retAmt1.compareTo(BigDecimal.ZERO) == 1) {
 			DecimalFormat df = new DecimalFormat("#.00");
@@ -160,6 +169,15 @@ public class MembershipCard {
 	 */
 	public void setRetAmt1(BigDecimal retAmt1) {
 		this.retAmt1 = retAmt1;
+	}
+
+	/**
+	 * 获取金卡返利-2
+	 * 
+	 * @return retAmt2
+	 */
+	public BigDecimal _getRetAmt2() {
+		return retAmt2;
 	}
 
 	/**
@@ -207,6 +225,15 @@ public class MembershipCard {
 	 * 
 	 * @return rechargeAmt1
 	 */
+	public BigDecimal _getRechargeAmt1() {
+		return rechargeAmt1;
+	}
+
+	/**
+	 * 获取金卡充值-1
+	 * 
+	 * @return rechargeAmt1
+	 */
 	public String getRechargeAmt1() {
 		if (rechargeAmt1.compareTo(BigDecimal.ZERO) == 1) {
 			DecimalFormat df = new DecimalFormat("#.00");
@@ -222,6 +249,15 @@ public class MembershipCard {
 	 */
 	public void setRechargeAmt1(BigDecimal rechargeAmt1) {
 		this.rechargeAmt1 = rechargeAmt1;
+	}
+
+	/**
+	 * 获取金卡充值-2
+	 * 
+	 * @return rechargeAmt2
+	 */
+	public BigDecimal _getRechargeAmt2() {
+		return rechargeAmt2;
 	}
 
 	/**
@@ -377,6 +413,15 @@ public class MembershipCard {
 	 * 
 	 * @return saleAmt1
 	 */
+	public BigDecimal _getSaleAmt1() {
+		return saleAmt1;
+	}
+
+	/**
+	 * 获取金卡消费金额
+	 * 
+	 * @return saleAmt1
+	 */
 	public String getSaleAmt1() {
 		if (saleAmt1.compareTo(BigDecimal.ZERO) == 1) {
 			DecimalFormat df = new DecimalFormat("#.00");
@@ -392,6 +437,15 @@ public class MembershipCard {
 	 */
 	public void setSaleAmt1(BigDecimal saleAmt1) {
 		this.saleAmt1 = saleAmt1;
+	}
+
+	/**
+	 * 获取金卡消费金额
+	 * 
+	 * @return saleAmt2
+	 */
+	public BigDecimal _getSaleAmt2() {
+		return saleAmt2;
 	}
 
 	/**
@@ -439,6 +493,15 @@ public class MembershipCard {
 	 * 
 	 * @return totalSaleAmt1
 	 */
+	public BigDecimal _getTotalSaleAmt1() {
+		return totalSaleAmt1;
+	}
+
+	/**
+	 * 获取消费金额-1
+	 * 
+	 * @return totalSaleAmt1
+	 */
 	public String getTotalSaleAmt1() {
 		if (totalSaleAmt1.compareTo(BigDecimal.ZERO) == 1) {
 			DecimalFormat df = new DecimalFormat("#.00");
@@ -454,6 +517,15 @@ public class MembershipCard {
 	 */
 	public void setTotalSaleAmt1(BigDecimal totalSaleAmt1) {
 		this.totalSaleAmt1 = totalSaleAmt1;
+	}
+
+	/**
+	 * 获取消费金额-2
+	 * 
+	 * @return totalSaleAmt2
+	 */
+	public BigDecimal _getTotalSaleAmt2() {
+		return totalSaleAmt2;
 	}
 
 	/**

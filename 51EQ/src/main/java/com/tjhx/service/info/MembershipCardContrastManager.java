@@ -66,7 +66,110 @@ public class MembershipCardContrastManager {
 		// 取得消费金额
 		copyList2Value_TotalConsumeAmtInfo(voList, currentStartOptDate, currentEndOptDate);
 
+		// 计算合计
+		calTotal(voList);
+
 		return voList;
+	}
+
+	private void setTotalValue(MembershipCard total, MembershipCard membershipCard) {
+		// 金卡发行次数-1
+		total.setIssueCnt1(total.getIssueCnt1() + membershipCard.getIssueCnt1());
+		// 金卡发行次数-2
+		total.setIssueCnt2(total.getIssueCnt2() + membershipCard.getIssueCnt2());
+
+		// 金卡返利-1
+		total.setRetAmt1(total._getRetAmt1().add(membershipCard._getRetAmt1()));
+		// 金卡返利-2
+		total.setRetAmt2(total._getRetAmt2().add(membershipCard._getRetAmt2()));
+
+		// 金卡充值-1
+		total.setRechargeAmt1(total._getRechargeAmt1().add(membershipCard._getRechargeAmt1()));
+		// 金卡充值-2
+		total.setRechargeAmt2(total._getRechargeAmt2().add(membershipCard._getRechargeAmt2()));
+
+		// 金卡消费次数-1
+		total.setConsumeCnt1(total.getConsumeCnt1() + membershipCard.getConsumeCnt1());
+		// 金卡消费次数-2
+		total.setConsumeCnt2(total.getConsumeCnt2() + membershipCard.getConsumeCnt2());
+
+		// 消费次数-1
+		total.setTotalConsumeCnt1(total.getTotalConsumeCnt1() + membershipCard.getTotalConsumeCnt1());
+		// 消费次数-2
+		total.setTotalConsumeCnt2(total.getTotalConsumeCnt2() + membershipCard.getTotalConsumeCnt2());
+
+		// 金卡消费金额
+		total.setSaleAmt1(total._getSaleAmt1().add(membershipCard._getSaleAmt1()));
+		// 金卡消费金额
+		total.setSaleAmt2(total._getSaleAmt2().add(membershipCard._getSaleAmt2()));
+
+		// 消费金额-1
+		total.setTotalSaleAmt1(total._getTotalSaleAmt1().add(membershipCard._getTotalSaleAmt1()));
+		// 消费金额-2
+		total.setTotalSaleAmt2(total._getTotalSaleAmt2().add(membershipCard._getTotalSaleAmt2()));
+
+	}
+
+	/**
+	 * 计算合计
+	 * 
+	 * @param voList
+	 */
+	private void calTotal(List<MembershipCard> voList) {
+
+		MembershipCard total = new MembershipCard();
+		total.setOrgName("总计");
+
+		MembershipCard total_Eq_Old = new MembershipCard();
+		total_Eq_Old.setOrgName("老EQ+");
+		List<String> orgName_Eq_Old = Lists.newArrayList("01D", "03D", "04D", "05D", "07D", "08D", "09D", "10D", "11D");
+
+		MembershipCard total_Eq_New = new MembershipCard();
+		total_Eq_New.setOrgName("新EQ+");
+		List<String> orgName_Eq_New = Lists.newArrayList("02D", "15D", "16D", "18D", "20D", "22D");
+
+		MembershipCard total_Infancy = new MembershipCard();
+		total_Infancy.setOrgName("Infancy");
+		// List<String> orgName_Infancy = Lists.newArrayList("06D", "13D",
+		// "17D", "19D", "21D", "23D", "24D");
+
+		for (MembershipCard membershipCard : voList) {
+
+			// ==================================================================
+			// 总计
+			// ==================================================================
+			setTotalValue(total, membershipCard);
+
+			// ==================================================================
+			// 老EQ+
+			// ==================================================================
+			if (orgName_Eq_Old.contains(membershipCard.getOrgName())) {
+				setTotalValue(total_Eq_Old, membershipCard);
+			}
+			// ==================================================================
+			// 新EQ+
+			// ==================================================================
+			else if (orgName_Eq_New.contains(membershipCard.getOrgName())) {
+				setTotalValue(total_Eq_New, membershipCard);
+
+			}
+			// ==================================================================
+			// Infancy
+			// ==================================================================
+			else {
+				setTotalValue(total_Infancy, membershipCard);
+			}
+		}
+
+		// 总计
+		voList.add(0, total);
+		// 老EQ+
+		voList.add(1, total_Eq_Old);
+		// 新EQ+
+		voList.add(2, total_Eq_New);
+		// Infancy
+		voList.add(3, total_Infancy);
+
 	}
 
 	/**
