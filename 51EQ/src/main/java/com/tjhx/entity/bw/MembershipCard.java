@@ -68,6 +68,11 @@ public class MembershipCard {
 	/** 机构名称 */
 	private String orgName;
 
+	/** 金卡类型 */
+	private String cardType;
+	/** 金卡余额 */
+	private BigDecimal balance = new BigDecimal("0");
+
 	/**
 	 * 获取金卡发行次数
 	 * 
@@ -602,6 +607,46 @@ public class MembershipCard {
 	 */
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
+	}
+
+	/**
+	 * 获取金卡类型
+	 * 
+	 * @return 金卡类型
+	 */
+	public String getCardType() {
+		return cardType;
+	}
+
+	/**
+	 * 设置金卡类型
+	 * 
+	 * @param cardType 金卡类型
+	 */
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+
+	/**
+	 * 获取金卡余额
+	 * 
+	 * @return 金卡余额
+	 */
+	public String getBalance() {
+		if (balance.compareTo(BigDecimal.ZERO) == 1) {
+			DecimalFormat df = new DecimalFormat("#.00");
+			return df.format(balance);
+		}
+		return balance.toString();
+	}
+
+	/**
+	 * 设置金卡余额
+	 * 
+	 * @param balance 金卡余额
+	 */
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
 	}
 
 	@Override

@@ -72,6 +72,17 @@ public class MembershipCardContrastController extends BaseController {
 
 		model.addAttribute("membershipCardList", _list);
 
+		// 取得金卡余额
+		List<MembershipCard> balanceList = membershipCardContrastManager.getMembershipCardBalanceInfo();
+
+		for (MembershipCard membershipCard : balanceList) {
+			if ("01".equals(membershipCard.getCardType())) {
+				model.addAttribute("infancyBalance", membershipCard.getBalance());
+			} else if ("03".equals(membershipCard.getCardType())) {
+				model.addAttribute("eqBalance", membershipCard.getBalance());
+			}
+		}
+
 		return "report/membershipCardContrast";
 	}
 }

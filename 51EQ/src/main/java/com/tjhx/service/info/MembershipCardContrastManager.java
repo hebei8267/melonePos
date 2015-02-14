@@ -27,6 +27,15 @@ public class MembershipCardContrastManager {
 	@Resource
 	private MembershipCardMyBatisDao membershipCardMyBatisDao;
 
+	/**
+	 * 取得金卡余额
+	 * 
+	 * @return
+	 */
+	public List<MembershipCard> getMembershipCardBalanceInfo() {
+		return membershipCardMyBatisDao.getMembershipCardBalanceInfo();
+	}
+
 	public List<MembershipCard> getContrastList(String preStartOptDate, String preEndOptDate, String currentStartOptDate,
 			String currentEndOptDate, String orgId) {
 

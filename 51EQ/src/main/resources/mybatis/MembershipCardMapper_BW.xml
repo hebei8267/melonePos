@@ -12,6 +12,9 @@
         <result column="consume_cnt" property="_consumeCnt" jdbcType="INTEGER"/>
         <result column="total_consume_cnt" property="_totalConsumeCnt" jdbcType="INTEGER"/>
         <result column="branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
+        
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="card_type" property="cardType" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 取得金卡发行次数 -->
@@ -168,4 +171,22 @@
 		    a.branch_no
 	]]>
 	</select>
+	
+	<!-- 取得金卡余额 -->
+	<select id="getMembershipCardBalanceInfo" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+	    	a.card_type,
+	    	SUM(a.spare_cash) AS balance
+		FROM
+		    pos_t_vip_info a
+		WHERE
+		    card_status NOT IN ('3',
+		                        '4',
+		                        '7')
+		GROUP BY
+		    a.card_type
+	]]>
+	</select>
+	
 </mapper>

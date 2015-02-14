@@ -120,6 +120,28 @@
 			</form>
 
 			<div class="row">
+				<c:if test="${!empty infancyBalance}" >
+				<div class="span6" style="margin-top: 10px;">
+					<table class="table	table-striped table-bordered table-condensed mytable">
+						<thead>
+							<tr>
+								<th class="center" colspan="2" style="background-image: linear-gradient(to bottom,#897E7E,#897E7E);"> 会员卡余额(当前) </th>
+							</tr>
+							<tr>
+								<th class="center"> infancy尊享卡 </th>
+								<th class="center"> EQ+会员卡 </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="center"> ${infancyBalance} 元</td>
+								<td class="center"> ${eqBalance} 元</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				</c:if>
+				
 				<div class="span12" style="margin-top: 10px;">
 					<table class="table	table-striped table-bordered table-condensed mytable">
 						<thead>

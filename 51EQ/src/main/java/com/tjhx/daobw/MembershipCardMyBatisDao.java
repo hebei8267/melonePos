@@ -65,4 +65,11 @@ public interface MembershipCardMyBatisDao {
 	 * @return
 	 */
 	public List<MembershipCard> getTotalConsumeAmtInfoList(Map<String, String> param);
+
+	/**
+	 * 取得金卡余额
+	 * 
+	 * @return
+	 */
+	public List<MembershipCard> getMembershipCardBalanceInfo();
 }
