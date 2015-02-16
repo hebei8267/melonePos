@@ -90,7 +90,7 @@
     	ORDER BY sup._index asc
 	</select>
 	
-	<!-- 根据批次号取得供应商信息 -->
+	<!-- 根据参数(批次号、门店号、供应商名称)取得门店要货单信息 -->
 	<select id="getReqBillList" parameterType="com.tjhx.entity.order.ReqBill" resultMap="Result_Map_ReqBill">
 		SELECT
 		    good1.pos_qty AS pos_qty1 ,
@@ -126,6 +126,26 @@
 		AND supplier_name = #{supplierName}
 		ORDER BY
 		    org_id
+	</select>
+	
+	<!-- 根据参数(批次号、供应商名称)取得要货单合计信息 -->
+	<select id="getReqBillSumList" parameterType="com.tjhx.entity.order.ReqBill" resultMap="Result_Map_ReqBill">
+		SELECT
+		    batch_id ,
+		    supplier_name,
+		    barcode ,
+		    product_no,
+		    product_name ,
+		    SUM(app_num) AS app_num
+		FROM
+		    t_req_bill_tmp
+		WHERE
+		    batch_id = #{batchId}
+		AND supplier_name = #{supplierName}
+		GROUP BY
+		    barcode
+		ORDER BY
+		    barcode
 	</select>
 	
 	<select id="getOrgListBySupplier" parameterType="com.tjhx.entity.order.ReqBill" resultMap="Result_Map_ReqBill">

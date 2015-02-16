@@ -51,6 +51,7 @@ public class ReqBillManager {
 
 	private final static String XML_CONFIG_READ_REQ_BILL = "/excel/Req_Bill_Org_Read_CFG.xml";
 	private final static String XML_CONFIG_WRITE_REQ_BILL = "/excel/Req_Bill_Supplier_Template.xls";
+	private final static String XML_CONFIG_WRITE_REQ_BILL_SUM = "/excel/Req_Bill_Sum_Supplier_Template.xls";
 	private final static String XML_CONFIG_WRITE_REQ_BILL_EQ = "/excel/Req_Bill_EQ_Template.xls";
 
 	/**
@@ -74,6 +75,29 @@ public class ReqBillManager {
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_EQ, map,
 				sysConfig.getReqBillSupplierOutputPath() + batchId + "/#########EQ_" + batchId + ".xls");
+	}
+
+	/**
+	 * @param batchId
+	 * @param supplierName
+	 * @param list
+	 * @throws ParsePropertyException
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	public void writeReqBillSumFileToSupplier(String batchId, String supplierName, List<ReqBill> list)
+			throws ParsePropertyException, InvalidFormatException, IOException {
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		Map<String, List<ReqBill>> map = new HashMap<String, List<ReqBill>>();
+		map.put("reqBillList", list);
+
+		// 自动建立文件夹
+		FileUtils.mkdir(sysConfig.getReqBillSupplierOutputPath() + batchId + "/");
+
+		XLSTransformer transformer = new XLSTransformer();
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_SUM, map,
+				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_合计_" + batchId + ".xls");
 	}
 
 	/**
@@ -109,13 +133,13 @@ public class ReqBillManager {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void writeReqBillImageFileToSupplier(String filePath, List<String> imagePathList)
-			throws FileNotFoundException, IOException {
+	public void writeReqBillImageFileToSupplier(String filePath, List<String> imagePathList) throws FileNotFoundException,
+			IOException {
 		File xlsFile = new File(filePath);
 		if (!xlsFile.exists()) {// excel文件不存在
 			return;
 		}
-		
+
 		// 声明一个工作薄
 		HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(xlsFile)));
 		// 生成一个表格
@@ -151,8 +175,7 @@ public class ReqBillManager {
 	 */
 	public List<ReqBill> readReqBillFile(String filePath) throws IOException, SAXException, InvalidFormatException {
 
-		InputStream inputXML = new BufferedInputStream(
-				ReqBillManager.class.getResourceAsStream(XML_CONFIG_READ_REQ_BILL));
+		InputStream inputXML = new BufferedInputStream(ReqBillManager.class.getResourceAsStream(XML_CONFIG_READ_REQ_BILL));
 
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
 

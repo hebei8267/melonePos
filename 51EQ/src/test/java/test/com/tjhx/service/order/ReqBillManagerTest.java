@@ -289,6 +289,33 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@全部数据行" + _index);
 	}
 
+	// 生产供应商文件(合计)
+	@Test
+	public void output22() throws InvalidFormatException, IOException, SAXException {
+		int _index = 0;
+		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(batchId);
+		for (Supplier supplier : supList) {
+
+			System.out.println(supplier.getName());
+
+			ReqBill reqBill = new ReqBill();
+			reqBill.setBatchId(batchId);
+			reqBill.setSupplierName(supplier.getName());
+			List<ReqBill> list = reqBillMyBatisDao.getReqBillSumList(reqBill);
+
+			reqBillManager.writeReqBillSumFileToSupplier(batchId, supplier.getName(), list);
+
+			for (ReqBill reqBill2 : list) {
+				_index++;
+				System.out.print(reqBill2.getProductName() + "\t");
+				System.out.println();
+			}
+			System.out.println("############################################################");
+		}
+
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@全部数据行" + _index);
+	}
+
 	/**
 	 * 计算建议采购数量
 	 */
@@ -321,8 +348,8 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 			reqBill.setSupplierName(supplier.getName());
 			List<ReqBill> list = reqBillMyBatisDao.getReqBillList(reqBill);
 
-			reqBillManager.writeReqBillImageFileToSupplier(sysConfig.getReqBillSupplierOutputPath() + batchId + "/"
-					+ supplier.getName() + "_" + batchId + ".xls",
+			reqBillManager.writeReqBillImageFileToSupplier(
+					sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplier.getName() + "_" + batchId + ".xls",
 					getImagePathList(sysConfig.getProductImgPath(), list));
 		}
 	}
