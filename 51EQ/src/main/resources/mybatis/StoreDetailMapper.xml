@@ -147,11 +147,13 @@
 		    g.supplier_bw_id
     </select>
     
-    <delete id="delStoreDetail" parameterType="String">  
+    <delete id="delStoreDetail" parameterType="String">
         DELETE FROM t_store_detail WHERE opt_date = #{optDate}
     </delete>
     
-    <delete id="delStoreDetail_GreaterThan90Day" parameterType="String">  
+    <delete id="delStoreDetail_GreaterThan90Day" parameterType="String">
+    <![CDATA[
         DELETE FROM t_store_detail WHERE opt_date <= #{optDate}
+    ]]>
     </delete>
 </mapper>
