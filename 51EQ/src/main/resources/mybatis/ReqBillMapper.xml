@@ -136,6 +136,7 @@
 		    barcode ,
 		    product_no,
 		    product_name ,
+		    ref_price ,
 		    SUM(app_num) AS app_num
 		FROM
 		    t_req_bill_tmp
