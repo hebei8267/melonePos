@@ -191,9 +191,12 @@ public class StoreDetailManager {
 		// storeDetailMyBatisDao.dropTable();
 		// storeDetailMyBatisDao.createTable();
 
-		// 删除库存明细信息,仅保留近90天数据
 		String _optDate = DateUtils.getNextDateFormatDate(-90, "yyyyMMdd");
+
+		// 删除库存明细信息,仅保留近90天数据
 		storeDetailMyBatisDao.delStoreDetail_GreaterThan90Day(_optDate);
+		// 删除库存合计信息,仅保留近90天数据
+		storeDayTotalMyBatisDao.delStoreDayTotal_GreaterThan90Day(_optDate);
 	}
 
 	public static void main(String[] args) {

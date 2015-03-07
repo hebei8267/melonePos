@@ -71,4 +71,8 @@
 	<delete id="delStoreDayTotal" parameterType="String">  
         DELETE FROM t_store_day_total WHERE opt_date = #{optDate}
     </delete>
+    
+    <delete id="delStoreDayTotal_GreaterThan90Day" parameterType="String">  
+        DELETE FROM t_store_day_total WHERE opt_date <= #{optDate}
+    </delete>
 </mapper>

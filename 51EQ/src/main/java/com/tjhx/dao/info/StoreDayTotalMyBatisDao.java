@@ -26,4 +26,11 @@ public interface StoreDayTotalMyBatisDao {
 	 */
 	public void delStoreDayTotal(String optDate);
 
+	/**
+	 * 删除库存合计信息,仅保留近90天数据
+	 * 
+	 * @param optDate
+	 */
+	public void delStoreDayTotal_GreaterThan90Day(String _optDate);
+
 }
