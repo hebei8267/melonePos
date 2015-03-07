@@ -62,8 +62,8 @@ public class SaleInfoJob implements IJob {
 		logger.info("取得百威系统商品信息 End");
 
 		logger.info("清理t_store_detail Begin");
-		// 清理t_store_detail(数据量过大,其数据已汇总到t_store_day_total)
-		// storeDetailManager.initTable();
+		// 清理t_store_detail
+		storeDetailManager.initTable();
 		logger.info("清理t_store_detail End");
 		// ##########################################################
 		logger.info("取得门店库存信息 Begin");

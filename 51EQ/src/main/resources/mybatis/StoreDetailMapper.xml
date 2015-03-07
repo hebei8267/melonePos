@@ -150,4 +150,8 @@
     <delete id="delStoreDetail" parameterType="String">  
         DELETE FROM t_store_detail WHERE opt_date = #{optDate}
     </delete>
+    
+    <delete id="delStoreDetail_GreaterThan90Day" parameterType="String">  
+        DELETE FROM t_store_detail WHERE opt_date <= #{optDate}
+    </delete>
 </mapper>

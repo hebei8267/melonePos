@@ -183,11 +183,20 @@ public class StoreDetailManager {
 	}
 
 	/**
-	 * 清理t_store_detail(数据量过大,其数据已汇总到t_store_day_total)
+	 * 清理t_store_detail
 	 */
 	@Transactional(readOnly = false)
 	public void initTable() {
-		storeDetailMyBatisDao.dropTable();
-		storeDetailMyBatisDao.createTable();
+		// 数据量过大,其数据已汇总到t_store_day_total
+		// storeDetailMyBatisDao.dropTable();
+		// storeDetailMyBatisDao.createTable();
+
+		// 删除库存明细信息,仅保留近90天数据
+		String _optDate = DateUtils.getNextDateFormatDate(-90, "yyyyMMdd");
+		storeDetailMyBatisDao.delStoreDetail_GreaterThan90Day(_optDate);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(DateUtils.getNextDateFormatDate(-90, "yyyyMMdd"));
 	}
 }
