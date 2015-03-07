@@ -105,7 +105,7 @@
 			 cash.uuid ,
 			 cash.opt_date ,
 			 cash.report_amt ,
-    		 cash.sale_amt
+    		 cash.sale_amt + cash.gold_Card_Amt +cash.rebate_Amt AS sale_amt
 		from t_cash_daily cash, t_organization org
 		where
 			 cash.org_id = org.org_id
@@ -119,7 +119,7 @@
 	<select id="getAllOrgCashDailyChartList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
 		SELECT
 		    cash.opt_date,
-		    SUM(cash.sale_amt) AS sale_amt
+		    SUM(cash.sale_amt + cash.gold_Card_Amt +cash.rebate_Amt) AS sale_amt
 		FROM
 		    t_cash_daily cash
 		WHERE
