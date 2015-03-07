@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.SalesOrdersDayTotalMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SalesOrdersDayTotal" type="com.tjhx.entity.info.SalesOrdersDayTotal">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="opt_date_y" property="optDateY" jdbcType="VARCHAR"/>
+        <result column="opt_date_y_m" property="optDateYm" jdbcType="VARCHAR"/>
+        <result column="orders_avg_price" property="ordersAvgPrice" jdbcType="DECIMAL"/>
+        <result column="orders_num" property="ordersNum" jdbcType="INTEGER"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+
+  	<delete id="delSalesOrdersDayTotalInfo" parameterType="string">
+        DELETE FROM t_sales_orders_day_total WHERE opt_date = #{optDate}
+    </delete>
+  	
+  	<!-- 取得t_sales_orders_day_total信息(根据参数) -->
+	<select id="getSalesOrdersDayTotalList" parameterType="map" resultMap="Result_Map_SalesOrdersDayTotal">
+		SELECT
+		    org_id,
+		    SUM(orders_num) AS orders_num,
+		    SUM(sale_amt)   AS sale_amt
+		FROM
+		    t_sales_orders_day_total
+		where
+		<![CDATA[
+  		 	opt_date >= #{optDateStart}
+		AND opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
+  		AND org_id = #{orgId}
+  		</if>
+		GROUP BY
+		    org_id
+	</select>
+</mapper>

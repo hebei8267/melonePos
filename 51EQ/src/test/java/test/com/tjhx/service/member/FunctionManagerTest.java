@@ -769,15 +769,39 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun61() {
+//		Function fun = new Function();
+//		// 功能显示名称--角色管理
+//		fun.setDisplayName("销售对比-按供应商");
+//		// 功能URL */
+//		fun.setFunUrl("salesContrastBySupplier/init");
+//
+//		functionJpaDao.save(fun);
+//	}
+	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun62() {
+//		Function fun = new Function();
+//		// 功能显示名称--店铺指标
+//		fun.setDisplayName("店铺指标");
+//		// 功能URL */
+//		fun.setFunUrl("salesOrdersDayTotalContrast/init");
+//
+//		functionJpaDao.save(fun);
+//	}
 	
 	@Test
 	@Rollback(false)
-	public void saveNewFun61() {
+	public void saveNewFun63() {
 		Function fun = new Function();
-		// 功能显示名称--角色管理
-		fun.setDisplayName("销售对比-按供应商");
+		// 功能显示名称--会员卡信息对比
+		fun.setDisplayName("会员卡信息对比");
 		// 功能URL */
-		fun.setFunUrl("salesContrastBySupplier/init");
+		fun.setFunUrl("membershipCardContrast/init");
 
 		functionJpaDao.save(fun);
 	}

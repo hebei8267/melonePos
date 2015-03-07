@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.DaySalesOrdersTotalMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_SalesOrdersDayTotal" type="com.tjhx.entity.info.SalesOrdersDayTotal">
+        <result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+        <result column="opt_date" property="optDate" jdbcType="VARCHAR"/>
+        <result column="orders_num" property="ordersNum" jdbcType="INTEGER"/>
+        <result column="sale_amt" property="saleAmt" jdbcType="DECIMAL"/>
+	</resultMap>
+	
+	
+  	<!-- 取得t_sales_orders_day_total信息(根据参数) -->
+	<select id="getSalesOrdersDayTotalList" parameterType="map" resultMap="Result_Map_SalesOrdersDayTotal">
+	<![CDATA[
+		SELECT
+		    a.branch_no                AS branch_no ,
+		    ISNULL(SUM(a.rsale_amt),0) AS sale_amt ,
+		    c.sheet_qty                AS orders_num ,
+		    #{startDate}               AS opt_date
+		FROM
+		    pos_v_saleflow_contain_del a,
+		    bi_t_people_info b
+		LEFT JOIN
+		    (
+		        SELECT
+		            sale_man,
+		            COUNT(DISTINCT flow_no) AS sheet_qty
+		        FROM
+		            pos_v_saleflow
+		        WHERE
+		            oper_date>=#{startDate}
+		        AND oper_date<=#{endDate}
+		        GROUP BY
+		            sale_man) AS c
+		ON
+		    b.oper_id=c.sale_man
+		WHERE
+		    a.sale_man = b.oper_id
+		AND a.oper_date>=CONVERT(VARCHAR,CONVERT(DATETIME,#{startDate}),112)
+		AND a.oper_date<=CONVERT(VARCHAR,CONVERT(DATETIME,#{endDate}),112)
+		AND a.branch_no = #{branchNo}
+		GROUP BY
+		    a.branch_no,
+		    a.sale_man,
+		    c.sheet_qty
+	]]>
+	</select>
+</mapper>

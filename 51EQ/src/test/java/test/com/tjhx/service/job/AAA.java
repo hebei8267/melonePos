@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 import com.tjhx.service.accounts.CashDailyManager;
+import com.tjhx.service.info.SalesOrdersDayTotalManager;
 
 /**
  * @author he_bei
@@ -21,13 +22,11 @@ import com.tjhx.service.accounts.CashDailyManager;
 public class AAA extends SpringTransactionalTestCase {
 	private static Logger logger = LoggerFactory.getLogger(AAA.class);
 	@Autowired
-	private CashDailyManager cashDailyManager;
+	private SalesOrdersDayTotalManager salesOrdersDayTotalManager;
 
 	@Test
 	@Rollback(false)
 	public void tt() throws ParseException {
-		logger.info("同步百威金卡销售额 Begin");
-		cashDailyManager.synBwGoldCardSaleAmt();
-		logger.info("同步百威金卡销售额 End");
+		salesOrdersDayTotalManager.bwDataSyn();
 	}
 }

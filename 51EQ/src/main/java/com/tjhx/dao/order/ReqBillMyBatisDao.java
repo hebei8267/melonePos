@@ -30,6 +30,14 @@ public interface ReqBillMyBatisDao {
 	public List<ReqBill> getReqBillList(ReqBill reqBill);
 
 	/**
+	 * 根据参数(批次号、供应商名称)取得要货单合计信息
+	 * 
+	 * @param reqBill
+	 * @return
+	 */
+	public List<ReqBill> getReqBillSumList(ReqBill reqBill);
+
+	/**
 	 * 根据参数(批次号、供应商名称)取得门店信息
 	 * 
 	 * @param reqBill

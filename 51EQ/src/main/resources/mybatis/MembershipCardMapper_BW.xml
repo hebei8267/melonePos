@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.MembershipCardMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_MembershipCard" type="com.tjhx.entity.bw.MembershipCard">
+        <result column="issue_cnt" property="_issueCnt" jdbcType="INTEGER"/>
+        <result column="ret_amt" property="_retAmt" jdbcType="DECIMAL"/>
+        <result column="recharge_amt" property="_rechargeAmt" jdbcType="DECIMAL"/>
+        <result column="sale_amt" property="_saleAmt" jdbcType="DECIMAL"/>
+        <result column="total_sale_amt" property="_totalSaleAmt" jdbcType="DECIMAL"/>
+        <result column="consume_cnt" property="_consumeCnt" jdbcType="INTEGER"/>
+        <result column="total_consume_cnt" property="_totalConsumeCnt" jdbcType="INTEGER"/>
+        <result column="branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
+        
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="card_type" property="cardType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 取得金卡发行次数 -->
+	<select id="getMembershipCardIssueInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    COUNT(a.flow_no)        	AS issue_cnt,
+		    LEFT(a.branch_no,2) + '01'  AS branch_no
+		FROM
+		    pos_t_vip_flow a
+		WHERE
+		    a.oper_date >= #{optDateStart}
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		AND (
+		        a.oper_type IN ('B'))
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡返利 -->
+	<select id="getMembershipCardRetAmtInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+			LEFT(b.branch_no,2) + '01'  AS branch_no,
+		    SUM(b.ret_amt) 				AS ret_amt
+		FROM
+		    pos_t_vip_haveret b
+		WHERE
+		    (
+		        b.oper_date >= #{optDateStart})
+		AND (
+		        b.oper_date <= #{optDateEnd})
+		GROUP BY
+		    b.branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡充值 -->
+	<select id="getMembershipCardRechargeAmtInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    LEFT(a.branch_no,2) + '01' AS branch_no,
+		    SUM(a.oper_money)		   AS recharge_amt
+		FROM
+		    pos_t_vip_flow a
+		WHERE
+		    (
+		        a.oper_date >= #{optDateStart})
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		AND (
+		        a.oper_type IN ('P'))
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡消费次数 -->
+	<select id="getMembershipCardConsumeCntInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    COUNT(a.flow_no)        	AS consume_cnt,
+		    LEFT(a.branch_no,2) + '01'  AS branch_no
+		FROM
+		    pos_t_vip_flow a
+		WHERE
+		    a.oper_date >= #{optDateStart}
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		AND (
+		        a.oper_type IN ('SA'))
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
+	<!-- 取得消费次数 -->
+	<select id="getTotalConsumeCntInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    COUNT(a.flow_no)			AS total_consume_cnt,
+    		LEFT(a.branch_no,2) + '01'  AS branch_no
+		FROM
+		    pos_t_saleflow a
+		WHERE
+		    a.oper_date >= #{optDateStart}
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡消费金额 -->
+	<select id="getMembershipCardConsumeAmtInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    LEFT(a.branch_no,2) + '01' AS branch_no,
+		    SUM(
+		        CASE a.sell_way
+		            WHEN 'a'
+		            THEN 1
+		            WHEN 'b'
+		            THEN -1
+		            ELSE 0
+		        END * a.sale_money )AS sale_amt
+		FROM
+		    view_item_info c,
+		    pos_t_saleflow a,
+		    pos_t_payflow d
+		LEFT OUTER JOIN
+		    pos_t_vip_info b
+		ON
+		    d.card_no = b.card_id
+		AND b.is_saving = '1'
+		WHERE
+		    d.pay_way = 'D'
+		AND a.flow_no = d.flow_no
+		AND a.branch_no = d.branch_no
+		AND a.item_no = c.item_no
+		AND (
+		        a.oper_date >= #{optDateStart})
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		GROUP BY
+		    a.branch_no
+	]]>
+	</select>
+	
+	<!-- 取得消费金额 -->
+	<select id="getTotalConsumeAmtInfoList" parameterType="map" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+		    LEFT(a.branch_no,2) + '01' AS branch_no,
+		    SUM(a.sale_money)		   AS total_sale_amt
+		FROM
+		    pos_t_saleflow a
+		LEFT JOIN
+		    ic_t_branch_stock_target c
+		ON
+		    a.branch_no = c.branch_no
+		AND a.item_no = c.item_no,
+		    view_item_info b
+		WHERE
+		    (
+		        a.item_no = b.item_no )
+		AND (
+		        a.oper_date >= #{optDateStart})
+		AND (
+		        a.oper_date <= #{optDateEnd})
+		GROUP BY
+		    a.branch_no
+	]]>
+	</select>
+	
+	<!-- 取得金卡余额 -->
+	<select id="getMembershipCardBalanceInfo" resultMap="Result_Map_MembershipCard">
+	<![CDATA[
+		SELECT
+	    	a.card_type,
+	    	SUM(a.spare_cash) AS balance
+		FROM
+		    pos_t_vip_info a
+		WHERE
+		    card_status NOT IN ('3',
+		                        '4',
+		                        '7')
+		GROUP BY
+		    a.card_type
+	]]>
+	</select>
+	
+</mapper>
