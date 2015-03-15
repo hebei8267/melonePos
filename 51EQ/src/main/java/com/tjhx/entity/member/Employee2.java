@@ -19,6 +19,8 @@ import com.tjhx.entity.IdEntity;
 public class Employee2 extends IdEntity {
 
 	private static final long serialVersionUID = 6297453810049919075L;
+	/** 员工考勤编号 */
+	private String employeeNo;
 	/** 员工姓名 */
 	private String name;
 	/** 员工性别 1-男 2-女 */
@@ -67,6 +69,25 @@ public class Employee2 extends IdEntity {
 	private String photoUrl;
 	/** 照片文件 */
 	private MultipartFile imgFile;
+
+	/**
+	 * 获取员工考勤编号
+	 * 
+	 * @return employeeNo
+	 */
+	@Column(length = 32)
+	public String getEmployeeNo() {
+		return employeeNo;
+	}
+
+	/**
+	 * 设置员工考勤编号
+	 * 
+	 * @param employeeNo 员工考勤编号
+	 */
+	public void setEmployeeNo(String employeeNo) {
+		this.employeeNo = employeeNo;
+	}
 
 	/**
 	 * 获取员工姓名
