@@ -108,6 +108,8 @@ public class Employee2Manager {
 		if (null == _dbEmployee2) {
 			throw new ServiceException("ERR_MSG_EMPLOYEE2_002");
 		}
+		// 员工考勤编号
+		_dbEmployee2.setEmployeeNo(employee2.getEmployeeNo());
 		// 员工姓名
 		_dbEmployee2.setName(employee2.getName());
 		// 员工性别 1-男 2-女
