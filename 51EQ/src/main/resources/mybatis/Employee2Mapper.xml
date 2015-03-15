@@ -28,6 +28,8 @@
         <result column="sex" property="sex" jdbcType="VARCHAR"/>
         <result column="start_work_time" property="startWorkTime" jdbcType="VARCHAR"/>
         <result column="photo_url" property="photoUrl" jdbcType="VARCHAR"/>
+        
+        <result column="employee_no" property="employeeNo" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -56,7 +58,8 @@
     	renew_time ,
     	sex ,
     	photo_url ,
-    	start_work_time 
+    	start_work_time ,
+    	employee_no
 	]]>
   	</sql>
   	
