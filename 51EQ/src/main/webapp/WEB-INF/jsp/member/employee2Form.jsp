@@ -32,6 +32,9 @@
 			$().ready(function() {
 				$("#inputForm").validate({
 					rules: {
+						employeeNo : {
+                            maxlength : 32
+                        },
 						name : {
                             required : true,
                             maxlength : 32
@@ -152,10 +155,10 @@
 	            <div class="span12">
 	            	<legend>
 	                    <h3>员工信息
-	                    <c:if test="${empty	employee.uuid}">
+	                    <c:if test="${empty	employee2.uuid}">
 	                        新增
 	                    </c:if>
-	                    <c:if test="${!empty employee.uuid}">
+	                    <c:if test="${!empty employee2.uuid}">
 	                        编辑
 	                    </c:if></h3>
 	                </legend>
@@ -166,6 +169,18 @@
                         <form:hidden path="uuid"/>
                         <h4>基本信息</h4>
                         <table class="table table-bordered mytable">
+                        	<tr>
+                        		<td width="130" class="right">考勤编号 :</td>
+                        		<td colspan="3">
+	                                <div class="controls">
+	                                    <form:input	path="employeeNo" />
+	                                </div>
+                        		</td>
+                        		<td rowspan="7" class="center">
+                        			<img src="${ctx}/imgservlet?FILE_PATH=${employee2.photoUrl}" id="photoImg" height="600" width="220"/>
+                        			<input type="file" name="photoFile" id="photoFile" />
+                        		</td>
+                        	</tr>
                         	<tr>
                         		<td width="130" class="right">姓名 :</td>
                         		<td width="200">
@@ -182,10 +197,6 @@
 			                                <option value="2" <c:if test="${2 == employee2.sex}">selected</c:if>>女</option>
                         				</form:select>
 	                                </div>
-                        		</td>
-                        		<td rowspan="6" class="center">
-                        			<img src="${ctx}/imgservlet?FILE_PATH=${employee2.photoUrl}" id="photoImg" height="600" width="220"/>
-                        			<input type="file" name="photoFile" id="photoFile" />
                         		</td>
                         	</tr>
                         	<tr>

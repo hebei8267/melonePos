@@ -43,7 +43,12 @@
                 <div class="span12">
                 	<table class="table table-bordered mytable">
                 		<tr>
-                			<td rowspan="7" class="center"><h4>基本信息</h4></td>
+                			<td rowspan="8" class="center"><h4>基本信息</h4></td>
+                			<td class="right">考勤编号 :</td>
+                			<td colspan="3">${employee2.employeeNo}</td>
+                			<td rowspan="7" class="center"><img src="${ctx}/imgservlet?FILE_PATH=${employee2.photoUrl}" height="570" width="210"/></td>
+                		</tr>
+                		<tr>
                 			<td class="right">姓名 :</td>
                 			<td>${employee2.name}</td>
                 			<td class="right" width="120">性别 :</td>
@@ -51,7 +56,6 @@
                 				<c:if test="${1 == employee2.sex}">男</c:if>
                 				<c:if test="${2 == employee2.sex}">女</c:if>
                 			</td>
-                			<td rowspan="6" class="center"><img src="${ctx}/imgservlet?FILE_PATH=${employee2.photoUrl}" height="570" width="210"/></td>
                 		</tr>
                 		<tr>
                 			<td class="right">身份证号 :</td>

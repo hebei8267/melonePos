@@ -124,6 +124,9 @@
                                         所属机构
                                     </th>
                                     <th class="center">
+                                        考勤编号
+                                    </th>
+                                    <th class="center">
                                         员工姓名
                                     </th>
                                     <th class="center">
@@ -159,6 +162,9 @@
 			             				<c:if test="${fn:length(employee.orgId) < 4}">
 			             					总部
 			             				</c:if>
+                                    </td>
+                                    <td class="center">
+                                        ${employee.employeeNo}
                                     </td>
                                     <td class="center">
                                         ${employee.name}
