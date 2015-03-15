@@ -51,6 +51,3 @@ CREATE TABLE
     )
     ENGINE=InnoDB DEFAULT CHARSET=utf8;
     
-
-ALTER TABLE
-    kafei_new.t_employee_2 ADD (employee_no VARCHAR(32))
