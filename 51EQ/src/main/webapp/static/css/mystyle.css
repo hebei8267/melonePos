@@ -74,7 +74,7 @@ select{
 	margin-top: 20px;
 	margin-bottom: 30px;
 }
-/************************ µ¯³öÐÅÏ¢¿ò ************************/
+/************************ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ ************************/
 .__model37 {
 	font-size: 22px;
 }
@@ -112,4 +112,10 @@ textarea.error {
 }
 select.error {
 	border: 1px dotted red;
+}
+
+.required {
+  color: #e02222;
+  font-size: 12px;
+  padding-left: 2px;
 }

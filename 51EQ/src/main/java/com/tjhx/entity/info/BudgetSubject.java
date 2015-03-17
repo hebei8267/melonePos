@@ -1,5 +1,6 @@
 package com.tjhx.entity.info;
 
+import java.beans.Transient;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,9 +26,13 @@ public class BudgetSubject extends IdEntity {
 	private static final long serialVersionUID = 6623863688516776919L;
 	/** 预算科目父节点 */
 	private BudgetSubject parentSub;
-	/** 子机构节点 */
+	/** 预算科目父节点Uuid */
+	private Integer parentSubUuid;
+	/** 预算科目父节点名称 */
+	private String parentSubName;
+	/** 子预算科目节点 */
 	private List<BudgetSubject> childrenSubList = Lists.newArrayList();
-	/** 机构名称 */
+	/** 预算科目名称 */
 	private String subName;
 	/** 排序 */
 	private int sortIndex;
@@ -59,7 +64,45 @@ public class BudgetSubject extends IdEntity {
 	}
 
 	/**
-	 * 获取子机构节点
+	 * 获取预算科目父节点Uuid
+	 * 
+	 * @return parentSubUuid
+	 */
+	@Transient
+	public Integer getParentSubUuid() {
+		return parentSubUuid;
+	}
+
+	/**
+	 * 设置预算科目父节点Uuid
+	 * 
+	 * @param parentSubUuid 预算科目父节点Uuid
+	 */
+	public void setParentSubUuid(Integer parentSubUuid) {
+		this.parentSubUuid = parentSubUuid;
+	}
+
+	/**
+	 * 获取预算科目父节点名称
+	 * 
+	 * @return parentSubName
+	 */
+	@Transient
+	public String getParentSubName() {
+		return parentSubName;
+	}
+
+	/**
+	 * 设置预算科目父节点名称
+	 * 
+	 * @param parentSubName 预算科目父节点名称
+	 */
+	public void setParentSubName(String parentSubName) {
+		this.parentSubName = parentSubName;
+	}
+
+	/**
+	 * 获取子预算科目节点
 	 * 
 	 * @return childrenSubList
 	 */
@@ -70,16 +113,16 @@ public class BudgetSubject extends IdEntity {
 	}
 
 	/**
-	 * 设置子机构节点
+	 * 设置子预算科目节点
 	 * 
-	 * @param childrenSubList 子机构节点
+	 * @param childrenSubList 子预算科目节点
 	 */
 	public void setChildrenSubList(List<BudgetSubject> childrenSubList) {
 		this.childrenSubList = childrenSubList;
 	}
 
 	/**
-	 * 获取机构名称
+	 * 获取预算科目名称
 	 * 
 	 * @return subName
 	 */
@@ -89,9 +132,9 @@ public class BudgetSubject extends IdEntity {
 	}
 
 	/**
-	 * 设置机构名称
+	 * 设置预算科目名称
 	 * 
-	 * @param subName 机构名称
+	 * @param subName 预算科目名称
 	 */
 	public void setSubName(String subName) {
 		this.subName = subName;
@@ -132,5 +175,22 @@ public class BudgetSubject extends IdEntity {
 	 */
 	public void setDelFlg(String delFlg) {
 		this.delFlg = delFlg;
+	}
+
+	/**
+	 * 添加子预算科目节点
+	 * 
+	 * @param childrenSub 子预算科目节点
+	 */
+	public void addChildrenSub(BudgetSubject childrenSub) {
+		if (null == childrenSub) {
+			return;
+		}
+
+		childrenSub.setParentSub(this);
+
+		if (!getChildrenSubList().contains(childrenSub)) {
+			getChildrenSubList().add(childrenSub);
+		}
 	}
 }

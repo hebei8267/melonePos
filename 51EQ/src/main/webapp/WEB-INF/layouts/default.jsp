@@ -24,11 +24,11 @@
 		<link type="text/css" href="${ctx}/static/css/bootstrap-responsive.css" rel="stylesheet">
 		<link type="text/css" href="${ctx}/static/css/datepicker.css" rel="stylesheet">
 		<link type="text/css" href="${ctx}/static/css/mystyle.css" rel="stylesheet">
-
-		<script src="${ctx}/static/js/jquery-1.7.2.min.js"></script>
+		
+		<script src="${ctx}/static/js/jquery-1.11.2.min.js"></script>
 		<script src="${ctx}/static/js/bootstrap.js"></script>
 		<script src="${ctx}/static/js/bootstrap-datepicker.js"></script>
-		<script src="${ctx}/static/js/jquery.validate-1.10.0.js"></script>
+		<script src="${ctx}/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 		<script src="${ctx}/static/js/jquery.validate_cn.js"></script>
 
 		<link rel="shortcut icon" href="${ctx}/static/img/favicon.ico" type="image/x-icon">

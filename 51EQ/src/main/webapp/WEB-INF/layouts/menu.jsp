@@ -91,6 +91,12 @@
 										<a href="${sc_ctx}/coupon/list">代金卷管理</a>
 									</li>
 								</c:if>
+								<c:if test="${_permIdList.contains('64')}">
+									<li class="divider"></li>
+									<li>
+										<a href="${sc_ctx}/budgetSubject/init">预算科目管理</a>
+									</li>
+								</c:if>
 							</ul>
 						</li>
 					</c:if>

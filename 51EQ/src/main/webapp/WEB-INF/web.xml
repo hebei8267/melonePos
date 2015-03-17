@@ -37,6 +37,10 @@
 		<filter-name>SecurityFilter</filter-name>
 		<url-pattern>/sc/*</url-pattern>
 	</filter-mapping>
+	<servlet-mapping>
+		<servlet-name>SecurityFilter</servlet-name>
+		<url-pattern>/em/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- Filter 定义 -->
 	<!-- Character Encoding filter -->
@@ -66,6 +70,10 @@
 		<filter-name>sitemeshFilter</filter-name>
 		<url-pattern>/sc/*</url-pattern>
 	</filter-mapping>
+	<servlet-mapping>
+		<servlet-name>sitemeshFilter</servlet-name>
+		<url-pattern>/em/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- Srping OpenSessionInView filter -->
 	<!-- Open Entity Manager in View filter -->
@@ -96,6 +104,10 @@
 		<servlet-name>springServlet</servlet-name>
 		<url-pattern>/sc/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>springServlet</servlet-name>
+		<url-pattern>/em/*</url-pattern>
+	</servlet-mapping>
 
 
 	<servlet>
@@ -109,7 +121,7 @@
 	
 	<!-- session 超时时间(单位：分钟),使用MemcachedSessionFilter时无效 -->
 	<session-config>
-		<session-timeout>30</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
 
 	<!-- 默认首页访问地址 -->

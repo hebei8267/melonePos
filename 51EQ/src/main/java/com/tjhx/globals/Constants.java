@@ -42,4 +42,9 @@ public class Constants {
 	public static final String ORG_ID_02 = "00002D";
 	/** 门店机构编号-13 */
 	public static final String ORG_ID_13 = "00013D";
+	
+	/** 删除标识 */
+	public static final String DEL_FLAG = "1";
+	/** 空白选择项－显示文字 */
+	public static final String BLANK_SELECT_TEXT = "---请选择---";
 }
