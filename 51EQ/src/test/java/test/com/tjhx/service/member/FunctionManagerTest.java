@@ -745,7 +745,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
-	
+//	
 //	@Test
 //	@Rollback(false)
 //	public void saveNewFun59() {
@@ -757,7 +757,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
-	
+//	
 //	@Test
 //	@Rollback(false)
 //	public void saveNewFun60() {
@@ -781,7 +781,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
-	
+//	
 //	@Test
 //	@Rollback(false)
 //	public void saveNewFun62() {
@@ -793,7 +793,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
-	
+//	
 //	@Test
 //	@Rollback(false)
 //	public void saveNewFun63() {

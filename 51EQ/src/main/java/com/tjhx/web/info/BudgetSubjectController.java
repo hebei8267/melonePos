@@ -10,13 +10,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.mapper.JsonMapper;
 
 import com.tjhx.entity.info.BudgetSubject;
+import com.tjhx.globals.Constants;
 import com.tjhx.service.info.BudgetSubjectManager;
 import com.tjhx.vo.tree.info.BudgetSubjectTreeNode;
 import com.tjhx.web.BaseController;
@@ -92,5 +96,24 @@ public class BudgetSubjectController extends BaseController {
 		budgetSubjectManager.saveBudgetSubject(sub);
 
 		return "true";
+	}
+
+	/**
+	 * 删除预算科目信息
+	 * 
+	 * @param request
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "del")
+	public String del_Action(HttpServletRequest request) throws ServletRequestBindingException {
+		String uuid = ServletRequestUtils.getStringParameter(request, "uuid");
+
+		if (StringUtils.isNotBlank(uuid)) {
+			// 删除预算科目信息
+			budgetSubjectManager.delBudgetSubject(uuid);
+		}
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/budgetSubject/init";
 	}
 }

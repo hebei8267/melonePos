@@ -10,6 +10,7 @@
 </c:set>
 <form class="form-horizontal" id="budgetSubject-add-form" action="${sc_ctx}/budgetSubject/init">
 	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
 		<h4 class="modal-title">预算科目信息－新增</h4>
 	</div>
 

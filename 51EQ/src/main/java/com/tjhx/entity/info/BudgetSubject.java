@@ -34,6 +34,8 @@ public class BudgetSubject extends IdEntity {
 	private List<BudgetSubject> childrenSubList = Lists.newArrayList();
 	/** 预算科目名称 */
 	private String subName;
+	/** 级别 */
+	private int level;
 	/** 排序 */
 	private int sortIndex;
 	/** 删除标识 0有效 1已删除 */
@@ -138,6 +140,25 @@ public class BudgetSubject extends IdEntity {
 	 */
 	public void setSubName(String subName) {
 		this.subName = subName;
+	}
+
+	/**
+	 * 获取级别
+	 * 
+	 * @return level
+	 */
+	@Column(name = "_level")
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * 设置级别
+	 * 
+	 * @param level 级别
+	 */
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	/**

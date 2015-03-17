@@ -27,6 +27,8 @@ public class BudgetSubjectManagerTest extends SpringTransactionalTestCase {
 
 		// 预算科目名称
 		sub.setSubName("根预算科目");
+		// 级别
+		sub.setLevel(0);
 		// 排序
 		sub.setSortIndex(1);
 

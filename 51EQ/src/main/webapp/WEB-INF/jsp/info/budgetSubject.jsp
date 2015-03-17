@@ -31,6 +31,45 @@
         <script>
         	var subjectTreeData = ${rootNodeJson};
 			var selectNode = null;
+			function nodeSelected() {
+				if (null == selectNode) {
+					return;
+				}
+		
+				if ( typeof selectNode.node.original.parentSubUuid === "undefined") {
+					$("#sub-edit-form #parentSubUuid").val('');
+				} else {
+					$("#sub-edit-form #parentSubUuid").val(selectNode.node.original.parentSubUuid);
+				}
+		
+				if ( typeof selectNode.node.original.parentSubName === "undefined") {
+					$("#sub-edit-form #parentSubName").val('');
+				} else {
+					$("#sub-edit-form #parentSubName").val(selectNode.node.original.parentSubName);
+				}
+		
+				if ( typeof selectNode.node.id === "undefined") {
+					$("#sub-tree-form #uuid").val('');
+		
+					$("#sub-edit-form #uuid").val('');
+				} else {
+					$("#sub-tree-form #uuid").val(selectNode.node.id);
+		
+					$("#sub-edit-form #uuid").val(selectNode.node.id);
+				}
+				
+				if ( typeof selectNode.node.text === "undefined") {
+					$("#sub-edit-form #subName").val('');
+				} else {
+					$("#sub-edit-form #subName").val(selectNode.node.text);
+				}
+		
+				if ( typeof selectNode.node.original.sortIndex === "undefined") {
+					$("#sub-edit-form #sortIndex").val('');
+				} else {
+					$("#sub-edit-form #sortIndex").val(selectNode.node.original.sortIndex);
+				}
+			};
 			
             $().ready(function() {
                 $('#subjectTree').jstree({
@@ -42,13 +81,58 @@
 					}
 				}).bind("select_node.jstree", function(e, data) {
 					selectNode = data;
-					//nodeSelected();
+					nodeSelected();
 				}).bind("ready.jstree", function() {
 					$('#subjectTree').jstree("open_all");
 				});
 				
 				initSubAddWin();
+				
+				//-----------------------------------
+                // 删除按钮点击
+                //-----------------------------------
+                $("#delBtn").click(function() {
+                	if($("#sub-tree-form #uuid").val() != ""){
+	                    $('#__del_confirm').modal({
+	                        backdrop : true,
+	                        keyboard : true,
+	                        show : true
+	                    });
+                    }
+                });
+                
+                $("#sub-edit-form").validate({
+                    rules : {
+		                parentSubName : {
+							required : true
+						},
+						subName : {
+							required : true,
+							maxlength : 32
+						},
+						sortIndex : {
+							digits : true
+						}
+                    },
+
+					submitHandler : function(form) {
+						subEdit(form);
+					}
+                });
             });
+            
+            //-----------------------------------
+            // 删除
+            //-----------------------------------
+            function _del_confirm() {
+                if($("#sub-tree-form #uuid").val()==""){
+                	return;
+                }
+                
+                $("#sub-tree-form").attr('target', '_self');
+                $("#sub-tree-form").attr("action", "${sc_ctx}/budgetSubject/del");
+                $("#sub-tree-form").submit();
+            }
             
             function initSubAddWin(){
 
@@ -68,6 +152,15 @@
 					}, 200);
 				});
             }
+            
+            function subEdit(form) {
+				$.post('${sc_ctx}/budgetSubject/save', $('#sub-edit-form').serialize(), function(result) {
+					if (result) {
+						form.submit();
+					} else {
+					}
+				});
+			}
         </script>
     </head>
     <body>
@@ -83,7 +176,8 @@
                     </legend>
                 </div>
               	
-              	<form method="post"	class="form-horizontal"	id="listForm">
+              	<form method="post"	class="form-horizontal"	id="sub-tree-form">
+              		<input type="hidden" id="uuid" name="uuid" />
                     <div class="span12">
                         <a href="#" id="sub-add-btn" class="btn btn-primary">新增</a>
                         <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
@@ -113,19 +207,20 @@
 							</div>
 						</div>
 						<div class="portlet-body">
-							<form class="form-horizontal" id="org-edit-form" action="${ctx}/struct/orgManage.jspx">
+							<form method="POST" class="form-horizontal" id="sub-edit-form" action="${sc_ctx}/budgetSubject/init">
 								<div class="form-body">
 									<div class="control-group">
 										<label class="control-label">上层科目</label>
 										<div class="controls">
-											<input type="text" id="parentOrgName" name="parentOrgName" readonly/>
-											<input type="hidden" id="parentOrgId" name="parentOrgId" />
+											<input type="text" id="parentSubName" name="parentSubName" readonly/>
+											<input type="hidden" id="parentSubUuid" name="parentSubUuid" />
+											<input type="hidden" id="uuid" name="uuid" />
 										</div>
 									</div>
 									<div class="control-group">
 										<label class="control-label">科目名称<span class="required">※</span></label>
 										<div class="controls">
-											<input type="text" class="form-control" id="orgName" name="orgName"/>
+											<input type="text" class="form-control" id="subName" name="subName"/>
 										</div>
 									</div>
 									<div class="control-group">
@@ -137,8 +232,8 @@
 									</div>
 									<div class="control-group">
 										<div class="controls">
-											<button type="button" class="btn btn-success" id="org-save-btn">保存</button>
-											<button type="button" class="btn" id="org-reset-btn" onclick="OrgManage.nodeSelectReset()">重置</button>
+											<button type="submit" class="btn btn-success">保存</button>
+											<button type="button" class="btn" id="org-reset-btn" onclick="nodeSelected()">重置</button>
 										</div>
 									</div>
 								</div>

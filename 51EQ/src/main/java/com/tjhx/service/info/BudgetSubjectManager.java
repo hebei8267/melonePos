@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import com.tjhx.dao.info.BudgetSubjectJpaDao;
 import com.tjhx.entity.info.BudgetSubject;
 import com.tjhx.globals.Constants;
+import com.tjhx.service.ServiceException;
 
 /**
  * 
@@ -105,8 +106,85 @@ public class BudgetSubjectManager {
 	 * 
 	 * @param sub
 	 */
-	public void saveBudgetSubject(BudgetSubject sub) {
-		// TODO Auto-generated method stub
+	@Transactional(readOnly = false)
+	public Boolean saveBudgetSubject(BudgetSubject sub) {
+		if (null == sub) {
+			return false;
+		}
+
+		if (null == sub.getUuid()) {
+			// 添加预算科目信息
+			return addBudgetSubject(sub);
+		} else {
+			// 编辑预算科目信息
+			return editBudgetSubject(sub);
+		}
+
+	}
+
+	/**
+	 * 添加预算科目信息
+	 * 
+	 * @param sub
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	private Boolean addBudgetSubject(BudgetSubject sub) {
+
+		BudgetSubject parentSub = budgetSubjectJpaDao.findOne(sub.getParentSubUuid());
+		if (null == parentSub) {
+			return false;
+		}
+
+		// 父节点
+		sub.setParentSub(parentSub);
+		parentSub.addChildrenSub(sub);
+
+		sub.setLevel(parentSub.getLevel() + 1);
+
+		budgetSubjectJpaDao.save(sub);
+
+		return true;
+	}
+
+	/**
+	 * 编辑预算科目信息
+	 * 
+	 * @param sub
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	private Boolean editBudgetSubject(BudgetSubject sub) {
+		BudgetSubject dbSub = budgetSubjectJpaDao.findOne(sub.getUuid());
+
+		if (null == dbSub) {
+			throw new ServiceException("ERR_MSG_BUDGET_SUBJECT_001");
+		}
+		// 预算科目名称
+		dbSub.setSubName(sub.getSubName());
+		// 排序
+		dbSub.setSortIndex(sub.getSortIndex());
+
+		budgetSubjectJpaDao.save(dbSub);
+
+		return true;
+	}
+
+	/**
+	 * 删除预算科目信息
+	 * 
+	 * @param uuid
+	 */
+	@Transactional(readOnly = false)
+	public void delBudgetSubject(String uuid) {
+
+		BudgetSubject dbSub = budgetSubjectJpaDao.findOne(Integer.valueOf(uuid));
+
+		if (null != dbSub) {
+			dbSub.setDelFlg(Constants.DEL_FLAG);
+
+			budgetSubjectJpaDao.save(dbSub);
+		}
 
 	}
 }
