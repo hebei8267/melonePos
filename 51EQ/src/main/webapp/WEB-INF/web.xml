@@ -37,10 +37,10 @@
 		<filter-name>SecurityFilter</filter-name>
 		<url-pattern>/sc/*</url-pattern>
 	</filter-mapping>
-	<servlet-mapping>
-		<servlet-name>SecurityFilter</servlet-name>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
 		<url-pattern>/em/*</url-pattern>
-	</servlet-mapping>
+	</filter-mapping>
 
 	<!-- Filter 定义 -->
 	<!-- Character Encoding filter -->
@@ -70,10 +70,10 @@
 		<filter-name>sitemeshFilter</filter-name>
 		<url-pattern>/sc/*</url-pattern>
 	</filter-mapping>
-	<servlet-mapping>
-		<servlet-name>sitemeshFilter</servlet-name>
+	<filter-mapping>
+		<filter-name>sitemeshFilter</filter-name>
 		<url-pattern>/em/*</url-pattern>
-	</servlet-mapping>
+	</filter-mapping>
 
 	<!-- Srping OpenSessionInView filter -->
 	<!-- Open Entity Manager in View filter -->
