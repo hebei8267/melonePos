@@ -1,6 +1,7 @@
 package com.tjhx.entity.affair;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,6 +18,10 @@ public class PunchClock_Show {
 	private String startClockTime;
 	/** 打卡时间-结束 */
 	private String endClockTime;
+	/** 打卡时间-开始 */
+	private Date _startClockTime;
+	/** 打卡时间-结束 */
+	private Date _endClockTime;
 	/** 排班日期 YYYYMMDD */
 	private String scheduleDate;
 	/** 排班上班时间 HH:mm */
@@ -25,7 +30,9 @@ public class PunchClock_Show {
 	private String endScheduleTime;
 	/** 员工编号 */
 	private int empUuid;
-	/** 考勤状态 99-非预期加班 0-正常 1-迟到 2-早退 */
+	/** 员工名称 */
+	private String empName;
+	/** 考勤状态 99-非预期加班 0-正常 1-迟到 2-早退 3-工作时长不满 */
 	private int punchNormalState;
 	/** 工作时长 */
 	private double workHour;
@@ -34,11 +41,12 @@ public class PunchClock_Show {
 
 	}
 
-	public PunchClock_Show(String clockTimeY, String clockTimeM, String clockTimeD, int empUuid) {
+	public PunchClock_Show(String clockTimeY, String clockTimeM, String clockTimeD, int empUuid, String empName) {
 		this.clockTimeY = clockTimeY;
 		this.clockTimeM = clockTimeM;
 		this.clockTimeD = clockTimeD;
 		this.empUuid = empUuid;
+		this.empName = empName;
 	}
 
 	/**
@@ -213,9 +221,9 @@ public class PunchClock_Show {
 	}
 
 	/**
-	 * 设置考勤状态99-非预期加班 0-正常 1-迟到 2-早退
+	 * 设置考勤状态99-非预期加班 0-正常 1-迟到 2-早退 3-工作时长不满
 	 * 
-	 * @param punchNormalState 考勤状态99-非预期加班 0-正常 1-迟到 2-早退
+	 * @param punchNormalState 考勤状态99-非预期加班 0-正常 1-迟到 2-早退 3-工作时长不满
 	 */
 	public void setPunchNormalState(int punchNormalState) {
 		this.punchNormalState = punchNormalState;
@@ -239,7 +247,28 @@ public class PunchClock_Show {
 		this.workHour = workHour;
 	}
 
+	/**
+	 * 获取员工名称
+	 * 
+	 * @return empName
+	 */
+	public String getEmpName() {
+		return empName;
+	}
+
+	/**
+	 * 设置员工名称
+	 * 
+	 * @param empName 员工名称
+	 */
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
 	public void copy(PunchClock clock) {
+		this._startClockTime = clock.getStartClockTime();
+		this._endClockTime = clock.getEndClockTime();
+
 		this.startClockTime = DateUtils.transDateFormat(clock.getStartClockTime(), "MM/dd HH:mm:ss");
 		this.endClockTime = DateUtils.transDateFormat(clock.getEndClockTime(), "MM/dd HH:mm:ss");
 		// 设置工作时长
@@ -255,7 +284,7 @@ public class PunchClock_Show {
 	}
 
 	public void timeValidate() throws ParseException {
-		// 99-非预期加班 0-正常 1-迟到 2-早退
+		// 99-非预期加班 0-正常 1-迟到 2-早退 3-工作时长不满
 
 		String curDate = DateUtils.getCurrentDateShortStr();
 		String clockTime = clockTimeY + clockTimeM + clockTimeD;
@@ -265,8 +294,15 @@ public class PunchClock_Show {
 			punchNormalState = 0;// 正常
 
 			if (StringUtils.isNotBlank(startClockTime) || StringUtils.isNotBlank(endClockTime)) {
-				// 非预期加班
-				punchNormalState = 99;
+
+				if (_startClockTime != null && _endClockTime != null
+						&& DateUtils.getDateSpanHour(_startClockTime, _endClockTime) < 7) {
+					// 工作时长不满
+					punchNormalState = 3;
+				} else {
+					// 非预期加班
+					punchNormalState = 99;
+				}
 			}
 		} else {
 			// 是否迟到

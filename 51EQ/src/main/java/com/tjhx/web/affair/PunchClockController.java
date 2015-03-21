@@ -26,6 +26,7 @@ import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.affair.PunchClock_List_Show;
+import com.tjhx.entity.affair.PunchClock_Show;
 import com.tjhx.entity.member.Employee;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.affair.PunchClockManager;
@@ -34,6 +35,10 @@ import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 import com.tjhx.web.report.ReportUtils;
 
+/**
+ * @author he_bei
+ * 
+ */
 @Controller
 @RequestMapping(value = "/punchClock")
 public class PunchClockController extends BaseController {
@@ -73,6 +78,22 @@ public class PunchClockController extends BaseController {
 		model.addAttribute("punchClockList", _clockList);
 	}
 
+	/**
+	 * 异常考勤
+	 * 
+	 * @param orgId
+	 * @param optDateY
+	 * @param optDateM
+	 * @param model
+	 * @throws ParseException
+	 */
+	private void _punchClockAbnormalListAction(String orgId, String optDateY, String optDateM, Model model) throws ParseException {
+		List<Employee> _empList = empManager.getEmployeeListByOrgId(orgId);
+
+		List<PunchClock_Show> _abnormalClockList = punchClockManager.getPunchClockAbnormalList(orgId, optDateY, optDateM, _empList);
+		model.addAttribute("abnormalClockList", _abnormalClockList);
+	}
+
 	// ######################################################################################################
 	@RequestMapping(value = { "manage" })
 	public String punchClockManageList_Action(Model model) {
@@ -98,6 +119,32 @@ public class PunchClockController extends BaseController {
 		ReportUtils.initOrgList_NonNull_Root(orgManager, model);
 
 		return "affair/punchClockManageList";
+	}
+
+	/**
+	 * 异常考勤查看
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws ServletRequestBindingException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = { "manage/abnormal" })
+	public String punchClockManageAbnormalList_Action(HttpServletRequest request, Model model)
+			throws ServletRequestBindingException, ParseException {
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
+		model.addAttribute("orgId", orgId);
+		model.addAttribute("optDateShow", optDateShow);
+
+		String optDateY = DateUtils.transDateFormat(optDateShow, "yyyy-MM", "yyyy");
+		String optDateM = DateUtils.transDateFormat(optDateShow, "yyyy-MM", "MM");
+
+		// 异常考勤
+		_punchClockAbnormalListAction(orgId, optDateY, optDateM, model);
+
+		return "affair/punchClockManageAbnormalList";
 	}
 
 	@RequestMapping(value = "manage/export")

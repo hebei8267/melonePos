@@ -272,7 +272,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * 取得dateTo与dateFrom的日期间隔(返回结果-分钟)
+	 * 取得dateTo与dateFrom的日期间隔(返回结果-小时)
 	 * 
 	 * @param dateFrom dateFrom
 	 * @param dateTo dateTo

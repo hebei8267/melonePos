@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.affair.PunchClockJpaDao;
 import com.tjhx.dao.affair.PunchClockMyBatisDao;
@@ -206,14 +207,15 @@ public class PunchClockManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private List<PunchClock_List_Show> formatPunchClockList(String clockTimeY, String clockTimeM,
-			List<PunchClock> punchClockList, List<WorkSchedule> workScheduleList, List<Employee> empList) throws ParseException {
+	private List<PunchClock_Show> _formatPunchClockList(String clockTimeY, String clockTimeM, List<PunchClock> punchClockList,
+			List<WorkSchedule> workScheduleList, List<Employee> empList) throws ParseException {
 		int days = DateUtils.getMonthDays(Integer.parseInt(clockTimeY), Integer.parseInt(clockTimeM));
 
 		List<PunchClock_Show> _punchClockList = new ArrayList<PunchClock_Show>();
 		for (int i = 1; i <= days; i++) {
 			for (Employee employee : empList) {
-				_punchClockList.add(new PunchClock_Show(clockTimeY, clockTimeM, String.format("%02d", i), employee.getUuid()));
+				_punchClockList.add(new PunchClock_Show(clockTimeY, clockTimeM, String.format("%02d", i), employee.getUuid(),
+						employee.getName()));
 			}
 		}
 
@@ -240,7 +242,25 @@ public class PunchClockManager {
 			}
 		}
 
-		return formatPunchClockList(_punchClockList, empList.size());
+		return _punchClockList;
+	}
+
+	/**
+	 * 调整考勤信息表,准备页面显示
+	 * 
+	 * @param clockTimeY
+	 * @param clockTimeM
+	 * @param punchClockList 打卡信息列表
+	 * @param workScheduleList 排班信息列表
+	 * @param empList
+	 * @return
+	 * @throws ParseException
+	 */
+	private List<PunchClock_List_Show> formatPunchClockList(String clockTimeY, String clockTimeM,
+			List<PunchClock> punchClockList, List<WorkSchedule> workScheduleList, List<Employee> empList) throws ParseException {
+
+		return formatPunchClockList(_formatPunchClockList(clockTimeY, clockTimeM, punchClockList, workScheduleList, empList),
+				empList.size());
 
 	}
 
@@ -339,5 +359,42 @@ public class PunchClockManager {
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PUNCH_CLOCK, map, tmpFilePath);
 
 		return tmpFileName;
+	}
+
+	/**
+	 * 异常考勤
+	 * 
+	 * @param orgId
+	 * @param optDateY
+	 * @param optDateM
+	 * @param _empList
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<PunchClock_Show> getPunchClockAbnormalList(String orgId, String clockTimeY, String clockTimeM,
+			List<Employee> empList) throws ParseException {
+
+		PunchClock punchClock = new PunchClock();
+		punchClock.setOrgId(orgId);
+		punchClock.setClockTimeY(clockTimeY);
+		punchClock.setClockTimeM(clockTimeM);
+
+		// 打卡信息列表
+		List<PunchClock> _dbClockList = punchClockMyBatisDao.getPunchClockList(punchClock);
+		// 排班信息列表
+		List<WorkSchedule> _dbWsList = workScheduleManager.getWorkScheduleListByDateYM(orgId, clockTimeY + clockTimeM);
+
+		List<PunchClock_Show> reList = _formatPunchClockList(clockTimeY, clockTimeM, _dbClockList, _dbWsList, empList);
+
+		List<PunchClock_Show> _reList = Lists.newArrayList();
+
+		for (PunchClock_Show _punchClock : reList) {
+			// 排除0-正常
+			if (0 == _punchClock.getPunchNormalState()) {
+				continue;
+			}
+			_reList.add(_punchClock);
+		}
+		return _reList;
 	}
 }
