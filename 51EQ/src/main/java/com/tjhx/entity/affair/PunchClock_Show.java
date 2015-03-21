@@ -326,6 +326,12 @@ public class PunchClock_Show {
 					punchNormalState = 2;// 早退
 				}
 			}
+
+			// 工作时长不满
+			if (_startClockTime != null && _endClockTime != null && DateUtils.getDateSpanHour(_startClockTime, _endClockTime) < 7) {
+				// 工作时长不满
+				punchNormalState = 3;
+			}
 		}
 	}
 }
