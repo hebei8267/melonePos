@@ -63,6 +63,9 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
+                                	<th class="center">
+                                        考勤时间
+                                    </th>
                                     <th class="center">
                                         职员名称
                                     </th>
@@ -81,6 +84,7 @@
                           
                             <c:forEach items="${abnormalClockList}" var="abnormalClock">
                             <tr>
+                            	<td class="center">${abnormalClock.clockTimeM}-${abnormalClock.clockTimeD}</td>
 	                            <td class="center">${abnormalClock.empName}</td>
 	                            <td class="center">
 	                            <c:if test="${abnormalClock.punchNormalState == 99}">
