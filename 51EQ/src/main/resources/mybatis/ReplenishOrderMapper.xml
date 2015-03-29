@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.order.ReplenishOrderMyBatisDao">
+	
+	<delete id="delReplenishOrderByBatchId" parameterType="String">
+        DELETE FROM t_replenish_order WHERE order_batch_id = #{orderBatchId}
+    </delete>
+</mapper>
