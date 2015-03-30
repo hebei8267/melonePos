@@ -16,6 +16,7 @@ import net.sf.jxls.reader.ReaderBuilder;
 import net.sf.jxls.reader.XLSReadStatus;
 import net.sf.jxls.reader.XLSReader;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,6 +109,31 @@ public class ReplenishOrderManager {
 			replenishOrderDetailJpaDao.save(detail);
 		}
 
+	}
+
+	/**
+	 * @param orderNo
+	 * @param orgId
+	 * @param orderState
+	 * @return
+	 */
+	public List<ReplenishOrder> getReplenishOrderList(String orderNo, String orgId, String orderState) {
+		Map<String, String> param = Maps.newHashMap();
+		if (StringUtils.isNotBlank(orderNo)) {
+			if (orderNo.length() == 8) {
+				param.put("orderBatchId", orderNo);
+			} else {
+				param.put("orderNo", orderNo);
+			}
+		}
+
+		if (StringUtils.isNotBlank(orgId)) {
+			param.put("replenishOrgId", orgId.substring(3));
+		}
+
+		param.put("orderState", orderState);
+
+		return replenishOrderMyBatisDao.getReplenishOrderList(param);
 	}
 
 }

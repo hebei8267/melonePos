@@ -35,11 +35,13 @@ public class ReplenishOrder extends IdEntity {
 	/** 补货单状态 01-编辑中 02-已发货 03-收货中 99-已确认 */
 	private String orderState;
 	/** 点货日期 */
-	private String generateDate;
+	private String receiveDate;
 	/** 描述 */
 	private String description;
 	/** 补货单明细列表 */
 	private List<ReplenishOrderDetail> detailList;
+	/** 错填次数 */
+	private int errorNum;
 
 	/**
 	 * 获取补货单生成批次号
@@ -121,20 +123,20 @@ public class ReplenishOrder extends IdEntity {
 	/**
 	 * 获取点货日期
 	 * 
-	 * @return generateDate
+	 * @return receiveDate
 	 */
 	@Column(length = 8)
-	public String getGenerateDate() {
-		return generateDate;
+	public String getReceiveDate() {
+		return receiveDate;
 	}
 
 	/**
 	 * 设置点货日期
 	 * 
-	 * @param generateDate 点货日期
+	 * @param receiveDate 点货日期
 	 */
-	public void setGenerateDate(String generateDate) {
-		this.generateDate = generateDate;
+	public void setReceiveDate(String receiveDate) {
+		this.receiveDate = receiveDate;
 	}
 
 	/**
@@ -172,5 +174,23 @@ public class ReplenishOrder extends IdEntity {
 	 */
 	public void setDetailList(List<ReplenishOrderDetail> detailList) {
 		this.detailList = detailList;
+	}
+
+	/**
+	 * 获取错填次数
+	 * 
+	 * @return errorNum
+	 */
+	public int getErrorNum() {
+		return errorNum;
+	}
+
+	/**
+	 * 设置错填次数
+	 * 
+	 * @param errorNum 错填次数
+	 */
+	public void setErrorNum(int errorNum) {
+		this.errorNum = errorNum;
 	}
 }

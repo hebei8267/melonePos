@@ -16,11 +16,14 @@
                 // 全选/全部选
                 //-----------------------------------
                 $("#checkAll").click(function() {
-                    $('input[name="supplierBwId"]').attr("checked", this.checked);
-                });
-                var $subCheckBox = $("input[name='supplierBwId']");
-                $subCheckBox.click(function() {
-                    $("#checkAll").attr("checked", $subCheckBox.length == $("input[name='supplierBwId']:checked").length ? true : false);
+            		var checked = $("#checkAll").is(":checked");
+                	$("input[name='uuid']").each(function(){
+                		if (checked) {
+							$(this).attr("checked", true);
+						} else {
+							$(this).attr("checked", false);
+						}
+                	}); 
                 });
                 
                 

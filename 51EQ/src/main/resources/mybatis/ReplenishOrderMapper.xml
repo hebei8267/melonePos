@@ -3,7 +3,72 @@
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tjhx.dao.order.ReplenishOrderMyBatisDao">
 	
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_ReplenishOrder" type="com.tjhx.entity.order.ReplenishOrder">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="error_num" property="errorNum" jdbcType="INTEGER"/>
+        <result column="order_batch_id" property="orderBatchId" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="order_state" property="orderState" jdbcType="VARCHAR"/>
+        <result column="receive_date" property="receiveDate" jdbcType="VARCHAR"/>
+        <result column="replenish_org_id" property="replenishOrgId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
 	<delete id="delReplenishOrderByBatchId" parameterType="String">
         DELETE FROM t_replenish_order WHERE order_batch_id = #{orderBatchId}
     </delete>
+    
+    
+    <!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+    	uuid ,
+    	create_date ,
+    	create_user_id ,
+    	update_date ,
+    	update_user_id ,
+    	version ,
+    	description ,
+    	error_num ,
+    	order_batch_id ,
+    	order_no ,
+    	order_state ,
+    	receive_date ,
+    	replenish_org_id 
+	]]>
+  	</sql>
+  	
+  	<!-- 查询条件 -->
+  	<sql id="Where_Clause" >
+  		<where>
+  			<if test="orderBatchId != null and orderBatchId !='' ">
+  			AND order_batch_id = #{orderBatchId}
+  			</if>
+  			<if test="orderNo != null and orderNo !='' ">
+  			AND order_no = #{orderNo}
+  			</if>
+  			<if test="orderState != null and orderState !='' ">
+  			AND order_state = #{orderState}
+  			</if>
+  			<if test="replenishOrgId != null and replenishOrgId !='' ">
+  			AND replenish_org_id = #{replenishOrgId}
+  			</if>
+	  	</where>
+  	</sql>
+  	
+  	<!-- 取得t_replenish_order信息(根据参数) -->
+	<select id="getReplenishOrderList" parameterType="map" resultMap="Result_Map_ReplenishOrder">
+		select
+		<include refid="Base_Column_List" />
+		from t_replenish_order
+		<include refid="Where_Clause" />
+		ORDER BY order_batch_id , order_no
+	</select>
 </mapper>

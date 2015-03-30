@@ -33,11 +33,14 @@
                 // 全选/全部选
                 //-----------------------------------
                 $("#checkAll").click(function() {
-                    $('input[name="uuid"]').attr("checked", this.checked);
-                });
-                var $subCheckBox = $("input[name='uuid']");
-                $subCheckBox.click(function() {
-                    $("#checkAll").attr("checked", $subCheckBox.length == $("input[name='uuid']:checked").length ? true : false);
+            		var checked = $("#checkAll").is(":checked");
+                	$("input[name='uuid']").each(function(){
+                		if (checked) {
+							$(this).attr("checked", true);
+						} else {
+							$(this).attr("checked", false);
+						}
+                	}); 
                 });
                 
                 //-----------------------------------

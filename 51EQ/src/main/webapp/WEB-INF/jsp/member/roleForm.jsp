@@ -482,7 +482,7 @@
 				</div>
 				
 				<div class="span3">
-					<h4>物流模块<br>
+					<h4>商品收发模块<br>
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
 						<tr>
 							<c:if test="${role.permIdList.contains('56')}">
@@ -490,6 +490,22 @@
 							</c:if>
 							<c:if test="${!role.permIdList.contains('56')}">
 							<td><input type="checkbox" name="perm" value="56">物流</td>
+							</c:if>
+						</tr>
+						<tr>	
+							<c:if test="${role.permIdList.contains('65')}">
+							<td><input type="checkbox" name="perm" value="65" checked>收货管理</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('65')}">
+							<td><input type="checkbox" name="perm" value="65">收货管理</td>
+							</c:if>
+						<tr>
+						</tr>
+							<c:if test="${role.permIdList.contains('66')}">
+							<td><input type="checkbox" name="perm" value="66" checked>发货管理</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('66')}">
+							<td><input type="checkbox" name="perm" value="66">发货管理</td>
 							</c:if>
 						</tr>
 					</table>
