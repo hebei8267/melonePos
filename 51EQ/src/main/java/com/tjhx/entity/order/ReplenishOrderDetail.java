@@ -1,5 +1,7 @@
 package com.tjhx.entity.order;
 
+import javax.persistence.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,10 +31,18 @@ public class ReplenishOrderDetail extends IdEntity {
 	private String orderNo;
 	/** 商品条码 */
 	private String productBarcode;
-	/** 补货数量 */
+	/** 补货(发货)数量 */
 	private int replenishNum;
 	/** 收货数量 */
 	private int receiptNum;
+
+	// =========================================================
+	/** 商品名称 */
+	private String goodsName;
+	/** 商品类型 */
+	private String goodsItemNo;
+	/** 商品货商名称 */
+	private String supplierName;
 
 	/**
 	 * 获取补货单生成批次号
@@ -127,5 +137,64 @@ public class ReplenishOrderDetail extends IdEntity {
 	 */
 	public void setReceiptNum(int receiptNum) {
 		this.receiptNum = receiptNum;
+	}
+
+	// =========================================================
+
+	/**
+	 * 获取商品名称
+	 * 
+	 * @return goodsName
+	 */
+	@javax.persistence.Transient
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	/**
+	 * 设置商品名称
+	 * 
+	 * @param goodsName 商品名称
+	 */
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	/**
+	 * 获取商品类型
+	 * 
+	 * @return goodsItemNo
+	 */
+	@Transient
+	public String getGoodsItemNo() {
+		return goodsItemNo;
+	}
+
+	/**
+	 * 设置商品类型
+	 * 
+	 * @param goodsItemNo 商品类型
+	 */
+	public void setGoodsItemNo(String goodsItemNo) {
+		this.goodsItemNo = goodsItemNo;
+	}
+
+	/**
+	 * 获取商品货商名称
+	 * 
+	 * @return supplierName
+	 */
+	@Transient
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	/**
+	 * 设置商品货商名称
+	 * 
+	 * @param supplierName 商品货商名称
+	 */
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 }

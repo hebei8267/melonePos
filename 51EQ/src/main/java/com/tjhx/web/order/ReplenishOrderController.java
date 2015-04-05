@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjhx.entity.order.ReplenishOrder;
+import com.tjhx.globals.Constants;
 import com.tjhx.service.order.ReplenishOrderManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
@@ -134,10 +137,6 @@ public class ReplenishOrderController extends BaseController {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
-		// 01-编辑中 02-已发货 03-收货中 99-已确认
-		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(null, null, "02");
-		model.addAttribute("replenishOrderList", list);
-
 		return "order/replenishOrderManageList";
 	}
 
@@ -148,9 +147,25 @@ public class ReplenishOrderController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "manageEdit/{orderNo}")
-	public String manageEdit_Action(@PathVariable("orderNo") String orderNo, Model model) {
+	public String manageEdit_Action(@PathVariable("orderNo") String orderNo, Model model, HttpServletRequest request) {
+		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
+
+		model.addAttribute("order", order);
 
 		return "order/replenishOrderManageEdit";
+	}
+
+	@RequestMapping(value = "manageEditSave")
+	public String manageEditSave_Action(HttpServletRequest request, Model model) throws ServletRequestBindingException {
+		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
+		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
+		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
+
+		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, productBarcodes, replenishNums);
+
+		addInfoMsg(model, "TIP_MSG_SAVE_SUCCESSED");
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageEdit/" + orderNo;
 	}
 
 	/**
@@ -161,7 +176,44 @@ public class ReplenishOrderController extends BaseController {
 	 */
 	@RequestMapping(value = "manageView/{orderNo}")
 	public String manageView_Action(@PathVariable("orderNo") String orderNo, Model model) {
+		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
+
+		model.addAttribute("order", order);
 
 		return "order/replenishOrderManageView";
+	}
+
+	/**
+	 * 删除补货单
+	 * 
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "manageDel")
+	public String manageDel_Action(@RequestParam("uuids") String ids, Model model, HttpSession session) {
+		String[] idArray = ids.split(",");
+		for (int i = 0; i < idArray.length; i++) {
+			replenishOrderManager.delReplenishOrder(idArray[i]);
+		}
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageList";
+	}
+
+	/**
+	 * 补货单-发货
+	 * 
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "manageSend")
+	public String manageSend_Action(@RequestParam("uuids") String ids, Model model, HttpSession session) {
+		String[] idArray = ids.split(",");
+		for (int i = 0; i < idArray.length; i++) {
+			replenishOrderManager.sendReplenishOrder(idArray[i]);
+		}
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageList";
 	}
 }

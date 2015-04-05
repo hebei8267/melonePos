@@ -16,6 +16,9 @@
 					rules : {
 						orderNo : {
 							maxlength : 12
+						},
+						orderState : {
+							required : true
 						}
 					}
 				});
@@ -28,13 +31,49 @@
                 	$("input[name='uuid']").each(function(){
                 		if (checked) {
 							$(this).attr("checked", true);
+							$(this).prop("checked", true);
 						} else {
 							$(this).attr("checked", false);
+							$(this).prop("checked", false);
 						}
                 	}); 
                 });
                 
+                //-----------------------------------
+                // 删除按钮点击
+                //-----------------------------------
+                $("#delBtn").click(function() {
+                    if ($("#listForm").valid()) {
+                        $('#__del_confirm').modal({
+                            backdrop : true,
+                            keyboard : true,
+                            show : true
+                        });
+                    }
+                });
+                
+                // 发货
+				$("#sendBtn").click(function() {
+					var $subCheckBox = $("input[name='uuid']");
+	                var uuids = "";
+	                $.each($subCheckBox, function(index, _checkBox) {
+	                    if (_checkBox.checked) {
+	                        uuids += _checkBox.value + ",";
+	                    }
+	                });
+	                if (uuids.length > 0) {
+	                    uuids = uuids.substring(0, uuids.length - 1);
+	                }
+	
+	                $("#uuids").val(uuids);
+	                
+	                $("#listForm").attr("target", "_self");
+	                $("#listForm").attr("action", "${sc_ctx}/replenishOrder/manageSend");
+	                $("#listForm").submit();
 				
+				});
+				
+				// 查询
 				$("#searchBtn").click(function() {
 					$("input[type='text'],textarea").each(function(i) {
 						this.value = $.trim(this.value);
@@ -45,6 +84,28 @@
 					$("#listForm").submit();
 				});
 			});
+			
+			//-----------------------------------
+            // 删除
+            //-----------------------------------
+            function _del_confirm() {
+                var $subCheckBox = $("input[name='uuid']");
+                var uuids = "";
+                $.each($subCheckBox, function(index, _checkBox) {
+                    if (_checkBox.checked) {
+                        uuids += _checkBox.value + ",";
+                    }
+                });
+                if (uuids.length > 0) {
+                    uuids = uuids.substring(0, uuids.length - 1);
+                }
+
+                $("#uuids").val(uuids);
+                
+                $("#listForm").attr("target", "_self");
+                $("#listForm").attr("action", "${sc_ctx}/replenishOrder/manageDel");
+                $("#listForm").submit();
+        	}
 		</script>
     </head>
     <body>
@@ -86,7 +147,7 @@
 								<c:if test="${state.key == orderState}">
 									<option value="${state.key }" selected>${state.value }</option>
 								</c:if>
-								<c:if test="${state.key != orgId}">
+								<c:if test="${state.key != orderState}">
 									<option value="${state.key }">${state.value }</option>
 								</c:if>
 							</c:forEach>
@@ -94,7 +155,12 @@
 						<button id="searchBtn" class="btn btn-primary" type="button">查询</button>
                     </div>
                     
-                    <div class="span12"	style="margin-top: 10px;">
+                    <div class="span12" style="margin-top: 10px;">
+                    	<input id="sendBtn" name="sendBtn" type="button" class="btn btn-primary" value="发货"/>
+                        <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
+                    </div>
+                    
+                    <div class="span12" style="margin-top: 10px;">
                     	<input type="hidden" name="uuids" id="uuids"/>
                     	<table class="table	table-striped table-bordered table-condensed mytable">
                     		<thead>
@@ -115,12 +181,15 @@
                                         补货单<br>状态
                                     </th>
                                     <th class="center">
+                                        总部发货<br>日期
+                                    </th>
+                                    <th class="center">
                                         门店点货<br>开始日期
                                     </th>
                                     <th class="center">
                                         错填次数
                                     </th>
-                                    <th	width="55">
+                                    <th	width="155">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -129,7 +198,10 @@
                                 <c:forEach items="${replenishOrderList}" var="replenishOrder">
                                 	<tr>
                                         <td	class="center">
-                                          	<input type="checkbox" name="uuid" value="${replenishOrder.uuid}"></input>
+                                        <%//收货中与已完结不能删除 %>
+                                        <c:if test="${replenishOrder.orderState != '03' || replenishOrder.orderState != '99'}">
+                                        	<input type="checkbox" name="uuid" value="${replenishOrder.orderNo}"></input>
+                                        </c:if>
                                         </td>
                                         <td	class="center">
                                         	${replenishOrder.orderBatchId}
@@ -155,13 +227,18 @@
                                             </c:if>
                                         </td>
                                         <td	class="center">
+                                            ${replenishOrder.sendDate}
+                                        </td>
+                                        <td	class="center">
                                             ${replenishOrder.receiveDate}
                                         </td>
                                         <td	class="center">
                                             ${replenishOrder.errorNum}
                                         </td>
                                         <td	class="center">
-                                            <a href="${sc_ctx}/coupon/edit/${coupon.couponNo}" class="btn btn-warning"/>编辑</a>
+                                        	<a href="${sc_ctx}/replenishOrder/manageView/${replenishOrder.orderNo}" class="btn" target="_blank"/>查看</a>
+                                        	 
+                                            <a href="${sc_ctx}/replenishOrder/manageEdit/${replenishOrder.orderNo}" class="btn btn-warning"/>编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

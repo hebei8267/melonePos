@@ -3,7 +3,56 @@
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.tjhx.dao.order.ReplenishOrderDetailMyBatisDao">
 	
+	<resultMap id="Result_Map_ReplenishOrderDetail" type="com.tjhx.entity.order.ReplenishOrderDetail">
+        <result column="order_batch_id" property="orderBatchId" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="product_barcode" property="productBarcode" jdbcType="VARCHAR"/>
+        <result column="receipt_num" property="receiptNum" jdbcType="INTEGER"/>
+        <result column="replenish_num" property="replenishNum" jdbcType="INTEGER"/>
+        
+        <result column="goods_item_no" property="goodsItemNo" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
 	<delete id="delReplenishOrderDetailByBatchId" parameterType="String">
         DELETE FROM t_replenish_order_detail WHERE order_batch_id = #{orderBatchId}
     </delete>
+    
+    <delete id="delReplenishOrderDetailByOrderNo" parameterType="String">
+        DELETE FROM t_replenish_order_detail WHERE order_no = #{order_no}
+    </delete>
+    
+    <!-- 取得t_replenish_order_detail信息(根据参数) -->
+	<select id="findReplenishOrderDetailByOrderNo" parameterType="map" resultMap="Result_Map_ReplenishOrderDetail">
+		SELECT
+		    od.order_batch_id ,
+		    od.order_no ,
+		    od.product_barcode ,
+		    od.receipt_num ,
+		    od.replenish_num ,
+		    tp. item_short_name AS goods_item_no ,
+		    gd.name             AS goods_name ,
+		    sp.name             AS supplier_name
+		FROM
+		    t_replenish_order_detail od
+		LEFT JOIN
+		    t_goods gd
+		ON
+		    od.product_barcode=gd.subno
+		LEFT JOIN
+		    t_supplier sp
+		ON
+		    gd.supplier_bw_id=sp.supplier_bw_id
+		LEFT JOIN
+		    t_item_type tp
+		ON
+		    gd.item_no=tp.item_no
+		<where>
+  			<if test="orderNo != null and orderNo !='' ">
+  			od.order_no = #{orderNo}
+  			</if>
+	  	</where>
+	  	ORDER BY sp.supplier_bw_id , gd.item_no , gd.subno
+	</select>
 </mapper>

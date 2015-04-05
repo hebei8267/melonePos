@@ -24,6 +24,7 @@ import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.order.ReplenishOrderDetailJpaDao;
 import com.tjhx.dao.order.ReplenishOrderDetailMyBatisDao;
 import com.tjhx.dao.order.ReplenishOrderJpaDao;
@@ -98,6 +99,7 @@ public class ReplenishOrderManager {
 	 * 
 	 * @param order
 	 */
+	@Transactional(readOnly = false)
 	public void saveReplenishOrder(ReplenishOrder order) {
 
 		if (order.getDetailList() == null || order.getDetailList().size() == 0) {
@@ -136,4 +138,74 @@ public class ReplenishOrderManager {
 		return replenishOrderMyBatisDao.getReplenishOrderList(param);
 	}
 
+	/**
+	 * 取得调货单信息-根据调货单编号
+	 * 
+	 * @param orderNo
+	 * @return
+	 */
+	public ReplenishOrder getReplenishOrderByOrderNo(String orderNo) {
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+
+		Map<String, String> param = Maps.newHashMap();
+		param.put("orderNo", orderNo);
+		List<ReplenishOrderDetail> detailList = replenishOrderDetailMyBatisDao.findReplenishOrderDetailByOrderNo(param);
+
+		order.setDetailList(detailList);
+
+		return order;
+	}
+
+	/**
+	 * 更新调货单明细信息-补货数量
+	 * 
+	 * @param orderNo
+	 * @param productBarcodes
+	 * @param replenishNums
+	 */
+	@Transactional(readOnly = false)
+	public void updateReplenishOrderDetail_replenishNums(String orderNo, String[] productBarcodes, String[] replenishNums) {
+		for (int i = 0; i < productBarcodes.length; i++) {
+
+			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo,
+					productBarcodes[i]);
+
+			// 错误补货数量,全部置为0
+			try {
+				detail.setReplenishNum(Integer.valueOf(replenishNums[i]));
+			} catch (Exception e) {
+				detail.setReplenishNum(0);
+			}
+
+			replenishOrderDetailJpaDao.save(detail);
+		}
+
+	}
+
+	/**
+	 * 删除补货单-根据补货单编号
+	 * 
+	 * @param string
+	 */
+	@Transactional(readOnly = false)
+	public void delReplenishOrder(String orderNo) {
+		// 根据补货单编号删除要货单信息
+		replenishOrderMyBatisDao.delReplenishOrderByOrderNo(orderNo);
+		// 根据补货单编号删除要货单明细信息
+		replenishOrderDetailMyBatisDao.delReplenishOrderDetailByOrderNo(orderNo);
+	}
+
+	/**
+	 * 补货单-发货
+	 * 
+	 * @param string
+	 */
+	@Transactional(readOnly = false)
+	public void sendReplenishOrder(String orderNo) {
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+		// 补货单状态 01-编辑中 02-已发货 03-收货中 99-已确认 */
+		order.setOrderState("02");
+		order.setSendDate(DateUtils.getCurrentDateShortStr());
+		replenishOrderJpaDao.save(order);
+	}
 }

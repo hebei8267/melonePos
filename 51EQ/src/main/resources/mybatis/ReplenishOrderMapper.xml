@@ -16,6 +16,7 @@
         <result column="order_batch_id" property="orderBatchId" jdbcType="VARCHAR"/>
         <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
         <result column="order_state" property="orderState" jdbcType="VARCHAR"/>
+        <result column="send_date" property="sendDate" jdbcType="VARCHAR"/>
         <result column="receive_date" property="receiveDate" jdbcType="VARCHAR"/>
         <result column="replenish_org_id" property="replenishOrgId" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -23,6 +24,10 @@
 	
 	<delete id="delReplenishOrderByBatchId" parameterType="String">
         DELETE FROM t_replenish_order WHERE order_batch_id = #{orderBatchId}
+    </delete>
+    
+    <delete id="delReplenishOrderByOrderNo" parameterType="String">
+        DELETE FROM t_replenish_order WHERE order_no = #{orderNo}
     </delete>
     
     
@@ -40,6 +45,7 @@
     	order_batch_id ,
     	order_no ,
     	order_state ,
+    	send_date ,
     	receive_date ,
     	replenish_org_id 
 	]]>

@@ -29,8 +29,10 @@
                 	$("input[name='uuid']").each(function(){
                 		if (checked) {
 							$(this).attr("checked", true);
+							$(this).prop("checked", true);
 						} else {
 							$(this).attr("checked", false);
+							$(this).prop("checked", false);
 						}
                 	}); 
                 });

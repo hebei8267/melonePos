@@ -34,7 +34,9 @@ public class ReplenishOrder extends IdEntity {
 	private String replenishOrgId;
 	/** 补货单状态 01-编辑中 02-已发货 03-收货中 99-已确认 */
 	private String orderState;
-	/** 点货日期 */
+	/** 发货日期 */
+	private String sendDate;
+	/** 收货日期 */
 	private String receiveDate;
 	/** 描述 */
 	private String description;
@@ -121,7 +123,26 @@ public class ReplenishOrder extends IdEntity {
 	}
 
 	/**
-	 * 获取点货日期
+	 * 获取发货日期
+	 * 
+	 * @return sendDate
+	 */
+	@Column(length = 8)
+	public String getSendDate() {
+		return sendDate;
+	}
+
+	/**
+	 * 设置发货日期
+	 * 
+	 * @param sendDate 发货日期
+	 */
+	public void setSendDate(String sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	/**
+	 * 获取收货日期
 	 * 
 	 * @return receiveDate
 	 */
@@ -131,9 +152,9 @@ public class ReplenishOrder extends IdEntity {
 	}
 
 	/**
-	 * 设置点货日期
+	 * 设置收货日期
 	 * 
-	 * @param receiveDate 点货日期
+	 * @param receiveDate 收货日期
 	 */
 	public void setReceiveDate(String receiveDate) {
 		this.receiveDate = receiveDate;
