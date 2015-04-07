@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <script src="${ctx}/assets/global/plugins/fuelux/js/spinner.min.js" type="text/javascript"></script>
+    <link href="${ctx}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
 		.form-horizontal .control-label {
             width: 130px;
@@ -31,22 +33,40 @@
 			font-weight: normal;
 		}
     </style>
+    <script>
+    $(function() {
+		$('.numSpinner').each(function(){
+			$(this).spinner({min: 0});
+		});
+		
+        $("#saveBtn").click(function() {
+            $("input[type='text'],textarea").each(function(i) {
+                this.value = $.trim(this.value);
+            });
+
+			$("#inputForm").attr("target", "_self");
+            $("#inputForm").attr("action", "${sc_ctx}/replenishOrder/editSave");
+            $("#inputForm").submit();
+        });
+    });
+    </script>
     </head>
     <body>
         <%// 系统菜单  %>
         <page:applyDecorator name="menu" />
-        <form method="post"	class="form-horizontal">
+        <form:form method="POST" id="inputForm" class="form-horizontal">
         <div class="container">
         	<div class="row">
                 <div class="span12">
                     <legend>
-                        <h3>发货管理-货单查看</h3>
+                        <h3>收货管理-货单编辑</h3>
                     </legend>
                 </div>
                 
                 <div class="span3">
 					<label class="control-label">货单编号 :</label>
 					<label class="left-control-label">${order.orderNo}</label>
+					<input type="hidden" name="orderNo" value="${order.orderNo}">
                 </div>
                 
                 <div class="span3">
@@ -93,10 +113,10 @@
                                 <th class="center">
                                     货商名称
                                 </th>
-                                <th class="center">
+                                <th class="center" width="110">
                                     补货数量
                                 </th>
-                                <th class="center">
+                                <th class="center" width="180">
                                     收货数量
                                 </th>
                                 
@@ -107,6 +127,7 @@
                         	<tr>
                                 <td	class="center">
                                 	${detail.productBarcode}
+                                	<input type="hidden" name="productBarcode" value="${detail.productBarcode}">
                                 </td>
                                 <td	class="center">
                                     ${detail.goodsName}
@@ -121,7 +142,17 @@
                                     ${detail.replenishNum}
                                 </td>
                                 <td	class="center">
-                                    ${detail.receiptNum}
+                                
+                                	<div class="numSpinner">
+                        				<button type="button" class="btn spinner-up blue">
+                        					<i class="fa fa-plus"></i>
+                        				</button> 
+                            			<input type="text" name="receiptNum" class="spinner-input input-mini" value="${detail.receiptNum}" readonly> 
+                        				<button type="button" class="btn spinner-down red">
+                        					<i class="fa fa-minus"></i>
+                        				</button>
+                                	</div>
+																			
                                 </td>
                             </tr>
                         </c:forEach>
@@ -137,8 +168,13 @@
                         </c:if>
                 	</table>
                 </div>
+                
+                <div class="span12"	style="margin-top: 10px;text-align:right">
+                <button	id="saveBtn" class="btn	btn-large btn-primary" type="button">保存</button>
+                &nbsp;<a href="${sc_ctx}/replenishOrder/list" class="btn btn-large">返回</a>
+                </div>
           	</div>
         </div>
-        </form>
+        </form:form>
 	</body>
 </html>

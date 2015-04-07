@@ -32,7 +32,7 @@ public class ReplenishOrder extends IdEntity {
 	private String orderNo;
 	/** 补货机构代码 */
 	private String replenishOrgId;
-	/** 补货单状态 01-编辑中 02-已发货 03-收货中 99-已确认 */
+	/** 补货单状态 01-编辑中 02-收货中 99-已确认 */
 	private String orderState;
 	/** 发货日期 */
 	private String sendDate;
@@ -114,9 +114,9 @@ public class ReplenishOrder extends IdEntity {
 	}
 
 	/**
-	 * 设置补货单状态01-编辑中02-已发货03-收货中99-已确认
+	 * 设置补货单状态01-编辑中02-收货中99-已确认
 	 * 
-	 * @param orderState 补货单状态01-编辑中02-已发货03-收货中99-已确认
+	 * @param orderState 补货单状态01-编辑中02-收货中99-已确认
 	 */
 	public void setOrderState(String orderState) {
 		this.orderState = orderState;

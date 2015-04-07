@@ -47,6 +47,26 @@ public class ReplenishOrderController extends BaseController {
 	 */
 	@RequestMapping(value = "list")
 	public String list_Action(Model model) {
+		// 补货单状态-下拉菜单
+		initOrderState(model);
+
+		return "order/replenishOrderList";
+	}
+
+	@RequestMapping(value = "search")
+	public String search_Action(Model model, HttpServletRequest request, HttpSession session)
+			throws ServletRequestBindingException {
+		// 补货单状态-下拉菜单
+		initOrderState(model);
+
+		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
+		String orderState = ServletRequestUtils.getStringParameter(request, "orderState");
+		model.addAttribute("orderNo", orderNo);
+		model.addAttribute("orderState", orderState);
+
+		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session).getOrgId(),
+				orderState);
+		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderList";
 	}
@@ -59,8 +79,24 @@ public class ReplenishOrderController extends BaseController {
 	 */
 	@RequestMapping(value = "edit/{orderNo}")
 	public String edit_Action(@PathVariable("orderNo") String orderNo, Model model) {
+		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
+
+		model.addAttribute("order", order);
 
 		return "order/replenishOrderEdit";
+	}
+
+	@RequestMapping(value = "editSave")
+	public String editSave_Action(HttpServletRequest request, Model model) throws ServletRequestBindingException {
+		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
+		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
+		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
+
+		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, productBarcodes, receiptNums);
+
+		addInfoMsg(model, "TIP_MSG_SAVE_SUCCESSED");
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/edit/" + orderNo;
 	}
 
 	/**
@@ -71,6 +107,9 @@ public class ReplenishOrderController extends BaseController {
 	 */
 	@RequestMapping(value = "view/{orderNo}")
 	public String view_Action(@PathVariable("orderNo") String orderNo, Model model) {
+		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
+
+		model.addAttribute("order", order);
 
 		return "order/replenishOrderView";
 	}
@@ -90,8 +129,7 @@ public class ReplenishOrderController extends BaseController {
 
 		stateList.put("", "");
 		stateList.put("01", "编辑中");
-		stateList.put("02", "已发货");
-		stateList.put("03", "收货中");
+		stateList.put("02", "收货中");
 		stateList.put("99", "已完结");
 
 		model.addAttribute("stateList", stateList);
@@ -166,21 +204,6 @@ public class ReplenishOrderController extends BaseController {
 		addInfoMsg(model, "TIP_MSG_SAVE_SUCCESSED");
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageEdit/" + orderNo;
-	}
-
-	/**
-	 * 总部--补货单查看
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "manageView/{orderNo}")
-	public String manageView_Action(@PathVariable("orderNo") String orderNo, Model model) {
-		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
-
-		model.addAttribute("order", order);
-
-		return "order/replenishOrderManageView";
 	}
 
 	/**

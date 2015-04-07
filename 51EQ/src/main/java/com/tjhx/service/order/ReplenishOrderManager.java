@@ -203,9 +203,35 @@ public class ReplenishOrderManager {
 	@Transactional(readOnly = false)
 	public void sendReplenishOrder(String orderNo) {
 		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
-		// 补货单状态 01-编辑中 02-已发货 03-收货中 99-已确认 */
+		// 补货单状态 01-编辑中 02-收货中 99-已确认 */
 		order.setOrderState("02");
 		order.setSendDate(DateUtils.getCurrentDateShortStr());
 		replenishOrderJpaDao.save(order);
+	}
+
+	/**
+	 * @param orderNo
+	 * @param productBarcodes
+	 * @param receiptNums
+	 */
+	@Transactional(readOnly = false)
+	public void updateReplenishOrderDetail_receiptNums(String orderNo, String[] productBarcodes, String[] receiptNums) {
+		//
+
+		for (int i = 0; i < productBarcodes.length; i++) {
+
+			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo,
+					productBarcodes[i]);
+
+			// 错误补货数量,全部置为0
+			try {
+				detail.setReceiptNum(Integer.valueOf(receiptNums[i]));
+			} catch (Exception e) {
+				detail.setReceiptNum(0);
+			}
+
+			replenishOrderDetailJpaDao.save(detail);
+		}
+
 	}
 }
