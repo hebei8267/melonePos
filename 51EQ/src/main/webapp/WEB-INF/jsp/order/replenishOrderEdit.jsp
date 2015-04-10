@@ -94,7 +94,7 @@
                 
                 <div class="span3">
 					<label class="control-label">错填次数 :</label>
-					<label class="left-control-label">${order.errorNum}</label>
+					<label class="left-control-label"><span class="warn_text">${order.errorNum}</span></label>
                 </div>
                 
                 <div class="span12"	style="margin-top: 10px;">
@@ -139,7 +139,7 @@
                                 	${detail.supplierName}
                                 </td>
                                 <td	class="center">
-                                    ${detail.replenishNum}
+                                    ***
                                 </td>
                                 <td	class="center">
                                 

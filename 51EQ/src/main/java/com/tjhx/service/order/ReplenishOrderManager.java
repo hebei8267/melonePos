@@ -203,20 +203,21 @@ public class ReplenishOrderManager {
 	@Transactional(readOnly = false)
 	public void sendReplenishOrder(String orderNo) {
 		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
-		// 补货单状态 01-编辑中 02-收货中 99-已确认 */
+		// 补货单状态 01-编辑中 02-收货中 99-已确认
 		order.setOrderState("02");
 		order.setSendDate(DateUtils.getCurrentDateShortStr());
 		replenishOrderJpaDao.save(order);
 	}
 
 	/**
+	 * 更新调货单明细信息-收货数量
+	 * 
 	 * @param orderNo
 	 * @param productBarcodes
 	 * @param receiptNums
 	 */
 	@Transactional(readOnly = false)
 	public void updateReplenishOrderDetail_receiptNums(String orderNo, String[] productBarcodes, String[] receiptNums) {
-		//
 
 		for (int i = 0; i < productBarcodes.length; i++) {
 
@@ -233,5 +234,44 @@ public class ReplenishOrderManager {
 			replenishOrderDetailJpaDao.save(detail);
 		}
 
+	}
+
+	/**
+	 * 校验出货数与发货数是否一致
+	 * 
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	public boolean receiptNumCheck(String orderNo) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("orderNo", orderNo);
+		List<ReplenishOrderDetail> detailList = replenishOrderDetailMyBatisDao.findReplenishOrderDetailByOrderNo(param);
+
+		boolean successFlg = true;
+		for (ReplenishOrderDetail replenishOrderDetail : detailList) {
+			// 收货数量
+			int receiptNum = replenishOrderDetail.getReceiptNum();
+			// 补货数量
+			int replenishNum = replenishOrderDetail.getReplenishNum();
+
+			if (replenishNum == receiptNum) {
+				continue;
+			} else {
+				successFlg = false;
+				break;
+			}
+		}
+
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+		if (successFlg) {
+			// 补货单状态 01-编辑中 02-收货中 99-已确认 */
+			order.setOrderState("99");
+		} else {
+			order.setErrorNum(order.getErrorNum() + 1);
+		}
+
+		replenishOrderJpaDao.save(order);
+
+		return successFlg;
 	}
 }

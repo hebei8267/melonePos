@@ -34,7 +34,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 
 	// ##############################################
 	// 批次号
-	private static String batchId = "20150329";
+	private static String batchId = "20150410";
 
 	// ##############################################
 

@@ -46,7 +46,7 @@ public class ReplenishOrderController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "list")
-	public String list_Action(Model model) {
+	public String list_Action(Model model, HttpServletRequest request) {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
@@ -78,7 +78,7 @@ public class ReplenishOrderController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "edit/{orderNo}")
-	public String edit_Action(@PathVariable("orderNo") String orderNo, Model model) {
+	public String edit_Action(@PathVariable("orderNo") String orderNo, Model model, HttpServletRequest request) {
 		ReplenishOrder order = replenishOrderManager.getReplenishOrderByOrderNo(orderNo);
 
 		model.addAttribute("order", order);
@@ -93,10 +93,17 @@ public class ReplenishOrderController extends BaseController {
 		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
 
 		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, productBarcodes, receiptNums);
+		boolean result = replenishOrderManager.receiptNumCheck(orderNo);
+		if (result) {
+			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
 
-		addInfoMsg(model, "TIP_MSG_SAVE_SUCCESSED");
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/list";
+		} else {
+			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_ERROR");
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/edit/" + orderNo;
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/edit/" + orderNo;
+		}
+
 	}
 
 	/**
@@ -170,7 +177,7 @@ public class ReplenishOrderController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "manageList")
-	public String manageList_Action(Model model) {
+	public String manageList_Action(Model model, HttpServletRequest request) {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		// 补货单状态-下拉菜单
 		initOrderState(model);
@@ -200,10 +207,18 @@ public class ReplenishOrderController extends BaseController {
 		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
 
 		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, productBarcodes, replenishNums);
+		boolean result = replenishOrderManager.receiptNumCheck(orderNo);
 
-		addInfoMsg(model, "TIP_MSG_SAVE_SUCCESSED");
+		if (result) {
+			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageEdit/" + orderNo;
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageList";
+		} else {
+			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_ERROR");
+
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageEdit/" + orderNo;
+		}
+
 	}
 
 	/**
