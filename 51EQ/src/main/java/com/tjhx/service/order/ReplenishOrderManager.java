@@ -242,7 +242,7 @@ public class ReplenishOrderManager {
 	 * @return
 	 */
 	@Transactional(readOnly = false)
-	public boolean receiptNumCheck(String orderNo) {
+	public boolean receiptNumCheck(String orderNo, boolean subOrgFlg) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("orderNo", orderNo);
 		List<ReplenishOrderDetail> detailList = replenishOrderDetailMyBatisDao.findReplenishOrderDetailByOrderNo(param);
@@ -268,6 +268,10 @@ public class ReplenishOrderManager {
 			order.setOrderState("99");
 		} else {
 			order.setErrorNum(order.getErrorNum() + 1);
+		}
+
+		if (subOrgFlg && StringUtils.isBlank(order.getReceiveDate())) {
+			order.setReceiveDate(DateUtils.getCurrentDateShortStr());
 		}
 
 		replenishOrderJpaDao.save(order);

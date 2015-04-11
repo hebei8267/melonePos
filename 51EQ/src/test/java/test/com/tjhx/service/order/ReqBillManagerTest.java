@@ -24,6 +24,9 @@ import com.tjhx.entity.order.ReqBill;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.order.ReqBillManager;
 
+/**
+ * 要货单
+ */
 public class ReqBillManagerTest extends SpringTransactionalTestCase {
 	@Resource
 	private ReqBillManager reqBillManager;

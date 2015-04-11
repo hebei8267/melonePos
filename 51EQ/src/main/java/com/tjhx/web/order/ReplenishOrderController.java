@@ -93,7 +93,7 @@ public class ReplenishOrderController extends BaseController {
 		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
 
 		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, productBarcodes, receiptNums);
-		boolean result = replenishOrderManager.receiptNumCheck(orderNo);
+		boolean result = replenishOrderManager.receiptNumCheck(orderNo, true);
 		if (result) {
 			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
 
@@ -207,7 +207,7 @@ public class ReplenishOrderController extends BaseController {
 		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
 
 		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, productBarcodes, replenishNums);
-		boolean result = replenishOrderManager.receiptNumCheck(orderNo);
+		boolean result = replenishOrderManager.receiptNumCheck(orderNo, false);
 
 		if (result) {
 			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");

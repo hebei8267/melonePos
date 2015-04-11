@@ -25,8 +25,7 @@ import com.tjhx.entity.order.ReplenishOrderVo;
 import com.tjhx.service.order.ReplenishOrderManager;
 
 /**
- * @author he_bei
- * 
+ * 配货单
  */
 public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 	@Resource
@@ -34,7 +33,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 
 	// ##############################################
 	// 批次号
-	private static String batchId = "20150410";
+	private static String batchId = "20150411";
 
 	// ##############################################
 
