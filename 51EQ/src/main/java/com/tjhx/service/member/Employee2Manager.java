@@ -3,6 +3,7 @@ package com.tjhx.service.member;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -28,10 +29,11 @@ public class Employee2Manager {
 	/**
 	 * 取得所有Employee2信息
 	 * 
-	 * @return Employee2信息列表
+	 * @param param
+	 * @return
 	 */
-	public List<Employee2> getAllEmployee2(Employee2 employee2) {
-		return employee2MyBatisDao.getEmployee2List(employee2);
+	public List<Employee2> getAllEmployee2(Map<String, String> param) {
+		return employee2MyBatisDao.getEmployee2List(param);
 	}
 
 	/**

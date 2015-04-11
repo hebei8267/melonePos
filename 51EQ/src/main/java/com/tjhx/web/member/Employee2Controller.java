@@ -3,6 +3,7 @@ package com.tjhx.web.member;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.member.Employee2;
 import com.tjhx.globals.Constants;
@@ -43,6 +45,7 @@ public class Employee2Controller extends BaseController {
 	 */
 	@RequestMapping(value = "list")
 	public String employee2List_Action(Model model, HttpServletRequest request) {
+		ReportUtils.initOrgList_Null_Root(orgManager, model);
 
 		return "member/employee2List";
 	}
@@ -59,31 +62,41 @@ public class Employee2Controller extends BaseController {
 		String name = ServletRequestUtils.getStringParameter(request, "name");
 		String idCardNo = ServletRequestUtils.getStringParameter(request, "idCardNo");
 		String phone = ServletRequestUtils.getStringParameter(request, "phone");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		model.addAttribute("name", name);
 		model.addAttribute("idCardNo", idCardNo);
 		model.addAttribute("phone", phone);
+		model.addAttribute("orgId", orgId);
 
-		Employee2 param = new Employee2();
+		Map<String, String> param = Maps.newHashMap();
 		if (StringUtils.isNotBlank(name)) {
-			param.setName("%" + name + "%");
+			param.put("name", "%" + name + "%");
 		}
 		if (StringUtils.isNotBlank(idCardNo)) {
-			param.setIdCardNo("%" + idCardNo + "%");
+			param.put("idCardNo", "%" + idCardNo + "%");
 		}
 		if (StringUtils.isNotBlank(phone)) {
-			param.setPhone("%" + phone + "%");
+			param.put("phone", "%" + phone + "%");
 		}
+		if (StringUtils.isNotBlank(orgId)) {
+			param.put("orgId", orgId);
+		}
+
+		ReportUtils.initOrgList_Null_Root(orgManager, model);
+
 		List<Employee2> _list = employee2Manager.getAllEmployee2(param);
 		model.addAttribute("employeeList", _list);
 
 		return "member/employee2List";
 	}
+
 	@RequestMapping(value = "view/{id}")
 	public String viewEmployee2_Action(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
 		editEmployee2_Action(id, model, request);
-		
+
 		return "member/employee2ViewForm";
 	}
+
 	/**
 	 * 编辑Employee2信息
 	 * 

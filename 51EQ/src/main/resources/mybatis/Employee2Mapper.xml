@@ -75,11 +75,14 @@
   			<if test="phone != null and phone !='' ">
   			AND phone LIKE #{phone}
   			</if>
+  			<if test="orgId != null and orgId !='' ">
+  			AND org_id LIKE #{orgId}
+  			</if>
 	  	</where>
   	</sql>
   	
   	<!-- 取得t_employee_2信息(根据参数) -->
-	<select id="getEmployee2List" parameterType="com.tjhx.entity.member.Employee2" resultMap="Result_Map_Employee2">
+	<select id="getEmployee2List" parameterType="map" resultMap="Result_Map_Employee2">
 		select
 		<include refid="Base_Column_List" />
 		from t_employee_2

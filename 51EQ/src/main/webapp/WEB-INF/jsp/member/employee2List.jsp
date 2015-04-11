@@ -8,6 +8,11 @@
 <c:set var="pop_sc_ctx">${ctx}/popsc</c:set>
 <html>
 	<head>
+		<style>
+		.my-input-medium {
+  			width: 170px;
+		}
+		</style>
 		<script>
 			$().ready(function() {
 				//-----------------------------------
@@ -96,19 +101,34 @@
 	                        <h3>员工管理</h3>
 	                    </legend>
 	                </div>
-	                <div class="span3">
+	                <div class="span2">
+	                    <label class="control-label">机构 :</label>
+						<select id="orgId" name="orgId" class="my-input-medium">
+							<c:forEach items="${orgList}" var="org">
+								<c:if test="${org.key == orgId}">
+									<option value="${org.key }" selected>${org.value }</option>
+								</c:if>
+								<c:if test="${org.key != orgId}">
+									<option value="${org.key }">${org.value }</option>
+								</c:if>
+							</c:forEach>
+						</select>
+	                </div>
+	                <div class="span2">
 	                    <label class="control-label">员工姓名 : </label>
 	                    <input id="name" name="name" type="text" class="input-medium" value="${name}"/>
 	                </div>
-	                <div class="span3">
+	                <div class="span2">
 	                    <label class="control-label">联系电话 : </label>
 	                    <input id="phone" name="phone" type="text" class="input-medium" value="${phone}"/>
 	                </div>
-	                <div class="span6">
+	                
+	                <div class="span2">
 	                    <label class="control-label">身份证号 : </label>
 	                    <input id="idCardNo" name="idCardNo" type="text" class="input-medium" value="${idCardNo}"/>
-	                    &nbsp;&nbsp;
-	                    <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
+	                </div>
+	                <div class="span4">
+	                	<button	id="searchBtn" class="btn btn-primary" type="button" style="margin-top:25px">查询</button>
 	                </div>
 	      		</form>
 	      		
