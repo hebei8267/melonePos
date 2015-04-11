@@ -66,6 +66,14 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('27')}">
+							<td><input type="checkbox" name="perm" value="27" checked>发票开具-申请(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('27')}">
+							<td><input type="checkbox" name="perm" value="27">发票开具-申请(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('28')}">
 							<td><input type="checkbox" name="perm" value="28" checked>发票开具</td>
 							</c:if>
@@ -79,6 +87,14 @@
 							</c:if>
 							<c:if test="${!role.permIdList.contains('36')}">
 							<td><input type="checkbox" name="perm" value="36">公告/消息</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('37')}">
+							<td><input type="checkbox" name="perm" value="37" checked>门店备用金(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('37')}">
+							<td><input type="checkbox" name="perm" value="37">门店备用金(门店)</td>
 							</c:if>
 						</tr>
 						<tr>
@@ -103,6 +119,22 @@
 							</c:if>
 							<c:if test="${!role.permIdList.contains('29')}">
 							<td><input type="checkbox" name="perm" value="29">门店巡查报告(财务)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('30')}">
+							<td><input type="checkbox" name="perm" value="30" checked>考勤信息-查看(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('30')}">
+							<td><input type="checkbox" name="perm" value="30">考勤信息-查看(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('31')}">
+							<td><input type="checkbox" name="perm" value="31" checked>排班表-查看(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('31')}">
+							<td><input type="checkbox" name="perm" value="31">排班表-查看(门店)</td>
 							</c:if>
 						</tr>
 						<tr>
@@ -154,6 +186,14 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('43')}">
+							<td><input type="checkbox" name="perm" value="43" checked>供应商(挂账)结算进度表(BOSS)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('43')}">
+							<td><input type="checkbox" name="perm" value="43">供应商(挂账)结算进度表(BOSS用)</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('49')}">
 							<td><input type="checkbox" name="perm" value="49" checked>机构月销售目标管理</td>
 							</c:if>
@@ -170,6 +210,14 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('54')}">
+							<td><input type="checkbox" name="perm" value="54" checked>共享文件管理(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('54')}">
+							<td><input type="checkbox" name="perm" value="54">共享文件管理(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('55')}">
 							<td><input type="checkbox" name="perm" value="55" checked>商品调货单</td>
 							</c:if>
@@ -183,6 +231,24 @@
 				<div class="span3">
 					<h4>销售信息模块<br>
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
+						<tr>
+							<c:if test="${role.permIdList.contains('8')}">
+							<td><input type="checkbox" name="perm" value="8" checked>销售信息-录入(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('8')}">
+							<td><input type="checkbox" name="perm" value="8">销售信息-录入(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('9')}">
+							<td><input type="checkbox" name="perm" value="9" checked>销售信息-录入(日结)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('9')}">
+							<td><input type="checkbox" name="perm" value="9">销售信息-录入(日结)</td>
+							</c:if>
+						</tr>
+						
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('13')}">
 							<td><input type="checkbox" name="perm" value="13" checked>刷卡信息</td>
@@ -420,6 +486,14 @@
 							</c:if>
 							<c:if test="${!role.permIdList.contains('45')}">
 							<td><input type="checkbox" name="perm" value="45">销售信息排名(按类别)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('46')}">
+							<td><input type="checkbox" name="perm" value="46" checked>销售信息排名(按类别)-(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('46')}">
+							<td><input type="checkbox" name="perm" value="46">销售信息排名(按类别)-(门店)</td>
 							</c:if>
 						</tr>
 						<tr>
