@@ -241,10 +241,10 @@
 						</tr>
 						<tr>
 							<c:if test="${role.permIdList.contains('9')}">
-							<td><input type="checkbox" name="perm" value="9" checked>销售信息-录入(日结)</td>
+							<td><input type="checkbox" name="perm" value="9" checked>销售信息-日结(门店)</td>
 							</c:if>
 							<c:if test="${!role.permIdList.contains('9')}">
-							<td><input type="checkbox" name="perm" value="9">销售信息-录入(日结)</td>
+							<td><input type="checkbox" name="perm" value="9">销售信息-日结(门店)</td>
 							</c:if>
 						</tr>
 						
