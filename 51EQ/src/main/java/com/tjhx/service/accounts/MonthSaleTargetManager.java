@@ -1,24 +1,33 @@
 package com.tjhx.service.accounts;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.dao.accounts.MonthSaleTargetJpaDao;
 import com.tjhx.dao.accounts.MonthSaleTargetMyBatisDao;
 import com.tjhx.entity.accounts.MonthSaleTarget;
+import com.tjhx.entity.info.SalesMonthTotal_Show;
 import com.tjhx.globals.MemcachedObjectType;
+import com.tjhx.globals.SysConfig;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,6 +40,7 @@ public class MonthSaleTargetManager {
 	private MonthSaleTargetMyBatisDao monthSaleTargetMyBatisDao;
 	@Resource
 	private SpyMemcachedClient spyMemcachedClient;
+	private final static String XML_CONFIG_MONTH_SALE_TARGET = "/excel/Month_Sale_Target_Template.xls";
 
 	/**
 	 * 取得月销售目标信息(根据机构编号/年份)
@@ -129,5 +139,34 @@ public class MonthSaleTargetManager {
 		}
 
 		spyMemcachedClient.delete(MemcachedObjectType.MONTH_SALE_TARGET_MAP.getObjKey());
+	}
+
+	/**
+	 * @param orgNameList
+	 * @param _list
+	 * @param totalList
+	 * @return
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 */
+	public String createDownLoadFile(String optDateY, List<String> orgNameList, List<List<SalesMonthTotal_Show>> dataList,
+			List<SalesMonthTotal_Show> totalList) throws ParsePropertyException, InvalidFormatException, IOException {
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("optDateY", optDateY);
+		map.put("orgNameList", orgNameList);
+		map.put("totalList", totalList);
+		map.put("dataList", dataList);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_MONTH_SALE_TARGET, map, tmpFilePath);
+
+		return tmpFileName;
 	}
 }

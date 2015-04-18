@@ -1,27 +1,41 @@
 package com.tjhx.web.accounts;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jxls.exception.ParsePropertyException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.MonthSaleTarget;
 import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.entity.info.SalesMonthTotal_Show;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.accounts.MonthSaleTargetManager;
 import com.tjhx.service.info.SalesMonthTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -82,7 +96,68 @@ public class MonthSaleTargetController extends BaseController {
 		// 取得机构本年与销售目标信息
 		getCurrentYearSales(orgId, optDateY, _list);
 
+		List<SalesMonthTotal_Show> totalList = calTotal(_list);
+		model.addAttribute("totalList", totalList);
+
 		return "accounts/monthSaleTarget";
+	}
+
+	@RequestMapping(value = "export")
+	public void export_Action(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
+
+		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
+		model.addAttribute("optDateY", optDateY);
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		model.addAttribute("orgId", orgId);
+
+		// 机构信息
+		List<String> orgNameList = new ArrayList<String>();
+
+		// 取得机构去年月销售信息
+		List<List<SalesMonthTotal_Show>> _list = getLastYearSales(orgId, optDateY, orgNameList);
+
+		// 取得机构本年与销售目标信息
+		getCurrentYearSales(orgId, optDateY, _list);
+
+		List<SalesMonthTotal_Show> totalList = calTotal(_list);
+
+		// =========================================
+		// 生成下载文件
+		// =========================================
+		String downLoadFileName = monthSaleTargetManager.createDownLoadFile(optDateY, orgNameList, _list, totalList);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
 	}
 
 	/**
@@ -166,6 +241,41 @@ public class MonthSaleTargetController extends BaseController {
 		}
 
 		return _list;
+	}
+
+	/**
+	 * 计算合计
+	 * 
+	 * @param _list
+	 */
+	private List<SalesMonthTotal_Show> calTotal(List<List<SalesMonthTotal_Show>> _list) {
+
+		Map<Integer, SalesMonthTotal_Show> totalMap = Maps.newHashMap();
+
+		for (List<SalesMonthTotal_Show> _showList : _list) {
+
+			for (int i = 0; i < _showList.size(); i++) {
+
+				SalesMonthTotal_Show total = totalMap.get(i);
+				if (null == total) {
+					total = new SalesMonthTotal_Show();
+					totalMap.put(i, total);
+				}
+
+				SalesMonthTotal_Show _show = _showList.get(i);
+				if (null != _show.getSaleRamt2()) {
+					total.setSaleRamt2(total.getSaleRamt2().add(_show.getSaleRamt2()));
+				}
+
+			}
+
+		}
+
+		List<SalesMonthTotal_Show> reList = Lists.newArrayList();
+		for (int i = 0; i < 12; i++) {
+			reList.add(totalMap.get(i));
+		}
+		return reList;
 	}
 
 	/**

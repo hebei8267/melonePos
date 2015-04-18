@@ -33,6 +33,15 @@
                 $("#searchForm").attr("action", "${sc_ctx}/monthSaleTarget/show");
                 $("#searchForm").submit();
             });
+            $("#exportBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#searchForm").attr('target', '_self');
+                $("#searchForm").attr("action", "${sc_ctx}/monthSaleTarget/export");
+                $("#searchForm").submit();
+			});
             $("#saveBtn").click(function() {
         		$("#searchForm").attr('target', '_self');
                 $("#searchForm").attr("action", "${sc_ctx}/monthSaleTarget/save");
@@ -80,6 +89,7 @@
                         </select>
                         &nbsp;&nbsp;
                         <button	id="showBtn" class="btn	btn-primary" type="button">显示</button>
+                        <button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
                     </div>
                     
                     <c:if test="${showFlg}" >
@@ -106,6 +116,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                            <td class="center">合计</td>
+                            <c:forEach items="${totalList}" var="total">
+                            <td class="center">${total.saleRamt2 }</td>
+                            </c:forEach>
+                            </tr>
                             <c:forEach items="${lastYearSalesList}" var="_lastYearSalesList" varStatus="status">
                             	<tr>
                             	<input type="hidden" name="_orgId" value="${orgNameList.get(status.index) }">
