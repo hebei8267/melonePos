@@ -10,6 +10,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<style>
+		.form-horizontal .control-label {
+		  float: left;
+		  width: 120px;
+		  padding-top: 5px;
+		  text-align: right;
+		}
+		</style>
 		<script>
 			$(function() {
 				$("#inputForm").validate({
@@ -26,6 +34,9 @@
 							required : true
 						},
 						orgUuid : {
+							required : true
+						},
+						subUuid : {
 							required : true
 						},
 						descTxt : {
@@ -93,6 +104,12 @@
 							<label class="control-label">所属机构 :</label>
 							<div class="controls">
 								<form:select path="orgUuid" items="${orgList}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">会计科目机构 :</label>
+							<div class="controls">
+								<form:select path="subUuid" items="${subList}" />
 							</div>
 						</div>
 						<div class="control-group">

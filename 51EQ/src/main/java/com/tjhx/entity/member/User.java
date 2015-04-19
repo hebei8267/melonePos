@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
 
 import com.tjhx.entity.IdEntity;
+import com.tjhx.entity.info.BudgetSubject;
 import com.tjhx.entity.struct.Organization;
 
 /**
@@ -43,6 +44,8 @@ public class User extends IdEntity {
 	private String photoName;
 	/** 账户是否有效 */
 	private boolean valid = true;
+	/** 预算科目编号 */
+	private BudgetSubject budgetSubject;
 	// ############################################################################################
 	/** 用户关联机构名称 */
 	private String orgName;
@@ -54,6 +57,10 @@ public class User extends IdEntity {
 	private String orgUuid;
 	/** 初始化默认密码标记 */
 	private boolean initPwdFlg;
+	/** 预算科目编号 */
+	private String subUuid;
+	/** 预算科目名称 */
+	private String subName;
 
 	/**
 	 * 取得登录名称
@@ -210,6 +217,26 @@ public class User extends IdEntity {
 	}
 
 	/**
+	 * 获取预算科目编号
+	 * 
+	 * @return budgetSubject
+	 */
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name = "SUB_UUID")
+	public BudgetSubject getBudgetSubject() {
+		return budgetSubject;
+	}
+
+	/**
+	 * 设置预算科目编号
+	 * 
+	 * @param budgetSubject 预算科目编号
+	 */
+	public void setBudgetSubject(BudgetSubject budgetSubject) {
+		this.budgetSubject = budgetSubject;
+	}
+
+	/**
 	 * 取得账户是否有效
 	 * 
 	 * @return valid 账户是否有效
@@ -333,6 +360,50 @@ public class User extends IdEntity {
 	 */
 	public void setInitPwdFlg(boolean initPwdFlg) {
 		this.initPwdFlg = initPwdFlg;
+	}
+
+	/**
+	 * 获取预算科目编号
+	 * 
+	 * @return subUuid
+	 */
+	@Transient
+	public String getSubUuid() {
+		if (null != budgetSubject) {
+			return budgetSubject.getUuid().toString();
+		}
+		return subUuid;
+	}
+
+	/**
+	 * 设置预算科目编号
+	 * 
+	 * @param subUuid 预算科目编号
+	 */
+	public void setSubUuid(String subUuid) {
+		this.subUuid = subUuid;
+	}
+
+	/**
+	 * 获取预算科目名称
+	 * 
+	 * @return subName
+	 */
+	@Transient
+	public String getSubName() {
+		if (null != budgetSubject) {
+			return budgetSubject.getSubName();
+		}
+		return subName;
+	}
+
+	/**
+	 * 设置预算科目名称
+	 * 
+	 * @param subName 预算科目名称
+	 */
+	public void setSubName(String subName) {
+		this.subName = subName;
 	}
 
 }

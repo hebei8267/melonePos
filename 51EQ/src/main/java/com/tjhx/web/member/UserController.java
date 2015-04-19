@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tjhx.entity.info.BudgetSubject;
 import com.tjhx.entity.member.Role;
 import com.tjhx.entity.member.User;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
+import com.tjhx.service.info.BudgetSubjectManager;
 import com.tjhx.service.member.RoleManager;
 import com.tjhx.service.member.UserManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -32,6 +35,8 @@ public class UserController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private RoleManager roleManager;
+	@Resource
+	private BudgetSubjectManager budgetSubjectManager;
 
 	/**
 	 * 取得User信息列表
@@ -65,6 +70,7 @@ public class UserController extends BaseController {
 
 			initOrgList(model);
 			initRoleList(model);
+			initBudgetSubjectList(model);
 
 			return "member/userForm";
 		}
@@ -102,6 +108,7 @@ public class UserController extends BaseController {
 
 		initOrgList(model);
 		initRoleList(model);
+		initBudgetSubjectList(model);
 
 		return "member/userForm";
 	}
@@ -116,6 +123,19 @@ public class UserController extends BaseController {
 		}
 
 		model.addAttribute("orgList", orgList);
+	}
+
+	private void initBudgetSubjectList(Model model) {
+
+		// 取得一级科目（机构信息）
+		List<BudgetSubject> _subList = budgetSubjectManager.findLevelOneBudgetSubjectList();
+		Map<String, String> subList = new LinkedHashMap<String, String>();
+		subList.put("", "");
+		for (BudgetSubject _sub : _subList) {
+			subList.put(_sub.getUuid().toString(), _sub.getSubName());
+		}
+
+		model.addAttribute("subList", subList);
 	}
 
 	private void initRoleList(Model model) {
@@ -153,7 +173,7 @@ public class UserController extends BaseController {
 
 				initOrgList(model);
 				initRoleList(model);
-
+				initBudgetSubjectList(model);
 				return "member/userForm";
 			}
 		} else {// 修改操作
@@ -165,7 +185,7 @@ public class UserController extends BaseController {
 
 				initOrgList(model);
 				initRoleList(model);
-
+				initBudgetSubjectList(model);
 				return "member/userForm";
 			}
 		}

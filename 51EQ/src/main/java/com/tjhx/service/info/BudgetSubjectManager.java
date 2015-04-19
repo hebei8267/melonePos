@@ -187,4 +187,13 @@ public class BudgetSubjectManager {
 		}
 
 	}
+
+	/**
+	 * 取得一级科目（机构信息）
+	 * 
+	 * @return
+	 */
+	public List<BudgetSubject> findLevelOneBudgetSubjectList() {
+		return budgetSubjectJpaDao.findLevelOneBudgetSubjectList();
+	}
 }

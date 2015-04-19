@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 
 import com.tjhx.common.utils.Encrypter;
+import com.tjhx.dao.info.BudgetSubjectJpaDao;
 import com.tjhx.dao.member.RoleJpaDao;
 import com.tjhx.dao.member.UserJpaDao;
 import com.tjhx.dao.member.UserMyBatisDao;
 import com.tjhx.dao.struct.OrganizationJpaDao;
+import com.tjhx.entity.info.BudgetSubject;
 import com.tjhx.entity.member.Role;
 import com.tjhx.entity.member.User;
 import com.tjhx.entity.struct.Organization;
@@ -40,6 +42,8 @@ public class UserManager {
 	private OrganizationJpaDao orgJpaDao;
 	@Resource
 	private SpyMemcachedClient spyMemcachedClient;
+	@Resource
+	private BudgetSubjectJpaDao budgetSubjectJpaDao;
 
 	/**
 	 * 取得所有用户信息
@@ -48,8 +52,8 @@ public class UserManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getAllUser() {
-		return (List<User>) userJpaDao.findAll(new Sort(new Sort.Order("organization"), new Sort.Order(
-				Sort.Direction.ASC, "loginName")));
+		return (List<User>) userJpaDao.findAll(new Sort(new Sort.Order("organization"), new Sort.Order(Sort.Direction.ASC,
+				"loginName")));
 	}
 
 	/**
@@ -64,8 +68,8 @@ public class UserManager {
 			// 从数据库中取出全量机构信息(List格式)
 			_userList = userMyBatisDao.getAllUserList();
 			// 将机构信息Map保存到memcached
-			spyMemcachedClient.set(MemcachedObjectType.USER_LIST.getObjKey(),
-					MemcachedObjectType.USER_LIST.getExpiredTime(), _userList);
+			spyMemcachedClient.set(MemcachedObjectType.USER_LIST.getObjKey(), MemcachedObjectType.USER_LIST.getExpiredTime(),
+					_userList);
 
 			logger.debug("人员信息不在 memcached中,从数据库中取出并放入memcached");
 		} else {
@@ -155,6 +159,9 @@ public class UserManager {
 		user.setOrganization(org);
 		Role role = roleJpaDao.findOne(Integer.parseInt(user.getRoleUuid()));
 		user.setRole(role);
+		// 预算科目
+		BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
+		user.setBudgetSubject(sub);
 
 		// 消除用户信息缓存
 		spyMemcachedClient.delete(MemcachedObjectType.USER_LIST.getObjKey());
@@ -232,6 +239,9 @@ public class UserManager {
 		_dbUser.setRole(role);
 		// 账户是否有效
 		_dbUser.setValid(user.isValid());
+		// 预算科目
+		BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
+		_dbUser.setBudgetSubject(sub);
 
 		// 消除用户信息缓存
 		spyMemcachedClient.delete(MemcachedObjectType.USER_LIST.getObjKey());

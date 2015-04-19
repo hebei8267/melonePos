@@ -109,6 +109,7 @@
 									<th> 用户名称 </th>
 									<th> 用户角色 </th>
 									<th> 所属机构 </th>
+									<th> 会计科目机构 </th>
 									<th	width="55"> &nbsp; </th>
 								</tr>
 							</thead>
@@ -132,6 +133,7 @@
 										<td> ${user.name} </td>
 										<td> ${user.role.name} </td>
 										<td> ${user.organization.name} </td>
+										<td> ${user.subName} </td>
 										<td><a href="${sc_ctx}/user/edit/${user.uuid}" class="btn btn-warning"/>修改</a></td>
 									</tr>
 								</c:forEach>
@@ -139,7 +141,7 @@
 							<c:if test="${empty	userList}" >
 								<tfoot>
 									<tr>
-										<td	colspan="7" class="rounded-foot-left"> 无记录信息 </td>
+										<td	colspan="8" class="rounded-foot-left"> 无记录信息 </td>
 									</tr>
 								</tfoot>
 							</c:if>
