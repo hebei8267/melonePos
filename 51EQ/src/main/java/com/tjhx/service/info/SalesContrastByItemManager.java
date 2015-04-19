@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,19 +36,28 @@ public class SalesContrastByItemManager {
 	@Resource
 	private StoreDetailMyBatisDao storeDetailMyBatisDao;
 
+	private String[] formatOrgIdArray(String[] orgIds) {
+		String[] _orgIds = new String[orgIds.length];
+		for (int i = 0; i < _orgIds.length; i++) {
+			_orgIds[i] = "'" + orgIds[i] + "'";
+		}
+		return _orgIds;
+
+	}
+
 	/**
 	 * 销售数据1设置
 	 * 
 	 * @param list1
 	 * @return
 	 */
-	private void copyList1Value(List<ItemSalesContrastVo> voList, String optDate1Start, String optDate1End, String orgId,
+	private void copyList1Value(List<ItemSalesContrastVo> voList, String optDate1Start, String optDate1End, String[] orgIds,
 			String itemNoArray) {
 
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate1Start);
 		param.put("optDateEnd", optDate1End);
-		param.put("orgId", orgId);
+		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
 		param.put("itemType", itemNoArray);
 		List<SalesDayTotalItem> list1 = salesDayTotalItemMyBatisDao.getContrastList(param);
 
@@ -81,14 +91,14 @@ public class SalesContrastByItemManager {
 	 * @return
 	 */
 	public List<List<ItemSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start,
-			String optDate2End, String itemNoArray, String orgId, String orderMode) {
+			String optDate2End, String itemNoArray, String[] orgIds, String orderMode) {
 
-		List<ItemSalesContrastVo> voList = initBlankVoList(itemNoArray, orgId);
-		copyList1Value(voList, optDate1Start, optDate1End, orgId, itemNoArray);
-		copyList2Value(voList, optDate2Start, optDate2End, orgId, itemNoArray);
-		copyStore1Value(voList, optDate1End, orgId, itemNoArray);
-		copyStore2Value(voList, optDate2End, orgId, itemNoArray);
-		return formatVoList(voList, orgId, itemNoArray, orderMode);
+		List<ItemSalesContrastVo> voList = initBlankVoList(itemNoArray, Lists.newArrayList(orgIds));
+		copyList1Value(voList, optDate1Start, optDate1End, orgIds, itemNoArray);
+		copyList2Value(voList, optDate2Start, optDate2End, orgIds, itemNoArray);
+		copyStore1Value(voList, optDate1End, orgIds, itemNoArray);
+		copyStore2Value(voList, optDate2End, orgIds, itemNoArray);
+		return formatVoList(voList, orgIds, itemNoArray, orderMode);
 	}
 
 	/**
@@ -99,10 +109,10 @@ public class SalesContrastByItemManager {
 	 * @param orgId
 	 * @param itemNoArray
 	 */
-	private void copyStore1Value(List<ItemSalesContrastVo> voList, String optDate1End, String orgId, String itemNoArray) {
+	private void copyStore1Value(List<ItemSalesContrastVo> voList, String optDate1End, String[] orgIds, String itemNoArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate1End);
-		param.put("orgId", orgId);
+		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
 		param.put("itemType", itemNoArray);
 
 		List<StoreDetail> sList = storeDetailMyBatisDao.getItemContrastStoreList(param);
@@ -126,10 +136,10 @@ public class SalesContrastByItemManager {
 	 * @param orgId
 	 * @param itemNoArray
 	 */
-	private void copyStore2Value(List<ItemSalesContrastVo> voList, String optDate2End, String orgId, String itemNoArray) {
+	private void copyStore2Value(List<ItemSalesContrastVo> voList, String optDate2End, String[] orgIds, String itemNoArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate2End);
-		param.put("orgId", orgId);
+		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
 		param.put("itemType", itemNoArray);
 
 		List<StoreDetail> sList = storeDetailMyBatisDao.getItemContrastStoreList(param);
@@ -154,12 +164,12 @@ public class SalesContrastByItemManager {
 	 * @param orgId
 	 * @param itemNoArray
 	 */
-	private void copyList2Value(List<ItemSalesContrastVo> voList, String optDate2Start, String optDate2End, String orgId,
+	private void copyList2Value(List<ItemSalesContrastVo> voList, String optDate2Start, String optDate2End, String[] orgIds,
 			String itemNoArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate2Start);
 		param.put("optDateEnd", optDate2End);
-		param.put("orgId", orgId);
+		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
 		param.put("itemType", itemNoArray);
 		List<SalesDayTotalItem> list1 = salesDayTotalItemMyBatisDao.getContrastList(param);
 
@@ -194,19 +204,19 @@ public class SalesContrastByItemManager {
 	 * @param itemNoArray
 	 * @return
 	 */
-	private List<ItemSalesContrastVo> initBlankVoList(String itemNoArray, String orgId) {
+	private List<ItemSalesContrastVo> initBlankVoList(String itemNoArray, List<String> orgIdList) {
 
 		List<ItemSalesContrastVo> voList = Lists.newArrayList();
 
 		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
-		List<Organization> orgList = null;
-		if (StringUtils.isBlank(orgId)) {// 全机构
-			orgList = orgManager.getSubOrganization();
-		} else {
-			Organization org = orgManager.getOrganizationByOrgIdInCache(orgId);
 
-			orgList = Lists.newArrayList();
-			orgList.add(org);
+		List<Organization> orgList = Lists.newArrayList();
+		for (String orgId : orgIdList) {
+			if (StringUtils.isNotBlank(orgId)) {
+				Organization org = orgManager.getOrganizationByOrgIdInCache(orgId);
+
+				orgList.add(org);
+			}
 		}
 
 		for (Organization org : orgList) {
@@ -236,7 +246,7 @@ public class SalesContrastByItemManager {
 	 * @param tmpList
 	 * @return
 	 */
-	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList, String orgId, String itemNoArray,
+	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList, String[] orgIds, String itemNoArray,
 			String orderMode) {
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
@@ -262,7 +272,7 @@ public class SalesContrastByItemManager {
 		}
 
 		// 计算合计
-		if (StringUtils.isBlank(orgId)) {
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
 			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray);
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(voTotalList, new ItemSaleRamtComparator());

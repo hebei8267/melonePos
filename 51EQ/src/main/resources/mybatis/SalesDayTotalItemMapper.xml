@@ -159,7 +159,7 @@
 		AND opt_date <= #{optDateEnd}
 		]]>
 		<if test="orgId != null and orgId != ''">
-        AND it.org_id = #{orgId}
+        AND it.org_id IN (${orgId})
         </if>
 		GROUP BY
 		    it.org_id,

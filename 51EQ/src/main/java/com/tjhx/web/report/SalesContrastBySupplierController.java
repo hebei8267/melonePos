@@ -51,7 +51,7 @@ public class SalesContrastBySupplierController extends BaseController {
 	 */
 	private void initPageControls(Model model) {
 		// 初始化机构下拉菜单
-		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+		ReportUtils.initOrgList_NoNRoot(orgManager, model);
 		// 初始化类型下拉菜单
 		List<Supplier> _supplierList = supplierManager.getAllSupplierList();
 		List<Select2Vo> supplierList = Lists.newArrayList();
@@ -68,12 +68,12 @@ public class SalesContrastBySupplierController extends BaseController {
 
 	@RequestMapping(value = "search")
 	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		String[] orgIds = ServletRequestUtils.getStringParameters(request, "orgId");
 		String optDate2_start = ServletRequestUtils.getStringParameter(request, "optDate2_start");
 		String optDate2_end = ServletRequestUtils.getStringParameter(request, "optDate2_end");
 		String optDate1_end = ServletRequestUtils.getStringParameter(request, "optDate1_end");
 		String optDate1_start = ServletRequestUtils.getStringParameter(request, "optDate1_start");
 		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
-		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String orderMode = ServletRequestUtils.getStringParameter(request, "orderMode");
 
 		model.addAttribute("optDate2_start", optDate2_start);
@@ -81,7 +81,7 @@ public class SalesContrastBySupplierController extends BaseController {
 		model.addAttribute("optDate1_end", optDate1_end);
 		model.addAttribute("optDate1_start", optDate1_start);
 		model.addAttribute("supplier", supplier);
-		model.addAttribute("orgId", orgId);
+		model.addAttribute("orgIdList", Lists.newArrayList(orgIds));
 		model.addAttribute("orderMode", orderMode);
 
 		// 初始化页面下拉菜单控件
@@ -107,7 +107,10 @@ public class SalesContrastBySupplierController extends BaseController {
 				DateUtils.transDateFormat(optDate1_start, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate1_end, "yyyy-MM-dd", "yyyyMMdd"),
 				DateUtils.transDateFormat(optDate2_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), supplierNoArray, orgId, orderMode);
+				DateUtils.transDateFormat(optDate2_end, "yyyy-MM-dd", "yyyyMMdd"), 
+				supplierNoArray, 
+				orgIds, 
+				orderMode);
 
 		model.addAttribute("contrastList", voList);
 
