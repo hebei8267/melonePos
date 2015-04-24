@@ -137,7 +137,7 @@
 		AND g.supplier_bw_id IN (${supplierArray})
 		<![CDATA[AND opt_date = #{optDateEnd}]]>
 		<if test="orgId != null and orgId != ''">
-	    AND sd.org_id = IN (${orgId})
+	    AND sd.org_id IN (${orgId})
 	    </if>
 		GROUP BY
 		    sd.org_id,
