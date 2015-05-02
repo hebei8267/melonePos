@@ -151,7 +151,6 @@ public class CashReportController extends BaseController {
 			if (bos != null)
 				bos.close();
 		}
-		return;
 	}
 
 	/**

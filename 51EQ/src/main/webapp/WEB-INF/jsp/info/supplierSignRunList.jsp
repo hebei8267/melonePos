@@ -37,6 +37,16 @@
         	$(".label").each(function(){
         		$(this).popover({trigger:'hover', html:'true'});
         	});
+        	
+        	$("#exportBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#searchForm").attr('target', '_self');
+                $("#searchForm").attr("action", "${sc_ctx}/supplierSignRun/export");
+                $("#searchForm").submit();
+            });
         });
         </script>
     </head>
@@ -79,6 +89,7 @@
                         </select>
                         &nbsp;&nbsp;
                         <button	id="showBtn" class="btn	btn-primary" type="button">显示</button>
+                        <button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
                     </div>
                     
                     <c:if test="${showFlg}" >

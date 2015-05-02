@@ -1,21 +1,31 @@
 package com.tjhx.service.info;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.dao.info.SupplierSignMyBatisDao;
 import com.tjhx.dao.info.SupplierSignRunJpaDao;
 import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.info.SupplierSignRun;
 import com.tjhx.entity.info.SupplierSignRun_Show;
+import com.tjhx.globals.SysConfig;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,8 +49,8 @@ public class SupplierSignRunManager {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear, String supplierBwId)
-			throws IllegalAccessException, InvocationTargetException {
+	public List<SupplierSignRun_Show> getSupplierSignRunList(String optYear, String supplierBwId) throws IllegalAccessException,
+			InvocationTargetException {
 		List<Supplier> _supList = null;
 
 		if (StringUtils.isNotBlank(supplierBwId)) {
@@ -55,8 +65,8 @@ public class SupplierSignRunManager {
 		return _supSignRunList;
 	}
 
-	private void copyProperties(SupplierSignRun destObj, List<SupplierSignRun> origObjList)
-			throws IllegalAccessException, InvocationTargetException {
+	private void copyProperties(SupplierSignRun destObj, List<SupplierSignRun> origObjList) throws IllegalAccessException,
+			InvocationTargetException {
 
 		int _i = origObjList.indexOf(destObj);
 
@@ -118,8 +128,7 @@ public class SupplierSignRunManager {
 	 * 
 	 * @return
 	 */
-	public SupplierSignRun findSupplierSignRunByNaturalId(String supplierBwId, String optDateY, String optDateM,
-			String runType) {
+	public SupplierSignRun findSupplierSignRunByNaturalId(String supplierBwId, String optDateY, String optDateM, String runType) {
 		return supplierSignRunJpaDao.findSupplierSignRunByNaturalId(supplierBwId, optDateY, optDateM, runType);
 	}
 
@@ -140,8 +149,8 @@ public class SupplierSignRunManager {
 	 */
 	@Transactional(readOnly = false)
 	public void saveRunInfo(SupplierSignRun run) {
-		SupplierSignRun _dbRun = findSupplierSignRunByNaturalId(run.getSupplierBwId(), run.getOptDateY(),
-				run.getOptDateM(), run.getRunType());
+		SupplierSignRun _dbRun = findSupplierSignRunByNaturalId(run.getSupplierBwId(), run.getOptDateY(), run.getOptDateM(),
+				run.getRunType());
 
 		if (null == _dbRun) {// 新增
 			if ("1".equals(run.getRunType())) {// 赊购挂账
@@ -179,10 +188,44 @@ public class SupplierSignRunManager {
 	 */
 	@Transactional(readOnly = false)
 	public void delRunInfo(SupplierSignRun run) {
-		SupplierSignRun _dbRun = findSupplierSignRunByNaturalId(run.getSupplierBwId(), run.getOptDateY(),
-				run.getOptDateM(), run.getRunType());
+		SupplierSignRun _dbRun = findSupplierSignRunByNaturalId(run.getSupplierBwId(), run.getOptDateY(), run.getOptDateM(),
+				run.getRunType());
 		if (null != _dbRun) {
 			supplierSignRunJpaDao.delete(_dbRun);
 		}
 	}
+
+	/**
+	 * 文件导出
+	 * 
+	 * @param optDateY
+	 * @param supplierBwId
+	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws IOException 
+	 * @throws InvalidFormatException 
+	 * @throws ParsePropertyException 
+	 */
+	public String createSupplierSignRunFile(String optDateY, String supplierBwId) throws IllegalAccessException,
+			InvocationTargetException, ParsePropertyException, InvalidFormatException, IOException {
+		List<SupplierSignRun_Show> _supSignRunList = getSupplierSignRunList(optDateY, supplierBwId);
+
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("optDateY", optDateY);
+		map.put("supSignRunList", _supSignRunList);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_SUPPLIER_SIGN_RUN, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_SUPPLIER_SIGN_RUN = "/excel/Supplier_Sign_Run_Template.xls";
 }

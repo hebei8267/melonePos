@@ -1,5 +1,10 @@
 package com.tjhx.web.info;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,9 +12,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jxls.exception.ParsePropertyException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -18,12 +27,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.mapper.JsonMapper;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.info.SupplierSignRun;
 import com.tjhx.entity.info.SupplierSignRun_Show;
 import com.tjhx.globals.Constants;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.info.SupplierSignRunManager;
 import com.tjhx.web.BaseController;
@@ -103,6 +114,61 @@ public class SupplierSignRunController extends BaseController {
 		_show_Action(model, request);
 
 		return "info/supplierSignRunList";
+	}
+
+	/**
+	 * 文件导出
+	 * 
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @throws ServletRequestBindingException
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	@RequestMapping(value = "export")
+	public void cashReportExport_Action(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException,
+			IllegalAccessException, InvocationTargetException {
+		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
+		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
+
+		String downLoadFileName = supplierSignRunManager.createSupplierSignRunFile(optDateY, supplierBwId);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
 	}
 
 	/**
