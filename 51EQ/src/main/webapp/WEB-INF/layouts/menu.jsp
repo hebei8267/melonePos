@@ -299,15 +299,17 @@
 					</c:if>
 
 					<c:if test="${_permIdList.contains('27') || _permIdList.contains('28')
-					|| _permIdList.contains('29') || _permIdList.contains('30') || _permIdList.contains('31')
-					|| _permIdList.contains('32') || _permIdList.contains('33') || _permIdList.contains('34')
-					|| _permIdList.contains('35') || _permIdList.contains('36') || _permIdList.contains('37')
-					|| _permIdList.contains('38') || _permIdList.contains('39')
-					|| _permIdList.contains('42') || _permIdList.contains('43')
-					|| _permIdList.contains('49') || _permIdList.contains('50')
-					|| _permIdList.contains('51') || _permIdList.contains('52')
-					|| _permIdList.contains('53') || _permIdList.contains('54')
-					|| _permIdList.contains('55') || _permIdList.contains('57')}">
+					|| _permIdList.contains('29') || _permIdList.contains('30') 
+					|| _permIdList.contains('31') || _permIdList.contains('32') 
+					|| _permIdList.contains('33') || _permIdList.contains('34')
+					|| _permIdList.contains('35') || _permIdList.contains('36') 
+					|| _permIdList.contains('37') || _permIdList.contains('38') 
+					|| _permIdList.contains('39') || _permIdList.contains('42') 
+					|| _permIdList.contains('43') || _permIdList.contains('49') 
+					|| _permIdList.contains('50') || _permIdList.contains('51') 
+					|| _permIdList.contains('52') || _permIdList.contains('53') 
+					|| _permIdList.contains('54') || _permIdList.contains('55') 
+					|| _permIdList.contains('57')|| _permIdList.contains('67')}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -330,6 +332,11 @@
 								<c:if test="${_permIdList.contains('36')}">
 									<li>
 										<a href="${sc_ctx}/msgInfo">公告/消息</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('67')}">
+									<li>
+										<a href="${sc_ctx}/pettyCashApp/list">备用金申请/审批</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('37')}">

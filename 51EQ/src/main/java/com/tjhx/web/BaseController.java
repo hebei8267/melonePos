@@ -157,6 +157,8 @@ public class BaseController {
 		user.getOrgName();
 		// 初始化角色权限
 		user.getRole().initPermIdList(functionManager.getAllFunction());
+		// 初始化预算科目机构信息
+		user.getBudgetSubject().getSubName();
 
 		session.setAttribute(Constants.SESSION_USER_INFO, user);
 	}

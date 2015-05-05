@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.affair.PettyCashAppMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_PettyCashApp" type="com.tjhx.entity.affair.PettyCashApp">
+        <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="app_date" property="appDate" jdbcType="VARCHAR"/>
+        <result column="app_level" property="appLevel" jdbcType="VARCHAR"/>
+        <result column="app_no" property="appNo" jdbcType="VARCHAR"/>
+        <result column="app_org" property="appOrg" jdbcType="INTEGER"/>
+        <result column="app_per" property="appPer" jdbcType="INTEGER"/>
+        <result column="app_state" property="appState" jdbcType="VARCHAR"/>
+        <result column="approval_per1" property="approvalPer1" jdbcType="INTEGER"/>
+        <result column="approval_per_comment1" property="approvalPerComment1" jdbcType="VARCHAR"/>
+        <result column="approval_per2" property="approvalPer2" jdbcType="INTEGER"/>
+        <result column="approval_per_comment2" property="approvalPerComment2" jdbcType="VARCHAR"/>
+        <result column="approval_per3" property="approvalPer3" jdbcType="INTEGER"/>
+        <result column="approval_per_comment3" property="approvalPerComment3" jdbcType="VARCHAR"/>
+        <result column="payment_explain" property="paymentExplain" jdbcType="VARCHAR"/>
+        <result column="payment_mode" property="paymentMode" jdbcType="VARCHAR"/>
+        <result column="payment_period" property="paymentPeriod" jdbcType="VARCHAR"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="confirm_amount" property="confirmAmount" jdbcType="DECIMAL"/>
+        
+        <result column="app_per_name" property="appPerName" jdbcType="VARCHAR"/>
+        <result column="app_org_name" property="appOrgName" jdbcType="VARCHAR"/>
+        <result column="approval_per1_name" property="approvalPer1Name" jdbcType="VARCHAR"/>
+        <result column="approval_per2_name" property="approvalPer2Name" jdbcType="VARCHAR"/>
+        <result column="approval_per3_name" property="approvalPer3Name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+  	<!-- 取得t_petty_cash_app信息(根据参数) -->
+	<select id="getPettyCashAppList" parameterType="map" resultMap="Result_Map_PettyCashApp">
+		select
+			app.uuid ,
+			app.amount ,
+	    	app.app_date ,
+	    	app.app_level ,
+	    	app.app_no ,
+	    	app.app_org ,
+	    	bs.sub_name as app_org_name ,
+	    	app.app_per ,
+	    	u1.name as app_per_name ,
+	    	app.app_state ,
+	    	app.approval_per1 ,
+	    	u2.name as approval_per1_name ,
+	    	app.approval_per_comment1 ,
+	    	app.approval_per2 ,
+	    	u3.name as approval_per2_name ,
+	    	app.approval_per_comment2 ,
+	    	app.approval_per3 ,
+	    	u4.name as approval_per3_name ,
+	    	app.approval_per_comment3 ,
+	    	app.payment_explain ,
+	    	app.payment_mode ,
+	    	app.payment_period ,
+	    	app.reason ,
+	    	app.confirm_amount
+		from t_petty_cash_app app LEFT JOIN t_user u1 ON app.app_per = u1.uuid
+								  LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid
+								  LEFT JOIN t_user u3 ON app.approval_per2 = u3.uuid
+								  LEFT JOIN t_user u4 ON app.approval_per3 = u4.uuid
+								  LEFT JOIN t_budget_subject bs ON app.app_org = bs.uuid
+		<where>
+  			app.app_per = #{appPer}
+  			<if test="appDate != null and appDate !='' ">
+  			AND app.app_date = #{appDate}
+  			</if>
+  			<if test="appNo != null and appNo !='' ">
+  			AND app.app_no = #{appNo}
+  			</if>
+	  	</where>
+	  	order by app.app_no desc
+	</select>
+	
+	<!-- 取得t_petty_cash_app信息(根据参数) -->
+	<select id="findPettyCashAppByUuid" parameterType="int" resultMap="Result_Map_PettyCashApp">
+		select
+			app.uuid ,
+			app.amount ,
+	    	app.app_date ,
+	    	app.app_level ,
+	    	app.app_no ,
+	    	app.app_org ,
+	    	bs.sub_name as app_org_name ,
+	    	app.app_per ,
+	    	u1.name as app_per_name ,
+	    	app.app_state ,
+	    	app.approval_per1 ,
+	    	u2.name as approval_per1_name ,
+	    	app.approval_per_comment1 ,
+	    	app.approval_per2 ,
+	    	u3.name as approval_per2_name ,
+	    	app.approval_per_comment2 ,
+	    	app.approval_per3 ,
+	    	u4.name as approval_per3_name ,
+	    	app.approval_per_comment3 ,
+	    	app.payment_explain ,
+	    	app.payment_mode ,
+	    	app.payment_period ,
+	    	app.reason ,
+	    	app.confirm_amount
+		from t_petty_cash_app app LEFT JOIN t_user u1 ON app.app_per = u1.uuid
+								  LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid
+								  LEFT JOIN t_user u3 ON app.approval_per2 = u3.uuid
+								  LEFT JOIN t_user u4 ON app.approval_per3 = u4.uuid
+								  LEFT JOIN t_budget_subject bs ON app.app_org = bs.uuid
+		<where>
+  			app.uuid = #{uuid}
+	  	</where>
+	</select>
+</mapper>

@@ -84,6 +84,17 @@ public class BudgetSubjectManager {
 		return subList;
 	}
 
+	public List<BudgetSubject> getBudgetSubjectList(Integer parentUuid) {
+		BudgetSubject rootSub = budgetSubjectJpaDao.findOne(parentUuid);
+
+		rootSub = initLazyObj(rootSub);
+
+		List<BudgetSubject> subList = Lists.newArrayList();
+		initSubList(rootSub, subList);
+
+		return subList;
+	}
+
 	/**
 	 * BudgetSubject--->BudgetSubjectList
 	 * 

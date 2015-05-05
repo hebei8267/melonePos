@@ -817,27 +817,39 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun65() {
+//		Function fun = new Function();
+//		// 门店--补货单管理
+//		fun.setDisplayName("收货管理");
+//		// 功能URL */
+//		fun.setFunUrl("replenishOrder/list");
+//
+//		functionJpaDao.save(fun);
+//	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun66() {
+//		Function fun = new Function();
+//		// 总部--补货单管理
+//		fun.setDisplayName("发货管理");
+//		// 功能URL */
+//		fun.setFunUrl("replenishOrder/manageList");
+//
+//		functionJpaDao.save(fun);
+//	}
 	
 	@Test
 	@Rollback(false)
-	public void saveNewFun65() {
+	public void saveNewFun67() {
 		Function fun = new Function();
-		// 门店--补货单管理
-		fun.setDisplayName("收货管理");
+		// 备用金申请/审批
+		fun.setDisplayName("备用金申请/审批");
 		// 功能URL */
-		fun.setFunUrl("replenishOrder/list");
-
-		functionJpaDao.save(fun);
-	}
-	
-	@Test
-	@Rollback(false)
-	public void saveNewFun66() {
-		Function fun = new Function();
-		// 总部--补货单管理
-		fun.setDisplayName("发货管理");
-		// 功能URL */
-		fun.setFunUrl("replenishOrder/manageList");
+		fun.setFunUrl("pettyCashApp/list");
 
 		functionJpaDao.save(fun);
 	}
