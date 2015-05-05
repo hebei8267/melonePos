@@ -56,7 +56,19 @@
                    	confirmAmount : {
                    		required : true,
                      	number : true
-                  	}
+                  	},
+                  	approvalPerComment1 : {
+                		required : true,
+                     	maxlength : 255
+                   	},
+                   	approvalPerComment2 : {
+                		required : true,
+                     	maxlength : 255
+                   	},
+                   	approvalPerComment3 : {
+                		required : true,
+                     	maxlength : 255
+                   	}
                  }
      		});
      		

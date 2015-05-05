@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +26,20 @@ public class PettyCashAppManager {
 	@Resource
 	private PettyCashAppMyBatisDao pettyCashAppMyBatisDao;
 
-	public List<PettyCashApp> getPettyCashAppList(Integer appPer) {
+	public List<PettyCashApp> getPettyCashAppList(String appNo, String optDateShowStart, String optDateShowEnd,
+			String appPerName, Integer appPer, boolean managerFlg) {
 		Map<String, Object> param = Maps.newHashMap();
+		param.put("appNo", appNo);
+		param.put("optDateShowStart", optDateShowStart);
+		param.put("optDateShowEnd", optDateShowEnd);
+
+		if (StringUtils.isNotBlank(appPerName)) {
+			appPerName = "%" + appPerName + "%";
+			param.put("appPerName", appPerName);
+		}
+
 		param.put("appPer", appPer);
+		param.put("managerFlg", managerFlg);
 
 		return pettyCashAppMyBatisDao.getPettyCashAppList(param);
 	}
@@ -176,5 +188,13 @@ public class PettyCashAppManager {
 
 		pettyCashAppJpaDao.save(_dbPettyCashApp);
 
+	}
+
+	/**
+	 * @param parseInt
+	 */
+	@Transactional(readOnly = false)
+	public void delPettyCashAppByUuid(int uuid) {
+		pettyCashAppJpaDao.delete(uuid);
 	}
 }

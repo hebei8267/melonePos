@@ -12,6 +12,13 @@
     <head>
     <script>
     $().ready(function() {
+    	$('#optDateShow_start').datepicker({
+            format : 'yyyy-mm-dd'
+        });
+        $('#optDateShow_end').datepicker({
+            format : 'yyyy-mm-dd'
+        });
+                
     	$("#searchBtn").click(function() {
             $("input[type='text'],textarea").each(function(i) {
                 this.value = $.trim(this.value);
@@ -21,7 +28,56 @@
             $("#searchForm").attr("action", "${sc_ctx}/pettyCashApp/search");
             $("#searchForm").submit();
         });
+        
+        //-----------------------------------
+        // 全选/全部选
+        //-----------------------------------
+        $("#checkAll").click(function() {
+    		var checked = $("#checkAll").is(":checked");
+        	$("input[name='uuid']").each(function(){
+        		if (checked) {
+					$(this).attr("checked", true);
+					$(this).prop("checked", true);
+				} else {
+					$(this).attr("checked", false);
+					$(this).prop("checked", false);
+				}
+        	}); 
+        });
+        //-----------------------------------
+        // 删除按钮点击
+        //-----------------------------------
+        $("#delBtn").click(function() {
+            if ($("#listForm").valid()) {
+                $('#__del_confirm').modal({
+                    backdrop : true,
+                    keyboard : true,
+                    show : true
+                });
+            }
+        });
     });
+    //-----------------------------------
+    // 删除
+    //-----------------------------------
+    function _del_confirm() {
+        var $subCheckBox = $("input[name='uuid']");
+        var uuids = "";
+        $.each($subCheckBox, function(index, _checkBox) {
+            if (_checkBox.checked) {
+                uuids += _checkBox.value + ",";
+            }
+        });
+        if (uuids.length > 0) {
+            uuids = uuids.substring(0, uuids.length - 1);
+        }
+
+        $("#uuids").val(uuids);
+        
+        $("#listForm").attr("target", "_self");
+        $("#listForm").attr("action", "${sc_ctx}/pettyCashApp/del");
+        $("#listForm").submit();
+    }
     </script>
     </head>
     <body>
@@ -47,7 +103,7 @@
                     </div>
                     <div class="span4">
                         <label class="control-label">申请人 :</label>
-                        <input id="appPer" name="appPer" type="text" class="input-medium" value="${appPer }"/>
+                        <input id="appPerName" name="appPerName" type="text" class="input-medium" value="${appPerName }"/>
                         <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
                     </div>
               	</form>
@@ -92,7 +148,11 @@
                             <tbody>
                             <c:forEach items="${appList}" var="app">
                             	<tr>
-                            		<td></td>
+                            		<td class="center">
+                            		<c:if test="${app.appState.equals('00') || managerFlg}">
+                                    <input type="checkbox" name="uuid" value="${app.uuid}">
+                                    </c:if>
+                            		</td>
                             		<td class="center">${app.appNo}</td>
                             		<td class="center">${app.appPerName}</td>
                             		<td class="center">${app.amount}</td>
@@ -116,15 +176,22 @@
                                     </c:if>
                             		</td>
                             		<td class="center">
-                            		<c:if test="${app.appState.equals('00')}">
+                            		<c:if test="${app.appState.equals('00') && sessionScope.__SESSION_USER_INFO.uuid == app.createUserId}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>编辑</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('01') || app.appState.equals('02') || app.appState.equals('03')}">
+                                    <c:if test="${app.appState.equals('01') && appFlg1}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('99')}">
+                                    <c:if test="${app.appState.equals('02') && appFlg2}">
+                                        <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
+                                    </c:if>
+                                    <c:if test="${app.appState.equals('03') && appFlg3}">
+                                        <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
+                                    </c:if>
+                                    <c:if test="${app.appState.equals('99') && fileFlg}">
                                         <a href="${sc_ctx}/pettyCashApp/fileEdit/${app.uuid}" class="btn btn-warning"/>归档</a>
                                     </c:if>
+                                    <a href="${sc_ctx}/pettyCashApp/view/${app.uuid}" class="btn" target="_blank"/>查看</a>
                             		</td>
                             	</tr>
                             </c:forEach>

@@ -40,6 +40,7 @@
 	<select id="getPettyCashAppList" parameterType="map" resultMap="Result_Map_PettyCashApp">
 		select
 			app.uuid ,
+			app.create_user_id ,
 			app.amount ,
 	    	app.app_date ,
 	    	app.app_level ,
@@ -63,15 +64,24 @@
 	    	app.payment_period ,
 	    	app.reason ,
 	    	app.confirm_amount
-		from t_petty_cash_app app LEFT JOIN t_user u1 ON app.app_per = u1.uuid
-								  LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid
+		from t_petty_cash_app app LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid
 								  LEFT JOIN t_user u3 ON app.approval_per2 = u3.uuid
 								  LEFT JOIN t_user u4 ON app.approval_per3 = u4.uuid
-								  LEFT JOIN t_budget_subject bs ON app.app_org = bs.uuid
+								  LEFT JOIN t_budget_subject bs ON app.app_org = bs.uuid,
+			 t_user u1
 		<where>
-  			app.app_per = #{appPer}
-  			<if test="appDate != null and appDate !='' ">
-  			AND app.app_date = #{appDate}
+			app.app_per = u1.uuid
+			<if test="managerFlg == false">
+			AND app.app_per = #{appPer}
+			</if>
+  			<if test="optDateShowStart != null and optDateShowStart !='' ">
+  			AND app.app_date <![CDATA[>=]]> #{optDateShowStart}
+  			</if>
+  			<if test="optDateShowEnd != null and optDateShowEnd !='' ">
+  			AND app.app_date <![CDATA[<=]]> #{optDateShowEnd}
+  			</if>
+  			<if test="appPerName != null and appPerName !='' ">
+  			AND u1.name like #{appPerName}
   			</if>
   			<if test="appNo != null and appNo !='' ">
   			AND app.app_no = #{appNo}
