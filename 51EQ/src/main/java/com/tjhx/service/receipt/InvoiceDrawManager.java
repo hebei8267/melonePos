@@ -1,16 +1,28 @@
 package com.tjhx.service.receipt;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.receipt.InvoiceJpaDao;
 import com.tjhx.dao.receipt.InvoiceMyBatisDao;
 import com.tjhx.entity.member.User;
 import com.tjhx.entity.receipt.Invoice;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
 
 @Service
@@ -61,4 +73,44 @@ public class InvoiceDrawManager {
 
 		invoiceJpaDao.save(_invoice);
 	}
+
+	/**
+	 * @param invoice
+	 * @return
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 */
+	public String createInvoiceDrawFile(Invoice invoice) throws ParsePropertyException, InvalidFormatException, IOException {
+		List<Invoice> _list = invoiceMyBatisDao.getInvoiceDrawList(invoice);
+		if (null == _list || _list.size() == 0) {
+			return null;
+		}
+
+		List<Invoice> fileList = Lists.newArrayList();
+		for (Invoice _invoice : _list) {
+			// 发票状态1-申请2-已处理
+			if ("2".equals(_invoice.getInvoiceStatus())) {
+				_invoice.setServiceDateShow(DateUtils.transDateFormat(_invoice.getServiceDateShow(), "yyyy-MM-dd", "yyyy/MM/dd"));
+				_invoice.setAppDate(DateUtils.transDateFormat(_invoice.getAppDate(), "yyyyMMdd", "yyyy/MM/dd"));
+				fileList.add(_invoice);
+			}
+		}
+
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("invoiceDrawList", fileList);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_INVOICE_DRAW, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_INVOICE_DRAW = "/excel/Invoice_Draw_Template.xls";
 }

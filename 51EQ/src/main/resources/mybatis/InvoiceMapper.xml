@@ -5,6 +5,7 @@
 	<!-- mybatis表结构与对象的映射关系 -->
 	<resultMap id="Result_Map_Invoice" type="com.tjhx.entity.receipt.Invoice">
         <result column="uuid" property="uuid" jdbcType="INTEGER"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="amt" property="amt" jdbcType="DECIMAL"/>
         <result column="app_date" property="appDate" jdbcType="VARCHAR"/>
         <result column="app_date_m" property="appDateM" jdbcType="VARCHAR"/>
@@ -31,6 +32,7 @@
 	<sql id="Base_Column_List" >
 	<![CDATA[
     	inv.uuid ,
+    	inv.update_date ,
     	inv.amt ,
     	inv.app_date ,
     	inv.app_date_m ,

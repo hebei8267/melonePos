@@ -6,8 +6,6 @@ import com.tjhx.entity.receipt.Invoice;
 
 public interface InvoiceMyBatisDao {
 
-	
-
 	/**
 	 * 根据参数取得发票信息
 	 * 

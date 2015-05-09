@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.IdEntity;
 
 /**
@@ -61,6 +62,8 @@ public class Invoice extends IdEntity {
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
+	/** 处理时间 */
+	private String processTime;
 
 	/**
 	 * 取得机构编号
@@ -436,5 +439,27 @@ public class Invoice extends IdEntity {
 	 */
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
+	}
+
+	/**
+	 * 获取处理时间
+	 * 
+	 * @return processTime
+	 */
+	@Transient
+	public String getProcessTime() {
+		if (null != getUpdateDate()) {
+			processTime = DateUtils.transDateFormat(getUpdateDate(), "yyyy/MM/dd");
+		}
+		return processTime;
+	}
+
+	/**
+	 * 设置处理时间
+	 * 
+	 * @param processTime 处理时间
+	 */
+	public void setProcessTime(String processTime) {
+		this.processTime = processTime;
 	}
 }
