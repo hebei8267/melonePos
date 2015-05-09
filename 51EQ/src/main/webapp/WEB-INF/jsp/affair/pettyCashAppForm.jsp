@@ -91,6 +91,16 @@
                 $("#inputForm").attr("action", "${sc_ctx}/pettyCashApp/confirm");
                 $("#inputForm").submit();
             });  
+            
+            $("#refuseBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#inputForm").attr('target', '_self');
+                $("#inputForm").attr("action", "${sc_ctx}/pettyCashApp/refuse");
+                $("#inputForm").submit();
+            });
 		});
     	</script>
     </head>
@@ -104,13 +114,13 @@
                     <legend>
                         <h3>
                         <c:if test="${empty	pettyCashApp.uuid}">
-                            备用金-申请
+                            资金-申请
                         </c:if>
                         <c:if test="${!empty pettyCashApp.uuid && pettyCashApp.appState.equals('00')}">
-                            备用金-编辑
+                            资金-申请-编辑
                         </c:if>
                         <c:if test="${!empty pettyCashApp.uuid && !pettyCashApp.appState.equals('00')}">
-                            备用金-审批
+                            资金-申请-审批
                         </c:if>
                         </h3>
                     </legend>
@@ -355,6 +365,9 @@
                     
                     <div class="control-group">
                         <div class="controls">
+                        	<c:if test="${!empty pettyCashApp.uuid && (pettyCashApp.appState.equals('00') || pettyCashApp.appState.equals('01') || pettyCashApp.appState.equals('02') || pettyCashApp.appState.equals('03'))}">
+                        	<button	id="refuseBtn" class="btn	btn-large btn-warning" type="submit">驳回</button>
+                        	</c:if>
 	                        <button	id="confirmBtn" class="btn	btn-large btn-warning" type="submit">提交</button>
 	                        <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
                             <a href="${sc_ctx}/pettyCashApp/list" class="btn btn-large">返回</a>

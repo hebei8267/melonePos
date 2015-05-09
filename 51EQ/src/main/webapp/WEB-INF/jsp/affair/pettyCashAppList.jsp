@@ -89,7 +89,7 @@
                 <form method="post"	class="form-inline"	id="searchForm">
                 	<div class="span12">
                         <legend>
-                            <h3>备用金申请/审批</h3>
+                            <h3>资金申请与审批</h3>
                         </legend>
                     </div>
                     <div class="span3">

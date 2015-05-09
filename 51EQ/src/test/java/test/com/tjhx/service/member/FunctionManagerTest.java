@@ -847,7 +847,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	public void saveNewFun67() {
 		Function fun = new Function();
 		// 备用金申请/审批
-		fun.setDisplayName("备用金申请/审批");
+		fun.setDisplayName("资金申请/审批");
 		// 功能URL */
 		fun.setFunUrl("pettyCashApp/list");
 

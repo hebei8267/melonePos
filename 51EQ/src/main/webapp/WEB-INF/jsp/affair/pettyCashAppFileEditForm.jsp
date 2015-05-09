@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="span12">
                     <legend>
-                        <h3>备用金-归档</h3>
+                        <h3>资金-归档</h3>
                     </legend>
                 </div>
                 

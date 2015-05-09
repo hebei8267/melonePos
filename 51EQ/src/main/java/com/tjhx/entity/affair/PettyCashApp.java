@@ -57,6 +57,8 @@ public class PettyCashApp extends IdEntity {
 	private String approvalPerComment3;
 	/** 审批金额 */
 	private BigDecimal confirmAmount;
+	/** 拒绝标记 */
+	private boolean refuseFlg = false;
 
 	private String appPerName;
 	private String appOrgName;
@@ -487,6 +489,24 @@ public class PettyCashApp extends IdEntity {
 	 */
 	public void setApprovalPer3Name(String approvalPer3Name) {
 		this.approvalPer3Name = approvalPer3Name;
+	}
+
+	/**
+	 * 获取拒绝标记
+	 * 
+	 * @return refuseFlg
+	 */
+	public boolean isRefuseFlg() {
+		return refuseFlg;
+	}
+
+	/**
+	 * 设置拒绝标记
+	 * 
+	 * @param refuseFlg 拒绝标记
+	 */
+	public void setRefuseFlg(boolean refuseFlg) {
+		this.refuseFlg = refuseFlg;
 	}
 
 }

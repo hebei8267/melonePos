@@ -84,18 +84,22 @@ public class PettyCashAppController extends BaseController {
 			throws ServletRequestBindingException {
 		boolean managerFlg = false;
 		int roleUuid = getUserInfo(session).getRole().getUuid();
-		// 1-系统管理员 2-总部人员-会计 5-总部人员-Boss
+		// 1-系统管理员 2-总部人员-会计 5-总部人员-Boss 10-总部高级会计人员
 		if (1 == roleUuid || 2 == roleUuid || 5 == roleUuid) {
 			managerFlg = true;
 		}
-		if (2 == roleUuid) {// 1审--总部人员
+		if (2 == roleUuid) {// 1审--总部会计人员
 			model.addAttribute("appFlg1", true);
 		}
-		// TODO appFlg2
+		if (10 == roleUuid) {// 2审--总部高级会计人员
+			model.addAttribute("appFlg2", true);
+		}
 		if (5 == roleUuid) {// 3审--总部人员-Boss
 			model.addAttribute("appFlg3", true);
 		}
-		// TODO fileFlg
+		if (10 == roleUuid) {// 归档--总部高级会计人员
+			model.addAttribute("fileFlg", true);
+		}
 
 		String appNo = ServletRequestUtils.getStringParameter(request, "appNo");
 		String optDateShowStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
@@ -189,7 +193,7 @@ public class PettyCashAppController extends BaseController {
 	@RequestMapping(value = "save")
 	public String pettyCashApp_save_Action(@ModelAttribute("pettyCashApp") PettyCashApp pettyCashApp, Model model) {
 
-		pettyCashAppManager.savePettyCashApp(pettyCashApp, false);
+		pettyCashAppManager.savePettyCashApp(pettyCashApp, false, false);
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCashApp/list";
 	}
@@ -259,8 +263,23 @@ public class PettyCashAppController extends BaseController {
 	 */
 	@RequestMapping(value = "confirm")
 	public String pettyCashApp_confirm_Action(@ModelAttribute("pettyCashApp") PettyCashApp pettyCashApp, Model model) {
-		pettyCashAppManager.savePettyCashApp(pettyCashApp, true);
+		pettyCashAppManager.savePettyCashApp(pettyCashApp, true, false);
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCashApp/list";
 	}
+
+	/**
+	 * 备用金申请/审批--驳回
+	 * 
+	 * @param pettyCashApp
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "refuse")
+	public String pettyCashApp_refuse_Action(@ModelAttribute("pettyCashApp") PettyCashApp pettyCashApp, Model model) {
+		pettyCashAppManager.savePettyCashApp(pettyCashApp, false, true);
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCashApp/list";
+	}
+
 }

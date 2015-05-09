@@ -48,7 +48,7 @@ public class PettyCashAppManager {
 	 * @param pettyCashApp
 	 */
 	@Transactional(readOnly = false)
-	public void savePettyCashApp(PettyCashApp pettyCashApp, boolean confirmFlg) {
+	public void savePettyCashApp(PettyCashApp pettyCashApp, boolean confirmFlg, boolean refuseFlg) {
 		// 申请时间
 		pettyCashApp.setAppDate(DateUtils.transDateFormat(pettyCashApp.getAppDate(), "yyyy-MM-dd", "yyyyMMdd"));
 		// 付款期限
@@ -57,7 +57,7 @@ public class PettyCashAppManager {
 		if (null == pettyCashApp.getUuid()) {// 新增操作
 			addPettyCashApp(pettyCashApp, confirmFlg);
 		} else {// 修改操作
-			editPettyCashApp(pettyCashApp, confirmFlg);
+			editPettyCashApp(pettyCashApp, confirmFlg, refuseFlg);
 		}
 
 	}
@@ -66,7 +66,7 @@ public class PettyCashAppManager {
 	 * @param pettyCashApp
 	 */
 	@Transactional(readOnly = false)
-	private void editPettyCashApp(PettyCashApp pettyCashApp, boolean confirmFlg) {
+	private void editPettyCashApp(PettyCashApp pettyCashApp, boolean confirmFlg, boolean refuseFlg) {
 		PettyCashApp _dbPettyCashApp = pettyCashAppJpaDao.findOne(pettyCashApp.getUuid());
 		if (null == _dbPettyCashApp) {
 			return;
@@ -115,6 +115,11 @@ public class PettyCashAppManager {
 		}
 
 		commonProcess(_dbPettyCashApp, confirmFlg);
+
+		// 拒绝标记
+		if (refuseFlg) {
+			_dbPettyCashApp.setRefuseFlg(refuseFlg);
+		}
 
 		pettyCashAppJpaDao.save(_dbPettyCashApp);
 	}

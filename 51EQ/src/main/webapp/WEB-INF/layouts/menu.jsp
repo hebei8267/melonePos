@@ -336,7 +336,7 @@
 								</c:if>
 								<c:if test="${_permIdList.contains('67')}">
 									<li>
-										<a href="${sc_ctx}/pettyCashApp/list">备用金申请/审批</a>
+										<a href="${sc_ctx}/pettyCashApp/list">资金申请与审批</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('37')}">
