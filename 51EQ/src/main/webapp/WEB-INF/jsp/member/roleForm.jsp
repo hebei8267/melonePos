@@ -57,14 +57,7 @@
 				<div class="span3">
 					<h4>日常事务模块<br>
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
-						<tr>
-							<c:if test="${role.permIdList.contains('57')}">
-							<td><input type="checkbox" name="perm" value="57" checked>物件借还</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('57')}">
-							<td><input type="checkbox" name="perm" value="57">物件借还</td>
-							</c:if>
-						</tr>
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('27')}">
 							<td><input type="checkbox" name="perm" value="27" checked>发票开具-申请(门店)</td>
@@ -81,14 +74,7 @@
 							<td><input type="checkbox" name="perm" value="28">发票开具</td>
 							</c:if>
 						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('36')}">
-							<td><input type="checkbox" name="perm" value="36" checked>公告/消息</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('36')}">
-							<td><input type="checkbox" name="perm" value="36">公告/消息</td>
-							</c:if>
-						</tr>
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('37')}">
 							<td><input type="checkbox" name="perm" value="37" checked>门店备用金(门店)</td>
@@ -121,22 +107,7 @@
 							<td><input type="checkbox" name="perm" value="29">门店巡查报告(财务)</td>
 							</c:if>
 						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('30')}">
-							<td><input type="checkbox" name="perm" value="30" checked>考勤信息-查看(门店)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('30')}">
-							<td><input type="checkbox" name="perm" value="30">考勤信息-查看(门店)</td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('31')}">
-							<td><input type="checkbox" name="perm" value="31" checked>排班表-查看(门店)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('31')}">
-							<td><input type="checkbox" name="perm" value="31">排班表-查看(门店)</td>
-							</c:if>
-						</tr>
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('50')}">
 							<td><input type="checkbox" name="perm" value="50" checked>门店巡查报告(运营)</td>
@@ -145,38 +116,7 @@
 							<td><input type="checkbox" name="perm" value="50">门店巡查报告(运营)</td>
 							</c:if>
 						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('32')}">
-							<td><input type="checkbox" name="perm" value="32" checked>排班表(维护)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('32')}">
-							<td><input type="checkbox" name="perm" value="32">排班表(维护)</td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('33')}">
-							<td><input type="checkbox" name="perm" value="33" checked>兼职信息(维护)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('33')}">
-							<td><input type="checkbox" name="perm" value="33">兼职信息(维护)</td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('34')}">
-							<td><input type="checkbox" name="perm" value="34" checked>工作时间(维护)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('34')}">
-							<td><input type="checkbox" name="perm" value="34">工作时间(维护)</td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('35')}">
-							<td><input type="checkbox" name="perm" value="35" checked>考勤信息(查看)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('35')}">
-							<td><input type="checkbox" name="perm" value="35">考勤信息(查看)</td>
-							</c:if>
-						</tr>
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('42')}">
 							<td><input type="checkbox" name="perm" value="42" checked>供应商(挂账)结算进度表</td>
@@ -201,22 +141,7 @@
 							<td><input type="checkbox" name="perm" value="49">机构月销售目标管理</td>
 							</c:if>
 						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('53')}">
-							<td><input type="checkbox" name="perm" value="53" checked>共享文件管理</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('53')}">
-							<td><input type="checkbox" name="perm" value="53">共享文件管理</td>
-							</c:if>
-						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('54')}">
-							<td><input type="checkbox" name="perm" value="54" checked>共享文件管理(门店)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('54')}">
-							<td><input type="checkbox" name="perm" value="54">共享文件管理(门店)</td>
-							</c:if>
-						</tr>
+						
 						<tr>
 							<c:if test="${role.permIdList.contains('55')}">
 							<td><input type="checkbox" name="perm" value="55" checked>商品调货单</td>
@@ -560,6 +485,86 @@
 							<td><input type="checkbox" name="perm" value="58">员工管理</td>
 							</c:if>
 						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('53')}">
+							<td><input type="checkbox" name="perm" value="53" checked>共享文件管理</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('53')}">
+							<td><input type="checkbox" name="perm" value="53">共享文件管理</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('54')}">
+							<td><input type="checkbox" name="perm" value="54" checked>共享文件管理(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('54')}">
+							<td><input type="checkbox" name="perm" value="54">共享文件管理(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('30')}">
+							<td><input type="checkbox" name="perm" value="30" checked>考勤信息-查看(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('30')}">
+							<td><input type="checkbox" name="perm" value="30">考勤信息-查看(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('31')}">
+							<td><input type="checkbox" name="perm" value="31" checked>排班表-查看(门店)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('31')}">
+							<td><input type="checkbox" name="perm" value="31">排班表-查看(门店)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('32')}">
+							<td><input type="checkbox" name="perm" value="32" checked>排班表(维护)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('32')}">
+							<td><input type="checkbox" name="perm" value="32">排班表(维护)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('33')}">
+							<td><input type="checkbox" name="perm" value="33" checked>兼职信息(维护)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('33')}">
+							<td><input type="checkbox" name="perm" value="33">兼职信息(维护)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('34')}">
+							<td><input type="checkbox" name="perm" value="34" checked>工作时间(维护)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('34')}">
+							<td><input type="checkbox" name="perm" value="34">工作时间(维护)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('35')}">
+							<td><input type="checkbox" name="perm" value="35" checked>考勤信息(查看)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('35')}">
+							<td><input type="checkbox" name="perm" value="35">考勤信息(查看)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('57')}">
+							<td><input type="checkbox" name="perm" value="57" checked>物件借还</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('57')}">
+							<td><input type="checkbox" name="perm" value="57">物件借还</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('36')}">
+							<td><input type="checkbox" name="perm" value="36" checked>公告/消息</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('36')}">
+							<td><input type="checkbox" name="perm" value="36">公告/消息</td>
+							</c:if>
+						</tr>
 					</table>
 				</div>
 				
@@ -590,6 +595,7 @@
 							<td><input type="checkbox" name="perm" value="66">发货管理</td>
 							</c:if>
 						</tr>
+						
 					</table>
 				</div>
 				<div class="span12">
