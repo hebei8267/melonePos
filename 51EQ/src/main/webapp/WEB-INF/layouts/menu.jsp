@@ -462,6 +462,7 @@
 								</c:if>
 								<%//总部-共享文件管理 %>
 								<c:if test="${_permIdList.contains('53')}">
+									<li class="divider"></li>
 									<li>
 										<a href="${sc_ctx}/shareFile/managerList">共享文件管理</a>
 									</li>
@@ -469,6 +470,7 @@
 
 								<%//门店-共享文件管理 %>
 								<c:if test="${_permIdList.contains('54')}">
+									<li class="divider"></li>
 									<li>
 										<a href="${sc_ctx}/shareFile/storeList">共享文件管理</a>
 									</li>
