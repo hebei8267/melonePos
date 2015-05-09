@@ -85,7 +85,7 @@ public class PettyCashAppController extends BaseController {
 		boolean managerFlg = false;
 		int roleUuid = getUserInfo(session).getRole().getUuid();
 		// 1-系统管理员 2-总部人员-会计 5-总部人员-Boss 10-总部高级会计人员
-		if (1 == roleUuid || 2 == roleUuid || 5 == roleUuid) {
+		if (1 == roleUuid || 2 == roleUuid || 5 == roleUuid || 10 == roleUuid) {
 			managerFlg = true;
 		}
 		if (2 == roleUuid) {// 1审--总部会计人员

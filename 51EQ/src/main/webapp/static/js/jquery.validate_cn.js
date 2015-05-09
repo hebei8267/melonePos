@@ -92,7 +92,7 @@ jQuery.validator.addMethod("dateLessThan", function(value, element, param) {
 	if(value == ''){
 		return true
 	} else {
-    	return value < param;
+    	return value <= param;
     }
 }, '输入日期必须早于 {0}');
 
@@ -100,7 +100,7 @@ jQuery.validator.addMethod("dateGreaterThan", function(value, element, param) {
 	if(value == ''){
 		return true
 	} else {
-    	return value > param;
+    	return value >= param;
     }
 }, '输入日期必须晚于 {0}');
 

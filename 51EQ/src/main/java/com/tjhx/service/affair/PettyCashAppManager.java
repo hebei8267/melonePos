@@ -131,9 +131,9 @@ public class PettyCashAppManager {
 	 */
 	@Transactional(readOnly = false)
 	private void addPettyCashApp(PettyCashApp pettyCashApp, boolean confirmFlg) {
-		String appNo = DateUtils.getCurFormatDate("yyyyMMdd-HHmmss-SS");
+		int appCount = pettyCashAppMyBatisDao.getPettyCashAppCount(DateUtils.getCurFormatDate("yyyyMMdd"));
 		// 备用金申请编号
-		pettyCashApp.setAppNo(appNo);
+		pettyCashApp.setAppNo(DateUtils.getCurFormatDate("yyyyMMdd") + "-" + String.format("%03d", appCount + 1));
 		// 申请审批状态00-申请01-1审02-2审03-3审99-归档
 		pettyCashApp.setAppState("00");
 

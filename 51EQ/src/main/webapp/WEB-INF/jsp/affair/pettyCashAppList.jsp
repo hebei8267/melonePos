@@ -10,6 +10,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <style type="text/css">
+	._warn1 {
+		padding: 10px;
+		background-color: #00DB00;
+	}
+	._warn2 {
+		padding: 10px;
+		background-color: #B15BFF;
+	}
+	._warn3 {
+		padding: 10px;
+		background-color: #FF9224;
+	}
+	._warn4 {
+		padding: 10px;
+		background-color: #B87070;
+	}
+    </style>
+    
     <script>
     $().ready(function() {
     	$('#optDateShow_start').datepicker({
@@ -159,36 +178,39 @@
                             		<td class="center">${app.appDate}</td>
                             		<td class="center">${app.paymentPeriod}</td>
                             		<td class="center">
-                            		<c:if test="${app.appState.equals('00')}">
-                                        编辑中
+                            		<c:if test="${app.refuseFlg}">
+                                        <span class="_warn4">已驳回</span>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('01')}">
-                                        审核中(1)
+                            		<c:if test="${!app.refuseFlg && app.appState.equals('00')}">
+                                        <span class="_warn2">编辑中</span>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('02')}">
-                                        审核中(2)
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('01')}">
+                                        <span class="_warn3">审核中(1)</span>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('03')}">
-                                        审核中(3)
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('02')}">
+                                        <span class="_warn3">审核中(2)</span>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('99')}">
-                                        归档
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('03')}">
+                                        <span class="_warn3">审核中(3)</span>
+                                    </c:if>
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('99')}">
+                                        <span class="_warn1">归档</span>
                                     </c:if>
                             		</td>
                             		<td class="center">
-                            		<c:if test="${app.appState.equals('00') && sessionScope.__SESSION_USER_INFO.uuid == app.createUserId}">
+                            		<c:if test="${!app.refuseFlg && app.appState.equals('00') && sessionScope.__SESSION_USER_INFO.uuid == app.createUserId}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>编辑</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('01') && appFlg1}">
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('01') && appFlg1}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('02') && appFlg2}">
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('02') && appFlg2}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('03') && appFlg3}">
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('03') && appFlg3}">
                                         <a href="${sc_ctx}/pettyCashApp/edit/${app.uuid}" class="btn btn-warning"/>审核</a>
                                     </c:if>
-                                    <c:if test="${app.appState.equals('99') && fileFlg}">
+                                    <c:if test="${!app.refuseFlg && app.appState.equals('99') && fileFlg}">
                                         <a href="${sc_ctx}/pettyCashApp/fileEdit/${app.uuid}" class="btn btn-warning"/>归档</a>
                                     </c:if>
                                     <a href="${sc_ctx}/pettyCashApp/view/${app.uuid}" class="btn" target="_blank"/>查看</a>

@@ -365,7 +365,7 @@
                     
                     <div class="control-group">
                         <div class="controls">
-                        	<c:if test="${!empty pettyCashApp.uuid && (pettyCashApp.appState.equals('00') || pettyCashApp.appState.equals('01') || pettyCashApp.appState.equals('02') || pettyCashApp.appState.equals('03'))}">
+                        	<c:if test="${!empty pettyCashApp.uuid && (pettyCashApp.appState.equals('01') || pettyCashApp.appState.equals('02') || pettyCashApp.appState.equals('03'))}">
                         	<button	id="refuseBtn" class="btn	btn-large btn-warning" type="submit">驳回</button>
                         	</c:if>
 	                        <button	id="confirmBtn" class="btn	btn-large btn-warning" type="submit">提交</button>

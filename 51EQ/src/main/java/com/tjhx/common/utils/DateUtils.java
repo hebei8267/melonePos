@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class DateUtils {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
@@ -189,6 +191,9 @@ public class DateUtils {
 	 * @return
 	 */
 	public static String transDateFormat(String date, String fromStyle, String toStyle) {
+		if (StringUtils.isBlank(date)) {
+			return "";
+		}
 		simpleDateFormat.applyPattern(fromStyle);
 		try {
 			Date _d = simpleDateFormat.parse(date);

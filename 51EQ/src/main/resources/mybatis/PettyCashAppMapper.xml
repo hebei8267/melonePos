@@ -28,6 +28,7 @@
         <result column="payment_period" property="paymentPeriod" jdbcType="VARCHAR"/>
         <result column="reason" property="reason" jdbcType="VARCHAR"/>
         <result column="confirm_amount" property="confirmAmount" jdbcType="DECIMAL"/>
+        <result column="refuse_flg" property="refuseFlg" jdbcType="BIT"/>
         
         <result column="app_per_name" property="appPerName" jdbcType="VARCHAR"/>
         <result column="app_org_name" property="appOrgName" jdbcType="VARCHAR"/>
@@ -36,6 +37,14 @@
         <result column="approval_per3_name" property="approvalPer3Name" jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	<select id="getPettyCashAppCount" parameterType="string" resultType="int">
+		select
+			count(*)
+		from 
+			t_petty_cash_app
+		where 
+			app_date = #{appDate}
+	</select>
   	<!-- 取得t_petty_cash_app信息(根据参数) -->
 	<select id="getPettyCashAppList" parameterType="map" resultMap="Result_Map_PettyCashApp">
 		select
@@ -63,6 +72,7 @@
 	    	app.payment_mode ,
 	    	app.payment_period ,
 	    	app.reason ,
+	    	app.refuse_flg ,
 	    	app.confirm_amount
 		from t_petty_cash_app app LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid
 								  LEFT JOIN t_user u3 ON app.approval_per2 = u3.uuid
@@ -116,6 +126,7 @@
 	    	app.payment_mode ,
 	    	app.payment_period ,
 	    	app.reason ,
+	    	app.refuse_flg ,
 	    	app.confirm_amount
 		from t_petty_cash_app app LEFT JOIN t_user u1 ON app.app_per = u1.uuid
 								  LEFT JOIN t_user u2 ON app.approval_per1 = u2.uuid

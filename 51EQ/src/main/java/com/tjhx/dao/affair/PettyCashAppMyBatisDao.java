@@ -19,4 +19,12 @@ public interface PettyCashAppMyBatisDao {
 	 */
 	public PettyCashApp findPettyCashAppByUuid(Integer id);
 
+	/**
+	 * 取得当前申请单据数量
+	 * 
+	 * @param curFormatDate
+	 * @return
+	 */
+	public int getPettyCashAppCount(String appDate);
+
 }
