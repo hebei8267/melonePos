@@ -238,7 +238,7 @@
                       	</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">付款方式描述 :</label>
+                        <label class="control-label">付款方式说明 :</label>
                         <div class="controls">
                       		<form:textarea path="paymentExplain" rows="3"/>
                       	</div>
@@ -263,7 +263,7 @@
                       	</div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">付款方式描述 :</label>
+                        <label class="control-label">付款方式说明 :</label>
                         <div class="controls">
                       		<label class="left-control-label">${pettyCashApp.paymentExplain}</label>
                       	</div>
