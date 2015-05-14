@@ -3,20 +3,30 @@
  */
 package com.tjhx.service.affair;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.affair.PettyCashAppJpaDao;
 import com.tjhx.dao.affair.PettyCashAppMyBatisDao;
 import com.tjhx.entity.affair.PettyCashApp;
+import com.tjhx.globals.SysConfig;
 
 @Service
 @Transactional(readOnly = true)
@@ -202,4 +212,43 @@ public class PettyCashAppManager {
 	public void delPettyCashAppByUuid(int uuid) {
 		pettyCashAppJpaDao.delete(uuid);
 	}
+
+	/**
+	 * @param appNo
+	 * @param transDateFormat
+	 * @param transDateFormat2
+	 * @param appPerName
+	 * @param uuid
+	 * @param managerFlg
+	 * @return
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 */
+	public String createPettyCashAppFile(String appNo, String optDateShowStart, String optDateShowEnd, String appPerName,
+			Integer appPer, boolean managerFlg) throws ParsePropertyException, InvalidFormatException, IOException {
+		List<PettyCashApp> list = getPettyCashAppList(appNo, optDateShowStart, optDateShowEnd, appPerName, appPer, managerFlg);
+
+		List<PettyCashApp> _list = Lists.newArrayList();
+		for (PettyCashApp pettyCashApp : list) {
+			if ("99".equals(pettyCashApp.getAppState())) {
+				_list.add(pettyCashApp);
+			}
+		}
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pettyCashAppList", _list);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PETTY_CASH_APP, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_PETTY_CASH_APP = "/excel/Petty_Cash_App_Template.xls";
 }

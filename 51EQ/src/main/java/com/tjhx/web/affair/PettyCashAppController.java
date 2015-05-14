@@ -3,6 +3,11 @@
  */
 package com.tjhx.web.affair;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,8 +15,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jxls.exception.ParsePropertyException;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -20,11 +29,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.affair.PettyCashApp;
 import com.tjhx.entity.info.BudgetSubject;
 import com.tjhx.globals.Constants;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.affair.PettyCashAppManager;
 import com.tjhx.service.info.BudgetSubjectManager;
 import com.tjhx.web.BaseController;
@@ -282,4 +293,58 @@ public class PettyCashAppController extends BaseController {
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/pettyCashApp/list";
 	}
 
+	@RequestMapping(value = "export")
+	public void pettyCashAppExport_Action(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
+
+		boolean managerFlg = false;
+		int roleUuid = getUserInfo(session).getRole().getUuid();
+		// 1-系统管理员 2-总部人员-会计 5-总部人员-Boss 10-总部高级会计人员
+		if (1 == roleUuid || 2 == roleUuid || 5 == roleUuid || 10 == roleUuid) {
+			managerFlg = true;
+		}
+
+		String appNo = ServletRequestUtils.getStringParameter(request, "appNo");
+		String optDateShowStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShowEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String appPerName = ServletRequestUtils.getStringParameter(request, "appPerName");
+
+		// =======================================================
+		String downLoadFileName = pettyCashAppManager.createPettyCashAppFile(appNo,
+				DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd"),
+				DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd"), appPerName, getUserInfo(session).getUuid(),
+				managerFlg);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+	}
 }

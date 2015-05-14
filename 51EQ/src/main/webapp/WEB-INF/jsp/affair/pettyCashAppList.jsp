@@ -48,6 +48,16 @@
             $("#searchForm").submit();
         });
         
+        $("#exportBtn").click(function() {
+            $("input[type='text'],textarea").each(function(i) {
+                this.value = $.trim(this.value);
+            });
+
+			$("#listForm").attr('target', '_self');
+            $("#listForm").attr("action", "${sc_ctx}/pettyCashApp/export");
+            $("#listForm").submit();
+        });
+        
         //-----------------------------------
         // 全选/全部选
         //-----------------------------------
@@ -124,6 +134,7 @@
                         <label class="control-label">申请人 :</label>
                         <input id="appPerName" name="appPerName" type="text" class="input-medium" value="${appPerName }"/>
                         <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
+                        <button	id="exportBtn" class="btn btn-warning" type="button">导出</button>
                     </div>
               	</form>
               	
