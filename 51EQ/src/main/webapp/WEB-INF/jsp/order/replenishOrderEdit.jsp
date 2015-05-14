@@ -139,7 +139,10 @@
                                 	${detail.supplierName}
                                 </td>
                                 <td	class="center">
-                                    ***
+                                    ***<br>
+                                    <c:if test="${order.errorNum > 0 && detail.replenishNum != detail.receiptNum}" >
+                                    收货数量有误
+                                    </c:if>
                                 </td>
                                 <td	class="center">
                                 
@@ -147,7 +150,7 @@
                         				<button type="button" class="btn spinner-up blue">
                         					<i class="fa fa-plus"></i>
                         				</button> 
-                            			<input type="text" name="receiptNum" class="spinner-input input-mini" value="${detail.receiptNum}" readonly> 
+                            			<input type="text" name="receiptNum" class="spinner-input input-mini" value="${detail.receiptNum}"> 
                         				<button type="button" class="btn spinner-down red">
                         					<i class="fa fa-minus"></i>
                         				</button>

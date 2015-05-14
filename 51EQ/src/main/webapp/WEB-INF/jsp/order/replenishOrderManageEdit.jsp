@@ -144,7 +144,7 @@
                         				<button type="button" class="btn spinner-up blue">
                         					<i class="fa fa-plus"></i>
                         				</button> 
-                            			<input type="text" name="replenishNum" class="spinner-input input-mini" value="${detail.replenishNum}" readonly> 
+                            			<input type="text" name="replenishNum" class="spinner-input input-mini" value="${detail.replenishNum}"> 
                         				<button type="button" class="btn spinner-down red">
                         					<i class="fa fa-minus"></i>
                         				</button>
