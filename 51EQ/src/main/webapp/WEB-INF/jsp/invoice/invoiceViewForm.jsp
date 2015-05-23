@@ -71,6 +71,29 @@
 						<label class="control-label">送达期限 :</label>
 						<label class="left-control-label">${invoice.serviceDateShow}</label>
 					</div>
+					<c:if test="${invoice.needPost == 1}">
+						<div class="control-group">
+							<label class="control-label">客户姓名 :</label>
+							<label class="left-control-label"><span class="warn_text">${invoice.customerName}</span></label>
+						</div>
+						<div class="control-group">
+							<label class="control-label">客户电话 :</label>
+							<label class="left-control-label"><span class="warn_text">${invoice.customerTel}</span></label>
+						</div>
+						<div class="control-group">
+							<label class="control-label">客户地址 :</label>
+							<label class="left-control-label"><span class="warn_text">${invoice.customerAdd}</span></label>
+						</div>
+					</c:if>
+					<div class="control-group">
+						<label class="control-label">发票号 :</label>
+						<label class="left-control-label"><span class="warn_text">${invoice.invoiceNum}</span></label>
+					</div>
+					<div class="control-group">
+						<label class="control-label">发票来源 :</label>
+						<label class="left-control-label"><span class="warn_text">${invoice.invoiceSrc}</span></label>
+					</div>
+					<c:if test="${invoice.needPost == 1}">
 					<div class="control-group">
 						<label class="control-label">快递公司 :</label>
 						<label class="left-control-label">
@@ -94,28 +117,7 @@
                         </c:if>
 						</label>
 					</div>
-					<c:if test="${invoice.needPost == 1}">
-						<div class="control-group">
-							<label class="control-label">客户姓名 :</label>
-							<label class="left-control-label"><span class="warn_text">${invoice.customerName}</span></label>
-						</div>
-						<div class="control-group">
-							<label class="control-label">客户电话 :</label>
-							<label class="left-control-label"><span class="warn_text">${invoice.customerTel}</span></label>
-						</div>
-						<div class="control-group">
-							<label class="control-label">客户地址 :</label>
-							<label class="left-control-label"><span class="warn_text">${invoice.customerAdd}</span></label>
-						</div>
 					</c:if>
-					<div class="control-group">
-						<label class="control-label">发票号 :</label>
-						<label class="left-control-label"><span class="warn_text">${invoice.invoiceNum}</span></label>
-					</div>
-					<div class="control-group">
-						<label class="control-label">发票来源 :</label>
-						<label class="left-control-label"><span class="warn_text">${invoice.invoiceSrc}</span></label>
-					</div>
 					<div class="control-group">
 						<label class="control-label">备注 :</label>
 						<label class="left-control-label"><span class="warn_text">${invoice.descTxt}</span></label>

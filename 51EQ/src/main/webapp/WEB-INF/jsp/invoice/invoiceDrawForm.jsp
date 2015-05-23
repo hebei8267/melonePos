@@ -119,6 +119,21 @@
                             <label class="control-label">客户地址 :</label>
                             <label class="left-control-label"><span class="warn_text">${invoice.customerAdd}</span></label>
                         </div>
+                        </c:if>
+                        
+                        <div class="control-group">
+                            <label class="control-label">发票号	:</label>
+                            <div class="controls">
+                                <form:input	path="invoiceNum" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">发票来源	:</label>
+                            <div class="controls">
+                                <form:input	path="invoiceSrc" />
+                            </div>
+                        </div>
+                        <c:if test="${invoice.needPost == 1}">
                         <div class="control-group">
 							<label class="control-label">快递公司 :</label>
 							<div class="controls">
@@ -134,20 +149,7 @@
 		                        </select>
                             </div>
 						</div>
-                        </c:if>
-                        
-                        <div class="control-group">
-                            <label class="control-label">发票号	:</label>
-                            <div class="controls">
-                                <form:input	path="invoiceNum" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">发票来源	:</label>
-                            <div class="controls">
-                                <form:input	path="invoiceSrc" />
-                            </div>
-                        </div>
+						</c:if>
                         <div class="control-group">
                             <label class="control-label">备注	:</label>
                             <div class="controls">
