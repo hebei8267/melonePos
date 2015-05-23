@@ -55,8 +55,8 @@ public class InvoiceApplyManager {
 
 	public List<Invoice> getInvoiceApplyList(String orgId, String appDateY, String appDateM) {
 
-		List<Invoice> _list = (List<Invoice>) invoiceJpaDao.findByOrgId_AppDateY_AppDateM(orgId, appDateY, appDateM,
-				new Sort(new Sort.Order(Sort.Direction.DESC, "appDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		List<Invoice> _list = (List<Invoice>) invoiceJpaDao.findByOrgId_AppDateY_AppDateM(orgId, appDateY, appDateM, new Sort(
+				new Sort.Order(Sort.Direction.DESC, "appDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
 
 		return _list;
 	}
@@ -98,6 +98,10 @@ public class InvoiceApplyManager {
 		_invoice.setAmt(invoice.getAmt());
 		// 送达日期
 		_invoice.setServiceDateShow(invoice.getServiceDateShow());
+
+		// 税务编号
+		_invoice.setTaxNo(invoice.getTaxNo());
+
 		// 是否邮寄客户 1-需要 0-不需要
 		_invoice.setNeedPost(invoice.getNeedPost());
 		if ("0".equals(invoice.getNeedPost())) {

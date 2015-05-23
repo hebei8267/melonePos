@@ -26,6 +26,8 @@
         <result column="service_date_show" property="serviceDateShow" jdbcType="VARCHAR"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="tax_no" property="taxNo" jdbcType="VARCHAR"/>
+        <result column="express_company" property="expressCompany" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -52,6 +54,8 @@
     	inv.org_id ,
     	inv.service_date_show ,
     	inv.title ,
+    	inv.tax_no ,
+    	inv.express_company ,
     	org.org_name AS org_name
 	]]>
   	</sql>

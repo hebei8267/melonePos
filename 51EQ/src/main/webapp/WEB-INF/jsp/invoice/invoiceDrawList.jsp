@@ -97,8 +97,14 @@
                                     <th>
                                         发票金额
                                     </th>
+                                    <th class="center">
+                                        税号
+                                    </th>
                                     <th width="80" class="center">
                                         邮寄客户
+                                    </th>
+                                    <th class="center">
+                                        快递公司
                                     </th>
                                     <th>
                                         发票号
@@ -137,12 +143,35 @@
                                         <td>
                                             ${invoiceDraw.amt}
                                         </td>
+                                        <td>
+                                            ${invoiceDraw.taxNo}
+                                        </td>
                                         <td class="center">
                                         	<c:if test="${invoiceDraw.needPost == 0}">
                                                 否
                                             </c:if>
                                             <c:if test="${invoiceDraw.needPost == 1}">
                                                 是
+                                            </c:if>
+                                        </td>
+                                        <td class="center">
+                                        	<c:if test="${invoiceDraw.expressCompany == '01'}">
+                                                申通
+                                            </c:if>
+                                            <c:if test="${invoiceDraw.expressCompany == '02'}">
+                                                中通
+                                            </c:if>
+                                            <c:if test="${invoiceDraw.expressCompany == '03'}">
+                                                顺丰
+                                            </c:if>
+                                            <c:if test="${invoiceDraw.expressCompany == '04'}">
+                                                圆通
+                                            </c:if>
+                                            <c:if test="${invoiceDraw.expressCompany == '05'}">
+                                                韵达
+                                            </c:if>
+                                            <c:if test="${invoiceDraw.expressCompany == '06'}">
+                                                汇通
                                             </c:if>
                                         </td>
                                         <td>

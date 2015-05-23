@@ -64,8 +64,35 @@
 						<label class="left-control-label">${invoice.amt}</label>
 					</div>
 					<div class="control-group">
+						<label class="control-label">税号 :</label>
+						<label class="left-control-label">${invoice.taxNo}</label>
+					</div>
+					<div class="control-group">
 						<label class="control-label">送达期限 :</label>
 						<label class="left-control-label">${invoice.serviceDateShow}</label>
+					</div>
+					<div class="control-group">
+						<label class="control-label">快递公司 :</label>
+						<label class="left-control-label">
+						<c:if test="${invoice.expressCompany == '01'}">
+                            申通
+                        </c:if>
+                        <c:if test="${invoice.expressCompany == '02'}">
+                            中通
+                        </c:if>
+                        <c:if test="${invoice.expressCompany == '03'}">
+                            顺丰
+                        </c:if>
+                        <c:if test="${invoice.expressCompany == '04'}">
+                            圆通
+                        </c:if>
+                        <c:if test="${invoice.expressCompany == '05'}">
+                            韵达
+                        </c:if>
+                        <c:if test="${invoice.expressCompany == '06'}">
+                            汇通
+                        </c:if>
+						</label>
 					</div>
 					<c:if test="${invoice.needPost == 1}">
 						<div class="control-group">

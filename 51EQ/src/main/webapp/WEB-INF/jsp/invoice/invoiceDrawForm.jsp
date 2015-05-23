@@ -99,6 +99,10 @@
                             <label class="left-control-label">${invoice.amt}</label>
                         </div>
                         <div class="control-group">
+							<label class="control-label">税号 :</label>
+							<label class="left-control-label">${invoice.taxNo}</label>
+						</div>
+                        <div class="control-group">
                             <label class="control-label">送达期限 :</label>
                             <label class="left-control-label">${invoice.serviceDateShow}</label>
                         </div>
@@ -115,6 +119,21 @@
                             <label class="control-label">客户地址 :</label>
                             <label class="left-control-label"><span class="warn_text">${invoice.customerAdd}</span></label>
                         </div>
+                        <div class="control-group">
+							<label class="control-label">快递公司 :</label>
+							<div class="controls">
+                                <select name="expressCompany" class="input-medium">
+		                            <c:forEach items="${companyList}" var="company">
+		                                <c:if test="${company.key == invoice.expressCompany}">
+		                                    <option value="${company.key }" selected>${company.value }</option>
+		                                </c:if>
+		                                <c:if test="${company.key != invoice.expressCompany}">
+		                                    <option value="${company.key }">${company.value }</option>
+		                                </c:if>
+		                            </c:forEach>
+		                        </select>
+                            </div>
+						</div>
                         </c:if>
                         
                         <div class="control-group">

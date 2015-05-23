@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -108,9 +110,30 @@ public class InvoiceDrawController extends BaseController {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/invoiceDraw";
 		}
 
+		initCompanyList(model);
 		model.addAttribute("invoice", invoice);
 
 		return "invoice/invoiceDrawForm";
+	}
+
+	/**
+	 * 初始化快递公司列表信息
+	 * 
+	 * @param model
+	 */
+	public static void initCompanyList(Model model) {
+
+		Map<String, String> companyList = new LinkedHashMap<String, String>();
+
+		companyList.put("", "");
+		companyList.put("01", "申通");
+		companyList.put("02", "中通");
+		companyList.put("03", "顺丰");
+		companyList.put("04", "圆通");
+		companyList.put("05", "韵达");
+		companyList.put("06", "汇通");
+
+		model.addAttribute("companyList", companyList);
 	}
 
 	@RequestMapping(value = "draw")

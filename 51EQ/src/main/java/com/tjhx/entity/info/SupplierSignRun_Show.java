@@ -53,6 +53,11 @@ public class SupplierSignRun_Show {
 		}
 	}
 
+	public SupplierSignRun_Show(String supplierBwId, String supplierName) {
+		this.supplierBwId = supplierBwId;
+		this.supplierName = supplierName;
+	}
+
 	/**
 	 * 取得供应商编号-百威
 	 * 

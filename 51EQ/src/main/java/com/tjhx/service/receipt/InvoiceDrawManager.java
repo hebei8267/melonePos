@@ -66,6 +66,9 @@ public class InvoiceDrawManager {
 		_invoice.setInvoiceNum(invoice.getInvoiceNum());
 		// 发票来源
 		_invoice.setInvoiceSrc(invoice.getInvoiceSrc());
+		// 快递公司
+		_invoice.setExpressCompany(invoice.getExpressCompany());
+
 		// 备注
 		_invoice.setDescTxt(invoice.getDescTxt());
 		// 设置发票状态--已处理
@@ -94,6 +97,20 @@ public class InvoiceDrawManager {
 				_invoice.setServiceDateShow(DateUtils.transDateFormat(_invoice.getServiceDateShow(), "yyyy-MM-dd", "yyyy/MM/dd"));
 				_invoice.setAppDate(DateUtils.transDateFormat(_invoice.getAppDate(), "yyyyMMdd", "yyyy/MM/dd"));
 				fileList.add(_invoice);
+			}
+
+			if ("01".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("申通");
+			} else if ("02".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("中通");
+			} else if ("03".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("顺丰");
+			} else if ("04".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("圆通");
+			} else if ("05".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("韵达");
+			} else if ("06".equals(_invoice.getExpressCompany())) {
+				_invoice.setExpressCompany("汇通");
 			}
 		}
 

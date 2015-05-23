@@ -103,25 +103,31 @@
                                     <th	width="25" class="center">
                                         <input id="checkAll" type="checkbox" />
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         申请时间
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         申请人
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         发票种类
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         发票台头
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         发票金额
+                                    </th>
+                                    <th class="center">
+                                        税号
                                     </th>
                                     <th width="80" class="center">
                                         邮寄客户
                                     </th>
-                                    <th>
+                                    <th class="center">
+                                        快递公司
+                                    </th>
+                                    <th class="center">
                                         发票号
                                     </th>
                                     <th	width="55">
@@ -161,12 +167,35 @@
                                         <td>
                                             ${invoiceApply.amt}
                                         </td>
+                                        <td>
+                                            ${invoiceApply.taxNo}
+                                        </td>
                                         <td class="center">
                                         	<c:if test="${invoiceApply.needPost == 0}">
                                                 否
                                             </c:if>
                                             <c:if test="${invoiceApply.needPost == 1}">
                                                 是
+                                            </c:if>
+                                        </td>
+                                        <td class="center">
+                                        	<c:if test="${invoiceApply.expressCompany == '01'}">
+                                                申通
+                                            </c:if>
+                                            <c:if test="${invoiceApply.expressCompany == '02'}">
+                                                中通
+                                            </c:if>
+                                            <c:if test="${invoiceApply.expressCompany == '03'}">
+                                                顺丰
+                                            </c:if>
+                                            <c:if test="${invoiceApply.expressCompany == '04'}">
+                                                圆通
+                                            </c:if>
+                                            <c:if test="${invoiceApply.expressCompany == '05'}">
+                                                韵达
+                                            </c:if>
+                                            <c:if test="${invoiceApply.expressCompany == '06'}">
+                                                汇通
                                             </c:if>
                                         </td>
                                         <td>

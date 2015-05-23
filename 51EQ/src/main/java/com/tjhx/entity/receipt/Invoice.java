@@ -59,6 +59,10 @@ public class Invoice extends IdEntity {
 	private String descTxt;
 	/** 发票状态 1-申请 2-已处理 */
 	private String invoiceStatus;
+	/** 税务编号 */
+	private String taxNo;
+	/** 快递公司 */
+	private String expressCompany;
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -461,5 +465,43 @@ public class Invoice extends IdEntity {
 	 */
 	public void setProcessTime(String processTime) {
 		this.processTime = processTime;
+	}
+
+	/**
+	 * 获取税务编号
+	 * 
+	 * @return taxNo
+	 */
+	@Column(length = 32)
+	public String getTaxNo() {
+		return taxNo;
+	}
+
+	/**
+	 * 设置税务编号
+	 * 
+	 * @param taxNo 税务编号
+	 */
+	public void setTaxNo(String taxNo) {
+		this.taxNo = taxNo;
+	}
+
+	/**
+	 * 获取快递公司
+	 * 
+	 * @return expressCompany
+	 */
+	@Column(length = 2)
+	public String getExpressCompany() {
+		return expressCompany;
+	}
+
+	/**
+	 * 设置快递公司
+	 * 
+	 * @param expressCompany 快递公司
+	 */
+	public void setExpressCompany(String expressCompany) {
+		this.expressCompany = expressCompany;
 	}
 }

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
 import com.tjhx.dao.info.SupplierSignMyBatisDao;
 import com.tjhx.dao.info.SupplierSignRunJpaDao;
 import com.tjhx.entity.info.Supplier;
@@ -61,6 +62,29 @@ public class SupplierSignRunManager {
 		}
 
 		List<SupplierSignRun_Show> _supSignRunList = initSupplierSignRunList(_supList, optYear);
+
+		return _supSignRunList;
+	}
+
+	/**
+	 * 取得特殊标记-货品供应商信息列表
+	 * 
+	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	public List<SupplierSignRun_Show> getSupplierSignRunList_Export_File(String optYear, String supplierBwId)
+			throws IllegalAccessException, InvocationTargetException {
+		List<Supplier> _supList = null;
+
+		if (StringUtils.isNotBlank(supplierBwId)) {
+			_supList = new ArrayList<Supplier>();
+			_supList.add(supplierManager.getSupplierByBwId(supplierBwId));
+		} else {
+			_supList = supplierSignMyBatisDao.getSupplierListByYear(optYear);
+		}
+
+		List<SupplierSignRun_Show> _supSignRunList = initSupplierSignRunList_Export_File(_supList, optYear);
 
 		return _supSignRunList;
 	}
@@ -121,6 +145,64 @@ public class SupplierSignRunManager {
 		}
 
 		return _list;
+	}
+
+	/**
+	 * 初始化特殊标记-货品供应商 流水信息（文件导出）
+	 * 
+	 * @param _supList
+	 * @return
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	private List<SupplierSignRun_Show> initSupplierSignRunList_Export_File(List<Supplier> _supList, String optYear)
+			throws IllegalAccessException, InvocationTargetException {
+		List<SupplierSignRun_Show> _list = new ArrayList<SupplierSignRun_Show>();
+
+		// 初始化所有显示对象（特殊标记-货品供应商 流水信息）
+		for (Supplier supplier : _supList) {
+			SupplierSignRun_Show run = new SupplierSignRun_Show(supplier.getSupplierBwId(), supplier.getName());
+			_list.add(run);
+		}
+
+		// 取得数据库中保存对象（特殊标记-货品供应商 流水信息）
+		List<SupplierSignRun> _dblist = supplierSignRunJpaDao.findAllByOptYear(optYear);
+
+		for (SupplierSignRun_Show _showObj : _list) {
+			// 1. 赊购挂账
+			_showObj.setLoanList(addProperties(_dblist, _showObj.getSupplierBwId(), "1"));
+			// 2. 对账通知
+			_showObj.setNoticeList(addProperties(_dblist, _showObj.getSupplierBwId(), "2"));
+			// 3. 对账完成
+			_showObj.setCheckSuccessList(addProperties(_dblist, _showObj.getSupplierBwId(), "3"));
+			// 4. 结算付款
+			_showObj.setPayList(addProperties(_dblist, _showObj.getSupplierBwId(), "4"));
+			// 5. 退货申请
+			_showObj.setAppList(addProperties(_dblist, _showObj.getSupplierBwId(), "5"));
+			// 6. 退货确认
+			_showObj.setConfirmList(addProperties(_dblist, _showObj.getSupplierBwId(), "6"));
+
+			// 计算最终结算付款信息
+			_showObj.calLastSupplierSignRun();
+		}
+
+		return _list;
+	}
+
+	/**
+	 * @param _dblist
+	 * @param runType 流水类型
+	 * @return
+	 */
+	private List<SupplierSignRun> addProperties(List<SupplierSignRun> _dblist, String supplierBwId, String runType) {
+		List<SupplierSignRun> list = Lists.newArrayList();
+
+		for (SupplierSignRun supplierSignRun : _dblist) {
+			if (runType.equals(supplierSignRun.getRunType()) && supplierBwId.equals(supplierSignRun.getSupplierBwId())) {
+				list.add(supplierSignRun);
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -203,13 +285,13 @@ public class SupplierSignRunManager {
 	 * @return
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
-	 * @throws IOException 
-	 * @throws InvalidFormatException 
-	 * @throws ParsePropertyException 
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
 	 */
 	public String createSupplierSignRunFile(String optDateY, String supplierBwId) throws IllegalAccessException,
 			InvocationTargetException, ParsePropertyException, InvalidFormatException, IOException {
-		List<SupplierSignRun_Show> _supSignRunList = getSupplierSignRunList(optDateY, supplierBwId);
+		List<SupplierSignRun_Show> _supSignRunList = getSupplierSignRunList_Export_File(optDateY, supplierBwId);
 
 		// ---------------------------文件生成---------------------------
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -41,6 +41,9 @@
                             required : true,
                             money : true
                         },
+                        taxNo : {
+                            maxlength : 18
+                        },
                         customerName : {
                             myRequired : "#needPost",
                             maxlength : 64
@@ -86,6 +89,9 @@
                         </h3>
                     </legend>
                 </div>
+                <div class="span12">
+                <center><h3 style="color:red">发票金额超过200元时，建议邮寄给客户！</h3></center>
+                </div>
                 <div class="span12"	style="margin-top: 10px;">
                     <form:form method="POST" class="form-horizontal" id="inputForm"	modelAttribute="invoice">
                         <form:hidden path="uuid"/>
@@ -123,6 +129,12 @@
                                 <form:input	path="amt" />
                             </div>
                         </div>
+                        <div class="control-group">
+							<label class="control-label">税号 :</label>
+							<div class="controls">
+                                <form:input	path="taxNo" />
+                            </div>
+						</div>
                         <div class="control-group">
                             <label class="control-label">送达期限	:</label>
                             <div class="controls">

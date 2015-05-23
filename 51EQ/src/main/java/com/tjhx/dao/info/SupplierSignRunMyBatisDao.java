@@ -13,5 +13,4 @@ public interface SupplierSignRunMyBatisDao {
 	 * @return
 	 */
 	public List<SupplierSignRun> getSupplierSignRunList(SupplierSignRun supplierSignRun);
-
 }
