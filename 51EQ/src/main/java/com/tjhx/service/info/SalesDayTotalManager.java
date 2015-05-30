@@ -262,7 +262,8 @@ public class SalesDayTotalManager {
 		// ========================================
 		// 取得上月销售
 		// ========================================
-		if (null == _res) {
+		// TODO 20150530临时屏蔽!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if (("00020D".equals(orgId) && "2014".equals(_year) && "05".equals(month)) || null == _res) {
 			String _yearmonth = DateUtils.getNextMonthFormatDate(year + month, -1, "yyyyMM");
 			_res = _orgYMPosAmt.get(orgId + _yearmonth);
 
