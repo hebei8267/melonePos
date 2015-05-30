@@ -7,19 +7,24 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.reader.ReaderBuilder;
 import net.sf.jxls.reader.XLSReadStatus;
 import net.sf.jxls.reader.XLSReader;
+import net.sf.jxls.transformer.XLSTransformer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
@@ -32,6 +37,7 @@ import com.tjhx.dao.order.ReplenishOrderMyBatisDao;
 import com.tjhx.entity.order.ReplenishOrder;
 import com.tjhx.entity.order.ReplenishOrderDetail;
 import com.tjhx.entity.order.ReplenishOrderVo;
+import com.tjhx.globals.SysConfig;
 
 /**
  * @author he_bei
@@ -278,4 +284,39 @@ public class ReplenishOrderManager {
 
 		return successFlg;
 	}
+
+	/**
+	 * 生成补货单下载文件
+	 * 
+	 * @param orderNoArray
+	 * @return
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 */
+	public String createExportFile(String[] orderNoArray) throws ParsePropertyException, InvalidFormatException, IOException {
+
+		List<ReplenishOrder> _list = Lists.newArrayList();
+		for (String orderNo : orderNoArray) {
+			if (StringUtils.isNotBlank(orderNo)) {
+				_list.add(getReplenishOrderByOrderNo(orderNo));
+			}
+		}
+
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("replenishOrderList", _list);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_REPLENISH_ORDER, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_REPLENISH_ORDER = "/excel/Replenish_Order_Template.xls";
 }

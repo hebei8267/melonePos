@@ -79,6 +79,26 @@
 					$("#listForm").submit();
 
 				});
+				
+				// 数据导出
+				$("#exportBtn").click(function() {
+                    var $subCheckBox = $("input[name='uuid']");
+					var uuids = "";
+					$.each($subCheckBox, function(index, _checkBox) {
+						if (_checkBox.checked) {
+							uuids += _checkBox.value + ",";
+						}
+					});
+					if (uuids.length > 0) {
+						uuids = uuids.substring(0, uuids.length - 1);
+					}
+	
+					$("#uuids").val(uuids);
+
+					$("#listForm").attr('target', '_self');
+                    $("#listForm").attr("action", "${sc_ctx}/replenishOrder/export");
+                    $("#listForm").submit();
+                });
 
 				// 查询
 				$("#searchBtn").click(function() {
@@ -170,6 +190,7 @@
 					<div class="span12" style="margin-top: 15px;">
 						<input id="sendBtn" name="sendBtn" type="button" class="btn btn-primary" value="发货"/>
 						<input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
+						<input id="exportBtn" name="exportBtn" type="button" class="btn btn-warning" value="数据导出"/>
 					</div>
 
 					<div class="span12" style="margin-top: 10px;">
