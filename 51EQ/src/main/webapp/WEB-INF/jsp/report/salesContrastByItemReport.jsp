@@ -226,8 +226,8 @@
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量一 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量二 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
-								<th class="center"> 库存金额 </th>
-								<th class="center"> 库存金额 </th>
+								<th class="center"> 库存金额一 </th>
+								<th class="center"> 库存金额二 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
 							</tr>
 						</thead>
