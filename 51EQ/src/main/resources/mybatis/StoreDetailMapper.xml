@@ -103,7 +103,8 @@
 		    sd.org_id,
 		    sd.opt_date,
 		    g.item_no,
-		    SUM(sd.stock_qty) stock_qty
+		    SUM(sd.stock_qty) stock_qty,
+		    SUM(sd.stock_amt) AS stock_amt
 		FROM
 		    t_store_detail sd,
 		    t_goods g
@@ -128,7 +129,8 @@
 		    sd.org_id,
 		    sd.opt_date,
 		    g.supplier_bw_id,
-		    SUM(sd.stock_qty) stock_qty
+		    SUM(sd.stock_qty) stock_qty,
+		    SUM(sd.stock_amt) AS stock_amt
 		FROM
 		    t_store_detail sd,
 		    t_goods g

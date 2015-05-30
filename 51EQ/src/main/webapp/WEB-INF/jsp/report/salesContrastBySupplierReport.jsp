@@ -289,6 +289,9 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
+								<td class="center font2"> ${salesContrastVo.stockTotalAmt1} </td>
+								<td class="center font2"> ${salesContrastVo.stockTotalAmt2} </td>
+								
 								<fmt:parseNumber var="salesContrast" type="number" value="${salesContrastVo.salesContrast}" />
 								<c:if test="${salesContrast > 0}" >
 								<td class="center" style="color : #FF0000">↑ ${salesContrastVo.salesContrast} %</td>
@@ -303,7 +306,7 @@
 							
 							</c:forEach>
 							<tr>
-							<td colspan="15"></td>
+							<td colspan="17"></td>
 							</tr>
 							</c:forEach>
 						</tbody>

@@ -223,9 +223,11 @@
 								<th class="center"> 均价一 </th>
 								<th class="center"> 均价二 </th>
 								<th class="center">趋势</th>
-								<th class="center"> 库存量一 </th>
-								<th class="center"> 库存量二 </th>
-								<th class="center">趋势</th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量一 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量二 </th>
+								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
+								<th class="center"> 库存金额 </th>
+								<th class="center"> 库存金额 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
 							</tr>
 						</thead>
@@ -280,8 +282,8 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
-								<td class="center  font2"> ${salesContrastVo.stockTotalQty1} </td>
-								<td class="center  font2"> ${salesContrastVo.stockTotalQty2} </td>
+								<td class="center font2"> ${salesContrastVo.stockTotalQty1} </td>
+								<td class="center font2"> ${salesContrastVo.stockTotalQty2} </td>
 								
 								<fmt:parseNumber var="stockTotalQty1" type="number" value="${salesContrastVo.stockTotalQty1}" />
 								<fmt:parseNumber var="stockTotalQty2" type="number" value="${salesContrastVo.stockTotalQty2}" />
@@ -294,6 +296,9 @@
 								<c:if test="${stockTotalQty2 == stockTotalQty1}" >
 								<td class="center font2">－</td>
 								</c:if>
+								
+								<td class="center font2"> ${salesContrastVo.stockTotalAmt1} </td>
+								<td class="center font2"> ${salesContrastVo.stockTotalAmt2} </td>
 								
 								<fmt:parseNumber var="salesContrast" type="number" value="${salesContrastVo.salesContrast}" />
 								<c:if test="${salesContrast > 0}" >
@@ -308,7 +313,7 @@
 							</tr>
 							</c:forEach>
 							<tr>
-							<td colspan="15"></td>
+							<td colspan="17"></td>
 							</tr>
 							</c:forEach>
 						</tbody>

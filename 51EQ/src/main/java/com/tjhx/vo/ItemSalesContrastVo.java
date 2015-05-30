@@ -41,6 +41,11 @@ public class ItemSalesContrastVo {
 	/** 库存数量2 */
 	private BigDecimal stockTotalQty2 = new BigDecimal("0");
 
+	/** 库存金额1 */
+	private BigDecimal stockTotalAmt1 = new BigDecimal("0");
+	/** 库存金额2 */
+	private BigDecimal stockTotalAmt2 = new BigDecimal("0");
+
 	/**
 	 * 获取机构名称
 	 * 
@@ -273,6 +278,42 @@ public class ItemSalesContrastVo {
 	 */
 	public void setStockTotalQty2(BigDecimal stockTotalQty2) {
 		this.stockTotalQty2 = stockTotalQty2;
+	}
+
+	/**
+	 * 获取库存金额1
+	 * 
+	 * @return stockTotalAmt1
+	 */
+	public BigDecimal getStockTotalAmt1() {
+		return stockTotalAmt1;
+	}
+
+	/**
+	 * 设置库存金额1
+	 * 
+	 * @param stockTotalAmt1 库存金额1
+	 */
+	public void setStockTotalAmt1(BigDecimal stockTotalAmt1) {
+		this.stockTotalAmt1 = stockTotalAmt1;
+	}
+
+	/**
+	 * 获取库存金额2
+	 * 
+	 * @return stockTotalAmt2
+	 */
+	public BigDecimal getStockTotalAmt2() {
+		return stockTotalAmt2;
+	}
+
+	/**
+	 * 设置库存金额2
+	 * 
+	 * @param stockTotalAmt2 库存金额2
+	 */
+	public void setStockTotalAmt2(BigDecimal stockTotalAmt2) {
+		this.stockTotalAmt2 = stockTotalAmt2;
 	}
 
 	@Override

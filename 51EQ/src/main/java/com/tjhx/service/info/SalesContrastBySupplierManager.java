@@ -195,6 +195,8 @@ public class SalesContrastBySupplierManager {
 				StoreDetail sd = sList.get(_index);
 				// 库存数量2
 				vo.setStockTotalQty2(sd.getStockQty());
+				// 库存金额2
+				vo.setStockTotalAmt2(sd.getStockAmt());
 			}
 		}
 
@@ -220,7 +222,8 @@ public class SalesContrastBySupplierManager {
 				StoreDetail sd = sList.get(_index);
 				// 库存数量1
 				vo.setStockTotalQty1(sd.getStockQty());
-
+				// 库存金额1
+				vo.setStockTotalAmt1(sd.getStockAmt());
 			}
 		}
 
