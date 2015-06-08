@@ -168,7 +168,12 @@
                         </c:if>
                 	</table>
                 </div>
-                
+                <div class="control-group">
+	                <label class="control-label">备注 :</label>
+	                <div class="controls">
+	                	<textarea id="description" name="description" class="input-xlarge" rows="4">${order.description}</textarea>
+                    </div>
+                </div>
                 <div class="span12"	style="margin-top: 10px;text-align:right">
                 <button	id="saveBtn" class="btn	btn-large btn-primary" type="button">保存</button>
                 &nbsp;<a href="${sc_ctx}/replenishOrder/manageList" class="btn btn-large">返回</a>

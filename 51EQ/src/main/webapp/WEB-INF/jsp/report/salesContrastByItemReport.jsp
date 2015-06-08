@@ -104,6 +104,16 @@
 				$("#itemType").select2({
 					tags : itemTypeListJson
 				});
+				
+				$("#exportBtn").click(function() {
+                    $("input[type='text'],textarea").each(function(i) {
+                        this.value = $.trim(this.value);
+                    });
+
+					$("#listForm").attr('target', '_self');
+                    $("#listForm").attr("action", "${sc_ctx}/salesContrastByItem/export");
+                    $("#listForm").submit();
+                });
 			});
 			var itemTypeListJson = ${itemTypeList};
 			function initDateMode() {
@@ -200,6 +210,7 @@
 						<button id="searchBtn" class="btn btn-primary" type="button" style="margin-top: -6px">
 							查询
 						</button>
+						<button	id="exportBtn" class="btn btn-warning" type="button" style="margin-top: -6px">数据导出</button>
 					</div>
 				</div>
 			</form>

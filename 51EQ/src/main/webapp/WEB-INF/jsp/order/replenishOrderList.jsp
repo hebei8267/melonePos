@@ -112,6 +112,7 @@
 									<br>
 									开始日期 </th>
 									<th class="center"> 错填次数 </th>
+									<th class="center"> 有无<br>描述 </th>
 									<th	width="155"> &nbsp; </th>
 								</tr>
 							</thead>
@@ -136,6 +137,14 @@
 										<td	class="center"> ${replenishOrder.receiveDate} </td>
 										<td	class="center"><span class="warn_text"> ${replenishOrder.errorNum} </span></td>
 										<td	class="center">
+										<c:if test="${!empty replenishOrder.description}">
+											有
+										</c:if>
+										<c:if test="${empty replenishOrder.description}">
+											无
+										</c:if>
+										</td>
+										<td	class="center">
 										<c:if test="${replenishOrder.orderState == '02'}">
 											<a href="${sc_ctx}/replenishOrder/edit/${replenishOrder.orderNo}" class="btn btn-warning"/>收货</a>
 										</c:if>
@@ -149,7 +158,7 @@
 							<c:if test="${empty	replenishOrderList}" >
 								<tfoot>
 									<tr>
-										<td	colspan="8" class="rounded-foot-left"> 无记录信息 </td>
+										<td	colspan="9" class="rounded-foot-left"> 无记录信息 </td>
 									</tr>
 								</tfoot>
 							</c:if>

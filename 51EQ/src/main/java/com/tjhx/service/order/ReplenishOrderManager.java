@@ -170,7 +170,15 @@ public class ReplenishOrderManager {
 	 * @param replenishNums
 	 */
 	@Transactional(readOnly = false)
-	public void updateReplenishOrderDetail_replenishNums(String orderNo, String[] productBarcodes, String[] replenishNums) {
+	public void updateReplenishOrderDetail_replenishNums(String orderNo, String description, String[] productBarcodes,
+			String[] replenishNums) {
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+		if (null == order) {
+			return;
+		}
+		order.setDescription(description);
+		replenishOrderJpaDao.save(order);
+
 		for (int i = 0; i < productBarcodes.length; i++) {
 
 			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo,
@@ -223,7 +231,15 @@ public class ReplenishOrderManager {
 	 * @param receiptNums
 	 */
 	@Transactional(readOnly = false)
-	public void updateReplenishOrderDetail_receiptNums(String orderNo, String[] productBarcodes, String[] receiptNums) {
+	public void updateReplenishOrderDetail_receiptNums(String orderNo, String description, String[] productBarcodes,
+			String[] receiptNums) {
+
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+		if (null == order) {
+			return;
+		}
+		order.setDescription(description);
+		replenishOrderJpaDao.save(order);
 
 		for (int i = 0; i < productBarcodes.length; i++) {
 
@@ -273,7 +289,10 @@ public class ReplenishOrderManager {
 			// 补货单状态 01-编辑中 02-收货中 99-已确认 */
 			order.setOrderState("99");
 		} else {
-			order.setErrorNum(order.getErrorNum() + 1);
+			if (subOrgFlg) {// 门店操作时-增加错误计数
+				order.setErrorNum(order.getErrorNum() + 1);
+			}
+
 		}
 
 		if (subOrgFlg && StringUtils.isBlank(order.getReceiveDate())) {

@@ -100,10 +100,11 @@ public class ReplenishOrderController extends BaseController {
 	@RequestMapping(value = "editSave")
 	public String editSave_Action(HttpServletRequest request, Model model) throws ServletRequestBindingException {
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
+		String description = ServletRequestUtils.getStringParameter(request, "description");
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
 
-		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, productBarcodes, receiptNums);
+		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, description, productBarcodes, receiptNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, true);
 		if (result) {
 			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
@@ -214,10 +215,11 @@ public class ReplenishOrderController extends BaseController {
 	@RequestMapping(value = "manageEditSave")
 	public String manageEditSave_Action(HttpServletRequest request, Model model) throws ServletRequestBindingException {
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
+		String description = ServletRequestUtils.getStringParameter(request, "description");
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
 
-		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, productBarcodes, replenishNums);
+		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo,description, productBarcodes, replenishNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, false);
 
 		if (result) {

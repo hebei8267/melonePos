@@ -137,6 +137,12 @@
                         </c:if>
                 	</table>
                 </div>
+                
+                <div class="control-group">
+	                <label class="control-label">备注 :</label>
+	                <label class="left-control-label">${order.description}</label>
+                </div>
+                
           	</div>
         </div>
         </form>

@@ -1,17 +1,25 @@
 package com.tjhx.service.info;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -21,6 +29,7 @@ import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalItem;
 import com.tjhx.entity.info.StoreDetail;
 import com.tjhx.entity.struct.Organization;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.vo.ItemSalesContrastVo;
 
@@ -100,6 +109,45 @@ public class SalesContrastByItemManager {
 		copyStore2Value(voList, optDate2End, orgIds, itemNoArray);
 		return formatVoList(voList, orgIds, itemNoArray, orderMode);
 	}
+
+	/**
+	 * @param optDate1Start
+	 * @param optDate1End
+	 * @param optDate2Start
+	 * @param optDate2End
+	 * @param itemNoArray
+	 * @param orgIds
+	 * @param orderMode
+	 * @return
+	 * @throws ParsePropertyException
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	public String createItemSalesContrastFile(String optDate1Start, String optDate1End, String optDate2Start, String optDate2End,
+			String itemNoArray, String[] orgIds, String orderMode) throws ParsePropertyException, InvalidFormatException, IOException {
+
+		List<List<ItemSalesContrastVo>> list = search(optDate1Start, optDate1End, optDate2Start, optDate2End, itemNoArray,
+				orgIds, orderMode);
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("optDate1Start", optDate1Start);
+		map.put("optDate1End", optDate1End);
+		map.put("optDate2Start", optDate2Start);
+		map.put("optDate2End", optDate2End);
+		map.put("itemSalesContrastList", list);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_ITEM_SALES_CONTRAST, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_ITEM_SALES_CONTRAST = "/excel/Item_Sales_Contrast_Template.xls";
 
 	/**
 	 * 库存数据2设置
