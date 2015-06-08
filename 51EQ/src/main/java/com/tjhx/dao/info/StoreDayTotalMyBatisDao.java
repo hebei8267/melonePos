@@ -1,6 +1,7 @@
 package com.tjhx.dao.info;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tjhx.entity.info.StoreDayTotal;
 
@@ -33,4 +34,11 @@ public interface StoreDayTotalMyBatisDao {
 	 */
 	public void delStoreDayTotal_GreaterThan90Day(String _optDate);
 
+	/**
+	 * 根据门店库存合计信息
+	 * 
+	 * @param orgId
+	 * @return
+	 */
+	public List<StoreDayTotal> getStoreTotalListGroupByDay(Map<String, String> param);
 }

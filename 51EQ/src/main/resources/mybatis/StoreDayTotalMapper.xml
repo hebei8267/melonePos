@@ -68,6 +68,28 @@
 		    store.store_flg
 	</select>
 	
+	<select id="getStoreTotalListGroupByDay" parameterType="map" resultMap="Result_Map_StoreDayTotal">
+		SELECT
+		    store.opt_date,
+		    SUM(store.stock_total_qty) AS stock_total_qty,
+		    SUM(store.stock_total_amt) AS stock_total_amt,
+		    SUM(item_sale_total_amt) AS item_sale_total_amt,
+		    store.store_flg
+		FROM
+		    t_store_day_total store
+		<where>
+		<if test="orgId != null and orgId !='' ">
+  		store.org_id = #{orgId}
+  		</if>
+  		</where>
+		GROUP BY
+		    store.opt_date,
+		    store.store_flg
+		ORDER BY
+		    store.opt_date,
+		    store.store_flg
+	</select>
+	
 	<delete id="delStoreDayTotal" parameterType="String">  
         DELETE FROM t_store_day_total WHERE opt_date = #{optDate}
     </delete>

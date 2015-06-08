@@ -1,12 +1,14 @@
 package com.tjhx.service.affair;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.tjhx.dao.info.StoreDayTotalMyBatisDao;
 import com.tjhx.entity.info.StoreDayTotal;
 
@@ -37,5 +39,17 @@ public class StoreChartReportManager {
 	 */
 	public List<StoreDayTotal> getStoreDayTotalList(String optDate) {
 		return storeDayTotalMyBatisDao.getStoreDayTotalList(optDate);
+	}
+
+	/**
+	 * 根据门店库存合计信息
+	 * 
+	 * @param orgId 门店编号
+	 */
+	public List<StoreDayTotal> getStoreTotalListGroupByDay(String orgId) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("orgId", orgId);
+
+		return storeDayTotalMyBatisDao.getStoreTotalListGroupByDay(param);
 	}
 }
