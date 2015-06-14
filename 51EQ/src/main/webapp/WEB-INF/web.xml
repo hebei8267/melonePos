@@ -118,6 +118,15 @@
 		<servlet-name>ImgServlet</servlet-name>
 		<url-pattern>/imgservlet/*</url-pattern>
 	</servlet-mapping>
+	<!-- Excel File Servlet 配置 -->
+	<servlet>
+		<servlet-name>ExcelFileContentServlet</servlet-name>
+		<servlet-class>com.tjhx.web.ExcelFileContentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExcelFileContentServlet</servlet-name>
+		<url-pattern>/excelFile/*</url-pattern>
+	</servlet-mapping>
 	
 	<!-- session 超时时间(单位：分钟),使用MemcachedSessionFilter时无效 -->
 	<session-config>

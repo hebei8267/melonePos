@@ -39,7 +39,7 @@
             
             var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
             $(".dl-xls-ext").click(function() {
-				ee.downloadXLS("http://korsnack.kr/excelexport/download.php", "excelexport.xls");
+				ee.downloadXLS("${ctx}/excelFile", "excelexport.xls");
 			});
     	});
     	</script>
