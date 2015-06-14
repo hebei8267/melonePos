@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<script src="${ctx}/static/js/excelexport.js"></script>
     	<script>
     	$(function() {
     		$('#optDate').datepicker({
@@ -35,6 +36,11 @@
                 $("#listForm").attr("action", "${sc_ctx}/salesDayChartReport/search_tab1");
                 $("#listForm").submit();
             });
+            
+            var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
+            $(".dl-xls-ext").click(function() {
+				ee.downloadXLS("http://korsnack.kr/excelexport/download.php", "excelexport.xls");
+			});
     	});
     	</script>
     </head>
@@ -44,8 +50,9 @@
     		<label class="control-label">销售日期 :</label>
     		<input id="optDate" name="optDate" type="text" class="input-medium" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${_optDate}" />"/>
     		&nbsp;&nbsp;<button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
+    		<a class="btn btn-warning dl-xls-ext">数据导出</a>
     	</form>
-		<table class="table	table-striped table-bordered table-condensed mytable">
+		<table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
 			<thead>
 				<tr>
 					<th class="center">机构</th>

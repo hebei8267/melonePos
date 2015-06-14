@@ -15,6 +15,7 @@
 		<link type="text/css" href="${ctx}/static/css/select2.css" rel="stylesheet">
 		<script src="${ctx}/static/js/select2.min.js"></script>
 		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
+		<script src="${ctx}/static/js/excelexport.js"></script>
 		<style>
 		.font2 {
 			font-family : "Microsoft YaHei" ! important;
@@ -24,6 +25,10 @@
 		</style>
 		<script>
 			$(function() {
+				var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
+	            $(".dl-xls-ext").click(function() {
+					ee.downloadXLS("http://korsnack.kr/excelexport/download.php", "excelexport.xls");
+				});
 				//-----------------------------------
                 // 全选/全部选
                 //-----------------------------------
@@ -210,7 +215,7 @@
 						<button id="searchBtn" class="btn btn-primary" type="button" style="margin-top: -6px">
 							查询
 						</button>
-						<button	id="exportBtn" class="btn btn-warning" type="button" style="margin-top: -6px">数据导出</button>
+						<button	class="btn btn-warning dl-xls-ext" type="button" style="margin-top: -6px">数据导出</button>
 					</div>
 				</div>
 			</form>
@@ -220,7 +225,7 @@
 			<div class="row">
 				<div class="span12" style="margin-top: 10px;">
 					
-					<table class="table	table-striped table-bordered table-condensed mytable">
+					<table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
 						<thead>
 							<tr>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>

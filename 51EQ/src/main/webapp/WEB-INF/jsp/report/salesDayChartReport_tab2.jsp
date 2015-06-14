@@ -12,11 +12,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<script src="${ctx}/static/js/excelexport.js"></script>
+    	<script>
+    	$(function() {            
+            var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
+            $(".dl-xls-ext").click(function() {
+				ee.downloadXLS("http://korsnack.kr/excelexport/download.php", "excelexport.xls");
+			});
+    	});
+    	</script>
     </head>
     <body style="overflow: auto;-webkit-overflow-scrolling: touch;">
+    	<a class="btn btn-warning dl-xls-ext">数据导出</a>
     	<fmt:parseDate value="${optDate}" var="_optDate" pattern="yyyyMMdd" />
     	<h4>统计日期 : <fmt:formatDate pattern="yyyy/MM/dd" value="${_optDate}" /></h4>
-		<table class="table	table-striped table-bordered table-condensed mytable">
+		<table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
 			<thead>
 				<tr>
 					<th>日期/机构</th>
