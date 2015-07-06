@@ -280,46 +280,46 @@ public class SalesDayTotalManager {
 			}
 		}
 		// TODO 20150705临时屏蔽!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		if (("00001D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00001D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(212435);
 		}
-		if (("00002D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00002D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(200854);
 		}
-		if (("00004D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00004D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(186600);
 		}
-		if (("00005D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00005D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(103762);
 		}
-		if (("00007D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00007D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(228703);
 		}
-		if (("00009D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00009D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(119517);
 		}
-		if (("00011D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00011D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(132900);
 		}
-		if (("00013D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00013D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(646608);
 		}
-		if (("00015D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00015D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(144608);
 		}
-		if (("00016D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00016D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(63504);
 		}
-		if (("00017D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00017D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(72439);
 		}
-		if (("00018D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00018D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(60115);
 		}
-		if (("00019D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00019D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(66916);
 		}
-		if (("00001D".equals(orgId) && "2014".equals(_year) && "07".equals(month)) || null == _res) {
+		if (("00020D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(64520);
 		}
 		// ========================================
