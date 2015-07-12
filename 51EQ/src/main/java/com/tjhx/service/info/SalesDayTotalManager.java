@@ -287,16 +287,19 @@ public class SalesDayTotalManager {
 			_res = new BigDecimal(200854);
 		}
 		if (("00004D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(186600);
+			_res = new BigDecimal(186660);
 		}
 		if (("00005D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(103762);
+			_res = new BigDecimal(103782);
+		}
+		if (("00006D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
+			_res = new BigDecimal(134006);
 		}
 		if (("00007D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(228703);
+			_res = new BigDecimal(228722);
 		}
 		if (("00009D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(119517);
+			_res = new BigDecimal(119718);
 		}
 		if (("00011D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
 			_res = new BigDecimal(132900);
@@ -317,10 +320,10 @@ public class SalesDayTotalManager {
 			_res = new BigDecimal(60115);
 		}
 		if (("00019D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(66916);
+			_res = new BigDecimal(66908);
 		}
 		if (("00020D".equals(orgId) && "2014".equals(_year) && "07".equals(month))) {
-			_res = new BigDecimal(64520);
+			_res = new BigDecimal(54349);
 		}
 		// ========================================
 		// FIXME 机构/年月销售额合计(人为设定销售目标)
