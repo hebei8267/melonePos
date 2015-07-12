@@ -53,3 +53,25 @@ CREATE TABLE
     
 ALTER TABLE
     kafei_new.t_employee_2 ADD (employee_no VARCHAR(32))
+    
+    
+    
+    
+    
+CREATE TABLE
+    t_week_sales_total_goods
+    (
+        uuid INT NOT NULL AUTO_INCREMENT,
+        create_date DATETIME NOT NULL,
+        create_user_id VARCHAR(32) NOT NULL,
+        update_date DATETIME NOT NULL,
+        update_user_id VARCHAR(32) NOT NULL,
+        version INT NOT NULL,
+        item_subno VARCHAR(16),
+        org_id VARCHAR(32) NOT NULL,
+        pos_qty DECIMAL(19,2),
+        stock_qty DECIMAL(19,2),
+        PRIMARY KEY (uuid),
+        CONSTRAINT item_subno UNIQUE (item_subno, org_id)
+    )
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;

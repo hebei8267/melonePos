@@ -16,6 +16,7 @@ import com.tjhx.service.info.SalesDayTotalSupManager;
 import com.tjhx.service.info.SalesMonthTotalItemManager;
 import com.tjhx.service.info.SalesOrdersDayTotalManager;
 import com.tjhx.service.info.SalesWeekTotalGoodsManager;
+import com.tjhx.service.info.SalesWeekTotalGoodsManager2;
 import com.tjhx.service.info.StoreDetailManager;
 import com.tjhx.service.info.SupplierManager;
 
@@ -43,6 +44,8 @@ public class SaleInfoJob implements IJob {
 	private SupplierManager supplierManager;
 	@Resource
 	private SalesOrdersDayTotalManager salesOrdersDayTotalManager;
+	@Resource
+	private SalesWeekTotalGoodsManager2 salesWeekTotalGoodsManager2;
 
 	/*
 	 * (non-Javadoc)
@@ -127,6 +130,13 @@ public class SaleInfoJob implements IJob {
 		logger.info("计算销售单日汇总 Begin");
 		salesOrdersDayTotalManager.bwDataSyn();
 		logger.info("计算销售单日汇总 Begin");
+
+		// =================================================================
+		// 根据销售信息计算补货信息
+		// =================================================================
+		logger.info("根据销售信息计算补货信息 Begin");
+		salesWeekTotalGoodsManager2.saveWeekSalesTotalGoodsInfo();
+		logger.info("根据销售信息计算补货信息 Begin");
 	}
 
 }
