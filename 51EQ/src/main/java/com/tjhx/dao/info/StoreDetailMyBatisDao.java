@@ -27,6 +27,8 @@ public interface StoreDetailMyBatisDao {
 	 * @return
 	 */
 	public List<StoreDetail> getSupplierContrastStoreList(Map<String, String> param);
+	
+	public List<StoreDetail> getStoreListGroupBySubno(Map<String, String> param);
 
 	/**
 	 * 删除库存明细信息,仅保留近90天数据

@@ -21,7 +21,7 @@ import com.tjhx.dao.info.SalesWeekTotalGoods1JpaDao;
 import com.tjhx.dao.info.SalesWeekTotalGoods2JpaDao;
 import com.tjhx.dao.info.SalesWeekTotalGoods3JpaDao;
 import com.tjhx.dao.info.SalesWeekTotalGoods4JpaDao;
-import com.tjhx.dao.info.StoreDetailJpaDao;
+import com.tjhx.dao.info.StoreDetailMyBatisDao;
 import com.tjhx.dao.info.WeekSalesTotalGoodsJpaDao;
 import com.tjhx.dao.info.WeekSalesTotalGoodsMyBatisDao;
 import com.tjhx.entity.info.SalesWeekTotalGoods_1;
@@ -47,7 +47,7 @@ public class SalesWeekTotalGoodsManager2 {
 	@Resource
 	private SalesWeekTotalGoods4JpaDao salesWeekTotalGoods4JpaDao;
 	@Resource
-	private StoreDetailJpaDao storeDetailJpaDao;
+	private StoreDetailMyBatisDao storeDetailMyBatisDao;
 	@Resource
 	private WeekSalesTotalGoodsJpaDao weekSalesTotalGoodsJpaDao;
 	@Resource
@@ -113,8 +113,11 @@ public class SalesWeekTotalGoodsManager2 {
 		Map<String, BigDecimal> _monthMap = mergeMonthSalesTotalGoodsMap(monthMap1, monthMap2);
 
 		// 取得指定机构头一天的库存信息
-		List<StoreDetail> sdList = storeDetailJpaDao.findByOrgIdAndOptDate(orgId,
-				DateUtils.getNextDateFormatDate(-1, "yyyyMMdd"));
+		Map<String, String> param = Maps.newHashMap();
+		param.put("orgId", orgId);
+		param.put("optDate", DateUtils.getNextDateFormatDate(-1, "yyyyMMdd"));
+
+		List<StoreDetail> sdList = storeDetailMyBatisDao.getStoreListGroupBySubno(param);
 
 		List<WeekSalesTotalGoods> dtoList = Lists.newArrayList();
 		for (StoreDetail sd : sdList) {

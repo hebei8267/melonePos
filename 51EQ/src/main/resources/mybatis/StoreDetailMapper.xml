@@ -158,4 +158,18 @@
         DELETE FROM t_store_detail WHERE opt_date <= #{optDate}
     ]]>
     </delete>
+    
+    <select id="getStoreListGroupBySubno" parameterType="map" resultMap="Result_Map_StoreDetail">
+    SELECT
+	    org_id,
+	    opt_date,
+	    SUM(stock_qty) AS stock_qty
+	FROM
+	    t_store_detail
+	WHERE
+	    org_id=${orgId}
+	AND opt_date=#{optDate}
+	GROUP BY
+	    item_subno
+     </select>
 </mapper>
