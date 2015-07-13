@@ -163,11 +163,12 @@
     SELECT
 	    org_id,
 	    opt_date,
+	    item_subno,
 	    SUM(stock_qty) AS stock_qty
 	FROM
 	    t_store_detail
 	WHERE
-	    org_id=${orgId}
+	    org_id=#{orgId}
 	AND opt_date=#{optDate}
 	GROUP BY
 	    item_subno
