@@ -238,13 +238,11 @@ public class SalesWeekTotalGoodsManager {
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 
 	 * @param barcode 商品条码
-	 * @param optDate 库存日期
 	 * @return
 	 */
-	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode, String optDate) {
+	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode) {
 		Map<String, String> paramMap = Maps.newHashMap();
 		paramMap.put("barcode", barcode);
-		paramMap.put("optDate", optDate);
 		List<ReqBill> list = salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(paramMap);
 
 		ReqBill totalReqBill = new ReqBill();
@@ -264,6 +262,8 @@ public class SalesWeekTotalGoodsManager {
 			totalReqBill.setPosQty4(totalReqBill.getPosQty4().add(reqBill.getPosQty4()));
 			// 销量(件) 合计
 			totalReqBill.setPosQtyTotal(totalReqBill.getPosQtyTotal().add(reqBill.getPosQtyTotal()));
+			// 销量(件) 合计
+			totalReqBill.setHmPosQty(totalReqBill.getHmPosQty().add(reqBill.getHmPosQty()));
 
 			// 库存量
 			totalReqBill.setStockQty(totalReqBill.getStockQty().add(reqBill.getStockQty()));

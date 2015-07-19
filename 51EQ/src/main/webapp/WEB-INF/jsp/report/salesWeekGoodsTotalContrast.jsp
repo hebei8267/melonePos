@@ -37,6 +37,14 @@
 				});
 			});
 		</script>
+		<style>
+		.font2 {
+			font-family : "Microsoft YaHei" ! important;
+			font-size : 16px;
+			font-weight : bolder;
+		}
+		</style>
+		
     </head>
     <body>
         <%// 系统菜单  %>
@@ -52,14 +60,16 @@
                 </div>
                 <form method="post"	class="form-inline"	id="searchForm">
 					<div class="span8">
-						<label class="control-label">货号/条码 : </label>
-						<input id="barcode" name="barcode" type="text" class="input-medium"/>
+						<label class="control-label">货号 : </label>
+						<input id="barcode" name="barcode" type="text" class="input-xlarge" placeholder="多个货号需以英文半角逗号隔开"/>
 						&nbsp;&nbsp;
 						<button	id="searchBtn" class="btn btn-primary" type="button">
 							查询
 						</button>
 					</div>
 				</form>
+				
+				<c:forEach items="${list}" var="salesWeekGoodsList">
                 <div class="span12"	style="margin-top: 10px;">
                     <table class="table	table-striped table-bordered table-condensed mytable">
                         <thead>
@@ -73,6 +83,12 @@
                                 <th rowspan="2" class="center">
                                     名称
                                 </th>
+                                <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                    半月销售量
+                                </th>
+                                <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                    调货
+                                </th>
                                 <th colspan="6" class="center">
                                     销量(件)
                                 </th>
@@ -81,6 +97,12 @@
                                 </th>
                             </tr>
                             <tr>
+                            	<th class="center">
+                                    库存量
+                                </th>
+                                <th class="center">
+                                    合计
+                                </th>
                                 <th class="center">
                                     近一周
                                 </th>
@@ -93,11 +115,9 @@
                                 <th class="center">
                                     近四周
                                 </th>
-                                <th class="center">
+                                
+                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     合计
-                                </th>
-                                <th class="center">
-                                    库存量
                                 </th>
                                 <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     近一周
@@ -111,9 +131,7 @@
                                 <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     近四周
                                 </th>
-                                <th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                    合计
-                                </th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -131,6 +149,32 @@
                                     	${salesWeekGoods.productName}
                                     </td>
                                     </c:if>
+                                    <td class="center font2">
+                                    	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="center font2">
+                                    	
+                                    	<c:if test="${status1.index != 0}" >
+                                    		<c:if test="${salesWeekGoods.hmPosQty > salesWeekGoods.stockQty}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.hmPosQty}" var="a" />
+                                    		<fmt:parseNumber value="${salesWeekGoods.stockQty}" var="b"/>
+                                    		<span style="color : #FF0000">调入 [${a-b}]</span>
+                                    		</c:if>
+                                    	
+                                    		<c:if test="${salesWeekGoods.hmPosQty*2 < salesWeekGoods.stockQty}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.hmPosQty*2}" var="a" />
+                                    		<fmt:parseNumber value="${salesWeekGoods.stockQty}" var="b"/>
+                                    		<span style="color : #5bc0de">调出 [${b-a}]</span>
+                                    		</c:if>
+                                    	
+                                    	</c:if>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
+                                    </td>
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
                                     </td>
@@ -143,11 +187,9 @@
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posQty4}" maxFractionDigits="0"/>
                                     </td>
+                                    
                                     <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
-                                    </td>
-                                    <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
                                     </td>
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posAmt1}" maxFractionDigits="0"/>
@@ -161,180 +203,21 @@
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posAmt4}" maxFractionDigits="0"/>
                                     </td>
-                                    <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
-                                    </td>
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>
-                        <c:if test="${empty	salesWeekGoodsList}" >
-                            <tfoot>
-                                <tr>
-                                    <td	colspan="14" class="rounded-foot-left">
-                                        无记录信息
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </c:if>
                     </table>
                 </div>
+                </c:forEach>
                 
-                <div class="span12"	style="margin-top: 10px;">
-                	<div id="chart2" style="width:1000px;height:1000px;border:1px solid #A4BED4;"></div>
-                </div>
-                
-                <div class="span12"	style="margin-top: 10px;">
-                	<div id="chart1" style="width:1000px;height:1200px;border:1px solid #A4BED4;"></div>
-                </div>
             </div>
           
         </div>
         
         <script>
 			$(function() {
-				var _salesWeekGoodsListJson = ${salesWeekGoodsListJson}
-				var barChart1 = new dhtmlXChart({
-					view : "barH",
-					container : "chart1",
-					value : "#posQty1#",
-					label : "#posQty1#",
-					color: "#FF8000",
-		            tooltip: {
-		                template: "#posQty1#个"
-		            },
-		            width: 60,
-		            yAxis: {
-		                template: "#orgId#"
-		            },
-		            xAxis: {
-		            	title : "销 售 数 量"
-		            },
-		            padding : {
-						left : 70
-					},
-		            legend: {
-		                values: [{
-		                    text: "近一周",
-		                    color: "#FF8000"
-		                }, {
-		                    text: "近两周",
-		                    color: "#00FF40"
-		                }, {
-		                    text: "近三周",
-		                    color: "#0174DF"
-		                }, {
-		                    text: "近四周",
-		                    color: "#FFCC00"
-		                }, {
-		                    text: "库存量",
-		                    color: "#6E6E6E"
-		                }],
-		                valign: "middle",
-		                align: "right",
-		                width: 70,
-		                layout: "y"
-		            }
-				});
-				barChart1.addSeries({
-		            value: "#posQty2#",
-		            label: "#posQty2#",
-		            color: "#00FF40",
-		            tooltip: {
-		            	template: "#posQty2#个"
-		            }
-		        });
-				barChart1.addSeries({
-		            value: "#posQty3#",
-		            label: "#posQty3#",
-		            color: "#0174DF",
-		            tooltip: {
-		            	template: "#posQty3#个"
-		            }
-		        });
-				barChart1.addSeries({
-		            value: "#posQty4#",
-		            label: "#posQty4#",
-		            color: "#FFCC00",
-		            tooltip: {
-		            	template: "#posQty4#个"
-		            }
-		        });
-				barChart1.addSeries({
-		            value: "#stockQty#",
-		            label: "#stockQty#",
-		            color: "#6E6E6E",
-		            tooltip: {
-		            	template: "#stockQty#个"
-		            }
-		        });
-				barChart1.parse(_salesWeekGoodsListJson, "json");
 				
-				
-				
-				var barChart2 = new dhtmlXChart({
-					view : "barH",
-					container : "chart2",
-					value : "#posAmt1#",
-					label : "#posAmt1#",
-					color: "#FF8000",
-		            tooltip: {
-		                template: "#posAmt1#元"
-		            },
-		            width: 60,
-		            yAxis: {
-		                template: "#orgId#"
-		            },
-		            xAxis: {
-		            	title : "销 售 金 额"
-		            },
-		            padding : {
-						left : 70
-					},
-		            legend: {
-		                values: [{
-		                    text: "近一周",
-		                    color: "#FF8000"
-		                }, {
-		                    text: "近两周",
-		                    color: "#00FF40"
-		                }, {
-		                    text: "近三周",
-		                    color: "#0174DF"
-		                }, {
-		                    text: "近四周",
-		                    color: "#FFCC00"
-		                }],
-		                valign: "middle",
-		                align: "right",
-		                width: 70,
-		                layout: "y"
-		            }
-				});
-				barChart2.addSeries({
-		            value: "#posAmt2#",
-		            label: "#posAmt2#",
-		            color: "#00FF40",
-		            tooltip: {
-		            	template: "#posAmt2#元"
-		            }
-		        });
-				barChart2.addSeries({
-		            value: "#posAmt3#",
-		            label: "#posAmt3#",
-		            color: "#0174DF",
-		            tooltip: {
-		            	template: "#posAmt3#元"
-		            }
-		        });
-				barChart2.addSeries({
-		            value: "#posAmt4#",
-		            label: "#posAmt4#",
-		            color: "#FFCC00",
-		            tooltip: {
-		            	template: "#posAmt4#元"
-		            }
-		        });
-				barChart2.parse(_salesWeekGoodsListJson, "json");
 			});
 		</script>
     </body>

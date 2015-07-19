@@ -63,6 +63,8 @@ public class ReqBill extends IdEntity {
 	private BigDecimal lowPurchase = new BigDecimal("0");
 	/** 建议采购数量-高（平均值×2） */
 	private BigDecimal highPurchase = new BigDecimal("0");
+	/** 销售数量-半月最高销售量 */
+	private BigDecimal hmPosQty = new BigDecimal("0");
 
 	/** 销售金额-合计 */
 	private BigDecimal posAmtTotal = new BigDecimal("0");
@@ -454,6 +456,25 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setHighPurchase(BigDecimal highPurchase) {
 		this.highPurchase = highPurchase;
+	}
+
+	/**
+	 * 取得销售数量-半月最高销售量
+	 * 
+	 * @return 销售数量-半月最高销售量
+	 */
+	@Transient
+	public BigDecimal getHmPosQty() {
+		return hmPosQty;
+	}
+
+	/**
+	 * 设置销售数量-半月最高销售量
+	 * 
+	 * @param hmPosQty 销售数量-半月最高销售量
+	 */
+	public void setHmPosQty(BigDecimal hmPosQty) {
+		this.hmPosQty = hmPosQty;
 	}
 
 	/**

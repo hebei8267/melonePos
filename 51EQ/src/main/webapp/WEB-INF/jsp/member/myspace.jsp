@@ -45,8 +45,8 @@
 						</legend>
 					</div>
 					<div class="span8">
-						<label class="control-label">货号/条码 : </label>
-						<input id="barcode" name="barcode" type="text" class="input-medium"/>
+						<label class="control-label">货号 : </label>
+						<input id="barcode" name="barcode" type="text" class="input-xlarge" placeholder="多个货号需以英文半角逗号隔开"/>
 						&nbsp;&nbsp;
 						<button	id="searchBtn" class="btn btn-primary" type="button">
 							查询
