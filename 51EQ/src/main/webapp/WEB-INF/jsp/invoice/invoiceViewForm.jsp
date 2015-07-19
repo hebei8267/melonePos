@@ -31,61 +31,61 @@
 						<label class="control-label">申请机构 :</label>
 						<label class="left-control-label">${invoice.orgName}
 						<c:if test="${invoice.orgId == '00001D'}">
-							联系电话：027-68899726
+							&nbsp;&nbsp;&nbsp;联系电话：027-68899726
 						</c:if>
 						<c:if test="${invoice.orgId == '00002D'}">
-							联系电话：027-83998353
+							&nbsp;&nbsp;&nbsp;联系电话：027-83998353
 						</c:if>
 						<c:if test="${invoice.orgId == '00004D'}">
-							联系电话：027-87417008
+							&nbsp;&nbsp;&nbsp;联系电话：027-87417008
 						</c:if>
 						<c:if test="${invoice.orgId == '00005D'}">
-							联系电话：027-87314800
+							&nbsp;&nbsp;&nbsp;联系电话：027-87314800
 						</c:if>
 						<c:if test="${invoice.orgId == '00006D'}">
-							联系电话：027-85690686
+							&nbsp;&nbsp;&nbsp;联系电话：027-85690686
 						</c:if>
 						<c:if test="${invoice.orgId == '00007D'}">
-							联系电话：027-88100383
+							&nbsp;&nbsp;&nbsp;联系电话：027-88100383
 						</c:if>
 						<c:if test="${invoice.orgId == '00009D'}">
-							联系电话：027-87866808
+							&nbsp;&nbsp;&nbsp;联系电话：027-87866808
 						</c:if>
 						<c:if test="${invoice.orgId == '00011D'}">
-							联系电话：027-84468088
+							&nbsp;&nbsp;&nbsp;联系电话：027-84468088
 						</c:if>
 						<c:if test="${invoice.orgId == '00013D'}">
-							联系电话：027-87713668
+							&nbsp;&nbsp;&nbsp;联系电话：027-87713668
 						</c:if>
 						<c:if test="${invoice.orgId == '00015D'}">
-							联系电话：027-86530366
+							&nbsp;&nbsp;&nbsp;联系电话：027-86530366
 						</c:if>
 						<c:if test="${invoice.orgId == '00016D'}">
-							联系电话：027-82887190
+							&nbsp;&nbsp;&nbsp;联系电话：027-82887190
 						</c:if>
 						<c:if test="${invoice.orgId == '00017D'}">
-							联系电话：027-87667366
+							&nbsp;&nbsp;&nbsp;联系电话：027-87667366
 						</c:if>
 						<c:if test="${invoice.orgId == '00018D'}">
-							联系电话：027-88224288
+							&nbsp;&nbsp;&nbsp;联系电话：027-88224288
 						</c:if>
 						<c:if test="${invoice.orgId == '00019D'}">
-							联系电话：027-84818820
+							&nbsp;&nbsp;&nbsp;联系电话：027-84818820
 						</c:if>
 						<c:if test="${invoice.orgId == '00020D'}">
-							联系电话：027-83737512
+							&nbsp;&nbsp;&nbsp;联系电话：027-83737512
 						</c:if>
 						<c:if test="${invoice.orgId == '00021D'}">
-							联系电话：027-83636387
+							&nbsp;&nbsp;&nbsp;联系电话：027-83636387
 						</c:if>
 						<c:if test="${invoice.orgId == '00022D'}">
-							联系电话：027-86603790
+							&nbsp;&nbsp;&nbsp;联系电话：027-86603790
 						</c:if>
 						<c:if test="${invoice.orgId == '00023D'}">
-							联系电话：027-87569058
+							&nbsp;&nbsp;&nbsp;联系电话：027-87569058
 						</c:if>
 						<c:if test="${invoice.orgId == '00024D'}">
-							联系电话：027-86420188
+							&nbsp;&nbsp;&nbsp;联系电话：027-86420188
 						</c:if>
 						</label>
 					</div>
