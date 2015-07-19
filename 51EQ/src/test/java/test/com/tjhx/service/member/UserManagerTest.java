@@ -33,28 +33,28 @@ public class UserManagerTest extends SpringTransactionalTestCase {
 		userManager.addNewUser(user);
 	}
 
-	@Test
-	@Rollback(false)
-	public void saveNewUser1() {
-		List<String> fileContent = FileUtils.readFileContent("c:\\User.txt");
-
-		for (String _string : fileContent) {
-			String[] strArray = _string.split(",");
-			User user = new User();
-
-			user.setLoginName(strArray[0]);
-			user.setName(strArray[1]);
-
-			Organization org = organizationJpaDao.findByBwId(strArray[2]);
-			user.setOrganization(org);
-			if (strArray[0].endsWith("0")) {// 店长
-				user.setRoleUuid("3");
-			} else {
-				user.setRoleUuid("4");
-			}
-
-			userManager.addNewUser(user);
-		}
-	}
+//	@Test
+//	@Rollback(false)
+//	public void saveNewUser1() {
+//		List<String> fileContent = FileUtils.readFileContent("c:\\User.txt");
+//
+//		for (String _string : fileContent) {
+//			String[] strArray = _string.split(",");
+//			User user = new User();
+//
+//			user.setLoginName(strArray[0]);
+//			user.setName(strArray[1]);
+//
+//			Organization org = organizationJpaDao.findByBwId(strArray[2]);
+//			user.setOrganization(org);
+//			if (strArray[0].endsWith("0")) {// 店长
+//				user.setRoleUuid("3");
+//			} else {
+//				user.setRoleUuid("4");
+//			}
+//
+//			userManager.addNewUser(user);
+//		}
+//	}
 
 }

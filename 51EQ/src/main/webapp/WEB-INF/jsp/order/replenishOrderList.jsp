@@ -130,6 +130,9 @@
 										<c:if test="${replenishOrder.orderState == '02'}">
 											收货中
 										</c:if>
+										<c:if test="${replenishOrder.orderState == '03'}">
+											收货完成
+										</c:if>
 										<c:if test="${replenishOrder.orderState == '99'}">
 											已完结
 										</c:if></td>

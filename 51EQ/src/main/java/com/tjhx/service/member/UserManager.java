@@ -159,9 +159,12 @@ public class UserManager {
 		user.setOrganization(org);
 		Role role = roleJpaDao.findOne(Integer.parseInt(user.getRoleUuid()));
 		user.setRole(role);
-		// 预算科目
-		BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
-		user.setBudgetSubject(sub);
+		
+		if (null != user.getSubUuid()) {
+			// 预算科目
+			BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
+			user.setBudgetSubject(sub);
+		}
 
 		// 消除用户信息缓存
 		spyMemcachedClient.delete(MemcachedObjectType.USER_LIST.getObjKey());

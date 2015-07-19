@@ -75,8 +75,8 @@ public class ReplenishOrderController extends BaseController {
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderState", orderState);
 
-		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session).getOrgId(),
-				orderState);
+		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session)
+				.getOrgId(), orderState);
 		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderList";
@@ -104,7 +104,8 @@ public class ReplenishOrderController extends BaseController {
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
 
-		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, description, productBarcodes, receiptNums);
+		replenishOrderManager
+				.updateReplenishOrderDetail_receiptNums(orderNo, description, productBarcodes, receiptNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, true);
 		if (result) {
 			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
@@ -149,6 +150,7 @@ public class ReplenishOrderController extends BaseController {
 		stateList.put("", "");
 		stateList.put("01", "编辑中");
 		stateList.put("02", "收货中");
+		stateList.put("03", "收货完成");
 		stateList.put("99", "已完结");
 
 		model.addAttribute("stateList", stateList);
@@ -219,7 +221,8 @@ public class ReplenishOrderController extends BaseController {
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
 
-		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo,description, productBarcodes, replenishNums);
+		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, description, productBarcodes,
+				replenishNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, false);
 
 		if (result) {
@@ -232,6 +235,15 @@ public class ReplenishOrderController extends BaseController {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageEdit/" + orderNo;
 		}
 
+	}
+
+	@RequestMapping(value = "manageSuccessSave/{orderNo}")
+	public String manageSuccessSave_Action(@PathVariable("orderNo") String orderNo)
+			throws ServletRequestBindingException {
+
+		replenishOrderManager.replenishOrderSuccess(orderNo);
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageList";
 	}
 
 	/**
@@ -281,8 +293,8 @@ public class ReplenishOrderController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());

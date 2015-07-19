@@ -79,7 +79,8 @@ public class ReplenishOrderManager {
 	 */
 	public List<ReplenishOrderVo> readReplenishOrderFile(String filePath) throws IOException, SAXException,
 			InvalidFormatException {
-		InputStream inputXML = new BufferedInputStream(ReqBillManager.class.getResourceAsStream(XML_CONFIG_TRANSFER_ORDER));
+		InputStream inputXML = new BufferedInputStream(
+				ReqBillManager.class.getResourceAsStream(XML_CONFIG_TRANSFER_ORDER));
 
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
 
@@ -217,7 +218,7 @@ public class ReplenishOrderManager {
 	@Transactional(readOnly = false)
 	public void sendReplenishOrder(String orderNo) {
 		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
-		// 补货单状态 01-编辑中 02-收货中 99-已确认
+		// 补货单状态 01-编辑中 02-收货中 03-收货完成 99-已完成
 		order.setOrderState("02");
 		order.setSendDate(DateUtils.getCurrentDateShortStr());
 		replenishOrderJpaDao.save(order);
@@ -259,6 +260,21 @@ public class ReplenishOrderManager {
 	}
 
 	/**
+	 * 收货完成－>已完结
+	 * 
+	 * @param orderNo
+	 */
+	@Transactional(readOnly = false)
+	public void replenishOrderSuccess(String orderNo) {
+		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
+
+		// 补货单状态 01-编辑中 02-收货中 03-收货完成 99-已完成
+		order.setOrderState("99");
+
+		replenishOrderJpaDao.save(order);
+	}
+
+	/**
 	 * 校验出货数与发货数是否一致
 	 * 
 	 * @return
@@ -286,8 +302,8 @@ public class ReplenishOrderManager {
 
 		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
 		if (successFlg) {
-			// 补货单状态 01-编辑中 02-收货中 99-已确认 */
-			order.setOrderState("99");
+			// 补货单状态 01-编辑中 02-收货中 03-收货完成 99-已完成
+			order.setOrderState("03");
 		} else {
 			if (subOrgFlg) {// 门店操作时-增加错误计数
 				order.setErrorNum(order.getErrorNum() + 1);
@@ -313,7 +329,8 @@ public class ReplenishOrderManager {
 	 * @throws InvalidFormatException
 	 * @throws ParsePropertyException
 	 */
-	public String createExportFile(String[] orderNoArray) throws ParsePropertyException, InvalidFormatException, IOException {
+	public String createExportFile(String[] orderNoArray) throws ParsePropertyException, InvalidFormatException,
+			IOException {
 
 		List<ReplenishOrder> _list = Lists.newArrayList();
 		for (String orderNo : orderNoArray) {
