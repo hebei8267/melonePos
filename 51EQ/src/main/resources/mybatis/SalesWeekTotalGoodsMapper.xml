@@ -166,7 +166,7 @@
 			ON
 			    sd.item_subno = g.subno
 			WHERE
-			    sd.item_subno = '160654'
+			    sd.item_subno = #{barcode}
 			AND sd.org_id = org.org_id ) AS t
 		order by t.org_id
 	</select>
