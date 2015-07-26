@@ -119,7 +119,8 @@ public class SalesWeekTotalGoodsManager2 {
 
 		List<StoreDetail> sdList = storeDetailMyBatisDao.getStoreListGroupBySubno(param);
 
-		List<WeekSalesTotalGoods> dtoList = Lists.newArrayList();
+		Map<String, WeekSalesTotalGoods> wsg = Maps.newHashMap();
+		// 以库存为基础计算
 		for (StoreDetail sd : sdList) {
 			String itemSubno = sd.getItemSubno();
 			BigDecimal posQty = _monthMap.get(itemSubno);
@@ -137,9 +138,36 @@ public class SalesWeekTotalGoodsManager2 {
 			// 库存数量
 			dto.setStockQty(sd.getStockQty());
 
-			dtoList.add(dto);
+			wsg.put(itemSubno, dto);
 		}
 
+		// 以销售为基础计算
+		for (Entry<String, BigDecimal> sgEntry : _monthMap.entrySet()) {
+			String itemSubno = sgEntry.getKey();
+
+			WeekSalesTotalGoods tmpDto = wsg.get(itemSubno);
+
+			if (null == tmpDto) {
+				WeekSalesTotalGoods dto = new WeekSalesTotalGoods();
+
+				// 机构编号
+				dto.setOrgId(orgId);
+				// 短条码
+				dto.setItemSubno(itemSubno);
+				// 销售数量
+				dto.setPosQty(sgEntry.getValue());
+				// 库存数量
+				dto.setStockQty(new BigDecimal("0"));
+
+				wsg.put(itemSubno, dto);
+			}
+
+		}
+
+		List<WeekSalesTotalGoods> dtoList = Lists.newArrayList();
+		for (Entry<String, WeekSalesTotalGoods> sgEntry : wsg.entrySet()) {
+			dtoList.add(sgEntry.getValue());
+		}
 		return dtoList;
 	}
 
