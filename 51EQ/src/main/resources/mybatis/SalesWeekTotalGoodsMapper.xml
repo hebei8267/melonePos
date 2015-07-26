@@ -120,54 +120,61 @@
 	<!-- 指定条码各门店近四周销售数据及库存情况 -->
 	<select id="getSalesWeekGoodsTotalList_ByBarcode" parameterType="map" resultMap="Result_Map_SalesWeekTotal">
 		SELECT
-    		t.*,
-    		(t.pos_qty1 + t.pos_qty2 + t.pos_qty3 + t.pos_qty4) AS pos_qty,
-    		(t.pos_amt1 + t.pos_amt2 + t.pos_amt3 + t.pos_amt4) AS pos_amt
+		    t.*,
+		    (t.pos_qty1 + t.pos_qty2 + t.pos_qty3 + t.pos_qty4) AS pos_qty,
+		    (t.pos_amt1 + t.pos_amt2 + t.pos_amt3 + t.pos_amt4) AS pos_amt
 		FROM
-    	   (SELECT
-			    org.org_name  AS org_id,
-			    sd.item_subno AS barcode,
-			    g.name        AS product_name,
-			    sd.pos_qty 	  AS hm_pos_qty,
-			    sd.stock_qty,
-			    IF(sg1.pos_qty IS NULL, 0, sg1.pos_qty) AS pos_qty1,
-			    IF(sg2.pos_qty IS NULL, 0, sg2.pos_qty) AS pos_qty2,
-			    IF(sg3.pos_qty IS NULL, 0, sg3.pos_qty) AS pos_qty3,
-			    IF(sg4.pos_qty IS NULL, 0, sg4.pos_qty) AS pos_qty4,
-			    IF(sg1.pos_amt IS NULL, 0, sg1.pos_amt) AS pos_amt1,
-			    IF(sg2.pos_amt IS NULL, 0, sg2.pos_amt) AS pos_amt2,
-			    IF(sg3.pos_amt IS NULL, 0, sg3.pos_amt) AS pos_amt3,
-			    IF(sg4.pos_amt IS NULL, 0, sg4.pos_amt) AS pos_amt4
-			FROM
-			    t_organization org,
-			    t_week_sales_total_goods sd
-			LEFT JOIN
-			    t_sales_week_total_goods_1 sg1
-			ON
-			    sd.item_subno = sg1.item_subno
-			AND sd.org_id = sg1.org_id
-			LEFT JOIN
-			    t_sales_week_total_goods_2 sg2
-			ON
-			    sd.item_subno = sg2.item_subno
-			AND sd.org_id = sg2.org_id
-			LEFT JOIN
-			    t_sales_week_total_goods_3 sg3
-			ON
-			    sd.item_subno = sg3.item_subno
-			AND sd.org_id = sg3.org_id
-			LEFT JOIN
-			    t_sales_week_total_goods_4 sg4
-			ON
-			    sd.item_subno = sg4.item_subno
-			AND sd.org_id = sg4.org_id
-			LEFT JOIN
-			    t_goods g
-			ON
-			    sd.item_subno = g.subno
-			WHERE
-			    sd.item_subno = #{barcode}
-			AND sd.org_id = org.org_id ) AS t
-		order by t.org_id
+		    (
+		        SELECT
+		            org.org_name                            AS org_id,
+		            sd.item_subno                           AS barcode,
+		            sd.item_name                            AS product_name,
+		            wsd.pos_qty                             AS hm_pos_qty,
+		            SUM(sd.stock_qty)                       AS stock_qty,
+		            IF(sg1.pos_qty IS NULL, 0, sg1.pos_qty) AS pos_qty1,
+		            IF(sg2.pos_qty IS NULL, 0, sg2.pos_qty) AS pos_qty2,
+		            IF(sg3.pos_qty IS NULL, 0, sg3.pos_qty) AS pos_qty3,
+		            IF(sg4.pos_qty IS NULL, 0, sg4.pos_qty) AS pos_qty4,
+		            IF(sg1.pos_amt IS NULL, 0, sg1.pos_amt) AS pos_amt1,
+		            IF(sg2.pos_amt IS NULL, 0, sg2.pos_amt) AS pos_amt2,
+		            IF(sg3.pos_amt IS NULL, 0, sg3.pos_amt) AS pos_amt3,
+		            IF(sg4.pos_amt IS NULL, 0, sg4.pos_amt) AS pos_amt4
+		        FROM
+		            t_organization org,
+		            t_store_detail sd
+		        LEFT JOIN
+		            t_sales_week_total_goods_1 sg1
+		        ON
+		            sd.item_subno = sg1.item_subno
+		        AND sd.org_id = sg1.org_id
+		        LEFT JOIN
+		            t_sales_week_total_goods_2 sg2
+		        ON
+		            sd.item_subno = sg2.item_subno
+		        AND sd.org_id = sg2.org_id
+		        LEFT JOIN
+		            t_sales_week_total_goods_3 sg3
+		        ON
+		            sd.item_subno = sg3.item_subno
+		        AND sd.org_id = sg3.org_id
+		        LEFT JOIN
+		            t_sales_week_total_goods_4 sg4
+		        ON
+		            sd.item_subno = sg4.item_subno
+		        AND sd.org_id = sg4.org_id
+		        LEFT JOIN
+		            t_week_sales_total_goods wsd
+		        ON
+		            sd.item_subno = wsd.item_subno
+		        AND sd.org_id = wsd.org_id
+		        WHERE
+		            sd.opt_date = #{optDate}
+		        AND sd.item_subno = #{barcode}
+		        AND sd.org_id = org.org_id
+		        GROUP BY
+		            sd.org_id,
+		            sd.item_subno ) AS t
+		ORDER BY
+		    t.org_id
 	</select>
 </mapper>

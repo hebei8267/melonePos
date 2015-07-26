@@ -243,6 +243,7 @@ public class SalesWeekTotalGoodsManager {
 	public List<ReqBill> getSalesWeekGoodsTotalList_ByBarcode(String barcode) {
 		Map<String, String> paramMap = Maps.newHashMap();
 		paramMap.put("barcode", barcode);
+		paramMap.put("optDate", DateUtils.getNextDateFormatDate(-1, "yyyyMMdd"));
 		List<ReqBill> list = salesWeekTotalGoodsMyBatisDao.getSalesWeekGoodsTotalList_ByBarcode(paramMap);
 
 		ReqBill totalReqBill = new ReqBill();
