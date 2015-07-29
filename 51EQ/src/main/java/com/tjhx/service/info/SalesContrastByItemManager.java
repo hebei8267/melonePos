@@ -379,6 +379,12 @@ public class SalesContrastByItemManager {
 					value.setStockTotalQty1(value.getStockTotalQty1().add(vo.getStockTotalQty1()));
 					// 库存数量2
 					value.setStockTotalQty2(value.getStockTotalQty2().add(vo.getStockTotalQty2()));
+				
+					// 库存金额1
+					value.setStockTotalAmt1(value.getStockTotalAmt1().add(vo.getStockTotalAmt1()));
+					// 库存金额2
+					value.setStockTotalAmt2(value.getStockTotalAmt2().add(vo.getStockTotalAmt2()));
+				
 				}
 
 			}
