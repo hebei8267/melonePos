@@ -595,6 +595,14 @@
 							<td><input type="checkbox" name="perm" value="66">发货管理</td>
 							</c:if>
 						</tr>
+						</tr>
+							<c:if test="${role.permIdList.contains('68')}">
+							<td><input type="checkbox" name="perm" value="68" checked>商品收发错添信息</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('68')}">
+							<td><input type="checkbox" name="perm" value="68">商品收发错添信息</td>
+							</c:if>
+						</tr>
 						
 					</table>
 				</div>

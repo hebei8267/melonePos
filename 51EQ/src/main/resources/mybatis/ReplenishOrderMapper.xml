@@ -19,6 +19,8 @@
         <result column="send_date" property="sendDate" jdbcType="VARCHAR"/>
         <result column="receive_date" property="receiveDate" jdbcType="VARCHAR"/>
         <result column="replenish_org_id" property="replenishOrgId" jdbcType="VARCHAR"/>
+        
+        <result column="receive_date_ym" property="receiveDateYM" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	
@@ -76,5 +78,22 @@
 		from t_replenish_order
 		<include refid="Where_Clause" />
 		ORDER BY order_batch_id , order_no
+	</select>
+	
+	
+	<select id="getReceiveErrNumInfo" parameterType="map" resultMap="Result_Map_ReplenishOrder">
+		SELECT
+		    SUM(error_num)              AS error_num,
+		    SUBSTRING(receive_date,1,6) AS receive_date_ym,
+		    replenish_org_id
+		FROM
+		    T_REPLENISH_ORDER
+		WHERE
+		    order_state = '99'
+		AND replenish_org_id = #{bwId}
+		GROUP BY
+		    receive_date_ym
+		ORDER BY
+		    receive_date_ym
 	</select>
 </mapper>

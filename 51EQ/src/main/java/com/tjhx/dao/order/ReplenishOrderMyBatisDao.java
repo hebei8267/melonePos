@@ -30,4 +30,11 @@ public interface ReplenishOrderMyBatisDao {
 	 * @param orderNo
 	 */
 	public void delReplenishOrderByOrderNo(String orderNo);
+
+	/**
+	 * 根据补货单门店错填信息列表
+	 * 
+	 * @param bwId(例如：01D)
+	 */
+	public List<ReplenishOrder> getReceiveErrNumInfo(String bwId);
 }

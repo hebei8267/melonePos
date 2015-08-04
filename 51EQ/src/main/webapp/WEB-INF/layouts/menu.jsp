@@ -30,7 +30,7 @@
 					<li>
 						<a href="${sc_ctx}/member/initModPwd">密码修改</a>
 					</li>
-					<c:if test="${_permIdList.contains('65') || _permIdList.contains('66')}">
+					<c:if test="${_permIdList.contains('65') || _permIdList.contains('66') || _permIdList.contains('68')}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">商品收发<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -42,6 +42,11 @@
 							<c:if test="${_permIdList.contains('66')}">
 								<li>
 									<a href="${sc_ctx}/replenishOrder/manageList">发货管理</a>
+								</li>
+							</c:if>
+							<c:if test="${_permIdList.contains('68')}">
+								<li>
+									<a href="${sc_ctx}/replenishOrderReport">商品收发错添信息</a>
 								</li>
 							</c:if>
 							</ul>

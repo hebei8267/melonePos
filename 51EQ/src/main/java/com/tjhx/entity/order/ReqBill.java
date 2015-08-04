@@ -79,6 +79,8 @@ public class ReqBill extends IdEntity {
 	/** 操作日期 */
 	private String optDate;
 
+	private BigDecimal itemSaleAmt;
+	private BigDecimal stockAmt;
 	/**
 	 * 取得处理批次号
 	 * 
@@ -589,6 +591,44 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setOptDate(String optDate) {
 		this.optDate = optDate;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return itemSaleAmt
+	 */
+	@Transient
+	public BigDecimal getItemSaleAmt() {
+		return itemSaleAmt;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param itemSaleAmt itemSaleAmt
+	 */
+	public void setItemSaleAmt(BigDecimal itemSaleAmt) {
+		this.itemSaleAmt = itemSaleAmt;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return stockAmt
+	 */
+	@Transient
+	public BigDecimal getStockAmt() {
+		return stockAmt;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param stockAmt stockAmt
+	 */
+	public void setStockAmt(BigDecimal stockAmt) {
+		this.stockAmt = stockAmt;
 	}
 
 }

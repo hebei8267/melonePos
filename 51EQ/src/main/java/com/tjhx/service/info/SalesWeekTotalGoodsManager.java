@@ -1,5 +1,6 @@
 package com.tjhx.service.info;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -248,6 +249,15 @@ public class SalesWeekTotalGoodsManager {
 
 		ReqBill totalReqBill = new ReqBill();
 		for (ReqBill reqBill : list) {
+			// ===================================
+			// 进价/售价
+			int r = reqBill.getStockQty().compareTo(BigDecimal.ZERO); // 和0，Zero比较
+			if (r != 0) {
+				reqBill.setItemSaleAmt(reqBill.getItemSaleAmt().divide(reqBill.getStockQty(), 2, BigDecimal.ROUND_UP));
+				reqBill.setStockAmt(reqBill.getStockAmt().divide(reqBill.getStockQty(), 2, BigDecimal.ROUND_UP));
+			}
+			// ===================================
+
 			totalReqBill.setOrgId("合计");
 			// 货号
 			totalReqBill.setBarcode(barcode);

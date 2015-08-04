@@ -36,6 +36,9 @@
         <result column="pos_amt2" property="posAmt2" jdbcType="DECIMAL"/>
         <result column="pos_amt3" property="posAmt3" jdbcType="DECIMAL"/>
         <result column="pos_amt4" property="posAmt4" jdbcType="DECIMAL"/>
+        
+        <result column="item_sale_amt" property="itemSaleAmt" jdbcType="DECIMAL"/>
+        <result column="stock_amt" property="stockAmt" jdbcType="DECIMAL"/>
 	</resultMap>
 	
 	<!-- 查询条件 -->
@@ -131,6 +134,8 @@
 		            sd.item_name                            AS product_name,
 		            wsd.pos_qty                             AS hm_pos_qty,
 		            SUM(sd.stock_qty)                       AS stock_qty,
+		            SUM(sd.item_sale_amt)                   AS item_sale_amt,
+            		SUM(sd.stock_amt)                       AS stock_amt,
 		            IF(sg1.pos_qty IS NULL, 0, sg1.pos_qty) AS pos_qty1,
 		            IF(sg2.pos_qty IS NULL, 0, sg2.pos_qty) AS pos_qty2,
 		            IF(sg3.pos_qty IS NULL, 0, sg3.pos_qty) AS pos_qty3,

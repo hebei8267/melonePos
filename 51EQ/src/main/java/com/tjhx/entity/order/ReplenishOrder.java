@@ -44,6 +44,8 @@ public class ReplenishOrder extends IdEntity {
 	private List<ReplenishOrderDetail> detailList;
 	/** 错填次数 */
 	private int errorNum;
+	/** 收货日期YM */
+	private String receiveDateYM;
 
 	/**
 	 * 获取补货单生成批次号
@@ -213,5 +215,24 @@ public class ReplenishOrder extends IdEntity {
 	 */
 	public void setErrorNum(int errorNum) {
 		this.errorNum = errorNum;
+	}
+
+	/**
+	 * 取得收货日期YM
+	 * 
+	 * @return 收货日期YM
+	 */
+	@Transient
+	public String getReceiveDateYM() {
+		return receiveDateYM;
+	}
+
+	/**
+	 * 设置收货日期YM
+	 * 
+	 * @param receiveDateYM 收货日期YM
+	 */
+	public void setReceiveDateYM(String receiveDateYM) {
+		this.receiveDateYM = receiveDateYM;
 	}
 }

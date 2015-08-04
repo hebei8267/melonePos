@@ -37,7 +37,9 @@ import com.tjhx.dao.order.ReplenishOrderMyBatisDao;
 import com.tjhx.entity.order.ReplenishOrder;
 import com.tjhx.entity.order.ReplenishOrderDetail;
 import com.tjhx.entity.order.ReplenishOrderVo;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.struct.OrganizationManager;
 
 /**
  * @author he_bei
@@ -55,6 +57,8 @@ public class ReplenishOrderManager {
 	private ReplenishOrderDetailJpaDao replenishOrderDetailJpaDao;
 	@Resource
 	private ReplenishOrderJpaDao replenishOrderJpaDao;
+	@Resource
+	private OrganizationManager orgManager;
 
 	/**
 	 * 根据批次号删除调货单信息
@@ -355,4 +359,21 @@ public class ReplenishOrderManager {
 	}
 
 	private final static String XML_CONFIG_REPLENISH_ORDER = "/excel/Replenish_Order_Template.xls";
+
+	public Map<String, List<ReplenishOrder>> getReplenishOrderReport() {
+
+		List<Organization> orgList = orgManager.getSubOrganization();
+
+		Map<String, List<ReplenishOrder>> odMap = Maps.newHashMap();
+
+		for (Organization org : orgList) {
+			List<ReplenishOrder> odList = replenishOrderMyBatisDao.getReceiveErrNumInfo(org.getBwId());
+			if (null != odList && odList.size() > 0) {
+				odMap.put(org.getBwId(), odList);
+			}
+		}
+
+		return odMap;
+
+	}
 }
