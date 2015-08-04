@@ -89,6 +89,12 @@
                                 <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
                                     调货
                                 </th>
+                                <th rowspan="2" class="center">
+                                    进价
+                                </th>
+                                <th rowspan="2" class="center">
+                                    售价
+                                </th>
                                 <th colspan="6" class="center">
                                     销量(件)
                                 </th>
@@ -151,6 +157,12 @@
                                     </c:if>
                                     <td class="center font2">
                                     	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="center">
+                                    	${salesWeekGoods.itemSaleAmt}
+                                    </td>
+                                    <td class="center">
+                                    	${salesWeekGoods.stockAmt}
                                     </td>
                                     <td class="center font2">
                                     	
