@@ -89,10 +89,10 @@
                                 <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
                                     调货
                                 </th>
-                                <th rowspan="2" class="center">
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     进价
                                 </th>
-                                <th rowspan="2" class="center">
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     售价
                                 </th>
                                 <th colspan="6" class="center">
@@ -158,12 +158,7 @@
                                     <td class="center font2">
                                     	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
                                     </td>
-                                    <td class="center">
-                                    	${salesWeekGoods.itemSaleAmt}
-                                    </td>
-                                    <td class="center">
-                                    	${salesWeekGoods.stockAmt}
-                                    </td>
+                                    
                                     <td class="center font2">
                                     	
                                     	<c:if test="${status1.index != 0}" >
@@ -180,6 +175,12 @@
                                     		</c:if>
                                     	
                                     	</c:if>
+                                    </td>
+                                    <td class="center">
+                                    	${salesWeekGoods.itemSaleAmt}
+                                    </td>
+                                    <td class="center">
+                                    	${salesWeekGoods.stockAmt}
                                     </td>
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
