@@ -89,9 +89,11 @@
                                 <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
                                     调货
                                 </th>
+                                <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
                                 <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     进价
                                 </th>
+                                </c:if>
                                 <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     售价
                                 </th>
@@ -176,12 +178,17 @@
                                     	
                                     	</c:if>
                                     </td>
-                                    <td class="center">
-                                    	${salesWeekGoods.itemSaleAmt}
-                                    </td>
+                                    
+                                    <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
                                     <td class="center">
                                     	${salesWeekGoods.stockAmt}
                                     </td>
+                                    </c:if>
+                                    
+                                    <td class="center">
+                                    	${salesWeekGoods.itemSaleAmt}
+                                    </td>
+                                    
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
                                     </td>
