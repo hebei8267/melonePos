@@ -300,7 +300,7 @@ public class SalesWeekTotalGoodsManager {
 			// 销售额(元)合计
 			totalReqBill.setPosAmtTotal(totalReqBill.getPosAmtTotal().add(reqBill.getPosAmtTotal()));
 
-			totalReqBill.setInQty(totalReqBill.getInQty().add(reqBill.getInQty()).add(reqBill.getOutQty()));
+			totalReqBill.setInQty(totalReqBill.getInQty().add(reqBill.getInQty()).subtract(reqBill.getOutQty()));
 		}
 
 		list.add(0, totalReqBill);

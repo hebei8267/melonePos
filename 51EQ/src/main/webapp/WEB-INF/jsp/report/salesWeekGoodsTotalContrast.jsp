@@ -162,20 +162,28 @@
                                     </td>
                                     
                                     <td class="center font2">
+                                    	<c:if test="${status1.index == 0}" >
+                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
+                                    		<span style="color : #FF0000">调入 [${a}]</span>
+                                    		</c:if>
+                                    		
+                                    		<c:if test="${salesWeekGoods.inQty < 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="b" />
+                                    		<span style="color : #5bc0de">调出 [${-b}]</span>
+                                    		</c:if>
+                                    	</c:if>
                                     	
                                     	<c:if test="${status1.index != 0}" >
-                                    		<c:if test="${salesWeekGoods.hmPosQty > salesWeekGoods.stockQty}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.hmPosQty}" var="a" />
-                                    		<fmt:parseNumber value="${salesWeekGoods.stockQty}" var="b"/>
-                                    		<span style="color : #FF0000">调入 [${a-b}]</span>
+                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
+                                    		<span style="color : #FF0000">调入 [${a}]</span>
                                     		</c:if>
                                     	
-                                    		<c:if test="${salesWeekGoods.hmPosQty*2 < salesWeekGoods.stockQty}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.hmPosQty*2}" var="a" />
-                                    		<fmt:parseNumber value="${salesWeekGoods.stockQty}" var="b"/>
-                                    		<span style="color : #5bc0de">调出 [${b-a}]</span>
+                                    		<c:if test="${salesWeekGoods.outQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.outQty}" var="b" />
+                                    		<span style="color : #5bc0de">调出 [${b}]</span>
                                     		</c:if>
-                                    	
                                     	</c:if>
                                     </td>
                                     
