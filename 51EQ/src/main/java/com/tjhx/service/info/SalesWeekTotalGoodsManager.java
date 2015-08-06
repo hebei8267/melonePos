@@ -256,6 +256,17 @@ public class SalesWeekTotalGoodsManager {
 				reqBill.setItemSaleAmt(reqBill.getItemSaleAmt().divide(reqBill.getStockQty(), 2, BigDecimal.ROUND_UP));
 				reqBill.setStockAmt(reqBill.getStockAmt().divide(reqBill.getStockQty(), 2, BigDecimal.ROUND_UP));
 			}
+
+			// 调入
+			if (reqBill.getHmPosQty().compareTo(reqBill.getStockQty()) > 0) {
+				reqBill.setInQty(reqBill.getHmPosQty().subtract(reqBill.getStockQty()));
+			}
+
+			// 调出
+			if (reqBill.getHmPosQty().multiply(new BigDecimal("2")).compareTo(reqBill.getStockQty()) < 0) {
+				reqBill.setOutQty(reqBill.getStockQty().subtract(reqBill.getHmPosQty().multiply(new BigDecimal("2"))));
+			}
+
 			// ===================================
 
 			totalReqBill.setOrgId("合计");
@@ -288,6 +299,8 @@ public class SalesWeekTotalGoodsManager {
 			totalReqBill.setPosAmt4(totalReqBill.getPosAmt4().add(reqBill.getPosAmt4()));
 			// 销售额(元)合计
 			totalReqBill.setPosAmtTotal(totalReqBill.getPosAmtTotal().add(reqBill.getPosAmtTotal()));
+
+			totalReqBill.setInQty(totalReqBill.getInQty().add(reqBill.getInQty()).add(reqBill.getOutQty()));
 		}
 
 		list.add(0, totalReqBill);

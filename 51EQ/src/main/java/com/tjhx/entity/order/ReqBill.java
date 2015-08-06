@@ -81,6 +81,8 @@ public class ReqBill extends IdEntity {
 
 	private BigDecimal itemSaleAmt;
 	private BigDecimal stockAmt;
+	private BigDecimal inQty = new BigDecimal("0");
+	private BigDecimal outQty = new BigDecimal("0");
 	/**
 	 * 取得处理批次号
 	 * 
@@ -629,6 +631,42 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setStockAmt(BigDecimal stockAmt) {
 		this.stockAmt = stockAmt;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return inQty
+	 */
+	public BigDecimal getInQty() {
+		return inQty;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param inQty inQty
+	 */
+	public void setInQty(BigDecimal inQty) {
+		this.inQty = inQty;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return outQty
+	 */
+	public BigDecimal getOutQty() {
+		return outQty;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param outQty outQty
+	 */
+	public void setOutQty(BigDecimal outQty) {
+		this.outQty = outQty;
 	}
 
 }
