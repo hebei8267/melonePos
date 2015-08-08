@@ -116,17 +116,6 @@
 			        "valueField": "receiveNum"
 			    },
 			    {
-			        "valueAxis": "v1",
-			        "lineColor": "#FF6600",
-			        "bullet": "square",
-			        "balloonText": "错填率 [[errorRate]]",
-			        "bulletBorderThickness": 1,
-			        "hideBulletsCount": 80,
-			        "title": "错填率",
-			        "valueField": "errorRate",
-			        "fillAlphas": 0
-			    },
-			    {
 			        "valueAxis": "v2",
 			        "lineColor": "#FCD202",
 			        "bullet": "square",
@@ -135,6 +124,17 @@
 			        "hideBulletsCount": 80,
 			        "title": "错填次数",
 			        "valueField": "errorNum",
+			        "fillAlphas": 0
+			    },
+			    {
+			        "valueAxis": "v1",
+			        "lineColor": "#FF6600",
+			        "bullet": "square",
+			        "balloonText": "错填率 [[errorRate]]",
+			        "bulletBorderThickness": 1,
+			        "hideBulletsCount": 80,
+			        "title": "错填率",
+			        "valueField": "errorRate",
 			        "fillAlphas": 0
 			    }],
 			    "categoryField": "receiveDateYM"
