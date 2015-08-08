@@ -82,14 +82,14 @@
 			    "dataProvider": _data_set,
 			    "valueAxes": [{
 			        "id":"v1",
-			        "axisColor": "#FF6600",
+			        "axisColor": "#FCD202",
 			        "axisThickness": 2,
 			        "gridAlpha": 0,
 			        "axisAlpha": 1,
 			        "position": "left"
 			    }, {
 			        "id":"v2",
-			        "axisColor": "#FCD202",
+			        "axisColor": "#FF6600",
 			        "axisThickness": 2,
 			        "gridAlpha": 0,
 			        "axisAlpha": 1,
@@ -116,7 +116,7 @@
 			        "valueField": "receiveNum"
 			    },
 			    {
-			        "valueAxis": "v2",
+			        "valueAxis": "v1",
 			        "lineColor": "#FCD202",
 			        "bullet": "square",
 			        "balloonText": "错填 [[errorNum]] 次",
@@ -127,7 +127,7 @@
 			        "fillAlphas": 0
 			    },
 			    {
-			        "valueAxis": "v1",
+			        "valueAxis": "v2",
 			        "lineColor": "#FF6600",
 			        "bullet": "square",
 			        "balloonText": "错填率 [[errorRate]]",
