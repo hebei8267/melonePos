@@ -37,7 +37,6 @@ import com.tjhx.dao.order.ReplenishOrderMyBatisDao;
 import com.tjhx.entity.order.ReplenishOrder;
 import com.tjhx.entity.order.ReplenishOrderDetail;
 import com.tjhx.entity.order.ReplenishOrderVo;
-import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.struct.OrganizationManager;
 
@@ -360,20 +359,22 @@ public class ReplenishOrderManager {
 
 	private final static String XML_CONFIG_REPLENISH_ORDER = "/excel/Replenish_Order_Template.xls";
 
-	public Map<String, List<ReplenishOrder>> getReplenishOrderReport() {
-
-		List<Organization> orgList = orgManager.getSubOrganization();
-
-		Map<String, List<ReplenishOrder>> odMap = Maps.newHashMap();
-
-		for (Organization org : orgList) {
-			List<ReplenishOrder> odList = replenishOrderMyBatisDao.getReceiveErrNumInfo(org.getBwId());
-			if (null != odList && odList.size() > 0) {
-				odMap.put(org.getBwId(), odList);
-			}
+	/**
+	 * 取得机构收货错误信息列表
+	 * 
+	 * @param orgId
+	 * @return
+	 */
+	public List<ReplenishOrder> getReplenishOrderReport(String orgId) {
+		if (null != orgId && orgId.length() == 6) {
+			orgId = orgId.substring(3);
 		}
+		Map<String, String> param = Maps.newHashMap();
+		param.put("orgId", orgId);
 
-		return odMap;
+		List<ReplenishOrder> odList = replenishOrderMyBatisDao.getReceiveErrNumInfo(param);
+
+		return odList;
 
 	}
 }

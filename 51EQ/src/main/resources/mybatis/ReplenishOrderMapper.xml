@@ -21,6 +21,8 @@
         <result column="replenish_org_id" property="replenishOrgId" jdbcType="VARCHAR"/>
         
         <result column="receive_date_ym" property="receiveDateYM" jdbcType="VARCHAR"/>
+        <result column="receive_num" property="receiveNum" jdbcType="INTEGER"/>
+        
 	</resultMap>
 	
 	
@@ -81,16 +83,20 @@
 	</select>
 	
 	
-	<select id="getReceiveErrNumInfo" parameterType="map" resultMap="Result_Map_ReplenishOrder">
+	<select id="getReceiveErrNumInfo" parameterType="map" resultMap="Result_Map_ReplenishOrder">		    
 		SELECT
 		    SUM(error_num)              AS error_num,
 		    SUBSTRING(receive_date,1,6) AS receive_date_ym,
+		    COUNT(receive_date)         AS receive_num,
 		    replenish_org_id
 		FROM
 		    T_REPLENISH_ORDER
-		WHERE
-		    order_state = '99'
-		AND replenish_org_id = #{bwId}
+		<where>
+			order_state = '99'
+		<if test="orgId != null and orgId !='' ">
+		AND replenish_org_id = #{orgId}
+		</if>
+		</where>
 		GROUP BY
 		    receive_date_ym
 		ORDER BY

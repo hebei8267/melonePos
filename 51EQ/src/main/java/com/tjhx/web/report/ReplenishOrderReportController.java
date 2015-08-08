@@ -1,13 +1,14 @@
 package com.tjhx.web.report;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springside.modules.mapper.JsonMapper;
 
@@ -31,10 +32,20 @@ public class ReplenishOrderReportController extends BaseController {
 
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
-		Map<String, List<ReplenishOrder>> odMap = replenishOrderManager.getReplenishOrderReport();
+		return "report/replenishOrderReport";
+	}
+
+	@RequestMapping(value = {"search"})
+	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+
+		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
+
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		List<ReplenishOrder> odList = replenishOrderManager.getReplenishOrderReport(orgId);
 
 		JsonMapper mapper = new JsonMapper();
-		model.addAttribute("odMap", mapper.toJson(odMap));
+		model.addAttribute("orgId", orgId);
+		model.addAttribute("odList", mapper.toJson(odList));
 
 		return "report/replenishOrderReport";
 	}

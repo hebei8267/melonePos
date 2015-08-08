@@ -860,7 +860,7 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 	public void saveNewFun68() {
 		Function fun = new Function();
 		// 商品收发错添信息
-		fun.setDisplayName("商品收发错添信息");
+		fun.setDisplayName("商品收发错填信息");
 		// 功能URL */
 		fun.setFunUrl("replenishOrderReport");
 

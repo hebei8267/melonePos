@@ -34,7 +34,7 @@ public interface ReplenishOrderMyBatisDao {
 	/**
 	 * 根据补货单门店错填信息列表
 	 * 
-	 * @param bwId(例如：01D)
+	 * @param orgId(例如：01D)
 	 */
-	public List<ReplenishOrder> getReceiveErrNumInfo(String bwId);
+	public List<ReplenishOrder> getReceiveErrNumInfo(Map<String, String> param);
 }

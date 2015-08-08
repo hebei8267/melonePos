@@ -1,5 +1,6 @@
 package com.tjhx.entity.order;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,6 +47,10 @@ public class ReplenishOrder extends IdEntity {
 	private int errorNum;
 	/** 收货日期YM */
 	private String receiveDateYM;
+	/** 收货次数 */
+	private Integer receiveNum;
+	/** 收货错填率 */
+	private Float errorRate;
 
 	/**
 	 * 获取补货单生成批次号
@@ -234,5 +239,45 @@ public class ReplenishOrder extends IdEntity {
 	 */
 	public void setReceiveDateYM(String receiveDateYM) {
 		this.receiveDateYM = receiveDateYM;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return receiveNum
+	 */
+	@Transient
+	public Integer getReceiveNum() {
+		return receiveNum;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param receiveNum receiveNum
+	 */
+	public void setReceiveNum(Integer receiveNum) {
+		this.receiveNum = receiveNum;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return errorRate
+	 */
+	@Transient
+	public Float getErrorRate() {
+		errorRate = new Float(errorNum) / receiveNum;
+		BigDecimal b = new BigDecimal(errorRate);
+		float errorRate = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		return errorRate;
+	}
+	/**
+	 * 设置
+	 * 
+	 * @param errorRate errorRate
+	 */
+	public void setErrorRate(Float errorRate) {
+		this.errorRate = errorRate;
 	}
 }
