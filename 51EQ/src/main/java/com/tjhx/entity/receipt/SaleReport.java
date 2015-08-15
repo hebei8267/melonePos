@@ -633,6 +633,9 @@ public class SaleReport {
 			this.cardCertNo = _cashRun.getCardCertNo();
 		}
 
+		// 预付款(刷卡)
+		this.prePayCardAmt = this.prePayCardAmt.add(_cashRun.getPrePayCardAmt());
+
 		// 刷卡笔数
 		this.cardNum = this.cardNum + _cashRun.getCardNum();
 
