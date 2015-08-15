@@ -95,7 +95,7 @@
                         <a class="btn btn-warning dl-xls-ext">数据导出</a>
                     </div>
                     <div class="span12"	style="margin-top: 10px;">
-                        <table class="table	table-striped table-bordered table-condensed mytable">
+                        <table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
                             <thead>
                                 <tr>
                                     <th class="center">
