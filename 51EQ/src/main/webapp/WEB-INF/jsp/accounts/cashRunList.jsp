@@ -137,7 +137,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当班销售额<br>(普通 / 金卡[消费/返利] / 代金卷)
+                                        当班销售额<br>(普通 / 支付宝 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -198,7 +198,7 @@
                                             ${cashRun.retainedAmt}
                                         </td>
                                         <td class="center">
-                                            ${cashRun.saleAmt} / ${cashRun.goldCardAmt} / ${cashRun.rebateAmt} / ${cashRun.totalCouponValue} <br>(${cashRun.saleAmt + cashRun.goldCardAmt + cashRun.rebateAmt + cashRun.totalCouponValue})
+                                            ${cashRun.saleAmt} / ${cashRun.zfbSaleAmt} / ${cashRun.goldCardAmt} / ${cashRun.rebateAmt} / ${cashRun.totalCouponValue} <br>(${cashRun.saleAmt + cashRun.zfbSaleAmt + cashRun.goldCardAmt + cashRun.rebateAmt + cashRun.totalCouponValue})
                                         </td>
                                         <td>
                                             ${cashRun.reportAmt}
@@ -236,7 +236,7 @@
                                         </td>
                                         <td></td>
                                         <td class="center">
-                                            ${totalCashRun.saleAmt} / ${totalCashRun.goldCardAmt} / ${totalCashRun.rebateAmt} / ${totalCashRun.totalCouponValue}<br>(${totalCashRun.saleAmt + totalCashRun.goldCardAmt + totalCashRun.rebateAmt + totalCashRun.totalCouponValue})
+                                            ${totalCashRun.saleAmt} / ${totalCashRun.zfbSaleAmt} / ${totalCashRun.goldCardAmt} / ${totalCashRun.rebateAmt} / ${totalCashRun.totalCouponValue}<br>(${totalCashRun.saleAmt + totalCashRun.zfbSaleAmt + totalCashRun.goldCardAmt + totalCashRun.rebateAmt + totalCashRun.totalCouponValue})
                                         </td>
                                         <td colspan="2">
                                             ${totalCashRun.reportAmt}

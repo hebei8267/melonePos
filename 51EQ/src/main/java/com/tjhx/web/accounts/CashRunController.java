@@ -54,8 +54,8 @@ public class CashRunController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "calInitAmt")
-	public String calInitAmt_Action(HttpServletRequest request, HttpSession session) throws ServletRequestBindingException,
-			ParseException {
+	public String calInitAmt_Action(HttpServletRequest request, HttpSession session)
+			throws ServletRequestBindingException, ParseException {
 		String optDateShow = ServletRequestUtils.getStringParameter(request, "optDateShow");
 		String optDate = DateUtils.transDateFormat(optDateShow, "yyyy-MM-dd", "yyyyMMdd");
 
@@ -87,10 +87,10 @@ public class CashRunController extends BaseController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping(value = { "list", "" })
+	@RequestMapping(value = {"list", ""})
 	public String cashRunList_Action(Model model, HttpSession session) throws ParseException {
-		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_1(getUserInfo(session).getOrganization().getId(),
-				DateUtils.getCurrentDateShortStr());
+		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_1(getUserInfo(session).getOrganization()
+				.getId(), DateUtils.getCurrentDateShortStr());
 
 		model.addAttribute("cashRunList", cashRunList);
 
@@ -110,7 +110,8 @@ public class CashRunController extends BaseController {
 	@RequestMapping(value = "list/{date}")
 	public String cashRunList_Date_Action(@PathVariable("date") String date, Model model, HttpSession session)
 			throws ParseException {
-		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_2(getUserInfo(session).getOrganization().getId(), date);
+		List<CashRun> cashRunList = cashRunManager.getAllCashRunByOrgId_2(getUserInfo(session).getOrganization()
+				.getId(), date);
 
 		model.addAttribute("cashRunList", cashRunList);
 
@@ -170,6 +171,9 @@ public class CashRunController extends BaseController {
 
 		cashRun.setGoldCardAmt(null);
 		cashRun.setRebateAmt(null);
+
+		cashRun.setZfbSaleAmt(null);
+
 		model.addAttribute("cashRun", cashRun);
 
 		initJobTypeList(model);
