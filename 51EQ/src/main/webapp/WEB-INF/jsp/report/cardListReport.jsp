@@ -91,19 +91,22 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="center">
                                         机构
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         日结日期
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         刷卡金额(单据)
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         刷卡金额(百威)
                                     </th>
-                                    <th>
+                                    <th class="center">
+                                    	金卡预存刷卡
+									</th>
+                                    <th class="center">
                                         刷卡笔数
                                     </th>
                                     <th	width="55">
@@ -114,19 +117,22 @@
                             <tbody>
                                 <c:forEach items="${cashDailyList}" var="cashDaily">
                                     <tr>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.orgName}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                         	${cashDaily.optDateShow}
                                         </td>
-                                        <td <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="right" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.cardAmt}
                                         </td>
-                                        <td <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="right" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.cardAmtBw}
                                         </td>
-                                        <td>
+                                        <td class="right">
+                                        	${cashDaily.prePayCardAmt}
+                                        </td>
+                                        <td class="center">
                                         	${cashDaily.cardNum}
                                         </td>
                                         <td>
@@ -152,7 +158,7 @@
                             <c:if test="${empty	cashDailyList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="6"	class="rounded-foot-left">
+                                        <td	colspan="7"	class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
