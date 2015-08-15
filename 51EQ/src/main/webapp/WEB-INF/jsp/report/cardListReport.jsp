@@ -145,11 +145,14 @@
                                         <td	colspan="2">
                                             合计:
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${totalCashDaily.cardAmt}
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${totalCashDaily.cardAmtBw}
+                                        </td>
+                                        <td class="right">
+                                            ${totalCashDaily.prePayCardAmt}
                                         </td>
                                         <td	colspan="2"></td>
                                     </tr>
