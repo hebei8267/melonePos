@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<script src="${ctx}/static/js/excelexport.js"></script>
         <script>
             $(function() {
             	$("#listForm").validate({
@@ -52,6 +53,11 @@
                     $("#listForm").attr("action", "${sc_ctx}/cardReport/export");
                     $("#listForm").submit();
                 });
+                
+                var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
+                $(".dl-xls-ext").click(function() {
+    				ee.downloadXLS("${ctx}/excelFile", "excelexport.xls");
+    			});
             });
         </script>
     </head>
@@ -85,7 +91,8 @@
                             </c:forEach>
                         </select>&nbsp;&nbsp;
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
-                        <button	id="exportBtn" class="btn	btn-warning" type="button">数据导出</button>
+                        <button	id="exportBtn" class="btn	btn-warning" type="button">数据导出(明细)</button>
+                        <a class="btn btn-warning dl-xls-ext">数据导出</a>
                     </div>
                     <div class="span12"	style="margin-top: 10px;">
                         <table class="table	table-striped table-bordered table-condensed mytable">
