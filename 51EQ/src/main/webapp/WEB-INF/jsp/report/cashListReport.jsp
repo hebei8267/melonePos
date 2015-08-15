@@ -116,10 +116,7 @@
                                         昨日<br>余额
                                     </th>
                                     <th class="center">
-                                        金卡<br>预存<br>现金
-                                    </th>
-                                    <th class="center">
-                                        金卡<br>预存<br>刷卡
+                                        金卡<br>预存<br>[现金]<br>[刷卡]
                                     </th>
                                     <th class="center">
                                         金卡<br>预存<br>百威<br>对账
@@ -135,9 +132,6 @@
                                     </th>
                                     <th class="center">
                                         存款<br>金额
-                                    </th>
-                                    <th class="center">
-                                        留存<br>金额
                                     </th>
                                     <th class="center">
                                         当日销售额<br><br>普通 <br>[金卡消费]<br>[金卡返利]<br>代金卷
@@ -171,26 +165,23 @@
                                         <td class="center">
                                         	${cashDaily.optDate}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.initAmt}
                                         </td>
-                                        <td>
-                                            ${cashDaily.prePayCashAmt}
-                                        </td>
-                                        <td>
-                                            ${cashDaily.prePayCardAmt}
+                                        <td class="right">
+                                            ${cashDaily.prePayCashAmt}<br>${cashDaily.prePayCardAmt}
                                         </td>
                                         <c:set var="_difference_prePayCardAmt" value="${cashDaily.prePayCashAmt + cashDaily.prePayCardAmt - cashDaily.prePayTotalAmt }" />
-                                        <td <c:if test="${(_difference_prePayCardAmt > BW_SALE_DIF_AMOUNT) || (_difference_prePayCardAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td  class="right" <c:if test="${(_difference_prePayCardAmt > BW_SALE_DIF_AMOUNT) || (_difference_prePayCardAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                             ${cashDaily.prePayTotalAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.adjustAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.saleCashAmt}
                                         </td>
-                                        <td class="center" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="right" <c:if test="${cashDaily.cardAmt != cashDaily.cardAmtBw}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.cardAmt}
                                         </td>
                                         <td class="center">
@@ -202,32 +193,29 @@
                                         	</c:if>
                                         	${cashDaily.depositAmt}
                                         </td>
-                                        <td class="center" <c:if test="${cashDaily.retainedAmt > DEFAULT_RETAINED_AMT}">style="background-color:#FFDEAD;color:#00000"</c:if>>
-                                        	${cashDaily.retainedAmt}
-                                        </td>
                                         <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.saleAmt}<br>${cashDaily.goldCardAmt}<br>${cashDaily.rebateAmt}<br>${cashDaily.couponValue}
                                         </td>
                                         <c:set var="_difference_goldCarAmt" value="${cashDaily.goldCardAmt - cashDaily.goldCardTotalAmt }" />
-                                        <td <c:if test="${(_difference_goldCarAmt > BW_SALE_DIF_AMOUNT) || (_difference_goldCarAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="right" <c:if test="${(_difference_goldCarAmt > BW_SALE_DIF_AMOUNT) || (_difference_goldCarAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.goldCardTotalAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.couponCashValue}
                                         </td>
                                         
-                                        <td class="center" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        <td class="right" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
                                         	${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue}
                                         </td>
                                         
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.bwSaleAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${cashDaily.reportAmt}
                                         </td>
-                                        <td>
+                                        <td class="center">
                                             <a href="${sc_ctx}/cashReport/detail/${cashDaily.optDate}/${cashDaily.orgId}" target="_blank" class="btn btn-warning"/>详细</a>
                                         </td>
                                     </tr>
@@ -238,10 +226,7 @@
                                             合计:
                                         </td>
                                         <td>
-                                            ${totalCashDaily.prePayCashAmt}
-                                        </td>
-                                        <td>
-                                            ${totalCashDaily.prePayCardAmt}
+                                            ${totalCashDaily.prePayCashAmt}<br>${totalCashDaily.prePayCardAmt}
                                         </td>
                                         <td>
                                         	${totalCashDaily.prePayTotalAmt}
@@ -258,7 +243,6 @@
                                         <td class="center">
                                             ${totalCashDaily.depositAmt}
                                         </td>
-                                        <td></td>
                                         <td class="center">${totalCashDaily.saleAmt} / ${totalCashDaily.goldCardAmt} / ${totalCashDaily.rebateAmt} / ${totalCashDaily.couponValue}</td>
                                        	<td>
                                         	${totalCashDaily.goldCardTotalAmt}
@@ -281,7 +265,7 @@
                             <c:if test="${empty	cashDailyList}" >
                                 <tfoot>
                                     <tr>
-                                        <td	colspan="17"	class="rounded-foot-left">
+                                        <td	colspan="16" class="rounded-foot-left">
                                             无记录信息
                                         </td>
                                     </tr>
