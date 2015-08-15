@@ -12,6 +12,8 @@ public class DailySale {
 	private BigDecimal bwSaleAmt = new BigDecimal("0");
 	/** 金卡操作金额(合计) */
 	private BigDecimal operMoney = new BigDecimal("0");
+	/** 支付宝销售额 */
+	private BigDecimal bwZfbSaleAmt = new BigDecimal("0");
 	/** 金卡操作类型 */
 	private String operType;
 
@@ -103,6 +105,24 @@ public class DailySale {
 	 */
 	public void setOperType(String operType) {
 		this.operType = operType;
+	}
+
+	/**
+	 * 取得支付宝销售额
+	 * 
+	 * @return bwZfbSaleAmt 支付宝销售额
+	 */
+	public BigDecimal getBwZfbSaleAmt() {
+		return bwZfbSaleAmt;
+	}
+
+	/**
+	 * 设置支付宝销售额
+	 * 
+	 * @param bwZfbSaleAmt 支付宝销售额
+	 */
+	public void setBwZfbSaleAmt(BigDecimal bwZfbSaleAmt) {
+		this.bwZfbSaleAmt = bwZfbSaleAmt;
 	}
 
 }

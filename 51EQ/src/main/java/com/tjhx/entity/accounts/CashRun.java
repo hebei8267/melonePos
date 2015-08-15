@@ -87,6 +87,9 @@ public class CashRun extends IdEntity {
 	private BigDecimal prePayCashAmt = new BigDecimal("0");
 	/** 预付款(刷卡) */
 	private BigDecimal prePayCardAmt = new BigDecimal("0");
+
+	/** 支付宝销售额 */
+	private BigDecimal zfbSaleAmt = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -762,5 +765,23 @@ public class CashRun extends IdEntity {
 	 */
 	public void setRebateAmt(BigDecimal rebateAmt) {
 		this.rebateAmt = rebateAmt;
+	}
+
+	/**
+	 * 取得支付宝销售额
+	 * 
+	 * @return zfbSaleAmt 支付宝销售额
+	 */
+	public BigDecimal getZfbSaleAmt() {
+		return zfbSaleAmt;
+	}
+
+	/**
+	 * 设置支付宝销售额
+	 * 
+	 * @param zfbSaleAmt 支付宝销售额
+	 */
+	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
+		this.zfbSaleAmt = zfbSaleAmt;
 	}
 }

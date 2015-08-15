@@ -28,7 +28,11 @@ public class BwSaleAmtJob implements IJob {
 		logger.info("同步百威销售额 Begin");
 		cashDailyManager.synBwSaleAmt();
 		logger.info("同步百威销售额 End");
-		
+
+		logger.info("同步支付宝销售额 Begin");
+		cashDailyManager.synZFBSaleAmt();
+		logger.info("同步支付宝销售额 Begin");
+
 		logger.info("同步百威金卡销售额 Begin");
 		cashDailyManager.synBwGoldCardSaleAmt();
 		logger.info("同步百威金卡销售额 End");

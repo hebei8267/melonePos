@@ -72,6 +72,10 @@ public class CashDaily extends IdEntity {
 	private BigDecimal goldCardTotalAmt = new BigDecimal("0");
 	/** 金卡预付款(合计) */
 	private BigDecimal prePayTotalAmt = new BigDecimal("0");
+	/** 支付宝销售额 */
+	private BigDecimal zfbSaleAmt = new BigDecimal("0");
+	/** 支付宝销售额 */
+	private BigDecimal bwZfbSaleAmt = new BigDecimal("0");
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -635,5 +639,41 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setPrePayTotalAmt(BigDecimal prePayTotalAmt) {
 		this.prePayTotalAmt = prePayTotalAmt;
+	}
+
+	/**
+	 * 取得支付宝销售额
+	 * 
+	 * @return zfbSaleAmt 支付宝销售额
+	 */
+	public BigDecimal getZfbSaleAmt() {
+		return zfbSaleAmt;
+	}
+
+	/**
+	 * 设置支付宝销售额
+	 * 
+	 * @param zfbSaleAmt 支付宝销售额
+	 */
+	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
+		this.zfbSaleAmt = zfbSaleAmt;
+	}
+
+	/**
+	 * 取得支付宝销售额
+	 * 
+	 * @return bwZfbSaleAmt 支付宝销售额
+	 */
+	public BigDecimal getBwZfbSaleAmt() {
+		return bwZfbSaleAmt;
+	}
+
+	/**
+	 * 设置支付宝销售额
+	 * 
+	 * @param bwZfbSaleAmt 支付宝销售额
+	 */
+	public void setBwZfbSaleAmt(BigDecimal bwZfbSaleAmt) {
+		this.bwZfbSaleAmt = bwZfbSaleAmt;
 	}
 }
