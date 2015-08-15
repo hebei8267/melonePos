@@ -134,7 +134,7 @@
                                         存款<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br><br>普通 <br>[金卡消费]<br>[金卡返利]<br>代金卷
+                                        当日销售额<br><br>[普通]<br>[支付宝]<br>[金卡消费]<br>[金卡返利]<br>[代金卷]
                                     </th>
                                     <th class="center">
                                         金卡<br>消费<br>百威<br>对账
@@ -143,10 +143,16 @@
                                         代金卷<br>价值
                                     </th>
                                     <th class="center">
-                                        销售额<br>合计
+                                        销售额<br>[普通]<br>合计
                                     </th>
                                     <th class="center">
-                                        百威<br>对账
+                                        百威<br>销售额<br>[普通]<br>对账
+                                    </th>
+                                    <th class="center">
+                                        销售额<br>[支付宝]<br>合计
+                                    </th>
+                                    <th class="center">
+                                        百威<br>销售额<br>[支付宝]<br>对账
                                     </th>
                                     <th class="center">
                                         报商场<br>销售额
@@ -194,8 +200,8 @@
                                         	${cashDaily.depositAmt}
                                         </td>
                                         <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
-                                        <td class="right">
-                                        	${cashDaily.saleAmt}<br>${cashDaily.goldCardAmt}<br>${cashDaily.rebateAmt}<br>${cashDaily.couponValue}
+                                        <td class="center">
+                                        	${cashDaily.saleAmt}<br>${cashDaily.zfbSaleAmt}<br>${cashDaily.goldCardAmt}<br>${cashDaily.rebateAmt}<br>${cashDaily.couponValue}
                                         </td>
                                         <c:set var="_difference_goldCarAmt" value="${cashDaily.goldCardAmt - cashDaily.goldCardTotalAmt }" />
                                         <td class="right" <c:if test="${(_difference_goldCarAmt > BW_SALE_DIF_AMOUNT) || (_difference_goldCarAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
@@ -212,6 +218,14 @@
                                         <td class="right">
                                         	${cashDaily.bwSaleAmt}
                                         </td>
+                                        
+                                        <td class="right" <c:if test="${(cashDaily.zfbSaleAmt-cashDaily.bwZfbSaleAmt > BW_SALE_DIF_AMOUNT) || (cashDaily.zfbSaleAmt-cashDaily.bwZfbSaleAmt < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
+                                        	${cashDaily.zfbSaleAmt}
+                                        </td>
+                                        <td class="right">
+                                        	${cashDaily.bwZfbSaleAmt}
+                                        </td>
+                                        
                                         <td class="right">
                                         	${cashDaily.reportAmt}
                                         </td>
@@ -225,36 +239,42 @@
                                         <td	colspan="3">
                                             合计:
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${totalCashDaily.prePayCashAmt}<br>${totalCashDaily.prePayCardAmt}
                                         </td>
-                                        <td>
+                                        <td class="right">
                                         	${totalCashDaily.prePayTotalAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                             ${totalCashDaily.adjustAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                             ${totalCashDaily.saleCashAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                             ${totalCashDaily.cardAmt}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                             ${totalCashDaily.depositAmt}
                                         </td>
-                                        <td class="center">${totalCashDaily.saleAmt} / ${totalCashDaily.goldCardAmt} / ${totalCashDaily.rebateAmt} / ${totalCashDaily.couponValue}</td>
-                                       	<td>
+                                        <td class="center">${totalCashDaily.saleAmt}<br>${totalCashDaily.zfbSaleAmt}<br>${totalCashDaily.goldCardAmt}<br>${totalCashDaily.rebateAmt}<br>${totalCashDaily.couponValue}</td>
+                                       	<td class="right">
                                         	${totalCashDaily.goldCardTotalAmt}
                                         </td>
-                                       	<td class="center">${totalCashDaily.couponCashValue}</td>
-                                        <td class="center">
+                                       	<td class="right">${totalCashDaily.couponCashValue}</td>
+                                        <td class="right">
                                             ${totalCashDaily.saleAmt + totalCashDaily.goldCardAmt + totalCashDaily.rebateAmt + totalCashDaily.couponValue}
                                         </td>
-                                        <td class="center">
+                                        <td class="right">
                                         	${totalCashDaily.bwSaleAmt}
                                         </td>
-                                        <td class="center">
+                                         <td class="right">
+                                        	${totalCashDaily.zfbSaleAmt}
+                                        </td>
+                                        <td class="right">
+                                        	${totalCashDaily.bwZfbSaleAmt}
+                                        </td>
+                                        <td class="right">
                                         	${totalCashDaily.reportAmt}
                                         </td>
                                         <td>

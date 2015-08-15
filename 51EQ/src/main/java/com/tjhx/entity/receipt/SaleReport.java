@@ -68,6 +68,8 @@ public class SaleReport {
 	private BigDecimal goldCardTotalAmt = new BigDecimal("0");
 	/** 金卡预付款(合计) */
 	private BigDecimal prePayTotalAmt = new BigDecimal("0");
+	/** 支付宝销售额 */
+	private BigDecimal zfbSaleAmt = new BigDecimal("0");
 
 	/**
 	 * 取得行号
@@ -636,6 +638,9 @@ public class SaleReport {
 		// 刷卡笔数
 		this.cardNum = this.cardNum + _cashRun.getCardNum();
 
+		// 支付宝销售额
+		this.zfbSaleAmt = this.zfbSaleAmt.add(_cashRun.getZfbSaleAmt());
+
 		// 记录人
 		if (StringUtils.isNotBlank(this.userName)) {
 			this.userName += " / " + _cashRun.getUserName();
@@ -685,5 +690,23 @@ public class SaleReport {
 	 */
 	public void setPrePayTotalAmt(BigDecimal prePayTotalAmt) {
 		this.prePayTotalAmt = prePayTotalAmt;
+	}
+
+	/**
+	 * 取得支付宝销售额
+	 * 
+	 * @return zfbSaleAmt 支付宝销售额
+	 */
+	public BigDecimal getZfbSaleAmt() {
+		return zfbSaleAmt;
+	}
+
+	/**
+	 * 设置支付宝销售额
+	 * 
+	 * @param zfbSaleAmt 支付宝销售额
+	 */
+	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
+		this.zfbSaleAmt = zfbSaleAmt;
 	}
 }

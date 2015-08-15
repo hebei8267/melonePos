@@ -113,6 +113,9 @@ public class CashDailyManager {
 			// 返利金额
 			_tmpCashDaily.setRebateAmt(_tmpCashDaily.getRebateAmt().add(cashRun.getRebateAmt()));
 
+			// 支付宝销售额
+			_tmpCashDaily.setZfbSaleAmt(_tmpCashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
+
 		}
 
 		return _noCashDailyList;
@@ -244,6 +247,9 @@ public class CashDailyManager {
 			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(cashRun.getGoldCardAmt()));
 			// 返利金额
 			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(cashRun.getRebateAmt()));
+
+			// 支付宝销售额
+			_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
 		}
 		// 生成销售日结信息
 		cashDailyJpaDao.save(_cashDaily);
@@ -345,6 +351,9 @@ public class CashDailyManager {
 			_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(cashDaily.getGoldCardTotalAmt()));
 			// 金卡预付款(合计)
 			_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(cashDaily.getPrePayTotalAmt()));
+
+			// 支付宝销售额
+			_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashDaily.getZfbSaleAmt()));
 		}
 		return _cashDaily;
 	}
@@ -382,6 +391,10 @@ public class CashDailyManager {
 			_saleReport.setGoldCardTotalAmt(_saleReport.getGoldCardTotalAmt().add(saleReport.getGoldCardTotalAmt()));
 			// 金卡预付款(合计)
 			_saleReport.setPrePayTotalAmt(_saleReport.getPrePayTotalAmt().add(saleReport.getPrePayTotalAmt()));
+			
+			
+			// 支付宝销售额
+			_saleReport.setZfbSaleAmt(_saleReport.getZfbSaleAmt().add(saleReport.getZfbSaleAmt()));
 
 		}
 		return _saleReport;

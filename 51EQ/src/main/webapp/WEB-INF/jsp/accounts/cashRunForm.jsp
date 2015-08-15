@@ -84,6 +84,10 @@
                             required : true,
                             money : true
                         },
+                        zfbSaleAmt : {
+                            required : true,
+                            money : true
+                        },
                         cardNum : {
                             required : true,
                             digits : true
@@ -156,6 +160,9 @@
                 $("#cardAmt").change(function() {
                     saleAmt();
                 });
+                $("#zfbSaleAmt").change(function() {
+                    saleAmt();
+                });
                 $("#depositAmt").change(function() {
                     calRetainedAmt();
                 });
@@ -211,7 +218,7 @@
                 $("#retainedAmt").val(_result);
             }
 
-            // 当班销售金额 = 销售收现 + 刷卡金额(单据) + 代金卷销售 + 金卡余额消费 + 金卡返利金额
+            // 当班销售金额 = 销售收现 + 支付宝销售额 ＋ 刷卡金额(单据) + 代金卷销售 + 金卡余额消费 + 金卡返利金额
             function saleAmt() {
                 var _result = numAdd($("#saleCashAmt").val(), $("#cardAmt").val());
                 
@@ -225,8 +232,12 @@
                 $("input[name$='couponValue']").each(function(){
                 	_result2 = numAdd(_result2, $(this).val());
                 });
+                
+                // 支付宝销售额
+                var _result4 = 0;
+                _result4 = numAdd(_result4, $("#zfbSaleAmt").val());
 
-                $("#_saleAmt").html(_result + " 元 + " + _result3 + " 元 + " + _result2 + " 元");
+                $("#_saleAmt").html(_result + " 元 + " + _result4 + " 元 + " + _result3 + " 元 + " + _result2 + " 元");
                 $("#saleAmt").val(_result);
             }
         </script>
@@ -334,7 +345,6 @@
                         	</tr>
                         	
                         	
-                        	
                         	<tr>
                         		<td class="right">刷卡金额(单据) :</td>
                         		<td>
@@ -357,6 +367,22 @@
                         	<tr>
                         		<td colspan="4"><br></td>
                         	</tr>
+                        	
+                        	
+                        	<tr>
+                        		<td class="right">支付宝 :</td>
+                        		<td colspan="3">
+                        			<form:input	path="zfbSaleAmt" />&nbsp;元
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4" class="cash_daily"></td>
+                        	</tr>
+                        	<tr>
+                        		<td colspan="4"><br></td>
+                        	</tr>
+                        	
+                        	
                         	<tr>
                         		<td class="right">金卡余额消费 :</td>
                         		<td><form:input	path="goldCardAmt" />&nbsp;元</td>
@@ -369,6 +395,8 @@
                         	<tr>
                         		<td colspan="4"><br></td>
                         	</tr>
+                        	
+                        	
                         	<tr>
                         		<td class="right">代金卷1 :</td>
                         		<td>
@@ -491,7 +519,7 @@
                         		</td>
                         		<td class="right">当班销售金额 :</td>
                         		<td>
-                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.goldCardAmt + cashRun.rebateAmt} 元 + ${cashRun.totalCouponValue} 元</label>
+                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.zfbSaleAmt} 元 + ${cashRun.goldCardAmt + cashRun.rebateAmt} 元 + ${cashRun.totalCouponValue} 元</label>
 		                            <form:hidden path="saleAmt"/>
                         		</td>
                         	</tr>

@@ -100,8 +100,9 @@ public class CashRunManager {
 	 */
 	@SuppressWarnings("unchecked")
 	private List<CashRun> getAllCashRunByOrgId(String orgId, String optDateY, String optDateM) throws ParseException {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(
-				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao
+				.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(new Sort.Order(Sort.Direction.DESC,
+						"optDate"), new Sort.Order(Sort.Direction.DESC, "jobType")));
 
 		return _list;
 	}
@@ -206,7 +207,8 @@ public class CashRunManager {
 		BigDecimal totalCouponCashValue = new BigDecimal("0");
 
 		// 删除销售流水-代金卷明细信息
-		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), cashRun.getOptDate(), cashRun.getJobType());
+		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), cashRun.getOptDate(),
+				cashRun.getJobType());
 
 		for (int i = 0; i < cashRun.getCouponNo().length; i++) {
 			if (StringUtils.isBlank(cashRun.getCouponNo()[i]) || cashRun.getCouponValue()[i] == null) {
@@ -214,9 +216,9 @@ public class CashRunManager {
 			}
 			totalCouponValue = totalCouponValue.add(cashRun.getCouponValue()[i]);
 
-			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(
-					user.getOrganization().getId(), _date, cashRun.getJobType(), cashRun.getCouponNo()[i],
-					cashRun.getCouponValue()[i]));
+			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(user
+					.getOrganization().getId(), _date, cashRun.getJobType(), cashRun.getCouponNo()[i], cashRun
+					.getCouponValue()[i]));
 		}
 
 		// 代金卷实际值
@@ -237,8 +239,8 @@ public class CashRunManager {
 	@SuppressWarnings("unchecked")
 	public BigDecimal getInitAmt(String orgId, String optDate) throws ParseException {
 		// 取本日前班次余额（销售）信息
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(
+				new Sort.Order(Sort.Direction.DESC, "optDate")));
 
 		if (null != _list && _list.size() > 0) {// 返回本日前班次余额（销售）信息
 			return ((CashRun) _list.get(0)).getRetainedAmt();
@@ -302,13 +304,16 @@ public class CashRunManager {
 		_dbCashRun.setSaleCashAmt(cashRun.getSaleCashAmt());
 		// 汇报金额
 		_dbCashRun.setReportAmt(cashRun.getReportAmt());
+		// 支付宝
+		_dbCashRun.setZfbSaleAmt(cashRun.getZfbSaleAmt());
 
 		// -------------------------------2014-7-13
 		BigDecimal totalCouponValue = new BigDecimal("0");
 		BigDecimal totalCouponCashValue = new BigDecimal("0");
 
 		// 删除销售流水-代金卷明细信息
-		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), _dbCashRun.getOptDate(), _dbCashRun.getJobType());
+		cashRunCouponManager.delCashRunCoupon(user.getOrganization().getId(), _dbCashRun.getOptDate(),
+				_dbCashRun.getJobType());
 
 		for (int i = 0; i < cashRun.getCouponNo().length; i++) {
 			if (StringUtils.isBlank(cashRun.getCouponNo()[i]) || cashRun.getCouponValue()[i] == null) {
@@ -316,9 +321,9 @@ public class CashRunManager {
 			}
 			totalCouponValue = totalCouponValue.add(cashRun.getCouponValue()[i]);
 
-			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(
-					user.getOrganization().getId(), _dbCashRun.getOptDate(), _dbCashRun.getJobType(), cashRun.getCouponNo()[i],
-					cashRun.getCouponValue()[i]));
+			totalCouponCashValue = totalCouponCashValue.add(cashRunCouponManager.saveCashRunCoupon(user
+					.getOrganization().getId(), _dbCashRun.getOptDate(), _dbCashRun.getJobType(),
+					cashRun.getCouponNo()[i], cashRun.getCouponValue()[i]));
 		}
 
 		// 代金卷实际值
@@ -382,6 +387,9 @@ public class CashRunManager {
 			_cashRun.setGoldCardAmt(_cashRun.getGoldCardAmt().add(cashRun.getGoldCardAmt()));
 			// 金卡返利金额
 			_cashRun.setRebateAmt(_cashRun.getRebateAmt().add(cashRun.getRebateAmt()));
+
+			// 支付宝
+			_cashRun.setZfbSaleAmt(_cashRun.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
 		}
 		return _cashRun;
 	}

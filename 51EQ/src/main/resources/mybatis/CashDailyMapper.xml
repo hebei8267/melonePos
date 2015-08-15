@@ -39,6 +39,9 @@
 		<result column="pre_pay_total_amt" property="prePayTotalAmt" jdbcType="DECIMAL"/>
         
         <result column="bank_check_flg" property="bankCheckFlg" jdbcType="INTEGER"/>
+        
+        <result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
+		<result column="bw_zfb_sale_amt" property="bwZfbSaleAmt" jdbcType="DECIMAL"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -74,6 +77,8 @@
     	cash.rebate_amt ,
     	cash.gold_card_total_amt ,
     	cash.pre_pay_total_amt ,
+    	cash.zfb_sale_amt ,
+    	cash.bw_zfb_sale_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>
@@ -154,6 +159,8 @@
 	    	cash.report_amt ,
 	    	cash.gold_card_total_amt ,
     		cash.pre_pay_total_amt ,
+    		cash.zfb_sale_amt ,
+    		cash.bw_zfb_sale_amt ,
 	    	org.org_name AS org_name
 		from 
 			t_organization org left join t_cash_daily cash on org.org_id = cash.org_id
