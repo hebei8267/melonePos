@@ -62,8 +62,10 @@ public class CashDailyManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CashDaily> getAllNotCashDailyByOrgId(String orgId) {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getAllNotCashDailyByOrgId(orgId, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.ASC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao
+				.getAllNotCashDailyByOrgId(orgId, new Sort(new Sort.Order(
+						Sort.Direction.DESC, "optDate"), new Sort.Order(
+						Sort.Direction.ASC, "jobType")));
 
 		List<CashDaily> _noCashDailyList = new ArrayList<CashDaily>();
 		String _tmpOptDate = "";
@@ -84,37 +86,51 @@ public class CashDailyManager {
 			}
 
 			// 现金盈亏（合计）
-			_tmpCashDaily.setAdjustAmt(_tmpCashDaily.getAdjustAmt().add(cashRun.getAdjustAmt()));
+			_tmpCashDaily.setAdjustAmt(_tmpCashDaily.getAdjustAmt().add(
+					cashRun.getAdjustAmt()));
 			// 销售收现（合计）
-			_tmpCashDaily.setSaleCashAmt(_tmpCashDaily.getSaleCashAmt().add(cashRun.getSaleCashAmt()));
+			_tmpCashDaily.setSaleCashAmt(_tmpCashDaily.getSaleCashAmt().add(
+					cashRun.getSaleCashAmt()));
 			// 刷卡金额-单据统计-当日（合计）
-			_tmpCashDaily.setCardAmt(_tmpCashDaily.getCardAmt().add(cashRun.getCardAmt()));
+			_tmpCashDaily.setCardAmt(_tmpCashDaily.getCardAmt().add(
+					cashRun.getCardAmt()));
 			// 存款金额-当日（合计）
-			_tmpCashDaily.setDepositAmt(_tmpCashDaily.getDepositAmt().add(cashRun.getDepositAmt()));
+			_tmpCashDaily.setDepositAmt(_tmpCashDaily.getDepositAmt().add(
+					cashRun.getDepositAmt()));
 			// 留存金额-当日
 			_tmpCashDaily.setRetainedAmt(cashRun.getRetainedAmt());
 			// 当日销售（合计）
-			_tmpCashDaily.setSaleAmt(_tmpCashDaily.getSaleAmt().add(cashRun.getSaleAmt()));
+			_tmpCashDaily.setSaleAmt(_tmpCashDaily.getSaleAmt().add(
+					cashRun.getSaleAmt()));
 			// 汇报金额
-			_tmpCashDaily.setReportAmt(_tmpCashDaily.getReportAmt().add(cashRun.getReportAmt()));
+			_tmpCashDaily.setReportAmt(_tmpCashDaily.getReportAmt().add(
+					cashRun.getReportAmt()));
 
 			// 2014-5-11
 			// 代金卷面值
 			if (null != cashRun.getTotalCouponValue()) {
-				_tmpCashDaily.setCouponValue(_tmpCashDaily.getCouponValue().add(cashRun.getTotalCouponValue()));
+				_tmpCashDaily.setCouponValue(_tmpCashDaily.getCouponValue()
+						.add(cashRun.getTotalCouponValue()));
 			}
 			// 取得顾客/会员预付款（现金充值）合计信息
-			_tmpCashDaily.setPrePayCashAmt(_tmpCashDaily.getPrePayCashAmt().add(cashRun.getPrePayCashAmt()));
+			_tmpCashDaily.setPrePayCashAmt(_tmpCashDaily.getPrePayCashAmt()
+					.add(cashRun.getPrePayCashAmt()));
 			// 取得顾客/会员预付款（现金充值）合计信息
-			_tmpCashDaily.setPrePayCardAmt(_tmpCashDaily.getPrePayCardAmt().add(cashRun.getPrePayCardAmt()));
+			_tmpCashDaily.setPrePayCardAmt(_tmpCashDaily.getPrePayCardAmt()
+					.add(cashRun.getPrePayCardAmt()));
 
 			// 金卡销售金额
-			_tmpCashDaily.setGoldCardAmt(_tmpCashDaily.getGoldCardAmt().add(cashRun.getGoldCardAmt()));
+			_tmpCashDaily.setGoldCardAmt(_tmpCashDaily.getGoldCardAmt().add(
+					cashRun.getGoldCardAmt()));
 			// 返利金额
-			_tmpCashDaily.setRebateAmt(_tmpCashDaily.getRebateAmt().add(cashRun.getRebateAmt()));
+			_tmpCashDaily.setRebateAmt(_tmpCashDaily.getRebateAmt().add(
+					cashRun.getRebateAmt()));
 
-			// 支付宝销售额
-			_tmpCashDaily.setZfbSaleAmt(_tmpCashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
+			if (null != cashRun.getZfbSaleAmt()) {
+				// 支付宝销售额
+				_tmpCashDaily.setZfbSaleAmt(_tmpCashDaily.getZfbSaleAmt().add(
+						cashRun.getZfbSaleAmt()));
+			}
 
 		}
 
@@ -125,14 +141,18 @@ public class CashDailyManager {
 	 * 取得销售流水日结信息
 	 * 
 	 * @param orgId
-	 * @param currentDate(yyyyMMdd)
+	 * @param currentDate
+	 *            (yyyyMMdd)
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<CashDaily> getAllCashDailyByOrgId_1(String orgId, String currentDate) throws ParseException {
-		String optDateY = DateUtils.transDateFormat(currentDate, "yyyyMMdd", "yyyy");
+	public List<CashDaily> getAllCashDailyByOrgId_1(String orgId,
+			String currentDate) throws ParseException {
+		String optDateY = DateUtils.transDateFormat(currentDate, "yyyyMMdd",
+				"yyyy");
 
-		String optDateM = DateUtils.transDateFormat(currentDate, "yyyyMMdd", "MM");
+		String optDateM = DateUtils.transDateFormat(currentDate, "yyyyMMdd",
+				"MM");
 
 		return getAllCashDailyByOrgId(orgId, optDateY, optDateM);
 	}
@@ -141,11 +161,13 @@ public class CashDailyManager {
 	 * 取得销售流水日结信息
 	 * 
 	 * @param orgId
-	 * @param optDate(yyyy-MM)
+	 * @param optDate
+	 *            (yyyy-MM)
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<CashDaily> getAllCashDailyByOrgId_2(String orgId, String optDate) throws ParseException {
+	public List<CashDaily> getAllCashDailyByOrgId_2(String orgId, String optDate)
+			throws ParseException {
 		String optDateY = DateUtils.transDateFormat(optDate, "yyyy-MM", "yyyy");
 
 		String optDateM = DateUtils.transDateFormat(optDate, "yyyy-MM", "MM");
@@ -162,10 +184,14 @@ public class CashDailyManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private List<CashDaily> getAllCashDailyByOrgId(String orgId, String optDateY, String optDateM)
-			throws ParseException {
-		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY,
-				optDateM, new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
+	private List<CashDaily> getAllCashDailyByOrgId(String orgId,
+			String optDateY, String optDateM) throws ParseException {
+		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao
+				.findByOrgId_OptDateY_OptDateM(
+						orgId,
+						optDateY,
+						optDateM,
+						new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
 
 		return _list;
 	}
@@ -179,8 +205,9 @@ public class CashDailyManager {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = false)
 	public void cashDailyConfirm(String optDate, String orgId, String bwBranchNo) {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getNotCashDailyByOrgId_OptDate(orgId, optDate, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao
+				.getNotCashDailyByOrgId_OptDate(orgId, optDate, new Sort(
+						new Sort.Order(Sort.Direction.ASC, "jobType")));
 
 		CashDaily _cashDaily = null;
 		boolean firstFlg = true;
@@ -204,24 +231,32 @@ public class CashDailyManager {
 
 			}
 			// 当日销售（合计）
-			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashRun.getSaleAmt()));
+			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(
+					cashRun.getSaleAmt()));
 
 			// 刷卡金额-单据统计-当日（合计）
-			_cashDaily.setCardAmt(_cashDaily.getCardAmt().add(cashRun.getCardAmt()));
+			_cashDaily.setCardAmt(_cashDaily.getCardAmt().add(
+					cashRun.getCardAmt()));
 			// 刷卡金额-电脑统计-当日（合计）
-			_cashDaily.setCardAmtBw(_cashDaily.getCardAmtBw().add(cashRun.getCardAmtBw()));
+			_cashDaily.setCardAmtBw(_cashDaily.getCardAmtBw().add(
+					cashRun.getCardAmtBw()));
 			// 刷卡笔数-当日（合计）
-			_cashDaily.setCardNum(_cashDaily.getCardNum() + cashRun.getCardNum());
+			_cashDaily.setCardNum(_cashDaily.getCardNum()
+					+ cashRun.getCardNum());
 			// 存款金额-当日（合计）
-			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(cashRun.getDepositAmt()));
+			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(
+					cashRun.getDepositAmt()));
 			// 留存金额-当日
 			_cashDaily.setRetainedAmt(cashRun.getRetainedAmt());
 			// 销售现金-当日（合计）
-			_cashDaily.setSaleCashAmt(_cashDaily.getSaleCashAmt().add(cashRun.getSaleCashAmt()));
+			_cashDaily.setSaleCashAmt(_cashDaily.getSaleCashAmt().add(
+					cashRun.getSaleCashAmt()));
 			// 现金盈亏（调节）
-			_cashDaily.setAdjustAmt(_cashDaily.getAdjustAmt().add(cashRun.getAdjustAmt()));
+			_cashDaily.setAdjustAmt(_cashDaily.getAdjustAmt().add(
+					cashRun.getAdjustAmt()));
 			// 汇报金额
-			_cashDaily.setReportAmt(_cashDaily.getReportAmt().add(cashRun.getReportAmt()));
+			_cashDaily.setReportAmt(_cashDaily.getReportAmt().add(
+					cashRun.getReportAmt()));
 			// 修改销售流水标记
 			cashRun.setDailyFlg(true);
 
@@ -234,22 +269,32 @@ public class CashDailyManager {
 			// 2014-5-11
 			// 代金卷面值
 			if (null != cashRun.getCouponValue()) {
-				_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashRun.getTotalCouponValue()));
-				_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue().add(cashRun.getTotalCouponCashValue()));
+				_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(
+						cashRun.getTotalCouponValue()));
+				_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue()
+						.add(cashRun.getTotalCouponCashValue()));
 			}
 
 			// 取得顾客/会员预付款（现金充值）合计信息
-			_cashDaily.setPrePayCashAmt(_cashDaily.getPrePayCashAmt().add(cashRun.getPrePayCashAmt()));
+			_cashDaily.setPrePayCashAmt(_cashDaily.getPrePayCashAmt().add(
+					cashRun.getPrePayCashAmt()));
 			// 取得顾客/会员预付款（现金充值）合计信息
-			_cashDaily.setPrePayCardAmt(_cashDaily.getPrePayCardAmt().add(cashRun.getPrePayCardAmt()));
+			_cashDaily.setPrePayCardAmt(_cashDaily.getPrePayCardAmt().add(
+					cashRun.getPrePayCardAmt()));
 
 			// 金卡销售金额
-			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(cashRun.getGoldCardAmt()));
+			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(
+					cashRun.getGoldCardAmt()));
 			// 返利金额
-			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(cashRun.getRebateAmt()));
+			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(
+					cashRun.getRebateAmt()));
 
 			// 支付宝销售额
-			_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
+			if (null != cashRun.getZfbSaleAmt()) {
+				_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(
+						cashRun.getZfbSaleAmt()));
+			}
+
 		}
 		// 生成销售日结信息
 		cashDailyJpaDao.save(_cashDaily);
@@ -264,8 +309,9 @@ public class CashDailyManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CashRun> cashDailyDetail(String optDate, String orgId) {
-		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
-				Sort.Direction.ASC, "jobType")));
+		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId,
+				optDate,
+				new Sort(new Sort.Order(Sort.Direction.ASC, "jobType")));
 	}
 
 	/**
@@ -297,7 +343,8 @@ public class CashDailyManager {
 	 * @return
 	 */
 	public List<CashRun> searchSaleReportList(CashRun cashRun) {
-		List<CashRun> _list = cashRunMyBatisDao.getCashRunList_OptDate_Interval(cashRun);
+		List<CashRun> _list = cashRunMyBatisDao
+				.getCashRunList_OptDate_Interval(cashRun);
 
 		return _list;
 	}
@@ -317,43 +364,64 @@ public class CashDailyManager {
 			cashDaily.setIndex(_index);
 
 			// 现金盈亏（调节）
-			_cashDaily.setAdjustAmt(_cashDaily.getAdjustAmt().add(cashDaily.getAdjustAmt()));
+			_cashDaily.setAdjustAmt(_cashDaily.getAdjustAmt().add(
+					cashDaily.getAdjustAmt()));
 			// 销售现金-当日（合计）
-			_cashDaily.setSaleCashAmt(_cashDaily.getSaleCashAmt().add(cashDaily.getSaleCashAmt()));
+			_cashDaily.setSaleCashAmt(_cashDaily.getSaleCashAmt().add(
+					cashDaily.getSaleCashAmt()));
 			// 刷卡金额(单据)
-			_cashDaily.setCardAmt(_cashDaily.getCardAmt().add(cashDaily.getCardAmt()));
+			_cashDaily.setCardAmt(_cashDaily.getCardAmt().add(
+					cashDaily.getCardAmt()));
 			// 刷卡金额(电脑统计)
-			_cashDaily.setCardAmtBw(_cashDaily.getCardAmtBw().add(cashDaily.getCardAmtBw()));
+			_cashDaily.setCardAmtBw(_cashDaily.getCardAmtBw().add(
+					cashDaily.getCardAmtBw()));
 			// 刷卡笔数
-			_cashDaily.setCardNum(_cashDaily.getCardNum() + cashDaily.getCardNum());
+			_cashDaily.setCardNum(_cashDaily.getCardNum()
+					+ cashDaily.getCardNum());
 			// 存款金额
-			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(cashDaily.getDepositAmt()));
+			_cashDaily.setDepositAmt(_cashDaily.getDepositAmt().add(
+					cashDaily.getDepositAmt()));
 			// 当日销售
-			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(cashDaily.getSaleAmt()));
+			_cashDaily.setSaleAmt(_cashDaily.getSaleAmt().add(
+					cashDaily.getSaleAmt()));
 			// 代价卷
-			_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(cashDaily.getCouponValue()));
+			_cashDaily.setCouponValue(_cashDaily.getCouponValue().add(
+					cashDaily.getCouponValue()));
 			// 代价卷
-			_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue().add(cashDaily.getCouponCashValue()));
+			_cashDaily.setCouponCashValue(_cashDaily.getCouponCashValue().add(
+					cashDaily.getCouponCashValue()));
 			// 当日销售BW
-			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(cashDaily.getBwSaleAmt()));
+			_cashDaily.setBwSaleAmt(_cashDaily.getBwSaleAmt().add(
+					cashDaily.getBwSaleAmt()));
 			// 汇报金额
-			_cashDaily.setReportAmt(_cashDaily.getReportAmt().add(cashDaily.getReportAmt()));
+			_cashDaily.setReportAmt(_cashDaily.getReportAmt().add(
+					cashDaily.getReportAmt()));
 			// 金卡预付款(收现)
-			_cashDaily.setPrePayCashAmt(_cashDaily.getPrePayCashAmt().add(cashDaily.getPrePayCashAmt()));
+			_cashDaily.setPrePayCashAmt(_cashDaily.getPrePayCashAmt().add(
+					cashDaily.getPrePayCashAmt()));
 			// 金卡预付款(刷卡)
-			_cashDaily.setPrePayCardAmt(_cashDaily.getPrePayCardAmt().add(cashDaily.getPrePayCardAmt()));
+			_cashDaily.setPrePayCardAmt(_cashDaily.getPrePayCardAmt().add(
+					cashDaily.getPrePayCardAmt()));
 			// 金卡销售金额
-			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(cashDaily.getGoldCardAmt()));
+			_cashDaily.setGoldCardAmt(_cashDaily.getGoldCardAmt().add(
+					cashDaily.getGoldCardAmt()));
 			// 返利金额
-			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(cashDaily.getRebateAmt()));
+			_cashDaily.setRebateAmt(_cashDaily.getRebateAmt().add(
+					cashDaily.getRebateAmt()));
 
 			// 金卡销售金额(合计)
-			_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(cashDaily.getGoldCardTotalAmt()));
+			_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt()
+					.add(cashDaily.getGoldCardTotalAmt()));
 			// 金卡预付款(合计)
-			_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(cashDaily.getPrePayTotalAmt()));
+			_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(
+					cashDaily.getPrePayTotalAmt()));
 
 			// 支付宝销售额
-			_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashDaily.getZfbSaleAmt()));
+			if (null != cashDaily.getZfbSaleAmt()) {
+				_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(
+						cashDaily.getZfbSaleAmt()));
+			}
+
 		}
 		return _cashDaily;
 	}
@@ -367,34 +435,52 @@ public class CashDailyManager {
 	public SaleReport calTotal_SaleReport(List<SaleReport> reportList) {
 		SaleReport _saleReport = new SaleReport();
 		for (SaleReport saleReport : reportList) {
-			_saleReport.setSaleCashAmt(_saleReport.getSaleCashAmt().add(saleReport.getSaleCashAmt()));
-			_saleReport.setCashAmt(_saleReport.getCashAmt().add(saleReport.getCashAmt()));
-			_saleReport.setAdjustAmt(_saleReport.getAdjustAmt().add(saleReport.getAdjustAmt()));
-			_saleReport.setCardAmt(_saleReport.getCardAmt().add(saleReport.getCardAmt()));
-			_saleReport.setCardAmtBw(_saleReport.getCardAmtBw().add(saleReport.getCardAmtBw()));
-			_saleReport.setDepositAmt(_saleReport.getDepositAmt().add(saleReport.getDepositAmt()));
-			_saleReport.setSaleAmt(_saleReport.getSaleAmt().add(saleReport.getSaleAmt()));
-			_saleReport.setCardNum(_saleReport.getCardNum() + saleReport.getCardNum());
+			_saleReport.setSaleCashAmt(_saleReport.getSaleCashAmt().add(
+					saleReport.getSaleCashAmt()));
+			_saleReport.setCashAmt(_saleReport.getCashAmt().add(
+					saleReport.getCashAmt()));
+			_saleReport.setAdjustAmt(_saleReport.getAdjustAmt().add(
+					saleReport.getAdjustAmt()));
+			_saleReport.setCardAmt(_saleReport.getCardAmt().add(
+					saleReport.getCardAmt()));
+			_saleReport.setCardAmtBw(_saleReport.getCardAmtBw().add(
+					saleReport.getCardAmtBw()));
+			_saleReport.setDepositAmt(_saleReport.getDepositAmt().add(
+					saleReport.getDepositAmt()));
+			_saleReport.setSaleAmt(_saleReport.getSaleAmt().add(
+					saleReport.getSaleAmt()));
+			_saleReport.setCardNum(_saleReport.getCardNum()
+					+ saleReport.getCardNum());
 
-			_saleReport.setCouponValue(_saleReport.getCouponValue().add(saleReport.getCouponValue()));
-			_saleReport.setCouponCashValue(_saleReport.getCouponCashValue().add(saleReport.getCouponCashValue()));
+			_saleReport.setCouponValue(_saleReport.getCouponValue().add(
+					saleReport.getCouponValue()));
+			_saleReport.setCouponCashValue(_saleReport.getCouponCashValue()
+					.add(saleReport.getCouponCashValue()));
 
-			_saleReport.setPrePayCashAmt(_saleReport.getPrePayCashAmt().add(saleReport.getPrePayCashAmt()));
-			_saleReport.setPrePayCardAmt(_saleReport.getPrePayCardAmt().add(saleReport.getPrePayCardAmt()));
+			_saleReport.setPrePayCashAmt(_saleReport.getPrePayCashAmt().add(
+					saleReport.getPrePayCashAmt()));
+			_saleReport.setPrePayCardAmt(_saleReport.getPrePayCardAmt().add(
+					saleReport.getPrePayCardAmt()));
 
 			// 金卡销售金额
-			_saleReport.setGoldCardAmt(_saleReport.getGoldCardAmt().add(saleReport.getGoldCardAmt()));
+			_saleReport.setGoldCardAmt(_saleReport.getGoldCardAmt().add(
+					saleReport.getGoldCardAmt()));
 			// 返利金额
-			_saleReport.setRebateAmt(_saleReport.getRebateAmt().add(saleReport.getRebateAmt()));
+			_saleReport.setRebateAmt(_saleReport.getRebateAmt().add(
+					saleReport.getRebateAmt()));
 
 			// 金卡销售金额(合计)
-			_saleReport.setGoldCardTotalAmt(_saleReport.getGoldCardTotalAmt().add(saleReport.getGoldCardTotalAmt()));
+			_saleReport.setGoldCardTotalAmt(_saleReport.getGoldCardTotalAmt()
+					.add(saleReport.getGoldCardTotalAmt()));
 			// 金卡预付款(合计)
-			_saleReport.setPrePayTotalAmt(_saleReport.getPrePayTotalAmt().add(saleReport.getPrePayTotalAmt()));
-			
-			
+			_saleReport.setPrePayTotalAmt(_saleReport.getPrePayTotalAmt().add(
+					saleReport.getPrePayTotalAmt()));
+
 			// 支付宝销售额
-			_saleReport.setZfbSaleAmt(_saleReport.getZfbSaleAmt().add(saleReport.getZfbSaleAmt()));
+			if (null != saleReport.getZfbSaleAmt()) {
+				_saleReport.setZfbSaleAmt(_saleReport.getZfbSaleAmt().add(
+						saleReport.getZfbSaleAmt()));
+			}
 
 		}
 		return _saleReport;
@@ -403,17 +489,20 @@ public class CashDailyManager {
 	/**
 	 * 取得销售流水日结信息(全机构)
 	 * 
-	 * @param currentDate(yyyy-MM-dd)
+	 * @param currentDate
+	 *            (yyyy-MM-dd)
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<CashDaily> getCashDailyListByAllOrg(String dailyDate) throws ParseException {
+	public List<CashDaily> getCashDailyListByAllOrg(String dailyDate)
+			throws ParseException {
 		CashDaily _cashDaily = new CashDaily();
 		_cashDaily.setOptDateShow(dailyDate);
 		return cashDailyMyBatisDao.getCashDailyListByAllOrg(_cashDaily);
 	}
 
-	private void cardTotalProcess(List<CashRun> _list, List<SaleReport> reportList) throws ParseException {
+	private void cardTotalProcess(List<CashRun> _list,
+			List<SaleReport> reportList) throws ParseException {
 		String _tmpOrgName = "";
 		String _tmpOptDate = "";
 		int _index = 0;
@@ -421,7 +510,8 @@ public class CashDailyManager {
 		SaleReport _saleReport = null;
 		for (CashRun _cashRun : _list) {
 
-			if (!_tmpOrgName.equals(_cashRun.getOrgName()) || !_tmpOptDate.equals(_cashRun.getOptDateShow())) {
+			if (!_tmpOrgName.equals(_cashRun.getOrgName())
+					|| !_tmpOptDate.equals(_cashRun.getOptDateShow())) {
 
 				_tmpOrgName = _cashRun.getOrgName();
 				_tmpOptDate = _cashRun.getOptDateShow();
@@ -435,7 +525,8 @@ public class CashDailyManager {
 		}
 	}
 
-	private void cashTotalProcess(List<CashRun> _list, List<SaleReport> reportList) throws ParseException {
+	private void cashTotalProcess(List<CashRun> _list,
+			List<SaleReport> reportList) throws ParseException {
 		int _index = 0;
 
 		for (CashRun _cashRun : _list) {
@@ -459,8 +550,9 @@ public class CashDailyManager {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public String createCardReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCardReportFile(CashRun _cashRun)
+			throws ParsePropertyException, InvalidFormatException, IOException,
+			ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -480,7 +572,8 @@ public class CashDailyManager {
 
 		String tmpFileName = UUID.randomUUID().toString() + ".xls";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
-		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CARD_DAILY, map, tmpFilePath);
+		transformer.transformXLS(sysConfig.getExcelTemplatePath()
+				+ XML_CONFIG_CARD_DAILY, map, tmpFilePath);
 
 		return tmpFileName;
 	}
@@ -494,8 +587,8 @@ public class CashDailyManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public String createCashReportFile(CashDaily _cashDaily) throws ParsePropertyException, InvalidFormatException,
-			IOException {
+	public String createCashReportFile(CashDaily _cashDaily)
+			throws ParsePropertyException, InvalidFormatException, IOException {
 		List<CashDaily> _cashDailyList = searchReportList(_cashDaily);
 		if (null == _cashDailyList || _cashDailyList.size() == 0) {
 			return null;
@@ -516,7 +609,8 @@ public class CashDailyManager {
 
 		String tmpFileName = UUID.randomUUID().toString() + ".xls";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
-		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CASH_DAILY_2, map, tmpFilePath);
+		transformer.transformXLS(sysConfig.getExcelTemplatePath()
+				+ XML_CONFIG_CASH_DAILY_2, map, tmpFilePath);
 
 		return tmpFileName;
 	}
@@ -531,8 +625,9 @@ public class CashDailyManager {
 	 * @throws ParsePropertyException
 	 * @throws ParseException
 	 */
-	public String createCashReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCashReportFile(CashRun _cashRun)
+			throws ParsePropertyException, InvalidFormatException, IOException,
+			ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -553,7 +648,8 @@ public class CashDailyManager {
 
 		String tmpFileName = UUID.randomUUID().toString() + ".xls";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
-		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CASH_DAILY, map, tmpFilePath);
+		transformer.transformXLS(sysConfig.getExcelTemplatePath()
+				+ XML_CONFIG_CASH_DAILY, map, tmpFilePath);
 
 		return tmpFileName;
 	}
@@ -568,20 +664,25 @@ public class CashDailyManager {
 		// 取得同步百威销售额-重计算天数
 		List<String> optDateList = calOptDate();
 		for (String optDate : optDateList) {
-			List<CashDaily> _cashDailyList = cashDailyJpaDao.findByOptDate(optDate);
+			List<CashDaily> _cashDailyList = cashDailyJpaDao
+					.findByOptDate(optDate);
 
 			Map<String, String> operDateParam = Maps.newHashMap();
 			operDateParam.put("oper_date", optDate);
-			operDateParam.put("oper_date_start", DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
-			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
-			List<DailySale> _bwZFBSaleList = dailySaleMyBatisDao.getDailyZFBSaleList(operDateParam);
+			operDateParam.put("oper_date_start", DateUtils.transDateFormat(
+					optDate, "yyyyMMdd", "yyyy-MM-dd"));
+			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(
+					optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
+			List<DailySale> _bwZFBSaleList = dailySaleMyBatisDao
+					.getDailyZFBSaleList(operDateParam);
 
 			for (CashDaily _cashDaily : _cashDailyList) {
 				for (DailySale _dailySale : _bwZFBSaleList) {
 					if (myEquals(_cashDaily, _dailySale)) {
 
 						// 设置支付宝销售额
-						_cashDaily.setBwZfbSaleAmt(_dailySale.getBwZfbSaleAmt());
+						_cashDaily
+								.setBwZfbSaleAmt(_dailySale.getBwZfbSaleAmt());
 
 						cashDailyJpaDao.save(_cashDaily);
 
@@ -602,13 +703,17 @@ public class CashDailyManager {
 		List<String> optDateList = calOptDate();
 
 		for (String optDate : optDateList) {
-			List<CashDaily> _cashDailyList = cashDailyJpaDao.findByOptDate(optDate);
+			List<CashDaily> _cashDailyList = cashDailyJpaDao
+					.findByOptDate(optDate);
 
 			Map<String, String> operDateParam = Maps.newHashMap();
 			operDateParam.put("oper_date", optDate);
-			operDateParam.put("oper_date_start", DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
-			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
-			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailyGoldCardSaleList(operDateParam);
+			operDateParam.put("oper_date_start", DateUtils.transDateFormat(
+					optDate, "yyyyMMdd", "yyyy-MM-dd"));
+			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(
+					optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
+			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao
+					.getDailyGoldCardSaleList(operDateParam);
 
 			for (CashDaily _cashDaily : _cashDailyList) {
 				_cashDaily.setPrePayTotalAmt(new BigDecimal("0"));
@@ -619,15 +724,19 @@ public class CashDailyManager {
 
 						if ("P".equals(_dailySale.getOperType())) {// 充值
 							// 金卡预付款(合计)
-							_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(_dailySale.getOperMoney()));
+							_cashDaily.setPrePayTotalAmt(_cashDaily
+									.getPrePayTotalAmt().add(
+											_dailySale.getOperMoney()));
 						} else if ("SA".equals(_dailySale.getOperType())) {// 销售
 							// 金卡销售金额(合计)
-							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(
-									_dailySale.getOperMoney()));
+							_cashDaily.setGoldCardTotalAmt(_cashDaily
+									.getGoldCardTotalAmt().add(
+											_dailySale.getOperMoney()));
 						} else if ("SB".equals(_dailySale.getOperType())) {// 销售退货
 							// 金卡销售金额(合计)
-							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().subtract(
-									(_dailySale.getOperMoney())));
+							_cashDaily.setGoldCardTotalAmt(_cashDaily
+									.getGoldCardTotalAmt().subtract(
+											(_dailySale.getOperMoney())));
 						}
 
 					}
@@ -648,9 +757,11 @@ public class CashDailyManager {
 		List<String> optDateList = calOptDate();
 
 		for (String optDate : optDateList) {
-			List<CashDaily> _cashDailyList = cashDailyJpaDao.findByOptDate(optDate);
+			List<CashDaily> _cashDailyList = cashDailyJpaDao
+					.findByOptDate(optDate);
 
-			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailySaleList(optDate);
+			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao
+					.getDailySaleList(optDate);
 
 			for (CashDaily _cashDaily : _cashDailyList) {
 				for (DailySale _dailySale : _bwDailySaleList) {
@@ -696,7 +807,8 @@ public class CashDailyManager {
 
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 		for (int i = 1; i < sysConfig.getSynBwSaleDays() + 1; i++) {
-			_optDateList.add(DateUtils.getNextDateFormatDate(_now, -i, "yyyyMMdd"));
+			_optDateList.add(DateUtils.getNextDateFormatDate(_now, -i,
+					"yyyyMMdd"));
 		}
 		return _optDateList;
 	}
@@ -750,7 +862,8 @@ public class CashDailyManager {
 		_rParam.setOptDate(optDate);
 		cashRunMyBatisDao.delCashRunInfo(_rParam);
 
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, null);
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao
+				.findByOrgId_OptDate(orgId, optDate, null);
 		for (CashRun cashRun : _list) {
 			cashRun.setDailyFlg(false);
 

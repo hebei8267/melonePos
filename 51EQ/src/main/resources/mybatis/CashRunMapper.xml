@@ -47,6 +47,8 @@
 		<result column="pre_pay_cash_amt" property="prePayCashAmt" jdbcType="DECIMAL"/>
 		<result column="gold_card_amt" property="goldCardAmt" jdbcType="DECIMAL"/>
 		<result column="rebate_amt" property="rebateAmt" jdbcType="DECIMAL"/>
+		
+		<result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -87,6 +89,7 @@
 	    cash.pre_pay_cash_amt ,
 	    cash.gold_card_amt ,
 	    cash.rebate_amt ,
+	    cash.zfb_sale_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>

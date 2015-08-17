@@ -143,10 +143,10 @@
                                         代金卷<br>价值
                                     </th>
                                     <th class="center">
-                                        销售额<br>[普通]<br>合计
+                                        销售额<br>合计
                                     </th>
                                     <th class="center">
-                                        百威<br>销售额<br>[普通]<br>对账
+                                        百威<br>销售额<br>合计
                                     </th>
                                     <th class="center">
                                         销售额<br>[支付宝]<br>合计
@@ -199,7 +199,7 @@
                                         	</c:if>
                                         	${cashDaily.depositAmt}
                                         </td>
-                                        <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
+                                        <c:set var="_difference" value="${cashDaily.saleAmt + cashDaily.zfbSaleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt +  cashDaily.couponValue - cashDaily.bwSaleAmt }" />
                                         <td class="center">
                                         	${cashDaily.saleAmt}<br>${cashDaily.zfbSaleAmt}<br>${cashDaily.goldCardAmt}<br>${cashDaily.rebateAmt}<br>${cashDaily.couponValue}
                                         </td>
@@ -212,7 +212,7 @@
                                         </td>
                                         
                                         <td class="right" <c:if test="${(_difference > BW_SALE_DIF_AMOUNT) || (_difference < -BW_SALE_DIF_AMOUNT)}">style="background-color:#F89406;color:#FFFFFF"</c:if>>
-                                        	${cashDaily.saleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue}
+                                        	${cashDaily.saleAmt + cashDaily.zfbSaleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue}
                                         </td>
                                         
                                         <td class="right">
