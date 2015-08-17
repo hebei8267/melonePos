@@ -83,6 +83,11 @@ public class SalesContrastBySupplierManager {
 					value.setStockTotalQty1(value.getStockTotalQty1().add(vo.getStockTotalQty1()));
 					// 库存数量2
 					value.setStockTotalQty2(value.getStockTotalQty2().add(vo.getStockTotalQty2()));
+
+					// 库存金额1
+					value.setStockTotalAmt1(value.getStockTotalAmt1().add(vo.getStockTotalAmt1()));
+					// 库存金额2
+					value.setStockTotalAmt2(value.getStockTotalAmt2().add(vo.getStockTotalAmt2()));
 				}
 
 			}
@@ -181,7 +186,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyStore2Value(List<SupplierSalesContrastVo> voList, String optDate2End, String[] orgIds, String supplierArray) {
+	private void copyStore2Value(List<SupplierSalesContrastVo> voList, String optDate2End, String[] orgIds,
+			String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate2End);
 		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
@@ -208,7 +214,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyStore1Value(List<SupplierSalesContrastVo> voList, String optDate1End, String[] orgIds, String supplierArray) {
+	private void copyStore1Value(List<SupplierSalesContrastVo> voList, String optDate1End, String[] orgIds,
+			String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate1End);
 		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
@@ -236,8 +243,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyList2Value(List<SupplierSalesContrastVo> voList, String optDate2Start, String optDate2End, String[] orgIds,
-			String supplierArray) {
+	private void copyList2Value(List<SupplierSalesContrastVo> voList, String optDate2Start, String optDate2End,
+			String[] orgIds, String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate2Start);
 		param.put("optDateEnd", optDate2End);
@@ -286,8 +293,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyList1Value(List<SupplierSalesContrastVo> voList, String optDate1Start, String optDate1End, String[] orgIds,
-			String supplierArray) {
+	private void copyList1Value(List<SupplierSalesContrastVo> voList, String optDate1Start, String optDate1End,
+			String[] orgIds, String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate1Start);
 		param.put("optDateEnd", optDate1End);
