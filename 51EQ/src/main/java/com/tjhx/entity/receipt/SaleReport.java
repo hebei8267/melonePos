@@ -615,6 +615,9 @@ public class SaleReport {
 		this.goldCardAmt = _cashRun.getGoldCardAmt();
 
 		this.reportAmt = _cashRun.getReportAmt();
+
+		// 支付宝销售额
+		this.zfbSaleAmt = _cashRun.getZfbSaleAmt();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {
