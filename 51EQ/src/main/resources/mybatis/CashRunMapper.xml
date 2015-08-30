@@ -158,6 +158,7 @@
 	    	cash.pre_pay_cash_amt ,
 	    	cash.gold_card_amt ,
 	    	cash.rebate_amt ,
+	    	cash.zfb_sale_amt ,
     		user.name AS user_name,
     		org.org_name AS org_name
 		FROM
