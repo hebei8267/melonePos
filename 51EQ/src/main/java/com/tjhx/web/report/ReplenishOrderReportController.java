@@ -43,10 +43,22 @@ public class ReplenishOrderReportController extends BaseController {
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		List<ReplenishOrder> odList = replenishOrderManager.getReplenishOrderReport(orgId);
 
+		for (ReplenishOrder rOrder : odList) {
+			getOrgReplenishOrderRanking(rOrder);
+		}
+
 		JsonMapper mapper = new JsonMapper();
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("odList", mapper.toJson(odList));
 
 		return "report/replenishOrderReport";
+	}
+
+	private List<ReplenishOrder> getOrgReplenishOrderRanking(ReplenishOrder rOrder) {
+		List<ReplenishOrder> odList = replenishOrderManager.getOrgReplenishOrderRanking(rOrder.getReceiveDateYM());
+
+		rOrder.setOrgReplenishOrderList(odList);
+
+		return odList;
 	}
 }

@@ -37,4 +37,6 @@ public interface ReplenishOrderMyBatisDao {
 	 * @param orgId(例如：01D)
 	 */
 	public List<ReplenishOrder> getReceiveErrNumInfo(Map<String, String> param);
+
+	public List<ReplenishOrder> getOrgReceiveErrNumInfo(String receiveDateYM);
 }

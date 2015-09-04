@@ -52,6 +52,8 @@ public class ReplenishOrder extends IdEntity {
 	/** 收货错填率 */
 	private Float errorRate;
 
+	private List<ReplenishOrder> orgReplenishOrderList;
+
 	/**
 	 * 获取补货单生成批次号
 	 * 
@@ -267,11 +269,16 @@ public class ReplenishOrder extends IdEntity {
 	 */
 	@Transient
 	public Float getErrorRate() {
+		if (null == receiveNum || 0 == receiveNum) {
+			return 0f;
+		}
+
 		errorRate = new Float(errorNum) / receiveNum;
 		BigDecimal b = new BigDecimal(errorRate);
 		float errorRate = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 		return errorRate;
 	}
+
 	/**
 	 * 设置
 	 * 
@@ -280,4 +287,24 @@ public class ReplenishOrder extends IdEntity {
 	public void setErrorRate(Float errorRate) {
 		this.errorRate = errorRate;
 	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return orgReplenishOrderList
+	 */
+	@Transient
+	public List<ReplenishOrder> getOrgReplenishOrderList() {
+		return orgReplenishOrderList;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param orgReplenishOrderList orgReplenishOrderList
+	 */
+	public void setOrgReplenishOrderList(List<ReplenishOrder> orgReplenishOrderList) {
+		this.orgReplenishOrderList = orgReplenishOrderList;
+	}
+
 }

@@ -7,6 +7,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -376,5 +378,31 @@ public class ReplenishOrderManager {
 
 		return odList;
 
+	}
+
+	public List<ReplenishOrder> getOrgReplenishOrderRanking(String receiveDateYM) {
+		if (StringUtils.isBlank(receiveDateYM)) {
+			return null;
+		}
+		List<ReplenishOrder> odList = replenishOrderMyBatisDao.getOrgReceiveErrNumInfo(receiveDateYM);
+		if (null == odList || odList.size() == 0) {
+			return null;
+		}
+
+		Comparator<ReplenishOrder> comparator = new Comparator<ReplenishOrder>() {
+			public int compare(ReplenishOrder o1, ReplenishOrder o2) {
+				return o1.getErrorRate() > o2.getErrorRate() ? -1 : 1;
+			}
+		};
+		Collections.sort(odList, comparator);
+
+		int toIndex = 0;
+		if (odList.size() > 6) {
+			toIndex = 6;
+		} else {
+			toIndex = odList.size();
+		}
+
+		return odList.subList(0, toIndex);
 	}
 }
