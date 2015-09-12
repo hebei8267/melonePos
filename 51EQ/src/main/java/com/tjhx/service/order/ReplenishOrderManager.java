@@ -397,8 +397,8 @@ public class ReplenishOrderManager {
 		Collections.sort(odList, comparator);
 
 		int toIndex = 0;
-		if (odList.size() > 6) {
-			toIndex = 6;
+		if (odList.size() > 10) {
+			toIndex = 10;
 		} else {
 			toIndex = odList.size();
 		}

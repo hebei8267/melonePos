@@ -59,7 +59,7 @@
                     
                 	<div id="chart1" class="span12" style="height:330px;border:1px solid #A4BED4;margin-top: 10px;"></div>
                 	
-                	<div id="chart2" class="span8" style="height:330px;border:1px solid #A4BED4;margin-top: 10px;"></div>
+                	<div id="chart2" class="span12" style="height:330px;border:1px solid #A4BED4;margin-top: 10px;"></div>
 				</div>
 			</div>
 		</div>
