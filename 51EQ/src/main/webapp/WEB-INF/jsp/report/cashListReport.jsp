@@ -263,7 +263,7 @@
                                         </td>
                                        	<td class="right">${totalCashDaily.couponCashValue}</td>
                                         <td class="right">
-                                            ${totalCashDaily.saleAmt + totalCashDaily.goldCardAmt + totalCashDaily.rebateAmt + totalCashDaily.couponValue}
+                                            ${totalCashDaily.saleAmt + totalCashDaily.zfbSaleAmt + totalCashDaily.goldCardAmt + totalCashDaily.rebateAmt + totalCashDaily.couponValue}
                                         </td>
                                         <td class="right">
                                         	${totalCashDaily.bwSaleAmt}
