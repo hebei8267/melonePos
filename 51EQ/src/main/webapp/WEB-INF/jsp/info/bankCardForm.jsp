@@ -48,10 +48,10 @@
                 <div class="span12">
                     <legend>
                         <h3>银行卡信息
-                        <c:if test="${empty	user.uuid}">
+                        <c:if test="${empty	bankCard.uuid}">
                             新增
                         </c:if>
-                        <c:if test="${!empty user.uuid}">
+                        <c:if test="${!empty bankCard.uuid}">
                             编辑
                         </c:if></h3>
                     </legend>
