@@ -51,6 +51,10 @@ public class ReplenishOrderVo {
 	private String productNum23;
 	/** 货物数量 */
 	private String productNum24;
+	/** 货物数量 */
+	private String productNum25;
+	/** 货物数量 */
+	private String productNum26;
 
 	/**
 	 * 获取货号
@@ -464,6 +468,42 @@ public class ReplenishOrderVo {
 	 */
 	public void setProductNum24(String productNum24) {
 		this.productNum24 = productNum24;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return productNum25
+	 */
+	public String getProductNum25() {
+		return productNum25;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param productNum25 productNum25
+	 */
+	public void setProductNum25(String productNum25) {
+		this.productNum25 = productNum25;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return productNum26
+	 */
+	public String getProductNum26() {
+		return productNum26;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param productNum26 productNum26
+	 */
+	public void setProductNum26(String productNum26) {
+		this.productNum26 = productNum26;
 	}
 
 }
