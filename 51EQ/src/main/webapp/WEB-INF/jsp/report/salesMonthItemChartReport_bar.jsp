@@ -16,10 +16,16 @@
 			margin-top: 40px;
 			margin-bottom: 10px;
 		}
+		.chartdiv {
+			width		: 100%;
+			height		: 800px;
+			font-size	: 11px;
+		}
     	</style>
-    	<link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
-    	<script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
-    	<script>
+    	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script src="http://www.amcharts.com/lib/3/serial.js"></script>
+		<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+		<script>
             $(function() {             
                 $("#exportBtn").click(function() {
                     $("input[type='text'],textarea").each(function(i) {
@@ -53,7 +59,7 @@
                     <c:forEach items="${orgSumSalesJsonList}" var="orgSumSalesJson" varStatus="status1">
                     	<div class="span12"><h4>${orgNameList.get(status1.index) } - 销售金额</h4></div>
                         <div class="span12"	style="margin-top: 10px;">
-                            <div id="chart1${status1.index + 1}" style="width:950px;height:900px;border:1px solid #A4BED4;"></div>
+                            <div id="chart1${status1.index + 1}" class="chartdiv"></div>
                         </div>
                         <div class="span12 cash_daily"></div>
                     </c:forEach>
@@ -67,70 +73,81 @@
 				<c:forEach items="${orgSumSalesJsonList}" var="orgSumSalesJson" varStatus="status1">
 				var orgSumSalesJson${status1.index + 1} = ${orgSumSalesJson}
 				
-				var barChart1${status1.index + 1} = new dhtmlXChart({
-		            view: "barH",
-		            container: "chart1${status1.index + 1}",
-		            value: "#saleRamt1#",
-		            label: "#saleRamt1#",
-		            color: "#FF8000",
-		            tooltip: {
-		                template: "#saleRamt1#元(#optDateYM1#)"
-		            },
-		            width: 60,
-		            yAxis: {
-		                template: "#optDateM#月"
-		            },
-		            xAxis: {
-		            	title : "销 售 金 额"
-		            },
-		            padding : {
-						left : 70
+				var chart${status1.index + 1} = AmCharts.makeChart("chart1${status1.index + 1}", {
+					"type": "serial",
+					"theme": "light",
+					"categoryField": "optDateM",
+					"rotate": true,
+					"startDuration": 1,
+					"categoryAxis": {
+						"gridPosition": "start",
+				        "axisAlpha": 0,
+				        "gridAlpha": 0,
+				        "position": "left"
 					},
-		            legend: {
-		                values: [{
-		                    text: "${optDateYM1}年",
-		                    color: "#FF8000"
-		                }, {
-		                    text: "${optDateYM2}年",
-		                    color: "#00FF40"
-		                }, {
-		                    text: "${optDateYM3}年",
-		                    color: "#0174DF"
-		                }, {
-		                    text: "${optDateYM4}年",
-		                    color: "#FFCC00"
-		                }],
-		                valign: "middle",
-		                align: "right",
-		                width: 70,
-		                layout: "y"
-		            }
-		        });
-				barChart1${status1.index + 1}.addSeries({
-		            value: "#saleRamt2#",
-		            label: "#saleRamt2#",
-		            color: "#00FF40",
-		            tooltip: {
-		            	template: "#saleRamt2#元(#optDateYM2#)"
-		            }
-		        });
-				barChart1${status1.index + 1}.addSeries({
-		            value: "#saleRamt3#",
-		            label: "#saleRamt3#",
-		            color: "#0174DF",
-		            tooltip: {
-		            	template: "#saleRamt3#元(#optDateYM3#)"
-		            }
-		        });
-				barChart1${status1.index + 1}.addSeries({
-		            value: "#saleRamt4#",
-		            label: "#saleRamt4#",
-		            color: "#FFCC00",
-		            tooltip: {
-		            	template: "#saleRamt4#元(#optDateYM4#)"
-		            }
-		        });
-		        barChart1${status1.index + 1}.parse(orgSumSalesJson${status1.index + 1}, "json");
+					"legend": {
+				        "horizontalGap": 10,
+				        "maxColumns": 1,
+				        "position": "right",
+						"useGraphSettings": true,
+						"markerSize": 10
+				    },
+					"trendLines": [],
+					"graphs": [
+						{
+							"balloonText": "时间:[[optDateYM1]]  销售金额[[value]]元",
+							"fillAlphas": 0.8,
+					
+							"lineAlpha": 0.2,
+							"title": "2015年",
+							"type": "column",
+							"valueField": "saleRamt1"
+						},
+						{
+							"balloonText": "时间:[[optDateYM2]]  销售金额[[value]]元",
+							"fillAlphas": 0.8,
+							
+							"lineAlpha": 0.2,
+							"title": "2014年",
+							"type": "column",
+							"valueField": "saleRamt2"
+						},
+						{
+							"balloonText": "时间:[[optDateYM3]]  销售金额[[value]]元",
+							"fillAlphas": 0.8,
+							
+							"lineAlpha": 0.2,
+							"title": "2013年",
+							"type": "column",
+							"valueField": "saleRamt3"
+						},
+						{
+							"balloonText": "时间:[[optDateYM4]]  销售金额[[value]]元",
+							"fillAlphas": 0.8,
+						
+							"lineAlpha": 0.2,
+							"title": "2013年",
+							"type": "column",
+							"valueField": "saleRamt4"
+						}
+					],
+					"guides": [],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"position": "top",
+							"axisAlpha": 0
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"titles": [],
+					"dataProvider": orgSumSalesJson${status1.index + 1},
+					"export": {
+				    		"enabled": true
+					}
+				
+				});
 				</c:forEach>
 			});
 		</script>
