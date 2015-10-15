@@ -29,6 +29,8 @@
 				<mapping row="0" col="22">replenishOrderVo.productNum22</mapping>
 				<mapping row="0" col="23">replenishOrderVo.productNum23</mapping>
 				<mapping row="0" col="24">replenishOrderVo.productNum24</mapping>
+				<mapping row="0" col="25">replenishOrderVo.productNum25</mapping>
+				<mapping row="0" col="26">replenishOrderVo.productNum26</mapping>
 				<!-- -->
 			</section>
 			<loopbreakcondition>

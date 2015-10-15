@@ -103,6 +103,8 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 		map.put("22D", generateOrgReplenishOrder());
 		map.put("23D", generateOrgReplenishOrder());
 		map.put("24D", generateOrgReplenishOrder());
+		map.put("25D", generateOrgReplenishOrder());
+		map.put("26D", generateOrgReplenishOrder());
 
 		return map;
 	}
@@ -177,6 +179,8 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum22(), "22D");
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum23(), "23D");
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum24(), "24D");
+			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum25(), "25D");
+			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum26(), "26D");
 		}
 
 		_saveReplenishOrder(orgOrderMap);
