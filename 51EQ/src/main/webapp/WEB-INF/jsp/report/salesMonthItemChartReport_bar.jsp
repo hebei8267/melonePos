@@ -18,8 +18,9 @@
 		}
 		.chartdiv {
 			width		: 100%;
-			height		: 800px;
+			height		: 1100px;
 			font-size	: 11px;
+			border:1px solid #A4BED4;
 		}
     	</style>
     	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
@@ -97,7 +98,8 @@
 						{
 							"balloonText": "时间:[[optDateYM1]]  销售金额[[value]]元",
 							"fillAlphas": 0.8,
-					
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
 							"lineAlpha": 0.2,
 							"title": "2015年",
 							"type": "column",
@@ -106,7 +108,8 @@
 						{
 							"balloonText": "时间:[[optDateYM2]]  销售金额[[value]]元",
 							"fillAlphas": 0.8,
-							
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
 							"lineAlpha": 0.2,
 							"title": "2014年",
 							"type": "column",
@@ -115,7 +118,8 @@
 						{
 							"balloonText": "时间:[[optDateYM3]]  销售金额[[value]]元",
 							"fillAlphas": 0.8,
-							
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
 							"lineAlpha": 0.2,
 							"title": "2013年",
 							"type": "column",
@@ -124,7 +128,8 @@
 						{
 							"balloonText": "时间:[[optDateYM4]]  销售金额[[value]]元",
 							"fillAlphas": 0.8,
-						
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
 							"lineAlpha": 0.2,
 							"title": "2013年",
 							"type": "column",
