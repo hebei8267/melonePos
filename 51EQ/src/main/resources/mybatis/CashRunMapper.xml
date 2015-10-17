@@ -49,6 +49,8 @@
 		<result column="rebate_amt" property="rebateAmt" jdbcType="DECIMAL"/>
 		
 		<result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
+		
+		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -160,10 +162,12 @@
 	    	cash.rebate_amt ,
 	    	cash.zfb_sale_amt ,
     		user.name AS user_name,
-    		org.org_name AS org_name
+    		org.org_name AS org_name,
+    		user2.name AS mng_user_id
 		FROM
 			t_cash_run cash LEFT JOIN t_organization org ON cash.org_id = org.org_id
-							LEFT JOIN t_user USER ON user.uuid = cash.create_user_id
+							LEFT JOIN t_user user ON user.uuid = cash.create_user_id
+							LEFT JOIN t_user user2 ON user2.login_name = cash.mng_user_id
 		<include refid="Where_Clause_Report" />
 		ORDER BY
     		cash.org_id ,

@@ -42,6 +42,8 @@
         
         <result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
 		<result column="bw_zfb_sale_amt" property="bwZfbSaleAmt" jdbcType="DECIMAL"/>
+		
+		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -98,8 +100,13 @@
 	<select id="getCashDailyList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
 		select distinct
 		<include refid="Base_Column_List" /> ,
-		run.bank_check_flg
-		from t_cash_daily cash left join t_cash_run run on cash.opt_date = run.opt_date and cash.org_id = run.org_id and run.bank_check_flg = 1, t_organization org
+			run.bank_check_flg,
+			user2.name AS mng_user_id
+		from 
+			t_cash_daily cash 
+				left join t_cash_run run on cash.opt_date = run.opt_date and cash.org_id = run.org_id and run.bank_check_flg = 1
+				LEFT JOIN t_user user2 ON user2.login_name = cash.mng_user_id, 
+			t_organization org
 		<include refid="Where_Clause" />
 		order by cash.opt_date_show desc, cash.org_id 
 	</select>

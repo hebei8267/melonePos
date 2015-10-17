@@ -70,7 +70,8 @@ public class SaleReport {
 	private BigDecimal prePayTotalAmt = new BigDecimal("0");
 	/** 支付宝销售额 */
 	private BigDecimal zfbSaleAmt = new BigDecimal("0");
-
+	/** 督导员 */
+	private String mngUser;
 	/**
 	 * 取得行号
 	 * 
@@ -618,6 +619,8 @@ public class SaleReport {
 
 		// 支付宝销售额
 		this.zfbSaleAmt = _cashRun.getZfbSaleAmt();
+		// 督导员
+		this.mngUser = _cashRun.getMngUserId();
 	}
 
 	public void addCashRunInfo_Card(CashRun _cashRun) throws ParseException {
@@ -711,5 +714,23 @@ public class SaleReport {
 	 */
 	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
 		this.zfbSaleAmt = zfbSaleAmt;
+	}
+
+	/**
+	 * 取得督导员
+	 * 
+	 * @return 督导员
+	 */
+	public String getMngUser() {
+		return mngUser;
+	}
+
+	/**
+	 * 设置督导员
+	 * 
+	 * @param mngUser 督导员
+	 */
+	public void setMngUser(String mngUser) {
+		this.mngUser = mngUser;
 	}
 }
