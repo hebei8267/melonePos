@@ -52,8 +52,8 @@ public class UserManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getAllUser() {
-		return (List<User>) userJpaDao.findAll(new Sort(new Sort.Order("organization"), new Sort.Order(Sort.Direction.ASC,
-				"loginName")));
+		return (List<User>) userJpaDao.findAll(new Sort(new Sort.Order("organization"), new Sort.Order(
+				Sort.Direction.ASC, "loginName")));
 	}
 
 	/**
@@ -68,8 +68,8 @@ public class UserManager {
 			// 从数据库中取出全量机构信息(List格式)
 			_userList = userMyBatisDao.getAllUserList();
 			// 将机构信息Map保存到memcached
-			spyMemcachedClient.set(MemcachedObjectType.USER_LIST.getObjKey(), MemcachedObjectType.USER_LIST.getExpiredTime(),
-					_userList);
+			spyMemcachedClient.set(MemcachedObjectType.USER_LIST.getObjKey(),
+					MemcachedObjectType.USER_LIST.getExpiredTime(), _userList);
 
 			logger.debug("人员信息不在 memcached中,从数据库中取出并放入memcached");
 		} else {
@@ -159,7 +159,7 @@ public class UserManager {
 		user.setOrganization(org);
 		Role role = roleJpaDao.findOne(Integer.parseInt(user.getRoleUuid()));
 		user.setRole(role);
-		
+
 		if (null != user.getSubUuid()) {
 			// 预算科目
 			BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
@@ -242,6 +242,8 @@ public class UserManager {
 		_dbUser.setRole(role);
 		// 账户是否有效
 		_dbUser.setValid(user.isValid());
+		// 督导员标记
+		_dbUser.setMngFlg(user.isMngFlg());
 		// 预算科目
 		BudgetSubject sub = budgetSubjectJpaDao.findOne(Integer.parseInt(user.getSubUuid()));
 		_dbUser.setBudgetSubject(sub);
@@ -250,5 +252,15 @@ public class UserManager {
 		spyMemcachedClient.delete(MemcachedObjectType.USER_LIST.getObjKey());
 
 		userJpaDao.save(_dbUser);
+	}
+
+	/**
+	 * 取得督导员信息列表
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<User> getMngUser() {
+		return (List<User>) userJpaDao.getMngUser(new Sort(new Sort.Order(Sort.Direction.ASC, "loginName")));
 	}
 }

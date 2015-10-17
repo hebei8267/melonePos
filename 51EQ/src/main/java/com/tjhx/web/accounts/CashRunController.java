@@ -24,18 +24,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.accounts.CashRun;
 import com.tjhx.entity.info.BankCard;
+import com.tjhx.entity.member.User;
 import com.tjhx.entity.order.Coupon;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.accounts.CashRunManager;
 import com.tjhx.service.accounts.PrePaymentsManager;
 import com.tjhx.service.info.BankCardManager;
+import com.tjhx.service.member.UserManager;
 import com.tjhx.service.order.CouponManager;
 import com.tjhx.web.BaseController;
 
 @Controller
 @RequestMapping(value = "/cashRun")
 public class CashRunController extends BaseController {
+	@Resource
+	private UserManager userManager;
 	@Resource
 	private CashRunManager cashRunManager;
 	@Resource
@@ -141,6 +145,8 @@ public class CashRunController extends BaseController {
 
 			// 初始化代金卷信息列表
 			initCouponList(model, getUserInfo(session).getOrganization().getId());
+			// 初始化督导员列表
+			initMngPerList(model);
 
 			return "accounts/cashRunForm";
 		}
@@ -182,6 +188,9 @@ public class CashRunController extends BaseController {
 		// 初始化代金卷信息列表
 		initCouponList(model, getUserInfo(session).getOrganization().getId());
 
+		// 初始化督导员列表
+		initMngPerList(model);
+
 		return "accounts/cashRunForm";
 	}
 
@@ -201,6 +210,24 @@ public class CashRunController extends BaseController {
 		}
 
 		model.addAttribute("couponList", couponList);
+	}
+
+	/**
+	 * 初始化督导员列表
+	 * 
+	 * @param model
+	 */
+	private void initMngPerList(Model model) {
+		// 取得督导员信息列表
+		List<User> mngList = userManager.getMngUser();
+		
+		Map<String, String> mngPerList = new LinkedHashMap<String, String>();
+		mngPerList.put("", "");
+
+		for (User user : mngList) {
+			mngPerList.put(user.getLoginName(), user.getName());
+		}
+		model.addAttribute("mngPerList", mngPerList);
 	}
 
 	/**
@@ -261,6 +288,9 @@ public class CashRunController extends BaseController {
 			// 初始化代金卷信息列表
 			initCouponList(model, getUserInfo(session).getOrganization().getId());
 
+			// 初始化督导员列表
+			initMngPerList(model);
+
 			return "accounts/cashRunForm";
 		}
 
@@ -277,6 +307,9 @@ public class CashRunController extends BaseController {
 				// 初始化代金卷信息列表
 				initCouponList(model, getUserInfo(session).getOrganization().getId());
 
+				// 初始化督导员列表
+				initMngPerList(model);
+
 				return "accounts/cashRunForm";
 			}
 		} else {// 修改操作
@@ -291,6 +324,9 @@ public class CashRunController extends BaseController {
 
 				// 初始化代金卷信息列表
 				initCouponList(model, getUserInfo(session).getOrganization().getId());
+
+				// 初始化督导员列表
+				initMngPerList(model);
 
 				return "accounts/cashRunForm";
 			}

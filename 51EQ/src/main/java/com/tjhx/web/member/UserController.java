@@ -44,7 +44,7 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "list", "" })
+	@RequestMapping(value = {"list", ""})
 	public String userList_Action(Model model) {
 		List<User> userList = userManager.getAllUser();
 
@@ -69,6 +69,7 @@ public class UserController extends BaseController {
 			model.addAttribute("user", user);
 
 			initOrgList(model);
+			initMngFlgList(model);
 			initRoleList(model);
 			initBudgetSubjectList(model);
 
@@ -107,6 +108,7 @@ public class UserController extends BaseController {
 		model.addAttribute("user", user);
 
 		initOrgList(model);
+		initMngFlgList(model);
 		initRoleList(model);
 		initBudgetSubjectList(model);
 
@@ -123,6 +125,16 @@ public class UserController extends BaseController {
 		}
 
 		model.addAttribute("orgList", orgList);
+	}
+
+	private void initMngFlgList(Model model) {
+
+		Map<String, String> mngFlgList = new LinkedHashMap<String, String>();
+		mngFlgList.put("", "");
+		mngFlgList.put("true", "是");
+		mngFlgList.put("false", "否");
+
+		model.addAttribute("mngFlgList", mngFlgList);
 	}
 
 	private void initBudgetSubjectList(Model model) {

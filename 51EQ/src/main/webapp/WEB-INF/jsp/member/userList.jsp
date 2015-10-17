@@ -130,7 +130,12 @@
 										</c:if>
 										</td>
 										<td> ${user.loginName} </td>
-										<td> ${user.name} </td>
+										<td>
+											${user.name}
+											<c:if test="${user.mngFlg == true}">
+											<span class="_warn1">督导员</span>
+											</c:if>
+										</td>
 										<td> ${user.role.name} </td>
 										<td> ${user.organization.name} </td>
 										<td> ${user.subName} </td>

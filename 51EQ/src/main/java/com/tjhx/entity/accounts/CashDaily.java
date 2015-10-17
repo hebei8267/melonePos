@@ -76,6 +76,9 @@ public class CashDaily extends IdEntity {
 	private BigDecimal zfbSaleAmt = new BigDecimal("0");
 	/** 支付宝销售额 */
 	private BigDecimal bwZfbSaleAmt = new BigDecimal("0");
+
+	/** 督导员 */
+	private String mngUserId;
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -675,5 +678,24 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setBwZfbSaleAmt(BigDecimal bwZfbSaleAmt) {
 		this.bwZfbSaleAmt = bwZfbSaleAmt;
+	}
+
+	/**
+	 * 取得督导员
+	 * 
+	 * @return 督导员
+	 */
+	@Column(length = 32)
+	public String getMngUserId() {
+		return mngUserId;
+	}
+
+	/**
+	 * 设置督导员
+	 * 
+	 * @param mngUserId 督导员
+	 */
+	public void setMngUserId(String mngUserId) {
+		this.mngUserId = mngUserId;
 	}
 }

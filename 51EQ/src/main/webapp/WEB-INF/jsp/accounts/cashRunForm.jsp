@@ -69,6 +69,9 @@
                         jobType : {
                             required : true
                         },
+                        mngUserId : {
+                            required : true
+                        },
                         saleCashAmt : {
                             required : true
                         },
@@ -264,6 +267,21 @@
                     <form:form method="POST" id="inputForm"	modelAttribute="cashRun">
                         <form:hidden path="uuid"/>
                         <table class="mytable">
+                        	<tr>
+                        		<td width="130" class="right">督导员 :</td>
+                        		<td width="350">
+	                        		<select name="mngUserId">
+			                            <c:forEach items="${mngPerList}" var="mngPer">
+			                                <c:if test="${mngPer.key == cashRun.mngUserId}">
+			                                    <option value="${mngPer.key }" selected>${mngPer.value }</option>
+			                                </c:if>
+			                                <c:if test="${mngPer.key != cashRun.mngUserId}">
+			                                    <option value="${mngPer.key }">${mngPer.value }</option>
+			                                </c:if>
+			                            </c:forEach>
+			                        </select>
+                        		</td>
+                        	</tr>
                         	<tr>
                         		<td width="130" class="right">日期 :</td>
                         		<td width="350">

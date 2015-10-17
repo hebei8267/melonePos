@@ -30,6 +30,9 @@
 							required : true,
 							maxlength : 32
 						},
+						mngFlg : {
+							required : true
+						},
 						roleUuid : {
 							required : true
 						},
@@ -98,6 +101,12 @@
 							<label class="control-label">用户角色 :</label>
 							<div class="controls">
 								<form:select path="roleUuid" items="${roleList}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">督导员 :</label>
+							<div class="controls">
+								<form:select path="mngFlg" items="${mngFlgList}" />
 							</div>
 						</div>
 						<div class="control-group">

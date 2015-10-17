@@ -46,6 +46,8 @@ public class User extends IdEntity {
 	private boolean valid = true;
 	/** 预算科目编号 */
 	private BudgetSubject budgetSubject;
+	/** 督导员标记 */
+	private boolean mngFlg = true;
 	// ############################################################################################
 	/** 用户关联机构名称 */
 	private String orgName;
@@ -373,6 +375,24 @@ public class User extends IdEntity {
 			return budgetSubject.getUuid().toString();
 		}
 		return subUuid;
+	}
+
+	/**
+	 * 取得督导员标记
+	 * 
+	 * @return 督导员标记
+	 */
+	public boolean isMngFlg() {
+		return mngFlg;
+	}
+
+	/**
+	 * 设置督导员标记
+	 * 
+	 * @param mngFlg 督导员标记
+	 */
+	public void setMngFlg(boolean mngFlg) {
+		this.mngFlg = mngFlg;
 	}
 
 	/**
