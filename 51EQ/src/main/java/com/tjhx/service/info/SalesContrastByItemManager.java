@@ -140,14 +140,14 @@ public class SalesContrastByItemManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_ITEM_SALES_CONTRAST, map, tmpFilePath);
 
 		return tmpFileName;
 	}
 
-	private final static String XML_CONFIG_ITEM_SALES_CONTRAST = "/excel/Item_Sales_Contrast_Template.xls";
+	private final static String XML_CONFIG_ITEM_SALES_CONTRAST = "/excel/Item_Sales_Contrast_Template.xlsx";
 
 	/**
 	 * 库存数据2设置

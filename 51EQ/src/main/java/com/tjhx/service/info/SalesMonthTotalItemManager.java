@@ -48,7 +48,7 @@ public class SalesMonthTotalItemManager {
 	@Resource
 	private OrganizationManager orgManager;
 
-	private final static String XML_CONFIG_SALES_MONTH = "/excel/Sales_Month_Template.xls";
+	private final static String XML_CONFIG_SALES_MONTH = "/excel/Sales_Month_Template.xlsx";
 
 	/**
 	 * 门店月销售计算
@@ -193,7 +193,7 @@ public class SalesMonthTotalItemManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_SALES_MONTH, map, tmpFilePath);
 

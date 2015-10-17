@@ -302,12 +302,12 @@ public class SupplierSignRunManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_SUPPLIER_SIGN_RUN, map, tmpFilePath);
 
 		return tmpFileName;
 	}
 
-	private final static String XML_CONFIG_SUPPLIER_SIGN_RUN = "/excel/Supplier_Sign_Run_Template.xls";
+	private final static String XML_CONFIG_SUPPLIER_SIGN_RUN = "/excel/Supplier_Sign_Run_Template.xlsx";
 }

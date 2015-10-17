@@ -243,12 +243,12 @@ public class PettyCashAppManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PETTY_CASH_APP, map, tmpFilePath);
 
 		return tmpFileName;
 	}
 
-	private final static String XML_CONFIG_PETTY_CASH_APP = "/excel/Petty_Cash_App_Template.xls";
+	private final static String XML_CONFIG_PETTY_CASH_APP = "/excel/Petty_Cash_App_Template.xlsx";
 }

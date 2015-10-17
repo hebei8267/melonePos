@@ -122,12 +122,12 @@ public class InvoiceDrawManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_INVOICE_DRAW, map, tmpFilePath);
 
 		return tmpFileName;
 	}
 
-	private final static String XML_CONFIG_INVOICE_DRAW = "/excel/Invoice_Draw_Template.xls";
+	private final static String XML_CONFIG_INVOICE_DRAW = "/excel/Invoice_Draw_Template.xlsx";
 }

@@ -50,9 +50,9 @@ public class CashDailyManager {
 	@Resource
 	private PrePaymentsManager prePaymentsManager;
 
-	private final static String XML_CONFIG_CASH_DAILY = "/excel/Cash_Daily_Template.xls";
-	private final static String XML_CONFIG_CASH_DAILY_2 = "/excel/Cash_Daily_Template_2.xls";
-	private final static String XML_CONFIG_CARD_DAILY = "/excel/Card_Daily_Template.xls";
+	private final static String XML_CONFIG_CASH_DAILY = "/excel/Cash_Daily_Template.xlsx";
+	private final static String XML_CONFIG_CASH_DAILY_2 = "/excel/Cash_Daily_Template_2.xlsx";
+	private final static String XML_CONFIG_CARD_DAILY = "/excel/Card_Daily_Template.xlsx";
 
 	/**
 	 * 取得未日结销售流水日结信息
@@ -490,7 +490,7 @@ public class CashDailyManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CARD_DAILY, map, tmpFilePath);
 
@@ -526,7 +526,7 @@ public class CashDailyManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CASH_DAILY_2, map, tmpFilePath);
 
@@ -563,7 +563,7 @@ public class CashDailyManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_CASH_DAILY, map, tmpFilePath);
 

@@ -50,9 +50,9 @@ public class ReqBillManager {
 	private ReqBillMyBatisDao reqBillMyBatisDao;
 
 	private final static String XML_CONFIG_READ_REQ_BILL = "/excel/Req_Bill_Org_Read_CFG.xml";
-	private final static String XML_CONFIG_WRITE_REQ_BILL = "/excel/Req_Bill_Supplier_Template.xls";
-	private final static String XML_CONFIG_WRITE_REQ_BILL_SUM = "/excel/Req_Bill_Sum_Supplier_Template.xls";
-	private final static String XML_CONFIG_WRITE_REQ_BILL_EQ = "/excel/Req_Bill_EQ_Template.xls";
+	private final static String XML_CONFIG_WRITE_REQ_BILL = "/excel/Req_Bill_Supplier_Template.xlsx";
+	private final static String XML_CONFIG_WRITE_REQ_BILL_SUM = "/excel/Req_Bill_Sum_Supplier_Template.xlsx";
+	private final static String XML_CONFIG_WRITE_REQ_BILL_EQ = "/excel/Req_Bill_EQ_Template.xlsx";
 
 	/**
 	 * @param batchId
@@ -74,7 +74,7 @@ public class ReqBillManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_EQ, map,
-				sysConfig.getReqBillSupplierOutputPath() + batchId + "/#########EQ_" + batchId + ".xls");
+				sysConfig.getReqBillSupplierOutputPath() + batchId + "/#########EQ_" + batchId + ".xlsx");
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ReqBillManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_SUM, map,
-				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_合计_" + batchId + ".xls");
+				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_合计_" + batchId + ".xlsx");
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class ReqBillManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL, map,
-				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_" + batchId + ".xls");
+				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_" + batchId + ".xlsx");
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class ReqBillManager {
 
 	public static void main(String[] args) throws InvalidFormatException, IOException, SAXException {
 		ReqBillManager reqBillManager = new ReqBillManager();
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\eclipse-cdoi\\workspace\\BBB\\src\\DD.xls");
+		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\eclipse-cdoi\\workspace\\BBB\\src\\DD.xlsx");
 		if (null == reqBillList || reqBillList.size() == 0) {
 			System.out.println("############无效文件");
 		}

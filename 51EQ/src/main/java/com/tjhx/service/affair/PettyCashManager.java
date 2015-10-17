@@ -40,7 +40,7 @@ public class PettyCashManager {
 	@Resource
 	private InspectJpaDao inspectJpaDao;
 
-	private final static String XML_CONFIG_PETTY_CASH = "/excel/Petty_Cash_Template.xls";
+	private final static String XML_CONFIG_PETTY_CASH = "/excel/Petty_Cash_Template.xlsx";
 
 	/**
 	 * 取得 门店备用金
@@ -478,7 +478,7 @@ public class PettyCashManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PETTY_CASH, map, tmpFilePath);
 

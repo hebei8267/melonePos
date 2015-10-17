@@ -40,7 +40,7 @@ public class MonthSaleTargetManager {
 	private MonthSaleTargetMyBatisDao monthSaleTargetMyBatisDao;
 	@Resource
 	private SpyMemcachedClient spyMemcachedClient;
-	private final static String XML_CONFIG_MONTH_SALE_TARGET = "/excel/Month_Sale_Target_Template.xls";
+	private final static String XML_CONFIG_MONTH_SALE_TARGET = "/excel/Month_Sale_Target_Template.xlsx";
 
 	/**
 	 * 取得月销售目标信息(根据机构编号/年份)
@@ -163,7 +163,7 @@ public class MonthSaleTargetManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_MONTH_SALE_TARGET, map, tmpFilePath);
 

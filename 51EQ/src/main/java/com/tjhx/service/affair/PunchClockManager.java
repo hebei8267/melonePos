@@ -47,7 +47,7 @@ public class PunchClockManager {
 	@Resource
 	private WorkScheduleManager workScheduleManager;
 
-	private final static String XML_CONFIG_PUNCH_CLOCK = "/excel/Punch_Clock_Template.xls";
+	private final static String XML_CONFIG_PUNCH_CLOCK = "/excel/Punch_Clock_Template.xlsx";
 
 	/**
 	 * 取得考勤计算-重计算天数（含明天，列表第一个对象）
@@ -354,7 +354,7 @@ public class PunchClockManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_PUNCH_CLOCK, map, tmpFilePath);
 
