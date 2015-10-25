@@ -87,11 +87,7 @@
 				        "position": "left"
 					},
 					"legend": {
-				        "horizontalGap": 10,
-				        "maxColumns": 1,
-				        "position": "right",
-						"useGraphSettings": true,
-						"markerSize": 10
+				        "position": "top"
 				    },
 					"trendLines": [],
 					"graphs": [
