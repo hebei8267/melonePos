@@ -14,6 +14,14 @@ public interface SalesMonthTotalItemMyBatisDao {
 	public void delSalesMonthTotalInfo(String optYMDate);
 
 	/**
+	 * 取得指定门店销售信息（按月份区分）
+	 * 
+	 * @param orgId 门店编号
+	 * @return
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalMonthList(String orgId);
+
+	/**
 	 * 取得指定门店指定年份合计销售信息
 	 * 
 	 * @param param

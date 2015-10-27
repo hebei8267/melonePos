@@ -226,7 +226,7 @@
 					|| _permIdList.contains('41') || _permIdList.contains('44')
 					|| _permIdList.contains('45') || _permIdList.contains('60')
 					|| _permIdList.contains('61') || _permIdList.contains('62')
-					|| _permIdList.contains('63')}">
+					|| _permIdList.contains('63') || _permIdList.contains('69')}">
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
@@ -290,6 +290,11 @@
 								<c:if test="${_permIdList.contains('41')}">
 									<li>
 										<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售信息对比(图形)</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('69')}">
+									<li>
+										<a href="${sc_ctx}/salesMonthChartReport">月销售信息(图形)</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('47')}">

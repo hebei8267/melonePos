@@ -29,6 +29,22 @@
         DELETE FROM t_sales_month_total_item WHERE opt_date_y_m = #{optYMDate}
     </delete>
     
+    <!-- 取得指定门店销售信息（按月份区分） -->
+    <select id="getSalesTotalMonthList" parameterType="string" resultMap="Result_Map_SalesMonthTotalItem">
+    	SELECT
+		    SUM(sale_ramt) AS sale_ramt,
+		    OPT_DATE_Y_M,
+		    ORG_ID
+		FROM
+		    T_SALES_MONTH_TOTAL_ITEM
+		WHERE
+		    ORG_ID = #{orgId}
+		GROUP BY
+		    OPT_DATE_Y_M
+		ORDER BY
+		    OPT_DATE_Y_M
+    </select>
+    
     <!-- 各店指定年销售数据 -->
 	<select id="getSalesTotalList_ByOrgAndYear" parameterType="com.tjhx.entity.info.SalesMonthTotalItem" resultMap="Result_Map_SalesMonthTotalItem">
 		SELECT

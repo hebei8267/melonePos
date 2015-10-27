@@ -462,6 +462,14 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('69')}">
+							<td><input type="checkbox" name="perm" value="69" checked>月销售信息(图形)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('69')}">
+							<td><input type="checkbox" name="perm" value="69">月销售信息(图形)</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('47')}">
 							<td><input type="checkbox" name="perm" value="47" checked>门店备用金分析(图形)</td>
 							</c:if>
