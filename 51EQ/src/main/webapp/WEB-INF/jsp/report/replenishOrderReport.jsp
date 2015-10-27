@@ -57,9 +57,9 @@
                         <button	id="searchBtn" class="btn	btn-primary" type="button">查询</button>
                     </div>
                     
-                	<div id="chart1" class="span12" style="height:330px;border:1px solid #A4BED4;margin-top: 10px;"></div>
+                	<div id="chart1" class="span12" style="height:360px;border:1px solid #A4BED4;margin-top: 10px;"></div>
                 	
-                	<div id="chart2" class="span12" style="height:330px;border:1px solid #A4BED4;margin-top: 10px;"></div>
+                	<div id="chart2" class="span12" style="height:360px;border:1px solid #A4BED4;margin-top: 10px;"></div>
 				</div>
 			</div>
 		</div>
@@ -79,7 +79,7 @@
 			        "useGraphSettings": true,
 			        "valueWidth": 35,
 			        "valueText": "[[value]]",
-			        "position" : "left"
+			        "position" : "top"
 			    },
 			    "chartScrollbar": {},
 			    "chartCursor": {
@@ -162,7 +162,7 @@
 			        "useGraphSettings": true,
 			        "valueWidth": 35,
 			        "valueText": "[[value]]",
-			        "position" : "left"
+			        "position" : "top"
 			    },
 			    "chartCursor": {
 			        "cursorPosition": "mouse"
