@@ -127,7 +127,7 @@
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
 							"lineAlpha": 0.2,
-							"title": "2013年",
+							"title": "2012年",
 							"type": "column",
 							"valueField": "saleRamt4"
 						}
