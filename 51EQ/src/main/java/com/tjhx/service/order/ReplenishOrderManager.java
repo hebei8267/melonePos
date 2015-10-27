@@ -396,13 +396,6 @@ public class ReplenishOrderManager {
 		};
 		Collections.sort(odList, comparator);
 
-		int toIndex = 0;
-		if (odList.size() > 10) {
-			toIndex = 10;
-		} else {
-			toIndex = odList.size();
-		}
-
-		return odList.subList(0, toIndex);
+		return odList;
 	}
 }
