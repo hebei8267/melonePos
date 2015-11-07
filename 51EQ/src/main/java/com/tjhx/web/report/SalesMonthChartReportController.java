@@ -61,23 +61,23 @@ public class SalesMonthChartReportController extends BaseController {
 				}
 
 				if (item.getOrgId().equals("00001D")) {
-					vo.setSaleRamt1(item.getSaleRamt());
+					vo.setSaleRamt01(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00002D")) {
-					vo.setSaleRamt2(item.getSaleRamt());
+					vo.setSaleRamt02(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00003D")) {
-					vo.setSaleRamt3(item.getSaleRamt());
+					vo.setSaleRamt03(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00004D")) {
-					vo.setSaleRamt4(item.getSaleRamt());
+					vo.setSaleRamt04(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00005D")) {
-					vo.setSaleRamt5(item.getSaleRamt());
+					vo.setSaleRamt05(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00006D")) {
-					vo.setSaleRamt6(item.getSaleRamt());
+					vo.setSaleRamt06(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00007D")) {
-					vo.setSaleRamt7(item.getSaleRamt());
+					vo.setSaleRamt07(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00008D")) {
-					vo.setSaleRamt8(item.getSaleRamt());
+					vo.setSaleRamt08(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00009D")) {
-					vo.setSaleRamt9(item.getSaleRamt());
+					vo.setSaleRamt09(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00010D")) {
 					vo.setSaleRamt10(item.getSaleRamt());
 				} else if (item.getOrgId().equals("00011D")) {
