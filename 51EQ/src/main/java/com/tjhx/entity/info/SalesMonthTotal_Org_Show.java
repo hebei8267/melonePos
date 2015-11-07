@@ -6,23 +6,23 @@ public class SalesMonthTotal_Org_Show {
 	/** 月份 */
 	private String optDateYM;
 	/** 实销金额 */
-	private BigDecimal saleRamt1 = new BigDecimal(0);
+	private BigDecimal saleRamt01 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt2 = new BigDecimal(0);
+	private BigDecimal saleRamt02 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt3 = new BigDecimal(0);
+	private BigDecimal saleRamt03 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt4 = new BigDecimal(0);
+	private BigDecimal saleRamt04 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt5 = new BigDecimal(0);
+	private BigDecimal saleRamt05 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt6 = new BigDecimal(0);
+	private BigDecimal saleRamt06 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt7 = new BigDecimal(0);
+	private BigDecimal saleRamt07 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt8 = new BigDecimal(0);
+	private BigDecimal saleRamt08 = new BigDecimal(0);
 	/** 实销金额 */
-	private BigDecimal saleRamt9 = new BigDecimal(0);
+	private BigDecimal saleRamt09 = new BigDecimal(0);
 	/** 实销金额 */
 	private BigDecimal saleRamt10 = new BigDecimal(0);
 	/** 实销金额 */
@@ -88,149 +88,150 @@ public class SalesMonthTotal_Org_Show {
 	public void setOptDateYM(String optDateYM) {
 		this.optDateYM = optDateYM;
 	}
+
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt1
+	 * @return saleRamt01
 	 */
-	public BigDecimal getSaleRamt1() {
-		return saleRamt1;
+	public BigDecimal getSaleRamt01() {
+		return saleRamt01;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt1 saleRamt1
+	 * @param saleRamt01 saleRamt01
 	 */
-	public void setSaleRamt1(BigDecimal saleRamt1) {
-		this.saleRamt1 = saleRamt1;
+	public void setSaleRamt01(BigDecimal saleRamt01) {
+		this.saleRamt01 = saleRamt01;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt2
+	 * @return saleRamt02
 	 */
-	public BigDecimal getSaleRamt2() {
-		return saleRamt2;
+	public BigDecimal getSaleRamt02() {
+		return saleRamt02;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt2 saleRamt2
+	 * @param saleRamt02 saleRamt02
 	 */
-	public void setSaleRamt2(BigDecimal saleRamt2) {
-		this.saleRamt2 = saleRamt2;
+	public void setSaleRamt02(BigDecimal saleRamt02) {
+		this.saleRamt02 = saleRamt02;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt3
+	 * @return saleRamt03
 	 */
-	public BigDecimal getSaleRamt3() {
-		return saleRamt3;
+	public BigDecimal getSaleRamt03() {
+		return saleRamt03;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt3 saleRamt3
+	 * @param saleRamt03 saleRamt03
 	 */
-	public void setSaleRamt3(BigDecimal saleRamt3) {
-		this.saleRamt3 = saleRamt3;
+	public void setSaleRamt03(BigDecimal saleRamt03) {
+		this.saleRamt03 = saleRamt03;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt4
+	 * @return saleRamt04
 	 */
-	public BigDecimal getSaleRamt4() {
-		return saleRamt4;
+	public BigDecimal getSaleRamt04() {
+		return saleRamt04;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt4 saleRamt4
+	 * @param saleRamt04 saleRamt04
 	 */
-	public void setSaleRamt4(BigDecimal saleRamt4) {
-		this.saleRamt4 = saleRamt4;
+	public void setSaleRamt04(BigDecimal saleRamt04) {
+		this.saleRamt04 = saleRamt04;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt5
+	 * @return saleRamt05
 	 */
-	public BigDecimal getSaleRamt5() {
-		return saleRamt5;
+	public BigDecimal getSaleRamt05() {
+		return saleRamt05;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt5 saleRamt5
+	 * @param saleRamt05 saleRamt05
 	 */
-	public void setSaleRamt5(BigDecimal saleRamt5) {
-		this.saleRamt5 = saleRamt5;
+	public void setSaleRamt05(BigDecimal saleRamt05) {
+		this.saleRamt05 = saleRamt05;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt6
+	 * @return saleRamt06
 	 */
-	public BigDecimal getSaleRamt6() {
-		return saleRamt6;
+	public BigDecimal getSaleRamt06() {
+		return saleRamt06;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt6 saleRamt6
+	 * @param saleRamt06 saleRamt06
 	 */
-	public void setSaleRamt6(BigDecimal saleRamt6) {
-		this.saleRamt6 = saleRamt6;
+	public void setSaleRamt06(BigDecimal saleRamt06) {
+		this.saleRamt06 = saleRamt06;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt7
+	 * @return saleRamt07
 	 */
-	public BigDecimal getSaleRamt7() {
-		return saleRamt7;
+	public BigDecimal getSaleRamt07() {
+		return saleRamt07;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt7 saleRamt7
+	 * @param saleRamt07 saleRamt07
 	 */
-	public void setSaleRamt7(BigDecimal saleRamt7) {
-		this.saleRamt7 = saleRamt7;
+	public void setSaleRamt07(BigDecimal saleRamt07) {
+		this.saleRamt07 = saleRamt07;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt8
+	 * @return saleRamt08
 	 */
-	public BigDecimal getSaleRamt8() {
-		return saleRamt8;
+	public BigDecimal getSaleRamt08() {
+		return saleRamt08;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt8 saleRamt8
+	 * @param saleRamt08 saleRamt08
 	 */
-	public void setSaleRamt8(BigDecimal saleRamt8) {
-		this.saleRamt8 = saleRamt8;
+	public void setSaleRamt08(BigDecimal saleRamt08) {
+		this.saleRamt08 = saleRamt08;
 	}
 	/**
 	 * 取得
 	 * 
-	 * @return saleRamt9
+	 * @return saleRamt09
 	 */
-	public BigDecimal getSaleRamt9() {
-		return saleRamt9;
+	public BigDecimal getSaleRamt09() {
+		return saleRamt09;
 	}
 	/**
 	 * 设置
 	 * 
-	 * @param saleRamt9 saleRamt9
+	 * @param saleRamt09 saleRamt09
 	 */
-	public void setSaleRamt9(BigDecimal saleRamt9) {
-		this.saleRamt9 = saleRamt9;
+	public void setSaleRamt09(BigDecimal saleRamt09) {
+		this.saleRamt09 = saleRamt09;
 	}
 	/**
 	 * 取得

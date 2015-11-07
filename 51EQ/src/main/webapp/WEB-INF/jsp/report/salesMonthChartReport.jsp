@@ -1,6 +1,7 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
@@ -79,12 +80,14 @@
 							<input type="checkbox" name="orgId" value="${org.key }"></input>${org.value }
 							</c:if>
 						</c:forEach>
-						
-						<button id="searchBtn" class="btn btn-primary" type="button" style="margin-top: -6px">
-							查询
-						</button>
 					</form>
 				</div>
+				
+				<div class="span12">
+            		<button id="searchBtn" class="btn btn-primary" type="button" style="margin-top: -6px">
+						查询
+					</button>
+            	</div>
             	<div id="chart" class="span12" style="height:500px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
            	</div>
         </div>
@@ -106,12 +109,11 @@
 				    }],
 				    "graphs": [
 					<c:forEach items="${orgIds}" var="orgId" varStatus="status">
-					
 						{
 					        "bullet": "round",
-					        "balloonText": "${status.index+1}店<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt${status.index+1}]] 元",
-					        "title": "${status.index+1}店",
-					        "valueField": "saleRamt${status.index+1}"
+					        "balloonText": "门店 ${fn:substring(orgId,3,6)}<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt${fn:substring(orgId,3,5)}]] 元",
+					        "title": "${fn:substring(orgId,3,6)}",
+					        "valueField": "saleRamt${fn:substring(orgId,3,5)}"
 					    }
 						
 						<c:if test="${!status.last}">
