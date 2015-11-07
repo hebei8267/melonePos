@@ -352,14 +352,14 @@ public class ReplenishOrderManager {
 
 		XLSTransformer transformer = new XLSTransformer();
 
-		String tmpFileName = UUID.randomUUID().toString() + ".xlsx";
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
 		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_REPLENISH_ORDER, map, tmpFilePath);
 
 		return tmpFileName;
 	}
 
-	private final static String XML_CONFIG_REPLENISH_ORDER = "/excel/Replenish_Order_Template.xlsx";
+	private final static String XML_CONFIG_REPLENISH_ORDER = "/excel/Replenish_Order_Template.xls";
 
 	/**
 	 * 取得机构收货错误信息列表
