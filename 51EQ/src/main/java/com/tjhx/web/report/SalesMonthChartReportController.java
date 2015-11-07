@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springside.modules.mapper.JsonMapper;
 
@@ -19,8 +21,6 @@ import com.google.common.collect.Maps;
 import com.tjhx.dao.info.SalesMonthTotalItemMyBatisDao;
 import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.entity.info.SalesMonthTotal_Org_Show;
-import com.tjhx.entity.order.ReplenishOrder;
-import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 
@@ -31,13 +31,26 @@ public class SalesMonthChartReportController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
+
 	@RequestMapping(value = {""})
 	public String init_Action(Model model) throws ServletRequestBindingException {
-		List<Organization> _orgList = orgManager.getSubOrganization();
+		// 初始化机构下拉菜单
+		ReportUtils.initOrgList_NoNRoot(orgManager, model);
+
+		return "report/salesMonthChartReport";
+
+	}
+
+	@RequestMapping(value = "search")
+	public String search_Action(Model model, HttpServletRequest request) {
+		String[] orgIds = ServletRequestUtils.getStringParameters(request, "orgId");
+
+		// 初始化机构下拉菜单
+		ReportUtils.initOrgList_NoNRoot(orgManager, model);
 
 		Map<String, SalesMonthTotal_Org_Show> _map = Maps.newHashMap();
-		for (Organization org : _orgList) {
-			List<SalesMonthTotalItem> subDataList = salesMonthTotalItemMyBatisDao.getSalesTotalMonthList(org.getId());
+		for (String orgId : orgIds) {
+			List<SalesMonthTotalItem> subDataList = salesMonthTotalItemMyBatisDao.getSalesTotalMonthList(orgId);
 
 			for (SalesMonthTotalItem item : subDataList) {
 				SalesMonthTotal_Org_Show vo = _map.get(item.getOptDateYM());
@@ -133,6 +146,7 @@ public class SalesMonthChartReportController extends BaseController {
 
 		JsonMapper mapper = new JsonMapper();
 		model.addAttribute("dataList", mapper.toJson(_list));
+		model.addAttribute("orgIds", Lists.newArrayList(orgIds));
 		return "report/salesMonthChartReport";
 	}
 }
