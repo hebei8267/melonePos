@@ -6,6 +6,10 @@ public class SalesMonthTotal_Org_Show {
 	/** 月份 */
 	private String optDateYM;
 	/** 实销金额 */
+	private BigDecimal saleTotalRamt = new BigDecimal(0);
+	/** 机构数量 */
+	private int orgCount = 0;
+	/** 实销金额 */
 	private BigDecimal saleRamt01 = new BigDecimal(0);
 	/** 实销金额 */
 	private BigDecimal saleRamt02 = new BigDecimal(0);
@@ -89,6 +93,38 @@ public class SalesMonthTotal_Org_Show {
 		this.optDateYM = optDateYM;
 	}
 
+	/**
+	 * 取得
+	 * 
+	 * @return orgCount
+	 */
+	public int getOrgCount() {
+		return orgCount;
+	}
+	/**
+	 * 设置
+	 * 
+	 * @param orgCount orgCount
+	 */
+	public void setOrgCount(int orgCount) {
+		this.orgCount = orgCount;
+	}
+	/**
+	 * 取得
+	 * 
+	 * @return saleTotalRamt
+	 */
+	public BigDecimal getSaleTotalRamt() {
+		return saleTotalRamt;
+	}
+	/**
+	 * 设置
+	 * 
+	 * @param saleTotalRamt saleTotalRamt
+	 */
+	public void setSaleTotalRamt(BigDecimal saleTotalRamt) {
+		this.saleTotalRamt = saleTotalRamt;
+	}
 	/**
 	 * 取得
 	 * 

@@ -1,5 +1,6 @@
 package com.tjhx.web.report;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +41,44 @@ public class SalesMonthChartReportController extends BaseController {
 		return "report/salesMonthChartReport";
 
 	}
+	private void calTotal(List<List<SalesMonthTotalItem>> totalList, Model model, JsonMapper mapper) {
+
+		Map<String, SalesMonthTotal_Org_Show> _map = Maps.newHashMap();
+		for (List<SalesMonthTotalItem> subDataList : totalList) {
+
+			for (SalesMonthTotalItem item : subDataList) {
+				SalesMonthTotal_Org_Show vo = _map.get(item.getOptDateYM());
+
+				if (null == vo) {
+					vo = new SalesMonthTotal_Org_Show();
+					vo.setOptDateYM(item.getOptDateYM());
+
+				}
+
+				if (item.getOptDateYM().equals(vo.getOptDateYM())) {
+					vo.setSaleTotalRamt(vo.getSaleTotalRamt().add(item.getSaleRamt()));
+
+					if (item.getSaleRamt().compareTo(BigDecimal.ZERO) == 1) {// 大于0
+						vo.setOrgCount(vo.getOrgCount() + 1);
+					}
+				}
+
+				_map.put(item.getOptDateYM(), vo);
+			}
+
+		}
+
+		List<SalesMonthTotal_Org_Show> _list = Lists.newArrayList(_map.values());
+		Collections.sort(_list, new Comparator<SalesMonthTotal_Org_Show>() {
+
+			@Override
+			public int compare(SalesMonthTotal_Org_Show o1, SalesMonthTotal_Org_Show o2) {
+				return o1.getOptDateYM().compareTo(o2.getOptDateYM());
+			}
+
+		});
+		model.addAttribute("totalList", mapper.toJson(_list));
+	}
 
 	@RequestMapping(value = "search")
 	public String search_Action(Model model, HttpServletRequest request) {
@@ -48,9 +87,12 @@ public class SalesMonthChartReportController extends BaseController {
 		// 初始化机构下拉菜单
 		ReportUtils.initOrgList_NoNRoot(orgManager, model);
 
+		List<List<SalesMonthTotalItem>> totalList = Lists.newArrayList();
+
 		Map<String, SalesMonthTotal_Org_Show> _map = Maps.newHashMap();
 		for (String orgId : orgIds) {
 			List<SalesMonthTotalItem> subDataList = salesMonthTotalItemMyBatisDao.getSalesTotalMonthList(orgId);
+			totalList.add(subDataList);
 
 			for (SalesMonthTotalItem item : subDataList) {
 				SalesMonthTotal_Org_Show vo = _map.get(item.getOptDateYM());
@@ -147,6 +189,9 @@ public class SalesMonthChartReportController extends BaseController {
 		JsonMapper mapper = new JsonMapper();
 		model.addAttribute("dataList", mapper.toJson(_list));
 		model.addAttribute("orgIds", Lists.newArrayList(orgIds));
+
+		calTotal(totalList, model, mapper);
+
 		return "report/salesMonthChartReport";
 	}
 }

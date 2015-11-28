@@ -88,14 +88,17 @@
 						查询
 					</button>
             	</div>
-            	<div id="chart" class="span12" style="height:500px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
+            	<div id="chart" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
+            	
+            	<div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
            	</div>
         </div>
         
         
         <script>
 			$(function() {
-				var _dataList = ${dataList}
+				var _dataList = ${dataList};
+				var _totalList = ${totalList};
 				
 				var chart = AmCharts.makeChart("chart", {
 				    "type": "serial",
@@ -122,6 +125,55 @@
 					
 					</c:forEach>
 					],
+				    "chartScrollbar": {},
+				    "categoryField": "optDateYM"
+				});
+				
+				
+				var chart1 = AmCharts.makeChart("chart1", {
+				    "type": "serial",
+				    "theme": "light",
+				    "dataProvider": _totalList,
+				    "titles": [{
+				    	"size": 18,
+				       	"text": "合计销售金额/卖场数量"
+					}],
+					"valueAxes": [{
+				        "id":"v1",
+				        "axisColor": "#FF6600",
+				        "axisThickness": 2,
+				        "gridAlpha": 0,
+				        "axisAlpha": 1,
+				        "position": "left"
+				    }, {
+				        "id":"v2",
+				        "axisColor": "#67b7dc",
+				        "axisThickness": 2,
+				        "gridAlpha": 0,
+				        "axisAlpha": 1,
+				        "position": "right"
+				    }],
+				    "graphs": [{
+					    "valueAxis": "v1",
+					    "lineColor": "#FF6600",
+					    "bullet": "square",
+					    "balloonText": "销售时间 [[optDateYM]]<br>合计销售金额 [[saleTotalRamt]] 元<br>卖场数量 [[orgCount]] 个",
+					    "bulletBorderThickness": 1,
+					    "hideBulletsCount": 80,
+					    "valueField": "saleTotalRamt",
+					    "fillAlphas": 0
+					},
+					{
+					    "valueAxis": "v2",
+					    "lineColor": "#67b7dc",
+					    "fillAlphas": 0.8,
+				        "lineAlpha": 0.2,
+				    	"type": "column",
+					    "balloonText": "卖场数量 [[orgCount]]",
+					    "bulletBorderThickness": 1,
+				        "hideBulletsCount": 80,
+					    "valueField": "orgCount"
+					}],
 				    "chartScrollbar": {},
 				    "categoryField": "optDateYM"
 				});
