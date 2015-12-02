@@ -357,6 +357,14 @@
 							<td><input type="checkbox" name="perm" value="64">预算科目管理</td>
 							</c:if>
 						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('70')}">
+							<td><input type="checkbox" name="perm" value="70" checked>记账科目管理</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('70')}">
+							<td><input type="checkbox" name="perm" value="70">记账科目管理</td>
+							</c:if>
+						</tr>
 					</table>
 				</div>
 				

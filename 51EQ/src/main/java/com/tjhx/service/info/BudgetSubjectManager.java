@@ -49,9 +49,11 @@ public class BudgetSubjectManager {
 			// 对象唯一标识
 			_reSub.setUuid(budgetSubject.getUuid());
 			// 预算科目父节点Uuid
-			_reSub.setParentSubUuid(budgetSubject.getParentSub() == null ? null : budgetSubject.getParentSub().getUuid());
+			_reSub.setParentSubUuid(budgetSubject.getParentSub() == null ? null : budgetSubject.getParentSub()
+					.getUuid());
 			// 预算科目父节点名称
-			_reSub.setParentSubName(budgetSubject.getParentSub() == null ? null : budgetSubject.getParentSub().getSubName());
+			_reSub.setParentSubName(budgetSubject.getParentSub() == null ? null : budgetSubject.getParentSub()
+					.getSubName());
 			// 机构名称
 			_reSub.setSubName(budgetSubject.getSubName());
 			// 排序

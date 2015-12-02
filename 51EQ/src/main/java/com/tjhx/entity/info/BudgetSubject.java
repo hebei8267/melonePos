@@ -1,6 +1,5 @@
 package com.tjhx.entity.info;
 
-import java.beans.Transient;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.common.collect.Lists;
 import com.tjhx.entity.IdEntity;

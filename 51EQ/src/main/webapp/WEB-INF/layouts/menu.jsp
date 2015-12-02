@@ -56,7 +56,9 @@
 					<c:if test="${_permIdList.contains('1') || _permIdList.contains('2')
 					|| _permIdList.contains('3') || _permIdList.contains('4')
 					|| _permIdList.contains('5') || _permIdList.contains('6')
-					|| _permIdList.contains('7') || _permIdList.contains('59')}">
+					|| _permIdList.contains('7') || _permIdList.contains('59')
+					|| _permIdList.contains('48') || _permIdList.contains('64')
+					|| _permIdList.contains('70')}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">系统管理<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -112,6 +114,11 @@
 									<li class="divider"></li>
 									<li>
 										<a href="${sc_ctx}/budgetSubject/init">预算科目管理</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('70')}">
+									<li>
+										<a href="${sc_ctx}/accountSubject/init">记账科目管理</a>
 									</li>
 								</c:if>
 							</ul>
