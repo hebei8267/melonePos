@@ -98,20 +98,23 @@
                                     <th	width="25" class="center">
                                         <input id="checkAll" type="checkbox" />
                                     </th>
-                                    <th>
+                                    <th	class="center">
                                         机构编号
                                     </th>
-                                    <th>
+                                    <th	class="center">
                                         机构编号(中控)
                                     </th>
-                                    <th>
+                                    <th	class="center">
                                         机构资金编号(百威)
                                     </th>
-                                    <th>
+                                    <th	class="center">
                                         机构名称
                                     </th>
-                                    <th>
-                                        父层机构
+                                    <th	class="center">
+                                        机构名称
+                                    </th>
+                                    <th	class="center">
+                                        机构地址简称
                                     </th>
                                     <th	width="55">
                                         &nbsp;
@@ -127,20 +130,23 @@
                                                 </input>
                                             </c:if>
                                         </td>
-                                        <td>
+                                        <td	class="center">
                                             ${org.bwId}
                                         </td>
-                                        <td>
+                                        <td	class="center">
                                             ${org.zkId}
                                         </td>
-                                        <td>
+                                        <td	class="center">
                                             ${org.bwBranchNo}
                                         </td>
-                                        <td>
+                                        <td	class="center">
                                             ${org.name}
                                         </td>
-                                        <td>
+                                        <td	class="center">
                                             ${org.parentOrg.name}
+                                        </td>
+                                        <td class="right">
+                                            ${org.orgAddShort}
                                         </td>
                                         <td>
                                             <a href="${sc_ctx}/organization/edit/${org.uuid}" class="btn btn-warning"/>修改</a>

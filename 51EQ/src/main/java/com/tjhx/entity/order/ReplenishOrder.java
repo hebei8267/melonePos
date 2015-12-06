@@ -33,6 +33,8 @@ public class ReplenishOrder extends IdEntity {
 	private String orderNo;
 	/** 补货机构代码 */
 	private String replenishOrgId;
+	/** 补货机构代码 */
+	private String replenishOrgName;
 	/** 补货单状态 01-编辑中 02-收货中 03-收货完成 99-已完成 */
 	private String orderState;
 	/** 发货日期 */
@@ -110,6 +112,25 @@ public class ReplenishOrder extends IdEntity {
 	 */
 	public void setReplenishOrgId(String replenishOrgId) {
 		this.replenishOrgId = replenishOrgId;
+	}
+
+	/**
+	 * 取得
+	 * 
+	 * @return replenishOrgName
+	 */
+	@Transient
+	public String getReplenishOrgName() {
+		return replenishOrgName;
+	}
+
+	/**
+	 * 设置
+	 * 
+	 * @param replenishOrgName replenishOrgName
+	 */
+	public void setReplenishOrgName(String replenishOrgName) {
+		this.replenishOrgName = replenishOrgName;
 	}
 
 	/**

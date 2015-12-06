@@ -48,8 +48,8 @@ public class OrganizationManager {
 			// 从数据库中取出全量机构信息(List格式)
 			_orgList = (List<Organization>) orgJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "uuid")));
 			// 将机构信息Map保存到memcached
-			spyMemcachedClient.set(MemcachedObjectType.ORG_LIST.getObjKey(), MemcachedObjectType.ORG_LIST.getExpiredTime(),
-					_orgList);
+			spyMemcachedClient.set(MemcachedObjectType.ORG_LIST.getObjKey(),
+					MemcachedObjectType.ORG_LIST.getExpiredTime(), _orgList);
 
 			logger.debug("机构信息不在 memcached中,从数据库中取出并放入memcached");
 		} else {
@@ -187,6 +187,8 @@ public class OrganizationManager {
 		_dbOrganization.setName(org.getName());
 		_dbOrganization.setZkId(org.getZkId());
 		_dbOrganization.setBwBranchNo(org.getBwBranchNo());
+		_dbOrganization.setOrgAdd(org.getOrgAdd());
+		_dbOrganization.setOrgAddShort(org.getOrgAddShort());
 
 		orgJpaDao.save(_dbOrganization);
 

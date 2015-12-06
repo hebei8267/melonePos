@@ -23,6 +23,8 @@
         <result column="receive_date_ym" property="receiveDateYM" jdbcType="VARCHAR"/>
         <result column="receive_num" property="receiveNum" jdbcType="INTEGER"/>
         
+        <result column="replenish_org_Name" property="replenishOrgName" jdbcType="VARCHAR"/>
+        
 	</resultMap>
 	
 	
@@ -72,6 +74,34 @@
   			</if>
 	  	</where>
   	</sql>
+  	
+  	<select id="findByOrderNo" parameterType="map" resultMap="Result_Map_ReplenishOrder">
+  		select
+  			org.org_add_short AS replenish_org_Name,
+  			od.uuid ,
+	    	od.create_date ,
+	    	od.create_user_id ,
+	    	od.update_date ,
+	    	od.update_user_id ,
+	    	od.version ,
+	    	od.description ,
+	    	od.error_num ,
+	    	od.order_batch_id ,
+	    	od.order_no ,
+	    	od.order_state ,
+	    	od.send_date ,
+	    	od.receive_date ,
+	    	od.replenish_org_id 
+		from 
+			t_replenish_order od,
+			t_organization org
+		<where>
+			od.replenish_org_id = org.org_bw_id
+  			<if test="orderNo != null and orderNo !='' ">
+  			AND order_no = #{orderNo}
+  			</if>
+	  	</where>
+  	</select>
   	
   	<!-- 取得t_replenish_order信息(根据参数) -->
 	<select id="getReplenishOrderList" parameterType="map" resultMap="Result_Map_ReplenishOrder">

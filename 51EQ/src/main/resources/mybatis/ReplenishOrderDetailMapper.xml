@@ -53,6 +53,6 @@
   			od.order_no = #{orderNo}
   			</if>
 	  	</where>
-	  	ORDER BY od.product_barcode
+	  	ORDER BY sp.name , tp. item_short_name , od.product_barcode
 	</select>
 </mapper>

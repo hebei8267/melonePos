@@ -33,6 +33,12 @@
                         name : {
                             required : true,
                             maxlength : 32
+                        },
+                        orgAdd : {
+                            maxlength : 64
+                        },
+                        orgAddShort : {
+                            maxlength : 32
                         }
                     }
                 });
@@ -102,6 +108,18 @@
                             <label class="control-label">机构名称 :</label>
                             <div class="controls">
                                 <form:input	path="name" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">机构地址简称 :</label>
+                            <div class="controls">
+                                <form:input	path="orgAddShort" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">机构地址 :</label>
+                            <div class="controls">
+                                <form:input	path="orgAdd" />
                             </div>
                         </div>
                         <div class="control-group">

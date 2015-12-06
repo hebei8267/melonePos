@@ -39,4 +39,10 @@ public interface ReplenishOrderMyBatisDao {
 	public List<ReplenishOrder> getReceiveErrNumInfo(Map<String, String> param);
 
 	public List<ReplenishOrder> getOrgReceiveErrNumInfo(String receiveDateYM);
+
+	/**
+	 * @param orderNo
+	 * @return
+	 */
+	public ReplenishOrder findByOrderNo(Map<String, String> param);
 }

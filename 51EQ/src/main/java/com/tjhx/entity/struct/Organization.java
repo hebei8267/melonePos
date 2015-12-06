@@ -46,6 +46,11 @@ public class Organization extends IdEntity {
 	/** 父机构 */
 	private Organization parentOrg;
 
+	/** 机构地址 */
+	private String orgAdd;
+	/** 机构地址简称 */
+	private String orgAddShort;
+
 	public Organization() {
 
 	}
@@ -235,5 +240,43 @@ public class Organization extends IdEntity {
 		}
 		Organization rhs = (Organization) obj;
 		return new EqualsBuilder().append(this.getId(), rhs.getId()).isEquals();
+	}
+
+	/**
+	 * 取得机构地址
+	 * 
+	 * @return 机构地址
+	 */
+	@Column(length = 64)
+	public String getOrgAdd() {
+		return orgAdd;
+	}
+
+	/**
+	 * 设置机构地址
+	 * 
+	 * @param orgAdd 机构地址
+	 */
+	public void setOrgAdd(String orgAdd) {
+		this.orgAdd = orgAdd;
+	}
+
+	/**
+	 * 取得机构地址简称
+	 * 
+	 * @return 机构地址简称
+	 */
+	@Column(length = 32)
+	public String getOrgAddShort() {
+		return orgAddShort;
+	}
+
+	/**
+	 * 设置机构地址简称
+	 * 
+	 * @param orgAddShort 机构地址简称
+	 */
+	public void setOrgAddShort(String orgAddShort) {
+		this.orgAddShort = orgAddShort;
 	}
 }

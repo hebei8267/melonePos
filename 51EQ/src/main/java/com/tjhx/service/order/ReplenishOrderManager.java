@@ -157,10 +157,11 @@ public class ReplenishOrderManager {
 	 * @return
 	 */
 	public ReplenishOrder getReplenishOrderByOrderNo(String orderNo) {
-		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
-
 		Map<String, String> param = Maps.newHashMap();
 		param.put("orderNo", orderNo);
+
+		ReplenishOrder order = replenishOrderMyBatisDao.findByOrderNo(param);
+
 		List<ReplenishOrderDetail> detailList = replenishOrderDetailMyBatisDao.findReplenishOrderDetailByOrderNo(param);
 
 		order.setDetailList(detailList);
