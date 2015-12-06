@@ -55,6 +55,8 @@ public class ReplenishOrderVo {
 	private String productNum25;
 	/** 货物数量 */
 	private String productNum26;
+	/** 货物数量 */
+	private String productNum27;
 
 	/**
 	 * 获取货号
@@ -504,6 +506,14 @@ public class ReplenishOrderVo {
 	 */
 	public void setProductNum26(String productNum26) {
 		this.productNum26 = productNum26;
+	}
+
+	public String getProductNum27() {
+		return productNum27;
+	}
+
+	public void setProductNum27(String productNum27) {
+		this.productNum27 = productNum27;
 	}
 
 }

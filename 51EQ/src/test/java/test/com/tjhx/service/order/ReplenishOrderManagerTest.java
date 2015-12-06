@@ -33,7 +33,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 
 	// ##############################################
 	// 批次号
-	private static String batchId = "20150411";
+	private static String batchId = "99999999";
 
 	// ##############################################
 
@@ -62,7 +62,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 	@Rollback(false)
 	public void test01() throws InvalidFormatException, IOException, SAXException {
 
-		List<ReplenishOrderVo> replenishOrderList = replenishOrderManager.readReplenishOrderFile("D:\\门店调货单-输入\\11111.xlsx");
+		List<ReplenishOrderVo> replenishOrderList = replenishOrderManager.readReplenishOrderFile("C:\\AAAAAA配货单\\11111.xlsx");
 		if (null == replenishOrderList || replenishOrderList.size() == 0) {
 			System.out.println("############无效文件????????????????");
 		} else {
@@ -105,6 +105,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 		map.put("24D", generateOrgReplenishOrder());
 		map.put("25D", generateOrgReplenishOrder());
 		map.put("26D", generateOrgReplenishOrder());
+		map.put("27D", generateOrgReplenishOrder());
 
 		return map;
 	}
@@ -181,6 +182,7 @@ public class ReplenishOrderManagerTest extends SpringTransactionalTestCase {
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum24(), "24D");
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum25(), "25D");
 			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum26(), "26D");
+			setReplenishOrderInfo(orgOrderMap, vo.getProductNo(), vo.getProductNum27(), "27D");
 		}
 
 		_saveReplenishOrder(orgOrderMap);
