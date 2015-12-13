@@ -57,6 +57,14 @@
 				<div class="span3">
 					<h4>日常事务模块<br>
 					<table class="table	table-striped table-bordered" style="margin-top: 10px;">
+						<tr>
+							<c:if test="${role.permIdList.contains('71')}">
+							<td><input type="checkbox" name="perm" value="71" checked>会计记账</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('71')}">
+							<td><input type="checkbox" name="perm" value="71">会计记账</td>
+							</c:if>
+						</tr>
 						
 						<tr>
 							<c:if test="${role.permIdList.contains('27')}">

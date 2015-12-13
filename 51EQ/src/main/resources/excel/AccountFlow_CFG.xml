@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<workbook>
+	<worksheet idx="0">
+		<section startRow="0" endRow="0">
+		</section>
+		
+		<loop startRow="1" endRow="1" items="accountFlowList" var="accountFlow" varType="com.tjhx.entity.info.AccountFlow">
+			<section startRow="1" endRow="1">
+				<mapping row="1" col="0">accountFlow.optDate</mapping><!-- 日期 -->
+				<mapping row="1" col="1">accountFlow.inAmtDesc</mapping><!-- 拨入来源 -->
+		        <mapping row="1" col="2">accountFlow.inAmt</mapping><!-- 拨入金额 -->
+		        <mapping row="1" col="3">accountFlow.outAmt</mapping><!-- 支出金额 -->
+		        <mapping row="1" col="4">accountFlow.outAmtLClass</mapping><!-- 支出大类 -->
+		        <mapping row="1" col="5">accountFlow.outAmtSClass</mapping><!-- 支出细类 -->
+		        <mapping row="1" col="6">accountFlow.descTxt</mapping><!-- 备注 -->
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="0"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>

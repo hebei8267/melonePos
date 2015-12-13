@@ -220,7 +220,7 @@ public class CashRunController extends BaseController {
 	private void initMngPerList(Model model) {
 		// 取得督导员信息列表
 		List<User> mngList = userManager.getMngUser();
-		
+
 		Map<String, String> mngPerList = new LinkedHashMap<String, String>();
 		mngPerList.put("", "");
 
@@ -254,7 +254,7 @@ public class CashRunController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "del")
-	public String delCashRun_Action(@RequestParam("uuids") String ids, Model model, HttpSession session) {
+	public String delCashRun_Action(@RequestParam("uuids") String ids, Model model) {
 		String[] idArray = ids.split(",");
 		for (int i = 0; i < idArray.length; i++) {
 			cashRunManager.delCashRunByUuid(Integer.parseInt(idArray[i]));

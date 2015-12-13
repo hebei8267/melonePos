@@ -322,11 +322,16 @@
 					|| _permIdList.contains('43') || _permIdList.contains('49') 
 					|| _permIdList.contains('50') || _permIdList.contains('51') 
 					|| _permIdList.contains('52') || _permIdList.contains('55') 
-					|| _permIdList.contains('67')}">
+					|| _permIdList.contains('67') || _permIdList.contains('71')}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								
+								<c:if test="${_permIdList.contains('71')}">
+									<li>
+										<a href="${sc_ctx}/accountFlow/list">会计记账</a>
+									</li>
+									<li class="divider"></li>
+								</c:if>
 								<c:if test="${_permIdList.contains('27')}">
 									<li>
 										<a href="${sc_ctx}/invoiceApply">发票申请</a>
