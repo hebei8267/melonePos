@@ -89,6 +89,7 @@
                         </legend>
                     </div>
                     <div class="span9">
+                    	<a href="${sc_ctx}/accountFlow/new"	class="btn btn-primary">新增</a>
                         <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
                     </div>
               	</div>
@@ -139,7 +140,7 @@
                                 		<input type="checkbox" name="uuid" value="${accountFlow.uuid}"></input>
                                     </td>
                                     <td>
-                                    	<a href="${sc_ctx}/accountFlow/split/${accountFlow.uuid}" class="btn btn-warning"/>会计记账</a>
+                                    	<a href="${sc_ctx}/accountFlow/edit/${accountFlow.uuid}" class="btn btn-warning"/>修改</a>
                                   	</td>
                             		<td class="center">${accountFlow.balanceAmt}</td>
                             		<td class="center">${accountFlow.optDate}</td>

@@ -32,6 +32,8 @@ public class AccountFlow extends IdEntity {
 	private String outAmtSClass;
 	/** 备注 */
 	private String descTxt;
+	/** 锁定标记 */
+	private Boolean lockFlg = false;
 	/**
 	 * 取得日期
 	 * 
@@ -160,6 +162,22 @@ public class AccountFlow extends IdEntity {
 	 */
 	public void setDescTxt(String descTxt) {
 		this.descTxt = descTxt;
+	}
+	/**
+	 * 取得锁定标记
+	 * 
+	 * @return 锁定标记
+	 */
+	public Boolean getLockFlg() {
+		return lockFlg;
+	}
+	/**
+	 * 设置锁定标记
+	 * 
+	 * @param lockFlg 锁定标记
+	 */
+	public void setLockFlg(Boolean lockFlg) {
+		this.lockFlg = lockFlg;
 	}
 
 }

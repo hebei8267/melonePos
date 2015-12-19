@@ -26,6 +26,7 @@ import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.AccountFlowJpaDao;
 import com.tjhx.entity.info.AccountFlow;
+import com.tjhx.service.ServiceException;
 
 @Service
 @Transactional(readOnly = true)
@@ -130,7 +131,8 @@ public class AccountFlowManager {
 	 * @return
 	 */
 	public List<AccountFlow> getAccountFlowList() {
-		return (List<AccountFlow>) accountFlowJpaDao.findAll();
+		return (List<AccountFlow>) accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "optDate"),
+				new Sort.Order(Sort.Direction.DESC, "uuid")));
 	}
 
 	/**
@@ -145,5 +147,92 @@ public class AccountFlowManager {
 
 		accountFlowJpaDao.delete(_accountFlow);
 
+		// 计算会计余额
+		calBalanceAmt();
+	}
+	/**
+	 * 取得记账信息对象
+	 * 
+	 * @param id 记账对象ID
+	 * @return
+	 */
+	public AccountFlow getAccountFlowByUuid(Integer id) {
+		return accountFlowJpaDao.findOne(id);
+	}
+
+	/**
+	 * 新增/修改 记账信息
+	 * 
+	 * @param accountFlow
+	 */
+	@Transactional(readOnly = false)
+	public Boolean saveAccountFlow(AccountFlow accountFlow) {
+		if (null == accountFlow) {
+			return false;
+		}
+
+		if (null == accountFlow.getUuid()) {
+			// 添加记账信息
+			return addAccountFlow(accountFlow);
+		} else {
+			// 编辑记账信息
+			return editAccountFlow(accountFlow);
+		}
+
+	}
+
+	/**
+	 * 编辑记账信息
+	 * 
+	 * @param accountFlow
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	private Boolean editAccountFlow(AccountFlow accountFlow) {
+		AccountFlow dbAccountFlow = accountFlowJpaDao.findOne(accountFlow.getUuid());
+
+		if (null == dbAccountFlow) {
+			throw new ServiceException("ERR_MSG_ACCOUNT_FLOW_001");
+		}
+		// 日期
+		dbAccountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		// 余额
+		dbAccountFlow.setBalanceAmt(accountFlow.getBalanceAmt());
+		// 拨入来源
+		dbAccountFlow.setInAmtDesc(accountFlow.getInAmtDesc());
+		// 拨入金额
+		dbAccountFlow.setInAmt(accountFlow.getInAmt());
+		// 支出金额
+		dbAccountFlow.setOutAmt(accountFlow.getOutAmt());
+		// 支出大类
+		dbAccountFlow.setOutAmtLClass(accountFlow.getOutAmtLClass());
+		// 支出细类
+		dbAccountFlow.setOutAmtSClass(accountFlow.getOutAmtSClass());
+		// 备注
+		dbAccountFlow.setDescTxt(accountFlow.getDescTxt());
+
+		accountFlowJpaDao.save(dbAccountFlow);
+
+		// 计算会计余额
+		calBalanceAmt();
+
+		return true;
+	}
+
+	/**
+	 * 添加记账信息
+	 * 
+	 * @param accountFlow
+	 * @return
+	 */
+	@Transactional(readOnly = false)
+	private Boolean addAccountFlow(AccountFlow accountFlow) {
+		accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		accountFlowJpaDao.save(accountFlow);
+
+		// 计算会计余额
+		calBalanceAmt();
+
+		return true;
 	}
 }
