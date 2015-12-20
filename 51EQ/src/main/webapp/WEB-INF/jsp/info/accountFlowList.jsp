@@ -141,6 +141,7 @@
                                     </td>
                                     <td>
                                     	<a href="${sc_ctx}/accountFlow/edit/${accountFlow.uuid}" class="btn btn-warning"/>修改</a>
+                                    	<a href="${sc_ctx}/accountFlow/split/${accountFlow.uuid}" class="btn" style="margin-top: 5px"/>会计记账</a>
                                   	</td>
                             		<td class="center">${accountFlow.balanceAmt}</td>
                             		<td class="center">${accountFlow.optDate}</td>

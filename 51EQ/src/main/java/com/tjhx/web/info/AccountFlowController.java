@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.AccountFlow;
+import com.tjhx.entity.info.AccountFlowSplit;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.info.AccountFlowManager;
 import com.tjhx.web.BaseController;
@@ -123,8 +124,18 @@ public class AccountFlowController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "split")
-	public String splitAccountFlow_Action(@RequestParam("uuid") String id, Model model) {
-		return "info/accountFlowSplit";
+	@RequestMapping(value = "split/{uuid}")
+	public String splitAccountFlow_Action(@PathVariable("uuid") Integer id, Model model) {
+		AccountFlow accountFlow = accountFlowManager.getAccountFlowByUuid(id);
+		if (null == accountFlow) {
+			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/accountFlow/list";
+		} else {
+			model.addAttribute("accountFlow", accountFlow);
+
+			List<AccountFlowSplit> splitList = accountFlowManager.getAccountFlowSplitByFlowUuid(id);
+			model.addAttribute("splitList", splitList);
+
+			return "info/accountFlowSplit";
+		}
 	}
 }

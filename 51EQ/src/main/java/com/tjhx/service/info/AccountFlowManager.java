@@ -25,7 +25,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.AccountFlowJpaDao;
+import com.tjhx.dao.info.AccountFlowSplitJpaDao;
+import com.tjhx.dao.info.AccountFlowSplitMyBatisDao;
 import com.tjhx.entity.info.AccountFlow;
+import com.tjhx.entity.info.AccountFlowSplit;
 import com.tjhx.service.ServiceException;
 
 @Service
@@ -33,6 +36,13 @@ import com.tjhx.service.ServiceException;
 public class AccountFlowManager {
 	@Resource
 	private AccountFlowJpaDao accountFlowJpaDao;
+
+	@Resource
+	private AccountFlowSplitJpaDao accountFlowSplitJpaDao;
+
+	@Resource
+	private AccountFlowSplitMyBatisDao accountFlowSplitMyBatisDao;
+
 	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
 
 	/**
@@ -234,5 +244,23 @@ public class AccountFlowManager {
 		calBalanceAmt();
 
 		return true;
+	}
+
+	/**
+	 * 取得资金记账流水支出明细切分信息列表（根据记账信息UUID）
+	 * 
+	 * @param id 记账信息UUID
+	 * @return
+	 */
+	public List<AccountFlowSplit> getAccountFlowSplitByFlowUuid(Integer id) {
+		List<AccountFlowSplit> _list = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(id);
+
+		int _index = 10 - _list.size();
+
+		for (int i = 0; i < _index; i++) {
+			_list.add(new AccountFlowSplit());
+		}
+
+		return _list;
 	}
 }
