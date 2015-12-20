@@ -269,6 +269,7 @@ public class AccountFlowManager {
 		return _list;
 	}
 
+	@Transactional(readOnly = false)
 	public void saveAccountFlowSplit(int accountFlowUuid, List<AccountFlowSplit> _list) {
 
 		AccountFlow accountFlow = accountFlowJpaDao.findOne(accountFlowUuid);
@@ -290,5 +291,8 @@ public class AccountFlowManager {
 
 			accountFlowSplitJpaDao.save(accountFlowSplit);
 		}
+
+		accountFlow.setLockFlg(true);
+		accountFlowJpaDao.save(accountFlow);
 	}
 }

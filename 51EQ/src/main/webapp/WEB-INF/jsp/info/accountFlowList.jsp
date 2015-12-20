@@ -103,9 +103,6 @@
                                 	<th	width="25" class="center">
                                         <input id="checkAll" type="checkbox" />
                                     </th>
-                                    <th	width="55">
-                                        &nbsp;
-                                    </th>
                                     <th class="center">
                                         余额
                                     </th>
@@ -130,6 +127,9 @@
                                     <th class="center" width="200">
                                         备注
                                     </th>
+                                    <th	width="55">
+                                        &nbsp;
+                                    </th>
                                 </tr>
                             </thead>
                             
@@ -137,12 +137,10 @@
                             	<c:forEach items="${accountFlowList}" var="accountFlow" varStatus="status">
                             	<tr>
                             		<td	class="center">
+                            			<c:if test="${!accountFlow.lockFlg}">
                                 		<input type="checkbox" name="uuid" value="${accountFlow.uuid}"></input>
+                                		</c:if>
                                     </td>
-                                    <td>
-                                    	<a href="${sc_ctx}/accountFlow/edit/${accountFlow.uuid}" class="btn btn-warning"/>修改</a>
-                                    	<a href="${sc_ctx}/accountFlow/split/${accountFlow.uuid}" class="btn" style="margin-top: 5px"/>会计记账</a>
-                                  	</td>
                             		<td class="center">${accountFlow.balanceAmt}</td>
                             		<td class="center">${accountFlow.optDate}</td>
                             		<td class="center">${accountFlow.inAmtDesc}</td>
@@ -151,6 +149,16 @@
                             		<td class="center">${accountFlow.outAmtLClass}</td>
                             		<td class="center">${accountFlow.outAmtSClass}</td>
                             		<td>${accountFlow.descTxt}</td>
+                            		<td>
+                            			<c:if test="${!accountFlow.lockFlg}">
+                                    	<a href="${sc_ctx}/accountFlow/edit/${accountFlow.uuid}" class="btn btn-warning"/>修改</a>
+                                    	<a href="${sc_ctx}/accountFlow/split/${accountFlow.uuid}" class="btn btn-info" style="margin-top: 5px"/>会计记账</a>
+                                    	</c:if>
+                                    	
+                                    	<c:if test="${accountFlow.lockFlg}">
+                                    	<a href="${sc_ctx}/accountFlow/split/${accountFlow.uuid}" class="btn" style="margin-top: 5px"/>会计记账</a>
+                                    	</c:if>
+                                  	</td>
                             	</tr>
                             	</c:forEach>
                             </tbody>
