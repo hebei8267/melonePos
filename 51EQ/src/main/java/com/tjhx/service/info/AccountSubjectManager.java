@@ -49,6 +49,8 @@ public class AccountSubjectManager {
 			// 预算科目父节点名称
 			_reSub.setParentSubName(accountSubject.getParentSub() == null ? null : accountSubject.getParentSub()
 					.getSubName());
+			// 科目编号
+			_reSub.setSubId(accountSubject.getSubId());
 			// 机构名称
 			_reSub.setSubName(accountSubject.getSubName());
 			// 排序
@@ -143,6 +145,7 @@ public class AccountSubjectManager {
 
 		return true;
 	}
+
 	/**
 	 * 编辑记账科目信息
 	 * 

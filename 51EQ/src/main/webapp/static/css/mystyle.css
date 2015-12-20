@@ -13,6 +13,12 @@ textarea{
 	height: auto;
     padding: 7px 9px;
 }
+.mini_text{
+	width: 85px;
+}
+.mini_select{
+	width: 190px;
+}
 select{
 	font-size: 16px;
     height: auto;
@@ -74,7 +80,7 @@ select{
 	margin-top: 20px;
 	margin-bottom: 30px;
 }
-/************************ ������Ϣ�� ************************/
+/************************ �������������������������� ************************/
 .__model37 {
 	font-size: 22px;
 }

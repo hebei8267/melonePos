@@ -27,8 +27,10 @@ import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.AccountFlowJpaDao;
 import com.tjhx.dao.info.AccountFlowSplitJpaDao;
 import com.tjhx.dao.info.AccountFlowSplitMyBatisDao;
+import com.tjhx.dao.info.AccountSubjectJpaDao;
 import com.tjhx.entity.info.AccountFlow;
 import com.tjhx.entity.info.AccountFlowSplit;
+import com.tjhx.entity.info.AccountSubject;
 import com.tjhx.service.ServiceException;
 
 @Service
@@ -36,12 +38,12 @@ import com.tjhx.service.ServiceException;
 public class AccountFlowManager {
 	@Resource
 	private AccountFlowJpaDao accountFlowJpaDao;
-
 	@Resource
 	private AccountFlowSplitJpaDao accountFlowSplitJpaDao;
-
 	@Resource
 	private AccountFlowSplitMyBatisDao accountFlowSplitMyBatisDao;
+	@Resource
+	private AccountSubjectJpaDao accountSubjectJpaDao;
 
 	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
 
@@ -160,6 +162,7 @@ public class AccountFlowManager {
 		// 计算会计余额
 		calBalanceAmt();
 	}
+
 	/**
 	 * 取得记账信息对象
 	 * 
@@ -255,12 +258,37 @@ public class AccountFlowManager {
 	public List<AccountFlowSplit> getAccountFlowSplitByFlowUuid(Integer id) {
 		List<AccountFlowSplit> _list = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(id);
 
-		int _index = 10 - _list.size();
+		int _index = 5 - _list.size();
 
 		for (int i = 0; i < _index; i++) {
-			_list.add(new AccountFlowSplit());
+			AccountFlowSplit split = new AccountFlowSplit();
+			split.setAmt(null);
+			_list.add(split);
 		}
 
 		return _list;
+	}
+
+	public void saveAccountFlowSplit(int accountFlowUuid, List<AccountFlowSplit> _list) {
+
+		AccountFlow accountFlow = accountFlowJpaDao.findOne(accountFlowUuid);
+		if (null == accountFlow) {
+			return;
+		}
+
+		accountFlowSplitMyBatisDao.delAccountFlowSplitByFlowUuid(accountFlowUuid);
+
+		for (int i = 0; i < _list.size(); i++) {
+			AccountFlowSplit accountFlowSplit = _list.get(i);
+
+			accountFlowSplit.setAccountFlow(accountFlow);
+
+			AccountSubject sub = accountSubjectJpaDao.findBySubId(accountFlowSplit.getSubId());
+			accountFlowSplit.setAccountSub(sub);
+
+			accountFlowSplit.setIndex(i);
+
+			accountFlowSplitJpaDao.save(accountFlowSplit);
+		}
 	}
 }

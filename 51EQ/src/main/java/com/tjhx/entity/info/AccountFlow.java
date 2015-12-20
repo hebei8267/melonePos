@@ -34,6 +34,7 @@ public class AccountFlow extends IdEntity {
 	private String descTxt;
 	/** 锁定标记 */
 	private Boolean lockFlg = false;
+
 	/**
 	 * 取得日期
 	 * 
@@ -43,6 +44,7 @@ public class AccountFlow extends IdEntity {
 	public String getOptDate() {
 		return optDate;
 	}
+
 	/**
 	 * 设置日期
 	 * 
@@ -51,6 +53,7 @@ public class AccountFlow extends IdEntity {
 	public void setOptDate(String optDate) {
 		this.optDate = optDate;
 	}
+
 	/**
 	 * 取得余额
 	 * 
@@ -59,6 +62,7 @@ public class AccountFlow extends IdEntity {
 	public BigDecimal getBalanceAmt() {
 		return balanceAmt;
 	}
+
 	/**
 	 * 设置余额
 	 * 
@@ -67,6 +71,7 @@ public class AccountFlow extends IdEntity {
 	public void setBalanceAmt(BigDecimal balanceAmt) {
 		this.balanceAmt = balanceAmt;
 	}
+
 	/**
 	 * 取得拨入来源
 	 * 
@@ -75,6 +80,7 @@ public class AccountFlow extends IdEntity {
 	public String getInAmtDesc() {
 		return inAmtDesc;
 	}
+
 	/**
 	 * 设置拨入来源
 	 * 
@@ -83,6 +89,7 @@ public class AccountFlow extends IdEntity {
 	public void setInAmtDesc(String inAmtDesc) {
 		this.inAmtDesc = inAmtDesc;
 	}
+
 	/**
 	 * 取得拨入金额
 	 * 
@@ -91,6 +98,7 @@ public class AccountFlow extends IdEntity {
 	public BigDecimal getInAmt() {
 		return inAmt;
 	}
+
 	/**
 	 * 设置拨入金额
 	 * 
@@ -99,6 +107,7 @@ public class AccountFlow extends IdEntity {
 	public void setInAmt(BigDecimal inAmt) {
 		this.inAmt = inAmt;
 	}
+
 	/**
 	 * 取得支出金额
 	 * 
@@ -107,6 +116,7 @@ public class AccountFlow extends IdEntity {
 	public BigDecimal getOutAmt() {
 		return outAmt;
 	}
+
 	/**
 	 * 设置支出金额
 	 * 
@@ -115,6 +125,7 @@ public class AccountFlow extends IdEntity {
 	public void setOutAmt(BigDecimal outAmt) {
 		this.outAmt = outAmt;
 	}
+
 	/**
 	 * 取得支出大类
 	 * 
@@ -123,6 +134,7 @@ public class AccountFlow extends IdEntity {
 	public String getOutAmtLClass() {
 		return outAmtLClass;
 	}
+
 	/**
 	 * 设置支出大类
 	 * 
@@ -131,6 +143,7 @@ public class AccountFlow extends IdEntity {
 	public void setOutAmtLClass(String outAmtLClass) {
 		this.outAmtLClass = outAmtLClass;
 	}
+
 	/**
 	 * 取得支出细类
 	 * 
@@ -139,6 +152,7 @@ public class AccountFlow extends IdEntity {
 	public String getOutAmtSClass() {
 		return outAmtSClass;
 	}
+
 	/**
 	 * 设置支出细类
 	 * 
@@ -147,6 +161,7 @@ public class AccountFlow extends IdEntity {
 	public void setOutAmtSClass(String outAmtSClass) {
 		this.outAmtSClass = outAmtSClass;
 	}
+
 	/**
 	 * 取得备注
 	 * 
@@ -155,6 +170,7 @@ public class AccountFlow extends IdEntity {
 	public String getDescTxt() {
 		return descTxt;
 	}
+
 	/**
 	 * 设置备注
 	 * 
@@ -163,6 +179,7 @@ public class AccountFlow extends IdEntity {
 	public void setDescTxt(String descTxt) {
 		this.descTxt = descTxt;
 	}
+
 	/**
 	 * 取得锁定标记
 	 * 
@@ -171,6 +188,7 @@ public class AccountFlow extends IdEntity {
 	public Boolean getLockFlg() {
 		return lockFlg;
 	}
+
 	/**
 	 * 设置锁定标记
 	 * 

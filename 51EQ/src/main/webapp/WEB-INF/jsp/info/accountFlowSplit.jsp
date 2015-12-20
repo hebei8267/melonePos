@@ -3,6 +3,7 @@
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
+<%@ page import="com.tjhx.globals.Constants" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
 <c:set var="sc_ctx">
     ${ctx}/sc
@@ -19,50 +20,106 @@
             }
         </style>
         <script>
+        function clean(index) {
+        	$("#_subId" + index).val("");
+          	$("#_amt" + index).val("");
+          	reCal();
+        }
+        function reCal(){
+        	var _total = 0;
+    		$(".amt").each(function(){
+    			var _val = $(this).val();
+    			if(/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/.test(_val)){
+    				_total = numAdd(_total, _val);
+    			}
+    		});
+    		
+    		$('#_total').text(_total);
+    		$('#_total_Cal').val(_total);
+        }
         $(function() {
         	$('#optDate').datepicker({
                 format : 'yyyy-mm-dd'
             });
         	
-        	$("#inputForm").validate({
-                rules : {
-                	optDate : {
-                        required : true,
-                        date : true
-                    },
-                    inAmtDesc : {
-                    	maxlength : 255
-                    },
-                    inAmt : {
-                    	required : true,
-                        money : true
-                    },
-                    outAmt : {
-                    	required : true,
-                        money : true
-                    },
-                    outAmtLClass : {
-                    	maxlength : 255
-                    },
-                    outAmtSClass : {
-                    	maxlength : 255
-                    },
-                    descTxt : {
-                    	maxlength : 255
-                    }
-                }
+        	$(".amt").change(function() {
+        		reCal();
             });
-        	
         	$("#saveBtn").click(function() {
                 $("input[type='text'],textarea").each(function(i) {
                     this.value = $.trim(this.value);
                 });
 
 				$("#inputForm").attr("target", "_self");
-                $("#inputForm").attr("action", "${sc_ctx}/accountFlow/save");
+                $("#inputForm").attr("action", "${sc_ctx}/accountFlow/splitSave");
                 $("#inputForm").submit();
             });
+        	
+        	//-----------------------------------
+            // 表单效验
+            //-----------------------------------
+            $("#inputForm").validate({
+                rules : {
+                	"saveBtn" : {
+                		myEqualAmt : true
+                    },
+                	"subId0" : {
+                		requiredAmt : "_amt0"
+                    },
+                    "subId1" : {
+                    	requiredAmt : "_amt1"
+                    },
+                    "subId2" : {
+                    	requiredAmt : "_amt2"
+                    },
+                    "subId3" : {
+                    	requiredAmt : "_amt3"
+                    },
+                    "subId4" : {
+                    	requiredAmt : "_amt4"
+                    },
+                	"amt0" : {
+                		requiredSubject : "_subId0",
+                    	money : true
+                    },
+                    "amt1" : {
+                    	requiredSubject : "_subId1",
+                    	money : true
+                    },
+                    "amt2" : {
+                    	requiredSubject : "_subId2",
+                    	money : true
+                    },
+                    "amt3" : {
+                    	requiredSubject : "_subId3",
+                    	money : true
+                    },
+                    "amt4" : {
+                    	requiredSubject : "_subId4",
+                    	money : true
+                    }
+                    
+                }
+            });
         });
+        
+        jQuery.validator.addMethod("requiredSubject", function(value, element, param) {
+        	if(value != ""){
+        		return ($("#"+ param +"").val() != "");
+        	}
+    		return true;
+       	}, "请选择记账科目");
+        
+        jQuery.validator.addMethod("requiredAmt", function(value, element, param) {
+        	if(value != ""){
+        		return ($("#"+ param +"").val() != "");
+        	}
+    		return true;
+       	}, "请输入正确的金额");
+        
+        jQuery.validator.addMethod("myEqualAmt", function(value, element, param) {
+    		return numAdd($("#_total_Actual").val(),0) == numAdd($('#_total_Cal').val(),0);
+       	}, "请输入正确的金额(合计)");
  		</script>
     </head>
     <body>
@@ -78,7 +135,7 @@
                     </legend>
           		</div>
           		
-          		<div class="span6"	style="margin-top: 10px;">
+          		<div class="span5"	style="margin-top: 10px;">
                     <form:form method="POST" class="form-horizontal" modelAttribute="accountFlow">
                     	<form:hidden path="uuid"/>
                     	
@@ -96,7 +153,8 @@
                         </div>
                         <div class="control-group">
                             <label class="control-label">支出金额 :</label>
-                            <label class="left-control-label" style="color:#F89406;">${accountFlow.outAmt} 元</label>
+                            <label class="left-control-label" style="color:red;">${accountFlow.outAmt} 元</label>
+                            <input type="hidden" id="_total_Actual" value="${accountFlow.outAmt}">
                         </div>
                         <div class="control-group">
                             <label class="control-label">支出大类 :</label>
@@ -110,16 +168,12 @@
                             <label class="control-label">备注 :</label>
                             <label class="left-control-label">${accountFlow.descTxt}</label>
                         </div>
-                        <div class="control-group">
-                            <div class="controls">
-                                <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">记账</button>
-                                &nbsp;<a href="${sc_ctx}/accountFlow/list" class="btn btn-large">返回</a>
-                            </div>
-                        </div>
               		</form:form>
             	</div>
             	
-            	<div class="span6" style="padding-top: 10px;">
+            	<div class="span7" style="padding-top: 10px;">
+            		<form method="POST" id="inputForm">
+            		<input type="hidden" name="accountFlowUuid" value="${accountFlow.uuid}">
             		<table class="table	table-striped table-bordered table-condensed mytable">
 	                    <thead>
 	                        <tr>
@@ -129,21 +183,64 @@
 	                            <th class="center">
 	                                记账科目
 	                            </th>
-	                            <th	class="center" width="175">
+	                            <th	class="center" width="150">
 	                                金额
 	                            </th>
+	                            <th></th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                    	<c:forEach items="${accountFlowSplitList}" var="accountFlowSplit" varStatus="status">
+	                    	<c:set var="_total" value="0"/>
+	                    	<c:forEach items="${splitList}" var="split" varStatus="status">
+	                    	<c:set var="_total" value="${_total+split.amt}"/>
 	                    	<tr>
-	                    		<td>${status.index + 1}</td>
-	                    		<td></td>
-	                    		<td></td>
+	                    		<td class="center">${status.index + 1}</td>
+	                    		<td class="center">
+	                    			<select class="layout-option form-control mini_select" name="subId${status.index}" id="_subId${status.index}">
+										<c:if test="${split.subId == null}">
+										<option value="" selected><%=Constants.BLANK_SELECT_TEXT %></option>
+										</c:if>
+										<c:if test="${split.subId != null}">
+										<option value=""><%=Constants.BLANK_SELECT_TEXT %></option>
+										</c:if>
+										
+										<c:forEach items="${subList}" var="sub">
+											<c:if test="${split.subId == sub.subId}">
+											<option value="${sub.subId}" selected>${sub.subName}</option>
+											</c:if>
+											
+											<c:if test="${split.subId != sub.subId}">
+											<option value="${sub.subId}">${sub.subName}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+	                    		</td>
+	                    		<td class="center">
+	                    			<input class="mini_text amt" type="text" name="amt${status.index}" id="_amt${status.index}" value="${split.amt}"/> 元
+	                    		</td>
+	                    		<td class="center">
+	                    			<input type="button" class="btn btn-warning" onclick="clean('${status.index}')" value="清空">
+	                    		</td>
 	                    	</tr>
 	                    	</c:forEach>
+	                    	<tr>
+		                    	<td colspan="2" class="right">合计
+		                    	</td>
+		                    	<td colspan="2" class="left">
+		                    		<span id="_total" style="color:red">${_total}</span> 元
+		                    		<input type="hidden" id="_total_Cal" value="${_total}">
+		                    	</td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td colspan="4" class="right">
+		                    		<input type="button" id="saveBtn" name="saveBtn" class="btn	btn-large btn-primary" value="记账">
+	                                &nbsp;<a href="${sc_ctx}/accountFlow/list" class="btn btn-large">返回</a>
+	                    		</td>
+	                    	</tr>
 	                    </tbody>
 	            	</table>
+	            	
+	            	</form>
             	</div>
       		</div>
    		</div>

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.tjhx.entity.IdEntity;
 
@@ -21,6 +22,8 @@ public class AccountFlowSplit extends IdEntity {
 	private static final long serialVersionUID = -7253432114356840474L;
 	/** 资金记账流水 */
 	private AccountFlow accountFlow;
+	/** 资金记账流水 */
+	private Integer accountFlowUuid;
 	/** 记账科目 */
 	private AccountSubject accountSub;
 	/** 记账科目编号 */
@@ -29,6 +32,14 @@ public class AccountFlowSplit extends IdEntity {
 	private BigDecimal amt = new BigDecimal("0");
 	/** Index */
 	private Integer index;
+
+	public AccountFlowSplit() {
+	}
+
+	public AccountFlowSplit(String subId, BigDecimal amt) {
+		this.subId = subId;
+		this.amt = amt;
+	}
 
 	/**
 	 * 取得资金记账流水
@@ -48,6 +59,21 @@ public class AccountFlowSplit extends IdEntity {
 	 */
 	public void setAccountFlow(AccountFlow accountFlow) {
 		this.accountFlow = accountFlow;
+	}
+
+	/**
+	 * @return the accountFlowUuid
+	 */
+	@Transient
+	public Integer getAccountFlowUuid() {
+		return accountFlowUuid;
+	}
+
+	/**
+	 * @param accountFlowUuid the accountFlowUuid to set
+	 */
+	public void setAccountFlowUuid(Integer accountFlowUuid) {
+		this.accountFlowUuid = accountFlowUuid;
 	}
 
 	/**

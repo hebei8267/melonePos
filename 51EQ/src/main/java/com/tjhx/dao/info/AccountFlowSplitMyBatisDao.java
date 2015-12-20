@@ -14,4 +14,11 @@ public interface AccountFlowSplitMyBatisDao {
 	 */
 	List<AccountFlowSplit> getAccountFlowSplitByFlowUuid(Integer id);
 
+	/**
+	 * 删除
+	 * 
+	 * @param accountFlowUuid 记账信息UUID
+	 */
+	void delAccountFlowSplitByFlowUuid(int accountFlowUuid);
+
 }

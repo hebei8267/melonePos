@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.dao.info.AccountFlowSplitMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_AccountFlowSplit" type="com.tjhx.entity.info.AccountFlowSplit">
+		<result column="uuid" property="uuid" jdbcType="INTEGER"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+		<result column="version" property="version" jdbcType="INTEGER"/>
+		<result column="amt" property="amt" jdbcType="DECIMAL"/>
+		<result column="_index" property="index" jdbcType="INTEGER"/>
+		<result column="sub_id" property="subId" jdbcType="VARCHAR"/>
+		<result column="account_flow_h_id" property="accountFlowUuid" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<delete id="delAccountFlowSplitByFlowUuid" parameterType="Integer">
+    <![CDATA[
+        DELETE FROM t_account_flow_split where account_flow_h_id = #{accountFlowUuid}
+    ]]>
+    </delete>
+	
+	<!-- 取得[]对象列表-->
+	<select id="getAccountFlowSplitByFlowUuid"  resultMap="Result_Map_AccountFlowSplit">
+		select
+		<include refid="Base_Column_List" />
+		from t_account_flow_split
+		<where>
+			account_flow_h_id = #{accountFlowHid}
+		</where>
+		order by _index
+	</select>
+	
+	<!-- 查询结果字段 -->
+	<sql id="Base_Column_List" >
+	<![CDATA[
+		uuid ,
+		create_date ,
+		create_user_id ,
+		update_date ,
+		update_user_id ,
+		version ,
+		amt ,
+		_index ,
+		sub_id ,
+		account_flow_h_id
+	]]>
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="Where_Clause" >
+		<where>
+			<if test="uuid != null ">
+			uuid = #{uuid}
+			</if>
+			<if test="createDate != null and createDate !='' ">
+			AND create_date = #{createDate}
+			</if>
+			<if test="createUserId != null and createUserId !='' ">
+			AND create_user_id = #{createUserId}
+			</if>
+			<if test="updateDate != null and updateDate !='' ">
+			AND update_date = #{updateDate}
+			</if>
+			<if test="updateUserId != null and updateUserId !='' ">
+			AND update_user_id = #{updateUserId}
+			</if>
+			<if test="version != null ">
+			AND version = #{version}
+			</if>
+			<if test="amt != null and amt !='' ">
+			AND amt = #{amt}
+			</if>
+			<if test="index != null ">
+			AND _index = #{index}
+			</if>
+			<if test="subId != null and subId !='' ">
+			AND sub_id = #{subId}
+			</if>
+			<if test="accountFlowHid != null ">
+			AND account_flow_h_id = #{accountFlowHid}
+			</if>
+			<if test="accountSubHid != null ">
+			AND account_sub_h_id = #{accountSubHid}
+			</if>
+		</where>
+	</sql>
+	
+</mapper>
