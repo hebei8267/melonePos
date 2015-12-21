@@ -2,6 +2,7 @@
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
 <c:set var="sc_ctx">
@@ -142,7 +143,10 @@
                                 		</c:if>
                                     </td>
                             		<td class="center">${accountFlow.balanceAmt}</td>
-                            		<td class="center">${accountFlow.optDate}</td>
+                            		<td class="center">
+										<fmt:parseDate value="${accountFlow.optDate}" var="_optDate" pattern="yyyyMMdd" />
+                            			<fmt:formatDate pattern="yyyy-MM-dd" value="${_optDate}" />
+									</td>
                             		<td class="center">${accountFlow.inAmtDesc}</td>
                             		<td class="center">${accountFlow.inAmt}</td>
                             		<td class="center">${accountFlow.outAmt}</td>
