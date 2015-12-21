@@ -176,6 +176,7 @@ public class AccountFlow extends IdEntity {
 	 * 
 	 * @param descTxt 备注
 	 */
+	@Column(length = 1024)
 	public void setDescTxt(String descTxt) {
 		this.descTxt = descTxt;
 	}
