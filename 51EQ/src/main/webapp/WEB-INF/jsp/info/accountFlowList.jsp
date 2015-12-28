@@ -150,17 +150,14 @@
                        <!--  <input id="exportDetailBtn" class="btn btn-warning" type="button" value="记账明细数据导出" /> -->
                     </div>
                     </form>
-                    
-                    
-                    <form method="post"	class="form-horizontal"	id="listForm">
+				</div>   
+                
+                <form method="post"	class="form-horizontal"	id="listForm">
+                <div class="row">   
                     <div class="span12" style="margin-top: 15px">
                     	<a href="${sc_ctx}/accountFlow/new"	class="btn btn-primary">新增</a>
                         <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
-                        
                     </div>
-                    </form>
-                    
-                    
               	</div>
             
             	<div class="row">
@@ -237,6 +234,7 @@
                         </table>
                     </div>
                 </div>
+        	</form>
       	</div>
         
 	</body>
