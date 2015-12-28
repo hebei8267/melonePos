@@ -53,6 +53,57 @@
                     });
                 }
             });
+          	
+            $("#searchForm").validate({
+                rules : {
+                	optDateShow_start : {
+                		required : true,
+                		date : true                    		
+                    },
+                    optDateShow_end : {
+                		required : true,
+                		date : true,
+                		compareDate : "#optDateShow_start"
+                    }
+                }
+            });
+        	
+        	$('#optDateShow_start').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('#optDateShow_end').datepicker({
+                format : 'yyyy-mm-dd'
+            });
+            
+            $("#exportBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#searchForm").attr('target', '_self');
+                $("#searchForm").attr("action", "${sc_ctx}/accountFlow/export");
+                $("#searchForm").submit();
+            });
+            
+            $("#exportBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#searchForm").attr('target', '_self');
+                $("#searchForm").attr("action", "${sc_ctx}/accountFlow/export");
+                $("#searchForm").submit();
+            });
+            
+            $("#searchBtn").click(function() {
+                $("input[type='text'],textarea").each(function(i) {
+                    this.value = $.trim(this.value);
+                });
+
+				$("#searchForm").attr('target', '_self');
+                $("#searchForm").attr("action", "${sc_ctx}/accountFlow/search");
+                $("#searchForm").submit();
+            });
     	});
     	//-----------------------------------
         // 删除
@@ -82,17 +133,34 @@
         <page:applyDecorator name="menu" />
         
         <div class="container">
-            <form method="post"	class="form-horizontal"	id="listForm">
             	<div class="row">
                     <div class="span12">
                         <legend>
                             <h3>会计记账</h3>
                         </legend>
                     </div>
-                    <div class="span9">
+                    
+                    <form method="post"	class="form-horizontal"	id="searchForm">
+                    <div class="span12">
+                    	<label>操作时间 :</label>
+                        <input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
+                        ～ <input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
+                        &nbsp;&nbsp;<input id="searchBtn" class="btn btn-primary" type="button" value="查询" />
+                        <input id="exportBtn" class="btn btn-warning" type="button" value="记账数据导出" />
+                       <!--  <input id="exportDetailBtn" class="btn btn-warning" type="button" value="记账明细数据导出" /> -->
+                    </div>
+                    </form>
+                    
+                    
+                    <form method="post"	class="form-horizontal"	id="listForm">
+                    <div class="span12" style="margin-top: 15px">
                     	<a href="${sc_ctx}/accountFlow/new"	class="btn btn-primary">新增</a>
                         <input id="delBtn" name="delBtn" type="button" class="btn btn-danger" value="删除"/>
+                        
                     </div>
+                    </form>
+                    
+                    
               	</div>
             
             	<div class="row">
@@ -105,9 +173,9 @@
                                         <input id="checkAll" type="checkbox" />
                                     </th>
                                     <th class="center">
-                                        余额
+                                        余额(元)
                                     </th>
-                                    <th class="center">
+                                    <th width="90" class="center">
                                         日期
                                     </th>
                                     <th class="center">
@@ -122,7 +190,7 @@
                                     <th class="center">
                                         支出大类
                                     </th>
-                                    <th class="center">
+                                    <th width="60" class="center">
                                         支出细类
                                     </th>
                                     <th class="center" width="200">
@@ -169,7 +237,6 @@
                         </table>
                     </div>
                 </div>
-            </form>
       	</div>
         
 	</body>

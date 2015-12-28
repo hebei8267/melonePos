@@ -6,19 +6,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.reader.ReaderBuilder;
 import net.sf.jxls.reader.XLSReadStatus;
 import net.sf.jxls.reader.XLSReader;
+import net.sf.jxls.transformer.XLSTransformer;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
@@ -31,6 +37,7 @@ import com.tjhx.dao.info.AccountSubjectJpaDao;
 import com.tjhx.entity.info.AccountFlow;
 import com.tjhx.entity.info.AccountFlowSplit;
 import com.tjhx.entity.info.AccountSubject;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
 
 @Service
@@ -45,7 +52,8 @@ public class AccountFlowManager {
 	@Resource
 	private AccountSubjectJpaDao accountSubjectJpaDao;
 
-	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
+	private final static String XML_CONFIG_READ_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
+	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/Account_Flow_Template.xls";
 
 	/**
 	 * 读取记账文件内容
@@ -62,7 +70,7 @@ public class AccountFlowManager {
 	public boolean loadAccountFlowFile(String filePath) throws IOException, SAXException, InvalidFormatException,
 			NumberFormatException, ParseException {
 		InputStream inputXML = new BufferedInputStream(
-				AccountFlowManager.class.getResourceAsStream(XML_CONFIG_ACCOUNT_FLOW));
+				AccountFlowManager.class.getResourceAsStream(XML_CONFIG_READ_ACCOUNT_FLOW));
 
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
 
@@ -137,14 +145,55 @@ public class AccountFlowManager {
 		}
 	}
 
+	public String createDownLoadFile(String optDateShowStart, String optDateShowEnd) throws ParsePropertyException,
+			InvalidFormatException, IOException {
+		if (StringUtils.isBlank(optDateShowStart) && StringUtils.isBlank(optDateShowEnd)) {
+			return null;
+		}
+		String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
+		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
+				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+
+		for (AccountFlow accountFlow : _list) {
+			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
+		}
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountFlowList", _list);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_ACCOUNT_FLOW, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
 	/**
 	 * 取得记账信息对象列表
 	 * 
+	 * @param optDate
+	 * 
 	 * @return
 	 */
-	public List<AccountFlow> getAccountFlowList() {
-		return (List<AccountFlow>) accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "optDate"),
-				new Sort.Order(Sort.Direction.DESC, "uuid")));
+	public List<AccountFlow> getAccountFlowList(String optDateShowStart, String optDateShowEnd) {
+
+		if (StringUtils.isNotBlank(optDateShowStart) && StringUtils.isNotBlank(optDateShowEnd)) {
+			String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
+			String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+			return (List<AccountFlow>) accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
+					new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		} else {
+			return (List<AccountFlow>) accountFlowJpaDao.findAll(new Sort(
+					new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+		}
+
 	}
 
 	/**
@@ -295,4 +344,5 @@ public class AccountFlowManager {
 		accountFlow.setLockFlg(true);
 		accountFlowJpaDao.save(accountFlow);
 	}
+
 }

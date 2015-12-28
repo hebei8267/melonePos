@@ -11,4 +11,7 @@ import com.tjhx.entity.info.AccountFlow;
 public interface AccountFlowJpaDao extends CrudRepository<AccountFlow, Integer> {
 	@Query("select a from AccountFlow a")
 	public List<AccountFlow> findAll(Sort sort);
+
+	@Query("select a from AccountFlow a where a.optDate >= ?1 and a.optDate <= ?2")
+	public List<AccountFlow> findByOptDate(String optDateStart, String optDateEnd, Sort sort);
 }
