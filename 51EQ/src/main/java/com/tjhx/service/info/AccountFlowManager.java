@@ -154,7 +154,7 @@ public class AccountFlowManager {
 		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
 		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
-				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		for (AccountFlow accountFlow : _list) {
 			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
