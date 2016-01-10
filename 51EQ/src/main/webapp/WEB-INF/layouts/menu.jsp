@@ -76,8 +76,9 @@
 									<li>
 										<a href="${sc_ctx}/role/list">角色管理</a>
 									</li>
+									<li class="divider"></li>
 								</c:if>
-								<li class="divider"></li>
+								
 								<c:if test="${_permIdList.contains('3')}">
 									<li>
 										<a href="${sc_ctx}/organization">机构管理</a>
@@ -92,8 +93,9 @@
 									<li>
 										<a href="${sc_ctx}/bankCard">银行卡管理</a>
 									</li>
+									<li class="divider"></li>
 								</c:if>
-								<li class="divider"></li>
+								
 								<c:if test="${_permIdList.contains('6')}">
 									<li>
 										<a href="${sc_ctx}/goods">商品管理</a>

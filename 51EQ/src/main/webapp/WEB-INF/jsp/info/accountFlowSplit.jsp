@@ -78,6 +78,21 @@
                     "subId4" : {
                     	requiredAmt : "_amt4"
                     },
+                    "subId5" : {
+                    	requiredAmt : "_amt5"
+                    },
+                    "subId6" : {
+                    	requiredAmt : "_amt6"
+                    },
+                    "subId7" : {
+                    	requiredAmt : "_amt7"
+                    },
+                    "subId8" : {
+                    	requiredAmt : "_amt8"
+                    },
+                    "subId9" : {
+                    	requiredAmt : "_amt9"
+                    },
                 	"amt0" : {
                 		requiredSubject : "_subId0",
                     	money : true
@@ -96,6 +111,26 @@
                     },
                     "amt4" : {
                     	requiredSubject : "_subId4",
+                    	money : true
+                    },
+                    "amt5" : {
+                    	requiredSubject : "_subId5",
+                    	money : true
+                    },
+                    "amt6" : {
+                    	requiredSubject : "_subId6",
+                    	money : true
+                    },
+                    "amt7" : {
+                    	requiredSubject : "_subId7",
+                    	money : true
+                    },
+                    "amt8" : {
+                    	requiredSubject : "_subId8",
+                    	money : true
+                    },
+                    "amt9" : {
+                    	requiredSubject : "_subId9",
                     	money : true
                     }
                     

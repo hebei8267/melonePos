@@ -28,6 +28,8 @@ public class AccountFlowSplit extends IdEntity {
 	private AccountSubject accountSub;
 	/** 记账科目编号 */
 	private String subId;
+	/** 记账科目名称 */
+	private String subName;
 	/** 记账金额 */
 	private BigDecimal amt = new BigDecimal("0");
 	/** Index */
@@ -113,6 +115,25 @@ public class AccountFlowSplit extends IdEntity {
 	 */
 	public void setSubId(String subId) {
 		this.subId = subId;
+	}
+
+	/**
+	 * 取得记账科目名称
+	 * 
+	 * @return 记账科目名称
+	 */
+	@Transient
+	public String getSubName() {
+		return subName;
+	}
+
+	/**
+	 * 设置记账科目名称
+	 * 
+	 * @param subName 记账科目名称
+	 */
+	public void setSubName(String subName) {
+		this.subName = subName;
 	}
 
 	/**

@@ -82,6 +82,63 @@ public class AccountFlowController extends BaseController {
 	}
 
 	/**
+	 * 记账明细数据导出
+	 * 
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @throws ServletRequestBindingException
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	@RequestMapping(value = "exportDetail")
+	public void exportDetail_Action(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletRequestBindingException, IOException, ParsePropertyException, InvalidFormatException,
+			IllegalAccessException, InvocationTargetException {
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		// =========================================
+		// 生成下载文件
+		// =========================================
+		String downLoadFileName = accountFlowManager.createDownLoadFile_Detail(optDateShow_start, optDateShow_end);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
+	}
+
+	/**
 	 * 记账数据导出
 	 * 
 	 * @param model
@@ -241,9 +298,9 @@ public class AccountFlowController extends BaseController {
 	@RequestMapping(value = "splitSave")
 	public String splitSave_Action(HttpServletRequest request) throws ServletRequestBindingException {
 		int accountFlowUuid = ServletRequestUtils.getIntParameter(request, "accountFlowUuid");
-		String[] subId = new String[5];
-		String[] amt = new String[5];
-		for (int i = 0; i < 5; i++) {
+		String[] subId = new String[10];
+		String[] amt = new String[10];
+		for (int i = 0; i < 10; i++) {
 			subId[i] = ServletRequestUtils.getStringParameter(request, "subId" + i);
 			amt[i] = ServletRequestUtils.getStringParameter(request, "amt" + i);
 		}
