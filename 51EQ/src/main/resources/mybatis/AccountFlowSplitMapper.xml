@@ -13,6 +13,7 @@
 		<result column="amt" property="amt" jdbcType="DECIMAL"/>
 		<result column="_index" property="index" jdbcType="INTEGER"/>
 		<result column="sub_id" property="subId" jdbcType="VARCHAR"/>
+		<result column="sub_name" property="subName" jdbcType="VARCHAR"/>
 		<result column="account_flow_h_id" property="accountFlowUuid" jdbcType="INTEGER"/>
 	</resultMap>
 	
@@ -25,12 +26,20 @@
 	<!-- 取得[]对象列表-->
 	<select id="getAccountFlowSplitByFlowUuid"  resultMap="Result_Map_AccountFlowSplit">
 		select
-		<include refid="Base_Column_List" />
-		from t_account_flow_split
+			sp.uuid ,
+			sp.amt ,
+			sp._index ,
+			sp.sub_id ,
+			sub.sub_name ,
+			sp.account_flow_h_id
+		from
+			t_account_flow_split sp ,
+			t_account_subject sub
 		<where>
-			account_flow_h_id = #{accountFlowHid}
+			sp.account_flow_h_id = #{accountFlowHid}
+		and sp.account_sub_h_id = sub.uuid
 		</where>
-		order by _index
+		order by sp._index
 	</select>
 	
 	<!-- 查询结果字段 -->

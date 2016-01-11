@@ -85,13 +85,13 @@
                 $("#searchForm").submit();
             });
             
-            $("#exportBtn").click(function() {
+            $("#exportDetailBtn").click(function() {
                 $("input[type='text'],textarea").each(function(i) {
                     this.value = $.trim(this.value);
                 });
 
 				$("#searchForm").attr('target', '_self');
-                $("#searchForm").attr("action", "${sc_ctx}/accountFlow/export");
+                $("#searchForm").attr("action", "${sc_ctx}/accountFlow/exportDetail");
                 $("#searchForm").submit();
             });
             
@@ -147,7 +147,7 @@
                         ～ <input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
                         &nbsp;&nbsp;<input id="searchBtn" class="btn btn-primary" type="button" value="查询" />
                         <input id="exportBtn" class="btn btn-warning" type="button" value="记账数据导出" />
-                       <!--  <input id="exportDetailBtn" class="btn btn-warning" type="button" value="记账明细数据导出" /> -->
+                       	<input id="exportDetailBtn" class="btn btn-warning" type="button" value="记账明细数据导出" />
                     </div>
                     </form>
 				</div>   

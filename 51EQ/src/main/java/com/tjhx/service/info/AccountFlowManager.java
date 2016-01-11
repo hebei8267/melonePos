@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import net.sf.jxls.reader.XLSReadStatus;
 import net.sf.jxls.reader.XLSReader;
 import net.sf.jxls.transformer.XLSTransformer;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Sort;
@@ -39,6 +41,7 @@ import com.tjhx.entity.info.AccountFlowSplit;
 import com.tjhx.entity.info.AccountSubject;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.ServiceException;
+import com.tjhx.vo.AccountFlowSplitVo;
 
 @Service
 @Transactional(readOnly = true)
@@ -54,6 +57,7 @@ public class AccountFlowManager {
 
 	private final static String XML_CONFIG_READ_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
 	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/Account_Flow_Template.xls";
+	private final static String XML_CONFIG_ACCOUNT_FLOW_DETAIL = "/excel/Account_Flow_Detail_Template.xls";
 
 	/**
 	 * 读取记账文件内容
@@ -154,7 +158,7 @@ public class AccountFlowManager {
 		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
 		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
-				new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		for (AccountFlow accountFlow : _list) {
 			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
@@ -307,7 +311,7 @@ public class AccountFlowManager {
 	public List<AccountFlowSplit> getAccountFlowSplitByFlowUuid(Integer id) {
 		List<AccountFlowSplit> _list = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(id);
 
-		int _index = 5 - _list.size();
+		int _index = 10 - _list.size();
 
 		for (int i = 0; i < _index; i++) {
 			AccountFlowSplit split = new AccountFlowSplit();
@@ -343,6 +347,50 @@ public class AccountFlowManager {
 
 		accountFlow.setLockFlg(true);
 		accountFlowJpaDao.save(accountFlow);
+	}
+
+	public String createDownLoadFile_Detail(String optDateShowStart, String optDateShowEnd)
+			throws IllegalAccessException, InvocationTargetException, ParsePropertyException, InvalidFormatException,
+			IOException {
+		if (StringUtils.isBlank(optDateShowStart) && StringUtils.isBlank(optDateShowEnd)) {
+			return null;
+		}
+		String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
+		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
+				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+
+		List<AccountFlowSplitVo> _voList = Lists.newArrayList();
+		for (AccountFlow accountFlow : _list) {
+			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
+
+			List<AccountFlowSplit> _splitList = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(accountFlow
+					.getUuid());
+
+			for (AccountFlowSplit accountFlowSplit : _splitList) {
+				AccountFlowSplitVo vo = new AccountFlowSplitVo();
+				vo.setAccountFlowUuid(accountFlow.getUuid());
+				BeanUtils.copyProperties(vo, accountFlow);
+				BeanUtils.copyProperties(vo, accountFlowSplit);
+
+				_voList.add(vo);
+			}
+		}
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountFlowSplitVoList", _voList);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_ACCOUNT_FLOW_DETAIL, map, tmpFilePath);
+
+		return tmpFileName;
+
 	}
 
 }
