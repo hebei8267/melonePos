@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.diandao.cjn.dao.db.TOrganizationDao">
+<mapper namespace="com.tjhx.dao.struct.OrganizationMyBatisDao">
 	<!-- mybatis表结构与对象的映射关系 -->
-	<resultMap id="Result_Map_Organization" type="com.diandao.cjn.dto.db.OrganizationDto">
+	<resultMap id="Result_Map_Organization" type="com.tjhx.entity.struct.Organization">
 		<result column="uuid" property="uuid" jdbcType="INTEGER"/>
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
 		<result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
@@ -11,278 +11,43 @@
 		<result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
 		<result column="version" property="version" jdbcType="INTEGER"/>
 		<result column="bw_branch_no" property="bwBranchNo" jdbcType="VARCHAR"/>
-		<result column="org_bw_id" property="orgBwId" jdbcType="VARCHAR"/>
-		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="org_bw_id" property="bwId" jdbcType="VARCHAR"/>
+		<result column="org_id" property="id" jdbcType="VARCHAR"/>
+		<result column="org_add" property="orgAdd" jdbcType="VARCHAR"/>
+		<result column="org_add_short" property="orgAddShort" jdbcType="VARCHAR"/>
 		<result column="_index" property="index" jdbcType="INTEGER"/>
-		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+		<result column="org_name" property="name" jdbcType="VARCHAR"/>
 		<result column="zk_id" property="zkId" jdbcType="INTEGER"/>
-		<result column="parent_org_h_id" property="parentOrgHid" jdbcType="INTEGER"/>
 		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
+		<result column="mng_user_name" property="mngUserName" jdbcType="VARCHAR"/>
 		<result column="brand" property="brand" jdbcType="VARCHAR"/>
 	</resultMap>
 	
-	<!-- 新增[]对象 -->
-	<insert id="insertOrganization" parameterType="com.diandao.cjn.dto.db.OrganizationDto">
-	insert into t_organization 
-		<trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="uuid != null">
-				uuid ,
-			</if>
-			<if test="createDate != null">
-				create_date ,
-			</if>
-			<if test="createUserId != null">
-				create_user_id ,
-			</if>
-			<if test="updateDate != null">
-				update_date ,
-			</if>
-			<if test="updateUserId != null">
-				update_user_id ,
-			</if>
-			<if test="version != null">
-				version ,
-			</if>
-			<if test="bwBranchNo != null">
-				bw_branch_no ,
-			</if>
-			<if test="orgBwId != null">
-				org_bw_id ,
-			</if>
-			<if test="orgId != null">
-				org_id ,
-			</if>
-			<if test="index != null">
-				_index ,
-			</if>
-			<if test="orgName != null">
-				org_name ,
-			</if>
-			<if test="zkId != null">
-				zk_id ,
-			</if>
-			<if test="parentOrgHid != null">
-				parent_org_h_id ,
-			</if>
-			<if test="mngUserId != null">
-				mng_user_id ,
-			</if>
-			<if test="brand != null">
-				brand 
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="uuid != null ">
-				#{uuid,jdbcType=INTEGER} ,
-			</if>
-			<if test="createDate != null ">
-				#{createDate,jdbcType=TIMESTAMP} ,
-			</if>
-			<if test="createUserId != null ">
-				#{createUserId,jdbcType=VARCHAR} ,
-			</if>
-			<if test="updateDate != null ">
-				#{updateDate,jdbcType=TIMESTAMP} ,
-			</if>
-			<if test="updateUserId != null ">
-				#{updateUserId,jdbcType=VARCHAR} ,
-			</if>
-			<if test="version != null ">
-				#{version,jdbcType=INTEGER} ,
-			</if>
-			<if test="bwBranchNo != null ">
-				#{bwBranchNo,jdbcType=VARCHAR} ,
-			</if>
-			<if test="orgBwId != null ">
-				#{orgBwId,jdbcType=VARCHAR} ,
-			</if>
-			<if test="orgId != null ">
-				#{orgId,jdbcType=VARCHAR} ,
-			</if>
-			<if test="index != null ">
-				#{index,jdbcType=INTEGER} ,
-			</if>
-			<if test="orgName != null ">
-				#{orgName,jdbcType=VARCHAR} ,
-			</if>
-			<if test="zkId != null ">
-				#{zkId,jdbcType=INTEGER} ,
-			</if>
-			<if test="parentOrgHid != null ">
-				#{parentOrgHid,jdbcType=INTEGER} ,
-			</if>
-			<if test="mngUserId != null ">
-				#{mngUserId,jdbcType=VARCHAR} ,
-			</if>
-			<if test="brand != null ">
-				#{brand,jdbcType=VARCHAR} 
-			</if>
-		</trim>
-	</insert>
 	
-	<!-- 更新[]对象 -->
-	<update id="updateOrganization" parameterType="com.diandao.cjn.dto.db.OrganizationDto">
-		update t_organization set 
-		<trim prefix="" suffix="" suffixOverrides="," >
-				<if test="createDate != null">
-					create_date = #{createDate,jdbcType=TIMESTAMP} ,
-				</if>
-				<if test="createUserId != null">
-					create_user_id = #{createUserId,jdbcType=VARCHAR} ,
-				</if>
-				<if test="updateDate != null">
-					update_date = #{updateDate,jdbcType=TIMESTAMP} ,
-				</if>
-				<if test="updateUserId != null">
-					update_user_id = #{updateUserId,jdbcType=VARCHAR} ,
-				</if>
-				<if test="version != null">
-					version = #{version,jdbcType=INTEGER} ,
-				</if>
-				<if test="bwBranchNo != null">
-					bw_branch_no = #{bwBranchNo,jdbcType=VARCHAR} ,
-				</if>
-				<if test="orgBwId != null">
-					org_bw_id = #{orgBwId,jdbcType=VARCHAR} ,
-				</if>
-				<if test="orgId != null">
-					org_id = #{orgId,jdbcType=VARCHAR} ,
-				</if>
-				<if test="index != null">
-					_index = #{index,jdbcType=INTEGER} ,
-				</if>
-				<if test="orgName != null">
-					org_name = #{orgName,jdbcType=VARCHAR} ,
-				</if>
-				<if test="zkId != null">
-					zk_id = #{zkId,jdbcType=INTEGER} ,
-				</if>
-				<if test="parentOrgHid != null">
-					parent_org_h_id = #{parentOrgHid,jdbcType=INTEGER} ,
-				</if>
-				<if test="mngUserId != null">
-					mng_user_id = #{mngUserId,jdbcType=VARCHAR} ,
-				</if>
-				<if test="brand != null">
-					brand = #{brand,jdbcType=VARCHAR} 
-				</if>
-		</trim>
-		<where>
-			<if test="uuid != null">
-				 uuid = #{uuid}
-			</if>
-		</where>
-	</update>
 	
 	<!-- 取得[]对象列表-->
-	<select id="getAllOrganizationList"  resultMap="Result_Map_Organization">
-		select
-		<include refid="Base_Column_List" />
-		from t_organization
-	</select>
-	
-	<!-- 删除[]对象 -->
-	<delete id="deleteOrganization" parameterType="com.diandao.cjn.dto.db.OrganizationDto">
-		delete from t_organization
-		<include refid="Where_Clause" />
-	</delete>
-	
-	<!-- 查询结果字段 -->
-	<sql id="Base_Column_List" >
-	<![CDATA[
-		uuid ,
-		create_date ,
-		create_user_id ,
-		update_date ,
-		update_user_id ,
-		version ,
-		bw_branch_no ,
-		org_bw_id ,
-		org_id ,
-		_index ,
-		org_name ,
-		zk_id ,
-		parent_org_h_id ,
-		mng_user_id ,
-		brand 
-	]]>
-	</sql>
-	
-	<!-- 查询条件 -->
-	<sql id="Where_Clause" >
-		<where>
-			<if test="uuid != null ">
-			uuid = #{uuid}
-			</if>
-			<if test="createDate != null and createDate !='' ">
-			AND create_date = #{createDate}
-			</if>
-			<if test="createUserId != null and createUserId !='' ">
-			AND create_user_id = #{createUserId}
-			</if>
-			<if test="updateDate != null and updateDate !='' ">
-			AND update_date = #{updateDate}
-			</if>
-			<if test="updateUserId != null and updateUserId !='' ">
-			AND update_user_id = #{updateUserId}
-			</if>
-			<if test="version != null ">
-			AND version = #{version}
-			</if>
-			<if test="bwBranchNo != null and bwBranchNo !='' ">
-			AND bw_branch_no = #{bwBranchNo}
-			</if>
-			<if test="orgBwId != null and orgBwId !='' ">
-			AND org_bw_id = #{orgBwId}
-			</if>
-			<if test="orgId != null and orgId !='' ">
-			AND org_id = #{orgId}
-			</if>
-			<if test="index != null ">
-			AND _index = #{index}
-			</if>
-			<if test="orgName != null and orgName !='' ">
-			AND org_name = #{orgName}
-			</if>
-			<if test="zkId != null ">
-			AND zk_id = #{zkId}
-			</if>
-			<if test="parentOrgHid != null ">
-			AND parent_org_h_id = #{parentOrgHid}
-			</if>
-			<if test="mngUserId != null and mngUserId !='' ">
-			AND mng_user_id = #{mngUserId}
-			</if>
-			<if test="brand != null and brand !='' ">
-			AND brand = #{brand}
-			</if>
-		</where>
-	</sql>
-	
-	<!-- 取得[]对象列表(根据参数) -->
-	<select id="getOrganizationList" parameterType="com.diandao.cjn.dto.db.OrganizationDto" resultMap="Result_Map_Organization">
-		select
-		<include refid="Base_Column_List" />
-		from t_organization
-		<include refid="Where_Clause" />
-		<if test="sortFields != null">
-       		<foreach collection="sortFields" item="sortField" open="order by " separator="," close=" ">
-         	${sortField}
-       		</foreach>
-     	</if>
-     	<if test="sortOrder != null">
-       		${sortOrder}
-     	</if>
-	</select>
-	
-	<!-- 取得[]对象(根据参数) -->
-	<select id="selectOrganizationListById" parameterType="String" resultMap="Result_Map_Organization">
-		select
-		<include refid="Base_Column_List" />
-		from t_organization
-		<where>
-			uuid = #{_parameter}
-		</where>
+	<select id="getAllOrgList"  resultMap="Result_Map_Organization">
+		SELECT
+		    o.uuid ,
+		    o.create_date ,
+		    o.create_user_id ,
+		    o.update_date ,
+		    o.update_user_id ,
+		    o.version ,
+		    o.bw_branch_no ,
+		    o.org_bw_id ,
+		    o.org_id ,
+		    o._index ,
+		    o.org_name ,
+		    o.zk_id ,
+		    o.org_add ,
+			o.org_add_short ,
+		    o.mng_user_id ,
+		    u.name AS mng_user_name ,
+		    o.brand
+		FROM
+		    t_organization o LEFT JOIN t_user u ON o.mng_user_id = u.login_name
+		ORDER BY uuid
 	</select>
 	
 </mapper>

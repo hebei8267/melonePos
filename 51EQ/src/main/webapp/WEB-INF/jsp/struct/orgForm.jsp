@@ -123,6 +123,18 @@
                             </div>
                         </div>
                         <div class="control-group">
+                            <label class="control-label">门店品牌 :</label>
+                            <div class="controls">
+                                <form:select path="brand" items="${brandList}" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">督导员 :</label>
+                            <div class="controls">
+                            	<form:select path="mngUserId" items="${mngUserList}" />
+                            </div>
+                        </div>
+                        <div class="control-group">
                             <div class="controls">
                                 <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
                                 &nbsp;<a href="${sc_ctx}/organization" class="btn btn-large">返回</a>

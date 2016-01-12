@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.IndexColumn;
@@ -50,6 +51,12 @@ public class Organization extends IdEntity {
 	private String orgAdd;
 	/** 机构地址简称 */
 	private String orgAddShort;
+
+	/** 督导员 */
+	private String mngUserId;
+	private String mngUserName;
+	/** 门店品牌 */
+	private String brand;
 
 	public Organization() {
 
@@ -278,5 +285,54 @@ public class Organization extends IdEntity {
 	 */
 	public void setOrgAddShort(String orgAddShort) {
 		this.orgAddShort = orgAddShort;
+	}
+
+	/**
+	 * 取得督导员
+	 * 
+	 * @return 督导员
+	 */
+	@Column(length = 32)
+	public String getMngUserId() {
+		return mngUserId;
+	}
+
+	/**
+	 * 设置督导员
+	 * 
+	 * @param mngUserId 督导员
+	 */
+	public void setMngUserId(String mngUserId) {
+		this.mngUserId = mngUserId;
+	}
+
+	/**
+	 * @return the mngUserName
+	 */
+	@Transient
+	public String getMngUserName() {
+		return mngUserName;
+	}
+
+	/**
+	 * @param mngUserName the mngUserName to set
+	 */
+	public void setMngUserName(String mngUserName) {
+		this.mngUserName = mngUserName;
+	}
+
+	/**
+	 * @return the brand
+	 */
+	@Column(length = 32)
+	public String getBrand() {
+		return brand;
+	}
+
+	/**
+	 * @param brand the brand to set
+	 */
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 }

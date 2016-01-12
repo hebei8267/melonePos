@@ -116,6 +116,12 @@
                                     <th	class="center">
                                         机构地址简称
                                     </th>
+                                    <th	class="center">
+                                        门店品牌
+                                    </th>
+                                    <th	class="center">
+                                        督导员
+                                    </th>
                                     <th	width="55">
                                         &nbsp;
                                     </th>
@@ -147,6 +153,12 @@
                                         </td>
                                         <td class="right">
                                             ${org.orgAddShort}
+                                        </td>
+                                        <td class="center">
+                                            ${org.brand}
+                                        </td>
+                                        <td class="center">
+                                            ${org.mngUserName}
                                         </td>
                                         <td>
                                             <a href="${sc_ctx}/organization/edit/${org.uuid}" class="btn btn-warning"/>修改</a>

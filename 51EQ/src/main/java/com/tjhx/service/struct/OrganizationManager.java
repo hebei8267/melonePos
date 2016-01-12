@@ -7,12 +7,12 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 
 import com.tjhx.dao.struct.OrganizationJpaDao;
+import com.tjhx.dao.struct.OrganizationMyBatisDao;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.MemcachedObjectType;
@@ -28,6 +28,8 @@ public class OrganizationManager {
 	@Resource
 	private OrganizationJpaDao orgJpaDao;
 	@Resource
+	private OrganizationMyBatisDao organizationMyBatisDao;
+	@Resource
 	private SpyMemcachedClient spyMemcachedClient;
 	@Resource
 	private WorkTypeManager workTypeManager;
@@ -39,14 +41,13 @@ public class OrganizationManager {
 	 * 
 	 * @return 机构信息列表
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Organization> getAllOrganization() {
 
 		List<Organization> _orgList = spyMemcachedClient.get(MemcachedObjectType.ORG_LIST.getObjKey());
 
 		if (null == _orgList) {
 			// 从数据库中取出全量机构信息(List格式)
-			_orgList = (List<Organization>) orgJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "uuid")));
+			_orgList = organizationMyBatisDao.getAllOrgList();
 			// 将机构信息Map保存到memcached
 			spyMemcachedClient.set(MemcachedObjectType.ORG_LIST.getObjKey(),
 					MemcachedObjectType.ORG_LIST.getExpiredTime(), _orgList);
@@ -189,6 +190,8 @@ public class OrganizationManager {
 		_dbOrganization.setBwBranchNo(org.getBwBranchNo());
 		_dbOrganization.setOrgAdd(org.getOrgAdd());
 		_dbOrganization.setOrgAddShort(org.getOrgAddShort());
+		_dbOrganization.setBrand(org.getBrand());
+		_dbOrganization.setMngUserId(org.getMngUserId());
 
 		orgJpaDao.save(_dbOrganization);
 
