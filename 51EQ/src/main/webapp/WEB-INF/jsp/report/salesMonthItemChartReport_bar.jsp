@@ -54,7 +54,7 @@
                     </div>
                     
                     <div class="span12">
-                        <button	id="exportBtn" class="btn	btn-warning" type="button">数据导出</button>
+                        <button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
                     </div>
                     
                     <c:forEach items="${orgSumSalesJsonList}" var="orgSumSalesJson" varStatus="status1">

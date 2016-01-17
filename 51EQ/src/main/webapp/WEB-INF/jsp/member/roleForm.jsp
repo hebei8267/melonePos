@@ -478,6 +478,22 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('72')}">
+							<td><input type="checkbox" name="perm" value="72" checked>月销售信息对比(图形)[按品牌]</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('72')}">
+							<td><input type="checkbox" name="perm" value="72">月销售信息对比(图形)[按品牌]</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('73')}">
+							<td><input type="checkbox" name="perm" value="73" checked>月销售信息对比(图形)[按督导]</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('73')}">
+							<td><input type="checkbox" name="perm" value="73">月销售信息对比(图形)[按督导]</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('69')}">
 							<td><input type="checkbox" name="perm" value="69" checked>月销售信息(图形)</td>
 							</c:if>

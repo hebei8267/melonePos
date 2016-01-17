@@ -46,7 +46,7 @@
 							</c:if>
 							<c:if test="${_permIdList.contains('68')}">
 								<li>
-									<a href="${sc_ctx}/replenishOrderReport">商品收发错添信息</a>
+									<a href="${sc_ctx}/replenishOrderReport">商品收发错填信息</a>
 								</li>
 							</c:if>
 							</ul>
@@ -299,6 +299,16 @@
 								<c:if test="${_permIdList.contains('41')}">
 									<li>
 										<a href="${sc_ctx}/salesMonthItemChartReport/bar_init">月销售信息对比(图形)</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('72')}">
+									<li>
+										<a href="${sc_ctx}/salesMonthItemChartReport/brand_init">月销售信息对比(图形)[按品牌]</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('73')}">
+									<li>
+										<a href="${sc_ctx}/salesMonthItemChartReport/mngUser_init">月销售信息对比(图形)[按督导]</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('69')}">

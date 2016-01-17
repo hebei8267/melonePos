@@ -23,6 +23,9 @@
         <result column="sale_qty" property="saleQty" jdbcType="DECIMAL"/>
         <result column="sale_ramt" property="saleRamt" jdbcType="DECIMAL"/>
         <result column="sale_rqty" property="saleRqty" jdbcType="DECIMAL"/>
+        
+        <result column="mng_user" property="mngUser" jdbcType="VARCHAR"/>
+        <result column="org_brand" property="orgBrand" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<delete id="delSalesMonthTotalInfo" parameterType="String">  
@@ -105,6 +108,50 @@
 		    opt_date_y_m >= #{optDateStart}
 		AND opt_date_y_m <= #{optDateEnd}
 		AND org_id = #{orgId}
+	]]>
+	</select>
+	
+	<!-- 月销售信息对比(图形)[按督导] -->
+	<select id="getSalesTotalMonthListByMngUser" resultMap="Result_Map_SalesMonthTotalItem">
+	<![CDATA[
+		SELECT
+		    u.login_name AS mng_user,
+		    it.opt_date_y_m ,
+		    SUM(it.sale_ramt) AS sale_ramt
+		FROM
+		    t_sales_month_total_item it,
+		    t_organization og,
+		    t_user u
+		WHERE
+		    it.org_id = og.org_id
+		AND u.login_name=og.mng_user_id
+		GROUP BY
+			og.mng_user_id,
+		    it.opt_date_y_m
+		ORDER BY
+		    og.mng_user_id,
+		    it.opt_date_y_m
+	]]>
+	</select>
+	
+	<!-- 月销售信息对比(图形)[按品牌] -->
+	<select id="getSalesTotalMonthListByBrand" resultMap="Result_Map_SalesMonthTotalItem">
+	<![CDATA[
+		SELECT
+		    og.brand AS org_brand,
+		    it.opt_date_y_m ,
+		    SUM(it.sale_ramt) AS sale_ramt
+		FROM
+		    t_sales_month_total_item it,
+		    t_organization og
+		WHERE
+		    it.org_id = og.org_id
+		GROUP BY
+		    og.brand,
+		    it.opt_date_y_m
+		ORDER BY
+		    og.brand,
+		    it.opt_date_y_m
 	]]>
 	</select>
 </mapper>

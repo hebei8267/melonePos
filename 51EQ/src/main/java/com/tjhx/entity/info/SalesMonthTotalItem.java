@@ -57,6 +57,10 @@ public class SalesMonthTotalItem extends IdEntity {
 	private String optDateStart;
 	/** 日期-结束时间 */
 	private String optDateEnd;
+	/** 督导员 */
+	private String mngUser;
+	/** 门店品牌 */
+	private String orgBrand;
 
 	/**
 	 * 取得机构编号
@@ -376,6 +380,44 @@ public class SalesMonthTotalItem extends IdEntity {
 	 */
 	public void setOptDateEnd(String optDateEnd) {
 		this.optDateEnd = optDateEnd;
+	}
+
+	/**
+	 * 取得督导员
+	 * 
+	 * @return 督导员
+	 */
+	@Transient
+	public String getMngUser() {
+		return mngUser;
+	}
+
+	/**
+	 * 设置督导员
+	 * 
+	 * @param mngUser 督导员
+	 */
+	public void setMngUser(String mngUser) {
+		this.mngUser = mngUser;
+	}
+
+	/**
+	 * 取得门店品牌
+	 * 
+	 * @return 门店品牌
+	 */
+	@Transient
+	public String getOrgBrand() {
+		return orgBrand;
+	}
+
+	/**
+	 * 设置门店品牌
+	 * 
+	 * @param orgBrand 门店品牌
+	 */
+	public void setOrgBrand(String orgBrand) {
+		this.orgBrand = orgBrand;
 	}
 
 }

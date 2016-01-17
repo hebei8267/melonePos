@@ -52,4 +52,14 @@ public interface SalesMonthTotalItemMyBatisDao {
 	 * @return
 	 */
 	public SalesMonthTotalItem getSalesTotal_ByOrgAndYearMonthInterval(SalesMonthTotalItem param);
+
+	/**
+	 * 月销售信息对比(图形)[按品牌]
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalMonthListByBrand();
+
+	/**
+	 * 月销售信息对比(图形)[按督导]
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalMonthListByMngUser();
 }
