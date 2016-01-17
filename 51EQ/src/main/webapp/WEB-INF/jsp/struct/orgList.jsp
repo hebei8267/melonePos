@@ -111,10 +111,7 @@
                                         机构名称
                                     </th>
                                     <th	class="center">
-                                        机构名称
-                                    </th>
-                                    <th	class="center">
-                                        机构地址简称
+                                        机构地址
                                     </th>
                                     <th	class="center">
                                         门店品牌
@@ -147,9 +144,6 @@
                                         </td>
                                         <td	class="center">
                                             ${org.name}
-                                        </td>
-                                        <td	class="center">
-                                            ${org.parentOrg.name}
                                         </td>
                                         <td class="right">
                                             ${org.orgAddShort}

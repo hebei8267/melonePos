@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">机构地址简称 :</label>
+                            <label class="control-label">机构地址缩写 :</label>
                             <div class="controls">
                                 <form:input	path="orgAddShort" />
                             </div>
