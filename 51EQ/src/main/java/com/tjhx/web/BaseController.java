@@ -1,5 +1,6 @@
 package com.tjhx.web;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.member.User;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.member.FunctionManager;
@@ -167,13 +169,20 @@ public class BaseController {
 	 * 取得操作年信息列表
 	 * 
 	 * @return
+	 * @throws ParseException
 	 */
-	protected Map<String, String> getOptYearList() {
+	protected Map<String, String> getOptYearList() throws ParseException {
 		Map<String, String> yearList = new LinkedHashMap<String, String>();
 
 		yearList.put("", "");
-		yearList.put("2014", "2014");
-		yearList.put("2015", "2015");
+		String _nowYear = DateUtils.getCurrentYear();
+
+		for (int i = 3; i > 0; i--) {
+			String _tmpYear = DateUtils.getNextYearFormatDate(_nowYear, -i, "yyyy");
+			yearList.put(_tmpYear, _tmpYear);
+		}
+
+		yearList.put(_nowYear, _nowYear);
 
 		return yearList;
 	}

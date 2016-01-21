@@ -52,7 +52,7 @@ public class MonthSaleTargetController extends BaseController {
 	@Resource
 	private OrganizationManager orgManager;
 
-	private void initYearList(Model model) {
+	private void initYearList(Model model) throws ParseException {
 		model.addAttribute("yearList", getOptYearList());
 	}
 
@@ -61,9 +61,10 @@ public class MonthSaleTargetController extends BaseController {
 	 * 
 	 * @param model
 	 * @return
+	 * @throws ParseException
 	 */
 	@RequestMapping(value = "init")
-	public String init_Action(Model model, HttpServletRequest request) {
+	public String init_Action(Model model, HttpServletRequest request) throws ParseException {
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		initYearList(model);
@@ -104,7 +105,8 @@ public class MonthSaleTargetController extends BaseController {
 
 	@RequestMapping(value = "export")
 	public void export_Action(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException,
+			ParseException {
 
 		String optDateY = ServletRequestUtils.getStringParameter(request, "optDateY");
 		model.addAttribute("optDateY", optDateY);
@@ -140,8 +142,8 @@ public class MonthSaleTargetController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -167,7 +169,8 @@ public class MonthSaleTargetController extends BaseController {
 	 * @param optDateY
 	 * @throws ParseException
 	 */
-	private void getCurrentYearSales(String orgId, String optDateY, List<List<SalesMonthTotal_Show>> _list) throws ParseException {
+	private void getCurrentYearSales(String orgId, String optDateY, List<List<SalesMonthTotal_Show>> _list)
+			throws ParseException {
 		if (StringUtils.isNotBlank(orgId)) {// 单机构本年月销售信息
 
 			List<SalesMonthTotal_Show> _salesTotalShowList = _list.get(0);
@@ -186,7 +189,8 @@ public class MonthSaleTargetController extends BaseController {
 				List<SalesMonthTotal_Show> _salesTotalShowList = _list.get(index);
 
 				// 取得月销售目标信息(根据机构编号/年份)
-				List<MonthSaleTarget> _monthSaleTargetList = monthSaleTargetManager.getByOrgIdAndOptDateY(org.getId(), optDateY);
+				List<MonthSaleTarget> _monthSaleTargetList = monthSaleTargetManager.getByOrgIdAndOptDateY(org.getId(),
+						optDateY);
 
 				// DB数据导入显示列表（机构本年月销售信息）
 				copySalesTotalShowList2(_salesTotalShowList, _monthSaleTargetList);
@@ -212,7 +216,8 @@ public class MonthSaleTargetController extends BaseController {
 			_param.setOptDateY(DateUtils.getNextYearFormatDate(optDateY, -1, "yyyy"));
 
 			// 取得指定门店指定年份合计销售信息
-			List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager.getSalesTotalList_ByOrgAndYear(_param);
+			List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager
+					.getSalesTotalList_ByOrgAndYear(_param);
 
 			List<SalesMonthTotal_Show> _salesTotalShowList = initSalesTotalShowList(orgId, optDateY);
 
@@ -229,7 +234,8 @@ public class MonthSaleTargetController extends BaseController {
 				_param.setOptDateY(DateUtils.getNextYearFormatDate(optDateY, -1, "yyyy"));
 
 				// 取得指定门店指定年份合计销售信息
-				List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager.getSalesTotalList_ByOrgAndYear(_param);
+				List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager
+						.getSalesTotalList_ByOrgAndYear(_param);
 
 				List<SalesMonthTotal_Show> _salesTotalShowList = initSalesTotalShowList(orgId, optDateY);
 
@@ -294,7 +300,8 @@ public class MonthSaleTargetController extends BaseController {
 			// 机构编号
 			_salesTotalShow.setOrgId(orgId);
 			// 年月1
-			_salesTotalShow.setOptDateYM1(DateUtils.getNextYearFormatDate(optDateY, -1, "yyyy") + String.format("%02d", i));
+			_salesTotalShow.setOptDateYM1(DateUtils.getNextYearFormatDate(optDateY, -1, "yyyy")
+					+ String.format("%02d", i));
 			// 去年同期销售额
 			_salesTotalShow.setSaleRamt2(null);
 
@@ -310,7 +317,8 @@ public class MonthSaleTargetController extends BaseController {
 	 * @param _salesTotalShowList
 	 * @param _salesTotalList
 	 */
-	private void copySalesTotalShowList1(List<SalesMonthTotal_Show> _salesTotalShowList, List<SalesMonthTotalItem> _salesTotalList) {
+	private void copySalesTotalShowList1(List<SalesMonthTotal_Show> _salesTotalShowList,
+			List<SalesMonthTotalItem> _salesTotalList) {
 		for (SalesMonthTotal_Show _show : _salesTotalShowList) {
 			for (SalesMonthTotalItem _sale : _salesTotalList) {
 				if (_show.getOptDateYM1().equals(_sale.getOptDateYM())) {
@@ -327,8 +335,8 @@ public class MonthSaleTargetController extends BaseController {
 	 * @param _salesTotalList
 	 * @throws ParseException
 	 */
-	private void copySalesTotalShowList2(List<SalesMonthTotal_Show> _salesTotalShowList, List<MonthSaleTarget> _monthSaleTarget)
-			throws ParseException {
+	private void copySalesTotalShowList2(List<SalesMonthTotal_Show> _salesTotalShowList,
+			List<MonthSaleTarget> _monthSaleTarget) throws ParseException {
 		for (SalesMonthTotal_Show _show : _salesTotalShowList) {
 			for (MonthSaleTarget _sale : _monthSaleTarget) {
 				if (_show.getOptDateYM1().equals(
@@ -362,7 +370,8 @@ public class MonthSaleTargetController extends BaseController {
 				// 月份
 				m.setOptDateM(String.format("%02d", (j + 1)));
 				// 月销售目标额
-				if (StringUtils.isNotBlank(saleRamtTarget[i * 12 + j]) && Double.parseDouble(saleRamtTarget[i * 12 + j]) != 0) {
+				if (StringUtils.isNotBlank(saleRamtTarget[i * 12 + j])
+						&& Double.parseDouble(saleRamtTarget[i * 12 + j]) != 0) {
 					m.setSaleTargetAmt(new BigDecimal(saleRamtTarget[i * 12 + j]));
 
 					newObjList.add(m);

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class SupplierSignRunController extends BaseController {
 	@Resource
 	private SupplierManager supplierManager;
 
-	private void initYearList(Model model) {
+	private void initYearList(Model model) throws ParseException {
 		model.addAttribute("yearList", getOptYearList());
 	}
 
@@ -69,9 +70,10 @@ public class SupplierSignRunController extends BaseController {
 	 * 
 	 * @param model
 	 * @return
+	 * @throws ParseException
 	 */
 	@RequestMapping(value = "init")
-	public String init_Action(Model model, HttpServletRequest request) {
+	public String init_Action(Model model, HttpServletRequest request) throws ParseException {
 		_init(model);
 
 		return "info/supplierSignRunList";
@@ -82,15 +84,16 @@ public class SupplierSignRunController extends BaseController {
 	 * 
 	 * @param model
 	 * @return
+	 * @throws ParseException
 	 */
 	@RequestMapping(value = "init_boss")
-	public String init_boss_Action(Model model, HttpServletRequest request) {
+	public String init_boss_Action(Model model, HttpServletRequest request) throws ParseException {
 		_init(model);
 
 		return "info/supplierSignRunList_Boss";
 	}
 
-	private void _init(Model model) {
+	private void _init(Model model) throws ParseException {
 		model.addAttribute("showFlg", false);
 
 		initYearList(model);
@@ -107,10 +110,11 @@ public class SupplierSignRunController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
+	 * @throws ParseException
 	 */
 	@RequestMapping(value = "show")
 	public String show_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
-			IllegalAccessException, InvocationTargetException {
+			IllegalAccessException, InvocationTargetException, ParseException {
 		_show_Action(model, request);
 
 		return "info/supplierSignRunList";
@@ -151,8 +155,8 @@ public class SupplierSignRunController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -179,17 +183,18 @@ public class SupplierSignRunController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
+	 * @throws ParseException
 	 */
 	@RequestMapping(value = "show_boss")
 	public String show_boss_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
-			IllegalAccessException, InvocationTargetException {
+			IllegalAccessException, InvocationTargetException, ParseException {
 		_show_Action(model, request);
 
 		return "info/supplierSignRunList_Boss";
 	}
 
 	private void _show_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
-			IllegalAccessException, InvocationTargetException {
+			IllegalAccessException, InvocationTargetException, ParseException {
 		model.addAttribute("showFlg", true);
 
 		initYearList(model);
@@ -200,7 +205,8 @@ public class SupplierSignRunController extends BaseController {
 		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
 		model.addAttribute("supplierBwId", supplierBwId);
 
-		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY, supplierBwId);
+		List<SupplierSignRun_Show> _supSignRunList = supplierSignRunManager.getSupplierSignRunList(optDateY,
+				supplierBwId);
 
 		model.addAttribute("supSignRunList", _supSignRunList);
 	}
@@ -214,7 +220,8 @@ public class SupplierSignRunController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "editInit/{supId}/{optDateY}")
-	public String edit_Action(@PathVariable("supId") String supId, @PathVariable("optDateY") String optDateY, Model model) {
+	public String edit_Action(@PathVariable("supId") String supId, @PathVariable("optDateY") String optDateY,
+			Model model) {
 		model.addAttribute("supId", supId);
 		model.addAttribute("optDateY", optDateY);
 		model.addAttribute("supName", supplierManager.getSupplierByBwId(supId).getName());
@@ -240,7 +247,8 @@ public class SupplierSignRunController extends BaseController {
 		// 流水类型
 		String runType = ServletRequestUtils.getStringParameter(request, "runType");
 
-		SupplierSignRun _dbRun = supplierSignRunManager.findSupplierSignRunByNaturalId(supplierBwId, optDateY, optDateM, runType);
+		SupplierSignRun _dbRun = supplierSignRunManager.findSupplierSignRunByNaturalId(supplierBwId, optDateY,
+				optDateM, runType);
 
 		if (null != _dbRun && StringUtils.isNotBlank(_dbRun.getCheckNoticeDate())) {
 			_dbRun.setCheckNoticeDate(DateUtils.transDateFormat(_dbRun.getCheckNoticeDate(), "yyyyMMdd", "yyyy-MM-dd"));
@@ -272,7 +280,8 @@ public class SupplierSignRunController extends BaseController {
 	 * @throws IllegalAccessException
 	 */
 	@RequestMapping(value = "clean")
-	public String clean_Action(Model model, HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
+	public String clean_Action(Model model, HttpServletRequest request) throws IllegalAccessException,
+			InvocationTargetException {
 		SupplierSignRun run = new SupplierSignRun();
 
 		BeanUtils.populate(run, request.getParameterMap());
@@ -318,8 +327,8 @@ public class SupplierSignRunController extends BaseController {
 		}
 		supplierSignRunManager.saveRunInfo(run);
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/editInit/" + run.getSupplierBwId() + "/"
-				+ run.getOptDateY();
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/supplierSignRun/editInit/" + run.getSupplierBwId()
+				+ "/" + run.getOptDateY();
 	}
 
 }
