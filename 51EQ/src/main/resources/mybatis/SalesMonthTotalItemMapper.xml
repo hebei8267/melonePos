@@ -115,7 +115,7 @@
 	<select id="getSalesTotalMonthListByMngUser" resultMap="Result_Map_SalesMonthTotalItem">
 	<![CDATA[
 		SELECT
-		    u.login_name AS mng_user,
+		    u.name AS mng_user,
 		    it.opt_date_y_m ,
 		    SUM(it.sale_ramt) AS sale_ramt
 		FROM
@@ -124,7 +124,7 @@
 		    t_user u
 		WHERE
 		    it.org_id = og.org_id
-		AND u.login_name=og.mng_user_id
+		AND u.login_name = og.mng_user_id
 		GROUP BY
 			og.mng_user_id,
 		    it.opt_date_y_m
