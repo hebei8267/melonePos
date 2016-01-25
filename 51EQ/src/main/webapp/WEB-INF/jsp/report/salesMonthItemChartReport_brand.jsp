@@ -44,7 +44,7 @@
 			    "theme": "light",
 			    "dataProvider": _dataList,
 			    "legend": {
-			    	"valueWidth": 80,
+			    	"valueWidth": 100,
 			        "position": "top",
 			        "valueText": "[[value]]元"
 			    },
@@ -82,7 +82,7 @@
      		   	"legend":{
      			   	"position":"top",
      			    "autoMargins":false ,
-			        "valueWidth": 80,
+			        "valueWidth": 100,
 			        "valueText": "[[value]]元"
      			  },
      		    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",

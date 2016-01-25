@@ -88,7 +88,7 @@
 						查询
 					</button>
             	</div>
-            	<div id="chart" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
+            	<div id="chart" class="span12" style="height:550px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
             	
             	<div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
            	</div>
@@ -108,7 +108,9 @@
 				        "cursorPosition": "mouse"
 				    },
 				    "legend": {
-				        "position": "top"
+				        "valueWidth": 90,
+				        "position": "top",
+				        "valueText": "[[value]]元"
 				    },
 				    "valueAxes": [{
 				        "position": "left"
