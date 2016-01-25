@@ -33,7 +33,7 @@ public class SalesMonthChartReportController extends BaseController {
 	@Resource
 	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
 
-	@RequestMapping(value = {""})
+	@RequestMapping(value = { "" })
 	public String init_Action(Model model) throws ServletRequestBindingException {
 		// 初始化机构下拉菜单
 		ReportUtils.initOrgList_NoNRoot(orgManager, model);
@@ -41,6 +41,7 @@ public class SalesMonthChartReportController extends BaseController {
 		return "report/salesMonthChartReport";
 
 	}
+
 	private void calTotal(List<List<SalesMonthTotalItem>> totalList, Model model, JsonMapper mapper) {
 
 		Map<String, SalesMonthTotal_Org_Show> _map = Maps.newHashMap();
@@ -91,7 +92,6 @@ public class SalesMonthChartReportController extends BaseController {
 
 		Map<String, SalesMonthTotal_Org_Show> _map = Maps.newHashMap();
 
-
 		for (String orgId : orgIds) {
 
 			List<SalesMonthTotalItem> subDataList = salesMonthTotalItemMyBatisDao.getSalesTotalMonthList(orgId);
@@ -104,76 +104,9 @@ public class SalesMonthChartReportController extends BaseController {
 					vo = new SalesMonthTotal_Org_Show();
 					vo.setOptDateYM(item.getOptDateYM());
 				}
-				
+
 				vo.setSaleRamt(item.getOrgId(), item.getSaleRamt());
 
-//				if (item.getOrgId().equals("00001D")) {
-//					vo.setSaleRamt01(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00002D")) {
-//					vo.setSaleRamt02(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00003D")) {
-//					vo.setSaleRamt03(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00004D")) {
-//					vo.setSaleRamt04(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00005D")) {
-//					vo.setSaleRamt05(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00006D")) {
-//					vo.setSaleRamt06(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00007D")) {
-//					vo.setSaleRamt07(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00008D")) {
-//					vo.setSaleRamt08(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00009D")) {
-//					vo.setSaleRamt09(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00010D")) {
-//					vo.setSaleRamt10(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00011D")) {
-//					vo.setSaleRamt11(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00012D")) {
-//					vo.setSaleRamt12(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00013D")) {
-//					vo.setSaleRamt13(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00014D")) {
-//					vo.setSaleRamt14(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00015D")) {
-//					vo.setSaleRamt15(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00016D")) {
-//					vo.setSaleRamt16(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00017D")) {
-//					vo.setSaleRamt17(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00018D")) {
-//					vo.setSaleRamt18(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00019D")) {
-//					vo.setSaleRamt19(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00020D")) {
-//					vo.setSaleRamt20(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00021D")) {
-//					vo.setSaleRamt21(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00022D")) {
-//					vo.setSaleRamt22(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00023D")) {
-//					vo.setSaleRamt23(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00024D")) {
-//					vo.setSaleRamt24(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00025D")) {
-//					vo.setSaleRamt25(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00026D")) {
-//					vo.setSaleRamt26(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00027D")) {
-//					vo.setSaleRamt27(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00028D")) {
-//					vo.setSaleRamt28(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00029D")) {
-//					vo.setSaleRamt29(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00030D")) {
-//					vo.setSaleRamt30(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00031D")) {
-//					vo.setSaleRamt31(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00032D")) {
-//					vo.setSaleRamt32(item.getSaleRamt());
-//				} else if (item.getOrgId().equals("00033D")) {
-//					vo.setSaleRamt33(item.getSaleRamt());
-//				}
 				_map.put(item.getOptDateYM(), vo);
 			}
 
@@ -192,7 +125,22 @@ public class SalesMonthChartReportController extends BaseController {
 		Collections.sort(_list, comparator);
 
 		JsonMapper mapper = new JsonMapper();
-		model.addAttribute("dataList", mapper.toJson(_list));
+
+		List<Map<String, Object>> _dataList = Lists.newArrayList();
+
+		for (SalesMonthTotal_Org_Show sObj : _list) {
+			Map<String, Object> _obj = Maps.newHashMap();
+			_obj.put("optDateYM", sObj.getOptDateYM());
+			_obj.put("saleTotalRamt", sObj.getSaleTotalRamt());
+			_obj.put("orgCount", sObj.getOrgCount());
+
+			for (Entry<String, BigDecimal> entry : sObj.getSaleRamtMap().entrySet()) {
+				_obj.put(entry.getKey(), entry.getValue());
+			}
+
+			_dataList.add(_obj);
+		}
+		model.addAttribute("dataList", mapper.toJson(_dataList));
 		model.addAttribute("orgIds", Lists.newArrayList(orgIds));
 
 		calTotal(totalList, model, mapper);
