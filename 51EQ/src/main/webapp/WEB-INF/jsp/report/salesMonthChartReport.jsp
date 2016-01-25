@@ -104,6 +104,9 @@
 				    "type": "serial",
 				    "theme": "light",
 				    "dataProvider": _dataList,
+				    "chartCursor": {
+				        "cursorPosition": "mouse"
+				    },
 				    "legend": {
 				        "position": "top"
 				    },
@@ -134,6 +137,9 @@
 				    "type": "serial",
 				    "theme": "light",
 				    "dataProvider": _totalList,
+				    "chartCursor": {
+				        "cursorPosition": "mouse"
+				    },
 				    "titles": [{
 				    	"size": 18,
 				       	"text": "合计销售金额/卖场数量"

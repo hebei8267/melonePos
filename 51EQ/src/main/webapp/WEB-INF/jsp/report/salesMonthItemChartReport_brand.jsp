@@ -13,6 +13,7 @@
     	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
 		<script src="http://www.amcharts.com/lib/3/serial.js"></script>
 		<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+		<script src="https://www.amcharts.com/lib/3/pie.js"></script>
 	</head>
     <body>
         <%// 系统菜单  %>
@@ -27,7 +28,9 @@
                         </legend>
                     </div>
                     
-                    <div id="chart" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
+                    <div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
+            	
+            		<div id="chart2" class="span6" style="height:350px;border:1px solid #A4BED4;"></div>
             	</div>
             </form>
      	</div>
@@ -36,12 +39,14 @@
      	$(function() {
      		var _dataList = ${dataList};
      		
-     		var chart = AmCharts.makeChart("chart", {
+     		var chart1 = AmCharts.makeChart("chart1", {
 			    "type": "serial",
 			    "theme": "light",
 			    "dataProvider": _dataList,
 			    "legend": {
-			        "position": "top"
+			    	"valueWidth": 80,
+			        "position": "top",
+			        "valueText": "[[value]]元"
 			    },
 			    "valueAxes": [{
 			        "position": "left"
@@ -65,6 +70,55 @@
 			    "chartScrollbar": {},
 			    "categoryField": "optDateYM"
 			});
+     		
+     		var chart2 = AmCharts.makeChart("chart2", {
+     		    "type": "pie",
+     		    "theme": "light",
+     		    "dataProvider": _pie_data,
+     		    "valueField": "saleRamt",
+     		    "titleField": "brand",
+     		    "outlineAlpha": 0.4,
+     		    "depth3D": 15,
+     		   	"legend":{
+     			   	"position":"top",
+     			    "autoMargins":false ,
+			        "valueWidth": 80,
+			        "valueText": "[[value]]元"
+     			  },
+     		    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+     		    "angle": 30,
+     		    "export": {
+     		        "enabled": true
+     		    }
+     		});
+     		
+     		// CURSOR
+            var chartCursor = new AmCharts.ChartCursor();
+            chart1.addChartCursor(chartCursor);
+            chartCursor.addListener("changed", myChartCursor);
+            
+            var _pie_data = {};
+            function myChartCursor(obj){
+            	var _sub_Data = _dataList[obj.index];
+        		if(null != _sub_Data){
+        			_pie_data = new Array();
+        			
+        			var _eq = new Object();
+        			_eq.brand = "EQ+";
+        			_eq.saleRamt = _sub_Data.saleRamt_EQ;
+        			_pie_data.push(_eq);
+        			
+        			var _in = new Object();
+        			_in.brand = "Infancy";
+        			_in.saleRamt = _sub_Data.saleRamt_IF;
+        			_pie_data.push(_in);
+        			
+        			chart2.titles = [{"size": 18,"text":"销售时间["+_sub_Data.optDateYM+"]"}];
+        			chart2.dataProvider = _pie_data;
+        			chart2.validateNow();
+        			chart2.validateData();
+        		}
+        	}
      	});
      	</script>
 	</body>
