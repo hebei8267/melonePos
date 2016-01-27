@@ -140,18 +140,21 @@ public class SalesDayTotalManager {
 	 */
 	private void recalRanking(List<String> optDateList) {
 		for (String optDate : optDateList) {
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findByOptDateOrderBy_Ranking(optDate);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao
+					.findByOptDateOrderBy_Ranking(optDate);
 
 			int rank = 1;
 			for (SalesDayTotal _s : _sList) {
 
 				// 门店-13D不参加排名
 				if (Constants.ORG_ID_13.equals(_s.getOrgId())) {
-					continue;
+					// 排名
+					_s.setRanking(0);
+				} else {
+					// 排名
+					_s.setRanking(rank);
 				}
 
-				// 排名
-				_s.setRanking(rank);
 				rank++;
 				salesDayTotalJpaDao.save(_s);
 			}
@@ -177,8 +180,8 @@ public class SalesDayTotalManager {
 
 			BigDecimal _posAmtByNow = new BigDecimal(0);
 
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(org.getId(), year,
-					month);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(
+					org.getId(), year, month);
 			for (SalesDayTotal _salesDayTotal : _sList) {
 				_posAmtByNow = _posAmtByNow.add(_salesDayTotal.getPosAmt());
 
@@ -209,11 +212,13 @@ public class SalesDayTotalManager {
 						_salesDayTotal.getOptDateY(), _salesDayTotal.getOptDateM()));
 
 				// 日需销售金额=(月销售目标额-截止金额)/(本月天数-截止天数)
-				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt().subtract(_salesDayTotal.getPosAmtByNow())
+				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt()
+						.subtract(_salesDayTotal.getPosAmtByNow())
 						.divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
 
 				// 销售增长额(本月销售目标额)=预计本月销售-本月销售目标额
-				_salesDayTotal.setPosAmtIncrease2(_salesDayTotal.getExpMonthPosAmt().subtract(_salesDayTotal.getSaleTargetAmt()));
+				_salesDayTotal.setPosAmtIncrease2(_salesDayTotal.getExpMonthPosAmt().subtract(
+						_salesDayTotal.getSaleTargetAmt()));
 				// 销售增长率(本月销售目标额)=销售增长额(本月销售目标额)/本月销售目标额
 				BigDecimal _saleTargetAmt = _salesDayTotal.getSaleTargetAmt();
 				if (null == _saleTargetAmt || _saleTargetAmt.compareTo(BigDecimal.ZERO) == 0) {
