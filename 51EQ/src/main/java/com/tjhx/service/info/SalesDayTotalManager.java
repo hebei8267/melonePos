@@ -143,17 +143,11 @@ public class SalesDayTotalManager {
 			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao
 					.findByOptDateOrderBy_Ranking(optDate);
 
-			int rank = 1;
+			int rank = 0;
 			for (SalesDayTotal _s : _sList) {
 
-				// 门店-13D不参加排名
-				if (Constants.ORG_ID_13.equals(_s.getOrgId())) {
-					// 排名
-					_s.setRanking(0);
-				} else {
-					// 排名
-					_s.setRanking(rank);
-				}
+				// 排名
+				_s.setRanking(rank);
 
 				rank++;
 				salesDayTotalJpaDao.save(_s);
