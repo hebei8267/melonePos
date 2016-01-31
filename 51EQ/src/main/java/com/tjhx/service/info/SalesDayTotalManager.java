@@ -16,11 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.dao.accounts.CashDailyJpaDao;
 import com.tjhx.dao.info.SalesDayTotalJpaDao;
 import com.tjhx.dao.info.SalesDayTotalMyBatisDao;
 import com.tjhx.dao.info.SalesMonthTotalItemMyBatisDao;
 import com.tjhx.daobw.DailySaleMyBatisDao;
-import com.tjhx.entity.bw.DailySale;
+import com.tjhx.entity.accounts.CashDaily;
 import com.tjhx.entity.info.SalesDayTotal;
 import com.tjhx.entity.info.SalesMonthTotalItem;
 import com.tjhx.entity.struct.Organization;
@@ -44,6 +45,8 @@ public class SalesDayTotalManager {
 	private SalesMonthTotalItemMyBatisDao salesMonthTotalItemMyBatisDao;
 	@Resource
 	private MonthSaleTargetManager monthSaleTargetManager;
+	@Resource
+	private CashDailyJpaDao cashDailyJpaDao;
 
 	private Set<String> _calYM = new HashSet<String>();
 	private Map<String, BigDecimal> _orgYMPosAmt = new HashMap<String, BigDecimal>();
@@ -54,16 +57,53 @@ public class SalesDayTotalManager {
 	 * @param optDateList
 	 */
 	private void getBwSaleAmt(List<String> optDateList) {
+		//2016/1/31 停止取得百威销售信息作为日对比数据，改取门店填报数据
+//		for (String optDate : optDateList) {
+//			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailySaleList(optDate);
+//
+//			for (DailySale dailySale : _bwDailySaleList) {
+//
+//				Organization org = organizationManager.getOrganizationByBwBranchNo(dailySale.getOrgBranchNo());
+//
+//				if (null == org) {
+//					continue;
+//				}
+//
+//				SalesDayTotal _salesDayTotal = new SalesDayTotal();
+//
+//				String year = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
+//				String month = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
+//				String days = DateUtils.transDateFormat(optDate, "yyyyMMdd", "dd");
+//
+//				// 缓存计算的年月信息
+//				_calYM.add(year + month);
+//
+//				// 日期
+//				_salesDayTotal.setOptDate(optDate);
+//				// 日期-年
+//				_salesDayTotal.setOptDateY(year);
+//				// 日期-月
+//				_salesDayTotal.setOptDateM(month);
+//				// 机构编号
+//				_salesDayTotal.setOrgId(org.getId());
+//				// 机构资金编号
+//				_salesDayTotal.setBranchNo(org.getBwBranchNo());
+//				// 当日销售金额
+//				_salesDayTotal.setPosAmt(dailySale.getBwSaleAmt());
+//				// 截止天数
+//				_salesDayTotal.setNowDays(Integer.parseInt(days));
+//				// 本月天数
+//				_salesDayTotal.setMonthDays(DateUtils.getMonthDays(year, month));
+//
+//				salesDayTotalJpaDao.save(_salesDayTotal);
+//
+//			}
+//		}
+
 		for (String optDate : optDateList) {
-			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailySaleList(optDate);
+			List<CashDaily> _saleList = cashDailyJpaDao.findByOptDate(optDate);
 
-			for (DailySale dailySale : _bwDailySaleList) {
-
-				Organization org = organizationManager.getOrganizationByBwBranchNo(dailySale.getOrgBranchNo());
-
-				if (null == org) {
-					continue;
-				}
+			for (CashDaily cashDaily : _saleList) {
 
 				SalesDayTotal _salesDayTotal = new SalesDayTotal();
 
@@ -81,11 +121,12 @@ public class SalesDayTotalManager {
 				// 日期-月
 				_salesDayTotal.setOptDateM(month);
 				// 机构编号
-				_salesDayTotal.setOrgId(org.getId());
+				_salesDayTotal.setOrgId(cashDaily.getOrgId());
 				// 机构资金编号
-				_salesDayTotal.setBranchNo(org.getBwBranchNo());
+				_salesDayTotal.setBranchNo(cashDaily.getOrgBranchNo());
 				// 当日销售金额
-				_salesDayTotal.setPosAmt(dailySale.getBwSaleAmt());
+				_salesDayTotal.setPosAmt(cashDaily.getSaleAmt().add(cashDaily.getZfbSaleAmt())
+						.add(cashDaily.getGoldCardAmt()).add(cashDaily.getRebateAmt()).add(cashDaily.getCouponValue()));
 				// 截止天数
 				_salesDayTotal.setNowDays(Integer.parseInt(days));
 				// 本月天数

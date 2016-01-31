@@ -56,21 +56,27 @@
                         <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
                     </div>
                     
-                    <div style="margin-top: 10px;" class="span12">
-                        <div id="chart1" style="width:700px;height:400px;border:1px solid #A4BED4;"></div>
+                    <c:forEach items="${dataList}" var="data" varStatus="status">
+                    <div class="span12 cash_daily"></div>
+                    <div class="span12">${orgNameList.get(status.index) }</div>
+                    <div style="margin-top: 10px;" class="span6">
+                        <div id="chart1${status.index}" style="height:500px;border:1px solid #A4BED4;"></div>
                     </div>
                     
-                    <div style="margin-top: 10px;" class="span12">
-                        <div id="chart2" style="width:700px;height:400px;border:1px solid #A4BED4;"></div>
+                    <div style="margin-top: 10px;" class="span6">
+                        <div id="chart2${status.index}" style="height:500px;border:1px solid #A4BED4;"></div>
                     </div>
+                    </c:forEach>
                 </div>
             </form>
         </div>
         
         <script>
-        	var _data_set = ${data_set}
+        	<c:forEach items="${dataList}" var="data" varStatus="status">
+        	var _data_set${status.index} = ${data}
+        	
         	//------------------------------------------------------------
-        	var chart1 = AmCharts.makeChart("chart1", {
+        	var chart1 = AmCharts.makeChart("chart1${status.index}", {
 			    "theme": "light",
 			    "type": "serial",
 			    "legend": {
@@ -83,7 +89,7 @@
 			    "chartCursor": {
 			        "cursorPosition": "mouse"
 			    },
-			    "dataProvider": _data_set,
+			    "dataProvider": _data_set${status.index},
 			    "valueAxes": [{
 			        "id": "v1",
 			        "axisColor": "#FF6600",
@@ -126,7 +132,7 @@
 			    "categoryField": "optDate"
 			});
 
-	        var chart2 = AmCharts.makeChart("chart2", {
+	        var chart2 = AmCharts.makeChart("chart2${status.index}", {
 			    "theme": "light",
 			    "type": "serial",
 			    "legend": {
@@ -139,7 +145,7 @@
 			    "chartCursor": {
 			        "cursorPosition": "mouse"
 			    },
-			    "dataProvider": _data_set,
+			    "dataProvider": _data_set${status.index},
 			    "valueAxes": [{
 			        "id": "v1",
 			        "axisColor": "#FF6600",
@@ -181,6 +187,8 @@
 			    }],
 			    "categoryField": "optDate"
 			});
+	        
+	        </c:forEach>
 		</script>
 	</body>
 </html>
