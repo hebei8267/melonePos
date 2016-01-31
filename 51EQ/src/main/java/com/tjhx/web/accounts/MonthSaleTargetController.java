@@ -217,7 +217,7 @@ public class MonthSaleTargetController extends BaseController {
 
 			// 取得指定门店指定年份合计销售信息
 			List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager
-					.getSalesTotalList_ByOrgAndYear(_param);
+					.getSalesTotalList_ByOrgAndYear_SJ(_param);
 
 			List<SalesMonthTotal_Show> _salesTotalShowList = initSalesTotalShowList(orgId, optDateY);
 
@@ -235,7 +235,7 @@ public class MonthSaleTargetController extends BaseController {
 
 				// 取得指定门店指定年份合计销售信息
 				List<SalesMonthTotalItem> _salesTotalList = salesMonthTotalItemManager
-						.getSalesTotalList_ByOrgAndYear(_param);
+						.getSalesTotalList_ByOrgAndYear_SJ(_param);
 
 				List<SalesMonthTotal_Show> _salesTotalShowList = initSalesTotalShowList(orgId, optDateY);
 

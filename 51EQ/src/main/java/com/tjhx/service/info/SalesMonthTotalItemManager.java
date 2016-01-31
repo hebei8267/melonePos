@@ -166,6 +166,18 @@ public class SalesMonthTotalItemManager {
 	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear(SalesMonthTotalItem param) {
 		return salesMonthTotalItemMyBatisDao.getSalesTotalList_ByOrgAndYear(param);
 	}
+	
+	/**
+	 * 取得指定门店指定年份合计销售信息(实际销售额，门店填报)
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear_SJ(SalesMonthTotalItem param) {
+		return salesMonthTotalItemMyBatisDao.getSalesTotalList_ByOrgAndYear_SJ(param);
+	}
+	
+	
 
 	/**
 	 * 创建数据下载文件

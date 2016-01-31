@@ -28,6 +28,14 @@ public interface SalesMonthTotalItemMyBatisDao {
 	 * @return
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear(SalesMonthTotalItem param);
+	
+	/**
+	 * 取得指定门店指定年份合计销售信息
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear_SJ(SalesMonthTotalItem param);
 
 	/**
 	 * 取得全部门店指定年份合计销售信息

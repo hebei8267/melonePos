@@ -65,6 +65,24 @@
 		ORDER BY
 		    opt_date_y_m
 	</select>
+	
+	<!-- 各店指定年销售数据 -->
+	<select id="getSalesTotalList_ByOrgAndYear_SJ" parameterType="com.tjhx.entity.info.SalesMonthTotalItem" resultMap="Result_Map_SalesMonthTotalItem">
+		SELECT
+		    org_id ,
+		    opt_date_y ,
+		    concat(opt_date_y,opt_date_m)                                          AS opt_date_y_m,
+		    SUM(sale_amt+zfb_sale_amt + gold_card_amt + rebate_amt + coupon_value) AS sale_ramt
+		FROM
+		    t_cash_daily
+		WHERE
+		    opt_date_y = #{optDateY}
+		AND org_id = #{orgId}
+		GROUP BY
+		    opt_date_y_m
+		ORDER BY
+		    opt_date_y_m
+	</select>
 	<!-- 全部门店指定月份销售数据 -->
 	<select id="getSalesTotalList_ByYear" parameterType="com.tjhx.entity.info.SalesMonthTotalItem" resultMap="Result_Map_SalesMonthTotalItem">
 		SELECT
