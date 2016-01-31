@@ -30,7 +30,7 @@
                     
                     <div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 15px;"></div>
                     
-                    <div id="chart2" class="span6" style="height:350px;border:1px solid #A4BED4;"></div>
+                    <div id="chart2" class="span12" style="height:350px;border:1px solid #A4BED4;"></div>
             	</div>
             </form>
      	</div>
