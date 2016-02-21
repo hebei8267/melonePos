@@ -24,7 +24,6 @@
 		}
 		._warn3 {
 			background-color: #FFDEAD;
-			padding: 5px;
 		}
 		</style>
 		<script>
@@ -216,7 +215,7 @@
 										<td class="center">
 											<span class="_warn1">${pettyCash.expType}</span>
 	                                 	</td>
-										<td>
+										<td style="word-wrap:break-word;word-break:break-all;">
 											<% //操作类型 0-支出 1-拨入 %>
 											<c:if test="${pettyCash.optType == 0}">
 		                            		${pettyCash.expReason}
