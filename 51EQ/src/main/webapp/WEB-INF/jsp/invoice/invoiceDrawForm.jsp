@@ -122,6 +122,15 @@
 						<c:if test="${invoice.orgId == '00024D'}">
 							&nbsp;&nbsp;&nbsp;联系电话：027-86420188
 						</c:if>
+						<c:if test="${invoice.orgId == '00025D'}">
+							&nbsp;&nbsp;&nbsp;联系电话：027-84398156
+						</c:if>
+						<c:if test="${invoice.orgId == '00026D'}">
+							&nbsp;&nbsp;&nbsp;联系电话：027-83526277
+						</c:if>
+						<c:if test="${invoice.orgId == '00027D'}">
+							&nbsp;&nbsp;&nbsp;联系电话：027-84786253
+						</c:if>
                             </label>
                         </div>
                         <div class="control-group">

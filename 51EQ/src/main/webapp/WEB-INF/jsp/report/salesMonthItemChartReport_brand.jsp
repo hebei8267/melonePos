@@ -114,6 +114,7 @@
         			_pie_data.push(_in);
         			
         			chart2.titles = [{"size": 18,"text":"销售时间["+_sub_Data.optDateYM+"]"}];
+        			_pie_data.sort(function(a,b){return a.saleRamt>b.saleRamt?-1:1});
         			chart2.dataProvider = _pie_data;
         			chart2.validateNow();
         			chart2.validateData();
