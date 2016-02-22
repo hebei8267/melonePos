@@ -853,8 +853,8 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
-	
-	
+//	
+//	
 //	@Test
 //	@Rollback(false)
 //	public void saveNewFun68() {
@@ -903,27 +903,39 @@ public class FunctionManagerTest extends SpringTransactionalTestCase {
 //
 //		functionJpaDao.save(fun);
 //	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun72() {
+//		Function fun = new Function();
+//		// 会计记账
+//		fun.setDisplayName("月销售信息对比［品牌］(图形)");
+//		// 功能URL */
+//		fun.setFunUrl("salesMonthItemChartReport/brand_init");
+//
+//		functionJpaDao.save(fun);
+//	}
+//	
+//	@Test
+//	@Rollback(false)
+//	public void saveNewFun73() {
+//		Function fun = new Function();
+//		// 会计记账
+//		fun.setDisplayName("月销售信息对比［督导］(图形)");
+//		// 功能URL */
+//		fun.setFunUrl("salesMonthItemChartReport/mngUser_init");
+//
+//		functionJpaDao.save(fun);
+//	}
 	
 	@Test
 	@Rollback(false)
-	public void saveNewFun72() {
+	public void saveNewFun74() {
 		Function fun = new Function();
-		// 会计记账
-		fun.setDisplayName("月销售信息对比［品牌］(图形)");
+		// 机构合同管理
+		fun.setDisplayName("机构合同管理");
 		// 功能URL */
-		fun.setFunUrl("salesMonthItemChartReport/brand_init");
-
-		functionJpaDao.save(fun);
-	}
-	
-	@Test
-	@Rollback(false)
-	public void saveNewFun73() {
-		Function fun = new Function();
-		// 会计记账
-		fun.setDisplayName("月销售信息对比［督导］(图形)");
-		// 功能URL */
-		fun.setFunUrl("salesMonthItemChartReport/mngUser_init");
+		fun.setFunUrl("orgContract/init");
 
 		functionJpaDao.save(fun);
 	}

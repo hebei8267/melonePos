@@ -334,7 +334,8 @@
 					|| _permIdList.contains('43') || _permIdList.contains('49') 
 					|| _permIdList.contains('50') || _permIdList.contains('51') 
 					|| _permIdList.contains('52') || _permIdList.contains('55') 
-					|| _permIdList.contains('67') || _permIdList.contains('71')}">
+					|| _permIdList.contains('67') || _permIdList.contains('71')
+					|| _permIdList.contains('74')}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">日常事务<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -393,8 +394,21 @@
 										<a href="${sc_ctx}/runInspect/list">门店巡查报告(运营)</a>
 									</li>
 								</c:if>
-
 								
+								<%//总部-普通人员用%>
+								<c:if test="${_permIdList.contains('49')}">
+									<li class="divider"></li>
+									<li>
+										<a href="${sc_ctx}/monthSaleTarget/init">机构月销售目标管理</a>
+									</li>
+								</c:if>
+
+								<c:if test="${_permIdList.contains('74')}">
+									<li class="divider"></li>
+									<li>
+										<a href="${sc_ctx}/orgContract/init">机构合同/租金缴交管理</a>
+									</li>
+								</c:if>
 
 								<%//总部-会计用%>
 								<c:if test="${_permIdList.contains('42')}">
@@ -411,15 +425,7 @@
 										<a href="${sc_ctx}/supplierSignRun/init_boss">供应商(挂账)结算进度表</a>
 									</li>
 								</c:if>
-
-								<%//总部-普通人员用%>
-								<c:if test="${_permIdList.contains('49')}">
-									<li class="divider"></li>
-									<li>
-										<a href="${sc_ctx}/monthSaleTarget/init">机构月销售目标管理</a>
-									</li>
-								</c:if>
-
+								
 								<%//门店/总部-共享文件管理 %>
 								<c:if test="${_permIdList.contains('55')}">
 									<li class="divider"></li>
