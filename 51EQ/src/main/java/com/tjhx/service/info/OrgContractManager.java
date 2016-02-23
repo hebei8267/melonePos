@@ -71,7 +71,7 @@ public class OrgContractManager {
 	}
 
 	/**
-	 * 编辑机构合同信息
+	 * 取得机构合同信息
 	 * 
 	 * @param id
 	 * @return

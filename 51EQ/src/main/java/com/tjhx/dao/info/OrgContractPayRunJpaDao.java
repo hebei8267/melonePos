@@ -1,5 +1,8 @@
 package com.tjhx.dao.info;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 
 import com.tjhx.entity.info.OrgContractPayRun;
@@ -9,5 +12,5 @@ import com.tjhx.entity.info.OrgContractPayRun;
  */
 
 public interface OrgContractPayRunJpaDao extends CrudRepository<OrgContractPayRun, Integer> {
-
+	public List<OrgContractPayRun> findAll(Sort sort);
 }

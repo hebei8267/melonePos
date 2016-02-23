@@ -11,7 +11,7 @@ import org.hibernate.annotations.NaturalId;
 import com.tjhx.entity.IdEntity;
 
 /**
- * 机构合同
+ * 机构合同缴费
  */
 @Entity
 @Table(name = "T_ORG_CONTRACT_PAY_RUN")
