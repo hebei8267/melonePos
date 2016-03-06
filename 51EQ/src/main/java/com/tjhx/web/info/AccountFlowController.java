@@ -60,6 +60,17 @@ public class AccountFlowController extends BaseController {
 	 */
 	@RequestMapping(value = "list")
 	public String list_Action(HttpServletRequest request, Model model) throws ServletRequestBindingException {
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		if (StringUtils.isBlank(optDateShow_start)) {
+			optDateShow_start = DateUtils.getNextDateFormatDate(-6, "yyyy-MM-dd");
+			model.addAttribute("optDateShow_start", optDateShow_start);
+		}
+
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		if (StringUtils.isBlank(optDateShow_end)) {
+			optDateShow_end = DateUtils.getCurFormatDate("yyyy-MM-dd");
+			model.addAttribute("optDateShow_end", optDateShow_end);
+		}
 
 		return "info/accountFlowList";
 	}
@@ -100,8 +111,8 @@ public class AccountFlowController extends BaseController {
 	 */
 	@RequestMapping(value = "exportDetail")
 	public void exportDetail_Action(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletRequestBindingException, IOException, ParsePropertyException, InvalidFormatException,
-			IllegalAccessException, InvocationTargetException {
+			throws ServletRequestBindingException, IOException, ParsePropertyException, InvalidFormatException, IllegalAccessException,
+			InvocationTargetException {
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		// =========================================
@@ -122,8 +133,7 @@ public class AccountFlowController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -154,8 +164,8 @@ public class AccountFlowController extends BaseController {
 	 * @throws ParsePropertyException
 	 */
 	@RequestMapping(value = "export")
-	public void export_Action(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletRequestBindingException, IOException, ParsePropertyException, InvalidFormatException {
+	public void export_Action(Model model, HttpServletRequest request, HttpServletResponse response) throws ServletRequestBindingException,
+			IOException, ParsePropertyException, InvalidFormatException {
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		// =========================================
@@ -176,8 +186,7 @@ public class AccountFlowController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
@@ -261,8 +270,7 @@ public class AccountFlowController extends BaseController {
 	 * @throws InvocationTargetException
 	 */
 	@RequestMapping(value = "save")
-	public String saveAccountFlow_Action(HttpServletRequest request) throws IllegalAccessException,
-			InvocationTargetException {
+	public String saveAccountFlow_Action(HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
 		AccountFlow accountFlow = new AccountFlow();
 		BeanUtils.populate(accountFlow, request.getParameterMap());
 
