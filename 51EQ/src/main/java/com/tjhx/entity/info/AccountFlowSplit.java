@@ -20,6 +20,8 @@ import com.tjhx.entity.IdEntity;
 public class AccountFlowSplit extends IdEntity {
 
 	private static final long serialVersionUID = -7253432114356840474L;
+	/** 机构编号 */
+	private String orgId;
 	/** 资金记账流水 */
 	private AccountFlow accountFlow;
 	/** 资金记账流水 */
@@ -38,9 +40,29 @@ public class AccountFlowSplit extends IdEntity {
 	public AccountFlowSplit() {
 	}
 
-	public AccountFlowSplit(String subId, BigDecimal amt) {
+	public AccountFlowSplit(String subId, String orgId, BigDecimal amt) {
 		this.subId = subId;
+		this.orgId = orgId;
 		this.amt = amt;
+	}
+
+	/**
+	 * 取得机构编号
+	 * 
+	 * @return 机构编号
+	 */
+	@Column(length = 32)
+	public String getOrgId() {
+		return orgId;
+	}
+
+	/**
+	 * 设置机构编号
+	 * 
+	 * @param orgId 机构编号
+	 */
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
 	}
 
 	/**

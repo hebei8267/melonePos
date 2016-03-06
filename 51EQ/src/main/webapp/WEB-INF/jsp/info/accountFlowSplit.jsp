@@ -132,6 +132,36 @@
                     "amt9" : {
                     	requiredSubject : "_subId9",
                     	money : true
+                    },
+                	"orgId0" : {
+                		requiredSubject : "_subId0"
+                    },
+                    "orgId1" : {
+                    	requiredSubject : "_subId1"
+                    },
+                    "orgId2" : {
+                    	requiredSubject : "_subId2"
+                    },
+                    "orgId3" : {
+                    	requiredSubject : "_subId3"
+                    },
+                    "orgId4" : {
+                    	requiredSubject : "_subId4"
+                    },
+                    "orgId5" : {
+                    	requiredSubject : "_subId5"
+                    },
+                    "orgId6" : {
+                    	requiredSubject : "_subId6"
+                    },
+                    "orgId7" : {
+                    	requiredSubject : "_subId7"
+                    },
+                    "orgId8" : {
+                    	requiredSubject : "_subId8"
+                    },
+                    "orgId9" : {
+                    	requiredSubject : "_subId9"
                     }
                     
                 }
@@ -218,6 +248,9 @@
 	                            <th class="center">
 	                                记账科目
 	                            </th>
+	                            <th class="center">
+	                                记账机构
+	                            </th>
 	                            <th	class="center" width="150">
 	                                金额
 	                            </th>
@@ -230,6 +263,7 @@
 	                    	<c:set var="_total" value="${_total+split.amt}"/>
 	                    	<tr>
 	                    		<td class="center">${status.index + 1}</td>
+	                    		
 	                    		<td class="center">
 	                    			<select class="layout-option form-control mini_select" name="subId${status.index}" id="_subId${status.index}">
 										<c:if test="${split.subId == null}">
@@ -250,6 +284,28 @@
 										</c:forEach>
 									</select>
 	                    		</td>
+	                    		
+	                    		<td class="center">
+	                    			<select class="layout-option form-control mini_select" name="orgId${status.index}" id="_orgId${status.index}">
+	                    				<c:if test="${split.orgId == null}">
+										<option value="" selected><%=Constants.BLANK_SELECT_TEXT %></option>
+										</c:if>
+										<c:if test="${split.orgId != null}">
+										<option value=""><%=Constants.BLANK_SELECT_TEXT %></option>
+										</c:if>
+										
+										<c:forEach items="${orgList}" var="org">
+											<c:if test="${split.orgId == org.key}">
+											<option value="${org.key}" selected>${org.value}</option>
+											</c:if>
+											
+											<c:if test="${split.orgId != org.key}">
+											<option value="${org.key}">${org.value}</option>
+											</c:if>
+										</c:forEach>
+	                    			</select>
+	                    		</td>
+	                    		
 	                    		<td class="center">
 	                    			<input class="mini_text amt" type="text" name="amt${status.index}" id="_amt${status.index}" value="${split.amt}"/> 元
 	                    		</td>

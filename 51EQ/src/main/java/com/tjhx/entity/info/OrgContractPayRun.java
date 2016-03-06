@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NaturalId;
-
 import com.tjhx.entity.IdEntity;
 
 /**
@@ -27,14 +25,13 @@ public class OrgContractPayRun extends IdEntity {
 	/** 缴交金额 */
 	private BigDecimal payAmt = new BigDecimal("0");
 	/** 是否缴款 0-未缴费 1-已缴费 */
-	private String payFlg;
+	private String payFlg = "0";
 
 	/**
 	 * 取得机构编号
 	 * 
 	 * @return 机构编号
 	 */
-	@NaturalId
 	@Column(length = 32)
 	public String getOrgId() {
 		return orgId;

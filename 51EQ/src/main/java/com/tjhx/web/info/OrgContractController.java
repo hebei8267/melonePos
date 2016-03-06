@@ -8,8 +8,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.OrgContract;
+import com.tjhx.entity.info.OrgContractPayRun;
 import com.tjhx.globals.Constants;
 import com.tjhx.service.ServiceException;
 import com.tjhx.service.info.OrgContractManager;
+import com.tjhx.service.info.OrgContractPayRunManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
 import com.tjhx.web.report.ReportUtils;
@@ -31,18 +36,48 @@ public class OrgContractController extends BaseController {
 	private OrgContractManager orgContractManager;
 	@Resource
 	private OrganizationManager orgManager;
+	@Resource
+	private OrgContractPayRunManager orgContractPayRunManager;
 
 	/**
 	 * 取得机构合同信息列表
 	 * 
 	 * @param model
 	 * @return
+	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "init")
-	public String initList_Action(Model model, HttpServletRequest request) {
-		List<OrgContract> _list = orgContractManager.getOrgContractList();
+	public String initList_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		String selectOrgId = ServletRequestUtils.getStringParameter(request, "selectOrgId");
 
+		pageInit(selectOrgId, model);
+
+		return "info/orgContractList";
+	}
+
+	private void pageInit(String selectOrgId, Model model) throws ServletRequestBindingException {
+		List<OrgContract> _list = orgContractManager.getOrgContractList();
 		model.addAttribute("orgContractList", _list);
+
+		if (StringUtils.isNotBlank(selectOrgId)) {
+			List<OrgContractPayRun> _runList = orgContractPayRunManager.getOrgContractPayRunListByOrgId(selectOrgId);
+			model.addAttribute("orgContractPayRunList", _runList);
+
+			model.addAttribute("selectOrgId", selectOrgId);
+		}
+	}
+
+	/**
+	 * 取得机构合同信息列表
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ServletRequestBindingException
+	 */
+	@RequestMapping(value = "viewPayRun/{orgId}")
+	public String viewPayRun_Action(@PathVariable("orgId") String orgId, Model model)
+			throws ServletRequestBindingException {
+		pageInit(orgId, model);
 
 		return "info/orgContractList";
 	}
@@ -96,7 +131,8 @@ public class OrgContractController extends BaseController {
 			try {
 				orgContractManager.addOrgContract(orgContract);
 			} catch (ServiceException ex) {
-				orgContract.setStartDate(DateUtils.transDateFormat(orgContract.getStartDate(), "yyyyMMdd", "yyyy-MM-dd"));
+				orgContract
+						.setStartDate(DateUtils.transDateFormat(orgContract.getStartDate(), "yyyyMMdd", "yyyy-MM-dd"));
 				orgContract.setEndDate(DateUtils.transDateFormat(orgContract.getEndDate(), "yyyyMMdd", "yyyy-MM-dd"));
 
 				// 添加错误消息
@@ -113,7 +149,8 @@ public class OrgContractController extends BaseController {
 			try {
 				orgContractManager.updateOrgContract(orgContract);
 			} catch (ServiceException ex) {
-				orgContract.setStartDate(DateUtils.transDateFormat(orgContract.getStartDate(), "yyyyMMdd", "yyyy-MM-dd"));
+				orgContract
+						.setStartDate(DateUtils.transDateFormat(orgContract.getStartDate(), "yyyyMMdd", "yyyy-MM-dd"));
 				orgContract.setEndDate(DateUtils.transDateFormat(orgContract.getEndDate(), "yyyyMMdd", "yyyy-MM-dd"));
 
 				// 添加错误消息
@@ -136,9 +173,11 @@ public class OrgContractController extends BaseController {
 	 * 
 	 * @param model
 	 * @return
+	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "edit/{id}")
-	public String editOrgContract_Action(@PathVariable("id") Integer id, Model model) {
+	public String editOrgContract_Action(@PathVariable("id") Integer id, Model model, HttpServletRequest request)
+			throws ServletRequestBindingException {
 
 		OrgContract _orgContract = orgContractManager.getOrgContractByUuid(id);
 		if (null == _orgContract) {
@@ -146,13 +185,15 @@ public class OrgContractController extends BaseController {
 		} else {
 			_orgContract.setStartDate(DateUtils.transDateFormat(_orgContract.getStartDate(), "yyyyMMdd", "yyyy-MM-dd"));
 			_orgContract.setEndDate(DateUtils.transDateFormat(_orgContract.getEndDate(), "yyyyMMdd", "yyyy-MM-dd"));
-			
+
 			model.addAttribute("orgContract", _orgContract);
 
 			ReportUtils.initOrgList_Null_Root(orgManager, model);
 
 			// 初始化缴交频率
 			initPayFrequentList(model);
+
+			model.addAttribute("selectOrgId", _orgContract.getOrgId());
 
 			return "info/orgContractForm";
 		}
@@ -165,15 +206,17 @@ public class OrgContractController extends BaseController {
 	 * @param ids
 	 * @param model
 	 * @return
+	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "del")
-	public String delOrgContract_Action(@RequestParam("uuids") String ids, Model model) {
+	public String delOrgContract_Action(@RequestParam("uuids") String ids, Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		String[] idArray = ids.split(",");
 		for (int i = 0; i < idArray.length; i++) {
 			orgContractManager.delOrgContractByUuid(Integer.parseInt(idArray[i]));
 		}
 
-		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/orgContract/init";
+		String selectOrgId = ServletRequestUtils.getStringParameter(request, "selectOrgId");
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/orgContract/init/?selectOrgId=" + selectOrgId;
 	}
 
 }

@@ -12,5 +12,6 @@ import com.tjhx.entity.info.OrgContractPayRun;
  */
 
 public interface OrgContractPayRunJpaDao extends CrudRepository<OrgContractPayRun, Integer> {
-	public List<OrgContractPayRun> findAll(Sort sort);
+
+	public List<OrgContractPayRun> findByOrgId(String orgId, Sort sort);
 }

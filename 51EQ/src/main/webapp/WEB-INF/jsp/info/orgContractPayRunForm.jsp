@@ -21,11 +21,7 @@
         </style>
         <script>
         $(function() {
-        	$('#startDate').datepicker({
-                format : 'yyyy-mm-dd'
-            });
-        	
-        	$('#endDate').datepicker({
+        	$('#payDate').datepicker({
                 format : 'yyyy-mm-dd'
             });
         	
@@ -34,24 +30,13 @@
                 	orgId : {
                         required : true
                     },
-                    startDate : {
+                    payDate : {
                     	required : true,
                         date : true
                     },
-                    endDate : {
-                    	required : true,
-                		date : true,
-                		compareDate : "#startDate"
-                    },
-                    payFrequent : {
-                    	required : true
-                    },
-                    computePayAmt : {
+                    payAmt : {
                     	required : true,
                         money : true
-                    },
-                    terms : {
-                    	maxlength : 255
                     }
                 }
             });
@@ -62,106 +47,90 @@
                 });
 
 				$("#inputForm").attr("target", "_self");
-                $("#inputForm").attr("action", "${sc_ctx}/orgContract/save");
+                $("#inputForm").attr("action", "${sc_ctx}/orgContractPayRun/save");
                 $("#inputForm").submit();
             });
         });
- 		</script>
+        </script>
     </head>
     <body>
         <%// 系统菜单  %>
         <page:applyDecorator name="menu" />
         
-        
-		<div class="container">
+        <div class="container">
             <div class="row">
            		<div class="span12">
                     <legend>
-                        <h3>机构合同信息
-                        <c:if test="${empty	orgContract.uuid}">
+                        <h3>租金缴交信息
+                        <c:if test="${empty	orgContractPayRun.uuid}">
                             新增
                         </c:if>
-                        <c:if test="${!empty orgContract.uuid}">
+                        <c:if test="${!empty orgContractPayRun.uuid}">
                             编辑
                         </c:if></h3>
                     </legend>
           		</div>
           		
           		<div class="span12"	style="margin-top: 10px;">
-                    <form:form method="POST" class="form-horizontal" id="inputForm" modelAttribute="orgContract">
-                    	<form:hidden path="uuid"/>
-                    	<input type="hidden" name="selectOrgId" value="${selectOrgId}"/>
-                    	<div class="control-group">
+          			<form:form method="POST" class="form-horizontal" id="inputForm" modelAttribute="orgContractPayRun">
+          				<form:hidden path="uuid"/>
+          				<input type="hidden" name="selectOrgId" value="${selectOrgId}"/>
+          				<div class="control-group">
                             <label class="control-label">机构 :</label>
                            	
-                           	<c:if test="${empty	orgContract.uuid}">
+                           	<c:if test="${empty	orgContractPayRun.uuid}">
                            	<div class="controls">
 	                            <form:select path="orgId" items="${orgList}"/>
 	                        </div>
 	                        </c:if>
 	                        
-	                        <c:if test="${!empty orgContract.uuid}">
+	                        <c:if test="${!empty orgContractPayRun.uuid}">
 	                            <form:hidden path="orgId"/>
 	                            
 	                            <label class="left-control-label">
-	                            <c:if test="${fn:length(orgContract.orgId) > 4}">
-	             					${fn:substring(orgContract.orgId,3,6)}
+	                            <c:if test="${fn:length(orgContractPayRun.orgId) > 4}">
+	             					${fn:substring(orgContractPayRun.orgId,3,6)}
 	             				</c:if>
-	             				<c:if test="${fn:length(orgContract.orgId) < 4}">
+	             				<c:if test="${fn:length(orgContractPayRun.orgId) < 4}">
 	             					总部
 	             				</c:if>
 	                            </label>
 	                        </c:if>
                         </div>
+                        
                         <div class="control-group">
-                            <label class="control-label">[合同] 开始时间 :</label>
-                            
+                            <label class="control-label">交费时间[预计] :</label>
                           	
-                          	<c:if test="${empty	orgContract.uuid}">
                            	<div class="controls">
-                            	<form:input	path="startDate" />
+                            	<form:input	path="payDate" />
                           	</div>
-	                        </c:if>
-	                        
-	                        <c:if test="${!empty orgContract.uuid}">
-	                           	<form:hidden path="startDate"/>
-	                            <label class="left-control-label">${orgContract.startDate}</label>
-	                        </c:if>
-	                        
                         </div>
+                        
                         <div class="control-group">
-                            <label class="control-label">[合同] 结束时间 :</label>
+                            <label class="control-label">交费金额 :</label>
                             <div class="controls">
-                            	<form:input	path="endDate" />
+                            	<form:input	path="payAmt" /> 元
                           	</div>
                         </div>
+                        
                         <div class="control-group">
-                            <label class="control-label">缴交频率 :</label>
+                            <label class="control-label">交费状态 :</label>
                             <div class="controls">
-                            	<form:select path="payFrequent" items="${payFrequentList}"/>
+                            	<form:radiobutton path="payFlg" value="0"/> 未交费
+                            	<form:radiobutton path="payFlg" value="1"/> 已交费
                           	</div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">预估缴交金额 :</label>
-                            <div class="controls">
-                            	<form:input	path="computePayAmt" /> 元
-                          	</div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">优惠条款 :</label>
-                            <div class="controls">
-                            	<form:textarea path="terms" class="input-xlarge" rows="4"/>
-                          	</div>
-                        </div>
+                        
                         <div class="control-group">
                             <div class="controls">
                                 <button	id="saveBtn" class="btn	btn-large btn-primary" type="submit">保存</button>
                                 &nbsp;<a href="${sc_ctx}/orgContract/init/?selectOrgId=${selectOrgId}" class="btn btn-large">返回</a>
                             </div>
                         </div>
-              		</form:form>
-            	</div>
-      		</div>
-   		</div>
+          			
+          			</form:form>
+          		</div>
+          	</div>
+		</div>
 	</body>
 </html>

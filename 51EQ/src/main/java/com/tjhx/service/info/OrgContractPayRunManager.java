@@ -36,8 +36,8 @@ public class OrgContractPayRunManager {
 	 * 
 	 * @return
 	 */
-	public List<OrgContractPayRun> getOrgContractPayRunList() {
-		return orgContractPayRunJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "payDate")));
+	public List<OrgContractPayRun> getOrgContractPayRunListByOrgId(String orgId) {
+		return orgContractPayRunJpaDao.findByOrgId(orgId, new Sort(new Sort.Order(Sort.Direction.DESC, "payDate")));
 	}
 
 	/**

@@ -37,7 +37,9 @@ import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.info.AccountFlowManager;
 import com.tjhx.service.info.AccountSubjectManager;
+import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.web.BaseController;
+import com.tjhx.web.report.ReportUtils;
 
 @Controller
 @RequestMapping(value = "/accountFlow")
@@ -46,6 +48,8 @@ public class AccountFlowController extends BaseController {
 	private AccountFlowManager accountFlowManager;
 	@Resource
 	private AccountSubjectManager accountSubjectManager;
+	@Resource
+	private OrganizationManager orgManager;
 
 	/**
 	 * 记账页面初始化
@@ -283,6 +287,8 @@ public class AccountFlowController extends BaseController {
 		if (null == accountFlow) {
 			return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/accountFlow/list";
 		} else {
+			ReportUtils.initOrgList_NonNull_Root(orgManager, model);
+
 			model.addAttribute("accountFlow", accountFlow);
 
 			List<AccountFlowSplit> splitList = accountFlowManager.getAccountFlowSplitByFlowUuid(id);
@@ -300,16 +306,18 @@ public class AccountFlowController extends BaseController {
 		int accountFlowUuid = ServletRequestUtils.getIntParameter(request, "accountFlowUuid");
 		String[] subId = new String[10];
 		String[] amt = new String[10];
+		String[] orgId = new String[10];
 		for (int i = 0; i < 10; i++) {
 			subId[i] = ServletRequestUtils.getStringParameter(request, "subId" + i);
 			amt[i] = ServletRequestUtils.getStringParameter(request, "amt" + i);
+			orgId[i] = ServletRequestUtils.getStringParameter(request, "orgId" + i);
 		}
 
 		List<AccountFlowSplit> _list = Lists.newArrayList();
 
 		for (int i = 0; i < amt.length; i++) {
 			if (StringUtils.isNotBlank(subId[i]) && StringUtils.isNotBlank(amt[i])) {
-				_list.add(new AccountFlowSplit(subId[i], new BigDecimal(amt[i])));
+				_list.add(new AccountFlowSplit(subId[i], orgId[i], new BigDecimal(amt[i])));
 			}
 
 		}

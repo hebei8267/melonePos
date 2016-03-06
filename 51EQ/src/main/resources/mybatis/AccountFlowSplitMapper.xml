@@ -11,6 +11,7 @@
 		<result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
 		<result column="version" property="version" jdbcType="INTEGER"/>
 		<result column="amt" property="amt" jdbcType="DECIMAL"/>
+		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
 		<result column="_index" property="index" jdbcType="INTEGER"/>
 		<result column="sub_id" property="subId" jdbcType="VARCHAR"/>
 		<result column="sub_name" property="subName" jdbcType="VARCHAR"/>
@@ -28,6 +29,7 @@
 		select
 			sp.uuid ,
 			sp.amt ,
+			sp.org_id ,
 			sp._index ,
 			sp.sub_id ,
 			sub.sub_name ,
