@@ -7,7 +7,13 @@ public class SalesMonthTotal_Show {
 	/** 机构编号 */
 	private String orgId;
 	/** 机构数量 */
-	private Integer orgCnt;
+	private Integer orgCnt1;
+	/** 机构数量 */
+	private Integer orgCnt2;
+	/** 机构数量 */
+	private Integer orgCnt3;
+	/** 机构数量 */
+	private Integer orgCnt4;
 	/** 机构名称 */
 	private String orgName;
 	/** 月份 */
@@ -48,21 +54,75 @@ public class SalesMonthTotal_Show {
 	}
 
 	/**
-	 * 取得机构数量
+	 * 取得orgCnt1
 	 * 
-	 * @return 机构数量
+	 * @return orgCnt1
 	 */
-	public Integer getOrgCnt() {
-		return orgCnt;
+	public Integer getOrgCnt1() {
+		return orgCnt1;
 	}
 
 	/**
-	 * 设置机构数量
+	 * 设置orgCnt1
 	 * 
-	 * @param orgCnt 机构数量
+	 * @param orgCnt1 orgCnt1
 	 */
-	public void setOrgCnt(Integer orgCnt) {
-		this.orgCnt = orgCnt;
+	public void setOrgCnt1(Integer orgCnt1) {
+		this.orgCnt1 = orgCnt1;
+	}
+
+	/**
+	 * 取得orgCnt2
+	 * 
+	 * @return orgCnt2
+	 */
+	public Integer getOrgCnt2() {
+		return orgCnt2;
+	}
+
+	/**
+	 * 设置orgCnt2
+	 * 
+	 * @param orgCnt2 orgCnt2
+	 */
+	public void setOrgCnt2(Integer orgCnt2) {
+		this.orgCnt2 = orgCnt2;
+	}
+
+	/**
+	 * 取得orgCnt3
+	 * 
+	 * @return orgCnt3
+	 */
+	public Integer getOrgCnt3() {
+		return orgCnt3;
+	}
+
+	/**
+	 * 设置orgCnt3
+	 * 
+	 * @param orgCnt3 orgCnt3
+	 */
+	public void setOrgCnt3(Integer orgCnt3) {
+		this.orgCnt3 = orgCnt3;
+	}
+
+	/**
+	 * 取得orgCnt4
+	 * 
+	 * @return orgCnt4
+	 */
+	public Integer getOrgCnt4() {
+		return orgCnt4;
+	}
+
+	/**
+	 * 设置orgCnt4
+	 * 
+	 * @param orgCnt4 orgCnt4
+	 */
+	public void setOrgCnt4(Integer orgCnt4) {
+		this.orgCnt4 = orgCnt4;
 	}
 
 	/**
@@ -273,20 +333,23 @@ public class SalesMonthTotal_Show {
 	public void copyData(SalesMonthTotalItem _salesMonthTotalItem, int equalsRes) {
 		if (1 == equalsRes) {
 			saleRamt1 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt1 = _salesMonthTotalItem.getOrgCnt();
 		}
 
 		if (2 == equalsRes) {
 			saleRamt2 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt2 = _salesMonthTotalItem.getOrgCnt();
 		}
 
 		if (3 == equalsRes) {
 			saleRamt3 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt3 = _salesMonthTotalItem.getOrgCnt();
 		}
 
 		if (4 == equalsRes) {
 			saleRamt4 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt4 = _salesMonthTotalItem.getOrgCnt();
 		}
 
-		orgCnt = _salesMonthTotalItem.getOrgCnt();
 	}
 }
