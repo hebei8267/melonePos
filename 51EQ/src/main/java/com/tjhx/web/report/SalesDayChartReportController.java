@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.common.collect.Lists;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.info.SalesDayTotal;
 import com.tjhx.entity.struct.Organization;
@@ -168,8 +171,7 @@ public class SalesDayChartReportController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "search_tab1")
-	public String search_tab1_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
-			ParseException {
+	public String search_tab1_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException, ParseException {
 		String _optDate = ServletRequestUtils.getStringParameter(request, "optDate");
 		if (StringUtils.isNotBlank(_optDate)) {
 			_optDate = DateUtils.transDateFormat(_optDate, "yyyy-MM-dd", "yyyyMMdd");
@@ -192,9 +194,23 @@ public class SalesDayChartReportController extends BaseController {
 		// 取得每日各店销售汇总（根据日期）
 		List<SalesDayTotal> salesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
 
-		salesDayTotalList.add(0, calTotal(salesDayTotalList));
+		List<Organization> orgList = orgManager.getSubOrganization();
+		List<SalesDayTotal> _salesDayTotalList = Lists.newArrayList();
 
-		model.addAttribute("salesDayTotalList", salesDayTotalList);
+		for (Organization org : orgList) {
+			SalesDayTotal _tmpSalesDayTotal = new SalesDayTotal(optDate, org.getId());
+
+			if (!salesDayTotalList.contains(_tmpSalesDayTotal)) {
+				_salesDayTotalList.add(_tmpSalesDayTotal);
+			}
+		}
+
+		_salesDayTotalList.addAll(salesDayTotalList);
+		Collections.sort(_salesDayTotalList, new SalesDayTotalComparator());
+
+		_salesDayTotalList.add(0, calTotal(_salesDayTotalList));
+
+		model.addAttribute("salesDayTotalList", _salesDayTotalList);
 	}
 
 	private SalesDayTotal calTotal(List<SalesDayTotal> salesDayTotalList) {
@@ -366,4 +382,12 @@ public class SalesDayChartReportController extends BaseController {
 		return _optDateList;
 	}
 
+}
+
+class SalesDayTotalComparator implements Comparator<SalesDayTotal> {
+
+	@Override
+	public int compare(SalesDayTotal o1, SalesDayTotal o2) {
+		return o1.getOrgId().compareTo(o2.getOrgId());
+	}
 }

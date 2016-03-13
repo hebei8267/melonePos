@@ -1,5 +1,6 @@
 <%@	page contentType="text/html;charset=UTF-8"%>
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
@@ -74,7 +75,20 @@
 			<tbody>
 				<c:forEach items="${salesDayTotalList}" var="salesDayTotal">
 				<tr>
-					<td class="center">${salesDayTotal.orgId}</td>
+					<td class="center">
+						<c:if test="${fn:length(salesDayTotal.orgId) == 6}">
+						${fn:substring(salesDayTotal.orgId,3,6)}
+						</c:if>
+						<c:if test="${fn:length(salesDayTotal.orgId) != 6}">
+						${salesDayTotal.orgId}
+						</c:if>
+					</td>
+					
+					<c:if test="${salesDayTotal.posAmt==0}">
+					<td class="left" colspan="13">未日结</td>
+					</c:if>
+					
+					<c:if test="${salesDayTotal.posAmt!=0}">
 					<td class="right" <c:if test="${salesDayTotal.posAmt > salesDayTotal.dayNeededPosAmt}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmt < salesDayTotal.dayNeededPosAmt}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmt}</td>
 					<td class="right">${salesDayTotal.posAmtByNow}</td>
 					<td class="center">${salesDayTotal.nowDays}</td>
@@ -88,6 +102,7 @@
 					<td class="right" <c:if test="${salesDayTotal.posAmtRate2 > 0}" >style="background-color: #FF0000"</c:if><c:if test="${salesDayTotal.posAmtRate2 < 0}" >style="background-color: #00FF00"</c:if>>${salesDayTotal.posAmtRate2}%</td>
 					<td class="right" style="background-color:#FFDEAD;color:#00000">${salesDayTotal.dayNeededPosAmt}</td>
 					<td class="center">${salesDayTotal.ranking}</td>
+					</c:if>
 			 	</tr>
 				</c:forEach>
 			</tbody>
