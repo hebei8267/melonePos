@@ -270,7 +270,7 @@ public class SalesMonthTotal_Show {
 		return 0;
 	}
 
-	public void copyData(SalesMonthTotalItem _salesMonthTotalItem, int equalsRes, int orgCnt) {
+	public void copyData(SalesMonthTotalItem _salesMonthTotalItem, int equalsRes) {
 		if (1 == equalsRes) {
 			saleRamt1 = _salesMonthTotalItem.getSaleRamt();
 		}
@@ -287,6 +287,6 @@ public class SalesMonthTotal_Show {
 			saleRamt4 = _salesMonthTotalItem.getSaleRamt();
 		}
 
-		this.orgCnt = orgCnt;
+		orgCnt = _salesMonthTotalItem.getOrgCnt();
 	}
 }

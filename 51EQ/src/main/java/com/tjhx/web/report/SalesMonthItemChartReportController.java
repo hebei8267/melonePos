@@ -61,9 +61,8 @@ public class SalesMonthItemChartReportController extends BaseController {
 			SalesMonthTotalItem _param = new SalesMonthTotalItem();
 			_param.setOptDateY(optDateY);
 			List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByYear(_param);
-			// 取得门店数量
-			int orgCnt = salesMonthTotalItemManager.getOrgCnt(optDateY);
-			copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal, orgCnt);
+
+			copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
 		}
 		_orgSumSalesJsonList.add(mapper.toJson(_salesTotalShowList));
 	}
@@ -90,7 +89,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 				_param.setOrgId(org.getId());
 				List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByOrgAndYear(_param);
 
-				copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal, 1);
+				copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
 			}
 
 			_orgSumSalesJsonList.add(mapper.toJson(_salesTotalShowList));
@@ -128,14 +127,13 @@ public class SalesMonthItemChartReportController extends BaseController {
 		return "report/salesMonthItemChartReport_bar";
 	}
 
-	private void copyDate2SalesTotalShowList(List<SalesMonthTotal_Show> _salesTotalShowList, List<SalesMonthTotalItem> _salesYearTotal,
-			int orgCnt) {
+	private void copyDate2SalesTotalShowList(List<SalesMonthTotal_Show> _salesTotalShowList, List<SalesMonthTotalItem> _salesYearTotal) {
 
 		for (SalesMonthTotalItem _salesMonthTotalItem : _salesYearTotal) {
 			for (SalesMonthTotal_Show _salesMonthTotalShow : _salesTotalShowList) {
 				int equalsRes = _salesMonthTotalShow.myEquals(_salesMonthTotalItem);
 				if (0 != equalsRes) {
-					_salesMonthTotalShow.copyData(_salesMonthTotalItem, equalsRes, orgCnt);
+					_salesMonthTotalShow.copyData(_salesMonthTotalItem, equalsRes);
 				}
 			}
 		}

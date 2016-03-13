@@ -56,7 +56,8 @@
 		    org_id ,
 		    opt_date_y ,
 		    opt_date_y_m ,
-		    SUM(sale_ramt) AS sale_ramt
+		    SUM(sale_ramt) AS sale_ramt ,
+		    1 AS ORG_CNT
 		FROM
 		    t_sales_month_total_item
 		WHERE
@@ -91,7 +92,8 @@
 			'000' AS org_id ,
 		    opt_date_y ,
 		    opt_date_y_m ,
-		    SUM(sale_ramt) AS sale_ramt
+		    SUM(sale_ramt) AS sale_ramt ,
+		    COUNT( DISTINCT org_id) AS ORG_CNT
 		FROM
 		    t_sales_month_total_item
 		WHERE
@@ -100,21 +102,6 @@
 		    opt_date_y_m
 		ORDER BY
 		    opt_date_y_m
-	</select>
-	<!-- 取得门店数量 -->
-	<select id="getOrgCnt" parameterType="string" resultMap="Result_Map_SalesMonthTotalItem">
-		SELECT
-		    COUNT(*) AS ORG_CNT
-		FROM
-		    (
-		        SELECT
-		            org_id
-		        FROM
-		            t_sales_month_total_item
-		        WHERE
-		            opt_date_y = #{optDateY}
-		        GROUP BY
-		            org_id) A
 	</select>
 	
 	<!-- 各店指定月销售数据 -->

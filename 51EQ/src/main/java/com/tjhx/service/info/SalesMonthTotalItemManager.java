@@ -378,18 +378,4 @@ public class SalesMonthTotalItemManager {
 		return _list;
 	}
 
-	/**
-	 * 取得门店数量
-	 * 
-	 * @param optDateY
-	 * @return
-	 */
-	public int getOrgCnt(String optDateY) {
-		SalesMonthTotalItem _item = salesMonthTotalItemMyBatisDao.getOrgCnt(optDateY);
-		if (null != _item) {
-			return _item.getOrgCnt();
-		}
-		return 0;
-	}
-
 }

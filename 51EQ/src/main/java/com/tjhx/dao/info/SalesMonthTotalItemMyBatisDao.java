@@ -70,12 +70,4 @@ public interface SalesMonthTotalItemMyBatisDao {
 	 * 月销售信息对比(图形)[按督导]
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalMonthListByMngUser();
-
-	/**
-	 * 取得门店数量[月销售信息对比(图形)]
-	 * 
-	 * @param optDateY
-	 * @return
-	 */
-	public SalesMonthTotalItem getOrgCnt(String optDateY);
 }
