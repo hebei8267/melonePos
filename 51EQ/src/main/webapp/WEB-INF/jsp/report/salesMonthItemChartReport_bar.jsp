@@ -97,7 +97,7 @@
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
 							"lineAlpha": 0.2,
-							"title": "2015年",
+							"title": new Date().getFullYear()+"年",
 							"type": "column",
 							"valueField": "saleRamt1"
 						},
@@ -107,7 +107,7 @@
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
 							"lineAlpha": 0.2,
-							"title": "2014年",
+							"title": new Date().getFullYear()-1+"年",
 							"type": "column",
 							"valueField": "saleRamt2"
 						},
@@ -117,7 +117,7 @@
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
 							"lineAlpha": 0.2,
-							"title": "2013年",
+							"title": new Date().getFullYear()-2+"年",
 							"type": "column",
 							"valueField": "saleRamt3"
 						},
@@ -127,7 +127,7 @@
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
 							"lineAlpha": 0.2,
-							"title": "2012年",
+							"title": new Date().getFullYear()-3+"年",
 							"type": "column",
 							"valueField": "saleRamt4"
 						}
