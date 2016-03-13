@@ -61,8 +61,9 @@ public class SalesMonthItemChartReportController extends BaseController {
 			SalesMonthTotalItem _param = new SalesMonthTotalItem();
 			_param.setOptDateY(optDateY);
 			List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByYear(_param);
-
-			copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
+			// 取得门店数量
+			int orgCnt = salesMonthTotalItemManager.getOrgCnt(optDateY);
+			copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal, orgCnt);
 		}
 		_orgSumSalesJsonList.add(mapper.toJson(_salesTotalShowList));
 	}
@@ -75,8 +76,8 @@ public class SalesMonthItemChartReportController extends BaseController {
 	 * @param _orgSumSalesJsonList
 	 * @param _orgNameList
 	 */
-	private void getSalesTotalList_ByOrgAndYear(List<Organization> _orgList, List<String> optDateYList,
-			List<String> _orgSumSalesJsonList, List<String> _orgNameList) {
+	private void getSalesTotalList_ByOrgAndYear(List<Organization> _orgList, List<String> optDateYList, List<String> _orgSumSalesJsonList,
+			List<String> _orgNameList) {
 		JsonMapper mapper = new JsonMapper();
 		// 各店近4年销售数据
 		for (Organization org : _orgList) {
@@ -87,10 +88,9 @@ public class SalesMonthItemChartReportController extends BaseController {
 				SalesMonthTotalItem _param = new SalesMonthTotalItem();
 				_param.setOptDateY(optDateY);
 				_param.setOrgId(org.getId());
-				List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager
-						.getSalesTotalList_ByOrgAndYear(_param);
+				List<SalesMonthTotalItem> _salesYearTotal = salesMonthTotalItemManager.getSalesTotalList_ByOrgAndYear(_param);
 
-				copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal);
+				copyDate2SalesTotalShowList(_salesTotalShowList, _salesYearTotal, 1);
 			}
 
 			_orgSumSalesJsonList.add(mapper.toJson(_salesTotalShowList));
@@ -128,21 +128,20 @@ public class SalesMonthItemChartReportController extends BaseController {
 		return "report/salesMonthItemChartReport_bar";
 	}
 
-	private void copyDate2SalesTotalShowList(List<SalesMonthTotal_Show> _salesTotalShowList,
-			List<SalesMonthTotalItem> _salesYearTotal) {
+	private void copyDate2SalesTotalShowList(List<SalesMonthTotal_Show> _salesTotalShowList, List<SalesMonthTotalItem> _salesYearTotal,
+			int orgCnt) {
 
 		for (SalesMonthTotalItem _salesMonthTotalItem : _salesYearTotal) {
 			for (SalesMonthTotal_Show _salesMonthTotalShow : _salesTotalShowList) {
 				int equalsRes = _salesMonthTotalShow.myEquals(_salesMonthTotalItem);
 				if (0 != equalsRes) {
-					_salesMonthTotalShow.copyData(_salesMonthTotalItem, equalsRes);
+					_salesMonthTotalShow.copyData(_salesMonthTotalItem, equalsRes, orgCnt);
 				}
 			}
 		}
 	}
 
-	private void initSalesTotalShowList(String orgId, List<SalesMonthTotal_Show> _salesTotalShowList,
-			List<String> optDateYList) {
+	private void initSalesTotalShowList(String orgId, List<SalesMonthTotal_Show> _salesTotalShowList, List<String> optDateYList) {
 
 		for (int i = 1; i <= 12; i++) {
 			SalesMonthTotal_Show _salesTotalShow = new SalesMonthTotal_Show();
@@ -186,8 +185,8 @@ public class SalesMonthItemChartReportController extends BaseController {
 	// 数据导出
 	// ==============================================================================
 	@RequestMapping(value = "export")
-	public void export_Action(HttpServletResponse response) throws ParseException, ParsePropertyException,
-			InvalidFormatException, IOException {
+	public void export_Action(HttpServletResponse response) throws ParseException, ParsePropertyException, InvalidFormatException,
+			IOException {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 		int _yearNum = sysConfig.getSalesMonthTotalShowYearNum();
 
@@ -208,8 +207,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());

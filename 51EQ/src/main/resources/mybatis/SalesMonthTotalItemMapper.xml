@@ -26,6 +26,8 @@
         
         <result column="mng_user" property="mngUser" jdbcType="VARCHAR"/>
         <result column="org_brand" property="orgBrand" jdbcType="VARCHAR"/>
+        <result column="ORG_CNT" property="orgCnt" jdbcType="INTEGER"/>
+        
 	</resultMap>
 	
 	<delete id="delSalesMonthTotalInfo" parameterType="String">  
@@ -98,6 +100,21 @@
 		    opt_date_y_m
 		ORDER BY
 		    opt_date_y_m
+	</select>
+	<!-- 取得门店数量 -->
+	<select id="getOrgCnt" parameterType="string" resultMap="Result_Map_SalesMonthTotalItem">
+		SELECT
+		    COUNT(*) AS ORG_CNT
+		FROM
+		    (
+		        SELECT
+		            org_id
+		        FROM
+		            t_sales_month_total_item
+		        WHERE
+		            opt_date_y = #{optDateY}
+		        GROUP BY
+		            org_id) A
 	</select>
 	
 	<!-- 各店指定月销售数据 -->

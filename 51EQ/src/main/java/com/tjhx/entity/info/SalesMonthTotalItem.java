@@ -24,6 +24,8 @@ public class SalesMonthTotalItem extends IdEntity {
 
 	/** 机构编号 */
 	private String orgId;
+	/** 机构数量 */
+	private Integer orgCnt;
 	/** 机构资金编号 */
 	private String branchNo;
 	/** 日期-年月 */
@@ -80,6 +82,25 @@ public class SalesMonthTotalItem extends IdEntity {
 	 */
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
+	}
+
+	/**
+	 * 取得机构数量
+	 * 
+	 * @return 机构数量
+	 */
+	@Transient
+	public Integer getOrgCnt() {
+		return orgCnt;
+	}
+
+	/**
+	 * 设置机构数量
+	 * 
+	 * @param orgCnt 机构数量
+	 */
+	public void setOrgCnt(Integer orgCnt) {
+		this.orgCnt = orgCnt;
 	}
 
 	/**

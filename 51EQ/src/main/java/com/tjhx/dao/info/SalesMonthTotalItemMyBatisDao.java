@@ -28,7 +28,7 @@ public interface SalesMonthTotalItemMyBatisDao {
 	 * @return
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear(SalesMonthTotalItem param);
-	
+
 	/**
 	 * 取得指定门店指定年份合计销售信息
 	 * 
@@ -70,4 +70,12 @@ public interface SalesMonthTotalItemMyBatisDao {
 	 * 月销售信息对比(图形)[按督导]
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalMonthListByMngUser();
+
+	/**
+	 * 取得门店数量[月销售信息对比(图形)]
+	 * 
+	 * @param optDateY
+	 * @return
+	 */
+	public SalesMonthTotalItem getOrgCnt(String optDateY);
 }

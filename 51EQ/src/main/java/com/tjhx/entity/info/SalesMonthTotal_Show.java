@@ -6,6 +6,8 @@ public class SalesMonthTotal_Show {
 
 	/** 机构编号 */
 	private String orgId;
+	/** 机构数量 */
+	private Integer orgCnt;
 	/** 机构名称 */
 	private String orgName;
 	/** 月份 */
@@ -43,6 +45,24 @@ public class SalesMonthTotal_Show {
 	 */
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
+	}
+
+	/**
+	 * 取得机构数量
+	 * 
+	 * @return 机构数量
+	 */
+	public Integer getOrgCnt() {
+		return orgCnt;
+	}
+
+	/**
+	 * 设置机构数量
+	 * 
+	 * @param orgCnt 机构数量
+	 */
+	public void setOrgCnt(Integer orgCnt) {
+		this.orgCnt = orgCnt;
 	}
 
 	/**
@@ -250,18 +270,23 @@ public class SalesMonthTotal_Show {
 		return 0;
 	}
 
-	public void copyData(SalesMonthTotalItem _salesMonthTotalItem, int equalsRes) {
-		if (1 == equalsRes)
+	public void copyData(SalesMonthTotalItem _salesMonthTotalItem, int equalsRes, int orgCnt) {
+		if (1 == equalsRes) {
 			saleRamt1 = _salesMonthTotalItem.getSaleRamt();
+		}
 
-		if (2 == equalsRes)
+		if (2 == equalsRes) {
 			saleRamt2 = _salesMonthTotalItem.getSaleRamt();
+		}
 
-		if (3 == equalsRes)
+		if (3 == equalsRes) {
 			saleRamt3 = _salesMonthTotalItem.getSaleRamt();
+		}
 
-		if (4 == equalsRes)
+		if (4 == equalsRes) {
 			saleRamt4 = _salesMonthTotalItem.getSaleRamt();
+		}
 
+		this.orgCnt = orgCnt;
 	}
 }

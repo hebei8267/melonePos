@@ -92,7 +92,7 @@
 					"trendLines": [],
 					"graphs": [
 						{
-							"balloonText": "时间:[[optDateYM1]]  销售金额[[value]]元",
+							"balloonText": "时间:[[optDateYM1]]  销售金额[[value]]元  门店[[orgCnt]]个",
 							"fillAlphas": 0.8,
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
@@ -102,7 +102,7 @@
 							"valueField": "saleRamt1"
 						},
 						{
-							"balloonText": "时间:[[optDateYM2]]  销售金额[[value]]元",
+							"balloonText": "时间:[[optDateYM2]]  销售金额[[value]]元  门店[[orgCnt]]个",
 							"fillAlphas": 0.8,
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
@@ -112,7 +112,7 @@
 							"valueField": "saleRamt2"
 						},
 						{
-							"balloonText": "时间:[[optDateYM3]]  销售金额[[value]]元",
+							"balloonText": "时间:[[optDateYM3]]  销售金额[[value]]元  门店[[orgCnt]]个",
 							"fillAlphas": 0.8,
 							"labelText": "[[value]]元",
 							"labelOffset": -120,
@@ -122,7 +122,7 @@
 							"valueField": "saleRamt3"
 						},
 						{
-							"balloonText": "时间:[[optDateYM4]]  销售金额[[value]]元",
+							"balloonText": "时间:[[optDateYM4]]  销售金额[[value]]元  门店[[orgCnt]]个",
 							"fillAlphas": 0.8,
 							"labelText": "[[value]]元",
 							"labelOffset": -120,

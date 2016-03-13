@@ -78,8 +78,7 @@ public class SalesMonthTotalItemManager {
 				_param.setOptDateM(optM);
 
 				// 取得合计实销数量（指定年/月/机构）
-				List<SalesDayTotalItem> _monthSaleTotalList = salesDayTotalItemManager
-						.getSumSalesMonthTotalList(_param);
+				List<SalesDayTotalItem> _monthSaleTotalList = salesDayTotalItemManager.getSumSalesMonthTotalList(_param);
 
 				for (SalesDayTotalItem monthSaleTotal : _monthSaleTotalList) {
 					SalesMonthTotalItem _salesMonthTotal = new SalesMonthTotalItem();
@@ -112,8 +111,8 @@ public class SalesMonthTotalItemManager {
 					if (monthSaleTotal.getSaleRqty().compareTo(BigDecimal.ZERO) == 0) {
 						_salesMonthTotal.setSalePrice(new BigDecimal(0));
 					} else {
-						_salesMonthTotal.setSalePrice(monthSaleTotal.getSaleRamt().divide(monthSaleTotal.getSaleRqty(),
-								2, BigDecimal.ROUND_UP));
+						_salesMonthTotal.setSalePrice(monthSaleTotal.getSaleRamt().divide(monthSaleTotal.getSaleRqty(), 2,
+								BigDecimal.ROUND_UP));
 					}
 
 					salesMonthTotalItemJpaDao.save(_salesMonthTotal);
@@ -166,7 +165,7 @@ public class SalesMonthTotalItemManager {
 	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear(SalesMonthTotalItem param) {
 		return salesMonthTotalItemMyBatisDao.getSalesTotalList_ByOrgAndYear(param);
 	}
-	
+
 	/**
 	 * 取得指定门店指定年份合计销售信息(实际销售额，门店填报)
 	 * 
@@ -176,8 +175,6 @@ public class SalesMonthTotalItemManager {
 	public List<SalesMonthTotalItem> getSalesTotalList_ByOrgAndYear_SJ(SalesMonthTotalItem param) {
 		return salesMonthTotalItemMyBatisDao.getSalesTotalList_ByOrgAndYear_SJ(param);
 	}
-	
-	
 
 	/**
 	 * 创建数据下载文件
@@ -190,8 +187,8 @@ public class SalesMonthTotalItemManager {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public String createReportFile(List<String> optDateYList, List<Organization> orgList)
-			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
+	public String createReportFile(List<String> optDateYList, List<Organization> orgList) throws ParsePropertyException,
+			InvalidFormatException, IOException, ParseException {
 		// 各店近4年销售数据
 		List<Map<String, Object>> _mapList = getSalesTotalList_ByOrgAndYear_DL(optDateYList, orgList);
 		// 全部门店近4年销售数据
@@ -221,8 +218,8 @@ public class SalesMonthTotalItemManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private List<Map<String, Object>> getSalesTotalList_ByOrgAndYear_DL(List<String> optDateYList,
-			List<Organization> _orgList) throws ParseException {
+	private List<Map<String, Object>> getSalesTotalList_ByOrgAndYear_DL(List<String> optDateYList, List<Organization> _orgList)
+			throws ParseException {
 		List<Map<String, Object>> _mapList = new ArrayList<Map<String, Object>>();
 		// 各店近4年销售数据
 		for (Organization org : _orgList) {
@@ -275,8 +272,8 @@ public class SalesMonthTotalItemManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private Map<String, Object> formatFileMap(String orgName, List<String> optDateYList,
-			List<List<SalesMonthTotalItem>> salesShowList) throws ParseException {
+	private Map<String, Object> formatFileMap(String orgName, List<String> optDateYList, List<List<SalesMonthTotalItem>> salesShowList)
+			throws ParseException {
 		Map<String, Object> showMap = new HashMap<String, Object>();
 		Map<String, BigDecimal> _saleMap = new HashMap<String, BigDecimal>();
 
@@ -379,6 +376,20 @@ public class SalesMonthTotalItemManager {
 	public List<SalesMonthTotalItem> getSalesTotalMonthListByMngUser() {
 		List<SalesMonthTotalItem> _list = salesMonthTotalItemMyBatisDao.getSalesTotalMonthListByMngUser();
 		return _list;
+	}
+
+	/**
+	 * 取得门店数量
+	 * 
+	 * @param optDateY
+	 * @return
+	 */
+	public int getOrgCnt(String optDateY) {
+		SalesMonthTotalItem _item = salesMonthTotalItemMyBatisDao.getOrgCnt(optDateY);
+		if (null != _item) {
+			return _item.getOrgCnt();
+		}
+		return 0;
 	}
 
 }
