@@ -14,8 +14,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
-    	<script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
     	<script>
 			$().ready(function() {
 				$("#searchForm").validate({
@@ -40,6 +38,11 @@
 		<style>
 		.font2 {
 			font-family : "Microsoft YaHei" ! important;
+			font-size : 16px;
+			font-weight : bolder;
+		}
+		.font1 {
+			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
 			font-size : 16px;
 			font-weight : bolder;
 		}
@@ -201,7 +204,7 @@
                                     	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
                                     </td>
                                     <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/>
+                                    	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/></label>
                                     </td>
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
@@ -217,7 +220,7 @@
                                     </td>
                                     
                                     <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/>
+                                    	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posAmtTotal}" maxFractionDigits="0"/></label>
                                     </td>
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posAmt1}" maxFractionDigits="0"/>

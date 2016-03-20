@@ -130,8 +130,8 @@
 		    (
 		        SELECT
 		            org.org_name                            AS org_id,
-		            sd.item_subno                           AS barcode,
-		            sd.item_name                            AS product_name,
+		            gd.subno                           		AS barcode,
+		            gd.name                            		AS product_name,
 		            wsd.pos_qty                             AS hm_pos_qty,
 		            SUM(sd.stock_qty)                       AS stock_qty,
 		            SUM(sd.item_sale_amt)                   AS item_sale_amt,
@@ -145,40 +145,19 @@
 		            IF(sg3.pos_amt IS NULL, 0, sg3.pos_amt) AS pos_amt3,
 		            IF(sg4.pos_amt IS NULL, 0, sg4.pos_amt) AS pos_amt4
 		        FROM
-		            t_organization org,
-		            t_store_detail sd
-		        LEFT JOIN
-		            t_sales_week_total_goods_1 sg1
-		        ON
-		            sd.item_subno = sg1.item_subno
-		        AND sd.org_id = sg1.org_id
-		        LEFT JOIN
-		            t_sales_week_total_goods_2 sg2
-		        ON
-		            sd.item_subno = sg2.item_subno
-		        AND sd.org_id = sg2.org_id
-		        LEFT JOIN
-		            t_sales_week_total_goods_3 sg3
-		        ON
-		            sd.item_subno = sg3.item_subno
-		        AND sd.org_id = sg3.org_id
-		        LEFT JOIN
-		            t_sales_week_total_goods_4 sg4
-		        ON
-		            sd.item_subno = sg4.item_subno
-		        AND sd.org_id = sg4.org_id
-		        LEFT JOIN
-		            t_week_sales_total_goods wsd
-		        ON
-		            sd.item_subno = wsd.item_subno
-		        AND sd.org_id = wsd.org_id
+		        	t_goods gd,
+		            t_organization org
+		        LEFT JOIN t_store_detail sd ON sd.item_subno = #{barcode}  AND sd.org_id = org.org_id AND sd.opt_date = #{optDate}
+		        LEFT JOIN t_sales_week_total_goods_1 sg1 ON sg1.item_subno = #{barcode} AND org.org_id = sg1.org_id
+		        LEFT JOIN t_sales_week_total_goods_2 sg2 ON sg2.item_subno = #{barcode} AND org.org_id = sg2.org_id
+		        LEFT JOIN t_sales_week_total_goods_3 sg3 ON sg3.item_subno = #{barcode} AND org.org_id = sg3.org_id
+		        LEFT JOIN t_sales_week_total_goods_4 sg4 ON sg4.item_subno = #{barcode} AND org.org_id = sg4.org_id
+		        LEFT JOIN t_week_sales_total_goods wsd ON wsd.item_subno = #{barcode} AND org.org_id = wsd.org_id
 		        WHERE
-		            sd.opt_date = #{optDate}
-		        AND sd.item_subno = #{barcode}
-		        AND sd.org_id = org.org_id
+		            gd.subno = #{barcode}
 		        GROUP BY
-		            sd.org_id,
-		            sd.item_subno ) AS t
+		            org.org_id,
+		            barcode ) AS t
 		ORDER BY
 		    t.org_id
 	</select>
