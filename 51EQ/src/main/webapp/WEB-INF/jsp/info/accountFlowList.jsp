@@ -127,6 +127,14 @@
             $("#listForm").submit();
         }
     	</script>
+    	<style>
+		.font1 {
+			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+			font-size : 16px;
+			font-weight : bolder;
+			color : #009900;
+		}
+		</style>
     </head>
     <body>
         <%// 系统菜单  %>
@@ -213,7 +221,7 @@
                             			<fmt:formatDate pattern="yyyy-MM-dd" value="${_optDate}" />
 									</td>
                             		<td class="center">${accountFlow.inAmtDesc}</td>
-                            		<td class="center">${accountFlow.inAmt}</td>
+                            		<td class="center"><p class="font1">${accountFlow.inAmt}</p></td>
                             		<td class="center">${accountFlow.outAmt}</td>
                             		<td class="center">${accountFlow.outAmtLClass}</td>
                             		<td class="center">${accountFlow.outAmtSClass}</td>

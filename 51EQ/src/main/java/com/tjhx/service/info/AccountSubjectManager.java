@@ -25,6 +25,25 @@ public class AccountSubjectManager {
 	 * 
 	 * @return
 	 */
+	public AccountSubject getAccountSubjectStructTreeFromSubNode(String subId) {
+		AccountSubject _sub = accountSubjectJpaDao.findBySubId(subId);
+
+		initParentLazyObj(_sub);
+
+		return _sub;
+	}
+
+	private void initParentLazyObj(AccountSubject sub) {
+		if (null != sub.getParentSub()) {
+			initParentLazyObj(sub.getParentSub());
+		}
+	}
+
+	/**
+	 * 取得记账科目结构树
+	 * 
+	 * @return
+	 */
 	public AccountSubject getAccountSubjectStructTree() {
 		AccountSubject rootSub = accountSubjectJpaDao.findOne(1);
 
@@ -44,11 +63,9 @@ public class AccountSubjectManager {
 			// 对象唯一标识
 			_reSub.setUuid(accountSubject.getUuid());
 			// 预算科目父节点Uuid
-			_reSub.setParentSubUuid(accountSubject.getParentSub() == null ? null : accountSubject.getParentSub()
-					.getUuid());
+			_reSub.setParentSubUuid(accountSubject.getParentSub() == null ? null : accountSubject.getParentSub().getUuid());
 			// 预算科目父节点名称
-			_reSub.setParentSubName(accountSubject.getParentSub() == null ? null : accountSubject.getParentSub()
-					.getSubName());
+			_reSub.setParentSubName(accountSubject.getParentSub() == null ? null : accountSubject.getParentSub().getSubName());
 			// 科目编号
 			_reSub.setSubId(accountSubject.getSubId());
 			// 机构名称

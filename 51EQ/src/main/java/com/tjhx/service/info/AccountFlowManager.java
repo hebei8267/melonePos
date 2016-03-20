@@ -54,6 +54,8 @@ public class AccountFlowManager {
 	private AccountFlowSplitMyBatisDao accountFlowSplitMyBatisDao;
 	@Resource
 	private AccountSubjectJpaDao accountSubjectJpaDao;
+	@Resource
+	private AccountSubjectManager accountSubjectManager;
 
 	private final static String XML_CONFIG_READ_ACCOUNT_FLOW = "/excel/AccountFlow_CFG.xml";
 	private final static String XML_CONFIG_ACCOUNT_FLOW = "/excel/Account_Flow_Template.xls";
@@ -71,10 +73,9 @@ public class AccountFlowManager {
 	 * @throws NumberFormatException
 	 */
 	@Transactional(readOnly = false)
-	public boolean loadAccountFlowFile(String filePath) throws IOException, SAXException, InvalidFormatException,
-			NumberFormatException, ParseException {
-		InputStream inputXML = new BufferedInputStream(
-				AccountFlowManager.class.getResourceAsStream(XML_CONFIG_READ_ACCOUNT_FLOW));
+	public boolean loadAccountFlowFile(String filePath) throws IOException, SAXException, InvalidFormatException, NumberFormatException,
+			ParseException {
+		InputStream inputXML = new BufferedInputStream(AccountFlowManager.class.getResourceAsStream(XML_CONFIG_READ_ACCOUNT_FLOW));
 
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
 
@@ -104,8 +105,8 @@ public class AccountFlowManager {
 	@Transactional(readOnly = false)
 	private void calBalanceAmt() {
 
-		List<AccountFlow> _list = accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"),
-				new Sort.Order(Sort.Direction.ASC, "uuid")));
+		List<AccountFlow> _list = accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(
+				Sort.Direction.ASC, "uuid")));
 
 		BigDecimal _tmpBalanceAmt = new BigDecimal("0");
 		for (int i = 0; i < _list.size(); i++) {
@@ -134,8 +135,9 @@ public class AccountFlowManager {
 				if ("1".equals(accountFlow.getOptDate())) {
 					accountFlow.setOptDate("19000101");
 				} else {
-					accountFlow.setOptDate(DateUtils.transDateFormat(DateUtils.getNextDateFormatDate("1900/01/01",
-							Integer.parseInt(accountFlow.getOptDate()) - 2, "yyyy/MM/dd"), "yyyy/MM/dd", "yyyyMMdd"));
+					accountFlow.setOptDate(DateUtils.transDateFormat(
+							DateUtils.getNextDateFormatDate("1900/01/01", Integer.parseInt(accountFlow.getOptDate()) - 2, "yyyy/MM/dd"),
+							"yyyy/MM/dd", "yyyyMMdd"));
 				}
 			}
 
@@ -149,16 +151,16 @@ public class AccountFlowManager {
 		}
 	}
 
-	public String createDownLoadFile(String optDateShowStart, String optDateShowEnd) throws ParsePropertyException,
-			InvalidFormatException, IOException {
+	public String createDownLoadFile(String optDateShowStart, String optDateShowEnd) throws ParsePropertyException, InvalidFormatException,
+			IOException {
 		if (StringUtils.isBlank(optDateShowStart) && StringUtils.isBlank(optDateShowEnd)) {
 			return null;
 		}
 		String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(new Sort.Order(
+				Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		for (AccountFlow accountFlow : _list) {
 			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
@@ -191,11 +193,11 @@ public class AccountFlowManager {
 			String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
 			String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-			return (List<AccountFlow>) accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
-					new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+			return (List<AccountFlow>) accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(new Sort.Order(
+					Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
 		} else {
-			return (List<AccountFlow>) accountFlowJpaDao.findAll(new Sort(
-					new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.DESC, "uuid")));
+			return (List<AccountFlow>) accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "optDate"), new Sort.Order(
+					Sort.Direction.DESC, "uuid")));
 		}
 
 	}
@@ -349,29 +351,73 @@ public class AccountFlowManager {
 		accountFlowJpaDao.save(accountFlow);
 	}
 
-	public String createDownLoadFile_Detail(String optDateShowStart, String optDateShowEnd)
-			throws IllegalAccessException, InvocationTargetException, ParsePropertyException, InvalidFormatException,
-			IOException {
+	/**
+	 * 取得记账科目节点全路径名称
+	 * 
+	 * @param subMap
+	 * @param accountFlowSplit
+	 * @return
+	 */
+	private String getAccountSubjectName(Map<String, AccountSubject> subMap, AccountFlowSplit accountFlowSplit) {
+		AccountSubject sub = subMap.get(accountFlowSplit.getSubId());
+
+		if (null == sub) {
+			sub = accountSubjectManager.getAccountSubjectStructTreeFromSubNode(accountFlowSplit.getSubId());
+
+			subMap.put(accountFlowSplit.getSubId(), sub);
+		}
+
+		List<String> _nameList = Lists.newArrayList();
+		_getAccountSubjectName(_nameList, sub);
+
+		StringBuffer _sb = new StringBuffer();
+		for (int i = _nameList.size(); i > 0; i--) {
+			_sb.append(_nameList.get(i - 1) + "/");
+		}
+
+		return _sb.toString().substring(0, _sb.length() - 1);
+	}
+
+	private void _getAccountSubjectName(List<String> _nameList, AccountSubject sub) {
+		if (2 == sub.getSubId().length()) {
+			return;
+		}
+
+		if (4 == sub.getSubId().length()) {
+			_nameList.add(sub.getSubName());
+		} else {
+			_nameList.add(sub.getSubName());
+		}
+		_getAccountSubjectName(_nameList, sub.getParentSub());
+	}
+
+	public String createDownLoadFile_Detail(String optDateShowStart, String optDateShowEnd) throws IllegalAccessException,
+			InvocationTargetException, ParsePropertyException, InvalidFormatException, IOException {
 		if (StringUtils.isBlank(optDateShowStart) && StringUtils.isBlank(optDateShowEnd)) {
 			return null;
 		}
 		String _optDateStart = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _optDateShowEnd = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
+		List<AccountFlow> _list = accountFlowJpaDao.findByOptDate(_optDateStart, _optDateShowEnd, new Sort(new Sort.Order(
+				Sort.Direction.ASC, "optDate"), new Sort.Order(Sort.Direction.ASC, "uuid")));
 
 		List<AccountFlowSplitVo> _voList = Lists.newArrayList();
+
+		Map<String, AccountSubject> _subMap = Maps.newHashMap();
+
 		for (AccountFlow accountFlow : _list) {
 			accountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyyMMdd", "yyyy-MM-dd"));
 
-			List<AccountFlowSplit> _splitList = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(accountFlow
-					.getUuid());
+			List<AccountFlowSplit> _splitList = accountFlowSplitMyBatisDao.getAccountFlowSplitByFlowUuid(accountFlow.getUuid());
 
 			for (AccountFlowSplit accountFlowSplit : _splitList) {
 				AccountFlowSplitVo vo = new AccountFlowSplitVo();
 				vo.setAccountFlowUuid(accountFlow.getUuid());
 				BeanUtils.copyProperties(vo, accountFlow);
+
+				accountFlowSplit.setSubName(getAccountSubjectName(_subMap, accountFlowSplit));
+
 				BeanUtils.copyProperties(vo, accountFlowSplit);
 
 				_voList.add(vo);
