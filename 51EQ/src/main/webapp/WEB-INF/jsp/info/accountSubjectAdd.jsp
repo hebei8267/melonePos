@@ -31,6 +31,12 @@
 						</div>
 					</div>
 					<div class="control-group">
+						<label class="control-label">科目代码<span class="required">※</span></label>
+						<div class="controls">
+							<input type="text" class="form-control" name="subCode">
+						</div>
+					</div>
+					<div class="control-group">
 						<label class="control-label">科目名称<span class="required">※</span></label>
 						<div class="controls">
 							<input type="text" class="form-control" name="subName">
@@ -70,6 +76,10 @@
 			rules : {
 				parentSubUuid : {
 					required : true
+				},
+				subCode : {
+					required : true,
+					maxlength : 8
 				},
 				subName : {
 					required : true,

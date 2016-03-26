@@ -317,13 +317,13 @@
 	                    	<tr>
 		                    	<td colspan="2" class="right">合计
 		                    	</td>
-		                    	<td colspan="2" class="left">
+		                    	<td colspan="3" class="left">
 		                    		<span id="_total" style="color:red">${_total}</span> 元
 		                    		<input type="hidden" id="_total_Cal" value="${_total}">
 		                    	</td>
 	                    	</tr>
 	                    	<tr>
-	                    		<td colspan="4" class="right">
+	                    		<td colspan="5" class="right">
 		                    		<input type="button" id="saveBtn" name="saveBtn" class="btn	btn-large btn-primary" value="记账">
 	                                &nbsp;<a href="${sc_ctx}/accountFlow/list" class="btn btn-large">返回</a>
 	                    		</td>

@@ -72,6 +72,8 @@ public class AccountSubjectManager {
 			_reSub.setSubName(accountSubject.getSubName());
 			// 排序
 			_reSub.setSortIndex(accountSubject.getSortIndex());
+			// 科目代码
+			_reSub.setSubCode(accountSubject.getSubCode());
 
 			if (null != accountSubject.getChildrenSubList() && accountSubject.getChildrenSubList().size() > 0) {
 
@@ -176,7 +178,9 @@ public class AccountSubjectManager {
 		if (null == dbSub) {
 			throw new ServiceException("ERR_MSG_BUDGET_SUBJECT_001");
 		}
-		// 预算科目名称
+		// 记账科目代码
+		dbSub.setSubCode(sub.getSubCode());
+		// 记账科目名称
 		dbSub.setSubName(sub.getSubName());
 		// 排序
 		dbSub.setSortIndex(sub.getSortIndex());

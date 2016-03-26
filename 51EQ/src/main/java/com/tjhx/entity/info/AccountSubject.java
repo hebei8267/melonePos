@@ -29,6 +29,8 @@ public class AccountSubject extends IdEntity {
 
 	/** 科目编号 */
 	private String subId;
+	/** 科目代码 */
+	private String subCode;
 	/** 记账科目父节点 */
 	private AccountSubject parentSub;
 	/** 记账科目父节点Uuid */
@@ -68,6 +70,25 @@ public class AccountSubject extends IdEntity {
 	 */
 	public void setSubId(String subId) {
 		this.subId = subId;
+	}
+
+	/**
+	 * 取得科目代码
+	 * 
+	 * @return 科目代码
+	 */
+	@Column(length = 8)
+	public String getSubCode() {
+		return subCode;
+	}
+
+	/**
+	 * 设置科目代码
+	 * 
+	 * @param subCode 科目代码
+	 */
+	public void setSubCode(String subCode) {
+		this.subCode = subCode;
 	}
 
 	/**

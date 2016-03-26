@@ -29,7 +29,8 @@
 					<div class="span12">
 						<ul id="myTab" class="nav nav-tabs">
 			              	<li><a href="#_tab1" data-toggle="tab">同期增长额</a></li>
-			              	<li><a href="#_tab2" data-toggle="tab">增长率折线图</a></li>
+			              	<li><a href="#_tab2" data-toggle="tab">同期增长率[近40天]</a></li>
+			              <!-- 	<li><a href="#_tab3" data-toggle="tab">任务增长率[近40天]</a></li> -->
 	            		</ul>
 						<div id="myTabContent" class="tab-content">
 							<div class="tab-pane fade" id="_tab1" style="overflow: auto;-webkit-overflow-scrolling: touch;">
@@ -38,6 +39,9 @@
 							<div class="tab-pane fade" id="_tab2" style="overflow: auto;-webkit-overflow-scrolling: touch;">
 								<iframe src="${sc_ctx}/salesDayChartReport/init_tab2" frameborder="0" width="100%" height="1700"></iframe>
 	                		</div>
+	                	<!--	<div class="tab-pane fade" id="_tab3" style="overflow: auto;-webkit-overflow-scrolling: touch;">
+								<iframe src="${sc_ctx}/salesDayChartReport/init_tab3" frameborder="0" width="100%" height="1700"></iframe>
+	                		</div> -->
 	            		</div>
             		</div>
                 </div>

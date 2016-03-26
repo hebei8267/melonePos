@@ -27,6 +27,8 @@ public class AccountFlowSplitVo {
 	private String subId;
 	/** 记账科目名称 */
 	private String subName;
+	/** 科目代码 */
+	private String subCode;
 	/** 记账金额 */
 	private BigDecimal amt = new BigDecimal("0");
 
@@ -182,6 +184,24 @@ public class AccountFlowSplitVo {
 	 */
 	public void setSubName(String subName) {
 		this.subName = subName;
+	}
+
+	/**
+	 * 取得科目代码
+	 * 
+	 * @return 科目代码
+	 */
+	public String getSubCode() {
+		return subCode;
+	}
+
+	/**
+	 * 设置科目代码
+	 * 
+	 * @param subCode 科目代码
+	 */
+	public void setSubCode(String subCode) {
+		this.subCode = subCode;
 	}
 
 	/**

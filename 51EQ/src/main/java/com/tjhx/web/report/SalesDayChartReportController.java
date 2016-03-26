@@ -259,7 +259,39 @@ public class SalesDayChartReportController extends BaseController {
 	}
 
 	/**
-	 * 增长率折线图Tab初期化
+	 * 任务增长率[近40天]Tab初期化
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ParseException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 */
+	@RequestMapping(value = "init_tab3")
+	public String init_tab3_Action(Model model) throws ParseException, IllegalAccessException, InvocationTargetException {
+		String _now = DateUtils.getCurFormatDate("yyyyMMdd");
+		// 统计日期
+		String _optDate = DateUtils.getNextDateFormatDate(_now, -1, "yyyyMMdd");
+		model.addAttribute("optDate", _optDate);
+
+		List<Organization> _orgList = orgManager.getAllOrganization();
+		_orgList.remove(new Organization(Constants.ROOT_ORG_ID));
+		model.addAttribute("orgList", _orgList);
+
+		// 取得指定时间区间（近40天）
+		List<String> _optDateList = calOptDate(_optDate);
+		model.addAttribute("optDateList", _optDateList);
+
+		// 取得指定机构近期(近40天)的任务增长率
+		List<List<SalesDayTotal>> _posAmtRateList = initPosAmtRateList(_optDateList, _orgList, 2);
+
+		model.addAttribute("posAmtRateList", _posAmtRateList);
+
+		return "report/salesDayChartReport_tab3";
+	}
+
+	/**
+	 * 同期增长率[近40天]Tab初期化
 	 * 
 	 * @param model
 	 * @return
@@ -283,21 +315,26 @@ public class SalesDayChartReportController extends BaseController {
 		model.addAttribute("optDateList", _optDateList);
 
 		// 取得指定机构近期(近40天)的销售增长率
-		List<List<SalesDayTotal>> _posAmtRateList = initPosAmtRateList(_optDateList, _orgList);
+		List<List<SalesDayTotal>> _posAmtRateList = initPosAmtRateList(_optDateList, _orgList, 1);
 
 		model.addAttribute("posAmtRateList", _posAmtRateList);
 
 		return "report/salesDayChartReport_tab2";
 	}
 
-	private void copyProperties(SalesDayTotal destObj, List<SalesDayTotal> dbPosAmtRateList) throws IllegalAccessException,
+	private void copyProperties(SalesDayTotal destObj, List<SalesDayTotal> dbPosAmtRateList, int rateFlg) throws IllegalAccessException,
 			InvocationTargetException {
 
 		for (SalesDayTotal _dbObj : dbPosAmtRateList) {
 			if (_dbObj.equals(destObj)) {
 				BeanUtils.copyProperties(destObj, _dbObj);
 
-				BigDecimal _rate_b = destObj.getPosAmtRate();
+				BigDecimal _rate_b = null;
+				if (1 == rateFlg) {// 去年同期销售
+					_rate_b = destObj.getPosAmtRate();
+				} else {
+					_rate_b = destObj.getPosAmtRate2();
+				}
 
 				if (_rate_b.compareTo(BigDecimal.ZERO) > 0) {
 					double _rate_d = _rate_b.doubleValue();
@@ -338,7 +375,7 @@ public class SalesDayChartReportController extends BaseController {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-	private List<List<SalesDayTotal>> initPosAmtRateList(List<String> optDateList, List<Organization> orgList)
+	private List<List<SalesDayTotal>> initPosAmtRateList(List<String> optDateList, List<Organization> orgList, int rateFlg)
 			throws IllegalAccessException, InvocationTargetException {
 		List<List<SalesDayTotal>> _posAmtRateList = new ArrayList<List<SalesDayTotal>>();
 
@@ -351,8 +388,11 @@ public class SalesDayChartReportController extends BaseController {
 			for (Organization org : orgList) {
 				// 初始化空白每日各店销售汇总信息
 				SalesDayTotal _showObj = new SalesDayTotal(optDate, org.getId());
-
-				copyProperties(_showObj, dbPosAmtRateList);
+				if (1 == rateFlg) {
+					copyProperties(_showObj, dbPosAmtRateList, rateFlg);
+				} else {
+					copyProperties(_showObj, dbPosAmtRateList, rateFlg);
+				}
 
 				_list.add(_showObj);
 			}

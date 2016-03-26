@@ -70,6 +70,10 @@
 						required : true,
 						maxlength : 32
 					},
+					subCode : {
+						required : true,
+						maxlength : 8
+					},
 					sortIndex : {
 						digits : true
 					}
@@ -149,6 +153,12 @@
 				$("#sub-edit-form #uuid").val(selectNode.node.id);
 			}
 			
+			if ( typeof selectNode.node.original.subCode === "undefined") {
+				$("#sub-edit-form #subCode").val('');
+			} else {
+				$("#sub-edit-form #subCode").val(selectNode.node.original.subCode);
+			}
+			
 			if ( typeof selectNode.node.text === "undefined") {
 				$("#sub-edit-form #subName").val('');
 			} else {
@@ -216,6 +226,12 @@
 											<input type="text" id="parentSubName" name="parentSubName" readonly/>
 											<input type="hidden" id="parentSubUuid" name="parentSubUuid" />
 											<input type="hidden" id="uuid" name="uuid" />
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">科目代码<span class="required">※</span></label>
+										<div class="controls">
+											<input type="text" class="form-control" id="subCode" name="subCode"/>
 										</div>
 									</div>
 									<div class="control-group">

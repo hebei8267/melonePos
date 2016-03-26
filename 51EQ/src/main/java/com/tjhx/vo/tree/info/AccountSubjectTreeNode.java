@@ -10,6 +10,8 @@ public class AccountSubjectTreeNode extends BaseTreeNode {
 	private String parentSubName;
 	/** 排序 */
 	private int sortIndex;
+	/** 科目代码 */
+	private String subCode;
 
 	public AccountSubjectTreeNode() {
 
@@ -25,7 +27,8 @@ public class AccountSubjectTreeNode extends BaseTreeNode {
 		this.parentSubName = sub.getParentSubName();
 		// 排序
 		this.sortIndex = sub.getSortIndex();
-
+		// 科目代码
+		this.subCode = sub.getSubCode();
 	}
 
 	/**
@@ -81,4 +84,23 @@ public class AccountSubjectTreeNode extends BaseTreeNode {
 	public void setSortIndex(int sortIndex) {
 		this.sortIndex = sortIndex;
 	}
+
+	/**
+	 * 取得科目代码
+	 * 
+	 * @return 科目代码
+	 */
+	public String getSubCode() {
+		return subCode;
+	}
+
+	/**
+	 * 设置科目代码
+	 * 
+	 * @param subCode 科目代码
+	 */
+	public void setSubCode(String subCode) {
+		this.subCode = subCode;
+	}
+
 }

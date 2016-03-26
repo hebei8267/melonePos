@@ -378,16 +378,41 @@ public class AccountFlowManager {
 		return _sb.toString().substring(0, _sb.length() - 1);
 	}
 
+	private String getAccountSubjectCode(Map<String, AccountSubject> subMap, AccountFlowSplit accountFlowSplit) {
+		AccountSubject sub = subMap.get(accountFlowSplit.getSubId());
+		if (null == sub) {
+			sub = accountSubjectManager.getAccountSubjectStructTreeFromSubNode(accountFlowSplit.getSubId());
+
+			subMap.put(accountFlowSplit.getSubId(), sub);
+		}
+		List<String> _codeList = Lists.newArrayList();
+		_getAccountSubjectCode(_codeList, sub);
+
+		StringBuffer _sb = new StringBuffer();
+		for (int i = _codeList.size(); i > 0; i--) {
+			_sb.append(_codeList.get(i - 1) + "/");
+		}
+
+		return _sb.toString().substring(0, _sb.length() - 1);
+	}
+
+	private void _getAccountSubjectCode(List<String> _codeList, AccountSubject sub) {
+		if (2 == sub.getSubId().length()) {
+			return;
+		} else {
+			_codeList.add(sub.getSubCode());
+		}
+
+		_getAccountSubjectCode(_codeList, sub.getParentSub());
+	}
+
 	private void _getAccountSubjectName(List<String> _nameList, AccountSubject sub) {
 		if (2 == sub.getSubId().length()) {
 			return;
-		}
-
-		if (4 == sub.getSubId().length()) {
-			_nameList.add(sub.getSubName());
 		} else {
 			_nameList.add(sub.getSubName());
 		}
+
 		_getAccountSubjectName(_nameList, sub.getParentSub());
 	}
 
@@ -417,7 +442,7 @@ public class AccountFlowManager {
 				BeanUtils.copyProperties(vo, accountFlow);
 
 				accountFlowSplit.setSubName(getAccountSubjectName(_subMap, accountFlowSplit));
-
+				accountFlowSplit.setSubCode(getAccountSubjectCode(_subMap, accountFlowSplit));
 				BeanUtils.copyProperties(vo, accountFlowSplit);
 
 				_voList.add(vo);
