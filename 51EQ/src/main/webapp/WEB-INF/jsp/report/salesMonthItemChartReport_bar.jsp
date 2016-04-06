@@ -23,9 +23,9 @@
 			border:1px solid #A4BED4;
 		}
     	</style>
-    	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
-		<script src="http://www.amcharts.com/lib/3/serial.js"></script>
-		<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+    	<script src="${ctx}/static/amcharts_3.20/amcharts/amcharts.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/serial.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/themes/light.js"></script>
 		<script>
             $(function() {             
                 $("#exportBtn").click(function() {

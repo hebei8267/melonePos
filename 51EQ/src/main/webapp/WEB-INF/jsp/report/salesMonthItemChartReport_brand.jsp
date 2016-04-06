@@ -10,9 +10,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-    	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
-		<script src="http://www.amcharts.com/lib/3/serial.js"></script>
-		<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+    	<script src="${ctx}/static/amcharts_3.20/amcharts/amcharts.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/serial.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/themes/light.js"></script>
 		<script src="https://www.amcharts.com/lib/3/pie.js"></script>
 	</head>
     <body>
