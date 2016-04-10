@@ -148,10 +148,10 @@
                                         </td>
                                         <td	class="center">
                                         	<c:if test="${org.closedFlg}" >
-                                        	<span class='_warn1'>正常</span>
+                                        	<span class='_warn2'>闭店</span>
                                         	</c:if>
                                             <c:if test="${!org.closedFlg}" >
-                                            <span class='_warn2'>闭店</span>
+                                            <span class='_warn1'>正常</span>
                                         	</c:if>
                                         </td>
                                         <td	class="center">

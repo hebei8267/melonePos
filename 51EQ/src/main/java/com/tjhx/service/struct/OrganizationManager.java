@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 
+import com.google.common.collect.Lists;
 import com.tjhx.dao.struct.OrganizationJpaDao;
 import com.tjhx.dao.struct.OrganizationMyBatisDao;
 import com.tjhx.entity.struct.Organization;
@@ -37,6 +38,25 @@ public class OrganizationManager {
 	private EmployeeManager employeeManager;
 
 	/**
+	 * 取得所有开店机构信息
+	 * 
+	 * @return 开店机构信息
+	 */
+	public List<Organization> getAllOpenOrganization() {
+		List<Organization> _orgList = getAllOrganization();
+
+		List<Organization> _reOrgList = Lists.newArrayList();
+
+		for (Organization org : _orgList) {
+			if (!org.isClosedFlg()) {
+				_reOrgList.add(org);
+			}
+		}
+
+		return _reOrgList;
+	}
+
+	/**
 	 * 取得所有机构信息
 	 * 
 	 * @return 机构信息列表
@@ -49,8 +69,7 @@ public class OrganizationManager {
 			// 从数据库中取出全量机构信息(List格式)
 			_orgList = organizationMyBatisDao.getAllOrgList();
 			// 将机构信息Map保存到memcached
-			spyMemcachedClient.set(MemcachedObjectType.ORG_LIST.getObjKey(),
-					MemcachedObjectType.ORG_LIST.getExpiredTime(), _orgList);
+			spyMemcachedClient.set(MemcachedObjectType.ORG_LIST.getObjKey(), MemcachedObjectType.ORG_LIST.getExpiredTime(), _orgList);
 
 			logger.debug("机构信息不在 memcached中,从数据库中取出并放入memcached");
 		} else {

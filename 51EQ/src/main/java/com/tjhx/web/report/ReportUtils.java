@@ -18,7 +18,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_Null_Root(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 		orgList.put("", "");
@@ -38,7 +38,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_NonNull_Root(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 
@@ -58,7 +58,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_All_NonRoot(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 
@@ -79,7 +79,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_All_Null(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 
@@ -100,7 +100,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_Null_NoNRoot(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 
@@ -122,7 +122,7 @@ public class ReportUtils {
 	 * @param model
 	 */
 	public static void initOrgList_NoNRoot(OrganizationManager orgManager, Model model) {
-		List<Organization> _orgList = orgManager.getAllOrganization();
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
 
