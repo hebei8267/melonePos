@@ -57,6 +57,8 @@ public class Organization extends IdEntity {
 	private String mngUserName;
 	/** 门店品牌 */
 	private String brand;
+	/** 闭店标记 */
+	private boolean closedFlg;
 
 	public Organization() {
 
@@ -334,5 +336,23 @@ public class Organization extends IdEntity {
 	 */
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	/**
+	 * 取得闭店标记
+	 * 
+	 * @return 闭店标记
+	 */
+	public boolean isClosedFlg() {
+		return closedFlg;
+	}
+
+	/**
+	 * 设置闭店标记
+	 * 
+	 * @param closedFlg 闭店标记
+	 */
+	public void setClosedFlg(boolean closedFlg) {
+		this.closedFlg = closedFlg;
 	}
 }

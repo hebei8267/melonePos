@@ -10,6 +10,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<style type="text/css">
+			._warn1 {
+				padding: 5px;
+				background-color: #99FF33;
+			}
+			._warn2 {
+				padding: 5px;
+				background-color: #f89406;
+			}
+		</style>
         <script>
             $().ready(function() {
                 //-----------------------------------
@@ -99,6 +109,9 @@
                                         <input id="checkAll" type="checkbox" />
                                     </th>
                                     <th	class="center">
+                                        状态
+                                    </th>
+                                    <th	class="center">
                                         机构编号
                                     </th>
                                     <th	class="center">
@@ -132,6 +145,14 @@
                                                 <input type="checkbox" name="uuid" value="${org.uuid}">
                                                 </input>
                                             </c:if>
+                                        </td>
+                                        <td	class="center">
+                                        	<c:if test="${org.closedFlg}" >
+                                        	<span class='_warn1'>正常</span>
+                                        	</c:if>
+                                            <c:if test="${!org.closedFlg}" >
+                                            <span class='_warn2'>闭店</span>
+                                        	</c:if>
                                         </td>
                                         <td	class="center">
                                             ${org.bwId}

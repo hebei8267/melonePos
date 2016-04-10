@@ -192,6 +192,7 @@ public class OrganizationManager {
 		_dbOrganization.setOrgAddShort(org.getOrgAddShort());
 		_dbOrganization.setBrand(org.getBrand());
 		_dbOrganization.setMngUserId(org.getMngUserId());
+		_dbOrganization.setClosedFlg(org.isClosedFlg());
 
 		orgJpaDao.save(_dbOrganization);
 

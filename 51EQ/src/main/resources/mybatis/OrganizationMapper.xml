@@ -21,6 +21,7 @@
 		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
 		<result column="mng_user_name" property="mngUserName" jdbcType="VARCHAR"/>
 		<result column="brand" property="brand" jdbcType="VARCHAR"/>
+		<result column="closed_flg" property="closedFlg" jdbcType="BOOLEAN"/>
 	</resultMap>
 	
 	
@@ -44,7 +45,8 @@
 			o.org_add_short ,
 		    o.mng_user_id ,
 		    u.name AS mng_user_name ,
-		    o.brand
+		    o.brand ,
+		    o.closed_flg
 		FROM
 		    t_organization o LEFT JOIN t_user u ON o.mng_user_id = u.login_name
 		ORDER BY uuid

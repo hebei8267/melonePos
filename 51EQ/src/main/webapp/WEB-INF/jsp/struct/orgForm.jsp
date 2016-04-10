@@ -129,6 +129,15 @@
                             </div>
                         </div>
                         <div class="control-group">
+							<label class="control-label">状态 :</label>
+							<div class="controls">
+								<form:radiobutton path="closedFlg" value="true"/>
+								正常
+								<form:radiobutton path="closedFlg" value="false"/>
+								闭店
+							</div>
+						</div>
+                        <div class="control-group">
                             <label class="control-label">督导员 :</label>
                             <div class="controls">
                             	<form:select path="mngUserId" items="${mngUserList}" />
