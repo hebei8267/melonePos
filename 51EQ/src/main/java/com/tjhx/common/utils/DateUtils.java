@@ -400,6 +400,83 @@ public class DateUtils {
 		return between;
 	}
 
+	/**
+	 * 取得指定日期为一年中的周数
+	 * 
+	 * @param date yyyyMMdd
+	 * @return
+	 * @throws ParseException
+	 */
+	public static int getWeekOfYear(String date) throws ParseException {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		Date _date = format.parse(date);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		calendar.setTime(_date);
+
+		return calendar.get(Calendar.WEEK_OF_YEAR);
+	}
+
+	/**
+	 * 取得开始日期(yyyyMMdd)
+	 * 
+	 * @param year 指定年
+	 * @param weekOfYear 一年中的周数
+	 * @return
+	 */
+	public static String getBeginDate_WeekOfYear(String year, int weekOfYear) {
+		return getBeginDate_WeekOfYear(Integer.parseInt(year), weekOfYear);
+	}
+
+	/**
+	 * 取得开始日期(yyyyMMdd)
+	 * 
+	 * @param year 指定年
+	 * @param weekOfYear 一年中的周数
+	 * @return
+	 */
+	public static String getBeginDate_WeekOfYear(int year, int weekOfYear) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return df.format(cal.getTime());
+	}
+
+	/**
+	 * 取得开始日期(yyyyMMdd)
+	 * 
+	 * @param year 指定年
+	 * @param weekOfYear 一年中的周数
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String getEndDate_WeekOfYear(int year, int weekOfYear) throws ParseException {
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return getNextDateFormatDate(df.format(cal.getTime()), 6, "yyyyMMdd");
+	}
+
+	/**
+	 * 取得开始日期(yyyyMMdd)
+	 * 
+	 * @param year 指定年
+	 * @param weekOfYear 一年中的周数
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String getEndDate_WeekOfYear(String year, int weekOfYear) throws ParseException {
+
+		return getEndDate_WeekOfYear(Integer.parseInt(year), weekOfYear);
+	}
+
 	public static void main(String[] args) throws ParseException {
 		System.out.println(DateUtils.getNextMonthFormatDate("201401", -1, "yyyyMM"));
 	}

@@ -84,7 +84,20 @@
     	org.org_name AS org_name
 	]]>
   	</sql>
-  	
+  	<select id="getCashDailyListByWeek" parameterType="map" resultMap="Result_Map_CashDaily">
+  	<![CDATA[
+	  	SELECT
+		    org_id,
+		    SUM(sale_amt + zfb_sale_amt + gold_card_amt + report_amt + coupon_value) AS sale_amt
+		FROM
+		    t_cash_daily
+		WHERE
+		    opt_date >= #{beginDate}
+		AND opt_date <= #{endDate}
+		GROUP BY
+		    org_id
+  	]]>
+  	</select>
   	<!-- 查询条件 -->
   	<sql id="Where_Clause" >
   		<where>

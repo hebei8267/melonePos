@@ -1,6 +1,7 @@
 package com.tjhx.dao.accounts;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tjhx.entity.accounts.CashDaily;
 
@@ -28,4 +29,13 @@ public interface CashDailyMyBatisDao {
 	 * @param cashDaily(orgId/optDate)
 	 */
 	public void delCashDailyInfo(CashDaily cashDaily);
+
+	/**
+	 * 取得机构周销售流水合计信息
+	 * 
+	 * @param beginDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<CashDaily> getCashDailyListByWeek(Map<String, String> param);
 }

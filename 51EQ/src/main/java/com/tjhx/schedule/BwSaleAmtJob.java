@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tjhx.service.accounts.CashDailyManager;
+import com.tjhx.service.info.OrgWeekSalesRankingManager;
 import com.tjhx.service.info.SalesDayTotalManager;
 
 /**
@@ -22,6 +23,8 @@ public class BwSaleAmtJob implements IJob {
 	private CashDailyManager cashDailyManager;
 	@Resource
 	private SalesDayTotalManager salesDayTotalManager;
+	@Resource
+	private OrgWeekSalesRankingManager orgWeekSalesRankingManager;
 
 	@Override
 	public void execute() throws ParseException {
@@ -40,6 +43,10 @@ public class BwSaleAmtJob implements IJob {
 		logger.info("同步百威销售额（销售增长率） Begin");
 		salesDayTotalManager.synBwSaleAmt();
 		logger.info("同步百威销售额（销售增长率） End");
+
+		logger.info("计算机构销售等级／排名 Begin");
+		orgWeekSalesRankingManager.calOrgWeekSalesRanking();
+		logger.info("计算机构销售等级／排名 End");
 	}
 
 }
