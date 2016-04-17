@@ -86,6 +86,9 @@
                                 <th rowspan="2" class="center">
                                     名称
                                 </th>
+                                <th rowspan="2" class="center">
+                                    库存量
+                                </th>
                                 <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
                                     半月销售量
                                 </th>
@@ -100,7 +103,7 @@
                                 <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     售价
                                 </th>
-                                <th colspan="6" class="center">
+                                <th colspan="5" class="center">
                                     销量(件)
                                 </th>
                                 <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
@@ -108,9 +111,6 @@
                                 </th>
                             </tr>
                             <tr>
-                            	<th class="center">
-                                    库存量
-                                </th>
                                 <th class="center">
                                     合计
                                 </th>
@@ -160,6 +160,9 @@
                                     	${salesWeekGoods.productName}
                                     </td>
                                     </c:if>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    </td>
                                     <td class="center font2">
                                     	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
                                     </td>
@@ -200,9 +203,7 @@
                                     	${salesWeekGoods.itemSaleAmt}
                                     </td>
                                     
-                                    <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
-                                    </td>
+                                    
                                     <td class="right">
                                     	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/></label>
                                     </td>
