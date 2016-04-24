@@ -157,14 +157,17 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                         	<thead>
                                 <tr>
+                                	<th class="center">
+                                        序号
+                                    </th>
                                     <th	width="25" class="center">
                                         <input id="checkAll" type="checkbox" />
                                     </th>
                                     <th class="center">
-                                        所属机构
+                                        所属<br/>机构
                                     </th>
                                     <th class="center">
-                                        考勤编号
+                                        考勤<br/>编号
                                     </th>
                                     <th class="center">
                                         员工姓名
@@ -182,7 +185,7 @@
                                         职务
                                     </th>
                                     <th class="center">
-                                        聘用形式
+                                        聘用<br/>形式
                                     </th>
                                     <th	width="177">
                                         &nbsp;
@@ -190,8 +193,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach items="${employeeList}" var="employee">
+                            	<c:forEach items="${employeeList}" var="employee" varStatus="status">
                             	<tr>
+                            		<td	class="center">
+                                        ${status.index+1}
+                                    </td>
                                     <td	class="center">
                                         <input type="checkbox" name="uuid" value="${employee.uuid}" />
                                     </td>
