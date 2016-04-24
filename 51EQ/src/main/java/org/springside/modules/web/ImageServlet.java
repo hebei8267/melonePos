@@ -62,7 +62,8 @@ public class ImageServlet extends HttpServlet {
 		if (index > 0) {
 			suffix = filePath.substring(index);
 		} else {
-			suffix = "unknown";
+			suffix = "jpg";
+			filePath += "." + suffix;
 		}
 
 		response.setContentType("image/" + suffix);
