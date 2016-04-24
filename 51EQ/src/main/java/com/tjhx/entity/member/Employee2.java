@@ -69,6 +69,8 @@ public class Employee2 extends IdEntity {
 	private String photoUrl;
 	/** 照片文件 */
 	private MultipartFile imgFile;
+	/** 删除标记 */
+	private String delFlg = "0";
 
 	/**
 	 * 获取员工考勤编号
@@ -543,5 +545,24 @@ public class Employee2 extends IdEntity {
 	 */
 	public void setImgFile(MultipartFile imgFile) {
 		this.imgFile = imgFile;
+	}
+
+	/**
+	 * 取得delFlg
+	 * 
+	 * @return delFlg
+	 */
+	@Column(length = 1)
+	public String getDelFlg() {
+		return delFlg;
+	}
+
+	/**
+	 * 设置delFlg
+	 * 
+	 * @param delFlg delFlg
+	 */
+	public void setDelFlg(String delFlg) {
+		this.delFlg = delFlg;
 	}
 }

@@ -21,15 +21,26 @@
 				});
 
 				$("#searchBtn").click(function() {
-					$("input[type='text'],textarea").each(function(i) {
-						this.value = $.trim(this.value);
-					});
-
-					$("#searchForm").attr('target', '_blank');
-					$("#searchForm").attr("action", "${sc_ctx}/salesWeekGoodsTotalReport/contrast/" + $("#barcode").val());
-					$("#searchForm").submit();
+					_search();
 				});
+				
+				$('#barcode').keydown(function(event) {
+                    if (event.keyCode == 13) {
+                    	_search();
+                        return false;
+                    }
+                });
 			});
+			
+			function _search(){
+				$("input[type='text'],textarea").each(function(i) {
+					this.value = $.trim(this.value);
+				});
+
+				$("#searchForm").attr('target', '_blank');
+				$("#searchForm").attr("action", "${sc_ctx}/salesWeekGoodsTotalReport/contrast/" + $("#barcode").val());
+				$("#searchForm").submit();
+			}
 		</script>
 	</head>
 	<body>

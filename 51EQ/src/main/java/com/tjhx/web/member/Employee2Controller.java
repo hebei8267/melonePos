@@ -46,6 +46,7 @@ public class Employee2Controller extends BaseController {
 	@RequestMapping(value = "list")
 	public String employee2List_Action(Model model, HttpServletRequest request) {
 		ReportUtils.initOrgList_Null_Root(orgManager, model);
+		model.addAttribute("delFlg", "0");
 
 		return "member/employee2List";
 	}
@@ -63,10 +64,12 @@ public class Employee2Controller extends BaseController {
 		String idCardNo = ServletRequestUtils.getStringParameter(request, "idCardNo");
 		String phone = ServletRequestUtils.getStringParameter(request, "phone");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String delFlg = ServletRequestUtils.getStringParameter(request, "delFlg");
 		model.addAttribute("name", name);
 		model.addAttribute("idCardNo", idCardNo);
 		model.addAttribute("phone", phone);
 		model.addAttribute("orgId", orgId);
+		model.addAttribute("delFlg", delFlg);
 
 		Map<String, String> param = Maps.newHashMap();
 		if (StringUtils.isNotBlank(name)) {
@@ -80,6 +83,9 @@ public class Employee2Controller extends BaseController {
 		}
 		if (StringUtils.isNotBlank(orgId)) {
 			param.put("orgId", orgId);
+		}
+		if (StringUtils.isNotBlank(delFlg)) {
+			param.put("delFlg", delFlg);
 		}
 
 		ReportUtils.initOrgList_Null_Root(orgManager, model);
@@ -152,6 +158,20 @@ public class Employee2Controller extends BaseController {
 	}
 
 	/**
+	 * 离职Employee2信息
+	 * 
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "quit/{id}")
+	public String quitEmployee2_Action(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
+		employee2Manager.quitEmployee2ByUuid(id);
+
+		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/employee2/list";
+	}
+
+	/**
 	 * 新增Employee2初始化
 	 * 
 	 * @param model
@@ -181,8 +201,8 @@ public class Employee2Controller extends BaseController {
 	 */
 	@RequestMapping(value = "save")
 	public String saveEmployee2_Action(@ModelAttribute("employee2") Employee2 employee2,
-			@RequestParam("photoFile") MultipartFile photoFile, Model model, HttpServletRequest request)
-			throws IllegalAccessException, InvocationTargetException, IllegalStateException, IOException {
+			@RequestParam("photoFile") MultipartFile photoFile, Model model, HttpServletRequest request) throws IllegalAccessException,
+			InvocationTargetException, IllegalStateException, IOException {
 
 		employee2.setImgFile(photoFile);
 

@@ -78,6 +78,9 @@
   			<if test="orgId != null and orgId !='' ">
   			AND org_id LIKE #{orgId}
   			</if>
+  			<if test="delFlg != null and delFlg !='' ">
+  			AND del_flg = #{delFlg}
+  			</if>
 	  	</where>
   	</sql>
   	

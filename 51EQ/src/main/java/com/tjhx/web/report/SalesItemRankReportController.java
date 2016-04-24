@@ -115,7 +115,7 @@ public class SalesItemRankReportController extends BaseController {
 		List<String> orgNameList = new ArrayList<String>();
 		List<List<SalesDayTotalGoods>> goodList = new ArrayList<List<SalesDayTotalGoods>>();
 		if (StringUtils.isBlank(orgId)) { // 全机构
-			List<Organization> _orgList = orgManager.getSubOrganization();
+			List<Organization> _orgList = orgManager.getOpenSubOrganization();
 			for (Organization org : _orgList) {
 				// 机构名称
 				orgNameList.add(org.getName());
@@ -146,14 +146,12 @@ public class SalesItemRankReportController extends BaseController {
 	private List<SalesDayTotalGoods> _search_OrderQty(String optDateStart, String optDateEnd, String orgId, String itemTypeNo,
 			String orderMode2) {
 		// 取得指定店指定时间区间内销售信息排名(按类别)--按销量排序
-		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo,
-				orderMode2);
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderQty(optDateStart, optDateEnd, orgId, itemTypeNo, orderMode2);
 	}
 
 	private List<SalesDayTotalGoods> _search_OrderAmt(String optDateStart, String optDateEnd, String orgId, String itemTypeNo,
 			String orderMode2) {
 		// 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序
-		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo,
-				orderMode2);
+		return salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt(optDateStart, optDateEnd, orgId, itemTypeNo, orderMode2);
 	}
 }

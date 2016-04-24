@@ -57,6 +57,21 @@ public class Employee2Manager {
 	}
 
 	/**
+	 * 离职Employee2信息
+	 * 
+	 * @param uuid Employee2编号
+	 */
+	@Transactional(readOnly = false)
+	public void quitEmployee2ByUuid(int uuid) {
+		Employee2 emp = employee2JpaDao.findOne(uuid);
+		if (null != emp) {
+			emp.setDelFlg("1");
+
+			employee2JpaDao.save(emp);
+		}
+	}
+
+	/**
 	 * 添加新Employee2信息
 	 * 
 	 * @param employee2 Employee2信息
@@ -103,8 +118,8 @@ public class Employee2Manager {
 	 * @throws IllegalStateException
 	 */
 	@Transactional(readOnly = false)
-	public void updateEmployee2(Employee2 employee2) throws IllegalAccessException, InvocationTargetException,
-			IllegalStateException, IOException {
+	public void updateEmployee2(Employee2 employee2) throws IllegalAccessException, InvocationTargetException, IllegalStateException,
+			IOException {
 
 		Employee2 _dbEmployee2 = employee2JpaDao.findOne(employee2.getUuid());
 		if (null == _dbEmployee2) {
@@ -166,4 +181,5 @@ public class Employee2Manager {
 
 		photoStore(_dbEmployee2);
 	}
+
 }

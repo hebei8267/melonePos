@@ -55,6 +55,7 @@
                         });
                     }
                 });
+				
 				//--------------------------------------------------------------------
 				// 查询按钮点击
 				//--------------------------------------------------------------------
@@ -127,7 +128,21 @@
 	                    <label class="control-label">身份证号 : </label>
 	                    <input id="idCardNo" name="idCardNo" type="text" class="input-medium" value="${idCardNo}"/>
 	                </div>
-	                <div class="span4">
+	                
+	                <div class="span2">
+	                    <label class="control-label">状态 : </label>
+	                    <select id="delFlg" name="delFlg" class="my-input-medium">
+              				<c:if test="${delFlg == 0}">
+								<option value="0" selected>在职</option>
+              					<option value="1" >离职</option>
+							</c:if>
+							<c:if test="${delFlg == 1}">
+								<option value="0">在职</option>
+              					<option value="1" selected>离职</option>
+							</c:if>
+   						</select>
+	                </div>
+	                <div class="span2">
 	                	<button	id="searchBtn" class="btn btn-primary" type="button" style="margin-top:25px">查询</button>
 	                </div>
 	      		</form>
@@ -169,7 +184,7 @@
                                     <th class="center">
                                         聘用形式
                                     </th>
-                                    <th	width="117">
+                                    <th	width="177">
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -213,6 +228,7 @@
                                     <td>
                                    		<a href="${sc_ctx}/employee2/edit/${employee.uuid}" class="btn btn-warning"/>修改</a>
                                    		<a href="${sc_ctx}/employee2/view/${employee.uuid}" target="_blank" class="btn"/>查看</a>
+                                   		<a href="${sc_ctx}/employee2/quit/${employee.uuid}" class="btn btn-danger"/>离职</a>
                                     </td>
                                 </tr>
                             	</c:forEach>

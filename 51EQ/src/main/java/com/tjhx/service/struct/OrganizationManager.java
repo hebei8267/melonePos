@@ -230,4 +230,25 @@ public class OrganizationManager {
 
 		return _orgList;
 	}
+
+	/**
+	 * 取得门店机构（不包含总部机构）
+	 * 
+	 * @return
+	 */
+	public List<Organization> getOpenSubOrganization() {
+		List<Organization> _orgList = getAllOrganization();
+
+		_orgList.remove(new Organization(Constants.ROOT_ORG_ID));
+
+		List<Organization> _reOrgList = Lists.newArrayList();
+
+		for (Organization org : _orgList) {
+			if (!org.isClosedFlg()) {
+				_reOrgList.add(org);
+			}
+		}
+		return _reOrgList;
+	}
+
 }
