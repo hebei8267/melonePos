@@ -3,6 +3,7 @@
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
 <c:set var="sc_ctx">
@@ -48,7 +49,7 @@
 	                    	<c:forEach items="${orgWeekSalesRankingList}" var="orgWeekSalesRanking">
 	                    	<tr>
 	                    		<td class="center">${orgWeekSalesRanking.level}</td>
-	                    		<td class="center">${orgWeekSalesRanking.orgId}</td>
+	                    		<td class="center">${fn:substring(orgWeekSalesRanking.orgId,3,6)}</td>
 	                    		<td class="right">${orgWeekSalesRanking.saleCashAmt}</td>
 	                    		<td class="center">${orgWeekSalesRanking.level}${orgWeekSalesRanking.rankingLevel}</td>
 	                    		<td class="right">${orgWeekSalesRanking.saleCashAmt_Last}</td>
