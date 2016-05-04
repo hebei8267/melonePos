@@ -53,7 +53,7 @@
 	                    		<td class="center">${orgWeekSalesRanking.level}${orgWeekSalesRanking.rankingLevel}</td>
 	                    		<td class="right">${orgWeekSalesRanking.saleCashAmt_Last}</td>
 	                    		<td class="center">${orgWeekSalesRanking.level_Last}${orgWeekSalesRanking.rankingLevel_Last}</td>
-	                    		<c:if test="${orgWeekSalesRanking.gap == 0}" ><td class="center">-</td></c:if>
+	                    		<c:if test="${orgWeekSalesRanking.gap == 0}" ><td class="center">/</td></c:if>
 	                    		<c:if test="${orgWeekSalesRanking.gap > 0}" ><td class="center font2" style="color : #FF0000">↑${orgWeekSalesRanking.gap}</td></c:if>
 	                    		<c:if test="${orgWeekSalesRanking.gap < 0}" ><td class="center font2" style="color : #5bc0de">↓${orgWeekSalesRanking.gap}</td></c:if>
 	                    	</tr>
