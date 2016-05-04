@@ -400,6 +400,14 @@
 							</c:if>
 						</tr>
 						<tr>
+							<c:if test="${role.permIdList.contains('75')}">
+							<td><input type="checkbox" name="perm" value="75" checked>店铺周销售对比</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('75')}">
+							<td><input type="checkbox" name="perm" value="75">店铺周销售对比</td>
+							</c:if>
+						</tr>
+						<tr>
 							<c:if test="${role.permIdList.contains('63')}">
 							<td><input type="checkbox" name="perm" value="63" checked>会员卡信息对比</td>
 							</c:if>

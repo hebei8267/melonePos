@@ -235,7 +235,8 @@
 					|| _permIdList.contains('41') || _permIdList.contains('44')
 					|| _permIdList.contains('45') || _permIdList.contains('60')
 					|| _permIdList.contains('61') || _permIdList.contains('62')
-					|| _permIdList.contains('63') || _permIdList.contains('69')}">
+					|| _permIdList.contains('63') || _permIdList.contains('69')
+					|| _permIdList.contains('75')}">
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">数据报表<b class="caret"></b></a>
@@ -245,7 +246,12 @@
 										<a href="${sc_ctx}/salesOrdersDayTotalContrast/init">店铺指标</a>
 									</li>
 								</c:if>
-								<c:if test="${_permIdList.contains('63')}">
+								<c:if test="${_permIdList.contains('75')}">
+									<li>
+										<a href="${sc_ctx}/orgWeekSalesRanking/init">店铺周销售对比</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('75')}">
 									<li>
 										<a href="${sc_ctx}/membershipCardContrast/init">会员卡信息对比</a>
 									</li>

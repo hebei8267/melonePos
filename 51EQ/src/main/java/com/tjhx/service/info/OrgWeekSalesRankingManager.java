@@ -2,6 +2,8 @@ package com.tjhx.service.info;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -200,11 +202,79 @@ public class OrgWeekSalesRankingManager {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		OrgWeekSalesRankingManager a = new OrgWeekSalesRankingManager();
-		String endDate = a.getCalOptDate();
-		String beginDate = DateUtils.getNextDateFormatDate(endDate, -6, "yyyyMMdd");
-		System.out.println(endDate);
-		System.out.println(beginDate);
+		// OrgWeekSalesRankingManager a = new OrgWeekSalesRankingManager();
+		// String endDate = a.getCalOptDate();
+		// String beginDate = DateUtils.getNextDateFormatDate(endDate, -6, "yyyyMMdd");
+		// System.out.println(endDate);
+		// System.out.println(beginDate);
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2016);
+		cal.set(Calendar.WEEK_OF_YEAR, -1);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		System.out.println(df.format(cal.getTime()));
+	}
+
+	/**
+	 * 取得机构销售等级／排名
+	 * 
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<OrgWeekSalesRanking> getOrgWeekSalesRankingInfo() {
+		int _optDateY = DateUtils.getCurrentYearNum();
+		Integer _optDateW = orgWeekSalesRankingJpaDao.getMaxOptDateW(_optDateY);
+
+		if (null == _optDateW) {
+			_optDateY = _optDateY - 1;
+			_optDateW = orgWeekSalesRankingJpaDao.getMaxOptDateW(_optDateY);
+		}
+		List<OrgWeekSalesRanking> _list1 = orgWeekSalesRankingJpaDao.getOrgWeekSalesRankingList(_optDateY, _optDateW);// 取得最新销售等级／排名信息
+		// ================================================================================================================================================
+		List<OrgWeekSalesRanking> _list2 = null;
+		_optDateW = _optDateW - 1;
+		if (0 == _optDateW) {
+			_optDateY = _optDateY - 1;
+			_optDateW = orgWeekSalesRankingJpaDao.getMaxOptDateW(_optDateY);
+			_list2 = orgWeekSalesRankingJpaDao.getOrgWeekSalesRankingList(_optDateY, _optDateW);// 取得最新销售等级／排名信息
+		} else {
+			_list2 = orgWeekSalesRankingJpaDao.getOrgWeekSalesRankingList(_optDateY, _optDateW);// 取得最新销售等级／排名信息
+		}
+
+		mergeList(_list1, _list2);
+		return _list1;
+	}
+
+	private void mergeList(List<OrgWeekSalesRanking> _list1, List<OrgWeekSalesRanking> _list2) {
+		Map<String, OrgWeekSalesRanking> _map = Maps.newHashMap();
+
+		for (OrgWeekSalesRanking ranking : _list2) {
+			_map.put(ranking.getOrgId(), ranking);
+		}
+
+		for (OrgWeekSalesRanking ranking : _list1) {
+			OrgWeekSalesRanking _tmp = _map.get(ranking.getOrgId());
+
+			if (null != _tmp) {
+				// 年份
+				ranking.setOptDateY_Last(_tmp.getOptDateY());
+				// 星期(周)
+				ranking.setOptDateW_Last(_tmp.getOptDateW());
+				// 周区间
+				ranking.setOptDateWSection_Last(_tmp.getOptDateWSection());
+				// 销售金额
+				ranking.setSaleCashAmt_Last(_tmp.getSaleCashAmt());
+				// 排名
+				ranking.setRanking_Last(_tmp.getRanking());
+				// 等级
+				ranking.setLevel_Last(_tmp.getLevel());
+				// 等级排名
+				ranking.setRankingLevel_Last(_tmp.getRankingLevel());
+			}
+
+		}
 	}
 }
 
