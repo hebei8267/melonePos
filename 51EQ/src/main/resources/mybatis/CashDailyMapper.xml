@@ -88,7 +88,7 @@
   	<![CDATA[
 	  	SELECT
 		    org_id,
-		    SUM(sale_amt + zfb_sale_amt + gold_card_amt + report_amt + coupon_value) AS sale_amt
+		    SUM(sale_amt + zfb_sale_amt + gold_card_amt + rebate_amt + coupon_value) AS sale_amt
 		FROM
 		    t_cash_daily
 		WHERE
