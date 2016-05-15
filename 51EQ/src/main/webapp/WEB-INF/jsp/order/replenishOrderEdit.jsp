@@ -141,7 +141,7 @@
                                 <td	class="center">
                                     ***<br>
                                     <c:if test="${order.errorNum > 0 && detail.replenishNum != detail.receiptNum}" >
-                                    收货数量有误
+                                    <span style="color:red">收货数量有误</span>
                                     </c:if>
                                 </td>
                                 <td	class="center">

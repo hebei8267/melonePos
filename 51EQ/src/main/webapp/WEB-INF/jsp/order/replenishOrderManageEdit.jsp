@@ -152,7 +152,12 @@
 																			
                                 </td>
                                 <td	class="center">
+                                    <c:if test="${detail.replenishNum != detail.receiptNum}" >
+                                    <span style="color:red">${detail.receiptNum}</span>
+                                    </c:if>
+                                    <c:if test="${detail.replenishNum == detail.receiptNum}" >
                                     ${detail.receiptNum}
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
