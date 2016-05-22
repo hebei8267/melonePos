@@ -1,8 +1,6 @@
 package com.tjhx.globals;
 
 public class Constants {
-	public static final String SESSION_ENCRYPT_KEY_PAIR = "__SESSION_ENCRYPT_KEY_PAIR";
-	public static final String SESSION_ENCRYPT_KEY = "__SESSION_ENCRYPT_KEY";
 
 	// ------------------------------------------------------------------
 	public static final int EDITABLE_DAY = 3;

@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-    	<script src="${ctx}/static/js/jquery.jcryption-1.2.js"></script>
     </head>
     <body>
         <%// 系统菜单  %>
@@ -30,8 +29,6 @@
                     </c:if>
                     <form class="form-horizontal" id="inputForm" method="post">
                         <input id="uuid" name="uuid" type="hidden" value="${sessionScope.__SESSION_USER_INFO.uuid}"/>
-                        <input type="hidden" name="_oldPassWord" id="_oldPassWord" >
-                		<input type="hidden" name="_newPassWord" id="_newPassWord" >
                         <div class="control-group">
                             <label class="control-label">用户帐号 :</label>
                             <label class="left-control-label" id="_initAmt_label">${sessionScope.__SESSION_USER_INFO.loginName}</label>
@@ -64,7 +61,6 @@
             </div>
         </div>
         <script>
-        	var _key = '${_encrypt_key}';
         	
             $(function() {
                 $("#inputForm").validate({
@@ -89,16 +85,6 @@
 		        	if(!_res){
 		        		return;
 		        	}
-		        	
-		        	var enOldPassWord = $.jCryption.encrypt($("#oldPassWord").val(), _key);
-		        	var enNewPassWord = $.jCryption.encrypt($("#newPassWord").val(), _key);
-					
-					$("#oldPassWord").val("????????");
-					$("#newPassWord").val("????????");
-					$("#confirmPassWord").val("????????");
-					
-					$("#_oldPassWord").val(enOldPassWord);
-					$("#_newPassWord").val(enNewPassWord);
                 
                 	$("#inputForm").attr('target', '_self');
                     $("#inputForm").attr("action", "${sc_ctx}/member/modPwd");

@@ -2,8 +2,6 @@ package com.tjhx.web.member;
 
 import java.util.List;
 
-import javacryption.aes.AesCtr;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,15 +51,9 @@ public class MemberController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "login")
-	public String userLogin_Action(HttpServletRequest request, Model model, HttpSession session)
-			throws ServletRequestBindingException {
-		String loginName = ServletRequestUtils.getStringParameter(request, "_loginName");
-		String passWord = ServletRequestUtils.getStringParameter(request, "_passWord");
-
-		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
-
-		loginName = AesCtr.decrypt(loginName, key, 256);
-		passWord = AesCtr.decrypt(passWord, key, 256);
+	public String userLogin_Action(HttpServletRequest request, Model model, HttpSession session) throws ServletRequestBindingException {
+		String loginName = ServletRequestUtils.getStringParameter(request, "loginName");
+		String passWord = ServletRequestUtils.getStringParameter(request, "passWord");
 
 		User user = userManager.findByLoginName(loginName);
 
@@ -93,15 +85,10 @@ public class MemberController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "modPwd")
-	public String modPwd_Action(HttpServletRequest request, Model model, HttpSession session)
-			throws ServletRequestBindingException {
+	public String modPwd_Action(HttpServletRequest request, Model model, HttpSession session) throws ServletRequestBindingException {
 		Integer userUuid = ServletRequestUtils.getIntParameter(request, "uuid");
-		String oldPassWord = ServletRequestUtils.getStringParameter(request, "_oldPassWord");
-		String newPassWord = ServletRequestUtils.getStringParameter(request, "_newPassWord");
-
-		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
-		oldPassWord = AesCtr.decrypt(oldPassWord, key, 256);
-		newPassWord = AesCtr.decrypt(newPassWord, key, 256);
+		String oldPassWord = ServletRequestUtils.getStringParameter(request, "oldPassWord");
+		String newPassWord = ServletRequestUtils.getStringParameter(request, "newPassWord");
 
 		try {
 			User user = userManager.modUserPwd(userUuid, oldPassWord, newPassWord);
@@ -123,9 +110,6 @@ public class MemberController extends BaseController {
 	 */
 	@RequestMapping(value = "initModPwd")
 	public String initModPwd_Action(Model model, HttpSession session) {
-		String key = (String) session.getAttribute(Constants.SESSION_ENCRYPT_KEY);
-
-		model.addAttribute("_encrypt_key", key);
 
 		return "member/modPwd";
 	}
@@ -140,8 +124,7 @@ public class MemberController extends BaseController {
 	 */
 	private boolean checkUserInfo(User user, String loginName, String passWord) {
 		if (null != user) {
-			return user.getLoginName().equals(loginName) && Encrypter.decrypt(user.getPassWord()).equals(passWord)
-					&& user.isValid();
+			return user.getLoginName().equals(loginName) && Encrypter.decrypt(user.getPassWord()).equals(passWord) && user.isValid();
 		}
 		return false;
 	}

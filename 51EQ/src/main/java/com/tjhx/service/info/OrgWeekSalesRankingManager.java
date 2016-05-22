@@ -208,13 +208,17 @@ public class OrgWeekSalesRankingManager {
 		// System.out.println(endDate);
 		// System.out.println(beginDate);
 
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, 2016);
-		cal.set(Calendar.WEEK_OF_YEAR, -1);
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(Calendar.YEAR, 2016);
+//		cal.set(Calendar.WEEK_OF_YEAR, -1);
+//		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		
+		String nowDate = DateUtils.getCurrentDateShortStr();
+		int weekOfYear = DateUtils.getWeekOfYear(nowDate);
+		String _endDate = DateUtils.getBeginDate_WeekOfYear(DateUtils.transDateFormat(nowDate, "yyyyMMdd", "yyyy"), weekOfYear);
 
-		System.out.println(df.format(cal.getTime()));
+		System.out.println(DateUtils.getNextDateFormatDate(_endDate, -8, "yyyyMMdd"));
 	}
 
 	/**
