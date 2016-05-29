@@ -38,4 +38,6 @@ public interface CashDailyMyBatisDao {
 	 * @return
 	 */
 	public List<CashDaily> getCashDailyListByWeek(Map<String, String> param);
+
+	public List<CashDaily> getCashDaily_OrgCnt();
 }

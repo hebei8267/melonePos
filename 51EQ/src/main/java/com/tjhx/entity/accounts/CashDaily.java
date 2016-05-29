@@ -79,6 +79,7 @@ public class CashDaily extends IdEntity {
 
 	/** 督导员 */
 	private String mngUserId;
+	private String mngUserName;
 	// ############################################################################################
 	/** 机构名称 */
 	private String orgName;
@@ -90,6 +91,8 @@ public class CashDaily extends IdEntity {
 	private Integer index;
 	/** 回单对账标记 1-已对账 0-未对账 */
 	private Integer bankCheckFlg = 0;
+	/** 已日结机构数量 */
+	private Integer orgCnt;
 
 	/**
 	 * 取得机构编号
@@ -697,5 +700,43 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setMngUserId(String mngUserId) {
 		this.mngUserId = mngUserId;
+	}
+
+	/**
+	 * 取得mngUserName
+	 * 
+	 * @return mngUserName
+	 */
+	@Transient
+	public String getMngUserName() {
+		return mngUserName;
+	}
+
+	/**
+	 * 设置mngUserName
+	 * 
+	 * @param mngUserName mngUserName
+	 */
+	public void setMngUserName(String mngUserName) {
+		this.mngUserName = mngUserName;
+	}
+
+	/**
+	 * 取得orgCnt
+	 * 
+	 * @return orgCnt
+	 */
+	@Transient
+	public Integer getOrgCnt() {
+		return orgCnt;
+	}
+
+	/**
+	 * 设置orgCnt
+	 * 
+	 * @param orgCnt orgCnt
+	 */
+	public void setOrgCnt(Integer orgCnt) {
+		this.orgCnt = orgCnt;
 	}
 }

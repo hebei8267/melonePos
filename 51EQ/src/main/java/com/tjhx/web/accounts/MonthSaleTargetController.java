@@ -181,7 +181,7 @@ public class MonthSaleTargetController extends BaseController {
 			// DB数据导入显示列表（机构本年月销售信息）
 			copySalesTotalShowList2(_salesTotalShowList, _monthSaleTargetList);
 		} else {// 所有门店机构本年月销售信息
-			List<Organization> _orgList = orgManager.getSubOrganization();
+			List<Organization> _orgList = orgManager.getOpenSubOrganization();
 
 			int index = 0;
 			for (Organization org : _orgList) {
@@ -226,7 +226,7 @@ public class MonthSaleTargetController extends BaseController {
 			_list.add(_salesTotalShowList);
 			orgNameList.add(orgId);
 		} else {// 所有门店机构去年月销售信息
-			List<Organization> _orgList = orgManager.getSubOrganization();
+			List<Organization> _orgList = orgManager.getOpenSubOrganization();
 
 			for (Organization organization : _orgList) {
 				SalesMonthTotalItem _param = new SalesMonthTotalItem();

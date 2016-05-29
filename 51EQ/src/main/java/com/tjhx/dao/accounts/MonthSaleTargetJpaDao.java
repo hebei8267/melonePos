@@ -1,5 +1,7 @@
 package com.tjhx.dao.accounts;
 
+import java.util.List;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,9 +16,12 @@ public interface MonthSaleTargetJpaDao extends CrudRepository<MonthSaleTarget, I
 
 	@SuppressWarnings("rawtypes")
 	@Query("select m from MonthSaleTarget m where m.orgId = :orgId and m.optDateY = :optDateY")
-	public Iterable findByOrgIdAndOptDateY(@Param("orgId")String orgId, @Param("optDateY")String optDateY, Sort sort);
+	public Iterable findByOrgIdAndOptDateY(@Param("orgId") String orgId, @Param("optDateY") String optDateY, Sort sort);
 
 	@SuppressWarnings("rawtypes")
 	@Query("select m from MonthSaleTarget m where m.optDateY = :optDateY")
-	public Iterable findByOptDateY(String optDateY, Sort sort);
+	public Iterable findByOptDateY(@Param("optDateY") String optDateY, Sort sort);
+
+	@Query("select m from MonthSaleTarget m where m.optDateY = :optDateY and m.optDateM = :optDateM")
+	public List<MonthSaleTarget> findByOptDateYM(@Param("optDateY") String optDateY, @Param("optDateM") String optDateM);
 }

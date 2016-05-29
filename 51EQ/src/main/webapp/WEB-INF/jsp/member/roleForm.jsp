@@ -481,10 +481,10 @@
 						</tr>
 						<tr>
 							<c:if test="${role.permIdList.contains('44')}">
-							<td><input type="checkbox" name="perm" value="44" checked>日销售信息对比</td>
+							<td><input type="checkbox" name="perm" value="44" checked>日销售信息同期对比</td>
 							</c:if>
 							<c:if test="${!role.permIdList.contains('44')}">
-							<td><input type="checkbox" name="perm" value="44">日销售信息对比</td>
+							<td><input type="checkbox" name="perm" value="44">日销售信息同期对比</td>
 							</c:if>
 						</tr>
 						<tr>
@@ -525,6 +525,14 @@
 							</c:if>
 							<c:if test="${!role.permIdList.contains('47')}">
 							<td><input type="checkbox" name="perm" value="47">门店备用金分析(图形)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('76')}">
+							<td><input type="checkbox" name="perm" value="76" checked>毛利ABC分析表</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('76')}">
+							<td><input type="checkbox" name="perm" value="76">毛利ABC分析表</td>
 							</c:if>
 						</tr>
 					</table>

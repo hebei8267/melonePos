@@ -194,7 +194,7 @@ public class SalesDayChartReportController extends BaseController {
 		// 取得每日各店销售汇总（根据日期）
 		List<SalesDayTotal> salesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
 
-		List<Organization> orgList = orgManager.getSubOrganization();
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
 		List<SalesDayTotal> _salesDayTotalList = Lists.newArrayList();
 
 		for (Organization org : orgList) {

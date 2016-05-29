@@ -12,7 +12,7 @@
     <head>
     	<script src="${ctx}/static/amcharts_3.20/amcharts/amcharts.js"></script>
 		<script src="${ctx}/static/amcharts_3.20/amcharts/serial.js"></script>
-		<script src="${ctx}/static/amcharts_3.20/amcharts/themes/light.js"></script>s"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/themes/light.js"></script>
 		<script src="${ctx}/static/amcharts_3.20/amcharts/pie.js"></script>
 	</head>
     <body>
@@ -27,6 +27,8 @@
                             <h3>月销售信息对比(图形)[按督导]</h3>
                         </legend>
                     </div>
+                    
+                    <div class="span12" style="text-align: right;"><a href="${sc_ctx}/salesMonthItemChartReport/mngUserList_init">月销售信息对比(列表)[按督导]</a></div>
                     
                     <div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 15px;"></div>
                     

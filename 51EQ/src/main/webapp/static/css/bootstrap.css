@@ -1259,9 +1259,11 @@ textarea::-webkit-input-placeholder {
 .checkbox.inline + .checkbox.inline {
   margin-left: 10px;
 }
-
 .input-mini {
   width: 60px;
+}
+.input-mini_my {
+  width: 30px;
 }
 
 .input-small {

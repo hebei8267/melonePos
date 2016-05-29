@@ -145,7 +145,7 @@
 								<c:if test="${_permIdList.contains('46')}">
 									<li class="divider"></li>
 									<li>
-										<a href="${sc_ctx}/salesDayChartReport/init_shop">日销售信息对比</a>
+										<a href="${sc_ctx}/salesDayChartReport/init_shop">日销售信息同期对比</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('21')}">
@@ -299,7 +299,7 @@
 								</c:if>
 								<c:if test="${_permIdList.contains('44')}">
 									<li>
-										<a href="${sc_ctx}/salesDayChartReport/init">日销售信息对比</a>
+										<a href="${sc_ctx}/salesDayChartReport/init">日销售信息同期对比</a>
 									</li>
 								</c:if>
 								<c:if test="${_permIdList.contains('41')}">
@@ -326,6 +326,12 @@
 									<li class="divider"></li>
 									<li>
 										<a href="${sc_ctx}/pettyCash/analytics_init">门店备用金分析(图形)</a>
+									</li>
+								</c:if>
+								<c:if test="${_permIdList.contains('76')}">
+									<li class="divider"></li>
+									<li>
+										<a href="${sc_ctx}/grossProfitAbc/init">毛利ABC分析表</a>
 									</li>
 								</c:if>
 							</ul>

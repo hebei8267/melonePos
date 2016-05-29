@@ -44,6 +44,9 @@
 		<result column="bw_zfb_sale_amt" property="bwZfbSaleAmt" jdbcType="DECIMAL"/>
 		
 		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
+		<result column="mng_user_name" property="mngUserName" jdbcType="VARCHAR"/>
+		
+		<result column="org_cnt" property="orgCnt" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<!-- 查询结果字段 -->
@@ -206,4 +209,33 @@
 	<delete id="delCashDailyInfo" parameterType="com.tjhx.entity.accounts.CashDaily">
         DELETE FROM t_cash_daily WHERE opt_date = #{optDate} AND org_id = #{orgId}
     </delete>
+    
+    <select id="getCashDaily_OrgCnt" resultMap="Result_Map_CashDaily">		    
+		SELECT
+		    opt_date,
+		    COUNT(*) AS org_cnt
+		FROM
+		    t_cash_daily
+		GROUP BY
+		    opt_date
+		ORDER BY
+		    opt_date DESC limit 30
+	</select>
+	<select id="getCashDailyListByDay" parameterType="String" resultMap="Result_Map_CashDaily">
+  	<![CDATA[
+	  	SELECT
+		    cd.org_id,
+		    org.mng_user_id,
+		    us.name as mng_user_name,
+		    SUM(cd.sale_amt + cd.zfb_sale_amt + cd.gold_card_amt + cd.rebate_amt + cd.coupon_value) AS sale_amt
+		FROM
+		    t_cash_daily cd left join t_organization org on org.org_id = cd.org_id
+		    				left join t_user us on org.mng_user_id = us.login_name
+		WHERE
+		    cd.opt_date >= #{beginDate}
+		AND cd.opt_date <= #{endDate}
+		GROUP BY
+		    cd.org_id
+  	]]>
+  	</select>
 </mapper>

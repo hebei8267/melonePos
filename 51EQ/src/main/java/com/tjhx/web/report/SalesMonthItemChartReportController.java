@@ -36,6 +36,7 @@ import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.info.SalesMonthTotalItemManager;
 import com.tjhx.service.struct.OrganizationManager;
+import com.tjhx.vo.MngUserStatisticsTotal;
 import com.tjhx.web.BaseController;
 
 @Controller
@@ -254,6 +255,28 @@ public class SalesMonthItemChartReportController extends BaseController {
 		model.addAttribute("dataList", mapper.toJson(mergeDataList(_dataList)));
 
 		return "report/salesMonthItemChartReport_brand";
+	}
+
+	@RequestMapping(value = "mngUserList_init")
+	public String mngUserListInit_Action(Model model) {
+
+		MngUserStatisticsTotal total = salesMonthTotalItemManager.getMngUserStatisticsInfo();
+		// 统计日期
+		model.addAttribute("optDate", DateUtils.transDateFormat(total.getOptDate(), "yyyyMMdd", "yyyy/MM/dd"));
+		// 当月任务额
+		model.addAttribute("monthTaskAmt", total.getMonthTaskAmt());
+		// 当前完成额
+		model.addAttribute("monthCompleteAmt", total.getMonthCompleteAmt());
+		// 预计本月销售
+		model.addAttribute("expMonthAmt", total.getExpMonthAmt());
+		// 统计店铺数量
+		model.addAttribute("orgCnt", total.getOrgCnt());
+		// 任务完成店数
+		model.addAttribute("orgCompleteCnt", total.getOrgCompleteCnt());
+
+		model.addAttribute("info", total);
+
+		return "report/salesMonthItemChartReport_mngUserList";
 	}
 
 	@RequestMapping(value = "mngUser_init")

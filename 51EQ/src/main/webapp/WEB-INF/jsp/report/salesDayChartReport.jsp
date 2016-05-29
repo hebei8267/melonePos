@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="span12">
                         <legend>
-                            <h3>日销售信息对比</h3>
+                            <h3>日销售信息同期对比</h3>
                         </legend>
                     </div>
                     
