@@ -195,6 +195,13 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
+                                <c:if test="${!empty cashRunList}">
+                                	<tr>
+                                		<td colspan="2" class="right">合计 : &nbsp;&nbsp;</td>
+                                		<td>${totalDepositAmt }</td>
+                                		<td colspan="3"></td>
+                                	</tr>
+                                </c:if>
                             </tbody>
                             
                             <c:if test="${empty	cashRunList}" >

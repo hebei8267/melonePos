@@ -1,5 +1,6 @@
 package com.tjhx.web.accounts;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -54,7 +55,19 @@ public class BankCheckController extends BaseController {
 		List<CashRun> _cashRunList = cashRunManager.getBankCheckList(_param);
 		model.addAttribute("cashRunList", _cashRunList);
 
+		model.addAttribute("totalDepositAmt", calTotal(_cashRunList));
+
 		return "accounts/bankCheck";
+	}
+
+	private BigDecimal calTotal(List<CashRun> _cashRunList) {
+		BigDecimal _total = new BigDecimal("0");
+
+		for (CashRun cashRun : _cashRunList) {
+			_total = _total.add(cashRun.getDepositAmt());
+		}
+
+		return _total;
 	}
 
 	@RequestMapping(value = "audit")
