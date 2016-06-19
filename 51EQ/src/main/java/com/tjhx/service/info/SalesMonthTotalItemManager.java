@@ -384,6 +384,10 @@ public class SalesMonthTotalItemManager {
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalMonthListByBrand() {
 		List<SalesMonthTotalItem> _list = salesMonthTotalItemMyBatisDao.getSalesTotalMonthListByBrand();
+
+		List<SalesMonthTotalItem> _list_13 = salesMonthTotalItemMyBatisDao.getSalesTotalMonthListByBrand_13D();
+
+		_list.addAll(_list_13);
 		return _list;
 	}
 

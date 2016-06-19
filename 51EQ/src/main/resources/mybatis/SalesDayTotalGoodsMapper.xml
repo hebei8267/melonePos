@@ -238,4 +238,37 @@
 		    pos_amt ASC LIMIT 20
 	]]>
 	</select>
+	
+	<!-- 取得合计销售金额 -->
+	<select id="getTotalPosAmt" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+		SELECT
+		    SUM(sgd.pos_amt) AS pos_amt
+		FROM
+		    t_sales_day_total_goods sgd
+		WHERE
+		    sgd.opt_date>='20160101'
+		AND sgd.opt_date<='20160101'
+	]]>
+	</select>
+	<select id="getTotalPosAmtInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
+	<![CDATA[
+		SELECT
+		    sgd.opt_date,
+		    sgd.item_subno,
+		    SUM(sgd.pos_amt) AS pos_amt,
+		    SUM(sgd.pos_qty) AS pos_qty,
+		    gd.name AS goods_name
+		FROM
+		    t_sales_day_total_goods sgd
+		    LEFT JOIN t_goods gd ON sgd.item_subno = gd.subno
+		WHERE
+		    sgd.opt_date>='20160101'
+		AND sgd.opt_date<='20160101'
+		GROUP BY
+		    item_subno
+		ORDER BY
+		    pos_amt DESC
+	]]>
+	</select>
 </mapper>

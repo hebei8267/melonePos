@@ -29,8 +29,10 @@
                     </div>
                     
                     <div id="chart1" class="span12" style="height:350px;border:1px solid #A4BED4;margin-top: 15px;margin-bottom: 35px;"></div>
-            	
-            		<div id="chart2" class="span12" style="height:350px;border:1px solid #A4BED4;"></div>
+            	</div>
+            	<div class="row">
+            		<div id="chart2" class="span5" style="height:350px;border:1px solid #A4BED4;"></div>
+            		<div id="chart3" class="span5" style="height:350px;border:1px solid #A4BED4;"></div>
             	</div>
             </form>
      	</div>
@@ -54,16 +56,23 @@
 			    "graphs": [
 					{
 				        "bullet": "round",
-				        "balloonText": "品牌 EQ+<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt_EQ]]元",
+				        "balloonText": "品牌 EQ+<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt_EQ]]元<br>店铺数量 [[orgCnt_EQ]]个",
 				        "title": "EQ+",
 				        "valueField": "saleRamt_EQ"
 				    }
 					,
 					{
 				        "bullet": "round",
-				        "balloonText": "品牌 Infancy<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt_IF]]元",
+				        "balloonText": "品牌 Infancy<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt_IF]]元<br>店铺数量 [[orgCnt_IF]]个",
 				        "title": "Infancy",
 				        "valueField": "saleRamt_IF"
+				    }
+					,
+					{
+				        "bullet": "round",
+				        "balloonText": "品牌 Infancy<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt_IF]]元<br>店铺数量 [[orgCnt_13D]]个",
+				        "title": "13D",
+				        "valueField": "saleRamt_13D"
 				    }
 				
 				],
@@ -92,6 +101,27 @@
      		    }
      		});
      		
+     		var chart3 = AmCharts.makeChart("chart3", {
+     		    "type": "pie",
+     		    "theme": "light",
+     		    "dataProvider": _pie_data,
+     		    "valueField": "orgCnt",
+     		    "titleField": "brand",
+     		    "outlineAlpha": 0.4,
+     		    "depth3D": 15,
+     		   	"legend":{
+     			   	"position":"top",
+     			    "autoMargins":false ,
+			        "valueWidth": 100,
+			        "valueText": "店铺[[value]]个"
+     			  },
+     		    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+     		    "angle": 30,
+     		    "export": {
+     		        "enabled": true
+     		    }
+     		});
+     		
      		// CURSOR
             var chartCursor = new AmCharts.ChartCursor();
             chart1.addChartCursor(chartCursor);
@@ -106,20 +136,40 @@
         			var _eq = new Object();
         			_eq.brand = "EQ+";
         			_eq.saleRamt = _sub_Data.saleRamt_EQ;
+        			_eq.orgCnt = _sub_Data.orgCnt_EQ;
         			_pie_data.push(_eq);
         			
         			var _in = new Object();
         			_in.brand = "Infancy";
         			_in.saleRamt = _sub_Data.saleRamt_IF;
+        			_in.orgCnt = _sub_Data.orgCnt_IF;
         			_pie_data.push(_in);
         			
-        			chart2.titles = [{"size": 18,"text":"销售时间["+_sub_Data.optDateYM+"]"}];
+        			var _in13 = new Object();
+        			_in13.brand = "13D";
+        			if(_sub_Data.saleRamt_13D == null){
+        				_in13.saleRamt = 0;
+        			}else{
+        				_in13.saleRamt = _sub_Data.saleRamt_13D;
+        			}
+        			_in13.orgCnt = _sub_Data.orgCnt_13D;
+        			_pie_data.push(_in13);
+        			
+        			chart2.titles = [{"size": 18,"text":"销售额－销售时间["+_sub_Data.optDateYM+"]"}];
         			_pie_data.sort(function(a,b){return a.saleRamt>b.saleRamt?-1:1});
         			chart2.dataProvider = _pie_data;
         			chart2.validateNow();
         			chart2.validateData();
+        			
+        			
+        			chart3.titles = [{"size": 18,"text":"门店数量－销售时间["+_sub_Data.optDateYM+"]"}];
+        			_pie_data.sort(function(a,b){return a.orgCnt>b.orgCnt?-1:1});
+        			chart3.dataProvider = _pie_data;
+        			chart3.validateNow();
+        			chart3.validateData();
         		}
         	}
+            
      	});
      	</script>
 	</body>

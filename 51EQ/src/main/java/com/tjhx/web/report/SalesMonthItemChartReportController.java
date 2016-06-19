@@ -240,11 +240,23 @@ public class SalesMonthItemChartReportController extends BaseController {
 			Map<String, Object> _data = Maps.newHashMap();
 
 			if ("Infancy".equals(item.getOrgBrand())) {
+
 				_data.put("optDateYM", item.getOptDateYM());
 				_data.put("saleRamt_IF", item.getSaleRamt());
+				_data.put("orgCnt_IF", item.getOrgCnt());
+
 			} else if ("EQ+".equals(item.getOrgBrand())) {
+
 				_data.put("optDateYM", item.getOptDateYM());
 				_data.put("saleRamt_EQ", item.getSaleRamt());
+				_data.put("orgCnt_EQ", item.getOrgCnt());
+
+			} else if ("13D".equals(item.getOrgBrand())) {
+
+				_data.put("optDateYM", item.getOptDateYM());
+				_data.put("saleRamt_13D", item.getSaleRamt());
+				_data.put("orgCnt_13D", item.getOrgCnt());
+
 			}
 
 			_dataList.add(_data);

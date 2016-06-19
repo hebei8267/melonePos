@@ -62,9 +62,14 @@ public interface SalesMonthTotalItemMyBatisDao {
 	public SalesMonthTotalItem getSalesTotal_ByOrgAndYearMonthInterval(SalesMonthTotalItem param);
 
 	/**
-	 * 月销售信息对比(图形)[按品牌]
+	 * 月销售信息对比(图形)[按品牌]－不含13D
 	 */
 	public List<SalesMonthTotalItem> getSalesTotalMonthListByBrand();
+
+	/**
+	 * 月销售信息对比(图形)[按品牌]－含13D
+	 */
+	public List<SalesMonthTotalItem> getSalesTotalMonthListByBrand_13D();
 
 	/**
 	 * 月销售信息对比(图形)[按督导]

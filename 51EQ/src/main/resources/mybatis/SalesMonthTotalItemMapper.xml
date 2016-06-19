@@ -162,17 +162,39 @@
 		SELECT
 		    og.brand AS org_brand,
 		    it.opt_date_y_m ,
-		    SUM(it.sale_ramt) AS sale_ramt
+		    SUM(it.sale_ramt) AS sale_ramt,
+		    COUNT(DISTINCT it.org_id) AS ORG_CNT
 		FROM
 		    t_sales_month_total_item it,
 		    t_organization og
 		WHERE
 		    it.org_id = og.org_id
+		AND og.org_id != '00013D'
 		GROUP BY
 		    og.brand,
 		    it.opt_date_y_m
 		ORDER BY
 		    og.brand,
+		    it.opt_date_y_m
+	]]>
+	</select>
+	<!-- 月销售信息对比(图形)[按品牌] -->
+	<select id="getSalesTotalMonthListByBrand_13D" resultMap="Result_Map_SalesMonthTotalItem">
+	<![CDATA[
+		SELECT
+		    '13D' AS org_brand,
+		    it.opt_date_y_m ,
+		    SUM(it.sale_ramt) AS sale_ramt,
+		    COUNT(DISTINCT it.org_id) AS ORG_CNT
+		FROM
+		    t_sales_month_total_item it,
+		    t_organization og
+		WHERE
+		    it.org_id = og.org_id
+		AND	og.org_id = '00013D'
+		GROUP BY
+		    it.opt_date_y_m
+		ORDER BY
 		    it.opt_date_y_m
 	]]>
 	</select>
