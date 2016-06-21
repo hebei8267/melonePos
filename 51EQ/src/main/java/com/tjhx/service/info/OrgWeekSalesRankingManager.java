@@ -96,12 +96,21 @@ public class OrgWeekSalesRankingManager {
 	 * @param list
 	 */
 	private void calRanking(List<OrgWeekSalesRanking> list) {
-		Collections.sort(list, new OrgWeekSalesRankingComparator());
+		Collections.sort(list, new OrgWeekSalesRankingComparator_Amt());
 
+		int _rank = 0;
 		for (int i = 0; i < list.size(); i++) {
+
 			OrgWeekSalesRanking obj = list.get(i);
-			// 排名
-			obj.setRanking(i + 1);
+
+			if ("00013D".equals(obj.getOrgId()) || "00023D".equals(obj.getOrgId())) {// 特殊处理对13/23店
+				// 排名
+				obj.setRanking(0);
+			} else {
+				// 排名
+				obj.setRanking(++_rank);
+			}
+
 		}
 	}
 
@@ -111,50 +120,56 @@ public class OrgWeekSalesRankingManager {
 	 * @param list
 	 */
 	private void calLevel(List<OrgWeekSalesRanking> list) {
+		Collections.sort(list, new OrgWeekSalesRankingComparator_Rank());
+
 		for (int i = 0; i < list.size(); i++) {
 			OrgWeekSalesRanking obj = list.get(i);
-			if (i < 4) {
+			if ("00013D".equals(obj.getOrgId()) || "00023D".equals(obj.getOrgId())) {// 特殊处理对13/23店
+				continue;
+			}
+
+			if (i < 5) {
 				// 等级
 				obj.setLevel("A");
 			} else if (i < 8) {
 				// 等级
 				obj.setLevel("B");
-			} else if (i < 12) {
+			} else if (i < 11) {
 				// 等级
 				obj.setLevel("C");
-			} else if (i < 16) {
+			} else if (i < 14) {
 				// 等级
 				obj.setLevel("D");
-			} else if (i < 20) {
+			} else if (i < 17) {
 				// 等级
 				obj.setLevel("E");
-			} else if (i < 24) {
+			} else if (i < 20) {
 				// 等级
 				obj.setLevel("F");
-			} else if (i < 28) {
+			} else if (i < 23) {
 				// 等级
 				obj.setLevel("G");
-			} else if (i < 32) {
+			} else if (i < 26) {
 				// 等级
 				obj.setLevel("H");
-			} else if (i < 36) {
+			} else if (i < 29) {
 				// 等级
 				obj.setLevel("I");
-			} else if (i < 40) {
+			} else if (i < 32) {
 				// 等级
 				obj.setLevel("J");
-			} else if (i < 44) {
+			} else if (i < 35) {
 				// 等级
 				obj.setLevel("K");
-			} else if (i < 48) {
+			} else if (i < 38) {
 				// 等级
 				obj.setLevel("L");
 			}
 
-			int rl = obj.getRanking() % 4;
+			int rl = obj.getRanking() % 3;
 			if (0 == rl) {
 				// 等级排名
-				obj.setRankingLevel(4);
+				obj.setRankingLevel(3);
 			} else {
 				// 等级排名
 				obj.setRankingLevel(rl);
@@ -194,6 +209,7 @@ public class OrgWeekSalesRankingManager {
 	 */
 	private String getCalOptDate() throws ParseException {
 		String nowDate = DateUtils.getCurrentDateShortStr();
+		// String nowDate = "20160301";
 		int weekOfYear = DateUtils.getWeekOfYear(nowDate);
 		String _endDate = DateUtils.getBeginDate_WeekOfYear(DateUtils.transDateFormat(nowDate, "yyyyMMdd", "yyyy"), weekOfYear);
 		return DateUtils.getNextDateFormatDate(_endDate, -1, "yyyyMMdd");
@@ -280,7 +296,7 @@ public class OrgWeekSalesRankingManager {
 	}
 }
 
-class OrgWeekSalesRankingComparator implements Comparator<OrgWeekSalesRanking> {
+class OrgWeekSalesRankingComparator_Amt implements Comparator<OrgWeekSalesRanking> {
 
 	@Override
 	public int compare(OrgWeekSalesRanking o1, OrgWeekSalesRanking o2) {
@@ -291,6 +307,21 @@ class OrgWeekSalesRankingComparator implements Comparator<OrgWeekSalesRanking> {
 			return 0;
 		} else {
 			return v1.intValue() > v2.intValue() ? -1 : 1;
+		}
+	}
+}
+
+class OrgWeekSalesRankingComparator_Rank implements Comparator<OrgWeekSalesRanking> {
+
+	@Override
+	public int compare(OrgWeekSalesRanking o1, OrgWeekSalesRanking o2) {
+		int v1 = o1.getRanking();
+		int v2 = o2.getRanking();
+
+		if (v1 == v2) {
+			return 0;
+		} else {
+			return v1 > v2 ? 1 : -1;
 		}
 	}
 
