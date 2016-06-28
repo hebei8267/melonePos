@@ -152,18 +152,23 @@
 							<h3>类别销售信息对比</h3>
 						</legend>
 					</div>
+					<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == '000'}" >
+						<div class="span12">
+							<input type="checkbox" id="checkAll"></input>全机构
+							<c:forEach items="${orgList}" var="org">
+								<c:if test="${orgIdList.contains(org.key)}">
+								<input type="checkbox" name="orgId" value="${org.key }" checked></input>${org.value }
+								</c:if>
+								<c:if test="${!orgIdList.contains(org.key)}">
+								<input type="checkbox" name="orgId" value="${org.key }"></input>${org.value }
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:if>
+					<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != '000'}" >
+						<input type="hidden" name="orgId" value="${sessionScope.__SESSION_USER_INFO.orgId}">
+					</c:if>
 					
-					<div class="span12">
-						<input type="checkbox" id="checkAll"></input>全机构
-						<c:forEach items="${orgList}" var="org">
-							<c:if test="${orgIdList.contains(org.key)}">
-							<input type="checkbox" name="orgId" value="${org.key }" checked></input>${org.value }
-							</c:if>
-							<c:if test="${!orgIdList.contains(org.key)}">
-							<input type="checkbox" name="orgId" value="${org.key }"></input>${org.value }
-							</c:if>
-						</c:forEach>
-					</div>
 				</div>
 				<div class="row" style="margin-top: 20px;">
 					<div class="span4">
