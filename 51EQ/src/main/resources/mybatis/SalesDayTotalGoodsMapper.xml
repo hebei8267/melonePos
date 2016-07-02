@@ -239,20 +239,28 @@
 	]]>
 	</select>
 	
+	
 	<!-- 取得合计销售金额 -->
 	<select id="getTotalPosAmt" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
 		SELECT
 		    SUM(sgd.pos_amt) AS pos_amt
 		FROM
 		    t_sales_day_total_goods sgd
-		WHERE
-		    sgd.opt_date>='20160101'
-		AND sgd.opt_date<='20160101'
-	]]>
+		    LEFT JOIN t_goods gd ON sgd.item_subno = gd.subno
+		<where>
+  			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
+  			<if test="orgId != null ">
+			AND sgd.org_Id = #{orgId}
+			</if>
+			<if test="itemSubno != null ">
+			AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
+			</if>
+			<if test="itemName != null ">
+			AND gd.name LIKE #{itemName}
+			</if>
+	  	</where>
 	</select>
 	<select id="getTotalPosAmtInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
 		SELECT
 		    sgd.opt_date,
 		    sgd.item_subno,
@@ -262,13 +270,22 @@
 		FROM
 		    t_sales_day_total_goods sgd
 		    LEFT JOIN t_goods gd ON sgd.item_subno = gd.subno
-		WHERE
-		    sgd.opt_date>='20160101'
-		AND sgd.opt_date<='20160101'
+		<where>
+  			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
+  			<if test="orgId != null ">
+			AND sgd.org_Id = #{orgId}
+			</if>
+			<if test="itemSubno != null ">
+			AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
+			</if>
+			<if test="itemName != null ">
+			AND gd.name LIKE #{itemName}
+			</if>
+	  	</where>
 		GROUP BY
 		    item_subno
 		ORDER BY
 		    pos_amt DESC
-	]]>
 	</select>
+	
 </mapper>
