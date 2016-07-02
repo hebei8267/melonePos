@@ -49,10 +49,20 @@ select{
     height: 28px;
     vertical-align: middle;
 }
-.mytable tbody tr td.center, .mytable thead  tr th.center {
+.mytable tbody tr td.center, .mytable thead  tr th.center  {
 	text-align: center;
 }
 .mytable tbody tr td.right, .mytable thead  tr th.right {
+	text-align: right;
+}
+.mytable1 td {
+    height: 28px;
+    vertical-align: middle;
+}
+.mytable1 tbody tr td.center, .mytable1 thead tr th.center  {
+	text-align: center;
+}
+.mytable1 tbody tr td.right, .mytable1 thead tr th.right {
 	text-align: right;
 }
 .right_text {
