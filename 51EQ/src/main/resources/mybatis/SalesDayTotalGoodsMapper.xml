@@ -245,10 +245,11 @@
 		SELECT
 		    SUM(sgd.pos_amt) AS pos_amt
 		FROM
-		    t_sales_day_total_goods sgd
-		    LEFT JOIN t_goods gd ON sgd.item_subno = gd.subno
+		    t_sales_day_total_goods sgd,
+		    t_goods gd
 		<where>
   			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
+  			AND sgd.item_subno = gd.subno
   			<if test="orgId != null ">
 			AND sgd.org_Id = #{orgId}
 			</if>
@@ -257,21 +258,24 @@
 			</if>
 			<if test="itemName != null ">
 			AND gd.name LIKE #{itemName}
+			</if>
+			<if test="itemType != null ">
+			AND gd.item_no IN (${itemType})
 			</if>
 	  	</where>
 	</select>
 	<select id="getTotalPosAmtInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
 		SELECT
-		    sgd.opt_date,
 		    sgd.item_subno,
 		    SUM(sgd.pos_amt) AS pos_amt,
 		    SUM(sgd.pos_qty) AS pos_qty,
 		    gd.name AS goods_name
 		FROM
-		    t_sales_day_total_goods sgd
-		    LEFT JOIN t_goods gd ON sgd.item_subno = gd.subno
+		    t_sales_day_total_goods sgd,
+		    t_goods gd
 		<where>
   			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
+  			AND sgd.item_subno = gd.subno
   			<if test="orgId != null ">
 			AND sgd.org_Id = #{orgId}
 			</if>
@@ -280,6 +284,9 @@
 			</if>
 			<if test="itemName != null ">
 			AND gd.name LIKE #{itemName}
+			</if>
+			<if test="itemType != null ">
+			AND gd.item_no IN (${itemType})
 			</if>
 	  	</where>
 		GROUP BY

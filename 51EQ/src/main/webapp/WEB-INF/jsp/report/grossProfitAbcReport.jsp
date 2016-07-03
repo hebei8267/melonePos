@@ -151,8 +151,8 @@
                     <select name="abcType" class="input-medium">
                     	<option value=""></option>
                     	<option value="1" <c:if test="${abcType == '1'}">selected</c:if>>合计销售金额</option>
-                    	<option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
-                    	<option value="3" <c:if test="${abcType == '3'}">selected</c:if>>合计销售毛利</option>
+                    	<%-- <option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
+                    	<option value="3" <c:if test="${abcType == '3'}">selected</c:if>>合计销售毛利</option> --%>
                     </select>
                 </div>
                 
@@ -187,29 +187,27 @@
 	                            <table class="table table-striped table-bordered table-hover mytable1">
 	                                <thead>
 	                                    <tr>
-	                                        <th class="center" scope="col">行号</th>
-	                                        <th class="center" scope="col">货号</th>
+	                                        <th class="center" scope="col" width="50">行号</th>
+	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
-	                                        <th class="center" scope="col">日均销量</th>
-	                                        <th class="center" scope="col">库存数量</th>
-	                                        <th class="center" scope="col">销售数量</th>
-	                                        <th class="center" scope="col">销售金额</th>
-	                                        <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th>
+	                                        <th class="center" scope="col" width="70">日均销量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
+	                                        <th class="center" scope="col" width="7">销售数量</th>
+	                                        <th class="center" scope="col" width="70">销售金额</th>
+	                                        <!-- <th class="center" scope="col">有库存店数</th>
+	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
 	                                	<c:forEach items="${vo.listA}" var="saleInfo" varStatus="status">
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
-	                                        <td class="center">${saleInfo.itemSubno }</td>
+	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left">${saleInfo.goodsName }</td>
-	                                        <td class="right">${saleInfo.posQty }?</td>
-	                                        <td class="right"> Table data </td>
+	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
-	                                        <td class="right"> Table data </td>
-	                                        <td class="right"> Table data </td>
 	                                    </tr>
 	                                    </c:forEach>
 	                                </tbody>
@@ -233,29 +231,27 @@
 	                            <table class="table table-striped table-bordered table-hover mytable1">
 	                                <thead>
 	                                    <tr>
-	                                        <th class="center" scope="col">行号</th>
-	                                        <th class="center" scope="col">货号</th>
+	                                        <th class="center" scope="col" width="50">行号</th>
+	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
-	                                        <th class="center" scope="col">日均销量</th>
-	                                        <th class="center" scope="col">库存数量</th>
-	                                        <th class="center" scope="col">销售数量</th>
-	                                        <th class="center" scope="col">销售金额</th>
-	                                        <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th>
+	                                        <th class="center" scope="col" width="70">日均销量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
+	                                        <th class="center" scope="col" width="7">销售数量</th>
+	                                        <th class="center" scope="col" width="70">销售金额</th>
+	                                        <!-- <th class="center" scope="col">有库存店数</th>
+	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
 	                                	<c:forEach items="${vo.listB}" var="saleInfo" varStatus="status">
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
-	                                        <td class="center">${saleInfo.itemSubno }</td>
+	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left">${saleInfo.goodsName }</td>
-	                                        <td class="right">${saleInfo.posQty }?</td>
-	                                        <td class="right"> Table data </td>
+	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
-	                                        <td class="right"> Table data </td>
-	                                        <td class="right"> Table data </td>
 	                                    </tr>
 	                                    </c:forEach>
 	                                </tbody>
@@ -280,29 +276,27 @@
 	                            <table class="table table-striped table-bordered table-hover mytable1">
 	                                <thead>
 	                                    <tr>
-	                                        <th class="center" scope="col">行号</th>
-	                                        <th class="center" scope="col">货号</th>
+	                                        <th class="center" scope="col" width="50">行号</th>
+	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
-	                                        <th class="center" scope="col">日均销量</th>
-	                                        <th class="center" scope="col">库存数量</th>
-	                                        <th class="center" scope="col">销售数量</th>
-	                                        <th class="center" scope="col">销售金额</th>
-	                                        <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th>
+	                                        <th class="center" scope="col" width="70">日均销量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
+	                                        <th class="center" scope="col" width="7">销售数量</th>
+	                                        <th class="center" scope="col" width="70">销售金额</th>
+	                                        <!-- <th class="center" scope="col">有库存店数</th>
+	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
 	                                    <c:forEach items="${vo.listC}" var="saleInfo" varStatus="status">
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
-	                                        <td class="center">${saleInfo.itemSubno }</td>
+	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left">${saleInfo.goodsName }</td>
-	                                        <td class="right">${saleInfo.posQty }?</td>
-	                                        <td class="right"> Table data </td>
+	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
-	                                        <td class="right"> Table data </td>
-	                                        <td class="right"> Table data </td>
 	                                    </tr>
 	                                    </c:forEach>
 	                                </tbody>

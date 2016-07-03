@@ -1,6 +1,7 @@
 package com.tjhx.service.info;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,13 @@ public class GrossProfitAbcManager {
 	@Resource
 	private SalesDayTotalGoodsMyBatisDao salesDayTotalGoodsMyBatisDao;
 
-	/** 合计销售金额 */
+	/**
+	 * 合计销售金额
+	 * 
+	 * @throws ParseException
+	 */
 	private GrossProfitAbcVo getPosAmtInfo(String startDate, String endDate, String orgId, String itemSubno, String itemName,
-			BigDecimal abcParam1, BigDecimal abcParam2) {
+			String itemType, BigDecimal abcParam1, BigDecimal abcParam2) throws ParseException {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
@@ -36,6 +41,9 @@ public class GrossProfitAbcManager {
 		}
 		if (StringUtils.isNotBlank(itemName)) {
 			param.put("itemName", "%" + itemName + "%");
+		}
+		if (StringUtils.isNotBlank(itemType)) {
+			param.put("itemType", itemType);
 		}
 
 		SalesDayTotalGoods total = salesDayTotalGoodsMyBatisDao.getTotalPosAmt(param);
@@ -49,8 +57,12 @@ public class GrossProfitAbcManager {
 		List<SalesDayTotalGoods> _list2 = vo.getListB();
 		List<SalesDayTotalGoods> _list3 = vo.getListC();
 
+		// 时间间隔（单位：天）
+		long _spanDay = DateUtils.getDateSpanDay(startDate, endDate) + 1;
 		BigDecimal _tmp_total = new BigDecimal("0");
 		for (SalesDayTotalGoods _s : _totalList) {
+			_s.setSpanDay(_spanDay);
+
 			_tmp_total = _tmp_total.add(_s.getPosAmt());
 
 			if (_tmp_total.compareTo(total_1) == -1) {
@@ -66,13 +78,13 @@ public class GrossProfitAbcManager {
 	}
 
 	public GrossProfitAbcVo getGrossProfitAbcInfo(String optDateShow_start, String optDateShow_end, String orgId, String itemType,
-			String itemSubno, String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3) {
+			String itemSubno, String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3) throws ParseException {
 		String startDate = DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd");
 		String endDate = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
 
 		if ("1".equals(abcType)) {// 合计销售金额
-			return getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, new BigDecimal(abcParam1).divide(new BigDecimal("100")),
-					new BigDecimal(abcParam2).divide(new BigDecimal("100")));
+			return getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
+					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")));
 		} else if ("2".equals(abcType)) {// 合计销售数量
 
 		} else {// 合计销售毛利

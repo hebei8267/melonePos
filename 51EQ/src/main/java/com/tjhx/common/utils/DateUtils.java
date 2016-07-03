@@ -478,6 +478,6 @@ public class DateUtils {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		System.out.println(DateUtils.getNextMonthFormatDate("201401", -1, "yyyyMM"));
+		System.out.println(DateUtils.getDateSpanDay("20160101", "20160103"));
 	}
 }

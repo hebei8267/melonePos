@@ -1,10 +1,12 @@
 package com.tjhx.web.report;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -66,7 +68,7 @@ public class GrossProfitAbcController extends BaseController {
 	}
 
 	@RequestMapping(value = "search")
-	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException, ParseException {
 
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
@@ -94,7 +96,9 @@ public class GrossProfitAbcController extends BaseController {
 		model.addAttribute("abcParam2", abcParam2);
 		model.addAttribute("abcParam3", abcParam3);
 
-		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemType, itemSubno,
+		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
+		String itemNoArray = StringUtils.join(itemNoList, ",");
+		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray, itemSubno,
 				itemName, abcType, abcParam1, abcParam2, abcParam3);
 
 		model.addAttribute("vo", vo);

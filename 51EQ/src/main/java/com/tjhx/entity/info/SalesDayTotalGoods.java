@@ -45,6 +45,8 @@ public class SalesDayTotalGoods extends IdEntity {
 	private String optDateStart;
 	/** 日期-结束时间 */
 	private String optDateEnd;
+	/** 时间间隔（单位：天） */
+	private long spanDay;
 	/** 日均销量 */
 	private BigDecimal averageDailySales;
 	/** 机构名称 */
@@ -280,13 +282,35 @@ public class SalesDayTotalGoods extends IdEntity {
 	}
 
 	/**
+	 * 取得 时间间隔（单位：天）
+	 * 
+	 * @return 时间间隔（单位：天）
+	 */
+	@Transient
+	public long getSpanDay() {
+		return spanDay;
+	}
+
+	/**
+	 * 设置 时间间隔（单位：天）
+	 * 
+	 * @param spanDay 时间间隔（单位：天）
+	 */
+	public void setSpanDay(long spanDay) {
+		this.spanDay = spanDay;
+	}
+
+	/**
 	 * 取得日均销量
 	 * 
 	 * @return averageDailySales 日均销量
 	 */
 	@Transient
 	public BigDecimal getAverageDailySales() {
-		return averageDailySales;
+
+		return posQty.divide(new BigDecimal(spanDay), 1);
+
+		// return averageDailySales;
 	}
 
 	/**
