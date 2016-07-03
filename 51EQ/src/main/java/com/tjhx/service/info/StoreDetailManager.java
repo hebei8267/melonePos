@@ -129,8 +129,8 @@ public class StoreDetailManager {
 
 		}
 
-		storeMyBatisDao.cleanStoreDetailOneDay();
-		storeMyBatisDao.insertStoreDetailOneDay(optDateList.get(0));
+		storeDetailMyBatisDao.cleanStoreDetailOneDay();
+		storeDetailMyBatisDao.insertStoreDetailOneDay(optDateList.get(0));
 
 	}
 

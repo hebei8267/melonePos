@@ -9,8 +9,4 @@ public interface StoreMyBatisDao {
 
 	public List<Store> getStoreInfoList(Map<String, String> param);
 
-	public void cleanStoreDetailOneDay();
-
-	public void insertStoreDetailOneDay(String optDate);
-
 }

@@ -27,7 +27,7 @@ public interface StoreDetailMyBatisDao {
 	 * @return
 	 */
 	public List<StoreDetail> getSupplierContrastStoreList(Map<String, String> param);
-	
+
 	public List<StoreDetail> getStoreListGroupBySubno(Map<String, String> param);
 
 	/**
@@ -37,4 +37,8 @@ public interface StoreDetailMyBatisDao {
 	 * @return
 	 */
 	public void delStoreDetail_GreaterThan90Day(String optDate);
+
+	public void cleanStoreDetailOneDay();
+
+	public void insertStoreDetailOneDay(String optDate);
 }

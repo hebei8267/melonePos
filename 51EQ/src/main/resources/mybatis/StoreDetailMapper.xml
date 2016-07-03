@@ -173,4 +173,59 @@
 	GROUP BY
 	    item_subno
      </select>
+     
+     <delete id="cleanStoreDetailOneDay">
+    <![CDATA[
+        DELETE FROM t_store_detail_one_day 
+    ]]>
+    </delete>
+    <insert id="insertStoreDetailOneDay" parameterType="String">
+        INSERT INTO
+		    t_store_detail_one_day
+		    (
+		        uuid ,
+		        create_date ,
+		        create_user_id ,
+		        update_date ,
+		        update_user_id ,
+		        version ,
+		        bw_branch_no ,
+		        _index ,
+		        item_barcode ,
+		        item_name ,
+		        item_sale_amt ,
+		        item_subno ,
+		        opt_date ,
+		        opt_date_m ,
+		        opt_date_y ,
+		        org_id ,
+		        stock_amt ,
+		        stock_qty ,
+		        store_flg
+		    )
+		SELECT
+		    uuid ,
+		    create_date ,
+		    create_user_id ,
+		    update_date ,
+		    update_user_id ,
+		    version ,
+		    bw_branch_no ,
+		    _index ,
+		    item_barcode ,
+		    item_name ,
+		    item_sale_amt ,
+		    item_subno ,
+		    opt_date ,
+		    opt_date_m ,
+		    opt_date_y ,
+		    org_id ,
+		    stock_amt ,
+		    stock_qty ,
+		    store_flg
+		FROM
+		    t_store_detail
+		WHERE
+		    opt_date = #{optDate}
+    </insert>
 </mapper>
