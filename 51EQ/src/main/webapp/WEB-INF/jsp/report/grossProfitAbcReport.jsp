@@ -118,16 +118,15 @@
 	                </legend>
 	            </div>
 	            
-	            <div class="span6">
+	            <div class="span12">
                     <label class="control-label">查询时间 :</label>
-                    <input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
+                    <input id="optDateShow_start" name="optDateShow_start" type="text" class="input-small2" value="${optDateShow_start }"/>
                    	～
-                 	<input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
-                </div>
-                
-                <div class="span6">
+                 	<input id="optDateShow_end" name="optDateShow_end" type="text" class="input-small2" value="${optDateShow_end }"/>
+               		
+               		&nbsp;&nbsp;
                     <label class="control-label">机构 :</label>
-                    <select name="orgId" class="input-medium">
+                    <select name="orgId" class="input-small2">
 	                    <c:forEach items="${orgList}" var="org">
 	                        <c:if test="${org.key == orgId}">
 	                            <option value="${org.key }" selected>${org.value }</option>
@@ -137,28 +136,23 @@
 	                        </c:if>
 	                    </c:forEach>
 	                </select>
-                </div>
-            </div>
-            
-			<div class="row" style="padding-top: 10px">
-				<div class="span3">
+                	
+                	&nbsp;&nbsp;
                     <label class="control-label">商品类别 :</label>
-                    <input type="hidden" id="itemType" name="itemType" class="select2 input-medium" value="${itemType}">
-                </div>
-                
-                <div class="span3">
+                    <input type="hidden" id="itemType" name="itemType" class="select2 input-small2" value="${itemType}">
+                    
+                    &nbsp;&nbsp;
                     <label class="control-label">货号 :</label>
-                    <input id="itemSubno" name="itemSubno" type="text" class="input-medium" value="${itemSubno }"/>
-                </div>
-                
-                <div class="span3">
+                    <input id="itemSubno" name="itemSubno" type="text" class="input-small2" value="${itemSubno }"/>
+                    
+                    &nbsp;&nbsp;
                     <label class="control-label">商品名称 :</label>
-                    <input id="itemName" name="itemName" type="text" class="input-medium" value="${itemName }"/>
+                    <input id="itemName" name="itemName" type="text" class="input-small2" value="${itemName }"/>
                 </div>
             </div>
             
 			<div class="row" style="padding-top: 10px">    
-                <div class="span3">
+                <div class="span12">
                     <label class="control-label">ABC系数 :</label>
                     <select name="abcType" class="input-medium">
                     	<option value=""></option>
@@ -166,9 +160,8 @@
                     	<%-- <option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
                     	<option value="3" <c:if test="${abcType == '3'}">selected</c:if>>合计销售毛利</option> --%>
                     </select>
-                </div>
-                
-                <div class="span4">
+               
+               		&nbsp;&nbsp;
                     <label class="control-label">A :</label>
                     <input id="abcParam1" name="abcParam1" type="text" class="input-mini_my" value="${abcParam1 }"/>%&nbsp;&nbsp;
 
@@ -177,9 +170,8 @@
 
                     <label class="control-label">C :</label>
                     <input id="abcParam3" name="abcParam3" type="text" class="input-mini_my" value="${abcParam3 }"/>%&nbsp;&nbsp;
-                </div>
-                
-                <div class="span5">    
+
+                	&nbsp;&nbsp;
                     <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
                 </div>
 	    	</div>
