@@ -155,6 +155,7 @@
 		        LEFT JOIN t_week_sales_total_goods wsd ON wsd.item_subno = #{barcode} AND org.org_id = wsd.org_id
 		        WHERE
 		            gd.subno = #{barcode}
+		        AND org.closed_flg = 0
 		        GROUP BY
 		            org.org_id,
 		            barcode ) AS t

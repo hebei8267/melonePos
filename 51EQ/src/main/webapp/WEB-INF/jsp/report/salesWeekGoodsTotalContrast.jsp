@@ -77,14 +77,23 @@
                     <table class="table	table-striped table-bordered table-condensed mytable">
                         <thead>
                             <tr>
-                            	<th rowspan="2" class="center">
-                                    机构
-                                </th>
                                 <th rowspan="2" class="center">
                                     货号
                                 </th>
                                 <th rowspan="2" class="center">
                                     名称
+                                </th>
+                               	<c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    进价
+                                </th>
+                                </c:if>
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
+                                    售价
+                                </th>
+                                
+                                <th rowspan="2" class="center">
+                                    机构
                                 </th>
                                 <th rowspan="2" class="center">
                                     库存量
@@ -95,15 +104,7 @@
                                 <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
                                     调货
                                 </th>
-                                <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
-                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                    进价
-                                </th>
-                                </c:if>
-                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                    售价
-                                </th>
-                                <th colspan="5" class="center">
+                               	<th colspan="5" class="center">
                                     销量(件)
                                 </th>
                                 <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
@@ -148,9 +149,6 @@
                         <tbody>
                             <c:forEach items="${salesWeekGoodsList}" var="salesWeekGoods" varStatus="status1">
                                 <tr>
-                                	<td class="center">
-                                    	${salesWeekGoods.orgId}
-                                    </td>
                                     <c:if test="${status1.index == 0}" >
                                     <td rowspan="${salesWeekGoodsList.size()}" class="center">
                                     	${salesWeekGoods.barcode}
@@ -160,38 +158,6 @@
                                     	${salesWeekGoods.productName}
                                     </td>
                                     </c:if>
-                                    <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
-                                    </td>
-                                    <td class="center font2">
-                                    	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
-                                    </td>
-                                    
-                                    <td class="center font2">
-                                    	<c:if test="${status1.index == 0}" >
-                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
-                                    		<span style="color : #FF0000">调入 [${a}]</span>
-                                    		</c:if>
-                                    		
-                                    		<c:if test="${salesWeekGoods.inQty < 0}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="b" />
-                                    		<span style="color : #5bc0de">调出 [${-b}]</span>
-                                    		</c:if>
-                                    	</c:if>
-                                    	
-                                    	<c:if test="${status1.index != 0}" >
-                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
-                                    		<span style="color : #FF0000">调入 [${a}]</span>
-                                    		</c:if>
-                                    	
-                                    		<c:if test="${salesWeekGoods.outQty > 0}" >
-                                    		<fmt:parseNumber value="${salesWeekGoods.outQty}" var="b" />
-                                    		<span style="color : #5bc0de">调出 [${b}]</span>
-                                    		</c:if>
-                                    	</c:if>
-                                    </td>
                                     
                                     <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
                                     <td class="center">
@@ -203,6 +169,41 @@
                                     	${salesWeekGoods.itemSaleAmt}
                                     </td>
                                     
+                                    <td class="center font1">
+                                    	${salesWeekGoods.orgId}
+                                    </td>
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    <td class="center font2">
+                                    	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    
+                                    <td class="center font2">
+                                    	<c:if test="${status1.index == 0}" >
+                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
+                                    		<span style="color : #FF0000;font-size:12px">调入 [${a}]</span>
+                                    		</c:if>
+                                    		
+                                    		<c:if test="${salesWeekGoods.inQty < 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="b" />
+                                    		<span style="color : #5bc0de;font-size:12px">调出 [${-b}]</span>
+                                    		</c:if>
+                                    	</c:if>
+                                    	
+                                    	<c:if test="${status1.index != 0}" >
+                                    		<c:if test="${salesWeekGoods.inQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.inQty}" var="a" />
+                                    		<span style="color : #FF0000;font-size:12px">调入 [${a}]</span>
+                                    		</c:if>
+                                    	
+                                    		<c:if test="${salesWeekGoods.outQty > 0}" >
+                                    		<fmt:parseNumber value="${salesWeekGoods.outQty}" var="b" />
+                                    		<span style="color : #5bc0de;font-size:12px">调出 [${b}]</span>
+                                    		</c:if>
+                                    	</c:if>
+                                    </td>
                                     
                                     <td class="right">
                                     	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/></label>
