@@ -92,6 +92,18 @@
 			    return (Number(abcParam1) + Number(abcParam2) + Number(abcParam3)) == 100
 			}, "A,B,C百分比输入错误");
 		</script>
+		<style>
+		.font1 {
+			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+			font-size : 22px;
+			font-weight : bolder;
+		}
+		.font2 {
+			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+			font-size : 10px;
+			font-weight : bolder;
+		}
+		</style>
     </head>
     <body>
         <%// 系统菜单  %>
@@ -176,7 +188,12 @@
          		<div class="span12">
          			<div class="portlet box green">
 	                    <div class="portlet-title">
-	                        <div class="caption">分析表A</div>
+	                        <div class="caption">
+	                        	分析表A
+	                        	<c:if test="${abcType == '1'}">
+	                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalA} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+	                        	</c:if>
+	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>
                          	</div>
@@ -220,7 +237,12 @@
 				<div class="span12">
          			<div class="portlet box blue">
 	                    <div class="portlet-title">
-	                        <div class="caption">分析表B</div>
+	                        <div class="caption">
+		                        分析表B
+		                        <c:if test="${abcType == '1'}">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalB} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+		                        </c:if>
+	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>
                          	</div>
@@ -265,7 +287,12 @@
          		<div class="span12">
          			<div class="portlet box yellow">
 	                    <div class="portlet-title">
-	                        <div class="caption">分析表C</div>
+	                        <div class="caption">
+		                        分析表C
+		                        <c:if test="${abcType == '1'}">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalC} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+		                        </c:if>
+	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>
                          	</div>

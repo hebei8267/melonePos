@@ -57,6 +57,8 @@ public class GrossProfitAbcManager {
 		List<SalesDayTotalGoods> _list2 = vo.getListB();
 		List<SalesDayTotalGoods> _list3 = vo.getListC();
 
+		vo.setTotal(total.getPosAmt());
+
 		// 时间间隔（单位：天）
 		long _spanDay = DateUtils.getDateSpanDay(startDate, endDate) + 1;
 		BigDecimal _tmp_total = new BigDecimal("0");
@@ -67,10 +69,16 @@ public class GrossProfitAbcManager {
 
 			if (_tmp_total.compareTo(total_1) == -1) {
 				_list1.add(_s);
-			} else if (_tmp_total.compareTo(total_2) != -1) {
+
+				vo.setTotalA(vo.getTotalA().add(_s.getPosAmt()));
+			} else if (_tmp_total.compareTo(total_2) == -1) {
 				_list2.add(_s);
+
+				vo.setTotalB(vo.getTotalB().add(_s.getPosAmt()));
 			} else {
 				_list3.add(_s);
+
+				vo.setTotalC(vo.getTotalC().add(_s.getPosAmt()));
 			}
 		}
 

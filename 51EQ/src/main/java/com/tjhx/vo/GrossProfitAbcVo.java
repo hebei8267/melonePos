@@ -1,5 +1,6 @@
 package com.tjhx.vo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -9,6 +10,11 @@ public class GrossProfitAbcVo {
 	private List<SalesDayTotalGoods> listA = Lists.newArrayList();
 	private List<SalesDayTotalGoods> listB = Lists.newArrayList();
 	private List<SalesDayTotalGoods> listC = Lists.newArrayList();
+
+	private BigDecimal total = new BigDecimal("0");
+	private BigDecimal totalA = new BigDecimal("0");
+	private BigDecimal totalB = new BigDecimal("0");
+	private BigDecimal totalC = new BigDecimal("0");
 
 	/**
 	 * 取得listA
@@ -62,5 +68,77 @@ public class GrossProfitAbcVo {
 	 */
 	public void setListC(List<SalesDayTotalGoods> listC) {
 		this.listC = listC;
+	}
+
+	/**
+	 * 取得total
+	 * 
+	 * @return total
+	 */
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	/**
+	 * 设置total
+	 * 
+	 * @param total total
+	 */
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	/**
+	 * 取得totalA
+	 * 
+	 * @return totalA
+	 */
+	public BigDecimal getTotalA() {
+		return totalA;
+	}
+
+	/**
+	 * 设置totalA
+	 * 
+	 * @param totalA totalA
+	 */
+	public void setTotalA(BigDecimal totalA) {
+		this.totalA = totalA;
+	}
+
+	/**
+	 * 取得totalB
+	 * 
+	 * @return totalB
+	 */
+	public BigDecimal getTotalB() {
+		return totalB;
+	}
+
+	/**
+	 * 设置totalB
+	 * 
+	 * @param totalB totalB
+	 */
+	public void setTotalB(BigDecimal totalB) {
+		this.totalB = totalB;
+	}
+
+	/**
+	 * 取得totalC
+	 * 
+	 * @return totalC
+	 */
+	public BigDecimal getTotalC() {
+		return totalC;
+	}
+
+	/**
+	 * 设置totalC
+	 * 
+	 * @param totalC totalC
+	 */
+	public void setTotalC(BigDecimal totalC) {
+		this.totalC = totalC;
 	}
 }
