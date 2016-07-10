@@ -46,13 +46,17 @@ public class GrossProfitAbcManager {
 			param.put("itemType", itemType);
 		}
 
+		GrossProfitAbcVo vo = new GrossProfitAbcVo();
 		SalesDayTotalGoods total = salesDayTotalGoodsMyBatisDao.getTotalPosAmt(param);
+		if (null == total) {
+			return vo;
+		}
+		
 		List<SalesDayTotalGoods> _totalList = salesDayTotalGoodsMyBatisDao.getTotalPosAmtInfo(param);
 
 		BigDecimal total_1 = total.getPosAmt().multiply(abcParam1);
 		BigDecimal total_2 = total.getPosAmt().multiply(abcParam1.add(abcParam2));
 
-		GrossProfitAbcVo vo = new GrossProfitAbcVo();
 		List<SalesDayTotalGoods> _list1 = vo.getListA();
 		List<SalesDayTotalGoods> _list2 = vo.getListB();
 		List<SalesDayTotalGoods> _list3 = vo.getListC();
