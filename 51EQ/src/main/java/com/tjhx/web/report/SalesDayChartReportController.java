@@ -306,8 +306,7 @@ public class SalesDayChartReportController extends BaseController {
 		String _optDate = DateUtils.getNextDateFormatDate(_now, -1, "yyyyMMdd");
 		model.addAttribute("optDate", _optDate);
 
-		List<Organization> _orgList = orgManager.getAllOrganization();
-		_orgList.remove(new Organization(Constants.ROOT_ORG_ID));
+		List<Organization> _orgList = orgManager.getOpenSubOrganization();
 		model.addAttribute("orgList", _orgList);
 
 		// 取得指定时间区间（近40天）
