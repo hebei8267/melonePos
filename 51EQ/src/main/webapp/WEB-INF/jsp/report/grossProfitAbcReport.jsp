@@ -157,8 +157,8 @@
                     <select name="abcType" class="input-medium">
                     	<option value=""></option>
                     	<option value="1" <c:if test="${abcType == '1'}">selected</c:if>>合计销售金额</option>
-                    	<%-- <option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
-                    	<option value="3" <c:if test="${abcType == '3'}">selected</c:if>>合计销售毛利</option> --%>
+                    	<option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
+                    	<%-- <option value="3" <c:if test="${abcType == '3'}">selected</c:if>>合计销售毛利</option> --%>
                     </select>
                
                		&nbsp;&nbsp;
@@ -184,6 +184,9 @@
 	                        	分析表A
 	                        	<c:if test="${abcType == '1'}">
 	                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalA} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+	                        	</c:if>
+	                        	<c:if test="${abcType == '2'}">
+	                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalA} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
 	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
@@ -232,8 +235,11 @@
 	                        <div class="caption">
 		                        分析表B
 		                        <c:if test="${abcType == '1'}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalB} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalB} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
 		                        </c:if>
+		                        <c:if test="${abcType == '2'}">
+	                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalB} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
+	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>
@@ -282,8 +288,11 @@
 	                        <div class="caption">
 		                        分析表C
 		                        <c:if test="${abcType == '1'}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalC} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
+		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalC} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(元)  销售金额 / 总销售金额</span>
 		                        </c:if>
+		                        <c:if test="${abcType == '2'}">
+	                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalC} / ${vo.total}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
+	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>

@@ -65,4 +65,9 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	public SalesDayTotalGoods getTotalPosAmt(Map<String, String> param);
 
 	public List<SalesDayTotalGoods> getTotalPosAmtInfo(Map<String, String> param);
+
+	/** 取得合计销售数量 */
+	public SalesDayTotalGoods getTotalPosQty(Map<String, String> param);
+
+	public List<SalesDayTotalGoods> getTotalPosQtyInfo(Map<String, String> param);
 }

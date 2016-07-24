@@ -51,7 +51,7 @@ public class GrossProfitAbcManager {
 		if (null == total) {
 			return vo;
 		}
-		
+
 		List<SalesDayTotalGoods> _totalList = salesDayTotalGoodsMyBatisDao.getTotalPosAmtInfo(param);
 
 		BigDecimal total_1 = total.getPosAmt().multiply(abcParam1);
@@ -98,10 +98,77 @@ public class GrossProfitAbcManager {
 			return getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
 					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")));
 		} else if ("2".equals(abcType)) {// 合计销售数量
-
+			return getPosNumInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
+					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")));
 		} else {// 合计销售毛利
 
 		}
 		return null;
+	}
+
+	/**
+	 * 合计销售数量
+	 * 
+	 * @throws ParseException
+	 */
+	private GrossProfitAbcVo getPosNumInfo(String startDate, String endDate, String orgId, String itemSubno, String itemName,
+			String itemType, BigDecimal abcParam1, BigDecimal abcParam2) throws ParseException {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		if (StringUtils.isNotBlank(orgId)) {
+			param.put("orgId", orgId);
+		}
+		if (StringUtils.isNotBlank(itemSubno)) {
+			param.put("itemSubno", itemSubno);
+		}
+		if (StringUtils.isNotBlank(itemName)) {
+			param.put("itemName", "%" + itemName + "%");
+		}
+		if (StringUtils.isNotBlank(itemType)) {
+			param.put("itemType", itemType);
+		}
+
+		GrossProfitAbcVo vo = new GrossProfitAbcVo();
+		SalesDayTotalGoods total = salesDayTotalGoodsMyBatisDao.getTotalPosQty(param);
+		if (null == total) {
+			return vo;
+		}
+
+		List<SalesDayTotalGoods> _totalList = salesDayTotalGoodsMyBatisDao.getTotalPosQtyInfo(param);
+
+		BigDecimal total_1 = total.getPosQty().multiply(abcParam1);
+		BigDecimal total_2 = total.getPosQty().multiply(abcParam1.add(abcParam2));
+
+		List<SalesDayTotalGoods> _list1 = vo.getListA();
+		List<SalesDayTotalGoods> _list2 = vo.getListB();
+		List<SalesDayTotalGoods> _list3 = vo.getListC();
+
+		vo.setTotal(total.getPosQty());
+
+		// 时间间隔（单位：天）
+		long _spanDay = DateUtils.getDateSpanDay(startDate, endDate) + 1;
+		BigDecimal _tmp_total = new BigDecimal("0");
+		for (SalesDayTotalGoods _s : _totalList) {
+			_s.setSpanDay(_spanDay);
+
+			_tmp_total = _tmp_total.add(_s.getPosQty());
+
+			if (_tmp_total.compareTo(total_1) == -1) {
+				_list1.add(_s);
+
+				vo.setTotalA(vo.getTotalA().add(_s.getPosQty()));
+			} else if (_tmp_total.compareTo(total_2) == -1) {
+				_list2.add(_s);
+
+				vo.setTotalB(vo.getTotalB().add(_s.getPosQty()));
+			} else {
+				_list3.add(_s);
+
+				vo.setTotalC(vo.getTotalC().add(_s.getPosQty()));
+			}
+		}
+
+		return vo;
 	}
 }

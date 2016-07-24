@@ -80,41 +80,42 @@
                                 <th rowspan="2" class="center">
                                     货号
                                 </th>
-                                <th rowspan="2" class="center">
+                                <th rowspan="2" class="center" width="80">
                                     名称
-                                </th>
-                               	<c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
-                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                    进价
-                                </th>
-                                </c:if>
-                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
-                                    售价
                                 </th>
                                 
                                 <th rowspan="2" class="center">
                                     机构
                                 </th>
-                                <th rowspan="2" class="center">
-                                    库存量
+                                
+                                <th rowspan="2" class="center" width="50" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                    四周<br>销售量
                                 </th>
-                                <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
-                                    半月销售量
+                                <th rowspan="2" class="center" width="55" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                    半月<br>销售量<br>[前/后]
                                 </th>
-                                <th rowspan="2" class="center"  style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                    库<br>存<br>量
+                                </th>
+                                <th rowspan="2" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     调货
                                 </th>
-                               	<th colspan="5" class="center">
+                               	<th colspan="4" class="center">
                                     销量(件)
                                 </th>
                                 <th colspan="5" class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">
                                     销售额(元)
                                 </th>
+                                <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
+                                <th rowspan="2" class="center">
+                                    进价
+                                </th>
+                                </c:if>
+                                <th rowspan="2" class="center">
+                                    售价
+                                </th>
                             </tr>
                             <tr>
-                                <th class="center">
-                                    合计
-                                </th>
                                 <th class="center">
                                     近一周
                                 </th>
@@ -159,24 +160,19 @@
                                     </td>
                                     </c:if>
                                     
-                                    <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
-                                    <td class="center">
-                                    	${salesWeekGoods.stockAmt}
-                                    </td>
-                                    </c:if>
-                                    
-                                    <td class="center">
-                                    	${salesWeekGoods.itemSaleAmt}
-                                    </td>
-                                    
                                     <td class="center font1">
                                     	${salesWeekGoods.orgId}
                                     </td>
+                                    
                                     <td class="right">
-                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
+                                    	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/></label>
                                     </td>
                                     <td class="center font2">
                                     	<fmt:formatNumber value="${salesWeekGoods.hmPosQty}" maxFractionDigits="0"/>
+                                    </td>
+                                    
+                                    <td class="right">
+                                    	<fmt:formatNumber value="${salesWeekGoods.stockQty}" maxFractionDigits="0"/>
                                     </td>
                                     
                                     <td class="center font2">
@@ -205,9 +201,7 @@
                                     	</c:if>
                                     </td>
                                     
-                                    <td class="right">
-                                    	<label class="font1"><fmt:formatNumber value="${salesWeekGoods.posQtyTotal}" maxFractionDigits="0"/></label>
-                                    </td>
+                                    
                                     <td class="right">
                                     	<fmt:formatNumber value="${salesWeekGoods.posQty1}" maxFractionDigits="0"/>
                                     </td>
@@ -237,6 +231,15 @@
                                     	<fmt:formatNumber value="${salesWeekGoods.posAmt4}" maxFractionDigits="0"/>
                                     </td>
                                     
+                                    <c:if test="${sessionScope.__SESSION_USER_INFO.orgUuid == 1}">
+                                    <td class="center">
+                                    	${salesWeekGoods.stockAmt}
+                                    </td>
+                                    </c:if>
+                                    
+                                    <td class="center">
+                                    	${salesWeekGoods.itemSaleAmt}
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
