@@ -61,10 +61,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<input type="hidden" name="orgId" id="orgId" value="${orgId}"/>
-                            	<input type="hidden" name="optDateStart" id="optDateStart" value="${optDateStart}"/>
-                            	<input type="hidden" name="optDateEnd" id="optDateEnd" value="${optDateEnd}"/>
-                            	<input type="hidden" name="itemClsNo" id="itemClsNo"/>
                             	<c:forEach items="${sumSaleRamtList}" var="sumSaleRamt">
                             	<tr>
                                  	<td class="center">

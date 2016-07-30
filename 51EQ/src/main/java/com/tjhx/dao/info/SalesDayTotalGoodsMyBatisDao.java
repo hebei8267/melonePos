@@ -46,20 +46,20 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt(SalesDayTotalGoods salesDayTotalGoods);
 
 	/**
-	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（前15名）
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（前30名）
 	 * 
 	 * @param salesDayTotalGoods
 	 * @return
 	 */
-	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Top(SalesDayTotalGoods salesDayTotalGoods);
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Top_Item(SalesDayTotalGoods salesDayTotalGoods);
 
 	/**
-	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（后15名）
+	 * 取得指定店指定时间区间内销售信息排名(按类别)--按销售额排序（后30名）
 	 * 
 	 * @param salesDayTotalGoods
 	 * @return
 	 */
-	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down(SalesDayTotalGoods salesDayTotalGoods);
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down_Item(SalesDayTotalGoods salesDayTotalGoods);
 
 	/** 取得合计销售金额 */
 	public SalesDayTotalGoods getTotalPosAmt(Map<String, String> param);
@@ -70,4 +70,10 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	public SalesDayTotalGoods getTotalPosQty(Map<String, String> param);
 
 	public List<SalesDayTotalGoods> getTotalPosQtyInfo(Map<String, String> param);
+
+	/** 取得指定店指定时间区间内销售信息排名(按供应商)--按销售额排序（前30名） */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Top_Supplier(SalesDayTotalGoods param);
+
+	/** 取得指定店指定时间区间内销售信息排名(按供应商)--按销售额排序（后30名） */
+	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down_Supplier(SalesDayTotalGoods param);
 }

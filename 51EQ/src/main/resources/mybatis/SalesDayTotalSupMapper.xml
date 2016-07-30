@@ -46,7 +46,8 @@
 		select
 			sd.supplier_bw_id,
 	    	sup.name AS supplier_name,
-	    	SUM(sd.sale_amt) AS sale_amt
+	    	SUM(sd.sale_amt) AS sale_amt,
+	    	SUM(sd.sale_qty) AS sale_qty
 		from 
 			t_sales_day_total_sup sd,
     		t_supplier sup
@@ -62,6 +63,7 @@
 		SELECT
 		    sd.supplier_bw_id,
 		    sup.name AS supplier_name,
+		    SUM(sd.sale_amt) AS sale_amt,
 		    SUM(sd.sale_qty) AS sale_qty
 		FROM
 			t_sales_day_total_sup sd,
