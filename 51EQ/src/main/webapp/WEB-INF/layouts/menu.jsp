@@ -269,11 +269,13 @@
 									<li class="divider"></li>
 								</c:if>
 								
+								<!-- 
 								<c:if test="${_permIdList.contains('22')}">
 									<li>
 										<a href="${sc_ctx}/salesDayItemChartReport/bar_init">类别销售信息一览(图形)</a>
 									</li>
 								</c:if>
+								 -->
 								<c:if test="${_permIdList.contains('23')}">
 									<li>
 										<a href="${sc_ctx}/salesDayItemChartReport/pie_init">类别销售信息对比(图形)</a>

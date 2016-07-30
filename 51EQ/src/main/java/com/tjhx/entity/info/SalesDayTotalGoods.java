@@ -308,9 +308,9 @@ public class SalesDayTotalGoods extends IdEntity {
 	@Transient
 	public BigDecimal getAverageDailySales() {
 
-		return posQty.divide(new BigDecimal(spanDay), 1);
+		//return posQty.divide(new BigDecimal(spanDay), 1);
 
-		// return averageDailySales;
+		 return averageDailySales;
 	}
 
 	/**

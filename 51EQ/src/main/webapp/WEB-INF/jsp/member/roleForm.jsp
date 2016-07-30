@@ -431,6 +431,7 @@
 							<td><input type="checkbox" name="perm" value="61">货商销售信息对比</td>
 							</c:if>
 						</tr>
+						<!-- 
 						<tr>
 							<c:if test="${role.permIdList.contains('22')}">
 							<td><input type="checkbox" name="perm" value="22" checked>类别销售信息一览(图形)</td>
@@ -439,6 +440,7 @@
 							<td><input type="checkbox" name="perm" value="22">类别销售信息一览(图形)</td>
 							</c:if>
 						</tr>
+						 -->
 						<tr>
 							<c:if test="${role.permIdList.contains('23')}">
 							<td><input type="checkbox" name="perm" value="23" checked>类别销售信息对比(图形)</td>
