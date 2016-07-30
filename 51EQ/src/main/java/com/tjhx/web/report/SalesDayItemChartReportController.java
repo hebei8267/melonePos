@@ -298,10 +298,10 @@ public class SalesDayItemChartReportController extends BaseController {
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top_Item(_startDate, _endDate, orgId,
-				itemNo);
-		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down_Item(_startDate, _endDate, orgId,
-				itemNo);
+		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top_Item(_startDate, _endDate,
+				orgId, itemNo);
+		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down_Item(_startDate, _endDate,
+				orgId, itemNo);
 		ItemType itemType = itemTypeManager.getByItemNo(itemNo);
 
 		model.addAttribute("itemType", itemType);
