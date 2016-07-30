@@ -63,8 +63,6 @@ public class SalesDayTotalGoods extends IdEntity {
 	private String itemNo;
 	/** 供应商名称 */
 	private String supName;
-	/** 供应商编号 */
-	private String supplierBwId;
 	private String orderMode;
 
 	/**
@@ -310,9 +308,9 @@ public class SalesDayTotalGoods extends IdEntity {
 	@Transient
 	public BigDecimal getAverageDailySales() {
 
-		// return posQty.divide(new BigDecimal(spanDay), 1);
+		return posQty.divide(new BigDecimal(spanDay), 1);
 
-		return averageDailySales;
+		// return averageDailySales;
 	}
 
 	/**
@@ -455,25 +453,6 @@ public class SalesDayTotalGoods extends IdEntity {
 	 */
 	public void setSupName(String supName) {
 		this.supName = supName;
-	}
-
-	/**
-	 * 取得供应商编号
-	 * 
-	 * @return 供应商编号
-	 */
-	@Transient
-	public String getSupplierBwId() {
-		return supplierBwId;
-	}
-
-	/**
-	 * 设置供应商编号
-	 * 
-	 * @param supplierBwId 供应商编号
-	 */
-	public void setSupplierBwId(String supplierBwId) {
-		this.supplierBwId = supplierBwId;
 	}
 
 	/**
