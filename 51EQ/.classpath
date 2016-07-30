@@ -10,7 +10,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aspectjrt.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aspectjtools.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/cglib-2.2.2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-beanutils-1.8.3.jar" sourcepath="/Users/tao_tao/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-dbcp-1.4.jar"/>
@@ -75,7 +75,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-jexl-2.1.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/quartz-1.8.4.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javacryption-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-core-1.0.5.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jxls-reader-1.0.5.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>

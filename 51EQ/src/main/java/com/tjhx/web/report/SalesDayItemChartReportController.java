@@ -48,7 +48,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	}
 
 	@RequestMapping(value = "bar_search")
-	public String salesDayChartReportSearch1_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	public String salesDayChartReportSearch1_Action(Model model, HttpServletRequest request)
+			throws ServletRequestBindingException {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -89,7 +90,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	}
 
 	@RequestMapping(value = "pie_search")
-	public String salesDayChartReportSearch2_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	public String salesDayChartReportSearch2_Action(Model model, HttpServletRequest request)
+			throws ServletRequestBindingException {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		model.addAttribute("optDateShow_start", optDateStart);
@@ -98,54 +100,27 @@ public class SalesDayItemChartReportController extends BaseController {
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<String> _saleRamtJsonList = new ArrayList<String>();
-		List<String> _saleRqtyJsonList = new ArrayList<String>();
+		List<String> _jsonStrList = new ArrayList<String>();
 		List<String> _orgNameList = new ArrayList<String>();
 		List<String> _orgIdList = new ArrayList<String>();
 		// 合计
-		_saleRamtJsonList.add(getSumSaleRamtJsonStr(_startDate, _endDate));
-		_saleRqtyJsonList.add(getSumSaleRqtyJsonStr(_startDate, _endDate));
+		_jsonStrList.add(getSumSaleRamtJsonStr(_startDate, _endDate));
 		_orgNameList.add("合计");
 		_orgIdList.add(Constants.ROOT_ORG_ID);
 
-		List<Organization> _orgList = orgManager.getOpenSubOrganization();
+		List<Organization> _orgList = orgManager.getSubOrganization();
 		for (Organization org : _orgList) {
 			// 各门店
-			_saleRamtJsonList.add(getSumSaleRamtJsonStr(_startDate, _endDate, org.getId()));
-			_saleRqtyJsonList.add(getSumSaleRqtyJsonStr(_startDate, _endDate, org.getId()));
+			_jsonStrList.add(getSumSaleRamtJsonStr(_startDate, _endDate, org.getId()));
 			_orgNameList.add(org.getName());
 			_orgIdList.add(org.getId());
 		}
 
-		model.addAttribute("saleRamtJsonList", _saleRamtJsonList);
-		model.addAttribute("saleRqtyJsonList", _saleRqtyJsonList);
+		model.addAttribute("saleRamtJsonList", _jsonStrList);
 		model.addAttribute("orgNameList", _orgNameList);
 		model.addAttribute("orgIdList", _orgIdList);
 
 		return "report/salesDayItemChartReport_pie";
-	}
-
-	/**
-	 * 取得合计机构指定时间区间的销售合计信息
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	private String getSumSaleRqtyJsonStr(String startDate, String endDate) {
-		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-		int num = sysConfig.getSalesDayItemTotalShowNum();
-
-		SalesDayTotalItem param = new SalesDayTotalItem();
-		param.setOptDateStart(startDate);
-		param.setOptDateEnd(endDate);
-		// 取得合计实销金额（指定时间区间/机构）
-		List<SalesDayTotalItem> _sumSaleRqtyList = salesDayTotalItemManager.getSumSaleRqtyList(param);
-		if (null != _sumSaleRqtyList && _sumSaleRqtyList.size() > num) {
-			_sumSaleRqtyList = _sumSaleRqtyList.subList(0, num);
-		}
-		JsonMapper mapper = new JsonMapper();
-		return mapper.toJson(_sumSaleRqtyList);
 	}
 
 	/**
@@ -172,7 +147,7 @@ public class SalesDayItemChartReportController extends BaseController {
 	}
 
 	/**
-	 * 取得指定机构和时间区间的销售合计信息(按销售额排序)
+	 * 取得指定机构和时间区间的销售合计信息
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -188,46 +163,6 @@ public class SalesDayItemChartReportController extends BaseController {
 		// 取得合计实销金额（指定时间区间/机构）
 		List<SalesDayTotalItem> _sumSaleRamtList = salesDayTotalItemManager.getSumSaleRamtList(param);
 		return _sumSaleRamtList;
-	}
-
-	/**
-	 * 取得指定机构和时间区间的销售合计信息(按销售数量排序)
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @param orgId
-	 * @return
-	 */
-	private List<SalesDayTotalItem> getSumSaleRqtyList(String startDate, String endDate, String orgId) {
-		SalesDayTotalItem param = new SalesDayTotalItem();
-		param.setOptDateStart(startDate);
-		param.setOptDateEnd(endDate);
-		param.setOrgId(orgId);
-
-		// 取得合计实销金额（指定时间区间/机构）
-		List<SalesDayTotalItem> _sumSaleRqtyList = salesDayTotalItemManager.getSumSaleRqtyList(param);
-		return _sumSaleRqtyList;
-	}
-
-	/**
-	 * 取得指定机构和时间区间的销售合计信息
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @param orgId
-	 * @return
-	 */
-	private String getSumSaleRqtyJsonStr(String startDate, String endDate, String orgId) {
-		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-		int num = sysConfig.getSalesDayItemTotalShowNum();
-
-		List<SalesDayTotalItem> _sumSaleRqtyList = getSumSaleRqtyList(startDate, endDate, orgId);
-
-		if (null != _sumSaleRqtyList && _sumSaleRqtyList.size() > num) {
-			_sumSaleRqtyList = _sumSaleRqtyList.subList(0, num);
-		}
-		JsonMapper mapper = new JsonMapper();
-		return mapper.toJson(_sumSaleRqtyList);
 	}
 
 	/**
@@ -260,7 +195,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	 * @throws ServletRequestBindingException
 	 */
 	@RequestMapping(value = "pie_detail_list")
-	public String salesDayChartReportDetailList_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	public String salesDayChartReportDetailList_Action(Model model, HttpServletRequest request)
+			throws ServletRequestBindingException {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -289,7 +225,8 @@ public class SalesDayItemChartReportController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "org_goods_list")
-	public String orgGoodsList_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException, ParseException {
+	public String orgGoodsList_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException,
+			ParseException {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -298,10 +235,10 @@ public class SalesDayItemChartReportController extends BaseController {
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top_Item(_startDate, _endDate, orgId,
-				itemNo);
-		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down_Item(_startDate, _endDate, orgId,
-				itemNo);
+		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top(_startDate, _endDate,
+				orgId, itemNo);
+		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down(_startDate,
+				_endDate, orgId, itemNo);
 		ItemType itemType = itemTypeManager.getByItemNo(itemNo);
 
 		model.addAttribute("itemType", itemType);
