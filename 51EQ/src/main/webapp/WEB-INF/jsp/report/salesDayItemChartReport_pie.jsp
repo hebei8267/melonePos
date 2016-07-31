@@ -17,8 +17,9 @@
 			margin-bottom: 10px;
 		}
     	</style>
-    	<link rel="stylesheet" type="text/css" href="${ctx}/static/css/dhtmlxchart.css">
-        <script src="${ctx}/static/js/dhtmlxchart.js" type="text/javascript"></script>
+    	<script src="${ctx}/static/amcharts_3.20/amcharts/amcharts.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/serial.js"></script>
+		<script src="${ctx}/static/amcharts_3.20/amcharts/themes/light.js"></script>
 
         <script>
             $(function() {
@@ -90,17 +91,16 @@
 				<div class="row">
 					<div class="span12 cash_daily"></div>
 					
-					<div class="span12">
-						<h4>${orgNameList.get(status1.index) } - 销售金额</h4>
+					<div class="span12" align="right">
 						<c:if test="${status1.index != 0}" >
-						<a href="#" onclick="setOrgId('${orgIdList.get(status1.index) }');" class="btn btn-warning"/>详细</a>
+						<a href="#" onclick="setOrgId('${orgIdList.get(status1.index) }');" class="btn btn-warning"/>>>更多</a>
 						</c:if>
 					</div>
 					
-					<div class="span6"	style="margin-top: 20px;">
+					<div class="span6"	style="margin-top: 10px;">
 	                	<div id="chart1${status1.index + 1}" style="width:570px;height:400px;border:1px solid #A4BED4;"></div>
 	                </div>
-	                <div class="span6"	style="margin-top: 20px;">
+	                <div class="span6"	style="margin-top: 10px;">
 	                	<div id="chart2${status1.index + 1}" style="width:570px;height:400px;border:1px solid #A4BED4;"></div>
 	             	</div>
              	</div>
@@ -112,45 +112,98 @@
 		<script>
 			$(function() {
 				<c:forEach items="${saleRamtJsonList}" var="saleRamtJson" varStatus="status1">
-				var _saleRamtJson${status1.index + 1} = ${saleRamtJson}				
-				
-				var pieChart${status1.index + 1} = new dhtmlXChart({
-					view : "pie",
-					container : "chart1${status1.index + 1}",
-					value : "#saleRamt#",
-					labelOffset : -30,
-					label : function(obj) {
-						var sum = pieChart${status1.index + 1}.sum("#saleRamt#");
-						var text = Math.round(parseFloat(obj.saleRamt) / sum * 100) + "%";
-						return "<div class='label' style='border:1px solid'>" + text + "</div>";
+				var _saleRamtJson${status1.index + 1} = ${saleRamtJson}
+				var chart1${status1.index + 1} = AmCharts.makeChart("chart1${status1.index + 1}", {
+					"type": "serial",
+					"theme": "light",
+					"categoryField": "itemShortName",
+					"rotate": true,
+					"startDuration": 1,
+					"categoryAxis": {
+						"gridPosition": "start",
+				        "axisAlpha": 0,
+				        "gridAlpha": 0,
+				        "position": "left"
 					},
-					tooltip: "#saleRamt#元    #itemName#",
-					legend: "#itemShortName#"
-				});
-				pieChart${status1.index + 1}.parse(_saleRamtJson${status1.index + 1}, "json");
-				
-				var barChart${status1.index + 1} = new dhtmlXChart({
-					view : "barH",
-					container : "chart2${status1.index + 1}",
-					value : "#saleRamt#",
-					label : "#saleRamt#",
-					barWidth : 30,
-					radius : 2,
-					tooltip : {
-						template : "#saleRamt#元    #itemName#"
-					},
-					yAxis : {
-						template : "#itemShortName#"
-					},
-					xAxis: {
-		            	title : "销 售 金 额"
-		            },
-					padding : {
-						left : 90,
-						right : 70
+					"trendLines": [],
+					"graphs": [
+						{
+							"balloonText": "<b>类别:[[category]]<br>销售金额[[value]]元<br>销售数量[[saleRqty]]个</b>",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]元",
+							"labelOffset": 0,
+							"lineAlpha": 0.2,
+							"type": "column",
+							"valueField": "saleRamt"
+						}
+					],
+					"guides": [],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"position": "top",
+							"axisAlpha": 0,
+							"title": "${orgNameList.get(status1.index) } - 销售金额"
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"titles": [],
+					"dataProvider": _saleRamtJson${status1.index + 1},
+					"export": {
+				    		"enabled": true
 					}
+				
 				});
-				barChart${status1.index + 1}.parse(_saleRamtJson${status1.index + 1}, "json");
+				
+				</c:forEach>
+				
+				
+				<c:forEach items="${saleRqtyJsonList}" var="saleRqtyJson" varStatus="status1">
+				var _saleRqtyJson${status1.index + 1} = ${saleRqtyJson}				
+				var chart2${status1.index + 1} = AmCharts.makeChart("chart2${status1.index + 1}", {
+					"type": "serial",
+					"theme": "light",
+					"categoryField": "itemShortName",
+					"rotate": true,
+					"startDuration": 1,
+					"categoryAxis": {
+						"gridPosition": "start",
+				        "axisAlpha": 0,
+				        "gridAlpha": 0,
+				        "position": "left"
+					},
+					"trendLines": [],
+					"graphs": [
+						{
+							"balloonText": "<b>类别:[[category]]<br>销售金额[[saleRamt]]元<br>销售数量[[value]]个</b>",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]个",
+							"labelOffset": 0,
+							"lineAlpha": 0.2,
+							"type": "column",
+							"valueField": "saleRqty"
+						}
+					],
+					"guides": [],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"position": "top",
+							"axisAlpha": 0,
+							"title": "${orgNameList.get(status1.index) } - 销售数量"
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"titles": [],
+					"dataProvider": _saleRqtyJson${status1.index + 1},
+					"export": {
+				    		"enabled": true
+					}
+				
+				});
+				
 				</c:forEach>
 			});
 		</script>
