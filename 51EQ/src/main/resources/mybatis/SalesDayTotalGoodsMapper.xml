@@ -184,10 +184,9 @@
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
-		    t_store_detail sd
+		    t_store_detail_one_day sd
 		ON
 		    sd.item_subno = g.item_subno
-		AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
@@ -219,10 +218,9 @@
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
-		    t_store_detail sd
+		    t_store_detail_one_day sd
 		ON
 		    sd.item_subno = g.item_subno
-		AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
@@ -253,10 +251,9 @@
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
-		    t_store_detail sd
+		    t_store_detail_one_day sd
 		ON
 		    sd.item_subno = g.item_subno
-		AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
@@ -286,10 +283,9 @@
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
-		    t_store_detail sd
+		    t_store_detail_one_day sd
 		ON
 		    sd.item_subno = g.item_subno
-		AND sd.opt_date = DATE_FORMAT( date_sub(NOW(),interval 1 DAY),'%Y%m%d')
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
