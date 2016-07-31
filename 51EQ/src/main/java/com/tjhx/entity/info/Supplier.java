@@ -167,7 +167,6 @@ public class Supplier extends IdEntity {
 	 * 
 	 * @return index 行号
 	 */
-	@NaturalId
 	@Column(name = "_INDEX")
 	public Integer getIndex() {
 		return index;
