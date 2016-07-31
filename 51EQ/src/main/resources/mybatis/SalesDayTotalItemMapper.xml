@@ -66,10 +66,11 @@
 	<!-- 取得t_sales_day_total信息(根据参数) -->
 	<select id="getSumSaleRqtyList" parameterType="com.tjhx.entity.info.SalesDayTotalItem" resultMap="Result_Map_SalesDayTotalItem">
 		SELECT
-		    sd.item_cls_no,
-		    it.item_short_name,
-		    it.item_name,
-		    SUM(sd.sale_rqty) AS sale_rqty
+			sd.item_cls_no,
+	    	it.item_short_name,
+	    	it.item_name,
+	    	SUM(sd.sale_ramt) AS sale_ramt,
+	    	SUM(sd.sale_rqty) AS sale_rqty
 		FROM
 			t_sales_day_total_item sd,
     		t_item_type it
