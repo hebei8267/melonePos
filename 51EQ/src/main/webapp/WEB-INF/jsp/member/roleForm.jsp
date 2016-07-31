@@ -431,6 +431,7 @@
 							<td><input type="checkbox" name="perm" value="61">货商销售信息对比</td>
 							</c:if>
 						</tr>
+						<!-- 
 						<tr>
 							<c:if test="${role.permIdList.contains('22')}">
 							<td><input type="checkbox" name="perm" value="22" checked>类别销售信息一览(图形)</td>
@@ -439,12 +440,21 @@
 							<td><input type="checkbox" name="perm" value="22">类别销售信息一览(图形)</td>
 							</c:if>
 						</tr>
+						 -->
 						<tr>
 							<c:if test="${role.permIdList.contains('23')}">
 							<td><input type="checkbox" name="perm" value="23" checked>类别销售信息对比(图形)</td>
 							</c:if>
 							<c:if test="${!role.permIdList.contains('23')}">
 							<td><input type="checkbox" name="perm" value="23">类别销售信息对比(图形)</td>
+							</c:if>
+						</tr>
+						<tr>
+							<c:if test="${role.permIdList.contains('25')}">
+							<td><input type="checkbox" name="perm" value="25" checked>货商销售信息对比(图形)</td>
+							</c:if>
+							<c:if test="${!role.permIdList.contains('25')}">
+							<td><input type="checkbox" name="perm" value="25">货商销售信息对比(图形)</td>
 							</c:if>
 						</tr>
 						<tr>
@@ -463,6 +473,7 @@
 							<td><input type="checkbox" name="perm" value="46">销售信息排名(按类别)-(门店)</td>
 							</c:if>
 						</tr>
+						<!-- 
 						<tr>
 							<c:if test="${role.permIdList.contains('24')}">
 							<td><input type="checkbox" name="perm" value="24" checked>货商销售信息一览(图形)</td>
@@ -471,14 +482,7 @@
 							<td><input type="checkbox" name="perm" value="24">货商销售信息一览(图形)</td>
 							</c:if>
 						</tr>
-						<tr>
-							<c:if test="${role.permIdList.contains('25')}">
-							<td><input type="checkbox" name="perm" value="25" checked>货商销售信息对比(图形)</td>
-							</c:if>
-							<c:if test="${!role.permIdList.contains('25')}">
-							<td><input type="checkbox" name="perm" value="25">货商销售信息对比(图形)</td>
-							</c:if>
-						</tr>
+						-->
 						<tr>
 							<c:if test="${role.permIdList.contains('44')}">
 							<td><input type="checkbox" name="perm" value="44" checked>日销售信息同期对比</td>
