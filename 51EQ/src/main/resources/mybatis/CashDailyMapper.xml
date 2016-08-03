@@ -190,6 +190,7 @@
 			and cash.opt_date_show = #{optDateShow}
 		where 
 			org.org_id != '000'
+		and org.closed_flg != true
 		order by 
 			org.org_id
 	</select>
