@@ -98,11 +98,31 @@ public class GrossProfitAbcController extends BaseController {
 
 		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
 		String itemNoArray = StringUtils.join(itemNoList, ",");
-		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray, itemSubno,
-				itemName, abcType, abcParam1, abcParam2, abcParam3);
+		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray,
+				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3);
 
 		model.addAttribute("vo", vo);
 
 		return "report/grossProfitAbcReport";
+	}
+
+	@RequestMapping(value = "abcModal")
+	public String abcModal_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+		String itemSubno = ServletRequestUtils.getStringParameter(request, "itemSubno");
+		String goodsName = ServletRequestUtils.getStringParameter(request, "goodsName");
+		String optDateShowStart = ServletRequestUtils.getStringParameter(request, "optDateShowStart");
+		String optDateShowEnd = ServletRequestUtils.getStringParameter(request, "optDateShowEnd");
+
+		// 取得销售门店信息（根据条码、销售时间段）
+		List<String> _saleOrgList = grossProfitAbcManager.getSaleOrgInfo(itemSubno, optDateShowStart, optDateShowEnd);
+		// 取得库存门店信息（根据条码）
+		List<String> _storeOrgList = grossProfitAbcManager.getStoreOrgInfo(itemSubno);
+
+		model.addAttribute("itemSubno", itemSubno);
+		model.addAttribute("goodsName", goodsName);
+		model.addAttribute("saleOrgList", _saleOrgList);
+		model.addAttribute("storeOrgList", _storeOrgList);
+
+		return "report/grossProfitAbcReport_abcModal";
 	}
 }

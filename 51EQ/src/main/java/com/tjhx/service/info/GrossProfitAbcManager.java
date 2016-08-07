@@ -171,4 +171,34 @@ public class GrossProfitAbcManager {
 
 		return vo;
 	}
+
+	/**
+	 * 取得销售门店信息（根据条码、销售时间段）
+	 * 
+	 * @param itemSubno
+	 * @param optDateShowStart
+	 * @param optDateShowEnd
+	 * @return
+	 */
+	public List<String> getSaleOrgInfo(String itemSubno, String optDateShowStart, String optDateShowEnd) {
+		String startDate = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
+		String endDate = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
+
+		Map<String, String> param = Maps.newHashMap();
+		param.put("itemSubno", itemSubno);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+
+		return salesDayTotalGoodsMyBatisDao.getSaleOrgInfo(param);
+	}
+
+	/**
+	 * 取得库存门店信息（根据条码）
+	 * 
+	 * @param itemSubno
+	 * @return
+	 */
+	public List<String> getStoreOrgInfo(String itemSubno) {
+		return salesDayTotalGoodsMyBatisDao.getStoreOrgInfo(itemSubno);
+	}
 }

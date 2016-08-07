@@ -76,4 +76,10 @@ public interface SalesDayTotalGoodsMyBatisDao {
 
 	/** 取得指定店指定时间区间内销售信息排名(按供应商)--按销售额排序（后30名） */
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down_Supplier(SalesDayTotalGoods param);
+
+	/** 取得销售门店信息（根据条码、销售时间段） */
+	public List<String> getSaleOrgInfo(Map<String, String> param);
+
+	/** 取得库存门店信息（根据条码） */
+	public List<String> getStoreOrgInfo(String itemSubno);
 }

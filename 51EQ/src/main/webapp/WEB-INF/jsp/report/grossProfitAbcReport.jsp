@@ -7,6 +7,9 @@
 <c:set var="sc_ctx">
     ${ctx}/sc
 </c:set>
+<c:set var="em_ctx">
+    ${ctx}/em
+</c:set>
 <!DOCTYPE html>
 <html>
     <head>
@@ -91,6 +94,21 @@
 			    var abcParam3 = $("#abcParam3").val();
 			    return (Number(abcParam1) + Number(abcParam2) + Number(abcParam3)) == 100
 			}, "A,B,C百分比输入错误");
+			
+			function _abcModalClick(itemSubno,goodsName){
+				var $modal_view = $('#_abcModal');
+
+				setTimeout(function() {
+					$modal_view.load('${em_ctx}/grossProfitAbc/abcModal', {
+						'itemSubno' : itemSubno,
+						'goodsName' : goodsName,
+						'optDateShowStart' : $("#optDateShow_start").val(),
+						'optDateShowEnd' : $("#optDateShow_end").val()
+						}, function() {
+						$modal_view.modal('show');
+					});
+				}, 200);
+			}
 		</script>
 		<style>
 		.font1 {
@@ -206,8 +224,6 @@
 	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="7">销售数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
-	                                        <!-- <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -215,7 +231,7 @@
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
-	                                        <td class="left">${saleInfo.goodsName }</td>
+	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="right">${saleInfo.averageDailySales }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
@@ -258,8 +274,6 @@
 	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="7">销售数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
-	                                        <!-- <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -267,7 +281,7 @@
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
-	                                        <td class="left">${saleInfo.goodsName }</td>
+	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="right">${saleInfo.averageDailySales }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
@@ -311,8 +325,6 @@
 	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="7">销售数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
-	                                        <!-- <th class="center" scope="col">有库存店数</th>
-	                                        <th class="center" scope="col">有销售店数</th> -->
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -320,7 +332,7 @@
 	                                    <tr>
 	                                        <td class="center">${status.index + 1}</td>
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
-	                                        <td class="left">${saleInfo.goodsName }</td>
+	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="right">${saleInfo.averageDailySales }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
 	                                        <td class="right">${saleInfo.posQty }</td>
@@ -337,5 +349,9 @@
          	</div>
          	</form>
         </div>
+        
+        <!-- Modal -->
+		<div id="_abcModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		</div>
 	</body>
 </html>
