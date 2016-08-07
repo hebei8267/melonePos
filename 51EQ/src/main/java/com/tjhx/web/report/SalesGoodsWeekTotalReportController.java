@@ -27,7 +27,7 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 	@Resource
 	private SalesWeekTotalGoodsManager salesWeekTotalGoodsManager;
 
-	@RequestMapping(value = {"init"})
+	@RequestMapping(value = { "init" })
 	public String init_Action(Model model) throws ServletRequestBindingException {
 
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
@@ -37,7 +37,7 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 		return "report/salesWeekGoodsTotalReport";
 	}
 
-	@RequestMapping(value = {"search"})
+	@RequestMapping(value = { "search" })
 	public String search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 
@@ -65,8 +65,7 @@ public class SalesGoodsWeekTotalReportController extends BaseController {
 
 		if (ArrayUtils.isNotEmpty(barcodes)) {
 			for (int i = 0; i < barcodes.length; i++) {
-				List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager
-						.getSalesWeekGoodsTotalList_ByBarcode(barcodes[i]);
+				List<ReqBill> salesWeekGoodsList = salesWeekTotalGoodsManager.getSalesWeekGoodsTotalList_ByBarcode(barcodes[i]);
 
 				list.add(salesWeekGoodsList);
 			}

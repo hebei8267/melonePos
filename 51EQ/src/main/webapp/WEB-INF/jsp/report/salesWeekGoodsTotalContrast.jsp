@@ -160,7 +160,8 @@
                                     </td>
                                     </c:if>
                                     
-                                    <td class="center font1">
+                                   
+                                    <td class="center font1" <c:if test="${('合计' == salesWeekGoods.orgId) || ('EQ+' == salesWeekGoods.orgId) || ('Infancy' == salesWeekGoods.orgId) || ('总部' == salesWeekGoods.orgId)}" >style="color: red;"</c:if>>
                                     	${salesWeekGoods.orgId}
                                     </td>
                                     

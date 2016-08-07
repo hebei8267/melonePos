@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.SalesDayTotalGoodsMyBatisDao;
@@ -24,6 +25,8 @@ import com.tjhx.entity.info.SalesWeekTotalGoods_2;
 import com.tjhx.entity.info.SalesWeekTotalGoods_3;
 import com.tjhx.entity.info.SalesWeekTotalGoods_4;
 import com.tjhx.entity.order.ReqBill;
+import com.tjhx.entity.struct.Organization;
+import com.tjhx.service.struct.OrganizationManager;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +44,8 @@ public class SalesWeekTotalGoodsManager {
 	private SalesWeekTotalGoods3JpaDao salesWeekTotalGoods3JpaDao;
 	@Resource
 	private SalesWeekTotalGoods4JpaDao salesWeekTotalGoods4JpaDao;
+	@Resource
+	private OrganizationManager orgManager;
 
 	/**
 	 * 取得重计算区间（近几周）
@@ -236,6 +241,49 @@ public class SalesWeekTotalGoodsManager {
 	}
 
 	/**
+	 * 计算合计
+	 * 
+	 * @param totalReqBill
+	 * @param barcode
+	 * @param orgIdName
+	 * @param reqBill
+	 */
+	private void calTotalReqBill(ReqBill totalReqBill, String barcode, String orgIdName, ReqBill reqBill) {
+		totalReqBill.setOrgId(orgIdName);
+		// 货号
+		totalReqBill.setBarcode(barcode);
+		// 名称
+		totalReqBill.setProductName(reqBill.getProductName());
+		// 销量(件) 近一周
+		totalReqBill.setPosQty1(totalReqBill.getPosQty1().add(reqBill.getPosQty1()));
+		// 销量(件) 近两周
+		totalReqBill.setPosQty2(totalReqBill.getPosQty2().add(reqBill.getPosQty2()));
+		// 销量(件) 近三周
+		totalReqBill.setPosQty3(totalReqBill.getPosQty3().add(reqBill.getPosQty3()));
+		// 销量(件) 近四周
+		totalReqBill.setPosQty4(totalReqBill.getPosQty4().add(reqBill.getPosQty4()));
+		// 销量(件) 合计
+		totalReqBill.setPosQtyTotal(totalReqBill.getPosQtyTotal().add(reqBill.getPosQtyTotal()));
+		// 销量(件) 合计
+		totalReqBill.setHmPosQty(totalReqBill.getHmPosQty().add(reqBill.getHmPosQty()));
+
+		// 库存量
+		totalReqBill.setStockQty(totalReqBill.getStockQty().add(reqBill.getStockQty()));
+		// 销售额(元) 近一周
+		totalReqBill.setPosAmt1(totalReqBill.getPosAmt1().add(reqBill.getPosAmt1()));
+		// 销售额(元) 近二周
+		totalReqBill.setPosAmt2(totalReqBill.getPosAmt2().add(reqBill.getPosAmt2()));
+		// 销售额(元) 近三周
+		totalReqBill.setPosAmt3(totalReqBill.getPosAmt3().add(reqBill.getPosAmt3()));
+		// 销售额(元) 近四周
+		totalReqBill.setPosAmt4(totalReqBill.getPosAmt4().add(reqBill.getPosAmt4()));
+		// 销售额(元)合计
+		totalReqBill.setPosAmtTotal(totalReqBill.getPosAmtTotal().add(reqBill.getPosAmtTotal()));
+
+		totalReqBill.setInQty(totalReqBill.getInQty().add(reqBill.getInQty()).subtract(reqBill.getOutQty()));
+	}
+
+	/**
 	 * 取得指定条码各门店近四周销售数据及库存情况
 	 * 
 	 * @param barcode 商品条码
@@ -268,43 +316,63 @@ public class SalesWeekTotalGoodsManager {
 			}
 
 			// ===================================
+			calTotalReqBill(totalReqBill, barcode, "合计", reqBill);
+		}
+		// 20160807按品牌分类
 
-			totalReqBill.setOrgId("合计");
-			// 货号
-			totalReqBill.setBarcode(barcode);
-			// 名称
-			totalReqBill.setProductName(reqBill.getProductName());
-			// 销量(件) 近一周
-			totalReqBill.setPosQty1(totalReqBill.getPosQty1().add(reqBill.getPosQty1()));
-			// 销量(件) 近两周
-			totalReqBill.setPosQty2(totalReqBill.getPosQty2().add(reqBill.getPosQty2()));
-			// 销量(件) 近三周
-			totalReqBill.setPosQty3(totalReqBill.getPosQty3().add(reqBill.getPosQty3()));
-			// 销量(件) 近四周
-			totalReqBill.setPosQty4(totalReqBill.getPosQty4().add(reqBill.getPosQty4()));
-			// 销量(件) 合计
-			totalReqBill.setPosQtyTotal(totalReqBill.getPosQtyTotal().add(reqBill.getPosQtyTotal()));
-			// 销量(件) 合计
-			totalReqBill.setHmPosQty(totalReqBill.getHmPosQty().add(reqBill.getHmPosQty()));
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
+		List<ReqBill> _eqList = calSalesWeekGoodsTotalList_EQ(orgList, list);
+		List<ReqBill> _infancyList = calSalesWeekGoodsTotalList_Infancy(orgList, list);
 
-			// 库存量
-			totalReqBill.setStockQty(totalReqBill.getStockQty().add(reqBill.getStockQty()));
-			// 销售额(元) 近一周
-			totalReqBill.setPosAmt1(totalReqBill.getPosAmt1().add(reqBill.getPosAmt1()));
-			// 销售额(元) 近二周
-			totalReqBill.setPosAmt2(totalReqBill.getPosAmt2().add(reqBill.getPosAmt2()));
-			// 销售额(元) 近三周
-			totalReqBill.setPosAmt3(totalReqBill.getPosAmt3().add(reqBill.getPosAmt3()));
-			// 销售额(元) 近四周
-			totalReqBill.setPosAmt4(totalReqBill.getPosAmt4().add(reqBill.getPosAmt4()));
-			// 销售额(元)合计
-			totalReqBill.setPosAmtTotal(totalReqBill.getPosAmtTotal().add(reqBill.getPosAmtTotal()));
+		List<ReqBill> _reList = Lists.newArrayList();
+		_reList.add(totalReqBill);
+		_reList.addAll(_eqList);
+		_reList.addAll(_infancyList);
+		// 总部
+		_reList.add(list.get(list.size() - 1));
 
-			totalReqBill.setInQty(totalReqBill.getInQty().add(reqBill.getInQty()).subtract(reqBill.getOutQty()));
+		return _reList;
+	}
+
+	private List<ReqBill> calSalesWeekGoodsTotalList_EQ(List<Organization> orgList, List<ReqBill> list) {
+		List<ReqBill> _eqList = Lists.newArrayList();
+
+		ReqBill totalReqBill = new ReqBill();
+		for (ReqBill reqBill : list) {
+
+			for (Organization _org : orgList) {
+				if ("EQ+".equals(_org.getBrand()) && _org.getName().equals(reqBill.getOrgId())) {
+					_eqList.add(reqBill);
+					calTotalReqBill(totalReqBill, reqBill.getBarcode(), "EQ+", reqBill);
+				}
+			}
+
 		}
 
-		list.add(0, totalReqBill);
-		return list;
+		_eqList.add(0, totalReqBill);
+
+		return _eqList;
+
+	}
+
+	private List<ReqBill> calSalesWeekGoodsTotalList_Infancy(List<Organization> orgList, List<ReqBill> list) {
+		List<ReqBill> _infancyList = Lists.newArrayList();
+
+		ReqBill totalReqBill = new ReqBill();
+		for (ReqBill reqBill : list) {
+			for (Organization _org : orgList) {
+				if ("Infancy".equals(_org.getBrand()) && _org.getName().equals(reqBill.getOrgId())) {
+					_infancyList.add(reqBill);
+					calTotalReqBill(totalReqBill, reqBill.getBarcode(), "Infancy", reqBill);
+				}
+			}
+
+		}
+
+		_infancyList.add(0, totalReqBill);
+
+		return _infancyList;
+
 	}
 
 }
