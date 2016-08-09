@@ -179,6 +179,7 @@ public class CashRunController extends BaseController {
 		cashRun.setRebateAmt(null);
 
 		cashRun.setZfbSaleAmt(null);
+		cashRun.setWxSaleAmt(null);
 
 		model.addAttribute("cashRun", cashRun);
 

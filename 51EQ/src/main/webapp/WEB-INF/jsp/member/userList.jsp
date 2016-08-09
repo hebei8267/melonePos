@@ -15,6 +15,10 @@
 				padding: 5px;
 				background-color: #99FF33;
 			}
+			._warn2 {
+				padding: 5px;
+				background-color: #f89406;
+			}
 		</style>
 		<script>
 			$().ready(function() {
@@ -126,7 +130,7 @@
 											启用
 										</c:if>
 										<c:if test="${user.valid != true}">
-											<span class='_warn1'>停用</span>
+											<span class='_warn2'>停用</span>
 										</c:if>
 										</td>
 										<td> ${user.loginName} </td>

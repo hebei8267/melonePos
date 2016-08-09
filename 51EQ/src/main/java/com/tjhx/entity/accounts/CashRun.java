@@ -90,7 +90,8 @@ public class CashRun extends IdEntity {
 
 	/** 支付宝销售额 */
 	private BigDecimal zfbSaleAmt = new BigDecimal("0");
-
+	/** 微信销售额 */
+	private BigDecimal wxSaleAmt = new BigDecimal("0");
 	/** 督导员 */
 	private String mngUserId;
 	// ############################################################################################
@@ -786,6 +787,24 @@ public class CashRun extends IdEntity {
 	 */
 	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
 		this.zfbSaleAmt = zfbSaleAmt;
+	}
+
+	/**
+	 * 取得微信销售额
+	 * 
+	 * @return wxSaleAmt 微信销售额
+	 */
+	public BigDecimal getWxSaleAmt() {
+		return wxSaleAmt;
+	}
+
+	/**
+	 * 设置微信销售额
+	 * 
+	 * @param wxSaleAmt 微信销售额
+	 */
+	public void setWxSaleAmt(BigDecimal wxSaleAmt) {
+		this.wxSaleAmt = wxSaleAmt;
 	}
 
 	/**

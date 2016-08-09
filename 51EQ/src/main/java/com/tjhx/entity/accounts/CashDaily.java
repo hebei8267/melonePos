@@ -76,7 +76,10 @@ public class CashDaily extends IdEntity {
 	private BigDecimal zfbSaleAmt = new BigDecimal("0");
 	/** 支付宝销售额 */
 	private BigDecimal bwZfbSaleAmt = new BigDecimal("0");
-
+	/** 微信销售额 */
+	private BigDecimal wxSaleAmt = new BigDecimal("0");
+	/** 微信销售额 */
+	private BigDecimal bwWxSaleAmt = new BigDecimal("0");
 	/** 督导员 */
 	private String mngUserId;
 	private String mngUserName;
@@ -681,6 +684,42 @@ public class CashDaily extends IdEntity {
 	 */
 	public void setBwZfbSaleAmt(BigDecimal bwZfbSaleAmt) {
 		this.bwZfbSaleAmt = bwZfbSaleAmt;
+	}
+
+	/**
+	 * 取得微信销售额
+	 * 
+	 * @return wxSaleAmt 微信销售额
+	 */
+	public BigDecimal getWxSaleAmt() {
+		return wxSaleAmt;
+	}
+
+	/**
+	 * 设置微信销售额
+	 * 
+	 * @param wxSaleAmt 微信销售额
+	 */
+	public void setWxSaleAmt(BigDecimal wxSaleAmt) {
+		this.wxSaleAmt = wxSaleAmt;
+	}
+
+	/**
+	 * 取得微信销售额
+	 * 
+	 * @return bwWxSaleAmt 微信销售额
+	 */
+	public BigDecimal getBwWxSaleAmt() {
+		return bwWxSaleAmt;
+	}
+
+	/**
+	 * 设置微信销售额
+	 * 
+	 * @param bwWxSaleAmt 微信销售额
+	 */
+	public void setBwWxSaleAmt(BigDecimal bwWxSaleAmt) {
+		this.bwWxSaleAmt = bwWxSaleAmt;
 	}
 
 	/**

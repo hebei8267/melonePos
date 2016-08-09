@@ -70,8 +70,11 @@ public class SaleReport {
 	private BigDecimal prePayTotalAmt = new BigDecimal("0");
 	/** 支付宝销售额 */
 	private BigDecimal zfbSaleAmt = new BigDecimal("0");
+	/** 微信销售额 */
+	private BigDecimal wxSaleAmt = new BigDecimal("0");
 	/** 督导员 */
 	private String mngUser;
+
 	/**
 	 * 取得行号
 	 * 
@@ -619,6 +622,8 @@ public class SaleReport {
 
 		// 支付宝销售额
 		this.zfbSaleAmt = _cashRun.getZfbSaleAmt();
+		// 微信销售额
+		this.wxSaleAmt = _cashRun.getWxSaleAmt();
 		// 督导员
 		this.mngUser = _cashRun.getMngUserId();
 	}
@@ -646,7 +651,8 @@ public class SaleReport {
 
 		// 支付宝销售额
 		this.zfbSaleAmt = this.zfbSaleAmt.add(_cashRun.getZfbSaleAmt());
-
+		// 微信销售额
+		this.wxSaleAmt = this.wxSaleAmt.add(_cashRun.getWxSaleAmt());
 		// 记录人
 		if (StringUtils.isNotBlank(this.userName)) {
 			this.userName += " / " + _cashRun.getUserName();
@@ -714,6 +720,24 @@ public class SaleReport {
 	 */
 	public void setZfbSaleAmt(BigDecimal zfbSaleAmt) {
 		this.zfbSaleAmt = zfbSaleAmt;
+	}
+
+	/**
+	 * 取得微信销售额
+	 * 
+	 * @return wxSaleAmt 微信销售额
+	 */
+	public BigDecimal getWxSaleAmt() {
+		return wxSaleAmt;
+	}
+
+	/**
+	 * 设置微信销售额
+	 * 
+	 * @param wxSaleAmt 微信销售额
+	 */
+	public void setWxSaleAmt(BigDecimal wxSaleAmt) {
+		this.wxSaleAmt = wxSaleAmt;
 	}
 
 	/**

@@ -77,7 +77,7 @@
                                         留存<br>金额
                                     </th>
                                     <th class="center">
-                                        当日销售额<br>(普通 / 支付宝 / 金卡[消费/返利] / 代金卷)
+                                        当日销售额<br>(普通 / 支付宝 / 微信 / 金卡[消费/返利] / 代金卷)
                                     </th>
                                     <th class="center">
                                         商场汇报<br>销售额
@@ -118,7 +118,7 @@
                                             ${noCashDaily.retainedAmt}
                                         </td>
                                         <td class="center">
-                                            ${noCashDaily.saleAmt} / ${noCashDaily.zfbSaleAmt} / ${noCashDaily.goldCardAmt} / ${noCashDaily.rebateAmt} / ${noCashDaily.couponValue}<br>(${noCashDaily.saleAmt + noCashDaily.zfbSaleAmt + noCashDaily.goldCardAmt + noCashDaily.rebateAmt + noCashDaily.couponValue})
+                                            ${noCashDaily.saleAmt} / ${noCashDaily.zfbSaleAmt} / ${noCashDaily.wxSaleAmt} / ${noCashDaily.goldCardAmt} / ${noCashDaily.rebateAmt} / ${noCashDaily.couponValue}<br>(${noCashDaily.saleAmt + noCashDaily.zfbSaleAmt + noCashDaily.wxSaleAmt + noCashDaily.goldCardAmt + noCashDaily.rebateAmt + noCashDaily.couponValue})
                                         </td>
                                         <td>
                                             ${noCashDaily.reportAmt}
@@ -232,7 +232,7 @@
                                             ${cashDaily.retainedAmt}
                                         </td>
                                         <td class="center">
-                                            ${cashDaily.saleAmt} / ${cashDaily.zfbSaleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}<br>(${cashDaily.saleAmt + cashDaily.zfbSaleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue})
+                                            ${cashDaily.saleAmt} / ${cashDaily.zfbSaleAmt} / ${cashDaily.wxSaleAmt} / ${cashDaily.goldCardAmt} / ${cashDaily.rebateAmt} / ${cashDaily.couponValue}<br>(${cashDaily.saleAmt + cashDaily.zfbSaleAmt + cashDaily.wxSaleAmt + cashDaily.goldCardAmt + cashDaily.rebateAmt + cashDaily.couponValue})
                                         </td>
                                         <td>
                                             ${cashDaily.reportAmt}

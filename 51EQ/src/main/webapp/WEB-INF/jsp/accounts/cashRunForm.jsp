@@ -91,6 +91,10 @@
                             required : true,
                             money : true
                         },
+                        wxSaleAmt : {
+                            required : true,
+                            money : true
+                        },
                         cardNum : {
                             required : true,
                             digits : true
@@ -156,14 +160,19 @@
                 });
 
                 $("#cashAmt").change(function() {
+                	carryingCashAmt();
+
                     adjustAmt();
+                    
                     saleAmt();
-                    calRetainedAmt();
                 });
                 $("#cardAmt").change(function() {
                     saleAmt();
                 });
                 $("#zfbSaleAmt").change(function() {
+                    saleAmt();
+                });
+                $("#wxSaleAmt").change(function() {
                     saleAmt();
                 });
                 $("#depositAmt").change(function() {
@@ -173,6 +182,8 @@
                     carryingCashAmt();
 
                     adjustAmt();
+                    
+                    saleAmt();
                 });
                 
                 $("input[name$='couponValue']").each(function(){
@@ -221,7 +232,7 @@
                 $("#retainedAmt").val(_result);
             }
 
-            // 当班销售金额 = 销售收现 + 支付宝销售额 ＋ 刷卡金额(单据) + 代金卷销售 + 金卡余额消费 + 金卡返利金额
+            // 当班销售金额 = 销售收现 + 支付宝销售额 + 微信销售额 + 刷卡金额(单据) + 代金卷销售 + 金卡余额消费 + 金卡返利金额
             function saleAmt() {
                 var _result = numAdd($("#saleCashAmt").val(), $("#cardAmt").val());
                 
@@ -239,8 +250,12 @@
                 // 支付宝销售额
                 var _result4 = 0;
                 _result4 = numAdd(_result4, $("#zfbSaleAmt").val());
+                
+             	// 微信销售额
+                var _result5 = 0;
+                _result5 = numAdd(_result5, $("#wxSaleAmt").val());
 
-                $("#_saleAmt").html(_result + " 元 + " + _result4 + " 元 + " + _result3 + " 元 + " + _result2 + " 元");
+                $("#_saleAmt").html("(现金／刷卡)" + _result + " 元 + (支付宝)" + _result4 + " 元 + (微信)" + _result5 + " 元 + (金卡)" + _result3 + " 元 + (代金卷)" + _result2 + " 元");
                 $("#saleAmt").val(_result);
             }
         </script>
@@ -388,9 +403,21 @@
                         	
                         	
                         	<tr>
-                        		<td class="right">支付宝 :</td>
-                        		<td colspan="3">
+                        		<td class="right" style="vertical-align: middle;">
+                        		<img style="-webkit-user-select: none" src="${ctx}/static/img/270-alipay.png">
+                        		支付宝
+                        		</td>
+                        		<td>
                         			<form:input	path="zfbSaleAmt" />&nbsp;元
+                        		</td>
+                        		
+                        		<td class="right" style="vertical-align: middle;">
+                        		<div>
+                        		<img style="-webkit-user-select: none" src="${ctx}/static/img/270-weixin.png">
+                        		微信
+                        		</td>
+                        		<td>
+                        			<form:input	path="wxSaleAmt" />&nbsp;元
                         		</td>
                         	</tr>
                         	<tr>
@@ -537,7 +564,8 @@
                         		</td>
                         		<td class="right">当班销售金额 :</td>
                         		<td>
-                        			<label class="left-control-label" id="_saleAmt">${cashRun.saleAmt} 元 + ${cashRun.zfbSaleAmt} 元 + ${cashRun.goldCardAmt + cashRun.rebateAmt} 元 + ${cashRun.totalCouponValue} 元</label>
+                        			<label class="left-control-label" id="_saleAmt">
+                        			(现金／刷卡)${cashRun.saleAmt} 元 + (支付宝)${cashRun.zfbSaleAmt} 元 + (微信)${cashRun.wxSaleAmt} + (金卡)${cashRun.goldCardAmt + cashRun.rebateAmt} 元 + (代金卷)${cashRun.totalCouponValue} 元</label>
 		                            <form:hidden path="saleAmt"/>
                         		</td>
                         	</tr>

@@ -62,8 +62,8 @@ public class CashDailyManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CashDaily> getAllNotCashDailyByOrgId(String orgId) {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getAllNotCashDailyByOrgId(orgId, new Sort(new Sort.Order(
-				Sort.Direction.DESC, "optDate"), new Sort.Order(Sort.Direction.ASC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getAllNotCashDailyByOrgId(orgId, new Sort(new Sort.Order(Sort.Direction.DESC,
+				"optDate"), new Sort.Order(Sort.Direction.ASC, "jobType")));
 
 		List<CashDaily> _noCashDailyList = new ArrayList<CashDaily>();
 		String _tmpOptDate = "";
@@ -117,7 +117,10 @@ public class CashDailyManager {
 				// 支付宝销售额
 				_tmpCashDaily.setZfbSaleAmt(_tmpCashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
 			}
-
+			if (null != cashRun.getWxSaleAmt()) {
+				// 微信销售额
+				_tmpCashDaily.setWxSaleAmt(_tmpCashDaily.getWxSaleAmt().add(cashRun.getWxSaleAmt()));
+			}
 		}
 
 		return _noCashDailyList;
@@ -164,10 +167,9 @@ public class CashDailyManager {
 	 * @return
 	 * @throws ParseException
 	 */
-	private List<CashDaily> getAllCashDailyByOrgId(String orgId, String optDateY, String optDateM)
-			throws ParseException {
-		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY,
-				optDateM, new Sort(new Sort.Order(Sort.Direction.DESC, "optDate")));
+	private List<CashDaily> getAllCashDailyByOrgId(String orgId, String optDateY, String optDateM) throws ParseException {
+		List<CashDaily> _list = (List<CashDaily>) cashDailyJpaDao.findByOrgId_OptDateY_OptDateM(orgId, optDateY, optDateM, new Sort(
+				new Sort.Order(Sort.Direction.DESC, "optDate")));
 
 		return _list;
 	}
@@ -181,8 +183,8 @@ public class CashDailyManager {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = false)
 	public void cashDailyConfirm(String optDate, String orgId, String bwBranchNo) {
-		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getNotCashDailyByOrgId_OptDate(orgId, optDate, new Sort(
-				new Sort.Order(Sort.Direction.ASC, "jobType")));
+		List<CashRun> _list = (List<CashRun>) cashRunJpaDao.getNotCashDailyByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
+				Sort.Direction.ASC, "jobType")));
 
 		CashDaily _cashDaily = null;
 		boolean firstFlg = true;
@@ -257,7 +259,10 @@ public class CashDailyManager {
 			if (null != cashRun.getZfbSaleAmt()) {
 				_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashRun.getZfbSaleAmt()));
 			}
-
+			// 微信销售额
+			if (null != cashRun.getWxSaleAmt()) {
+				_cashDaily.setWxSaleAmt(_cashDaily.getWxSaleAmt().add(cashRun.getWxSaleAmt()));
+			}
 		}
 		// 生成销售日结信息
 		cashDailyJpaDao.save(_cashDaily);
@@ -272,8 +277,7 @@ public class CashDailyManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CashRun> cashDailyDetail(String optDate, String orgId) {
-		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(
-				Sort.Direction.ASC, "jobType")));
+		return (List<CashRun>) cashRunJpaDao.findByOrgId_OptDate(orgId, optDate, new Sort(new Sort.Order(Sort.Direction.ASC, "jobType")));
 	}
 
 	/**
@@ -364,6 +368,10 @@ public class CashDailyManager {
 			if (null != cashDaily.getZfbSaleAmt()) {
 				_cashDaily.setZfbSaleAmt(_cashDaily.getZfbSaleAmt().add(cashDaily.getZfbSaleAmt()));
 			}
+			// 微信销售额
+			if (null != cashDaily.getWxSaleAmt()) {
+				_cashDaily.setWxSaleAmt(_cashDaily.getWxSaleAmt().add(cashDaily.getWxSaleAmt()));
+			}
 
 		}
 		return _cashDaily;
@@ -407,7 +415,10 @@ public class CashDailyManager {
 			if (null != saleReport.getZfbSaleAmt()) {
 				_saleReport.setZfbSaleAmt(_saleReport.getZfbSaleAmt().add(saleReport.getZfbSaleAmt()));
 			}
-
+			// 微信销售额
+			if (null != saleReport.getWxSaleAmt()) {
+				_saleReport.setWxSaleAmt(_saleReport.getWxSaleAmt().add(saleReport.getWxSaleAmt()));
+			}
 		}
 		return _saleReport;
 	}
@@ -471,8 +482,7 @@ public class CashDailyManager {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public String createCardReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCardReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -506,8 +516,7 @@ public class CashDailyManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public String createCashReportFile(CashDaily _cashDaily) throws ParsePropertyException, InvalidFormatException,
-			IOException {
+	public String createCashReportFile(CashDaily _cashDaily) throws ParsePropertyException, InvalidFormatException, IOException {
 		List<CashDaily> _cashDailyList = searchReportList(_cashDaily);
 		if (null == _cashDailyList || _cashDailyList.size() == 0) {
 			return null;
@@ -543,8 +552,7 @@ public class CashDailyManager {
 	 * @throws ParsePropertyException
 	 * @throws ParseException
 	 */
-	public String createCashReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException,
-			IOException, ParseException {
+	public String createCashReportFile(CashRun _cashRun) throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
 		List<CashRun> _list = searchSaleReportList(_cashRun);
 		if (null == _list || _list.size() == 0) {
 			return null;
@@ -634,12 +642,10 @@ public class CashDailyManager {
 							_cashDaily.setPrePayTotalAmt(_cashDaily.getPrePayTotalAmt().add(_dailySale.getOperMoney()));
 						} else if ("SA".equals(_dailySale.getOperType())) {// 销售
 							// 金卡销售金额(合计)
-							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(
-									_dailySale.getOperMoney()));
+							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().add(_dailySale.getOperMoney()));
 						} else if ("SB".equals(_dailySale.getOperType())) {// 销售退货
 							// 金卡销售金额(合计)
-							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().subtract(
-									(_dailySale.getOperMoney())));
+							_cashDaily.setGoldCardTotalAmt(_cashDaily.getGoldCardTotalAmt().subtract((_dailySale.getOperMoney())));
 						}
 
 					}
