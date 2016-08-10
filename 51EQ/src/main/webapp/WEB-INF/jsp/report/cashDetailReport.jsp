@@ -111,8 +111,18 @@
                                 <label class="left-control-label">${cashRun1.cardCertNo}</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label" style="color:#FF6633;font-weight:bold;">支付宝 :</label>
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">
+                                <img style="-webkit-user-select: none" src="${ctx}/static/img/270-alipay.png">
+                                支付宝 :
+                                </label>
                                 <label class="left-control-label">${cashRun1.zfbSaleAmt} 元</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">
+                                <img style="-webkit-user-select: none" src="${ctx}/static/img/270-weixin.png">
+                                微信 :
+                                </label>
+                                <label class="left-control-label">${cashRun1.wxSaleAmt} 元</label>
                             </div>
                             <div class="control-group">
                         		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡余额消费 :</label>
@@ -163,7 +173,9 @@
                             </div>
                             <div class="control-group">
 	                            <label class="control-label">当班销售金额 :</label>
-	                            <label class="left-control-label">${cashRun1.saleAmt} 元 + ${cashRun1.zfbSaleAmt} 元 + ${cashRun1.goldCardAmt + cashRun1.rebateAmt} 元 + ${totalCouponValue1} 元</label>
+	                            <label class="left-control-label">
+	                            (现金／刷卡)${cashRun1.saleAmt} 元 + (支付宝)${cashRun1.zfbSaleAmt} 元 + (微信)${cashRun1.wxSaleAmt} + (金卡)${cashRun1.goldCardAmt + cashRun1.rebateAmt} 元 + (代金卷)${totalCouponValue1} 元
+	                            </label>
 	                        </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>
@@ -259,8 +271,18 @@
                                 <label class="left-control-label">${cashRun2.cardCertNo}</label>
                             </div>
                             <div class="control-group">
-                                <label class="control-label" style="color:#FF6633;font-weight:bold;">支付宝 :</label>
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">
+                                <img style="-webkit-user-select: none" src="${ctx}/static/img/270-alipay.png">
+                                支付宝 :
+                                </label>
                                 <label class="left-control-label">${cashRun2.zfbSaleAmt} 元</label>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" style="color:#FF6633;font-weight:bold;">
+                                <img style="-webkit-user-select: none" src="${ctx}/static/img/270-weixin.png">
+                                微信 :
+                                </label>
+                                <label class="left-control-label">${cashRun2.wxSaleAmt} 元</label>
                             </div>
                             <div class="control-group">
                         		<label class="control-label" style="color:#B40431;font-weight:bold;">金卡余额消费 :</label>
@@ -309,7 +331,9 @@
                             </div>
                             <div class="control-group">
 	                            <label class="control-label">当班销售金额 :</label>
-	                            <label class="left-control-label">${cashRun2.saleAmt} 元+ ${cashRun2.zfbSaleAmt} 元 + + ${cashRun2.goldCardAmt + cashRun2.rebateAmt} 元 + ${totalCouponValue2} 元</label>
+	                            <label class="left-control-label">
+	                            (现金／刷卡)${cashRun2.saleAmt} 元 + (支付宝)${cashRun2.zfbSaleAmt} 元 + (微信)${cashRun2.wxSaleAmt} + (金卡)${cashRun2.goldCardAmt + cashRun2.rebateAmt} 元 + (代金卷)${totalCouponValue2} 元
+	                            </label>
 	                        </div>
                             <div class="control-group">
                                 <label class="control-label">备注 :</label>

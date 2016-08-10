@@ -57,48 +57,48 @@ public class SalesDayTotalManager {
 	 * @param optDateList
 	 */
 	private void getBwSaleAmt(List<String> optDateList) {
-		//2016/1/31 停止取得百威销售信息作为日对比数据，改取门店填报数据
-//		for (String optDate : optDateList) {
-//			List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailySaleList(optDate);
-//
-//			for (DailySale dailySale : _bwDailySaleList) {
-//
-//				Organization org = organizationManager.getOrganizationByBwBranchNo(dailySale.getOrgBranchNo());
-//
-//				if (null == org) {
-//					continue;
-//				}
-//
-//				SalesDayTotal _salesDayTotal = new SalesDayTotal();
-//
-//				String year = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
-//				String month = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
-//				String days = DateUtils.transDateFormat(optDate, "yyyyMMdd", "dd");
-//
-//				// 缓存计算的年月信息
-//				_calYM.add(year + month);
-//
-//				// 日期
-//				_salesDayTotal.setOptDate(optDate);
-//				// 日期-年
-//				_salesDayTotal.setOptDateY(year);
-//				// 日期-月
-//				_salesDayTotal.setOptDateM(month);
-//				// 机构编号
-//				_salesDayTotal.setOrgId(org.getId());
-//				// 机构资金编号
-//				_salesDayTotal.setBranchNo(org.getBwBranchNo());
-//				// 当日销售金额
-//				_salesDayTotal.setPosAmt(dailySale.getBwSaleAmt());
-//				// 截止天数
-//				_salesDayTotal.setNowDays(Integer.parseInt(days));
-//				// 本月天数
-//				_salesDayTotal.setMonthDays(DateUtils.getMonthDays(year, month));
-//
-//				salesDayTotalJpaDao.save(_salesDayTotal);
-//
-//			}
-//		}
+		// 2016/1/31 停止取得百威销售信息作为日对比数据，改取门店填报数据
+		// for (String optDate : optDateList) {
+		// List<DailySale> _bwDailySaleList = dailySaleMyBatisDao.getDailySaleList(optDate);
+		//
+		// for (DailySale dailySale : _bwDailySaleList) {
+		//
+		// Organization org = organizationManager.getOrganizationByBwBranchNo(dailySale.getOrgBranchNo());
+		//
+		// if (null == org) {
+		// continue;
+		// }
+		//
+		// SalesDayTotal _salesDayTotal = new SalesDayTotal();
+		//
+		// String year = DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy");
+		// String month = DateUtils.transDateFormat(optDate, "yyyyMMdd", "MM");
+		// String days = DateUtils.transDateFormat(optDate, "yyyyMMdd", "dd");
+		//
+		// // 缓存计算的年月信息
+		// _calYM.add(year + month);
+		//
+		// // 日期
+		// _salesDayTotal.setOptDate(optDate);
+		// // 日期-年
+		// _salesDayTotal.setOptDateY(year);
+		// // 日期-月
+		// _salesDayTotal.setOptDateM(month);
+		// // 机构编号
+		// _salesDayTotal.setOrgId(org.getId());
+		// // 机构资金编号
+		// _salesDayTotal.setBranchNo(org.getBwBranchNo());
+		// // 当日销售金额
+		// _salesDayTotal.setPosAmt(dailySale.getBwSaleAmt());
+		// // 截止天数
+		// _salesDayTotal.setNowDays(Integer.parseInt(days));
+		// // 本月天数
+		// _salesDayTotal.setMonthDays(DateUtils.getMonthDays(year, month));
+		//
+		// salesDayTotalJpaDao.save(_salesDayTotal);
+		//
+		// }
+		// }
 
 		for (String optDate : optDateList) {
 			List<CashDaily> _saleList = cashDailyJpaDao.findByOptDate(optDate);
@@ -125,7 +125,7 @@ public class SalesDayTotalManager {
 				// 机构资金编号
 				_salesDayTotal.setBranchNo(cashDaily.getOrgBranchNo());
 				// 当日销售金额
-				_salesDayTotal.setPosAmt(cashDaily.getSaleAmt().add(cashDaily.getZfbSaleAmt())
+				_salesDayTotal.setPosAmt(cashDaily.getSaleAmt().add(cashDaily.getZfbSaleAmt()).add(cashDaily.getWxSaleAmt())
 						.add(cashDaily.getGoldCardAmt()).add(cashDaily.getRebateAmt()).add(cashDaily.getCouponValue()));
 				// 截止天数
 				_salesDayTotal.setNowDays(Integer.parseInt(days));
@@ -181,8 +181,7 @@ public class SalesDayTotalManager {
 	 */
 	private void recalRanking(List<String> optDateList) {
 		for (String optDate : optDateList) {
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao
-					.findByOptDateOrderBy_Ranking(optDate);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findByOptDateOrderBy_Ranking(optDate);
 
 			int rank = 0;
 			for (SalesDayTotal _s : _sList) {
@@ -215,8 +214,7 @@ public class SalesDayTotalManager {
 
 			BigDecimal _posAmtByNow = new BigDecimal(0);
 
-			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(
-					org.getId(), year, month);
+			List<SalesDayTotal> _sList = (List<SalesDayTotal>) salesDayTotalJpaDao.findOneByOrgIdAndOptDateYM(org.getId(), year, month);
 			for (SalesDayTotal _salesDayTotal : _sList) {
 				_posAmtByNow = _posAmtByNow.add(_salesDayTotal.getPosAmt());
 
@@ -228,15 +226,14 @@ public class SalesDayTotalManager {
 				// 去年同期/上月/认为指定的销售额
 				_salesDayTotal.setPreYearMonthPosAmt(getOrgYMPosAmt(org.getId(), year, month));
 				// 销售增长额(去年同期销售)=预计本月销售-去年同期销售
-				_salesDayTotal.setPosAmtIncrease(_salesDayTotal.getExpMonthPosAmt().subtract(
-						_salesDayTotal.getPreYearMonthPosAmt()));
+				_salesDayTotal.setPosAmtIncrease(_salesDayTotal.getExpMonthPosAmt().subtract(_salesDayTotal.getPreYearMonthPosAmt()));
 				// 销售增长率(去年同期销售)=销售增长额/去年同期销售
 				BigDecimal _preYearMonthPosAmt = _salesDayTotal.getPreYearMonthPosAmt();
 				if (null == _preYearMonthPosAmt || _preYearMonthPosAmt.compareTo(BigDecimal.ZERO) == 0) {
 					_preYearMonthPosAmt = new BigDecimal(1);
 				}
-				_salesDayTotal.setPosAmtRate(_salesDayTotal.getPosAmtIncrease()
-						.divide(_preYearMonthPosAmt, 4, BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+				_salesDayTotal.setPosAmtRate(_salesDayTotal.getPosAmtIncrease().divide(_preYearMonthPosAmt, 4, BigDecimal.ROUND_HALF_EVEN)
+						.multiply(new BigDecimal(100)));
 				// 本月天数-截止天数
 				int _d = _salesDayTotal.getMonthDays() - _salesDayTotal.getNowDays();
 				if (0 == _d) {
@@ -247,20 +244,18 @@ public class SalesDayTotalManager {
 						_salesDayTotal.getOptDateY(), _salesDayTotal.getOptDateM()));
 
 				// 日需销售金额=(月销售目标额-截止金额)/(本月天数-截止天数)
-				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt()
-						.subtract(_salesDayTotal.getPosAmtByNow())
+				_salesDayTotal.setDayNeededPosAmt(_salesDayTotal.getSaleTargetAmt().subtract(_salesDayTotal.getPosAmtByNow())
 						.divide(new BigDecimal(_d), 2, BigDecimal.ROUND_HALF_EVEN));
 
 				// 销售增长额(本月销售目标额)=预计本月销售-本月销售目标额
-				_salesDayTotal.setPosAmtIncrease2(_salesDayTotal.getExpMonthPosAmt().subtract(
-						_salesDayTotal.getSaleTargetAmt()));
+				_salesDayTotal.setPosAmtIncrease2(_salesDayTotal.getExpMonthPosAmt().subtract(_salesDayTotal.getSaleTargetAmt()));
 				// 销售增长率(本月销售目标额)=销售增长额(本月销售目标额)/本月销售目标额
 				BigDecimal _saleTargetAmt = _salesDayTotal.getSaleTargetAmt();
 				if (null == _saleTargetAmt || _saleTargetAmt.compareTo(BigDecimal.ZERO) == 0) {
 					_saleTargetAmt = new BigDecimal(1);
 				}
-				_salesDayTotal.setPosAmtRate2(_salesDayTotal.getPosAmtIncrease2()
-						.divide(_saleTargetAmt, 4, BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+				_salesDayTotal.setPosAmtRate2(_salesDayTotal.getPosAmtIncrease2().divide(_saleTargetAmt, 4, BigDecimal.ROUND_HALF_EVEN)
+						.multiply(new BigDecimal(100)));
 
 				salesDayTotalJpaDao.save(_salesDayTotal);
 			}

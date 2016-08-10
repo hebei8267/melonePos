@@ -12,6 +12,7 @@
         <result column="oper_type" property="operType" jdbcType="NUMERIC"/>
         
         <result column="bw_zfb_sale_amt" property="bwZfbSaleAmt" jdbcType="NUMERIC"/>
+        <result column="bw_wx_sale_amt" property="bwWxSaleAmt" jdbcType="NUMERIC"/>
 	</resultMap>
 	
   	

@@ -579,6 +579,16 @@ public class CashDailyManager {
 	}
 
 	/**
+	 * 同步微信销售额
+	 * 
+	 * @throws ParseException
+	 */
+	@Transactional(readOnly = false)
+	public void synWXSaleAmt() throws ParseException {
+		// TODO ************************
+	}
+
+	/**
 	 * 同步支付宝销售额
 	 * 
 	 * @throws ParseException

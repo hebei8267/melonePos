@@ -43,6 +43,9 @@
         <result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
 		<result column="bw_zfb_sale_amt" property="bwZfbSaleAmt" jdbcType="DECIMAL"/>
 		
+		<result column="wx_sale_amt" property="wxSaleAmt" jdbcType="DECIMAL"/>
+		<result column="bw_wx_sale_amt" property="bwWxSaleAmt" jdbcType="DECIMAL"/>
+		
 		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
 		<result column="mng_user_name" property="mngUserName" jdbcType="VARCHAR"/>
 		
@@ -84,6 +87,8 @@
     	cash.pre_pay_total_amt ,
     	cash.zfb_sale_amt ,
     	cash.bw_zfb_sale_amt ,
+    	cash.wx_sale_amt ,
+    	cash.bw_wx_sale_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>
@@ -91,7 +96,7 @@
   	<![CDATA[
 	  	SELECT
 		    org_id,
-		    SUM(sale_amt + zfb_sale_amt + gold_card_amt + rebate_amt + coupon_value) AS sale_amt
+		    SUM(sale_amt + zfb_sale_amt + wx_sale_amt + gold_card_amt + rebate_amt + coupon_value) AS sale_amt
 		FROM
 		    t_cash_daily
 		WHERE
@@ -133,7 +138,7 @@
 			 cash.uuid ,
 			 cash.opt_date ,
 			 cash.report_amt ,
-    		 cash.sale_amt + cash.gold_Card_Amt + cash.rebate_Amt + cash.zfb_sale_amt + cash.coupon_value AS sale_amt
+    		 cash.sale_amt + cash.gold_Card_Amt + cash.rebate_Amt + cash.zfb_sale_amt + cash.wx_sale_amt + cash.coupon_value AS sale_amt
 		from t_cash_daily cash, t_organization org
 		where
 			 cash.org_id = org.org_id
@@ -147,7 +152,7 @@
 	<select id="getAllOrgCashDailyChartList" parameterType="com.tjhx.entity.accounts.CashDaily" resultMap="Result_Map_CashDaily">
 		SELECT
 		    cash.opt_date,
-		    SUM(cash.sale_amt + cash.gold_Card_Amt + cash.rebate_Amt + cash.zfb_sale_amt + cash.coupon_value) AS sale_amt
+		    SUM(cash.sale_amt + cash.gold_Card_Amt + cash.rebate_Amt + cash.zfb_sale_amt + cash.wx_sale_amt + cash.coupon_value) AS sale_amt
 		FROM
 		    t_cash_daily cash
 		WHERE
@@ -184,6 +189,8 @@
     		cash.pre_pay_total_amt ,
     		cash.zfb_sale_amt ,
     		cash.bw_zfb_sale_amt ,
+    		cash.wx_sale_amt ,
+    		cash.bw_wx_sale_amt ,
 	    	org.org_name AS org_name
 		from 
 			t_organization org left join t_cash_daily cash on org.org_id = cash.org_id
@@ -228,7 +235,7 @@
 		    cd.org_id,
 		    org.mng_user_id,
 		    us.name as mng_user_name,
-		    SUM(cd.sale_amt + cd.zfb_sale_amt + cd.gold_card_amt + cd.rebate_amt + cd.coupon_value) AS sale_amt
+		    SUM(cd.sale_amt + cd.zfb_sale_amt + cd.wx_sale_amt + cd.gold_card_amt + cd.rebate_amt + cd.coupon_value) AS sale_amt
 		FROM
 		    t_cash_daily cd left join t_organization org on org.org_id = cd.org_id
 		    				left join t_user us on org.mng_user_id = us.login_name

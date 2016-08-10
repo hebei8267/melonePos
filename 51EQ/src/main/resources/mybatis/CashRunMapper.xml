@@ -49,6 +49,7 @@
 		<result column="rebate_amt" property="rebateAmt" jdbcType="DECIMAL"/>
 		
 		<result column="zfb_sale_amt" property="zfbSaleAmt" jdbcType="DECIMAL"/>
+		<result column="wx_sale_amt" property="wxSaleAmt" jdbcType="DECIMAL"/>
 		
 		<result column="mng_user_id" property="mngUserId" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -92,6 +93,7 @@
 	    cash.gold_card_amt ,
 	    cash.rebate_amt ,
 	    cash.zfb_sale_amt ,
+	    cash.wx_sale_amt ,
     	org.org_name AS org_name
 	]]>
   	</sql>
@@ -161,6 +163,7 @@
 	    	cash.gold_card_amt ,
 	    	cash.rebate_amt ,
 	    	cash.zfb_sale_amt ,
+	    	cash.wx_sale_amt ,
     		user.name AS user_name,
     		org.org_name AS org_name,
     		user2.name AS mng_user_id

@@ -14,6 +14,8 @@ public class DailySale {
 	private BigDecimal operMoney = new BigDecimal("0");
 	/** 支付宝销售额 */
 	private BigDecimal bwZfbSaleAmt = new BigDecimal("0");
+	/** 微信销售额 */
+	private BigDecimal bwWxSaleAmt = new BigDecimal("0");
 	/** 金卡操作类型 */
 	private String operType;
 
@@ -125,4 +127,21 @@ public class DailySale {
 		this.bwZfbSaleAmt = bwZfbSaleAmt;
 	}
 
+	/**
+	 * 取得微信销售额
+	 * 
+	 * @return bwWxSaleAmt 微信销售额
+	 */
+	public BigDecimal getBwWxSaleAmt() {
+		return bwWxSaleAmt;
+	}
+
+	/**
+	 * 设置微信销售额
+	 * 
+	 * @param bwWxSaleAmt 微信销售额
+	 */
+	public void setBwWxSaleAmt(BigDecimal bwWxSaleAmt) {
+		this.bwWxSaleAmt = bwWxSaleAmt;
+	}
 }
