@@ -37,9 +37,9 @@ public class SalesDayTotalGoods extends IdEntity {
 	/** 长条码 */
 	private String itemBarcode;
 	/** 销售数量 */
-	private BigDecimal posQty;
+	private BigDecimal posQty = new BigDecimal("0");
 	/** 销售金额 */
-	private BigDecimal posAmt;
+	private BigDecimal posAmt = new BigDecimal("0");
 	// ----------------------------------------------------------
 	/** 日期-开始时间 */
 	private String optDateStart;
@@ -48,17 +48,17 @@ public class SalesDayTotalGoods extends IdEntity {
 	/** 时间间隔（单位：天） */
 	private long spanDay;
 	/** 日均销量 */
-	private BigDecimal averageDailySales;
+	private BigDecimal averageDailySales = new BigDecimal("0");
 	/** 机构名称 */
 	private String orgName;
 	/** 商品名字 */
 	private String goodsName;
 	/** 库存数量 */
-	private BigDecimal stockQty;
+	private BigDecimal stockQty = new BigDecimal("0");
 	/** 库存金额 */
-	private BigDecimal stockAmt;
+	private BigDecimal stockAmt = new BigDecimal("0");
 	/** 销售金额 */
-	private BigDecimal saleAmt;
+	private BigDecimal saleAmt = new BigDecimal("0");
 	/** 种类编号 */
 	private String itemNo;
 	/** 供应商名称 */

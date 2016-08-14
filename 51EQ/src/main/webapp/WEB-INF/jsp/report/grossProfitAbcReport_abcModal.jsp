@@ -6,35 +6,37 @@
 	<h3 id="myModalLabel">销售商品明细信息</h3>
 </div>
 <div class="modal-body">
-	<p class="font1">&nbsp;&nbsp;${goodsName}&nbsp;[${itemSubno}]</p>
+	<p>
+		&nbsp;&nbsp;销售时间&nbsp;&nbsp;${optDateShowStart} ～ ${optDateShowEnd}<br><br>
+		<span class="font1">&nbsp;&nbsp;${goodsName}&nbsp;[${itemSubno}]</span>
+	</p>
 	<table class="table table-striped table-bordered table-hover mytable1">
 		<thead>
 	        <tr>
-	            <th class="center" scope="col">有销售店数</th>
-	            <th class="center" scope="col">有库存店数</th>
+	            <th class="center">店号</th>
+	            <th class="center">销售数量</th>
+	            <th class="center">当前库存数量</th>
 	        </tr>
 	    </thead>
 	    <tbody>
+	    	<c:forEach items="${goodList}" var="good" varStatus="status">
 	    	<tr>
-	    		<td class="center"><c:out value="${fn:length(saleOrgList)}"></c:out></td>
-	    		<td class="center"><c:out value="${fn:length(storeOrgList)}"></c:out></td>
+	    		<td class="center" <c:if test="${('合计' == good.orgId) || ('EQ+' == good.orgId) || ('Infancy' == good.orgId) || ('总部' == good.orgId)}" >style="color: red;"</c:if>>
+					<c:if test="${fn:length(good.orgId) == 6}">
+	             	${fn:substring(good.orgId,3,6)}&nbsp;
+	             	</c:if>
+	             	<c:if test="${fn:length(good.orgId) != 6}">
+	             	${good.orgId}&nbsp;
+	             	</c:if>
+				</td>
+				<td class="center">
+					${good.posQty}
+				</td>
+				<td class="center">
+					${good.stockQty}
+				</td>
 	    	</tr>
-	    	<tr>
-	    		<td class="center">
-	    			<c:forEach items="${saleOrgList}" var="saleOrg" varStatus="status">
-	    				<c:if test="${fn:length(saleOrg) > 4}">
-		             	${fn:substring(saleOrg,3,6)}&nbsp;
-		             	</c:if>
-	    			</c:forEach>
-	    		</td>
-	    		<td class="center">
-	    			<c:forEach items="${storeOrgList}" var="saleOrg" varStatus="status">
-	    				<c:if test="${fn:length(saleOrg) > 4}">
-		             	${fn:substring(saleOrg,3,6)}&nbsp;
-		             	</c:if>
-	    			</c:forEach>
-	    		</td>
-	    	</tr>
+	    	</c:forEach>
 	    </tbody>
 	</table>
 </div>

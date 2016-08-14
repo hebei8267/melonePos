@@ -61,7 +61,16 @@
                         <h3>商品周销售信息对比(按商品)</h3>
                     </legend>
                 </div>
+                
+                <div class="span12">
+                	<div class="alert alert-info">
+              			<strong>调入</strong> : 库存量 < 周销售量（最近一周）
+              			&nbsp;&nbsp;<strong>调出</strong> : 库存量 > 周销售量 * 2倍（最近一周）
+            		</div>
+            	</div>
+                
                 <form method="post"	class="form-inline"	id="searchForm">
+                	
 					<div class="span8">
 						<label class="control-label">货号 : </label>
 						<input id="barcode" name="barcode" type="text" class="input-xlarge" placeholder="多个货号需以英文半角逗号隔开"/>

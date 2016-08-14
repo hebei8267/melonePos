@@ -448,25 +448,31 @@
     	ORDER BY pos_qty DESC
 	</select>
 	
-	<select id="getSaleOrgInfo" parameterType="map" resultType="String">
+	<select id="getSaleOrgInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
 	<![CDATA[
-		SELECT DISTINCT
-		    org_id
+		SELECT
+		    org_id,
+		    SUM(pos_Qty) AS pos_Qty
 		FROM
 		    t_sales_day_total_goods
 		WHERE
 		    item_subno = #{itemSubno}
 		AND opt_date >= #{startDate}
 		AND opt_date <= #{endDate}
+		GROUP BY
+		    org_id
 	]]>
 	</select>
 	
-	<select id="getStoreOrgInfo" parameterType="String" resultType="String">
-		SELECT DISTINCT
-		    org_id
+	<select id="getStoreOrgInfo" parameterType="String" resultMap="Result_Map_SalesDayTotalGoods">
+		SELECT
+		    org_id,
+    		SUM(stock_qty) AS stock_qty
 		FROM
 		    t_store_detail_one_day
 		WHERE
 		    item_subno = #{itemSubno}
+		GROUP BY
+		    org_id
 	</select>
 </mapper>

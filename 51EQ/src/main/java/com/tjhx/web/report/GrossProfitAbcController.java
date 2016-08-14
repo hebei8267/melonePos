@@ -16,6 +16,8 @@ import org.springside.modules.mapper.JsonMapper;
 
 import com.google.common.collect.Lists;
 import com.tjhx.entity.info.ItemType;
+import com.tjhx.entity.info.SalesDayTotalGoods;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.info.GrossProfitAbcManager;
 import com.tjhx.service.info.ItemTypeManager;
 import com.tjhx.service.struct.OrganizationManager;
@@ -114,15 +116,139 @@ public class GrossProfitAbcController extends BaseController {
 		String optDateShowEnd = ServletRequestUtils.getStringParameter(request, "optDateShowEnd");
 
 		// 取得销售门店信息（根据条码、销售时间段）
-		List<String> _saleOrgList = grossProfitAbcManager.getSaleOrgInfo(itemSubno, optDateShowStart, optDateShowEnd);
+		List<SalesDayTotalGoods> _saleOrgList = grossProfitAbcManager.getSaleOrgInfo(itemSubno, optDateShowStart, optDateShowEnd);
 		// 取得库存门店信息（根据条码）
-		List<String> _storeOrgList = grossProfitAbcManager.getStoreOrgInfo(itemSubno);
+		List<SalesDayTotalGoods> _storeOrgList = grossProfitAbcManager.getStoreOrgInfo(itemSubno);
 
+		model.addAttribute("optDateShowStart", optDateShowStart);
+		model.addAttribute("optDateShowEnd", optDateShowEnd);
 		model.addAttribute("itemSubno", itemSubno);
 		model.addAttribute("goodsName", goodsName);
-		model.addAttribute("saleOrgList", _saleOrgList);
-		model.addAttribute("storeOrgList", _storeOrgList);
+		model.addAttribute("goodList", initSalesDayTotalGoodsList(_saleOrgList, _storeOrgList));
 
 		return "report/grossProfitAbcReport_abcModal";
+	}
+
+	private List<SalesDayTotalGoods> initSalesDayTotalGoodsList(List<SalesDayTotalGoods> saleOrgList, List<SalesDayTotalGoods> storeOrgList) {
+		List<SalesDayTotalGoods> _tmplist = Lists.newArrayList();
+
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
+
+		// 初始化全部机构的显示信息
+		for (Organization org : orgList) {
+			SalesDayTotalGoods _s = new SalesDayTotalGoods();
+			_s.setOrgId(org.getId());
+			_tmplist.add(_s);
+		}
+
+		// 初始化销售数量
+		for (SalesDayTotalGoods salesGoods : _tmplist) {
+			SalesDayTotalGoods goods = _getSalesGoodsByOrgId(saleOrgList, salesGoods.getOrgId());
+
+			if (null != goods) {
+				salesGoods.setPosQty(goods.getPosQty());
+			}
+		}
+
+		// 初始化库存数量
+		for (SalesDayTotalGoods salesGoods : _tmplist) {
+			SalesDayTotalGoods goods = _getSalesGoodsByOrgId(storeOrgList, salesGoods.getOrgId());
+
+			if (null != goods) {
+				salesGoods.setStockQty(goods.getStockQty());
+			}
+		}
+
+		// 分门店品牌
+		List<SalesDayTotalGoods> _eqList = calSalesDayTotalGoodsList_EQ(orgList, _tmplist);
+		List<SalesDayTotalGoods> _infancyList = calSalesDayTotalGoodsList_Infancy(orgList, _tmplist);
+
+		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
+		for (SalesDayTotalGoods salesGoods : _tmplist) {
+			calTotalGoods(totalGoods, "合计", salesGoods);
+		}
+
+		List<SalesDayTotalGoods> _reList = Lists.newArrayList();
+		_reList.add(totalGoods);
+		_reList.addAll(_eqList);
+		_reList.addAll(_infancyList);
+
+		return _reList;
+	}
+
+	private List<SalesDayTotalGoods> calSalesDayTotalGoodsList_Infancy(List<Organization> orgList, List<SalesDayTotalGoods> list) {
+		List<SalesDayTotalGoods> _eqList = Lists.newArrayList();
+
+		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
+		for (SalesDayTotalGoods goods : list) {
+
+			for (Organization _org : orgList) {
+				if ("Infancy".equals(_org.getBrand()) && _org.getId().equals(goods.getOrgId())) {
+					_eqList.add(goods);
+					calTotalGoods(totalGoods, "Infancy", goods);
+				}
+			}
+
+		}
+
+		_eqList.add(0, totalGoods);
+
+		return _eqList;
+	}
+
+	private List<SalesDayTotalGoods> calSalesDayTotalGoodsList_EQ(List<Organization> orgList, List<SalesDayTotalGoods> list) {
+		List<SalesDayTotalGoods> _eqList = Lists.newArrayList();
+
+		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
+		for (SalesDayTotalGoods goods : list) {
+
+			for (Organization _org : orgList) {
+				if ("EQ+".equals(_org.getBrand()) && _org.getId().equals(goods.getOrgId())) {
+					_eqList.add(goods);
+					calTotalGoods(totalGoods, "EQ+", goods);
+				}
+			}
+
+		}
+
+		_eqList.add(0, totalGoods);
+
+		return _eqList;
+
+	}
+
+	/**
+	 * 计算合计
+	 * 
+	 * @param totalReqBill
+	 * @param barcode
+	 * @param orgIdName
+	 * @param reqBill
+	 */
+	private void calTotalGoods(SalesDayTotalGoods totalGoods, String orgIdName, SalesDayTotalGoods goods) {
+		totalGoods.setOrgId(orgIdName);
+		if (null != goods.getPosQty()) {
+			totalGoods.setPosQty(totalGoods.getPosQty().add(goods.getPosQty()));
+		}
+		if (null != goods.getStockQty()) {
+			totalGoods.setStockQty(totalGoods.getStockQty().add(goods.getStockQty()));
+		}
+	}
+
+	/**
+	 * 取得机构 库存信息
+	 * 
+	 * @param goodList
+	 * @param orgId
+	 * @return
+	 */
+	private SalesDayTotalGoods _getSalesGoodsByOrgId(List<SalesDayTotalGoods> goodList, String orgId) {
+		for (SalesDayTotalGoods goods : goodList) {
+			if (goods.getOrgId().equals(orgId)) {
+				return goods;
+			}
+		}
+
+		return null;
 	}
 }

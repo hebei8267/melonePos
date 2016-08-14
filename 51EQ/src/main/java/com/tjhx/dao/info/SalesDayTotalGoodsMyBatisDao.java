@@ -78,8 +78,8 @@ public interface SalesDayTotalGoodsMyBatisDao {
 	public List<SalesDayTotalGoods> getSalesItemRankInfoList_OrderAmt_Down_Supplier(SalesDayTotalGoods param);
 
 	/** 取得销售门店信息（根据条码、销售时间段） */
-	public List<String> getSaleOrgInfo(Map<String, String> param);
+	public List<SalesDayTotalGoods> getSaleOrgInfo(Map<String, String> param);
 
 	/** 取得库存门店信息（根据条码） */
-	public List<String> getStoreOrgInfo(String itemSubno);
+	public List<SalesDayTotalGoods> getStoreOrgInfo(String itemSubno);
 }

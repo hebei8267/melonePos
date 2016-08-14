@@ -180,7 +180,7 @@ public class GrossProfitAbcManager {
 	 * @param optDateShowEnd
 	 * @return
 	 */
-	public List<String> getSaleOrgInfo(String itemSubno, String optDateShowStart, String optDateShowEnd) {
+	public List<SalesDayTotalGoods> getSaleOrgInfo(String itemSubno, String optDateShowStart, String optDateShowEnd) {
 		String startDate = DateUtils.transDateFormat(optDateShowStart, "yyyy-MM-dd", "yyyyMMdd");
 		String endDate = DateUtils.transDateFormat(optDateShowEnd, "yyyy-MM-dd", "yyyyMMdd");
 
@@ -198,7 +198,7 @@ public class GrossProfitAbcManager {
 	 * @param itemSubno
 	 * @return
 	 */
-	public List<String> getStoreOrgInfo(String itemSubno) {
+	public List<SalesDayTotalGoods> getStoreOrgInfo(String itemSubno) {
 		return salesDayTotalGoodsMyBatisDao.getStoreOrgInfo(itemSubno);
 	}
 }
