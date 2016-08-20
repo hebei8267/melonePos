@@ -12,33 +12,33 @@ public class StoreDayTotal_Show {
 	private String optDate;
 
 	/** 库存数量 */
-	private BigDecimal stockTotalQty;
+	private BigDecimal stockTotalQty = new BigDecimal("0");
 	/** 库存金额 */
-	private BigDecimal stockTotalAmt;
+	private BigDecimal stockTotalAmt = new BigDecimal("0");
 	/** 售价金额 */
-	private BigDecimal itemSaleTotalAmt;
+	private BigDecimal itemSaleTotalAmt = new BigDecimal("0");
 
 	/** 负库存数量 */
-	private BigDecimal stockTotalQty_Minus;
+	private BigDecimal stockTotalQty_Minus = new BigDecimal("0");
 	/** 负库存金额 */
-	private BigDecimal stockTotalAmt_Minus;
+	private BigDecimal stockTotalAmt_Minus = new BigDecimal("0");
 	/** 负售价金额 */
-	private BigDecimal itemSaleTotalAmt_Minus;
+	private BigDecimal itemSaleTotalAmt_Minus = new BigDecimal("0");
 
 	public void initAmt() {
 		// 库存数量
-		this.stockTotalQty = new BigDecimal(0);
+		this.stockTotalQty = new BigDecimal("0");
 		// 库存金额
-		this.stockTotalAmt = new BigDecimal(0);
+		this.stockTotalAmt = new BigDecimal("0");
 		// 售价金额
-		this.itemSaleTotalAmt = new BigDecimal(0);
+		this.itemSaleTotalAmt = new BigDecimal("0");
 
 		// 负库存数量
-		this.stockTotalQty_Minus = new BigDecimal(0);
+		this.stockTotalQty_Minus = new BigDecimal("0");
 		// 负库存金额
-		this.stockTotalAmt_Minus = new BigDecimal(0);
+		this.stockTotalAmt_Minus = new BigDecimal("0");
 		// 负售价金额
-		this.itemSaleTotalAmt_Minus = new BigDecimal(0);
+		this.itemSaleTotalAmt_Minus = new BigDecimal("0");
 	}
 
 	/**
@@ -255,6 +255,35 @@ public class StoreDayTotal_Show {
 			// 负售价金额
 			this.itemSaleTotalAmt_Minus = storeDayTotal.getItemSaleTotalAmt();
 		}
+	}
+
+	/**
+	 * 取得stockQtyScale_Minus
+	 * 
+	 * @return stockQtyScale_Minus
+	 */
+	public BigDecimal getStockQtyScale_Minus() {
+		if (null == stockTotalQty_Minus || null == stockTotalQty || stockTotalQty_Minus.compareTo(BigDecimal.ZERO) == 0
+				|| stockTotalQty.compareTo(BigDecimal.ZERO) == 0) {
+			return new BigDecimal("0");
+		}
+		return stockTotalQty_Minus.divide(stockTotalQty, 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(-100))
+				.divide(new BigDecimal(1), 2, BigDecimal.ROUND_UP);
+	}
+
+	/**
+	 * 取得stockAmtScale_Minus
+	 * 
+	 * @return stockAmtScale_Minus
+	 */
+	public BigDecimal getStockAmtScale_Minus() {
+		if (null == stockTotalAmt_Minus || null == stockTotalAmt || stockTotalAmt_Minus.compareTo(BigDecimal.ZERO) == 0
+				|| stockTotalAmt.compareTo(BigDecimal.ZERO) == 0) {
+			return new BigDecimal("0");
+		}
+		return stockTotalAmt_Minus.divide(stockTotalAmt, 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(-100))
+				.divide(new BigDecimal(1), 2, BigDecimal.ROUND_UP);
+
 	}
 
 }

@@ -119,7 +119,7 @@
 					<c:forEach items="${orgIds}" var="orgId" varStatus="status">
 						{
 					        "bullet": "round",
-					        "balloonText": "门店 ${fn:substring(orgId,3,6)}<br>销售时间 [[optDateYM]]<br>销售金额 [[saleRamt${fn:substring(orgId,3,5)}]] 元",
+					        "balloonText": "<b>门店 ${fn:substring(orgId,3,6)}</b><br>销售金额 [[saleRamt${fn:substring(orgId,3,5)}]] 元<br>时间 [[optDateYM]]",
 					        "title": "${fn:substring(orgId,3,6)}",
 					        "valueField": "saleRamt${fn:substring(orgId,3,5)}"
 					    }

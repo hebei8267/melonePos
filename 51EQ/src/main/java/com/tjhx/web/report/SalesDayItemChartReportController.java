@@ -264,6 +264,9 @@ public class SalesDayItemChartReportController extends BaseController {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		if (null != orgId && orgId.length() != 6) {
+			orgId = null;
+		}
 
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
@@ -273,7 +276,7 @@ public class SalesDayItemChartReportController extends BaseController {
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
 		model.addAttribute("orgId", orgId);
-		model.addAttribute("orgName", orgId.substring(3));
+		model.addAttribute("orgName", orgId == null ? null : orgId.substring(3));
 		model.addAttribute("sumSaleRamtList", _sumSaleRamtList);
 
 		return "report/salesDayItemChartReport_pie_detail_list";
@@ -294,6 +297,9 @@ public class SalesDayItemChartReportController extends BaseController {
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String itemNo = ServletRequestUtils.getStringParameter(request, "itemClsNo");
+		if (null != orgId && orgId.length() != 6) {
+			orgId = null;
+		}
 
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
@@ -308,7 +314,7 @@ public class SalesDayItemChartReportController extends BaseController {
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
 		model.addAttribute("orgId", orgId);
-		model.addAttribute("orgName", orgId.substring(3));
+		model.addAttribute("orgName", orgId == null ? null : orgId.substring(3));
 
 		model.addAttribute("topList", _topList);
 		model.addAttribute("downList", _downList);

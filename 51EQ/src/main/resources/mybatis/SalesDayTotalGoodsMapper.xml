@@ -172,15 +172,15 @@
 	
 	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
 	<select id="getSalesItemRankInfoList_OrderAmt_Top_Item" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
+	
 		SELECT
 		    g.item_barcode,
 		    g.item_subno ,
-		    gs.name        AS goods_name,
-		    SUM(g.pos_amt) AS pos_amt ,
-		    SUM(g.pos_qty) AS pos_qty ,
-		    sup.name       AS sup_name ,
-		    sd.stock_qty
+		    gs.name        		AS goods_name,
+		    SUM(g.pos_amt) 		AS pos_amt ,
+		    SUM(g.pos_qty) 		AS pos_qty ,
+		    sup.name       		AS sup_name ,
+		    SUM(sd.stock_qty) 	AS stock_qty 
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
@@ -190,31 +190,36 @@
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
-		WHERE
+		<where>
+		<![CDATA[
 		    g.opt_date >= #{optDateStart}
 		AND g.opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
 		AND g.org_id = #{orgId}
+		</if>
 		AND g.item_barcode = gs.barcode
 		AND gs.item_no = #{itemNo}
 		AND gs.supplier_bw_id = sup.supplier_bw_id
+		</where>
 		GROUP BY
 		    g.item_barcode
 		ORDER BY
 		    pos_amt DESC LIMIT 30
-	]]>
+	
 	</select>
 	
 	<!-- 取得t_sales_day_total_goods信息(根据参数) -->
 	<select id="getSalesItemRankInfoList_OrderAmt_Down_Item" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
+	
 		SELECT
 		    g.item_barcode,
 		    g.item_subno ,
-		    gs.name        AS goods_name,
-		    SUM(g.pos_amt) AS pos_amt ,
-		    SUM(g.pos_qty) AS pos_qty ,
-		    sup.name       AS sup_name ,
-		    sd.stock_qty
+		    gs.name        		AS goods_name,
+		    SUM(g.pos_amt) 		AS pos_amt ,
+		    SUM(g.pos_qty) 		AS pos_qty ,
+		    sup.name       		AS sup_name ,
+		    SUM(sd.stock_qty) 	AS stock_qty
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
@@ -224,30 +229,35 @@
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
-		WHERE
+		<where>
+		<![CDATA[
 		    g.opt_date >= #{optDateStart}
 		AND g.opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
 		AND g.org_id = #{orgId}
+		</if>
 		AND g.item_barcode = gs.barcode
 		AND gs.item_no = #{itemNo}
 		AND gs.supplier_bw_id = sup.supplier_bw_id
+		</where>
 		GROUP BY
 		    g.item_barcode
 		ORDER BY
 		    pos_amt ASC LIMIT 30
-	]]>
+	
 	</select>
 	
 	<select id="getSalesItemRankInfoList_OrderAmt_Top_Supplier" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
+	
 		SELECT
 		    g.item_barcode,
 		    g.item_subno ,
-		    gs.name        AS goods_name,
-		    SUM(g.pos_amt) AS pos_amt ,
-		    SUM(g.pos_qty) AS pos_qty ,
-		    sup.name       AS sup_name ,
-		    sd.stock_qty
+		    gs.name        		AS goods_name,
+		    SUM(g.pos_amt) 		AS pos_amt ,
+		    SUM(g.pos_qty) 		AS pos_qty ,
+		    sup.name       		AS sup_name ,
+		    SUM(sd.stock_qty) 	AS stock_qty
 		FROM
 		    t_sales_day_total_goods g
 		LEFT JOIN
@@ -257,21 +267,26 @@
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
-		WHERE
+		<where>
+		<![CDATA[
 		    g.opt_date >= #{optDateStart}
 		AND g.opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
 		AND g.org_id = #{orgId}
+		</if>
 		AND g.item_barcode = gs.barcode
 		AND sup.supplier_bw_id = #{supplierBwId}
 		AND gs.supplier_bw_id = sup.supplier_bw_id
+		</where>
 		GROUP BY
 		    g.item_barcode
 		ORDER BY
 		    pos_amt DESC LIMIT 30
-	]]>
+	
 	</select>
 	<select id="getSalesItemRankInfoList_OrderAmt_Down_Supplier" parameterType="com.tjhx.entity.info.SalesDayTotalGoods" resultMap="Result_Map_SalesDayTotalGoods">
-	<![CDATA[
+	
 		SELECT
 		    g.item_barcode,
 		    g.item_subno ,
@@ -289,18 +304,23 @@
 		AND sd.org_id = g.org_id,
 		    t_goods gs,
 		    t_supplier sup
-		WHERE
+		<where>
+		<![CDATA[
 		    g.opt_date >= #{optDateStart}
 		AND g.opt_date <= #{optDateEnd}
+		]]>
+		<if test="orgId != null and orgId !='' ">
 		AND g.org_id = #{orgId}
+		</if>
 		AND g.item_barcode = gs.barcode
 		AND sup.supplier_bw_id = #{supplierBwId}
 		AND gs.supplier_bw_id = sup.supplier_bw_id
+		</where>
 		GROUP BY
 		    g.item_barcode
 		ORDER BY
 		    pos_amt ASC LIMIT 30
-	]]>
+	
 	</select>
 	
 	<!-- 取得合计销售金额 -->

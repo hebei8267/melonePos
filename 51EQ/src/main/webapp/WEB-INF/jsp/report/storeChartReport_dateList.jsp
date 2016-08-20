@@ -23,6 +23,14 @@
                             <h3>库存信息(表格)</h3>
                         </legend>
                     </div>
+                    
+                    <div class="span12">
+	                	<div class="alert alert-info">
+	                		负库比(数量/金额) ＞ <span style="color: red;">0.8%</span> 时，字体标红
+	            		</div>
+	            	</div>
+                    
+                    
                     <div class="span12" style="margin-top: -10px;">
                     	<h5>库存日期${maxOptDate}</h5>
                     </div>
@@ -31,46 +39,61 @@
                         <table class="table	table-striped table-bordered table-condensed mytable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="center">
                                         机构
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         库存数量(正)
                                     </th>
-                                    <th>
+                                    <th class="center">
                                         库存数量(负)
                                     </th>
-                                    <th class="right">
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                        负库比(数量)
+                                    </th>
+                                    <th class="center">
                                         库存金额(正)
                                     </th>
-                                    <th class="right">
+                                    <th class="center">
                                         库存金额(负)
                                     </th>
-                                    <th class="right">
+                                    <th class="center" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                        负库比(金额)
+                                    </th>
+                                    <th class="center">
                                         售价金额(正)
                                     </th>
-                                    <th class="right">
+                                    <th class="center">
                                         售价金额(负)
                                     </th>
+                                <!--    <th class="center" style="background-image: linear-gradient(to bottom,#fbb450,#f89406);">
+                                        库销比(金额)
+                                    </th> --> 
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${storeDayTotalList}" var="storeDayTotal">
                                     <tr>
-                                        <td>
+                                        <td class="center">
                                             ${storeDayTotal.orgName}
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${storeDayTotal.stockTotalQty}
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${storeDayTotal.stockTotalQty_Minus}
+                                        </td>
+                                        <td class="right" <c:if test="${storeDayTotal.stockQtyScale_Minus > 0.8}" > style="color: red;"</c:if>>
+                                            ${storeDayTotal.stockQtyScale_Minus}%
                                         </td>
                                         <td class="right">
                                             ${storeDayTotal.stockTotalAmt}
                                         </td>
                                         <td class="right">
                                             ${storeDayTotal.stockTotalAmt_Minus}
+                                        </td>
+                                        <td class="right" <c:if test="${storeDayTotal.stockAmtScale_Minus > 0.8}" > style="color: red;"</c:if>>
+                                            ${storeDayTotal.stockAmtScale_Minus}%
                                         </td>
                                         <td class="right">
                                             ${storeDayTotal.itemSaleTotalAmt}
@@ -82,20 +105,26 @@
                                 </c:forEach>
                                 <c:if test="${!empty storeDayTotalList}" >
                                     <tr>
-                                        <td>
-                                            合计:
+                                        <td class="center">
+                                            合计
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${totalStore.stockTotalQty}
                                         </td>
-                                        <td>
+                                        <td class="right">
                                             ${totalStore.stockTotalQty_Minus}
+                                        </td>
+                                        <td class="right" <c:if test="${totalStore.stockQtyScale_Minus > 0.8}" > style="color: red;"</c:if>>
+                                            ${totalStore.stockQtyScale_Minus}%
                                         </td>
                                         <td class="right">
                                             ${totalStore.stockTotalAmt}
                                         </td>
                                         <td class="right">
                                             ${totalStore.stockTotalAmt_Minus}
+                                        </td>
+                                        <td class="right" <c:if test="${totalStore.stockAmtScale_Minus > 0.8}" > style="color: red;"</c:if>>
+                                            ${totalStore.stockAmtScale_Minus}%
                                         </td>
                                         <td class="right">
                                             ${totalStore.itemSaleTotalAmt}

@@ -135,6 +135,9 @@ public class SalesDaySupChartReportController extends BaseController {
 		String optDateStart = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		if (null != orgId && orgId.length() != 6) {
+			orgId = null;
+		}
 
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
@@ -144,7 +147,7 @@ public class SalesDaySupChartReportController extends BaseController {
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
 		model.addAttribute("orgId", orgId);
-		model.addAttribute("orgName", orgId.substring(3));
+		model.addAttribute("orgName", orgId == null ? null : orgId.substring(3));
 		model.addAttribute("sumSaleRamtList", _sumSaleRamtList);
 
 		return "report/salesDaySupChartReport_pie_detail_list";
@@ -250,21 +253,24 @@ public class SalesDaySupChartReportController extends BaseController {
 		String optDateEnd = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String supplierBwId = ServletRequestUtils.getStringParameter(request, "supplierBwId");
+		if (null != orgId && orgId.length() != 6) {
+			orgId = null;
+		}
 
 		String _startDate = DateUtils.transDateFormat(optDateStart, "yyyy-MM-dd", "yyyyMMdd");
 		String _endDate = DateUtils.transDateFormat(optDateEnd, "yyyy-MM-dd", "yyyyMMdd");
 
-		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top_Supplier(_startDate, _endDate, orgId,
-				supplierBwId);
-		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down_Supplier(_startDate, _endDate, orgId,
-				supplierBwId);
+		List<SalesDayTotalGoods> _topList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Top_Supplier(_startDate, _endDate,
+				orgId, supplierBwId);
+		List<SalesDayTotalGoods> _downList = salesDayTotalGoodsManager.getSalesItemRankInfoList_OrderAmt_Down_Supplier(_startDate,
+				_endDate, orgId, supplierBwId);
 		Supplier supplier = supplierManager.getSupplierByBwId(supplierBwId);
 
 		model.addAttribute("supplier", supplier);
 		model.addAttribute("optDateStart", optDateStart);
 		model.addAttribute("optDateEnd", optDateEnd);
 		model.addAttribute("orgId", orgId);
-		model.addAttribute("orgName", orgId.substring(3));
+		model.addAttribute("orgName", orgId == null ? null : orgId.substring(3));
 
 		model.addAttribute("topList", _topList);
 		model.addAttribute("downList", _downList);

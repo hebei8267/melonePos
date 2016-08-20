@@ -92,9 +92,7 @@
 					<div class="span12 cash_daily"></div>
 					
 					<div class="span12" align="right">
-						<c:if test="${status1.index != 0}" >
 						<a href="#" onclick="setOrgId('${orgIdList.get(status1.index) }');" class="btn btn-warning"/>>>更多</a>
-						</c:if>
 					</div>
 					
 					<div class="span6"	style="margin-top: 10px;">
