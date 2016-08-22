@@ -63,6 +63,7 @@
     	WHERE 
     		store.opt_date = #{optDate}
     	AND store.org_id = org.org_id
+    	AND org.closed_flg = 0
     	ORDER BY
 		    store.org_id,
 		    store.store_flg

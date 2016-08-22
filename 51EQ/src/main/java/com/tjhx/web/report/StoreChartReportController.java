@@ -55,7 +55,7 @@ public class StoreChartReportController extends BaseController {
 		List<String> _nameList = Lists.newLinkedList();
 
 		if (StringUtils.isBlank(orgId)) {// 全机构
-			List<Organization> orgList = orgManager.getSubOrganization();
+			List<Organization> orgList = orgManager.getOpenSubOrganization();
 
 			_nameList.add("全机构");
 
