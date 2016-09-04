@@ -345,22 +345,28 @@
 			<if test="itemType != null ">
 			AND gd.item_no IN (${itemType})
 			</if>
+			<if test="supplier != null ">
+			AND gd.supplier_bw_id IN (${supplier})
+			</if>
 	  	</where>
 	</select>
 	<select id="getTotalPosAmtInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
 		SELECT
 		    A.*,
-		    B.stock_qty
+		    B.stock_qty,
+		    B.stock_amt
 		FROM
 		    (
 		        SELECT
 		            sgd.item_subno,
-		            SUM(sgd.pos_amt) AS pos_amt,
-		            SUM(sgd.pos_qty) AS pos_qty,
-		            gd.name          AS goods_name
+		            SUM(sgd.pos_amt) 	AS pos_amt,
+		            SUM(sgd.pos_qty) 	AS pos_qty,
+		            gd.name          	AS goods_name,
+		            sup.name         	AS sup_name
 		        FROM
 		            t_sales_day_total_goods sgd,
-		            t_goods gd
+		            t_goods gd,
+		            t_supplier sup
 		        <where>
 		            <![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
 			        AND sgd.item_subno = gd.subno
@@ -376,6 +382,12 @@
 					<if test="itemType != null ">
 					AND gd.item_no IN (${itemType})
 					</if>
+					
+					AND gd.supplier_bw_id = sup.supplier_bw_id
+					
+					<if test="supplier != null ">
+					AND gd.supplier_bw_id IN (${supplier})
+					</if>
 			  	</where>
 		        GROUP BY
 		            item_subno ) A
@@ -383,7 +395,8 @@
 		    (
 		        SELECT
 		            sd.item_subno,
-		            SUM(stock_qty) AS stock_qty
+		            SUM(stock_qty) 		AS stock_qty,
+		            SUM(stock_amt)		AS stock_amt
 		        FROM
 		            t_store_detail_one_day sd
 		        <where>
@@ -417,22 +430,28 @@
 			<if test="itemType != null ">
 			AND gd.item_no IN (${itemType})
 			</if>
+			<if test="supplier != null ">
+			AND gd.supplier_bw_id IN (${supplier})
+			</if>
 	  	</where>
 	</select>
 	<select id="getTotalPosQtyInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
 		SELECT
 		    A.*,
-		    B.stock_qty
+		    B.stock_qty,
+		    B.stock_amt
 		FROM
 		    (
 		        SELECT
 		            sgd.item_subno,
 		            SUM(sgd.pos_amt) AS pos_amt,
 		            SUM(sgd.pos_qty) AS pos_qty,
-		            gd.name          AS goods_name
+		            gd.name          AS goods_name,
+		            sup.name         AS sup_name
 		        FROM
 		            t_sales_day_total_goods sgd,
-		            t_goods gd
+		            t_goods gd,
+		            t_supplier sup
 		        <where>
 		            <![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
 			        AND sgd.item_subno = gd.subno
@@ -448,6 +467,12 @@
 					<if test="itemType != null ">
 					AND gd.item_no IN (${itemType})
 					</if>
+					
+					AND gd.supplier_bw_id = sup.supplier_bw_id
+					
+					<if test="supplier != null ">
+					AND gd.supplier_bw_id IN (${supplier})
+					</if>
 			  	</where>
 		        GROUP BY
 		            item_subno ) A
@@ -455,7 +480,8 @@
 		    (
 		        SELECT
 		            sd.item_subno,
-		            SUM(stock_qty) AS stock_qty
+		            SUM(stock_qty) 		AS stock_qty,
+		            SUM(stock_amt)		AS stock_amt
 		        FROM
 		            t_store_detail_one_day sd
 		        <where>

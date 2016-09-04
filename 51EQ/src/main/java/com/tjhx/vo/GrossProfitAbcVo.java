@@ -11,10 +11,19 @@ public class GrossProfitAbcVo {
 	private List<SalesDayTotalGoods> listB = Lists.newArrayList();
 	private List<SalesDayTotalGoods> listC = Lists.newArrayList();
 
-	private BigDecimal total = new BigDecimal("0");
-	private BigDecimal totalA = new BigDecimal("0");
-	private BigDecimal totalB = new BigDecimal("0");
-	private BigDecimal totalC = new BigDecimal("0");
+	private BigDecimal totalQty = new BigDecimal("0");
+	private BigDecimal totalAQty = new BigDecimal("0");
+	private BigDecimal totalBQty = new BigDecimal("0");
+	private BigDecimal totalCQty = new BigDecimal("0");
+
+	private BigDecimal totalAmt = new BigDecimal("0");
+	private BigDecimal totalAAmt = new BigDecimal("0");
+	private BigDecimal totalBAmt = new BigDecimal("0");
+	private BigDecimal totalCAmt = new BigDecimal("0");
+
+	private BigDecimal totalAStockAmt = new BigDecimal("0");
+	private BigDecimal totalBStockAmt = new BigDecimal("0");
+	private BigDecimal totalCStockAmt = new BigDecimal("0");
 
 	/**
 	 * 取得listA
@@ -71,74 +80,201 @@ public class GrossProfitAbcVo {
 	}
 
 	/**
-	 * 取得total
+	 * 取得totalQty
 	 * 
-	 * @return total
+	 * @return totalQty
 	 */
-	public BigDecimal getTotal() {
-		return total;
+	public BigDecimal getTotalQty() {
+		return totalQty;
 	}
 
 	/**
-	 * 设置total
+	 * 设置totalQty
 	 * 
-	 * @param total total
+	 * @param totalQty totalQty
 	 */
-	public void setTotal(BigDecimal total) {
-		this.total = total;
+	public void setTotalQty(BigDecimal totalQty) {
+		this.totalQty = totalQty;
 	}
 
 	/**
-	 * 取得totalA
+	 * 取得totalAQty
 	 * 
-	 * @return totalA
+	 * @return totalAQty
 	 */
-	public BigDecimal getTotalA() {
-		return totalA;
+	public BigDecimal getTotalAQty() {
+		return totalAQty;
 	}
 
 	/**
-	 * 设置totalA
+	 * 设置totalAQty
 	 * 
-	 * @param totalA totalA
+	 * @param totalAQty totalAQty
 	 */
-	public void setTotalA(BigDecimal totalA) {
-		this.totalA = totalA;
+	public void setTotalAQty(BigDecimal totalAQty) {
+		this.totalAQty = totalAQty;
 	}
 
 	/**
-	 * 取得totalB
+	 * 取得totalBQty
 	 * 
-	 * @return totalB
+	 * @return totalBQty
 	 */
-	public BigDecimal getTotalB() {
-		return totalB;
+	public BigDecimal getTotalBQty() {
+		return totalBQty;
 	}
 
 	/**
-	 * 设置totalB
+	 * 设置totalBQty
 	 * 
-	 * @param totalB totalB
+	 * @param totalBQty totalBQty
 	 */
-	public void setTotalB(BigDecimal totalB) {
-		this.totalB = totalB;
+	public void setTotalBQty(BigDecimal totalBQty) {
+		this.totalBQty = totalBQty;
 	}
 
 	/**
-	 * 取得totalC
+	 * 取得totalCQty
 	 * 
-	 * @return totalC
+	 * @return totalCQty
 	 */
-	public BigDecimal getTotalC() {
-		return totalC;
+	public BigDecimal getTotalCQty() {
+		return totalCQty;
 	}
 
 	/**
-	 * 设置totalC
+	 * 设置totalCQty
 	 * 
-	 * @param totalC totalC
+	 * @param totalCQty totalCQty
 	 */
-	public void setTotalC(BigDecimal totalC) {
-		this.totalC = totalC;
+	public void setTotalCQty(BigDecimal totalCQty) {
+		this.totalCQty = totalCQty;
 	}
+
+	/**
+	 * 取得totalAmt
+	 * 
+	 * @return totalAmt
+	 */
+	public BigDecimal getTotalAmt() {
+		return totalAmt;
+	}
+
+	/**
+	 * 设置totalAmt
+	 * 
+	 * @param totalAmt totalAmt
+	 */
+	public void setTotalAmt(BigDecimal totalAmt) {
+		this.totalAmt = totalAmt;
+	}
+
+	/**
+	 * 取得totalAAmt
+	 * 
+	 * @return totalAAmt
+	 */
+	public BigDecimal getTotalAAmt() {
+		return totalAAmt;
+	}
+
+	/**
+	 * 设置totalAAmt
+	 * 
+	 * @param totalAAmt totalAAmt
+	 */
+	public void setTotalAAmt(BigDecimal totalAAmt) {
+		this.totalAAmt = totalAAmt;
+	}
+
+	/**
+	 * 取得totalBAmt
+	 * 
+	 * @return totalBAmt
+	 */
+	public BigDecimal getTotalBAmt() {
+		return totalBAmt;
+	}
+
+	/**
+	 * 设置totalBAmt
+	 * 
+	 * @param totalBAmt totalBAmt
+	 */
+	public void setTotalBAmt(BigDecimal totalBAmt) {
+		this.totalBAmt = totalBAmt;
+	}
+
+	/**
+	 * 取得totalCAmt
+	 * 
+	 * @return totalCAmt
+	 */
+	public BigDecimal getTotalCAmt() {
+		return totalCAmt;
+	}
+
+	/**
+	 * 设置totalCAmt
+	 * 
+	 * @param totalCAmt totalCAmt
+	 */
+	public void setTotalCAmt(BigDecimal totalCAmt) {
+		this.totalCAmt = totalCAmt;
+	}
+
+	/**
+	 * 取得totalAStockAmt
+	 * 
+	 * @return totalAStockAmt
+	 */
+	public BigDecimal getTotalAStockAmt() {
+		return totalAStockAmt;
+	}
+
+	/**
+	 * 设置totalAStockAmt
+	 * 
+	 * @param totalAStockAmt totalAStockAmt
+	 */
+	public void setTotalAStockAmt(BigDecimal totalAStockAmt) {
+		this.totalAStockAmt = totalAStockAmt;
+	}
+
+	/**
+	 * 取得totalBStockAmt
+	 * 
+	 * @return totalBStockAmt
+	 */
+	public BigDecimal getTotalBStockAmt() {
+		return totalBStockAmt;
+	}
+
+	/**
+	 * 设置totalBStockAmt
+	 * 
+	 * @param totalBStockAmt totalBStockAmt
+	 */
+	public void setTotalBStockAmt(BigDecimal totalBStockAmt) {
+		this.totalBStockAmt = totalBStockAmt;
+	}
+
+	/**
+	 * 取得totalCStockAmt
+	 * 
+	 * @return totalCStockAmt
+	 */
+	public BigDecimal getTotalCStockAmt() {
+		return totalCStockAmt;
+	}
+
+	/**
+	 * 设置totalCStockAmt
+	 * 
+	 * @param totalCStockAmt totalCStockAmt
+	 */
+	public void setTotalCStockAmt(BigDecimal totalCStockAmt) {
+		this.totalCStockAmt = totalCStockAmt;
+	}
+
 }

@@ -17,9 +17,11 @@ import org.springside.modules.mapper.JsonMapper;
 import com.google.common.collect.Lists;
 import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalGoods;
+import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.service.info.GrossProfitAbcManager;
 import com.tjhx.service.info.ItemTypeManager;
+import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.vo.GrossProfitAbcVo;
 import com.tjhx.vo.Select2Vo;
@@ -32,6 +34,8 @@ public class GrossProfitAbcController extends BaseController {
 	private OrganizationManager orgManager;
 	@Resource
 	private ItemTypeManager itemTypeManager;
+	@Resource
+	private SupplierManager supplierManager;
 	@Resource
 	private GrossProfitAbcManager grossProfitAbcManager;
 
@@ -55,7 +59,7 @@ public class GrossProfitAbcController extends BaseController {
 	private void initPageControls(Model model) {
 		// 初始化机构下拉菜单
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
-		// 初始化类型下拉菜单
+		// 初始化类型下拉菜单---类别
 		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
 		List<Select2Vo> itemTypeList = Lists.newArrayList();
 		itemTypeList.add(new Select2Vo("ALL", "所有类别"));
@@ -67,6 +71,18 @@ public class GrossProfitAbcController extends BaseController {
 		}
 		JsonMapper mapper = new JsonMapper();
 		model.addAttribute("itemTypeList", mapper.toJson(itemTypeList));
+
+		// 初始化类型下拉菜单---货商
+		List<Supplier> _supplierList = supplierManager.getAllSupplierList();
+		List<Select2Vo> supplierList = Lists.newArrayList();
+		supplierList.add(new Select2Vo("ALL", "所有货商"));
+
+		for (Supplier supplier : _supplierList) {
+			Select2Vo vo = new Select2Vo(supplier.getSupplierBwId().trim(), supplier.getName().trim());
+
+			supplierList.add(vo);
+		}
+		model.addAttribute("supplierList", mapper.toJson(supplierList));
 	}
 
 	@RequestMapping(value = "search")
@@ -83,6 +99,7 @@ public class GrossProfitAbcController extends BaseController {
 		int abcParam1 = ServletRequestUtils.getIntParameter(request, "abcParam1");
 		int abcParam2 = ServletRequestUtils.getIntParameter(request, "abcParam2");
 		int abcParam3 = ServletRequestUtils.getIntParameter(request, "abcParam3");
+		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
 
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
@@ -97,11 +114,17 @@ public class GrossProfitAbcController extends BaseController {
 		model.addAttribute("abcParam1", abcParam1);
 		model.addAttribute("abcParam2", abcParam2);
 		model.addAttribute("abcParam3", abcParam3);
+		model.addAttribute("supplier", supplier);
 
 		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
 		String itemNoArray = StringUtils.join(itemNoList, ",");
+		
+		List<String> supplierBwIdList = Lists.newArrayList(supplier.split(","));
+		String supplierBwIdArray = StringUtils.join(supplierBwIdList, ",");
+		
+		
 		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray,
-				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3);
+				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray);
 
 		model.addAttribute("vo", vo);
 
