@@ -123,7 +123,7 @@
                         },
                         goldCardAmt : {
                             required : true,
-                            money : true
+                            negativeMoney : true
                         },
                         rebateAmt : {
                             required : true,
