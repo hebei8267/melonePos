@@ -7,7 +7,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<title>EQ+门店导航</title>
-		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Rm4w3fkD9Tc9ervhj7BnXcsH"></script>
+		<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Rm4w3fkD9Tc9ervhj7BnXcsH&s=1"></script>
 		<style type="text/css">
 		    html,body{margin:0;padding:0;}
 		    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
