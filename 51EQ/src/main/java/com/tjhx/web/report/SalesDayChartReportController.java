@@ -4,8 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,28 +193,45 @@ public class SalesDayChartReportController extends BaseController {
 		List<SalesDayTotal> salesDayTotalList = salesDayTotalManager.getSalesDayTotalListByOptDate(optDate);
 
 		List<Organization> orgList = orgManager.getOpenSubOrganization();
-		List<SalesDayTotal> _salesDayTotalList = Lists.newArrayList();
+		List<SalesDayTotal> _salesDayTotalList_EQ = Lists.newArrayList();
+		List<SalesDayTotal> _salesDayTotalList_Infancy = Lists.newArrayList();
 
-		for (Organization org : orgList) {
-			SalesDayTotal _tmpSalesDayTotal = new SalesDayTotal(optDate, org.getId());
+		for (SalesDayTotal salesDayInfo : salesDayTotalList) {
+			String _brand = getOrgBrand(orgList, salesDayInfo.getOrgId());
 
-			if (!salesDayTotalList.contains(_tmpSalesDayTotal)) {
-				_salesDayTotalList.add(_tmpSalesDayTotal);
+			if ("EQ+".equals(_brand)) {
+				_salesDayTotalList_EQ.add(salesDayInfo);
+			}
+			if ("Infancy".equals(_brand)) {
+				_salesDayTotalList_Infancy.add(salesDayInfo);
 			}
 		}
 
-		_salesDayTotalList.addAll(salesDayTotalList);
-		Collections.sort(_salesDayTotalList, new SalesDayTotalComparator());
+		_salesDayTotalList_EQ.add(0, calTotal(_salesDayTotalList_EQ, "EQ+"));
+		_salesDayTotalList_Infancy.add(0, calTotal(_salesDayTotalList_EQ, "Infancy"));
 
-		_salesDayTotalList.add(0, calTotal(_salesDayTotalList));
+		List<SalesDayTotal> _list = Lists.newArrayList();
+		_list.addAll(_salesDayTotalList_EQ);
+		_list.addAll(_salesDayTotalList_Infancy);
 
-		model.addAttribute("salesDayTotalList", _salesDayTotalList);
+		_list.add(0, calTotal(_list, "合计"));
+
+		model.addAttribute("salesDayTotalList", _list);
 	}
 
-	private SalesDayTotal calTotal(List<SalesDayTotal> salesDayTotalList) {
+	private String getOrgBrand(List<Organization> orgList, String orgId) {
+		for (Organization org : orgList) {
+			if (org.getId().equals(orgId)) {
+				return org.getBrand();
+			}
+		}
+		return null;
+	}
+
+	private SalesDayTotal calTotal(List<SalesDayTotal> salesDayTotalList, String aliasOrgId) {
 		SalesDayTotal total = new SalesDayTotal();
 		// 机构编号
-		total.setOrgId("合计");
+		total.setOrgId(aliasOrgId);
 
 		for (SalesDayTotal salesDayTotal : salesDayTotalList) {
 			// 当日销售金额
@@ -421,12 +436,4 @@ public class SalesDayChartReportController extends BaseController {
 		return _optDateList;
 	}
 
-}
-
-class SalesDayTotalComparator implements Comparator<SalesDayTotal> {
-
-	@Override
-	public int compare(SalesDayTotal o1, SalesDayTotal o2) {
-		return o1.getOrgId().compareTo(o2.getOrgId());
-	}
 }
