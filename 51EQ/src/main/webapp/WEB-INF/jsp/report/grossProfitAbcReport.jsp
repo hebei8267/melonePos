@@ -137,7 +137,7 @@
         	<div class="row">
 	            <div class="span12">
 	                <legend>
-	                    <h3>毛利ABC分析表</h3>
+	                    <h3>毛利ABC-D分析表</h3>
 	                </legend>
 	            </div>
 	            
@@ -399,6 +399,49 @@
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) != 0}">
 	                                        <td class="center">${saleInfo.stockAmt / saleInfo.posAmt}</td>
 	                                        </c:if>
+	                                    </tr>
+	                                    </c:forEach>
+	                                </tbody>
+	                            </table>
+	                        </div>
+	            		</div>
+	            	</div>
+         		</div>
+         		
+         		
+         		<div class="span12">
+         			<div class="portlet box red">
+	                    <div class="portlet-title">
+	                        <div class="caption">
+		                        分析表D（滞销商品）
+	                        </div>
+	                        <div class="tools">
+                                 <a href="#" class="collapse"> </a>
+                         	</div>
+	                    </div>
+	                    
+	                    <div class="portlet-body">
+	                        <div class="table-scrollable">
+	                            <table class="table table-striped table-bordered table-hover mytable1">
+	                                <thead>
+	                                    <tr>
+	                                        <th class="center" scope="col" width="50">行号</th>
+	                                        <th class="center" scope="col" width="70">货号</th>
+	                                        <th class="center" scope="col">商品名称</th>
+	                                        <th class="center" scope="col" width="70">货商</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
+	                                        <th class="center" scope="col" width="70">库存金额</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                    <c:forEach items="${vo.listD}" var="saleInfo" varStatus="status">
+	                                    <tr>
+	                                        <td class="center">${status.index + 1}</td>
+	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
+	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
+	                                        <td class="center">${saleInfo.supName }</td>
+	                                        <td class="right"> ${saleInfo.stockQty} </td>
+	                                        <td class="right">${saleInfo.stockAmt }</td>
 	                                    </tr>
 	                                    </c:forEach>
 	                                </tbody>

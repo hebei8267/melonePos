@@ -10,6 +10,7 @@ public class GrossProfitAbcVo {
 	private List<SalesDayTotalGoods> listA = Lists.newArrayList();
 	private List<SalesDayTotalGoods> listB = Lists.newArrayList();
 	private List<SalesDayTotalGoods> listC = Lists.newArrayList();
+	private List<SalesDayTotalGoods> listD = Lists.newArrayList();
 
 	private BigDecimal totalQty = new BigDecimal("0");
 	private BigDecimal totalAQty = new BigDecimal("0");
@@ -24,6 +25,7 @@ public class GrossProfitAbcVo {
 	private BigDecimal totalAStockAmt = new BigDecimal("0");
 	private BigDecimal totalBStockAmt = new BigDecimal("0");
 	private BigDecimal totalCStockAmt = new BigDecimal("0");
+	private BigDecimal totalDStockAmt = new BigDecimal("0");
 
 	/**
 	 * 取得listA
@@ -275,6 +277,42 @@ public class GrossProfitAbcVo {
 	 */
 	public void setTotalCStockAmt(BigDecimal totalCStockAmt) {
 		this.totalCStockAmt = totalCStockAmt;
+	}
+
+	/**
+	 * 取得listD
+	 * 
+	 * @return listD
+	 */
+	public List<SalesDayTotalGoods> getListD() {
+		return listD;
+	}
+
+	/**
+	 * 设置listD
+	 * 
+	 * @param listD listD
+	 */
+	public void setListD(List<SalesDayTotalGoods> listD) {
+		this.listD = listD;
+	}
+
+	/**
+	 * 取得totalDStockAmt
+	 * 
+	 * @return totalDStockAmt
+	 */
+	public BigDecimal getTotalDStockAmt() {
+		return totalDStockAmt;
+	}
+
+	/**
+	 * 设置totalDStockAmt
+	 * 
+	 * @param totalDStockAmt totalDStockAmt
+	 */
+	public void setTotalDStockAmt(BigDecimal totalDStockAmt) {
+		this.totalDStockAmt = totalDStockAmt;
 	}
 
 }

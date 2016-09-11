@@ -82,4 +82,7 @@ public interface SalesDayTotalGoodsMyBatisDao {
 
 	/** 取得库存门店信息（根据条码） */
 	public List<SalesDayTotalGoods> getStoreOrgInfo(String itemSubno);
+
+	/** 取得滞销商品信息 */
+	public List<SalesDayTotalGoods> getUnsalableGoodsInfo(Map<String, String> param);
 }

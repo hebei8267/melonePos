@@ -118,11 +118,10 @@ public class GrossProfitAbcController extends BaseController {
 
 		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
 		String itemNoArray = StringUtils.join(itemNoList, ",");
-		
+
 		List<String> supplierBwIdList = Lists.newArrayList(supplier.split(","));
 		String supplierBwIdArray = StringUtils.join(supplierBwIdList, ",");
-		
-		
+
 		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray,
 				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray);
 

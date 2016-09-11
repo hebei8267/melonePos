@@ -24,6 +24,36 @@ public class GrossProfitAbcManager {
 	private SalesDayTotalGoodsMyBatisDao salesDayTotalGoodsMyBatisDao;
 
 	/**
+	 * 取得滞销商品信息
+	 */
+	private List<SalesDayTotalGoods> getGrossProfitDInfo(String startDate, String endDate, String orgId, String itemType, String itemSubno,
+			String itemName, String supplierBwIdArray) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		if (StringUtils.isNotBlank(orgId)) {
+			param.put("orgId", orgId);
+		}
+		if (StringUtils.isNotBlank(itemSubno)) {
+			param.put("itemSubno", itemSubno);
+		}
+		if (StringUtils.isNotBlank(itemName)) {
+			param.put("itemName", "%" + itemName + "%");
+		}
+		if (StringUtils.isNotBlank(itemType) && !"ALL".equals(itemType)) {
+			param.put("itemType", itemType);
+		}
+		if (StringUtils.isNotBlank(supplierBwIdArray)) {
+			param.put("supplier", supplierBwIdArray);
+		}
+
+		// TODO
+		List<SalesDayTotalGoods> _unsalableGoodsList = salesDayTotalGoodsMyBatisDao.getUnsalableGoodsInfo(param);
+
+		return _unsalableGoodsList;
+	}
+
+	/**
 	 * 合计销售金额
 	 * 
 	 * @throws ParseException
@@ -42,7 +72,7 @@ public class GrossProfitAbcManager {
 		if (StringUtils.isNotBlank(itemName)) {
 			param.put("itemName", "%" + itemName + "%");
 		}
-		if (StringUtils.isNotBlank(itemType)) {
+		if (StringUtils.isNotBlank(itemType) && !"ALL".equals(itemType)) {
 			param.put("itemType", itemType);
 		}
 		if (StringUtils.isNotBlank(supplierBwIdArray)) {
@@ -106,18 +136,21 @@ public class GrossProfitAbcManager {
 		String startDate = DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd");
 		String endDate = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
 
+		GrossProfitAbcVo vo = null;
 		if ("1".equals(abcType)) {// 合计销售金额
-			return getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
+			vo = getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
 					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")),
 					supplierBwIdArray);
 		} else if ("2".equals(abcType)) {// 合计销售数量
-			return getPosNumInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
+			vo = getPosNumInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
 					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")),
 					supplierBwIdArray);
 		} else {// 合计销售毛利
 
 		}
-		return null;
+		// 取得滞销商品信息
+		vo.setListD(getGrossProfitDInfo(startDate, endDate, orgId, itemType, itemSubno, itemName, supplierBwIdArray));
+		return vo;
 	}
 
 	/**
@@ -139,7 +172,7 @@ public class GrossProfitAbcManager {
 		if (StringUtils.isNotBlank(itemName)) {
 			param.put("itemName", "%" + itemName + "%");
 		}
-		if (StringUtils.isNotBlank(itemType)) {
+		if (StringUtils.isNotBlank(itemType) && !"ALL".equals(itemType)) {
 			param.put("itemType", itemType);
 		}
 		if (StringUtils.isNotBlank(supplierBwIdArray)) {

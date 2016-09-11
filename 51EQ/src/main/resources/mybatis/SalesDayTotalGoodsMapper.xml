@@ -521,4 +521,65 @@
 		GROUP BY
 		    org_id
 	</select>
+	
+	<select id="getUnsalableGoodsInfo" parameterType="map" resultMap="Result_Map_SalesDayTotalGoods">
+		SELECT
+		    A.*
+		FROM
+		    (
+		        SELECT
+		            sd.item_subno,
+		            SUM(stock_qty) AS stock_qty,
+		            SUM(stock_amt) AS stock_amt,
+		            gd.name        AS goods_name,
+		            sup.name       AS sup_name
+		        FROM
+		            t_store_detail_one_day sd,
+		            t_goods gd,
+		            t_supplier sup
+		        <where>
+		        		sd.item_subno = gd.subno
+					AND gd.supplier_bw_id = sup.supplier_bw_id
+					
+		        	<if test="orgId != null ">
+					AND sd.org_Id = #{orgId}
+					</if>
+					<if test="itemSubno != null ">
+					AND (sd.item_barcode = #{itemSubno} OR  sd.item_subno = #{itemSubno})
+					</if>
+					<if test="itemName != null ">
+					AND gd.name LIKE #{itemName}
+					</if>
+					<if test="itemType != null ">
+					AND gd.item_no IN (${itemType})
+					</if>
+					
+					<if test="supplier != null ">
+					AND gd.supplier_bw_id IN (${supplier})
+					</if>
+		        </where>
+		        GROUP BY
+		            item_subno) A
+		WHERE
+		    NOT EXISTS
+		    (
+		        SELECT
+		            *
+		        FROM
+		            (
+		                SELECT
+		                    sgd.item_subno
+		                FROM
+		                    t_sales_day_total_goods sgd
+		                <where>
+		                	<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
+				        	<if test="orgId != null ">
+							AND sgd.org_Id = #{orgId}
+							</if>
+				        </where>
+		                GROUP BY
+		                    item_subno ) B
+		        WHERE
+		            A.item_subno = B.item_subno)
+	</select>
 </mapper>

@@ -533,10 +533,10 @@
 						</tr>
 						<tr>
 							<c:if test="${role.permIdList.contains('76')}">
-							<td><input type="checkbox" name="perm" value="76" checked>毛利ABC分析表</td>
+							<td><input type="checkbox" name="perm" value="76" checked>毛利ABC-D分析表</td>
 							</c:if>
 							<c:if test="${!role.permIdList.contains('76')}">
-							<td><input type="checkbox" name="perm" value="76">毛利ABC分析表</td>
+							<td><input type="checkbox" name="perm" value="76">毛利ABC-D分析表</td>
 							</c:if>
 						</tr>
 					</table>
