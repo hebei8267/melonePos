@@ -207,14 +207,16 @@ public class SalesDayChartReportController extends BaseController {
 			}
 		}
 
-		_salesDayTotalList_EQ.add(0, calTotal(_salesDayTotalList_EQ, "EQ+"));
-		_salesDayTotalList_Infancy.add(0, calTotal(_salesDayTotalList_EQ, "Infancy"));
+		SalesDayTotal _eqTotal = calTotal(_salesDayTotalList_EQ, "EQ+");
+		SalesDayTotal _inTotal = calTotal(_salesDayTotalList_Infancy, "Infancy");
+		_salesDayTotalList_EQ.add(0, _eqTotal);
+		_salesDayTotalList_Infancy.add(0, _inTotal);
 
 		List<SalesDayTotal> _list = Lists.newArrayList();
 		_list.addAll(_salesDayTotalList_EQ);
 		_list.addAll(_salesDayTotalList_Infancy);
 
-		_list.add(0, calTotal(_list, "合计"));
+		_list.add(0, calTotal(Lists.newArrayList(_eqTotal, _inTotal), "合计"));
 
 		model.addAttribute("salesDayTotalList", _list);
 	}
