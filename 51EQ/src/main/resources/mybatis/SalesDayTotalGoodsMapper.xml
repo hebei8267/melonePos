@@ -581,5 +581,6 @@
 		                    item_subno ) B
 		        WHERE
 		            A.item_subno = B.item_subno)
+	ORDER BY stock_amt DESC
 	</select>
 </mapper>

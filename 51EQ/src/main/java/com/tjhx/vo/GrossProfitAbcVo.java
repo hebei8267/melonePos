@@ -16,11 +16,13 @@ public class GrossProfitAbcVo {
 	private BigDecimal totalAQty = new BigDecimal("0");
 	private BigDecimal totalBQty = new BigDecimal("0");
 	private BigDecimal totalCQty = new BigDecimal("0");
+	private BigDecimal totalDQty = new BigDecimal("0");
 
 	private BigDecimal totalAmt = new BigDecimal("0");
 	private BigDecimal totalAAmt = new BigDecimal("0");
 	private BigDecimal totalBAmt = new BigDecimal("0");
 	private BigDecimal totalCAmt = new BigDecimal("0");
+	private BigDecimal totalDAmt = new BigDecimal("0");
 
 	private BigDecimal totalAStockAmt = new BigDecimal("0");
 	private BigDecimal totalBStockAmt = new BigDecimal("0");
@@ -313,6 +315,42 @@ public class GrossProfitAbcVo {
 	 */
 	public void setTotalDStockAmt(BigDecimal totalDStockAmt) {
 		this.totalDStockAmt = totalDStockAmt;
+	}
+
+	/**
+	 * 取得totalDQty
+	 * 
+	 * @return totalDQty
+	 */
+	public BigDecimal getTotalDQty() {
+		return totalDQty;
+	}
+
+	/**
+	 * 设置totalDQty
+	 * 
+	 * @param totalDQty totalDQty
+	 */
+	public void setTotalDQty(BigDecimal totalDQty) {
+		this.totalDQty = totalDQty;
+	}
+
+	/**
+	 * 取得totalDAmt
+	 * 
+	 * @return totalDAmt
+	 */
+	public BigDecimal getTotalDAmt() {
+		return totalDAmt;
+	}
+
+	/**
+	 * 设置totalDAmt
+	 * 
+	 * @param totalDAmt totalDAmt
+	 */
+	public void setTotalDAmt(BigDecimal totalDAmt) {
+		this.totalDAmt = totalDAmt;
 	}
 
 }

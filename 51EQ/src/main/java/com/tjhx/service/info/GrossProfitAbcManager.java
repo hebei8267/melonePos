@@ -26,8 +26,8 @@ public class GrossProfitAbcManager {
 	/**
 	 * 取得滞销商品信息
 	 */
-	private List<SalesDayTotalGoods> getGrossProfitDInfo(String startDate, String endDate, String orgId, String itemType, String itemSubno,
-			String itemName, String supplierBwIdArray) {
+	private void getGrossProfitDInfo(GrossProfitAbcVo vo, String startDate, String endDate, String orgId, String itemType,
+			String itemSubno, String itemName, String supplierBwIdArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
@@ -47,10 +47,13 @@ public class GrossProfitAbcManager {
 			param.put("supplier", supplierBwIdArray);
 		}
 
-		// TODO
 		List<SalesDayTotalGoods> _unsalableGoodsList = salesDayTotalGoodsMyBatisDao.getUnsalableGoodsInfo(param);
+		vo.setListD(_unsalableGoodsList);
 
-		return _unsalableGoodsList;
+		for (SalesDayTotalGoods _s : _unsalableGoodsList) {
+			vo.setTotalDAmt(vo.getTotalDAmt().add(_s.getStockAmt()));
+			vo.setTotalDQty(vo.getTotalDQty().add(_s.getStockQty()));
+		}
 	}
 
 	/**
@@ -149,7 +152,7 @@ public class GrossProfitAbcManager {
 
 		}
 		// 取得滞销商品信息
-		vo.setListD(getGrossProfitDInfo(startDate, endDate, orgId, itemType, itemSubno, itemName, supplierBwIdArray));
+		getGrossProfitDInfo(vo, startDate, endDate, orgId, itemType, itemSubno, itemName, supplierBwIdArray);
 		return vo;
 	}
 

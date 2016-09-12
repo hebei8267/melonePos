@@ -217,11 +217,18 @@
 	                        	
 	                        	<c:if test="${abcType == '1' || abcType == '2'}">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalAStockAmt} / ${vo.totalAAmt} / ${vo.totalAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 销售金额 / 总销售金额</span>
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalAQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
 		                        	
+		                        	<div style="margin-top: 10px">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalAQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
+		                        	</div>
+		                        	
+		                        	<div style="margin-top: 10px">
 		                        	<c:if test="${vo.totalAAmt.compareTo(BigDecimal.ZERO) != 0}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font2">库销比</span>&nbsp;&nbsp;<span class="font1">${vo.totalAStockAmt / vo.totalAAmt}</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalAStockAmt / vo.totalAAmt}</span>&nbsp;&nbsp;<span class="font2">库销比</span>
 		                        	</c:if>
+		                        	</div>
 	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
@@ -283,11 +290,18 @@
 		                        
 		                        <c:if test="${abcType == '1' || abcType == '2'}">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalBStockAmt} / ${vo.totalBAmt} / ${vo.totalAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 销售金额 / 总销售金额</span>
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalBQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
 		                        	
+		                        	<div style="margin-top: 10px">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalBQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
+		                        	</div>
+		                        	
+		                        	<div style="margin-top: 10px">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        	<c:if test="${vo.totalBAmt.compareTo(BigDecimal.ZERO) != 0}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font2">库销比</span>&nbsp;&nbsp;<span class="font1">${vo.totalBStockAmt / vo.totalBAmt}</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalBStockAmt / vo.totalBAmt}</span>&nbsp;&nbsp;<span class="font2">库销比</span>
 		                        	</c:if>
+		                        	</div>
 	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
@@ -349,12 +363,20 @@
 		                        分析表C
 		                        
 		                        <c:if test="${abcType == '1' || abcType == '2'}">
+		                        
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalCStockAmt} / ${vo.totalCAmt} / ${vo.totalAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 销售金额 / 总销售金额</span>
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalCQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
 		                        	
+		                        	<div style="margin-top: 10px">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalCQty} / ${vo.totalQty}</span>&nbsp;&nbsp;<span class="font2">(个)  销售数量 / 总销售数量</span>
+		                        	</div>
+		                        	
+		                        	<div style="margin-top: 10px">
 		                        	<c:if test="${vo.totalCAmt.compareTo(BigDecimal.ZERO) != 0}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font2">库销比</span>&nbsp;&nbsp;<span class="font1">${vo.totalCStockAmt / vo.totalCAmt}</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalCStockAmt / vo.totalCAmt}&nbsp;&nbsp;</span><span class="font2">库销比</span>
 		                        	</c:if>
+		                        	</div>
 	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
@@ -414,6 +436,12 @@
 	                    <div class="portlet-title">
 	                        <div class="caption">
 		                        分析表D（滞销商品）
+		                        <c:if test="${abcType == '1' || abcType == '2'}">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDQty}</span>&nbsp;&nbsp;<span class="font2">(个)  库存数量</span>
+		                        	
+		                        	
+	                        	</c:if>
 	                        </div>
 	                        <div class="tools">
                                  <a href="#" class="collapse"> </a>
