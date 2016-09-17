@@ -583,4 +583,11 @@
 		            A.item_subno = B.item_subno)
 	ORDER BY stock_amt DESC
 	</select>
+	
+	<select id="getTotalStockAmt" resultType="DECIMAL">
+	SELECT
+		SUM(stock_amt) AS stock_amt
+	FROM
+		t_store_detail_one_day
+	</select>
 </mapper>

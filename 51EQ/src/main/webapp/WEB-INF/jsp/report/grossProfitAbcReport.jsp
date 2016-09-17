@@ -143,7 +143,7 @@
 	            
 	            <div class="span12">
                 	<div class="alert alert-info">
-                		库销比 = 库存金额 / 销售金额
+                		库销比 = 库存金额 / 销售金额&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存比 = 库存金额 ／ 库存总金额
             		</div>
 	            </div>
 	            
@@ -437,9 +437,13 @@
 	                        <div class="caption">
 		                        分析表D（滞销商品）
 		                        <c:if test="${abcType == '1' || abcType == '2'}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt} / ${vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 库存总金额</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt / vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">库存比</span>
+		                        	<div style="margin-top: 10px">
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDQty}</span>&nbsp;&nbsp;<span class="font2">(个)  库存数量</span>
-		                        	
+		                        	</div>
 		                        	
 	                        	</c:if>
 	                        </div>

@@ -1,5 +1,6 @@
 package com.tjhx.dao.info;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -85,4 +86,7 @@ public interface SalesDayTotalGoodsMyBatisDao {
 
 	/** 取得滞销商品信息 */
 	public List<SalesDayTotalGoods> getUnsalableGoodsInfo(Map<String, String> param);
+
+	/** 库存合计金额 */
+	public BigDecimal getTotalStockAmt();
 }

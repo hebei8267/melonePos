@@ -54,6 +54,10 @@ public class GrossProfitAbcManager {
 			vo.setTotalDAmt(vo.getTotalDAmt().add(_s.getStockAmt()));
 			vo.setTotalDQty(vo.getTotalDQty().add(_s.getStockQty()));
 		}
+
+		// 库存合计金额
+		BigDecimal _totalDStockAmt = salesDayTotalGoodsMyBatisDao.getTotalStockAmt();
+		vo.setTotalDStockAmt(_totalDStockAmt);
 	}
 
 	/**
