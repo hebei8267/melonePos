@@ -118,12 +118,12 @@
 		<style>
 		.font1 {
 			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-			font-size : 22px;
+			font-size : 18px;
 			font-weight : bolder;
 		}
 		.font2 {
 			font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-			font-size : 10px;
+			font-size : 8px;
 			font-weight : bolder;
 		}
 		</style>
@@ -137,13 +137,13 @@
         	<div class="row">
 	            <div class="span12">
 	                <legend>
-	                    <h3>毛利ABC-D分析表</h3>
+	                    <h3>ABC-D分析表</h3>
 	                </legend>
 	            </div>
 	            
 	            <div class="span12">
                 	<div class="alert alert-info">
-                		库销比 = 库存金额 / 销售金额&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存比 = 库存金额 ／ 库存总金额
+                		库销比 = 库存 / 销售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存比(金额) = 库存金额 ／ 库存总金额
             		</div>
 	            </div>
 	            
@@ -188,7 +188,6 @@
                     &nbsp;&nbsp;
                     <label class="control-label">ABC系数 :</label>
                     <select name="abcType" class="input-medium">
-                    	<option value=""></option>
                     	<option value="1" <c:if test="${abcType == '1'}">selected</c:if>>合计销售金额</option>
                     	<option value="2" <c:if test="${abcType == '2'}">selected</c:if>>合计销售数量</option>
                     </select>
@@ -214,7 +213,6 @@
 	                    <div class="portlet-title">
 	                        <div class="caption">
 	                        	分析表A
-	                        	
 	                        	<c:if test="${abcType == '1' || abcType == '2'}">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalAStockAmt} / ${vo.totalAAmt} / ${vo.totalAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 销售金额 / 总销售金额</span>
 		                        	
@@ -245,12 +243,12 @@
 	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
 	                                        <th class="center" scope="col" width="70">货商</th>
-	                                        <th class="center" scope="col" width="70">日均销量</th>
-	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售数量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
 	                                        <th class="center" scope="col" width="70">库存金额</th>
-	                                        <th class="center" scope="col" width="70">库销比</th>
+	                                        <th class="center" scope="col" width="70">库销比(数量)</th>
+	                                        <th class="center" scope="col" width="70">库销比(金额)</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -260,16 +258,34 @@
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="center">${saleInfo.supName }</td>
-	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right" style="font-size:20px">${saleInfo.posQty }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
-	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
 	                                        <td class="right">${saleInfo.stockAmt }</td>
+
+											<c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) == 0}">
+	                                        <td class="center">-</td>
+	                                        </c:if>
+	                                        <c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) != 0}">
+	                                        <td class="center">
 	                                        
+	                                        <c:set var="_tmpA" value="${saleInfo.stockQty / saleInfo.posQty}"/>
+	                                       	<c:if test="${_tmpA <= 0.5}">
+	                                        <span style="color: red;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.5 && _tmpA <= 0.8}">
+	                                        <span style="color: orange;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.8}">
+	                                        <span>
+	                                        </c:if>
+	                                        ${_tmpA}</span>
+	                                        </td>
+	                                        </c:if>
+	                                        	                                        
 											<c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) == 0}">
 	                                        <td class="center">-</td>
 	                                        </c:if>
-	                                        
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) != 0}">
 	                                        <td class="center">${saleInfo.stockAmt / saleInfo.posAmt}</td>
 	                                        </c:if>
@@ -318,12 +334,12 @@
 	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
 	                                        <th class="center" scope="col" width="70">货商</th>
-	                                        <th class="center" scope="col" width="70">日均销量</th>
-	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售数量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
 	                                        <th class="center" scope="col" width="70">库存金额</th>
-	                                        <th class="center" scope="col" width="70">库销比</th>
+	                                        <th class="center" scope="col" width="70">库销比(数量)</th>
+	                                        <th class="center" scope="col" width="70">库销比(金额)</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -333,16 +349,34 @@
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="center">${saleInfo.supName }</td>
-	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right" style="font-size:20px">${saleInfo.posQty }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
-	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
 	                                        <td class="right">${saleInfo.stockAmt }</td>
 											
+											<c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) == 0}">
+	                                        <td class="center">-</td>
+	                                        </c:if>
+	                                        <c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) != 0}">
+	                                        <td class="center">
+	                                        
+	                                        <c:set var="_tmpA" value="${saleInfo.stockQty / saleInfo.posQty}"/>
+	                                       	<c:if test="${_tmpA <= 0.5}">
+	                                        <span style="color: red;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.5 && _tmpA <= 0.8}">
+	                                        <span style="color: orange;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.8}">
+	                                        <span>
+	                                        </c:if>
+	                                        ${_tmpA}</span>
+	                                        </td>
+	                                        </c:if>
+	                                        
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) == 0}">
 	                                        <td class="center">-</td>
 	                                        </c:if>
-	                                        
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) != 0}">
 	                                        <td class="center">${saleInfo.stockAmt / saleInfo.posAmt}</td>
 	                                        </c:if>
@@ -393,12 +427,12 @@
 	                                        <th class="center" scope="col" width="70">货号</th>
 	                                        <th class="center" scope="col">商品名称</th>
 	                                        <th class="center" scope="col" width="70">货商</th>
-	                                        <th class="center" scope="col" width="70">日均销量</th>
-	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售数量</th>
+	                                        <th class="center" scope="col" width="70">库存数量</th>
 	                                        <th class="center" scope="col" width="70">销售金额</th>
 	                                        <th class="center" scope="col" width="70">库存金额</th>
-	                                        <th class="center" scope="col" width="70">库销比</th>
+	                                        <th class="center" scope="col" width="70">库销比(数量)</th>
+	                                        <th class="center" scope="col" width="70">库销比(金额)</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -408,16 +442,34 @@
 	                                        <td class="center"><a style="text-decoration:underline;" target="_blank" href="${sc_ctx }/salesWeekGoodsTotalReport/contrast/${saleInfo.itemSubno }">${saleInfo.itemSubno }</a></td>
 	                                        <td class="left"><a style="text-decoration:underline;cursor: pointer;" onclick="_abcModalClick('${saleInfo.itemSubno}','${saleInfo.goodsName }')" data-toggle="modal">${saleInfo.goodsName }</a></td>
 	                                        <td class="center">${saleInfo.supName }</td>
-	                                        <td class="right">${saleInfo.averageDailySales }</td>
+	                                        <td class="right" style="font-size:20px">${saleInfo.posQty }</td>
 	                                        <td class="right"> ${saleInfo.stockQty} </td>
-	                                        <td class="right">${saleInfo.posQty }</td>
 	                                        <td class="right">${saleInfo.posAmt }</td>
 	                                        <td class="right">${saleInfo.stockAmt }</td>
+	                                        
+	                                        <c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) == 0}">
+	                                        <td class="center">-</td>
+	                                        </c:if>
+	                                        <c:if test="${saleInfo.posQty.compareTo(BigDecimal.ZERO) != 0}">
+	                                        <td class="center">
+	                                        
+	                                        <c:set var="_tmpA" value="${saleInfo.stockQty / saleInfo.posQty}"/>
+	                                       	<c:if test="${_tmpA <= 0.5}">
+	                                        <span style="color: red;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.5 && _tmpA <= 0.8}">
+	                                        <span style="color: orange;">
+	                                        </c:if>
+	                                        <c:if test="${_tmpA > 0.8}">
+	                                        <span>
+	                                        </c:if>
+	                                        ${_tmpA}</span>
+	                                        </td>
+	                                        </c:if>
 	                                        
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) == 0}">
 	                                        <td class="center">-</td>
 	                                        </c:if>
-	                                        
 	                                        <c:if test="${saleInfo.posAmt.compareTo(BigDecimal.ZERO) != 0}">
 	                                        <td class="center">${saleInfo.stockAmt / saleInfo.posAmt}</td>
 	                                        </c:if>
@@ -438,7 +490,7 @@
 		                        分析表D（滞销商品）
 		                        <c:if test="${abcType == '1' || abcType == '2'}">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt} / ${vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 库存总金额</span>
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt / vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">库存比</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt / vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">库存比(金额)</span>
 		                        	<div style="margin-top: 10px">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

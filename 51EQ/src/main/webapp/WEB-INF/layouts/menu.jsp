@@ -332,7 +332,7 @@
 								<c:if test="${_permIdList.contains('76')}">
 									<li class="divider"></li>
 									<li>
-										<a href="${sc_ctx}/grossProfitAbc/init">毛利ABC-D分析表</a>
+										<a href="${sc_ctx}/grossProfitAbc/init">ABC-D分析表</a>
 									</li>
 								</c:if>
 							</ul>
