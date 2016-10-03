@@ -1,24 +1,35 @@
 package com.tjhx.web.report;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jxls.exception.ParsePropertyException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springside.modules.mapper.JsonMapper;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.google.common.collect.Lists;
 import com.tjhx.entity.info.ItemType;
 import com.tjhx.entity.info.SalesDayTotalGoods;
 import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.struct.Organization;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.service.info.GrossProfitAbcManager;
 import com.tjhx.service.info.ItemTypeManager;
 import com.tjhx.service.info.SupplierManager;
@@ -272,5 +283,75 @@ public class GrossProfitAbcController extends BaseController {
 		}
 
 		return null;
+	}
+
+	/**
+	 * 文件导出-合计
+	 * 
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @throws ServletRequestBindingException
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "export")
+	public void AbcdTableDataExport_Action(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
+
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+
+		String itemType = ServletRequestUtils.getStringParameter(request, "itemType");
+		String itemSubno = ServletRequestUtils.getStringParameter(request, "itemSubno");
+		String itemName = ServletRequestUtils.getStringParameter(request, "itemName");
+		String abcType = ServletRequestUtils.getStringParameter(request, "abcType");
+		int abcParam1 = ServletRequestUtils.getIntParameter(request, "abcParam1");
+		int abcParam2 = ServletRequestUtils.getIntParameter(request, "abcParam2");
+		int abcParam3 = ServletRequestUtils.getIntParameter(request, "abcParam3");
+		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
+
+		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
+		String itemNoArray = StringUtils.join(itemNoList, ",");
+
+		List<String> supplierBwIdList = Lists.newArrayList(supplier.split(","));
+		String supplierBwIdArray = StringUtils.join(supplierBwIdList, ",");
+
+		String downLoadFileName = grossProfitAbcManager.createAbcdTableFile(optDateShow_start, optDateShow_end, orgId, itemNoArray,
+				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray);
+
+		if (null == downLoadFileName) {
+			return;
+		}
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = sysConfig.getReportTmpPath() + downLoadFileName;
+
+		try {
+			long fileLength = new File(downLoadPath).length();
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}
 	}
 }

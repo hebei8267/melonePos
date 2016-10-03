@@ -91,6 +91,16 @@
                     $("#listForm").attr("action", "${sc_ctx}/grossProfitAbc/search");
                     $("#listForm").submit();
                 });
+				
+				$("#exportBtn").click(function() {
+                    $("input[type='text'],textarea").each(function(i) {
+                        this.value = $.trim(this.value);
+                    });
+
+					$("#listForm").attr('target', '_self');
+                    $("#listForm").attr("action", "${sc_ctx}/grossProfitAbc/export");
+                    $("#listForm").submit();
+                });
 			});
 			//固定长度效验验证
 			jQuery.validator.addMethod("add100", function(value, element) {
@@ -204,6 +214,7 @@
 
                 	&nbsp;&nbsp;
                     <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
+                    <button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
                 </div>
 	    	</div>
 	    	

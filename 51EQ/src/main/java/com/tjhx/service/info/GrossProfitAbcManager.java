@@ -1,20 +1,29 @@
 package com.tjhx.service.info;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.utils.SpringContextHolder;
 
 import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.SalesDayTotalGoodsMyBatisDao;
 import com.tjhx.entity.info.SalesDayTotalGoods;
+import com.tjhx.globals.SysConfig;
 import com.tjhx.vo.GrossProfitAbcVo;
 
 @Service
@@ -266,4 +275,26 @@ public class GrossProfitAbcManager {
 	public List<SalesDayTotalGoods> getStoreOrgInfo(String itemSubno) {
 		return salesDayTotalGoodsMyBatisDao.getStoreOrgInfo(itemSubno);
 	}
+
+	public String createAbcdTableFile(String optDateShow_start, String optDateShow_end, String orgId, String itemType, String itemSubno,
+			String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3, String supplierBwIdArray)
+			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
+		GrossProfitAbcVo vo = getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemType, itemSubno, itemName, abcType,
+				abcParam1, abcParam2, abcParam3, supplierBwIdArray);
+		// ---------------------------文件生成---------------------------
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		XLSTransformer transformer = new XLSTransformer();
+
+		String tmpFileName = UUID.randomUUID().toString() + ".xls";
+		String tmpFilePath = sysConfig.getReportTmpPath() + tmpFileName;
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_ABCD_TABLE, map, tmpFilePath);
+
+		return tmpFileName;
+	}
+
+	private final static String XML_CONFIG_ABCD_TABLE = "/excel/Abcd_Table_Template.xls";
 }
