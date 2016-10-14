@@ -585,7 +585,31 @@ public class CashDailyManager {
 	 */
 	@Transactional(readOnly = false)
 	public void synWXSaleAmt() throws ParseException {
-		// TODO ************************
+		// 取得同步百威销售额-重计算天数
+		List<String> optDateList = calOptDate();
+		for (String optDate : optDateList) {
+			List<CashDaily> _cashDailyList = cashDailyJpaDao.findByOptDate(optDate);
+
+			Map<String, String> operDateParam = Maps.newHashMap();
+			operDateParam.put("oper_date", optDate);
+			operDateParam.put("oper_date_start", DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
+			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
+
+			List<DailySale> _wxSaleList = dailySaleMyBatisDao.getDailyWXSaleList(operDateParam);
+
+			for (CashDaily _cashDaily : _cashDailyList) {
+				for (DailySale _dailySale : _wxSaleList) {
+					if (myEquals(_cashDaily, _dailySale)) {
+
+						// 设置支付宝销售额
+						_cashDaily.setBwWxSaleAmt(_dailySale.getBwWxSaleAmt());
+
+						cashDailyJpaDao.save(_cashDaily);
+
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -604,6 +628,7 @@ public class CashDailyManager {
 			operDateParam.put("oper_date", optDate);
 			operDateParam.put("oper_date_start", DateUtils.transDateFormat(optDate, "yyyyMMdd", "yyyy-MM-dd"));
 			operDateParam.put("oper_date_end", DateUtils.getNextDateFormatDate(optDate, 1, "yyyyMMdd", "yyyy-MM-dd"));
+
 			List<DailySale> _bwZFBSaleList = dailySaleMyBatisDao.getDailyZFBSaleList(operDateParam);
 
 			for (CashDaily _cashDaily : _cashDailyList) {

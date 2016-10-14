@@ -57,6 +57,32 @@
 	]]>
 	</select>
 	
+	<!-- 按日/门店编号取得微信系统销售额信息 -->
+	<select id="getDailyWXSaleList" parameterType="map" resultMap="Result_Map_DailySale">
+	<![CDATA[
+		SELECT
+		    a.branch_no AS branch_no,
+		    #{oper_date} as oper_date,
+		    SUM(
+		        CASE a.sell_way
+		            WHEN 'B'
+		            THEN -1
+		            ELSE 1
+		        END * a.old_amount * a.coin_rate) AS bw_wx_sale_amt
+		FROM
+		    pos_v_payflow a
+		WHERE
+		    (
+		        a.oper_date >= #{oper_date_start})
+		AND (
+		        a.oper_date <= #{oper_date_end})
+		AND (
+		        a.pay_way IN ('WX'))
+		GROUP BY
+		    branch_no
+	]]>
+	</select>
+	
 	<!-- 按日/门店编号取得百威系统金卡预存/销售额信息 -->
 	<select id="getDailyGoldCardSaleList" parameterType="map" resultMap="Result_Map_DailySale">
 	<![CDATA[

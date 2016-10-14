@@ -28,4 +28,12 @@ public interface DailySaleMyBatisDao {
 	 * @param operDateMap
 	 */
 	public List<DailySale> getDailyZFBSaleList(Map<String, String> operDateMap);
+
+	/**
+	 * 按日/门店编号取得微信系统销售额信息
+	 * 
+	 * @param operDateMap
+	 */
+	public List<DailySale> getDailyWXSaleList(Map<String, String> operDateMap);
+
 }
