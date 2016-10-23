@@ -147,8 +147,8 @@ public class GrossProfitAbcManager {
 	}
 
 	public GrossProfitAbcVo getGrossProfitAbcInfo(String optDateShow_start, String optDateShow_end, String orgId, String itemType,
-			String itemSubno, String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3, String supplierBwIdArray)
-			throws ParseException {
+			String itemSubno, String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3, String supplierBwIdArray,
+			String dTable) throws ParseException {
 		String startDate = DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd");
 		String endDate = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
 
@@ -164,8 +164,12 @@ public class GrossProfitAbcManager {
 		} else {// 合计销售毛利
 
 		}
-		// 取得滞销商品信息
-		getGrossProfitDInfo(vo, startDate, endDate, orgId, itemType, itemSubno, itemName, supplierBwIdArray);
+
+		if ("1".equals(dTable)) {
+			// 取得滞销商品信息
+			getGrossProfitDInfo(vo, startDate, endDate, orgId, itemType, itemSubno, itemName, supplierBwIdArray);
+		}
+
 		return vo;
 	}
 
@@ -277,13 +281,14 @@ public class GrossProfitAbcManager {
 	}
 
 	public String createAbcdTableFile(String optDateShow_start, String optDateShow_end, String orgId, String itemType, String itemSubno,
-			String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3, String supplierBwIdArray)
+			String itemName, String abcType, int abcParam1, int abcParam2, int abcParam3, String supplierBwIdArray, String dTable)
 			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
 		GrossProfitAbcVo vo = getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemType, itemSubno, itemName, abcType,
-				abcParam1, abcParam2, abcParam3, supplierBwIdArray);
+				abcParam1, abcParam2, abcParam3, supplierBwIdArray, dTable);
 		// ---------------------------文件生成---------------------------
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("vo", vo);
+		map.put("dTable", dTable);
 
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 

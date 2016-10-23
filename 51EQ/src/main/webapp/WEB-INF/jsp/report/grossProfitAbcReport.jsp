@@ -212,6 +212,11 @@
                     <label class="control-label">C :</label>
                     <input id="abcParam3" name="abcParam3" type="text" class="input-mini_my" value="${abcParam3 }"/>%&nbsp;&nbsp;
 
+					<label class="control-label">滞销表格 :</label>
+					<select name="dTable" class="input-mini">
+                    	<option value="0" <c:if test="${dTable == '0'}">selected</c:if>>隐藏</option>
+                    	<option value="1" <c:if test="${dTable == '1'}">selected</c:if>>显示</option>
+                    </select>
                 	&nbsp;&nbsp;
                     <button	id="searchBtn" class="btn btn-primary" type="button">查询</button>
                     <button	id="exportBtn" class="btn btn-warning" type="button">数据导出</button>
@@ -492,8 +497,8 @@
 	            		</div>
 	            	</div>
          		</div>
-         		
-         		
+
+         		<c:if test="${dTable == '1'}">
          		<div class="span12">
          			<div class="portlet box red">
 	                    <div class="portlet-title">
@@ -545,7 +550,7 @@
 	            		</div>
 	            	</div>
          		</div>
-         		
+         		</c:if>
          	</div>
          	</form>
         </div>

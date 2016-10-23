@@ -59,6 +59,8 @@ public class GrossProfitAbcController extends BaseController {
 		model.addAttribute("abcParam2", "20");
 		model.addAttribute("abcParam3", "10");
 
+		model.addAttribute("dTable", "0");
+
 		return "report/grossProfitAbcReport";
 	}
 
@@ -112,6 +114,7 @@ public class GrossProfitAbcController extends BaseController {
 		int abcParam3 = ServletRequestUtils.getIntParameter(request, "abcParam3");
 		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
 
+		String dTable = ServletRequestUtils.getStringParameter(request, "dTable");
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
@@ -126,6 +129,7 @@ public class GrossProfitAbcController extends BaseController {
 		model.addAttribute("abcParam2", abcParam2);
 		model.addAttribute("abcParam3", abcParam3);
 		model.addAttribute("supplier", supplier);
+		model.addAttribute("dTable", dTable);
 
 		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
 		String itemNoArray = StringUtils.join(itemNoList, ",");
@@ -134,7 +138,7 @@ public class GrossProfitAbcController extends BaseController {
 		String supplierBwIdArray = StringUtils.join(supplierBwIdList, ",");
 
 		GrossProfitAbcVo vo = grossProfitAbcManager.getGrossProfitAbcInfo(optDateShow_start, optDateShow_end, orgId, itemNoArray,
-				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray);
+				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray, dTable);
 
 		model.addAttribute("vo", vo);
 
@@ -313,6 +317,7 @@ public class GrossProfitAbcController extends BaseController {
 		int abcParam2 = ServletRequestUtils.getIntParameter(request, "abcParam2");
 		int abcParam3 = ServletRequestUtils.getIntParameter(request, "abcParam3");
 		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
+		String dTable = ServletRequestUtils.getStringParameter(request, "dTable");
 
 		List<String> itemNoList = Lists.newArrayList(itemType.split(","));
 		String itemNoArray = StringUtils.join(itemNoList, ",");
@@ -321,7 +326,7 @@ public class GrossProfitAbcController extends BaseController {
 		String supplierBwIdArray = StringUtils.join(supplierBwIdList, ",");
 
 		String downLoadFileName = grossProfitAbcManager.createAbcdTableFile(optDateShow_start, optDateShow_end, orgId, itemNoArray,
-				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray);
+				itemSubno, itemName, abcType, abcParam1, abcParam2, abcParam3, supplierBwIdArray, dTable);
 
 		if (null == downLoadFileName) {
 			return;
