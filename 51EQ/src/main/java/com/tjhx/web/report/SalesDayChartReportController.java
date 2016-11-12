@@ -194,29 +194,45 @@ public class SalesDayChartReportController extends BaseController {
 
 		List<Organization> orgList = orgManager.getOpenSubOrganization();
 		List<SalesDayTotal> _salesDayTotalList_EQ = Lists.newArrayList();
+		List<SalesDayTotal> _salesDayTotalList_EQ_TMP = Lists.newArrayList();
 		List<SalesDayTotal> _salesDayTotalList_Infancy = Lists.newArrayList();
+		List<SalesDayTotal> _salesDayTotalList_Infancy_TMP = Lists.newArrayList();
 
 		for (SalesDayTotal salesDayInfo : salesDayTotalList) {
 			String _brand = getOrgBrand(orgList, salesDayInfo.getOrgId());
 
 			if ("EQ+".equals(_brand)) {
-				_salesDayTotalList_EQ.add(salesDayInfo);
+				if ("00001D".equals(salesDayInfo.getOrgId())) {
+					_salesDayTotalList_EQ_TMP.add(salesDayInfo);
+				} else {
+					_salesDayTotalList_EQ.add(salesDayInfo);
+				}
 			}
 			if ("Infancy".equals(_brand)) {
-				_salesDayTotalList_Infancy.add(salesDayInfo);
+				if ("00008D".equals(salesDayInfo.getOrgId()) || "00014D".equals(salesDayInfo.getOrgId())) {
+					_salesDayTotalList_Infancy_TMP.add(salesDayInfo);
+				} else {
+					_salesDayTotalList_Infancy.add(salesDayInfo);
+				}
 			}
 		}
 
 		SalesDayTotal _eqTotal = calTotal(_salesDayTotalList_EQ, "EQ+");
+		SalesDayTotal _eqTotal_tmp = calTotal(_salesDayTotalList_EQ, "EQ+试");
 		SalesDayTotal _inTotal = calTotal(_salesDayTotalList_Infancy, "Infancy");
+		SalesDayTotal _inTotal_tmp = calTotal(_salesDayTotalList_Infancy, "Infancy试");
 		_salesDayTotalList_EQ.add(0, _eqTotal);
+		_salesDayTotalList_EQ_TMP.add(0, _eqTotal_tmp);
 		_salesDayTotalList_Infancy.add(0, _inTotal);
+		_salesDayTotalList_Infancy_TMP.add(0, _inTotal_tmp);
 
 		List<SalesDayTotal> _list = Lists.newArrayList();
 		_list.addAll(_salesDayTotalList_EQ);
+		_list.addAll(_salesDayTotalList_EQ_TMP);
 		_list.addAll(_salesDayTotalList_Infancy);
+		_list.addAll(_salesDayTotalList_Infancy_TMP);
 
-		_list.add(0, calTotal(Lists.newArrayList(_eqTotal, _inTotal), "合计"));
+		_list.add(0, calTotal(Lists.newArrayList(_eqTotal, _eqTotal_tmp, _inTotal, _inTotal_tmp), "合计"));
 
 		model.addAttribute("salesDayTotalList", _list);
 	}
