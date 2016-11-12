@@ -218,9 +218,10 @@ public class SalesDayChartReportController extends BaseController {
 		}
 
 		SalesDayTotal _eqTotal = calTotal(_salesDayTotalList_EQ, "EQ+");
-		SalesDayTotal _eqTotal_tmp = calTotal(_salesDayTotalList_EQ, "EQ+试");
+		SalesDayTotal _eqTotal_tmp = calTotal(_salesDayTotalList_EQ_TMP, "EQ+试");
 		SalesDayTotal _inTotal = calTotal(_salesDayTotalList_Infancy, "Infancy");
-		SalesDayTotal _inTotal_tmp = calTotal(_salesDayTotalList_Infancy, "Infancy试");
+		SalesDayTotal _inTotal_tmp = calTotal(_salesDayTotalList_Infancy_TMP, "Infancy试");
+		
 		_salesDayTotalList_EQ.add(0, _eqTotal);
 		_salesDayTotalList_EQ_TMP.add(0, _eqTotal_tmp);
 		_salesDayTotalList_Infancy.add(0, _inTotal);
