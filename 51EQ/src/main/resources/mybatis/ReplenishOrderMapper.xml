@@ -109,7 +109,7 @@
 		<include refid="Base_Column_List" />
 		from t_replenish_order
 		<include refid="Where_Clause" />
-		ORDER BY order_batch_id , order_no
+		ORDER BY send_date desc, order_batch_id desc, order_no asc
 	</select>
 	
 	

@@ -17,13 +17,108 @@
 		<link type="text/css" href="${ctx}/static/css/select2.css" rel="stylesheet">
 		<script src="${ctx}/static/js/select2.min.js"></script>
 		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
-		
+        <link href="${ctx}/assets/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        
+        <script src="${ctx}/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
 		<link href="${ctx}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     	<script>
     		var itemTypeListJson = ${itemTypeList};
     		var supplierListJson = ${supplierList};
     		
 			$(function() {
+				var table = $('#table_1').dataTable({
+					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
+					],
+					"language" : {
+						"sProcessing" : "正在加载中......",
+						"sLengthMenu" : "显示 _MENU_ 条记录",
+						"sZeroRecords" : "对不起,查询不到相关数据!",
+						"sEmptyTable" : "无数据!",
+						"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+						"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+						"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+						"sSearch" : "搜索 ",
+						"paginate" : {
+							"previous" : "上一页",
+							"next" : "下一页",
+							"last" : "末页",
+							"first" : "首页"
+						}
+					},
+					"order" : [[0, "asc"]] // set first column as a default sort by asc
+				});
+				
+				var table = $('#table_2').dataTable({
+					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
+					],
+					"language" : {
+						"sProcessing" : "正在加载中......",
+						"sLengthMenu" : "显示 _MENU_ 条记录",
+						"sZeroRecords" : "对不起,查询不到相关数据!",
+						"sEmptyTable" : "无数据!",
+						"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+						"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+						"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+						"sSearch" : "搜索 ",
+						"paginate" : {
+							"previous" : "上一页",
+							"next" : "下一页",
+							"last" : "末页",
+							"first" : "首页"
+						}
+					},
+					"order" : [[0, "asc"]] // set first column as a default sort by asc
+				});
+				
+				
+				var table = $('#table_3').dataTable({
+					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
+					],
+					"language" : {
+						"sProcessing" : "正在加载中......",
+						"sLengthMenu" : "显示 _MENU_ 条记录",
+						"sZeroRecords" : "对不起,查询不到相关数据!",
+						"sEmptyTable" : "无数据!",
+						"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+						"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+						"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+						"sSearch" : "搜索 ",
+						"paginate" : {
+							"previous" : "上一页",
+							"next" : "下一页",
+							"last" : "末页",
+							"first" : "首页"
+						}
+					},
+					"order" : [[0, "asc"]] // set first column as a default sort by asc
+				});
+				
+				<c:if test="${dTable == '1'}">
+				var table = $('#table_4').dataTable({
+					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
+					],
+					"language" : {
+						"sProcessing" : "正在加载中......",
+						"sLengthMenu" : "显示 _MENU_ 条记录",
+						"sZeroRecords" : "对不起,查询不到相关数据!",
+						"sEmptyTable" : "无数据!",
+						"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+						"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+						"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+						"sSearch" : "搜索 ",
+						"paginate" : {
+							"previous" : "上一页",
+							"next" : "下一页",
+							"last" : "末页",
+							"first" : "首页"
+						}
+					},
+					"order" : [[0, "asc"]] // set first column as a default sort by asc
+				});
+				</c:if>
+				
+				
 				$("#itemType").select2({
 					tags : itemTypeListJson
 				});
@@ -252,7 +347,7 @@
 	                    
 	                    <div class="portlet-body">
 	                        <div class="table-scrollable">
-	                            <table class="table table-striped table-bordered table-hover mytable1">
+	                            <table class="table table-striped table-bordered table-hover mytable1" id="table_1">
 	                                <thead>
 	                                    <tr>
 	                                        <th class="center" scope="col" width="50">行号</th>
@@ -343,7 +438,7 @@
 	                    
 	                    <div class="portlet-body">
 	                        <div class="table-scrollable">
-	                            <table class="table table-striped table-bordered table-hover mytable1">
+	                            <table class="table table-striped table-bordered table-hover mytable1" id="table_2">
 	                                <thead>
 	                                    <tr>
 	                                        <th class="center" scope="col" width="50">行号</th>
@@ -436,7 +531,7 @@
 	                    
 	                    <div class="portlet-body">
 	                        <div class="table-scrollable">
-	                            <table class="table table-striped table-bordered table-hover mytable1">
+	                            <table class="table table-striped table-bordered table-hover mytable1" id="table_3">
 	                                <thead>
 	                                    <tr>
 	                                        <th class="center" scope="col" width="50">行号</th>
@@ -522,7 +617,7 @@
 	                    
 	                    <div class="portlet-body">
 	                        <div class="table-scrollable">
-	                            <table class="table table-striped table-bordered table-hover mytable1">
+	                            <table class="table table-striped table-bordered table-hover mytable1" id="table_4">
 	                                <thead>
 	                                    <tr>
 	                                        <th class="center" scope="col" width="50">行号</th>

@@ -16,6 +16,7 @@
 	            <th class="center">店号</th>
 	            <th class="center">销售数量</th>
 	            <th class="center">当前库存数量</th>
+	            <th class="center">库销比(数量)</th>
 	        </tr>
 	    </thead>
 	    <tbody>
@@ -35,6 +36,13 @@
 				<td class="center">
 					${good.stockQty}
 				</td>
+				
+				<c:if test="${good.posQty.compareTo(BigDecimal.ZERO) == 0}">
+                <td class="center">-</td>
+                </c:if>
+                <c:if test="${good.posQty.compareTo(BigDecimal.ZERO) != 0}">
+                <td class="center">${good.stockQty / good.posQty}</td>
+                </c:if>
 	    	</tr>
 	    	</c:forEach>
 	    </tbody>
