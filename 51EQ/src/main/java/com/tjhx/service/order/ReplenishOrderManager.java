@@ -82,10 +82,8 @@ public class ReplenishOrderManager {
 	 * @throws IOException
 	 * @throws InvalidFormatException
 	 */
-	public List<ReplenishOrderVo> readReplenishOrderFile(String filePath) throws IOException, SAXException,
-			InvalidFormatException {
-		InputStream inputXML = new BufferedInputStream(
-				ReqBillManager.class.getResourceAsStream(XML_CONFIG_TRANSFER_ORDER));
+	public List<ReplenishOrderVo> readReplenishOrderFile(String filePath) throws IOException, SAXException, InvalidFormatException {
+		InputStream inputXML = new BufferedInputStream(ReqBillManager.class.getResourceAsStream(XML_CONFIG_TRANSFER_ORDER));
 
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
 
@@ -131,7 +129,8 @@ public class ReplenishOrderManager {
 	 * @param orderState
 	 * @return
 	 */
-	public List<ReplenishOrder> getReplenishOrderList(String orderNo, String orgId, String orderState) {
+	public List<ReplenishOrder> getReplenishOrderList(String orderNo, String orgId, String orderState, String optDateStart,
+			String optDateEnd) {
 		Map<String, String> param = Maps.newHashMap();
 		if (StringUtils.isNotBlank(orderNo)) {
 			if (orderNo.length() == 8) {
@@ -146,6 +145,8 @@ public class ReplenishOrderManager {
 		}
 
 		param.put("orderState", orderState);
+		param.put("optDateStart", optDateStart);
+		param.put("optDateEnd", optDateEnd);
 
 		return replenishOrderMyBatisDao.getReplenishOrderList(param);
 	}
@@ -188,8 +189,7 @@ public class ReplenishOrderManager {
 
 		for (int i = 0; i < productBarcodes.length; i++) {
 
-			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo,
-					productBarcodes[i]);
+			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo, productBarcodes[i]);
 
 			// 错误补货数量,全部置为0
 			try {
@@ -238,8 +238,7 @@ public class ReplenishOrderManager {
 	 * @param receiptNums
 	 */
 	@Transactional(readOnly = false)
-	public void updateReplenishOrderDetail_receiptNums(String orderNo, String description, String[] productBarcodes,
-			String[] receiptNums) {
+	public void updateReplenishOrderDetail_receiptNums(String orderNo, String description, String[] productBarcodes, String[] receiptNums) {
 
 		ReplenishOrder order = replenishOrderJpaDao.findByOrderNo(orderNo);
 		if (null == order) {
@@ -250,8 +249,7 @@ public class ReplenishOrderManager {
 
 		for (int i = 0; i < productBarcodes.length; i++) {
 
-			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo,
-					productBarcodes[i]);
+			ReplenishOrderDetail detail = replenishOrderDetailJpaDao.findOneByOrderNoAndproductBarcode(orderNo, productBarcodes[i]);
 
 			// 错误补货数量,全部置为0
 			try {
@@ -335,8 +333,7 @@ public class ReplenishOrderManager {
 	 * @throws InvalidFormatException
 	 * @throws ParsePropertyException
 	 */
-	public String createExportFile(String[] orderNoArray) throws ParsePropertyException, InvalidFormatException,
-			IOException {
+	public String createExportFile(String[] orderNoArray) throws ParsePropertyException, InvalidFormatException, IOException {
 
 		List<ReplenishOrder> _list = Lists.newArrayList();
 		for (String orderNo : orderNoArray) {

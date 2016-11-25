@@ -12,6 +12,13 @@
 	<head>
 		<script>
 			$(function() {
+				$('#optDateShow_start').datepicker({
+                    format : 'yyyy-mm-dd'
+                });
+                $('#optDateShow_end').datepicker({
+                    format : 'yyyy-mm-dd'
+                });
+                
 				$("#searchForm").validate({
 					rules : {
 						orderNo : {
@@ -19,9 +26,19 @@
 						},
 						orderState : {
 							required : true
-						}
+						},
+						optDateShow_start : {
+                    		required : true,
+                    		date : true                    		
+                        },
+                        optDateShow_end : {
+                    		required : true,
+                    		date : true,
+                    		compareDate : "#optDateShow_start"
+                        }
 					}
 				});
+				
 				$("#listForm").validate({
 					rules : {
 						delBtn : {
@@ -147,44 +164,56 @@
 						<h3>发货管理</h3>
 					</legend>
 				</div>
-				<form method="post"	class="form-horizontal"	id="searchForm">
-					<div class="span3">
-						<label class="control-label">货单编号 :</label>
-						<input id="orderNo" name="orderNo" type="text" class="input-medium" value="${orderNo }" />
-					</div>
+			</div>
+			
+			<form method="post"	class="form-horizontal"	id="searchForm">
+			<div class="row">
+				<div class="span3">
+					<label class="control-label">货单编号 : &nbsp;</label>
+					<input id="orderNo" name="orderNo" type="text" class="input-medium" value="${orderNo }" />
+				</div>
 
-					<div class="span3">
-						<label class="control-label">机构 :</label>
-						<select id="orgId" name="orgId" class="input-medium">
-							<c:forEach items="${orgList}" var="org">
-								<c:if test="${org.key == orgId}">
-									<option value="${org.key }" selected>${org.value }</option>
-								</c:if>
-								<c:if test="${org.key != orgId}">
-									<option value="${org.key }">${org.value }</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</div>
-
-					<div class="span6">
-						<label class="control-label">货单状态 :</label>
-						<select id="orderState" name="orderState" class="input-medium">
-							<c:forEach items="${stateList}" var="state">
-								<c:if test="${state.key == orderState}">
-									<option value="${state.key }" selected>${state.value }</option>
-								</c:if>
-								<c:if test="${state.key != orderState}">
-									<option value="${state.key }">${state.value }</option>
-								</c:if>
-							</c:forEach>
-						</select>
-						&nbsp;&nbsp;
-						<button id="searchBtn" class="btn btn-primary" type="button">
-							查询
-						</button>
-					</div>
-				</form>
+				<div class="span3">
+					<label class="control-label">机构 : &nbsp;</label>
+					<select id="orgId" name="orgId" class="input-medium">
+						<c:forEach items="${orgList}" var="org">
+							<c:if test="${org.key == orgId}">
+								<option value="${org.key }" selected>${org.value }</option>
+							</c:if>
+							<c:if test="${org.key != orgId}">
+								<option value="${org.key }">${org.value }</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				</div>
+					
+				<div class="span6">
+					<label class="control-label">货单状态 : &nbsp;</label>
+					<select id="orderState" name="orderState" class="input-medium">
+						<c:forEach items="${stateList}" var="state">
+							<c:if test="${state.key == orderState}">
+								<option value="${state.key }" selected>${state.value }</option>
+							</c:if>
+							<c:if test="${state.key != orderState}">
+								<option value="${state.key }">${state.value }</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12" style="padding-top: 10px">
+         			<label class="control-label">发货日期 : &nbsp;</label>
+              		<input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
+       				～ <input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
+                        
+             		&nbsp;&nbsp;
+					<button id="searchBtn" class="btn btn-primary" type="button">
+						查询
+					</button>
+        		</div>
+			</div>
+			</form>
 
 				<form method="post"	class="form-horizontal"	id="listForm">
 					<div class="span12" style="margin-top: 15px;">

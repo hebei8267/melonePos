@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.tjhx.common.utils.DateUtils;
 import com.tjhx.entity.order.ReplenishOrder;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
@@ -60,23 +61,31 @@ public class ReplenishOrderController extends BaseController {
 	public String list_Action(Model model, HttpServletRequest request) {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
+		
+		model.addAttribute("optDateShow_start", DateUtils.getNextDateFormatDate(-30, "yyyy-MM-dd"));
+		model.addAttribute("optDateShow_end", DateUtils.getCurFormatDate("yyyy-MM-dd"));
 
 		return "order/replenishOrderList";
 	}
 
 	@RequestMapping(value = "search")
-	public String search_Action(Model model, HttpServletRequest request, HttpSession session)
-			throws ServletRequestBindingException {
+	public String search_Action(Model model, HttpServletRequest request, HttpSession session) throws ServletRequestBindingException {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
 		String orderState = ServletRequestUtils.getStringParameter(request, "orderState");
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderState", orderState);
+		model.addAttribute("optDateShow_start", optDateShow_start);
+		model.addAttribute("optDateShow_end", optDateShow_end);
 
-		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session)
-				.getOrgId(), orderState);
+		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session).getOrgId(), orderState,
+				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
+				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
 		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderList";
@@ -104,8 +113,7 @@ public class ReplenishOrderController extends BaseController {
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] receiptNums = ServletRequestUtils.getStringParameters(request, "receiptNum");
 
-		replenishOrderManager
-				.updateReplenishOrderDetail_receiptNums(orderNo, description, productBarcodes, receiptNums);
+		replenishOrderManager.updateReplenishOrderDetail_receiptNums(orderNo, description, productBarcodes, receiptNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, true);
 		if (result) {
 			addInfoMsg(model, "TIP_MSG_RECEIVING_CHECK_FINISH");
@@ -173,11 +181,18 @@ public class ReplenishOrderController extends BaseController {
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
 		String orderState = ServletRequestUtils.getStringParameter(request, "orderState");
+		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
+		String optDateShow_end = ServletRequestUtils.getStringParameter(request, "optDateShow_end");
+
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orgId", orgId);
 		model.addAttribute("orderState", orderState);
+		model.addAttribute("optDateShow_start", optDateShow_start);
+		model.addAttribute("optDateShow_end", optDateShow_end);
 
-		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, orgId, orderState);
+		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, orgId, orderState,
+				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
+				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
 		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderManageList";
@@ -195,6 +210,9 @@ public class ReplenishOrderController extends BaseController {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		// 补货单状态-下拉菜单
 		initOrderState(model);
+
+		model.addAttribute("optDateShow_start", DateUtils.getNextDateFormatDate(-30, "yyyy-MM-dd"));
+		model.addAttribute("optDateShow_end", DateUtils.getCurFormatDate("yyyy-MM-dd"));
 
 		return "order/replenishOrderManageList";
 	}
@@ -221,8 +239,7 @@ public class ReplenishOrderController extends BaseController {
 		String[] productBarcodes = ServletRequestUtils.getStringParameters(request, "productBarcode");
 		String[] replenishNums = ServletRequestUtils.getStringParameters(request, "replenishNum");
 
-		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, description, productBarcodes,
-				replenishNums);
+		replenishOrderManager.updateReplenishOrderDetail_replenishNums(orderNo, description, productBarcodes, replenishNums);
 		boolean result = replenishOrderManager.receiptNumCheck(orderNo, false);
 
 		if (result) {
@@ -238,8 +255,7 @@ public class ReplenishOrderController extends BaseController {
 	}
 
 	@RequestMapping(value = "manageSuccessSave/{orderNo}")
-	public String manageSuccessSave_Action(@PathVariable("orderNo") String orderNo)
-			throws ServletRequestBindingException {
+	public String manageSuccessSave_Action(@PathVariable("orderNo") String orderNo) throws ServletRequestBindingException {
 
 		replenishOrderManager.replenishOrderSuccess(orderNo);
 
@@ -274,8 +290,8 @@ public class ReplenishOrderController extends BaseController {
 	 * @throws ParsePropertyException
 	 */
 	@RequestMapping(value = "export")
-	public void export_Action(@RequestParam("uuids") String ids, HttpServletResponse response) throws IOException,
-			ParsePropertyException, InvalidFormatException {
+	public void export_Action(@RequestParam("uuids") String ids, HttpServletResponse response) throws IOException, ParsePropertyException,
+			InvalidFormatException {
 		String[] orderNoArray = ids.split(",");
 
 		String downLoadFileName = replenishOrderManager.createExportFile(orderNoArray);
@@ -293,8 +309,7 @@ public class ReplenishOrderController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition",
-					"attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());

@@ -72,6 +72,9 @@
   			<if test="replenishOrgId != null and replenishOrgId !='' ">
   			AND replenish_org_id = #{replenishOrgId}
   			</if>
+  			<if test="optDateStart != null and optDateStart !='' and optDateEnd != null and optDateEnd !=''">
+  			<![CDATA[ AND send_date >= #{optDateStart} AND send_date  <= #{optDateEnd} ]]>
+  			</if>
 	  	</where>
   	</sql>
   	

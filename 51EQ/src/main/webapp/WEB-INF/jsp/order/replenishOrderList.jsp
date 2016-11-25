@@ -22,6 +22,13 @@
         </style>
 		<script>
 			$(function() {
+				$('#optDateShow_start').datepicker({
+                    format : 'yyyy-mm-dd'
+                });
+                $('#optDateShow_end').datepicker({
+                    format : 'yyyy-mm-dd'
+                });
+                
 				$("#searchForm").validate({
 					rules : {
 						orderNo : {
@@ -29,7 +36,16 @@
 						},
 						orderState : {
 							required : true
-						}
+						},
+						optDateShow_start : {
+                    		required : true,
+                    		date : true                    		
+                        },
+                        optDateShow_end : {
+                    		required : true,
+                    		date : true,
+                    		compareDate : "#optDateShow_start"
+                        }
 					}
 				});
 
@@ -61,18 +77,18 @@
 				</div>
 				<form method="post"	class="form-horizontal"	id="searchForm">
 
-					<div class="span2">
-						<label class="control-label">机构 :</label>
+					<div class="span3">
+						<label class="control-label">机构 : &nbsp;</label>
 						<label class="my-control-label">${sessionScope.__SESSION_USER_INFO.orgName}</label>
 					</div>
 					
 					<div class="span3">
-						<label class="control-label">货单编号 :</label>
+						<label class="control-label">货单编号 : &nbsp;</label>
 						<input id="orderNo" name="orderNo" type="text" class="input-medium" value="${orderNo }" />
 					</div>
 
-					<div class="span7">
-						<label class="control-label">货单状态 :</label>
+					<div class="span6">
+						<label class="control-label">货单状态 : &nbsp;</label>
 						<select id="orderState" name="orderState" class="input-medium">
 							<c:forEach items="${stateList}" var="state">
 								<c:if test="${state.key == orderState}">
@@ -83,11 +99,18 @@
 								</c:if>
 							</c:forEach>
 						</select>
-						&nbsp;&nbsp;
+					</div>
+					
+					<div class="span12" style="padding-top: 10px">
+         				<label class="control-label">发货日期 : &nbsp;</label>
+              			<input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
+       					～ <input id="optDateShow_end" name="optDateShow_end" type="text" class="input-medium" value="${optDateShow_end }"/>
+                        
+             			&nbsp;&nbsp;
 						<button id="searchBtn" class="btn btn-primary" type="button">
 							查询
 						</button>
-					</div>
+        			</div>
 				</form>
 
 				<form method="post"	class="form-horizontal"	id="listForm">
