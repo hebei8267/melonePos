@@ -61,7 +61,7 @@ public class ReplenishOrderController extends BaseController {
 	public String list_Action(Model model, HttpServletRequest request) {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
-		
+
 		model.addAttribute("optDateShow_start", DateUtils.getNextDateFormatDate(-30, "yyyy-MM-dd"));
 		model.addAttribute("optDateShow_end", DateUtils.getCurFormatDate("yyyy-MM-dd"));
 
@@ -69,7 +69,8 @@ public class ReplenishOrderController extends BaseController {
 	}
 
 	@RequestMapping(value = "search")
-	public String search_Action(Model model, HttpServletRequest request, HttpSession session) throws ServletRequestBindingException {
+	public String search_Action(Model model, HttpServletRequest request, HttpSession session) throws ServletRequestBindingException,
+			ParseException {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
@@ -84,8 +85,10 @@ public class ReplenishOrderController extends BaseController {
 		model.addAttribute("optDateShow_end", optDateShow_end);
 
 		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session).getOrgId(), orderState,
-				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
+				DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"), -1, "yyyyMMdd",
+						"yyyyMMdd"), DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"),
+						1, "yyyyMMdd", "yyyyMMdd"));
+
 		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderList";
@@ -173,7 +176,7 @@ public class ReplenishOrderController extends BaseController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "manageSearch")
-	public String manageSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
+	public String manageSearch_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException, ParseException {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		// 补货单状态-下拉菜单
 		initOrderState(model);
@@ -190,9 +193,11 @@ public class ReplenishOrderController extends BaseController {
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
 
-		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, orgId, orderState,
-				DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"),
-				DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"));
+		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, orgId, orderState, DateUtils
+				.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"), -1, "yyyyMMdd", "yyyyMMdd"),
+				DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"), 1, "yyyyMMdd",
+						"yyyyMMdd"));
+
 		model.addAttribute("replenishOrderList", list);
 
 		return "order/replenishOrderManageList";
