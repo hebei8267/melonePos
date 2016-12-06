@@ -62,7 +62,7 @@ public class StoreChartReportManager {
 			_reList.add(storeDayTotalMyBatisDao.getStoreTotalListGroupByDay(_param));
 
 			// 所有门店机构
-			List<Organization> orgList = organizationManager.getSubOrganization();
+			List<Organization> orgList = organizationManager.getOpenSubOrganization();
 			for (Organization organization : orgList) {
 				Map<String, String> param = Maps.newHashMap();
 				param.put("orgId", organization.getId());
