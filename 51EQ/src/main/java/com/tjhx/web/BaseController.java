@@ -184,6 +184,9 @@ public class BaseController {
 
 		yearList.put(_nowYear, _nowYear);
 
+		int _nextYear = DateUtils.getCurrentYearNum() + 1;
+		yearList.put(String.valueOf(_nextYear), String.valueOf(_nextYear));
+
 		return yearList;
 	}
 }
