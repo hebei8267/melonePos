@@ -24,13 +24,17 @@ import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.info.SalesDayTotalGoodsMyBatisDao;
 import com.tjhx.entity.info.SalesDayTotalGoods;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.struct.OrganizationManager;
 import com.tjhx.vo.GrossProfitAbcVo;
+import com.tjhx.web.report.ReportUtils;
 
 @Service
 @Transactional(readOnly = true)
 public class GrossProfitAbcManager {
 	@Resource
 	private SalesDayTotalGoodsMyBatisDao salesDayTotalGoodsMyBatisDao;
+	@Resource
+	private OrganizationManager orgManager;
 
 	/**
 	 * 取得滞销商品信息
@@ -153,6 +157,13 @@ public class GrossProfitAbcManager {
 		String endDate = DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd");
 
 		GrossProfitAbcVo vo = null;
+
+		if ("EQ+".equals(orgId) || "Infancy".equals(orgId)) {
+			orgId = ReportUtils.getOrgIdByGroup(orgManager, orgId);
+		} else if (StringUtils.isNotBlank(orgId)) {
+			orgId = "'" + orgId + "'";
+		}
+
 		if ("1".equals(abcType)) {// 合计销售金额
 			vo = getPosAmtInfo(startDate, endDate, orgId, itemSubno, itemName, itemType,
 					new BigDecimal(abcParam1).divide(new BigDecimal("100")), new BigDecimal(abcParam2).divide(new BigDecimal("100")),

@@ -334,7 +334,7 @@
   			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
   			AND sgd.item_subno = gd.subno
   			<if test="orgId != null ">
-			AND sgd.org_Id = #{orgId}
+			AND sgd.org_Id IN (${orgId})
 			</if>
 			<if test="itemSubno != null ">
 			AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
@@ -371,7 +371,7 @@
 		            <![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
 			        AND sgd.item_subno = gd.subno
 			        <if test="orgId != null ">
-					AND sgd.org_Id = #{orgId}
+					AND sgd.org_Id IN (${orgId})
 					</if>
 					<if test="itemSubno != null ">
 					AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
@@ -401,7 +401,7 @@
 		            t_store_detail_one_day sd
 		        <where>
 		        	<if test="orgId != null ">
-					sd.org_Id = #{orgId}
+					sd.org_Id IN (${orgId})
 					</if>
 		        </where>
 		        GROUP BY
@@ -419,7 +419,7 @@
   			<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
   			AND sgd.item_subno = gd.subno
   			<if test="orgId != null ">
-			AND sgd.org_Id = #{orgId}
+			AND sgd.org_Id IN (${orgId})
 			</if>
 			<if test="itemSubno != null ">
 			AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
@@ -456,7 +456,7 @@
 		            <![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
 			        AND sgd.item_subno = gd.subno
 			        <if test="orgId != null ">
-					AND sgd.org_Id = #{orgId}
+					AND sgd.org_Id IN (${orgId})
 					</if>
 					<if test="itemSubno != null ">
 					AND (sgd.item_barcode = #{itemSubno} OR  sgd.item_subno = #{itemSubno})
@@ -486,7 +486,7 @@
 		            t_store_detail_one_day sd
 		        <where>
 		        	<if test="orgId != null ">
-					sd.org_Id = #{orgId}
+					sd.org_Id IN (${orgId})
 					</if>
 		        </where>
 		        GROUP BY
@@ -542,7 +542,7 @@
 					AND gd.supplier_bw_id = sup.supplier_bw_id
 					
 		        	<if test="orgId != null ">
-					AND sd.org_Id = #{orgId}
+					AND sd.org_Id IN (${orgId})
 					</if>
 					<if test="itemSubno != null ">
 					AND (sd.item_barcode = #{itemSubno} OR  sd.item_subno = #{itemSubno})
@@ -574,7 +574,7 @@
 		                <where>
 		                	<![CDATA[sgd.opt_date >= #{startDate} AND sgd.opt_date <= #{endDate}]]>
 				        	<if test="orgId != null ">
-							AND sgd.org_Id = #{orgId}
+							AND sgd.org_Id IN (${orgId})
 							</if>
 				        </where>
 		                GROUP BY

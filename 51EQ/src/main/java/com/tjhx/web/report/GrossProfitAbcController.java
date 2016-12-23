@@ -71,7 +71,7 @@ public class GrossProfitAbcController extends BaseController {
 	 */
 	private void initPageControls(Model model) {
 		// 初始化机构下拉菜单
-		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
+		ReportUtils.initOrgList_All_NonRoot_Group(orgManager, model);
 		// 初始化类型下拉菜单---类别
 		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
 		List<Select2Vo> itemTypeList = Lists.newArrayList();
