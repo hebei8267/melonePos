@@ -14,6 +14,14 @@ public class SalesMonthTotal_Show {
 	private Integer orgCnt3;
 	/** 机构数量 */
 	private Integer orgCnt4;
+	/** 机构数量 */
+	private Integer orgCnt5;
+	/** 机构数量 */
+	private Integer orgCnt6;
+	/** 机构数量 */
+	private Integer orgCnt7;
+	/** 机构数量 */
+	private Integer orgCnt8;
 	/** 机构名称 */
 	private String orgName;
 	/** 月份 */
@@ -26,6 +34,14 @@ public class SalesMonthTotal_Show {
 	private String optDateYM3;
 	/** 日期 */
 	private String optDateYM4;
+	/** 日期 */
+	private String optDateYM5;
+	/** 日期 */
+	private String optDateYM6;
+	/** 日期 */
+	private String optDateYM7;
+	/** 日期 */
+	private String optDateYM8;
 	/** 实销金额 */
 	private BigDecimal saleRamt1 = new BigDecimal(0);
 	/** 实销金额 */
@@ -34,6 +50,14 @@ public class SalesMonthTotal_Show {
 	private BigDecimal saleRamt3 = new BigDecimal(0);
 	/** 实销金额 */
 	private BigDecimal saleRamt4 = new BigDecimal(0);
+	/** 实销金额 */
+	private BigDecimal saleRamt5 = new BigDecimal(0);
+	/** 实销金额 */
+	private BigDecimal saleRamt6 = new BigDecimal(0);
+	/** 实销金额 */
+	private BigDecimal saleRamt7 = new BigDecimal(0);
+	/** 实销金额 */
+	private BigDecimal saleRamt8 = new BigDecimal(0);
 
 	/**
 	 * 取得机构编号
@@ -305,6 +329,222 @@ public class SalesMonthTotal_Show {
 		this.saleRamt4 = saleRamt4;
 	}
 
+	/**
+	 * 取得orgCnt5
+	 * 
+	 * @return orgCnt5
+	 */
+	public Integer getOrgCnt5() {
+		return orgCnt5;
+	}
+
+	/**
+	 * 设置orgCnt5
+	 * 
+	 * @param orgCnt5 orgCnt5
+	 */
+	public void setOrgCnt5(Integer orgCnt5) {
+		this.orgCnt5 = orgCnt5;
+	}
+
+	/**
+	 * 取得orgCnt6
+	 * 
+	 * @return orgCnt6
+	 */
+	public Integer getOrgCnt6() {
+		return orgCnt6;
+	}
+
+	/**
+	 * 设置orgCnt6
+	 * 
+	 * @param orgCnt6 orgCnt6
+	 */
+	public void setOrgCnt6(Integer orgCnt6) {
+		this.orgCnt6 = orgCnt6;
+	}
+
+	/**
+	 * 取得optDateYM5
+	 * 
+	 * @return optDateYM5
+	 */
+	public String getOptDateYM5() {
+		return optDateYM5;
+	}
+
+	/**
+	 * 设置optDateYM5
+	 * 
+	 * @param optDateYM5 optDateYM5
+	 */
+	public void setOptDateYM5(String optDateYM5) {
+		this.optDateYM5 = optDateYM5;
+	}
+
+	/**
+	 * 取得optDateYM6
+	 * 
+	 * @return optDateYM6
+	 */
+	public String getOptDateYM6() {
+		return optDateYM6;
+	}
+
+	/**
+	 * 设置optDateYM6
+	 * 
+	 * @param optDateYM6 optDateYM6
+	 */
+	public void setOptDateYM6(String optDateYM6) {
+		this.optDateYM6 = optDateYM6;
+	}
+
+	/**
+	 * 取得saleRamt5
+	 * 
+	 * @return saleRamt5
+	 */
+	public BigDecimal getSaleRamt5() {
+		return saleRamt5;
+	}
+
+	/**
+	 * 设置saleRamt5
+	 * 
+	 * @param saleRamt5 saleRamt5
+	 */
+	public void setSaleRamt5(BigDecimal saleRamt5) {
+		this.saleRamt5 = saleRamt5;
+	}
+
+	/**
+	 * 取得saleRamt6
+	 * 
+	 * @return saleRamt6
+	 */
+	public BigDecimal getSaleRamt6() {
+		return saleRamt6;
+	}
+
+	/**
+	 * 设置saleRamt6
+	 * 
+	 * @param saleRamt6 saleRamt6
+	 */
+	public void setSaleRamt6(BigDecimal saleRamt6) {
+		this.saleRamt6 = saleRamt6;
+	}
+
+	/**
+	 * 取得orgCnt7
+	 * 
+	 * @return orgCnt7
+	 */
+	public Integer getOrgCnt7() {
+		return orgCnt7;
+	}
+
+	/**
+	 * 设置orgCnt7
+	 * 
+	 * @param orgCnt7 orgCnt7
+	 */
+	public void setOrgCnt7(Integer orgCnt7) {
+		this.orgCnt7 = orgCnt7;
+	}
+
+	/**
+	 * 取得orgCnt8
+	 * 
+	 * @return orgCnt8
+	 */
+	public Integer getOrgCnt8() {
+		return orgCnt8;
+	}
+
+	/**
+	 * 设置orgCnt8
+	 * 
+	 * @param orgCnt8 orgCnt8
+	 */
+	public void setOrgCnt8(Integer orgCnt8) {
+		this.orgCnt8 = orgCnt8;
+	}
+
+	/**
+	 * 取得optDateYM7
+	 * 
+	 * @return optDateYM7
+	 */
+	public String getOptDateYM7() {
+		return optDateYM7;
+	}
+
+	/**
+	 * 设置optDateYM7
+	 * 
+	 * @param optDateYM7 optDateYM7
+	 */
+	public void setOptDateYM7(String optDateYM7) {
+		this.optDateYM7 = optDateYM7;
+	}
+
+	/**
+	 * 取得optDateYM8
+	 * 
+	 * @return optDateYM8
+	 */
+	public String getOptDateYM8() {
+		return optDateYM8;
+	}
+
+	/**
+	 * 设置optDateYM8
+	 * 
+	 * @param optDateYM8 optDateYM8
+	 */
+	public void setOptDateYM8(String optDateYM8) {
+		this.optDateYM8 = optDateYM8;
+	}
+
+	/**
+	 * 取得saleRamt7
+	 * 
+	 * @return saleRamt7
+	 */
+	public BigDecimal getSaleRamt7() {
+		return saleRamt7;
+	}
+
+	/**
+	 * 设置saleRamt7
+	 * 
+	 * @param saleRamt7 saleRamt7
+	 */
+	public void setSaleRamt7(BigDecimal saleRamt7) {
+		this.saleRamt7 = saleRamt7;
+	}
+
+	/**
+	 * 取得saleRamt8
+	 * 
+	 * @return saleRamt8
+	 */
+	public BigDecimal getSaleRamt8() {
+		return saleRamt8;
+	}
+
+	/**
+	 * 设置saleRamt8
+	 * 
+	 * @param saleRamt8 saleRamt8
+	 */
+	public void setSaleRamt8(BigDecimal saleRamt8) {
+		this.saleRamt8 = saleRamt8;
+	}
+
 	public int myEquals(Object obj) {
 
 		if (!(obj instanceof SalesMonthTotalItem))
@@ -315,17 +555,29 @@ public class SalesMonthTotal_Show {
 		if (!this.getOrgId().equals(rhs.getOrgId()))
 			return 0;
 
-		if (this.getOptDateYM1().equals(rhs.getOptDateYM()))
+		if (null != this.getOptDateYM1() && this.getOptDateYM1().equals(rhs.getOptDateYM()))
 			return 1;
 
-		if (this.getOptDateYM2().equals(rhs.getOptDateYM()))
+		if (null != this.getOptDateYM2() && this.getOptDateYM2().equals(rhs.getOptDateYM()))
 			return 2;
 
-		if (this.getOptDateYM3().equals(rhs.getOptDateYM()))
+		if (null != this.getOptDateYM3() && this.getOptDateYM3().equals(rhs.getOptDateYM()))
 			return 3;
 
-		if (this.getOptDateYM4().equals(rhs.getOptDateYM()))
+		if (null != this.getOptDateYM4() && this.getOptDateYM4().equals(rhs.getOptDateYM()))
 			return 4;
+
+		if (null != this.getOptDateYM5() && this.getOptDateYM5().equals(rhs.getOptDateYM()))
+			return 5;
+
+		if (null != this.getOptDateYM6() && this.getOptDateYM6().equals(rhs.getOptDateYM()))
+			return 6;
+
+		if (null != this.getOptDateYM7() && this.getOptDateYM7().equals(rhs.getOptDateYM()))
+			return 7;
+
+		if (null != this.getOptDateYM8() && this.getOptDateYM8().equals(rhs.getOptDateYM()))
+			return 8;
 
 		return 0;
 	}
@@ -349,6 +601,26 @@ public class SalesMonthTotal_Show {
 		if (4 == equalsRes) {
 			saleRamt4 = _salesMonthTotalItem.getSaleRamt();
 			orgCnt4 = _salesMonthTotalItem.getOrgCnt();
+		}
+
+		if (5 == equalsRes) {
+			saleRamt5 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt5 = _salesMonthTotalItem.getOrgCnt();
+		}
+
+		if (6 == equalsRes) {
+			saleRamt6 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt6 = _salesMonthTotalItem.getOrgCnt();
+		}
+
+		if (7 == equalsRes) {
+			saleRamt7 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt7 = _salesMonthTotalItem.getOrgCnt();
+		}
+
+		if (8 == equalsRes) {
+			saleRamt8 = _salesMonthTotalItem.getSaleRamt();
+			orgCnt8 = _salesMonthTotalItem.getOrgCnt();
 		}
 
 	}

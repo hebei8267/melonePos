@@ -18,7 +18,7 @@
 		}
 		.chartdiv {
 			width		: 100%;
-			height		: 1100px;
+			height		: 1000px;
 			font-size	: 11px;
 			border:1px solid #A4BED4;
 		}
@@ -130,6 +130,46 @@
 							"title": new Date().getFullYear()-3+"年",
 							"type": "column",
 							"valueField": "saleRamt4"
+						},
+						{
+							"balloonText": "时间:[[optDateYM5]]  销售金额[[value]]元  门店[[orgCnt5]]个",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
+							"lineAlpha": 0.2,
+							"title": new Date().getFullYear()-4+"年",
+							"type": "column",
+							"valueField": "saleRamt5"
+						},
+						{
+							"balloonText": "时间:[[optDateYM6]]  销售金额[[value]]元  门店[[orgCnt6]]个",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
+							"lineAlpha": 0.2,
+							"title": new Date().getFullYear()-5+"年",
+							"type": "column",
+							"valueField": "saleRamt6"
+						},
+						{
+							"balloonText": "时间:[[optDateYM7]]  销售金额[[value]]元  门店[[orgCnt7]]个",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
+							"lineAlpha": 0.2,
+							"title": new Date().getFullYear()-6+"年",
+							"type": "column",
+							"valueField": "saleRamt7"
+						},
+						{
+							"balloonText": "时间:[[optDateYM8]]  销售金额[[value]]元  门店[[orgCnt8]]个",
+							"fillAlphas": 0.8,
+							"labelText": "[[value]]元",
+							"labelOffset": -120,
+							"lineAlpha": 0.2,
+							"title": new Date().getFullYear()-7+"年",
+							"type": "column",
+							"valueField": "saleRamt8"
 						}
 					],
 					"guides": [],

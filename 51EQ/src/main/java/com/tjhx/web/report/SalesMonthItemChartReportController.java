@@ -48,14 +48,14 @@ public class SalesMonthItemChartReportController extends BaseController {
 	private SalesMonthTotalItemManager salesMonthTotalItemManager;
 
 	/**
-	 * 全部门店近4年销售数据
+	 * 全部门店近8年销售数据
 	 * 
 	 * @param optDateYList
 	 * @param _orgSumSalesJsonList
 	 */
 	private void getSalesTotalList_ByYear(List<String> optDateYList, List<String> _orgSumSalesJsonList) {
 		JsonMapper mapper = new JsonMapper();
-		// 全部门店近4年销售数据
+		// 全部门店近8年销售数据
 		List<SalesMonthTotal_Show> _salesTotalShowList = new ArrayList<SalesMonthTotal_Show>();
 		initSalesTotalShowList(Constants.ROOT_ORG_ID, _salesTotalShowList, optDateYList);
 		for (String optDateY : optDateYList) {
@@ -69,7 +69,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 	}
 
 	/**
-	 * 各店近4年销售数据
+	 * 各店近8年销售数据
 	 * 
 	 * @param _orgList
 	 * @param optDateYList
@@ -79,7 +79,7 @@ public class SalesMonthItemChartReportController extends BaseController {
 	private void getSalesTotalList_ByOrgAndYear(List<Organization> _orgList, List<String> optDateYList, List<String> _orgSumSalesJsonList,
 			List<String> _orgNameList) {
 		JsonMapper mapper = new JsonMapper();
-		// 各店近4年销售数据
+		// 各店近8年销售数据
 		for (Organization org : _orgList) {
 			List<SalesMonthTotal_Show> _salesTotalShowList = new ArrayList<SalesMonthTotal_Show>();
 			initSalesTotalShowList(org.getId(), _salesTotalShowList, optDateYList);
@@ -110,9 +110,9 @@ public class SalesMonthItemChartReportController extends BaseController {
 		List<String> _orgSumSalesJsonList = new ArrayList<String>();
 		List<String> _orgNameList = new ArrayList<String>();
 		_orgNameList.add("合计");
-		// 全部门店近4年销售数据
+		// 全部门店近8年销售数据
 		getSalesTotalList_ByYear(optDateYList, _orgSumSalesJsonList);
-		// 各店近4年销售数据
+		// 各店近8年销售数据
 		getSalesTotalList_ByOrgAndYear(_orgList, optDateYList, _orgSumSalesJsonList, _orgNameList);
 
 		for (int i = 0; i < _yearNum; i++) {
@@ -156,6 +156,15 @@ public class SalesMonthItemChartReportController extends BaseController {
 			_salesTotalShow.setOptDateYM3(optDateYList.get(2) + String.format("%02d", i));
 			// 年月4
 			_salesTotalShow.setOptDateYM4(optDateYList.get(3) + String.format("%02d", i));
+			// 年月5
+			_salesTotalShow.setOptDateYM5(optDateYList.get(4) + String.format("%02d", i));
+			// 年月6
+			_salesTotalShow.setOptDateYM6(optDateYList.get(5) + String.format("%02d", i));
+			// 年月7
+			_salesTotalShow.setOptDateYM6(optDateYList.get(6) + String.format("%02d", i));
+			// 年月8
+			_salesTotalShow.setOptDateYM6(optDateYList.get(7) + String.format("%02d", i));
+
 			_salesTotalShowList.add(_salesTotalShow);
 		}
 
