@@ -130,7 +130,7 @@ public class ReplenishOrderManager {
 	 * @return
 	 */
 	public List<ReplenishOrder> getReplenishOrderList(String orderNo, String orgId, String orderState, String optDateStart,
-			String optDateEnd) {
+			String optDateEnd, String barcode, String itemType, String supplier) {
 		Map<String, String> param = Maps.newHashMap();
 		if (StringUtils.isNotBlank(orderNo)) {
 			if (orderNo.length() == 8) {
@@ -144,11 +144,30 @@ public class ReplenishOrderManager {
 			param.put("replenishOrgId", orgId.substring(3));
 		}
 
+		if (StringUtils.isNotBlank(barcode)) {
+			param.put("barcode", barcode);
+		}
+		if (StringUtils.isNotBlank(itemType)) {
+			List<String> itemNoList = Lists.newArrayList(itemType.split(","));
+			String itemNoArray = StringUtils.join(itemNoList, ",");
+			param.put("itemType", itemNoArray);
+		}
+		if (StringUtils.isNotBlank(supplier)) {
+			List<String> supplierList = Lists.newArrayList(supplier.split(","));
+			String supplierArray = StringUtils.join(supplierList, ",");
+			param.put("supplier", supplierArray);
+		}
+
 		param.put("orderState", orderState);
 		param.put("optDateStart", optDateStart);
 		param.put("optDateEnd", optDateEnd);
 
-		return replenishOrderMyBatisDao.getReplenishOrderList(param);
+		if (StringUtils.isBlank(barcode) && StringUtils.isBlank(itemType) && StringUtils.isBlank(supplier)) {
+			return replenishOrderMyBatisDao.getReplenishOrderList(param);
+		} else {
+			return replenishOrderMyBatisDao.getReplenishOrderListByDetail(param);
+		}
+
 	}
 
 	/**

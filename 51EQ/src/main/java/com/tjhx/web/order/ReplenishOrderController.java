@@ -28,14 +28,21 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.SpringContextHolder;
 
+import com.google.common.collect.Lists;
 import com.tjhx.common.utils.DateUtils;
+import com.tjhx.entity.info.ItemType;
+import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.order.ReplenishOrder;
 import com.tjhx.globals.Constants;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.info.ItemTypeManager;
+import com.tjhx.service.info.SupplierManager;
 import com.tjhx.service.order.ReplenishOrderManager;
 import com.tjhx.service.struct.OrganizationManager;
+import com.tjhx.vo.Select2Vo;
 import com.tjhx.web.BaseController;
 import com.tjhx.web.report.ReportUtils;
 
@@ -49,6 +56,10 @@ public class ReplenishOrderController extends BaseController {
 	private ReplenishOrderManager replenishOrderManager;
 	@Resource
 	private OrganizationManager orgManager;
+	@Resource
+	private SupplierManager supplierManager;
+	@Resource
+	private ItemTypeManager itemTypeManager;
 
 	/**
 	 * 门店--补货单管理
@@ -62,6 +73,9 @@ public class ReplenishOrderController extends BaseController {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
+		initItemTypeList(model);
+		initSupplierList(model);
+
 		model.addAttribute("optDateShow_start", DateUtils.getNextDateFormatDate(-30, "yyyy-MM-dd"));
 		model.addAttribute("optDateShow_end", DateUtils.getCurFormatDate("yyyy-MM-dd"));
 
@@ -74,6 +88,9 @@ public class ReplenishOrderController extends BaseController {
 		// 补货单状态-下拉菜单
 		initOrderState(model);
 
+		initItemTypeList(model);
+		initSupplierList(model);
+
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
 		String orderState = ServletRequestUtils.getStringParameter(request, "orderState");
 		String optDateShow_start = ServletRequestUtils.getStringParameter(request, "optDateShow_start");
@@ -84,10 +101,20 @@ public class ReplenishOrderController extends BaseController {
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
 
+		// 货号
+		String barcode = ServletRequestUtils.getStringParameter(request, "barcode");
+		// 商品类别
+		String itemType = ServletRequestUtils.getStringParameter(request, "itemType");
+		// 货商
+		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
+		model.addAttribute("barcode", barcode);
+		model.addAttribute("itemType", itemType);
+		model.addAttribute("supplier", supplier);
+
 		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, getUserInfo(session).getOrgId(), orderState,
 				DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"), -1, "yyyyMMdd",
 						"yyyyMMdd"), DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"),
-						1, "yyyyMMdd", "yyyyMMdd"));
+						1, "yyyyMMdd", "yyyyMMdd"), barcode, itemType, supplier);
 
 		model.addAttribute("replenishOrderList", list);
 
@@ -180,6 +207,8 @@ public class ReplenishOrderController extends BaseController {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		// 补货单状态-下拉菜单
 		initOrderState(model);
+		initItemTypeList(model);
+		initSupplierList(model);
 
 		String orderNo = ServletRequestUtils.getStringParameter(request, "orderNo");
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -193,10 +222,20 @@ public class ReplenishOrderController extends BaseController {
 		model.addAttribute("optDateShow_start", optDateShow_start);
 		model.addAttribute("optDateShow_end", optDateShow_end);
 
+		// 货号
+		String barcode = ServletRequestUtils.getStringParameter(request, "barcode");
+		// 商品类别
+		String itemType = ServletRequestUtils.getStringParameter(request, "itemType");
+		// 货商
+		String supplier = ServletRequestUtils.getStringParameter(request, "supplier");
+		model.addAttribute("barcode", barcode);
+		model.addAttribute("itemType", itemType);
+		model.addAttribute("supplier", supplier);
+
 		List<ReplenishOrder> list = replenishOrderManager.getReplenishOrderList(orderNo, orgId, orderState, DateUtils
 				.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_start, "yyyy-MM-dd", "yyyyMMdd"), -1, "yyyyMMdd", "yyyyMMdd"),
 				DateUtils.getNextDateFormatDate(DateUtils.transDateFormat(optDateShow_end, "yyyy-MM-dd", "yyyyMMdd"), 1, "yyyyMMdd",
-						"yyyyMMdd"));
+						"yyyyMMdd"), barcode, itemType, supplier);
 
 		model.addAttribute("replenishOrderList", list);
 
@@ -215,6 +254,8 @@ public class ReplenishOrderController extends BaseController {
 		ReportUtils.initOrgList_Null_NoNRoot(orgManager, model);
 		// 补货单状态-下拉菜单
 		initOrderState(model);
+		initItemTypeList(model);
+		initSupplierList(model);
 
 		model.addAttribute("optDateShow_start", DateUtils.getNextDateFormatDate(-30, "yyyy-MM-dd"));
 		model.addAttribute("optDateShow_end", DateUtils.getCurFormatDate("yyyy-MM-dd"));
@@ -348,5 +389,43 @@ public class ReplenishOrderController extends BaseController {
 		}
 
 		return "redirect:/" + Constants.PAGE_REQUEST_PREFIX + "/replenishOrder/manageList";
+	}
+
+	/**
+	 * 初始化页面下拉菜单控件
+	 * 
+	 * @param model
+	 */
+	private void initItemTypeList(Model model) {
+		// 初始化类型下拉菜单
+		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
+		List<Select2Vo> itemTypeList = Lists.newArrayList();
+
+		for (ItemType itemType : _itemTypeList) {
+			Select2Vo vo = new Select2Vo(itemType.getItemNo().trim(), itemType.getItemShortName().trim());
+
+			itemTypeList.add(vo);
+		}
+		JsonMapper mapper = new JsonMapper();
+		model.addAttribute("itemTypeList", mapper.toJson(itemTypeList));
+	}
+
+	/**
+	 * 初始化页面下拉菜单控件
+	 * 
+	 * @param model
+	 */
+	private void initSupplierList(Model model) {
+		// 初始化类型下拉菜单
+		List<Supplier> _supplierList = supplierManager.getAllSupplierList();
+		List<Select2Vo> supplierList = Lists.newArrayList();
+
+		for (Supplier supplier : _supplierList) {
+			Select2Vo vo = new Select2Vo(supplier.getSupplierBwId().trim(), supplier.getName().trim());
+
+			supplierList.add(vo);
+		}
+		JsonMapper mapper = new JsonMapper();
+		model.addAttribute("supplierList", mapper.toJson(supplierList));
 	}
 }

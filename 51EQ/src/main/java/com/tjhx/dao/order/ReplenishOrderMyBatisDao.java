@@ -25,6 +25,14 @@ public interface ReplenishOrderMyBatisDao {
 	public List<ReplenishOrder> getReplenishOrderList(Map<String, String> param);
 
 	/**
+	 * 取得要货单列表
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public List<ReplenishOrder> getReplenishOrderListByDetail(Map<String, String> param);
+
+	/**
 	 * 根据补货单编号删除要货单信息
 	 * 
 	 * @param orderNo

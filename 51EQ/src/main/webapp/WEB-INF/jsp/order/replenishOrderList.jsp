@@ -20,6 +20,9 @@
 				font-size: 20px;
             }
         </style>
+        <link type="text/css" href="${ctx}/static/css/select2.css" rel="stylesheet">
+		<script src="${ctx}/static/js/select2.min.js"></script>
+		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
 		<script>
 			$(function() {
 				$('#optDateShow_start').datepicker({
@@ -59,8 +62,17 @@
 					$("#searchForm").attr("action", "${sc_ctx}/replenishOrder/search");
 					$("#searchForm").submit();
 				});
+				
+				$("#itemType").select2({
+					tags : itemTypeListJson
+				});
+				
+				$("#supplier").select2({
+					tags : supplierListJson
+				});
 			});
-
+			var itemTypeListJson = ${itemTypeList};
+			var supplierListJson = ${supplierList};
 		</script>
 	</head>
 	<body>
@@ -75,8 +87,10 @@
 						<h3>收货管理</h3>
 					</legend>
 				</div>
-				<form method="post"	class="form-horizontal"	id="searchForm">
-
+			</div>
+				
+			<form method="post"	class="form-horizontal"	id="searchForm">
+				<div class="row">
 					<div class="span3">
 						<label class="control-label">机构 : &nbsp;</label>
 						<label class="my-control-label">${sessionScope.__SESSION_USER_INFO.orgName}</label>
@@ -100,7 +114,26 @@
 							</c:forEach>
 						</select>
 					</div>
-					
+				</div>
+				
+				<div class="row" style="padding-top: 10px">
+					<div class="span3">
+						<label class="control-label">货号 : &nbsp;</label>
+						<input id="barcode" name="barcode" value="${barcode }" type="text" class="input-medium"/>
+					</div>
+	
+					<div class="span3">
+						<label class="control-label">商品类别 : &nbsp;</label>
+						<input type="hidden" id="itemType" name="itemType" class="select2 input-medium" value="${itemType}">
+					</div>
+						
+					<div class="span6">
+						<label class="control-label">货商 : &nbsp;</label>
+						<input type="hidden" id="supplier" name="supplier" class="select2 input-medium" value="${supplier}">
+					</div>
+				</div>
+				
+				<div class="row">
 					<div class="span12" style="padding-top: 10px">
          				<label class="control-label">发货日期 : &nbsp;</label>
               			<input id="optDateShow_start" name="optDateShow_start" type="text" class="input-medium" value="${optDateShow_start }"/>
@@ -111,9 +144,11 @@
 							查询
 						</button>
         			</div>
-				</form>
+        		</div>
+			</form>
 
 				<form method="post"	class="form-horizontal"	id="listForm">
+				<div class="row">
 					<div class="span12" style="margin-top: 20px;">
 						<table class="table	table-striped table-bordered table-condensed mytable">
 							<thead>
@@ -190,6 +225,7 @@
 							</c:if>
 						</table>
 					</div>
+				</div>
 				</form>
 			</div>
 

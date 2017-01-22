@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link type="text/css" href="${ctx}/static/css/select2.css" rel="stylesheet">
+		<script src="${ctx}/static/js/select2.min.js"></script>
+		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
 		<script>
 			$(function() {
 				$('#optDateShow_start').datepicker({
@@ -127,8 +130,17 @@
 					$("#searchForm").attr("action", "${sc_ctx}/replenishOrder/manageSearch");
 					$("#searchForm").submit();
 				});
+				
+				$("#itemType").select2({
+					tags : itemTypeListJson
+				});
+				
+				$("#supplier").select2({
+					tags : supplierListJson
+				});
 			});
-
+			var itemTypeListJson = ${itemTypeList};
+			var supplierListJson = ${supplierList};
 			//-----------------------------------
 			// 删除
 			//-----------------------------------
@@ -199,6 +211,22 @@
 							</c:if>
 						</c:forEach>
 					</select>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 10px">
+				<div class="span3">
+					<label class="control-label">货号 : &nbsp;</label>
+					<input id="barcode" name="barcode" value="${barcode }" type="text" class="input-medium"/>
+				</div>
+
+				<div class="span3">
+					<label class="control-label">商品类别 : &nbsp;</label>
+					<input type="hidden" id="itemType" name="itemType" class="select2 input-medium" value="${itemType}">
+				</div>
+					
+				<div class="span6">
+					<label class="control-label">货商 : &nbsp;</label>
+					<input type="hidden" id="supplier" name="supplier" class="select2 input-medium" value="${supplier}">
 				</div>
 			</div>
 			<div class="row">

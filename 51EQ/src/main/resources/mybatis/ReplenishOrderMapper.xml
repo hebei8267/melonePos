@@ -107,6 +107,65 @@
   	</select>
   	
   	<!-- 取得t_replenish_order信息(根据参数) -->
+	<select id="getReplenishOrderListByDetail" parameterType="map" resultMap="Result_Map_ReplenishOrder">
+		select
+			_order.uuid ,
+	    	_order.create_date ,
+	    	_order.create_user_id ,
+	    	_order.update_date ,
+	    	_order.update_user_id ,
+	    	_order.version ,
+	    	_order.description ,
+	    	_order.error_num ,
+	    	_order.order_batch_id ,
+	    	_order.order_no ,
+	    	_order.order_state ,
+	    	_order.send_date ,
+	    	_order.receive_date ,
+	    	_order.replenish_org_id 
+		from t_replenish_order _order ,
+			 (
+        SELECT DISTINCT
+            _detail.order_batch_id
+        FROM
+            t_replenish_order_detail _detail ,
+            t_goods gd
+        <where>
+            gd.subno = _detail.product_barcode
+        	<if test="itemType != null and itemType !='' ">
+  			AND gd.item_no IN (${itemType})
+  			</if>
+        	<if test="supplier != null and supplier !='' ">
+  			AND gd.supplier_bw_id IN (${supplier})
+  			</if>
+  			<if test="barcode != null and barcode !='' ">
+  			AND _detail.product_barcode = #{barcode}
+  			</if>
+        ) detail
+        </where>
+		<where>
+			_order.order_batch_id = detail.order_batch_id
+  			<if test="orderBatchId != null and orderBatchId !='' ">
+  			AND _order.order_batch_id = #{orderBatchId}
+  			</if>
+  			<if test="orderNo != null and orderNo !='' ">
+  			AND _order.order_no = #{orderNo}
+  			</if>
+  			<if test="orderState != null and orderState !='' ">
+  			AND _order.order_state = #{orderState}
+  			</if>
+  			<if test="replenishOrgId != null and replenishOrgId !='' ">
+  			AND _order.replenish_org_id = #{replenishOrgId}
+  			</if>
+  			<if test="optDateStart != null and optDateStart !='' and optDateEnd != null and optDateEnd !=''">
+  			<![CDATA[ AND _order.create_date >= #{optDateStart} AND _order.create_date  <= #{optDateEnd} ]]>
+  			</if>
+  			
+	  	</where>
+		ORDER BY _order.send_date desc, _order.order_batch_id desc, _order.order_no asc
+	</select>
+	
+	<!-- 取得t_replenish_order信息(根据参数) -->
 	<select id="getReplenishOrderList" parameterType="map" resultMap="Result_Map_ReplenishOrder">
 		select
 		<include refid="Base_Column_List" />
