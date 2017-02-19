@@ -30,9 +30,9 @@
 				//-----------------------------------
                 // 全选/全部选
                 //-----------------------------------
-                $("#checkAll").click(function() {
-            		var checked = $("#checkAll").is(":checked");
-                	$("input[name='orgId']").each(function(){
+                $("#eqCheckAll").click(function() {
+            		var checked = $("#eqCheckAll").is(":checked");
+                	$("input[name='eqOrgId']").each(function(){
                 		if (checked) {
 							$(this).attr("checked", true);
 							$(this).prop("checked", true);
@@ -42,6 +42,19 @@
 						}
                 	}); 
                 });
+                $("#infCheckAll").click(function() {
+            		var checked = $("#infCheckAll").is(":checked");
+                	$("input[name='infOrgId']").each(function(){
+                		if (checked) {
+							$(this).attr("checked", true);
+							$(this).prop("checked", true);
+						} else {
+							$(this).attr("checked", false);
+							$(this).prop("checked", false);
+						}
+                	}); 
+                });
+                
 				$("#listForm").validate({
 					rules : {
 						orgId : {
@@ -138,17 +151,34 @@
 						</legend>
 					</div>
 					
-					<div class="span12">
-						<input type="checkbox" id="checkAll"></input>全机构
-						<c:forEach items="${orgList}" var="org">
-							<c:if test="${orgIdList.contains(org.key)}">
-							<input type="checkbox" name="orgId" value="${org.key }" checked></input>${org.value }
-							</c:if>
-							<c:if test="${!orgIdList.contains(org.key)}">
-							<input type="checkbox" name="orgId" value="${org.key }"></input>${org.value }
-							</c:if>
-						</c:forEach>
-					</div>
+					<c:if test="${sessionScope.__SESSION_USER_INFO.orgId == '000'}" >
+						<div class="span12">
+							<input type="checkbox" id="eqCheckAll"></input>EQ门店
+							<c:forEach items="${eqOrgList}" var="org">
+								<c:if test="${orgIdList.contains(org.key)}">
+								<input type="checkbox" name="eqOrgId" value="${org.key }" checked></input>${org.value }
+								</c:if>
+								<c:if test="${!orgIdList.contains(org.key)}">
+								<input type="checkbox" name="eqOrgId" value="${org.key }"></input>${org.value }
+								</c:if>
+							</c:forEach>
+						</div>
+						
+						<div class="span12" style="margin-top: 10px;">
+							<input type="checkbox" id="infCheckAll"></input>Infancy门店
+							<c:forEach items="${infOrgList}" var="org">
+								<c:if test="${orgIdList.contains(org.key)}">
+								<input type="checkbox" name="infOrgId" value="${org.key }" checked></input>${org.value }
+								</c:if>
+								<c:if test="${!orgIdList.contains(org.key)}">
+								<input type="checkbox" name="infOrgId" value="${org.key }"></input>${org.value }
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:if>
+					<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != '000'}" >
+						<input type="hidden" name="orgId" value="${sessionScope.__SESSION_USER_INFO.orgId}">
+					</c:if>
 				</div>
 				<div class="row" style="margin-top: 20px;">
 					

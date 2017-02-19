@@ -197,4 +197,30 @@ public class ReportUtils {
 
 		model.addAttribute("orgList", orgList);
 	}
+
+	/**
+	 * 取得所有机构信息(分品牌)-不含总部-不含空白
+	 * 
+	 * @param orgManager
+	 * @param model
+	 */
+	public static void initBrandOrgList_NoNRoot(OrganizationManager orgManager, Model model) {
+		List<Organization> _orgList = orgManager.getAllOpenOrganization();
+
+		Map<String, String> eqOrgList = new LinkedHashMap<String, String>();
+		Map<String, String> infOrgList = new LinkedHashMap<String, String>();
+
+		for (Organization _org : _orgList) {
+			if (!Constants.ROOT_ORG_ID.equals(_org.getId()) && !_org.isClosedFlg() && "EQ+".equals(_org.getBrand())) {
+
+				eqOrgList.put(_org.getId(), _org.getName());
+			} else if (!Constants.ROOT_ORG_ID.equals(_org.getId()) && !_org.isClosedFlg() && "Infancy".equals(_org.getBrand())) {
+
+				infOrgList.put(_org.getId(), _org.getName());
+			}
+		}
+
+		model.addAttribute("eqOrgList", eqOrgList);
+		model.addAttribute("infOrgList", infOrgList);
+	}
 }

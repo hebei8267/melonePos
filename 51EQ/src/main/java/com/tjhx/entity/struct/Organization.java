@@ -324,7 +324,9 @@ public class Organization extends IdEntity {
 	}
 
 	/**
-	 * @return the brand
+	 * 取得门店品牌
+	 * 
+	 * @return 门店品牌
 	 */
 	@Column(length = 32)
 	public String getBrand() {
@@ -332,7 +334,9 @@ public class Organization extends IdEntity {
 	}
 
 	/**
-	 * @param brand the brand to set
+	 * 设置门店品牌
+	 * 
+	 * @param brand 门店品牌
 	 */
 	public void setBrand(String brand) {
 		this.brand = brand;

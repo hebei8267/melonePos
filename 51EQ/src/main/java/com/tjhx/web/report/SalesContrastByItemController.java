@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jxls.exception.ParsePropertyException;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.stereotype.Controller;
@@ -66,7 +67,7 @@ public class SalesContrastByItemController extends BaseController {
 	 */
 	private void initPageControls(Model model) {
 		// 初始化机构下拉菜单
-		ReportUtils.initOrgList_NoNRoot(orgManager, model);
+		ReportUtils.initBrandOrgList_NoNRoot(orgManager, model);
 		// 初始化类型下拉菜单
 		List<ItemType> _itemTypeList = itemTypeManager.getAllItemType();
 		List<Select2Vo> itemTypeList = Lists.newArrayList();
@@ -86,7 +87,12 @@ public class SalesContrastByItemController extends BaseController {
 		// 初始化页面下拉菜单控件
 		initPageControls(model);
 
-		String[] orgIds = ServletRequestUtils.getStringParameters(request, "orgId");
+		String[] eqOrgId = ServletRequestUtils.getStringParameters(request, "eqOrgId");
+		String[] infOrgId = ServletRequestUtils.getStringParameters(request, "infOrgId");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String[] orgIds = ArrayUtils.addAll(eqOrgId, infOrgId);
+		orgIds = ArrayUtils.add(orgIds, orgId);
+
 		String optDate2_start = ServletRequestUtils.getStringParameter(request, "optDate2_start");
 		String optDate2_end = ServletRequestUtils.getStringParameter(request, "optDate2_end");
 		String optDate1_end = ServletRequestUtils.getStringParameter(request, "optDate1_end");
@@ -144,7 +150,12 @@ public class SalesContrastByItemController extends BaseController {
 	public void cashReportExport_Action(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws ServletRequestBindingException, ParsePropertyException, InvalidFormatException, IOException, ParseException {
 
-		String[] orgIds = ServletRequestUtils.getStringParameters(request, "orgId");
+		String[] eqOrgId = ServletRequestUtils.getStringParameters(request, "eqOrgId");
+		String[] infOrgId = ServletRequestUtils.getStringParameters(request, "infOrgId");
+		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+		String[] orgIds = ArrayUtils.addAll(eqOrgId, infOrgId);
+		orgIds = ArrayUtils.add(orgIds, orgId);
+
 		String optDate2_start = ServletRequestUtils.getStringParameter(request, "optDate2_start");
 		String optDate2_end = ServletRequestUtils.getStringParameter(request, "optDate2_end");
 		String optDate1_end = ServletRequestUtils.getStringParameter(request, "optDate1_end");
@@ -189,8 +200,7 @@ public class SalesContrastByItemController extends BaseController {
 		try {
 			long fileLength = new File(downLoadPath).length();
 			response.setContentType("application/x-msdownload;");
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(downLoadFileName.getBytes("utf-8"), "ISO8859-1"));
 			response.setHeader("Content-Length", String.valueOf(fileLength));
 			bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 			bos = new BufferedOutputStream(response.getOutputStream());
