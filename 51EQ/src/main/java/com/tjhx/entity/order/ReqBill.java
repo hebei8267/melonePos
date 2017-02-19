@@ -638,6 +638,7 @@ public class ReqBill extends IdEntity {
 	 * 
 	 * @return inQty
 	 */
+	@Transient
 	public BigDecimal getInQty() {
 		return inQty;
 	}
@@ -656,6 +657,7 @@ public class ReqBill extends IdEntity {
 	 * 
 	 * @return outQty
 	 */
+	@Transient
 	public BigDecimal getOutQty() {
 		return outQty;
 	}
