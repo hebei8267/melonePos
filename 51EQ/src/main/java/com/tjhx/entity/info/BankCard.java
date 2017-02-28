@@ -54,7 +54,7 @@ public class BankCard extends IdEntity {
 	 * 
 	 * @return bankCardNo 银行卡号码
 	 */
-	@NaturalId
+	//@NaturalId
 	@Column(nullable = false, length = 32)
 	public String getBankCardNo() {
 		return bankCardNo;
