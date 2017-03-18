@@ -362,14 +362,14 @@
 								<c:if test="${salesContrastVo.stockTotalQty1.compareTo(BigDecimal.ZERO) == 0}">
 				                <td class="center">-</td>
 				                </c:if>
-				                <c:if test="${salesContrastVo.stockTotalQty1.compareTo(BigDecimal.ZERO) != 0}">
+				                <c:if test="${salesContrastVo.stockTotalQty1.compareTo(BigDecimal.ZERO) != 0 && salesContrastVo.saleRamt1 != null}">
 				                <td class="center">${salesContrastVo.stockTotalQty1 / salesContrastVo.saleRamt1}</td>
 				                </c:if>
 				                <!-- 库销比2 -->
 				                <c:if test="${salesContrastVo.stockTotalQty2.compareTo(BigDecimal.ZERO) == 0}">
 				                <td class="center">-</td>
 				                </c:if>
-				                <c:if test="${salesContrastVo.stockTotalQty2.compareTo(BigDecimal.ZERO) != 0}">
+				                <c:if test="${salesContrastVo.stockTotalQty2.compareTo(BigDecimal.ZERO) != 0 && salesContrastVo.saleRamt2 != null}">
 				                <td class="center">${salesContrastVo.stockTotalQty2 / salesContrastVo.saleRamt2}</td>
 				                </c:if>
 							</tr>
