@@ -259,6 +259,8 @@
 								<th class="center"> 库存金额一 </th>
 								<th class="center"> 库存金额二 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额增长/下降率 </th>
+								<th class="center"> 库销比一 </th>
+								<th class="center"> 库销比二 </th>
 							</tr>
 						</thead>
 						<tbody>
@@ -340,6 +342,21 @@
 								<c:if test="${salesContrast == 0}" >
 								<td class="center"> ${salesContrastVo.salesContrast} %</td>
 								</c:if>
+								
+								<!-- 库销比1 -->
+								<c:if test="${salesContrastVo.stockTotalQty1.compareTo(BigDecimal.ZERO) == 0}">
+				                <td class="center">-</td>
+				                </c:if>
+				                <c:if test="${salesContrastVo.stockTotalQty1.compareTo(BigDecimal.ZERO) != 0}">
+				                <td class="center">${salesContrastVo.stockTotalQty1 / salesContrastVo.saleRamt1}</td>
+				                </c:if>
+				                <!-- 库销比2 -->
+				                <c:if test="${salesContrastVo.stockTotalQty2.compareTo(BigDecimal.ZERO) == 0}">
+				                <td class="center">-</td>
+				                </c:if>
+				                <c:if test="${salesContrastVo.stockTotalQty2.compareTo(BigDecimal.ZERO) != 0}">
+				                <td class="center">${salesContrastVo.stockTotalQty2 / salesContrastVo.saleRamt2}</td>
+				                </c:if>
 							</tr>
 							
 							</c:forEach>
