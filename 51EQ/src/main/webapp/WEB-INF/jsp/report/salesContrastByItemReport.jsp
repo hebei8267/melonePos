@@ -253,7 +253,13 @@
 			
 			
 			<div class="row">
-				<div class="span12" style="margin-top: 10px;">
+				<div class="span12">
+                	<div class="alert alert-info">
+                		库销比(数量) = 库存(数量) / 销售(数量)
+            		</div>
+	            </div>
+	            
+				<div class="span12">
 					
 					<table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
 						<thead>
