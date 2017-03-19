@@ -344,18 +344,18 @@
 								</c:if>
 								
 								<!-- 库销比1 -->
-								<c:if test="${salesContrastVo.saleRamt1.compareTo(BigDecimal.ZERO) == 0}">
+								<c:if test="${salesContrastVo.saleRqty1.compareTo(BigDecimal.ZERO) == 0}">
 				                <td class="center">-</td>
 				                </c:if>
-				                <c:if test="${salesContrastVo.saleRamt1.compareTo(BigDecimal.ZERO) != 0}">
-				                <td class="center">${salesContrastVo.stockTotalQty1 / salesContrastVo.saleRamt1}</td>
+				                <c:if test="${salesContrastVo.saleRqty1.compareTo(BigDecimal.ZERO) != 0}">
+				                <td class="center">${salesContrastVo.stockTotalQty1 / salesContrastVo.saleRqty1}</td>
 				                </c:if>
 				                <!-- 库销比2 -->
-				                <c:if test="${salesContrastVo.saleRamt2.compareTo(BigDecimal.ZERO) == 0}">
+				                <c:if test="${salesContrastVo.saleRqty2.compareTo(BigDecimal.ZERO) == 0}">
 				                <td class="center">-</td>
 				                </c:if>
-				                <c:if test="${salesContrastVo.saleRamt2.compareTo(BigDecimal.ZERO) != 0}">
-				                <td class="center">${salesContrastVo.stockTotalQty2 / salesContrastVo.saleRamt2}</td>
+				                <c:if test="${salesContrastVo.saleRqty2.compareTo(BigDecimal.ZERO) != 0}">
+				                <td class="center">${salesContrastVo.stockTotalQty2 / salesContrastVo.saleRqty2}</td>
 				                </c:if>
 							</tr>
 							
