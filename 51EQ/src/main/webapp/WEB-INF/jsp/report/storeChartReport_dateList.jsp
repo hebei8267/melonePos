@@ -103,37 +103,7 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <c:if test="${!empty storeDayTotalList}" >
-                                    <tr>
-                                        <td class="center">
-                                            合计
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.stockTotalQty}
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.stockTotalQty_Minus}
-                                        </td>
-                                        <td class="right" <c:if test="${totalStore.stockQtyScale_Minus > 0.8}" > style="color: red;"</c:if>>
-                                            ${totalStore.stockQtyScale_Minus}%
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.stockTotalAmt}
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.stockTotalAmt_Minus}
-                                        </td>
-                                        <td class="right" <c:if test="${totalStore.stockAmtScale_Minus > 0.8}" > style="color: red;"</c:if>>
-                                            ${totalStore.stockAmtScale_Minus}%
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.itemSaleTotalAmt}
-                                        </td>
-                                        <td class="right">
-                                            ${totalStore.itemSaleTotalAmt_Minus}
-                                        </td>
-                                    </tr>
-                                </c:if>
+                                
                             </tbody>
                             <c:if test="${empty	storeDayTotalList}" >
                                 <tfoot>

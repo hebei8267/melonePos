@@ -32,8 +32,7 @@ public class StoreChartReportController extends BaseController {
 	private OrganizationManager orgManager;
 
 	@RequestMapping(value = { "chart", "" })
-	public String storeChartReport_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String storeChartReport_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		List<List<StoreDayTotal>> _dbStoreDayTotalList = storeChartReportManager.getStoreTotalListGroupByDay(null);
@@ -70,8 +69,7 @@ public class StoreChartReportController extends BaseController {
 	}
 
 	@RequestMapping(value = { "search" })
-	public String storeChartReport_search_Action(Model model, HttpServletRequest request)
-			throws ServletRequestBindingException {
+	public String storeChartReport_search_Action(Model model, HttpServletRequest request) throws ServletRequestBindingException {
 		ReportUtils.initOrgList_All_NonRoot(orgManager, model);
 
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
@@ -89,16 +87,70 @@ public class StoreChartReportController extends BaseController {
 	@RequestMapping(value = { "list" })
 	public String storeListReport_Action(Model model) throws ServletRequestBindingException {
 		String maxOptDate = storeChartReportManager.getMaxOptDate();
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
 
 		if (StringUtils.isNotBlank(maxOptDate)) {
 			model.addAttribute("maxOptDate", DateUtils.transDateFormat(maxOptDate, "yyyyMMdd", "yyyy-MM-dd"));
 			List<StoreDayTotal> _dbStoreDayTotalList = storeChartReportManager.getStoreDayTotalList(maxOptDate);
-			List<StoreDayTotal_Show> _list = formatStoreDayTotalInfo_list(_dbStoreDayTotalList);
+
+			List<StoreDayTotal> _storeDayTotalList_EQ = Lists.newArrayList();
+			List<StoreDayTotal> _storeDayTotalList_EQ_TMP = Lists.newArrayList();
+			List<StoreDayTotal> _storeDayTotalList_Infancy = Lists.newArrayList();
+			List<StoreDayTotal> _storeDayTotalList_Infancy_TMP = Lists.newArrayList();
+
+			for (StoreDayTotal _storeDayTotal : _dbStoreDayTotalList) {
+				String _brand = getOrgBrand(orgList, _storeDayTotal.getOrgId());
+
+				if ("EQ+".equals(_brand)) {
+					if ("00001D".equals(_storeDayTotal.getOrgId())) {
+						_storeDayTotalList_EQ_TMP.add(_storeDayTotal);
+					} else {
+						_storeDayTotalList_EQ.add(_storeDayTotal);
+					}
+				}
+				if ("Infancy".equals(_brand)) {
+					if ("00008D".equals(_storeDayTotal.getOrgId()) || "00014D".equals(_storeDayTotal.getOrgId())) {
+						_storeDayTotalList_Infancy_TMP.add(_storeDayTotal);
+					} else {
+						_storeDayTotalList_Infancy.add(_storeDayTotal);
+					}
+				}
+			}
+
+			List<StoreDayTotal_Show> _list = Lists.newArrayList();
+			List<StoreDayTotal_Show> _list_tmp = formatStoreDayTotalInfo_list(_dbStoreDayTotalList);
+			_list.add(calTotal_StoreDayTotal(_list_tmp, "合计"));
+
+			List<StoreDayTotal_Show> _list_EQ = formatStoreDayTotalInfo_list(_storeDayTotalList_EQ);
+			_list.add(calTotal_StoreDayTotal(_list_EQ, "EQ+"));
+			_list.addAll(_list_EQ);
+
+			List<StoreDayTotal_Show> _list_EQ_tmp = formatStoreDayTotalInfo_list(_storeDayTotalList_EQ_TMP);
+			_list.add(calTotal_StoreDayTotal(_list_EQ_tmp, "EQ+试"));
+			_list.addAll(_list_EQ_tmp);
+
+			List<StoreDayTotal_Show> _list_In = formatStoreDayTotalInfo_list(_storeDayTotalList_Infancy);
+			_list.add(calTotal_StoreDayTotal(_list_In, "Infancy"));
+			_list.addAll(_list_In);
+
+			List<StoreDayTotal_Show> _list_In_tmp = formatStoreDayTotalInfo_list(_storeDayTotalList_Infancy_TMP);
+			_list.add(calTotal_StoreDayTotal(_list_In_tmp, "Infancy试"));
+			_list.addAll(_list_In_tmp);
+
 			model.addAttribute("storeDayTotalList", _list);
-			calTotal_StoreDayTotal(model, _list);
+
 		}
 
 		return "report/storeChartReport_dateList";
+	}
+
+	private String getOrgBrand(List<Organization> orgList, String orgId) {
+		for (Organization org : orgList) {
+			if (org.getId().equals(orgId)) {
+				return org.getBrand();
+			}
+		}
+		return null;
 	}
 
 	private List<StoreDayTotal_Show> formatStoreDayTotalInfo_list(List<StoreDayTotal> _dbStoreDayTotal) {
@@ -157,9 +209,12 @@ public class StoreChartReportController extends BaseController {
 		return _relist;
 	}
 
-	private void calTotal_StoreDayTotal(Model model, List<StoreDayTotal_Show> _list) {
+	private StoreDayTotal_Show calTotal_StoreDayTotal(List<StoreDayTotal_Show> _list, String orgName) {
 		StoreDayTotal_Show _total = new StoreDayTotal_Show();
+
 		_total.initAmt();
+		_total.setOrgName(orgName);
+
 		for (StoreDayTotal_Show storeDayTotal_Show : _list) {
 
 			// 库存数量
@@ -178,23 +233,20 @@ public class StoreChartReportController extends BaseController {
 
 			// 负库存数量
 			if (null != storeDayTotal_Show.getStockTotalQty_Minus()) {
-				_total.setStockTotalQty_Minus(_total.getStockTotalQty_Minus().add(
-						storeDayTotal_Show.getStockTotalQty_Minus()));
+				_total.setStockTotalQty_Minus(_total.getStockTotalQty_Minus().add(storeDayTotal_Show.getStockTotalQty_Minus()));
 			}
 			// 负库存金额
 			if (null != storeDayTotal_Show.getStockTotalAmt_Minus()) {
-				_total.setStockTotalAmt_Minus(_total.getStockTotalAmt_Minus().add(
-						storeDayTotal_Show.getStockTotalAmt_Minus()));
+				_total.setStockTotalAmt_Minus(_total.getStockTotalAmt_Minus().add(storeDayTotal_Show.getStockTotalAmt_Minus()));
 			}
 			// 负售价金额
 			if (null != storeDayTotal_Show.getItemSaleTotalAmt_Minus()) {
-				_total.setItemSaleTotalAmt_Minus(_total.getItemSaleTotalAmt_Minus().add(
-						storeDayTotal_Show.getItemSaleTotalAmt_Minus()));
+				_total.setItemSaleTotalAmt_Minus(_total.getItemSaleTotalAmt_Minus().add(storeDayTotal_Show.getItemSaleTotalAmt_Minus()));
 			}
 
 		}
+		return _total;
 
-		model.addAttribute("totalStore", _total);
 	}
 
 }
