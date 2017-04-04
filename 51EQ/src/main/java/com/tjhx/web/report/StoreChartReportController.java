@@ -94,26 +94,15 @@ public class StoreChartReportController extends BaseController {
 			List<StoreDayTotal> _dbStoreDayTotalList = storeChartReportManager.getStoreDayTotalList(maxOptDate);
 
 			List<StoreDayTotal> _storeDayTotalList_EQ = Lists.newArrayList();
-			List<StoreDayTotal> _storeDayTotalList_EQ_TMP = Lists.newArrayList();
 			List<StoreDayTotal> _storeDayTotalList_Infancy = Lists.newArrayList();
-			List<StoreDayTotal> _storeDayTotalList_Infancy_TMP = Lists.newArrayList();
 
 			for (StoreDayTotal _storeDayTotal : _dbStoreDayTotalList) {
 				String _brand = getOrgBrand(orgList, _storeDayTotal.getOrgId());
 
 				if ("EQ+".equals(_brand)) {
-					if ("00001D".equals(_storeDayTotal.getOrgId())) {
-						_storeDayTotalList_EQ_TMP.add(_storeDayTotal);
-					} else {
-						_storeDayTotalList_EQ.add(_storeDayTotal);
-					}
-				}
-				if ("Infancy".equals(_brand)) {
-					if ("00008D".equals(_storeDayTotal.getOrgId()) || "00014D".equals(_storeDayTotal.getOrgId())) {
-						_storeDayTotalList_Infancy_TMP.add(_storeDayTotal);
-					} else {
-						_storeDayTotalList_Infancy.add(_storeDayTotal);
-					}
+					_storeDayTotalList_EQ.add(_storeDayTotal);
+				} else if ("Infancy".equals(_brand)) {
+					_storeDayTotalList_Infancy.add(_storeDayTotal);
 				}
 			}
 
@@ -125,17 +114,9 @@ public class StoreChartReportController extends BaseController {
 			_list.add(calTotal_StoreDayTotal(_list_EQ, "EQ+"));
 			_list.addAll(_list_EQ);
 
-			List<StoreDayTotal_Show> _list_EQ_tmp = formatStoreDayTotalInfo_list(_storeDayTotalList_EQ_TMP);
-			_list.add(calTotal_StoreDayTotal(_list_EQ_tmp, "EQ+试"));
-			_list.addAll(_list_EQ_tmp);
-
 			List<StoreDayTotal_Show> _list_In = formatStoreDayTotalInfo_list(_storeDayTotalList_Infancy);
 			_list.add(calTotal_StoreDayTotal(_list_In, "Infancy"));
 			_list.addAll(_list_In);
-
-			List<StoreDayTotal_Show> _list_In_tmp = formatStoreDayTotalInfo_list(_storeDayTotalList_Infancy_TMP);
-			_list.add(calTotal_StoreDayTotal(_list_In_tmp, "Infancy试"));
-			_list.addAll(_list_In_tmp);
 
 			model.addAttribute("storeDayTotalList", _list);
 

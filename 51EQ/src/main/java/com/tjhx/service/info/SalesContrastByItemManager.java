@@ -99,8 +99,8 @@ public class SalesContrastByItemManager {
 	 * @param orderMode
 	 * @return
 	 */
-	public List<List<ItemSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start,
-			String optDate2End, String itemNoArray, String[] orgIds, String orderMode) {
+	public List<List<ItemSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start, String optDate2End,
+			String itemNoArray, String[] orgIds, String orderMode) {
 
 		List<ItemSalesContrastVo> voList = initBlankVoList(itemNoArray, Lists.newArrayList(orgIds));
 		copyList1Value(voList, optDate1Start, optDate1End, orgIds, itemNoArray);
@@ -126,8 +126,8 @@ public class SalesContrastByItemManager {
 	public String createItemSalesContrastFile(String optDate1Start, String optDate1End, String optDate2Start, String optDate2End,
 			String itemNoArray, String[] orgIds, String orderMode) throws ParsePropertyException, InvalidFormatException, IOException {
 
-		List<List<ItemSalesContrastVo>> list = search(optDate1Start, optDate1End, optDate2Start, optDate2End, itemNoArray,
-				orgIds, orderMode);
+		List<List<ItemSalesContrastVo>> list = search(optDate1Start, optDate1End, optDate2Start, optDate2End, itemNoArray, orgIds,
+				orderMode);
 		// ---------------------------文件生成---------------------------
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("optDate1Start", optDate1Start);
@@ -290,6 +290,15 @@ public class SalesContrastByItemManager {
 		return voList;
 	}
 
+	private String getOrgBrand(List<Organization> orgList, String orgId) {
+		for (Organization org : orgList) {
+			if (org.getId().equals(orgId)) {
+				return org.getBrand();
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * 校验是否有略过的机构空行
 	 * 
@@ -298,21 +307,39 @@ public class SalesContrastByItemManager {
 	 */
 	private List<List<ItemSalesContrastVo>> formatVoList(List<ItemSalesContrastVo> voList, String[] orgIds, String itemNoArray,
 			String orderMode) {
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
 
-		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
+		List<List<ItemSalesContrastVo>> _list_EQ = Lists.newArrayList();
+		List<List<ItemSalesContrastVo>> _list_Infancy = Lists.newArrayList();
+
 		List<ItemSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
-		for (ItemSalesContrastVo vo : voList) {
-			if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
-				tmpOrgId = vo.getOrgId();
-				_subList = Lists.newArrayList();
 
-				_list.add(_subList);
+		for (ItemSalesContrastVo vo : voList) {
+			String _brand = getOrgBrand(orgList, vo.getOrgId());
+
+			if ("EQ+".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_EQ.add(_subList);
+				}
+				_subList.add(vo);
+			} else if ("Infancy".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_Infancy.add(_subList);
+				}
+				_subList.add(vo);
 			}
-			_subList.add(vo);
+
 		}
 
-		for (List<ItemSalesContrastVo> _voList : _list) {
+		// 排序-EQ+
+		for (List<ItemSalesContrastVo> _voList : _list_EQ) {
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(_voList, new ItemSaleRamtComparator());
 			} else {// 排序方式-销售量
@@ -321,9 +348,43 @@ public class SalesContrastByItemManager {
 
 		}
 
+		// 计算合计-EQ+
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
+			List<ItemSalesContrastVo> voTotalList = calTotal(_list_EQ, itemNoArray, "EQ+");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
+			}
+			_list_EQ.add(0, voTotalList);
+		}
+
+		// 排序-Infancy
+		for (List<ItemSalesContrastVo> _voList : _list_Infancy) {
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(_voList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(_voList, new ItemSaleRqtyComparator());
+			}
+
+		}
+		// 计算合计-Infancy
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
+			List<ItemSalesContrastVo> voTotalList = calTotal(_list_Infancy, itemNoArray, "Infancy");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
+			}
+			_list_Infancy.add(0, voTotalList);
+		}
+
+		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
+		_list.addAll(_list_EQ);
+		_list.addAll(_list_Infancy);
 		// 计算合计
 		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
-			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray);
+			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray, "合计");
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(voTotalList, new ItemSaleRamtComparator());
 			} else {// 排序方式-销售量
@@ -340,7 +401,7 @@ public class SalesContrastByItemManager {
 	 * @param voList
 	 * @return
 	 */
-	private List<ItemSalesContrastVo> calTotal(List<List<ItemSalesContrastVo>> voList, String itemNoArray) {
+	private List<ItemSalesContrastVo> calTotal(List<List<ItemSalesContrastVo>> voList, String itemNoArray, String orgName) {
 		List<String> itemNoList = Lists.newArrayList(itemNoArray.split(","));
 
 		List<ItemSalesContrastVo> _list = Lists.newArrayList();
@@ -348,7 +409,7 @@ public class SalesContrastByItemManager {
 		for (String itemNo : itemNoList) {
 			ItemSalesContrastVo vo = new ItemSalesContrastVo();
 			// 机构名称
-			vo.setOrgName("合计");
+			vo.setOrgName(orgName);
 			// 类型编号
 			vo.setItemClsNo(itemNo);
 			_list.add(vo);
@@ -379,12 +440,12 @@ public class SalesContrastByItemManager {
 					value.setStockTotalQty1(value.getStockTotalQty1().add(vo.getStockTotalQty1()));
 					// 库存数量2
 					value.setStockTotalQty2(value.getStockTotalQty2().add(vo.getStockTotalQty2()));
-				
+
 					// 库存金额1
 					value.setStockTotalAmt1(value.getStockTotalAmt1().add(vo.getStockTotalAmt1()));
 					// 库存金额2
 					value.setStockTotalAmt2(value.getStockTotalAmt2().add(vo.getStockTotalAmt2()));
-				
+
 				}
 
 			}

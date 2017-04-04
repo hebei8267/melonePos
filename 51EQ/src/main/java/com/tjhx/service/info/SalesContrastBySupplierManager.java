@@ -44,7 +44,7 @@ public class SalesContrastBySupplierManager {
 	 * @param supplierArray
 	 * @return
 	 */
-	public List<SupplierSalesContrastVo> calTotal(List<List<SupplierSalesContrastVo>> voList, String supplierArray) {
+	public List<SupplierSalesContrastVo> calTotal(List<List<SupplierSalesContrastVo>> voList, String supplierArray, String orgName) {
 		List<String> supplierNoList = Lists.newArrayList(supplierArray.split(","));
 
 		List<SupplierSalesContrastVo> _list = Lists.newArrayList();
@@ -52,7 +52,7 @@ public class SalesContrastBySupplierManager {
 		for (String supplierNo : supplierNoList) {
 			SupplierSalesContrastVo vo = new SupplierSalesContrastVo();
 			// 机构名称
-			vo.setOrgName("合计");
+			vo.setOrgName(orgName);
 			// 类型编号
 			vo.setSupplierNo(supplierNo);
 			_list.add(vo);
@@ -127,8 +127,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orderMode
 	 * @return
 	 */
-	public List<List<SupplierSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start,
-			String optDate2End, String supplierArray, String[] orgIds, String orderMode) {
+	public List<List<SupplierSalesContrastVo>> search(String optDate1Start, String optDate1End, String optDate2Start, String optDate2End,
+			String supplierArray, String[] orgIds, String orderMode) {
 		List<SupplierSalesContrastVo> voList = initBlankVoList(supplierArray, Lists.newArrayList(orgIds));
 		copyList1Value(voList, optDate1Start, optDate1End, orgIds, supplierArray);
 		copyList2Value(voList, optDate2Start, optDate2End, orgIds, supplierArray);
@@ -137,38 +137,96 @@ public class SalesContrastBySupplierManager {
 		return formatVoList(voList, orgIds, supplierArray, orderMode);
 	}
 
+	private String getOrgBrand(List<Organization> orgList, String orgId) {
+		for (Organization org : orgList) {
+			if (org.getId().equals(orgId)) {
+				return org.getBrand();
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * @param voList
 	 * @return
 	 */
-	private List<List<SupplierSalesContrastVo>> formatVoList(List<SupplierSalesContrastVo> voList, String[] orgIds,
-			String supplierArray, String orderMode) {
+	private List<List<SupplierSalesContrastVo>> formatVoList(List<SupplierSalesContrastVo> voList, String[] orgIds, String supplierArray,
+			String orderMode) {
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
 
-		List<List<SupplierSalesContrastVo>> _list = Lists.newArrayList();
+		List<List<SupplierSalesContrastVo>> _list_EQ = Lists.newArrayList();
+		List<List<SupplierSalesContrastVo>> _list_Infancy = Lists.newArrayList();
+
 		List<SupplierSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
 		for (SupplierSalesContrastVo vo : voList) {
-			if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
-				tmpOrgId = vo.getOrgId();
-				_subList = Lists.newArrayList();
+			String _brand = getOrgBrand(orgList, vo.getOrgId());
 
-				_list.add(_subList);
+			if ("EQ+".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_EQ.add(_subList);
+				}
+				_subList.add(vo);
+			} else if ("Infancy".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_Infancy.add(_subList);
+				}
+				_subList.add(vo);
 			}
-			_subList.add(vo);
-		}
 
-		for (List<SupplierSalesContrastVo> _voList : _list) {
+		}
+		// 排序-EQ+
+		for (List<SupplierSalesContrastVo> _voList : _list_EQ) {
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(_voList, new SupSaleRamtComparator());
 			} else {// 排序方式-销售量
 				Collections.sort(_voList, new SupSaleRqtyComparator());
 			}
-
 		}
 
+		// 计算合计-EQ+
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
+			List<SupplierSalesContrastVo> voTotalList = calTotal(_list_EQ, supplierArray, "EQ+");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList, new SupSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList, new SupSaleRqtyComparator());
+			}
+			_list_EQ.add(0, voTotalList);
+		}
+
+		// 排序-Infancy
+		for (List<SupplierSalesContrastVo> _voList : _list_Infancy) {
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(_voList, new SupSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(_voList, new SupSaleRqtyComparator());
+			}
+		}
+
+		// 计算合计-EQ+
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
+			List<SupplierSalesContrastVo> voTotalList = calTotal(_list_Infancy, supplierArray, "Infancy");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList, new SupSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList, new SupSaleRqtyComparator());
+			}
+			_list_Infancy.add(0, voTotalList);
+		}
+
+		List<List<SupplierSalesContrastVo>> _list = Lists.newArrayList();
+		_list.addAll(_list_EQ);
+		_list.addAll(_list_Infancy);
 		// 计算合计
 		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
-			List<SupplierSalesContrastVo> voTotalList = calTotal(_list, supplierArray);
+			List<SupplierSalesContrastVo> voTotalList = calTotal(_list, supplierArray, "合计");
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(voTotalList, new SupSaleRamtComparator());
 			} else {// 排序方式-销售量
@@ -176,7 +234,6 @@ public class SalesContrastBySupplierManager {
 			}
 			_list.add(0, voTotalList);
 		}
-
 		return _list;
 	}
 
@@ -186,8 +243,7 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyStore2Value(List<SupplierSalesContrastVo> voList, String optDate2End, String[] orgIds,
-			String supplierArray) {
+	private void copyStore2Value(List<SupplierSalesContrastVo> voList, String optDate2End, String[] orgIds, String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate2End);
 		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
@@ -214,8 +270,7 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyStore1Value(List<SupplierSalesContrastVo> voList, String optDate1End, String[] orgIds,
-			String supplierArray) {
+	private void copyStore1Value(List<SupplierSalesContrastVo> voList, String optDate1End, String[] orgIds, String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateEnd", optDate1End);
 		param.put("orgId", StringUtils.join(formatOrgIdArray(orgIds), ","));
@@ -243,8 +298,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyList2Value(List<SupplierSalesContrastVo> voList, String optDate2Start, String optDate2End,
-			String[] orgIds, String supplierArray) {
+	private void copyList2Value(List<SupplierSalesContrastVo> voList, String optDate2Start, String optDate2End, String[] orgIds,
+			String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate2Start);
 		param.put("optDateEnd", optDate2End);
@@ -293,8 +348,8 @@ public class SalesContrastBySupplierManager {
 	 * @param orgId
 	 * @param supplierArray
 	 */
-	private void copyList1Value(List<SupplierSalesContrastVo> voList, String optDate1Start, String optDate1End,
-			String[] orgIds, String supplierArray) {
+	private void copyList1Value(List<SupplierSalesContrastVo> voList, String optDate1Start, String optDate1End, String[] orgIds,
+			String supplierArray) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("optDateStart", optDate1Start);
 		param.put("optDateEnd", optDate1End);
