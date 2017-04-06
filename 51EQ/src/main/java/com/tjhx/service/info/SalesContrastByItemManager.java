@@ -348,17 +348,6 @@ public class SalesContrastByItemManager {
 
 		}
 
-		// 计算合计-EQ+
-		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
-			List<ItemSalesContrastVo> voTotalList = calTotal(_list_EQ, itemNoArray, "EQ+");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
-			}
-			_list_EQ.add(0, voTotalList);
-		}
-
 		// 排序-Infancy
 		for (List<ItemSalesContrastVo> _voList : _list_Infancy) {
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
@@ -368,28 +357,39 @@ public class SalesContrastByItemManager {
 			}
 
 		}
-		// 计算合计-Infancy
-		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
-			List<ItemSalesContrastVo> voTotalList = calTotal(_list_Infancy, itemNoArray, "Infancy");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
-			}
-			_list_Infancy.add(0, voTotalList);
-		}
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
-		_list.addAll(_list_EQ);
-		_list.addAll(_list_Infancy);
-		// 计算合计
+
 		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
+			// 计算合计-EQ+
+			List<ItemSalesContrastVo> voTotalList_EQ = calTotal(_list_EQ, itemNoArray, "EQ+");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList_EQ, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList_EQ, new ItemSaleRqtyComparator());
+			}
+
+			// 计算合计-Infancy
+			List<ItemSalesContrastVo> voTotalList_In = calTotal(_list_Infancy, itemNoArray, "Infancy");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList_In, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList_In, new ItemSaleRqtyComparator());
+			}
+
+			_list.addAll(_list_EQ);
+			_list.addAll(_list_Infancy);
+
+			// 计算合计
 			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray, "合计");
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(voTotalList, new ItemSaleRamtComparator());
 			} else {// 排序方式-销售量
 				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
 			}
+
+			_list.add(0, voTotalList_EQ);
+			_list.add(0, voTotalList_In);
 			_list.add(0, voTotalList);
 		}
 		return _list;
