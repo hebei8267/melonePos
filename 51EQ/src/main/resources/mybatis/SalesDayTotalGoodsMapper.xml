@@ -590,4 +590,16 @@
 	FROM
 		t_store_detail_one_day
 	</select>
+	
+	<select id="getTotalSelectStockAmt" resultType="DECIMAL">
+	SELECT
+		SUM(stock_amt) AS stock_amt
+	FROM
+		t_store_detail_one_day
+	<where>
+		<if test="orgId != null ">
+		org_Id IN (${orgId})
+		</if>
+	</where>
+	</select>
 </mapper>

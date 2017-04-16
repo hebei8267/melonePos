@@ -27,7 +27,10 @@ public class GrossProfitAbcVo {
 	private BigDecimal totalAStockAmt = new BigDecimal("0");
 	private BigDecimal totalBStockAmt = new BigDecimal("0");
 	private BigDecimal totalCStockAmt = new BigDecimal("0");
+	/** 库存合计金额 */
 	private BigDecimal totalDStockAmt = new BigDecimal("0");
+	/** 选择机构库存合计金额 */
+	private BigDecimal totalDSelectStockAmt = new BigDecimal("0");
 
 	/**
 	 * 取得listA
@@ -351,6 +354,24 @@ public class GrossProfitAbcVo {
 	 */
 	public void setTotalDAmt(BigDecimal totalDAmt) {
 		this.totalDAmt = totalDAmt;
+	}
+
+	/**
+	 * 取得totalDSelectStockAmt
+	 * 
+	 * @return totalDSelectStockAmt
+	 */
+	public BigDecimal getTotalDSelectStockAmt() {
+		return totalDSelectStockAmt;
+	}
+
+	/**
+	 * 设置totalDSelectStockAmt
+	 * 
+	 * @param totalDSelectStockAmt totalDSelectStockAmt
+	 */
+	public void setTotalDSelectStockAmt(BigDecimal totalDSelectStockAmt) {
+		this.totalDSelectStockAmt = totalDSelectStockAmt;
 	}
 
 }

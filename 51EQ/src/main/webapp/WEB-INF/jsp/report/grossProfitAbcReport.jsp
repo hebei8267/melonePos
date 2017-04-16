@@ -600,8 +600,15 @@
 	                        <div class="caption">
 		                        分析表D（滞销商品）
 		                        <c:if test="${abcType == '1' || abcType == '2'}">
-		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt} / ${vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  库存金额 / 库存总金额</span>
+		                        	<c:if test="${empty orgId}"><!-- 选择全部机构 -->
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt} / ${vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  滞销库存金额 / 全机构库存总金额</span>
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt / vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">库存比(金额)</span>
+		                        	</c:if>
+		                        	
+		                        	<c:if test="${!empty orgId}"><!-- 选择非全部机构 -->
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt} / ${vo.totalDSelectStockAmt} / ${vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">(元)  滞销库存金额 / 选择机构总库存金额 / 全机构库存总金额</span>
+		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font1">${vo.totalDAmt / vo.totalDSelectStockAmt}</span> / <span class="font1">${vo.totalDAmt / vo.totalDStockAmt}</span>&nbsp;&nbsp;<span class="font2">库存比(金额)</span>
+		                        	</c:if>
 		                        	<div style="margin-top: 10px">
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

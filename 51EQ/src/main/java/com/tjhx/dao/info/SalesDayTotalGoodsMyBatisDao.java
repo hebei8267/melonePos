@@ -89,4 +89,7 @@ public interface SalesDayTotalGoodsMyBatisDao {
 
 	/** 库存合计金额 */
 	public BigDecimal getTotalStockAmt();
+
+	/** 选择机构库存合计金额 */
+	public BigDecimal getTotalSelectStockAmt(Map<String, String> param);
 }
