@@ -61,9 +61,9 @@ public class MShopFtpManager {
 
 			for (MShopDailySale saleData : _saleDataList) {
 				// 店铺ID
-				fw.write(saleData.getOrgId() + ",");
+				fw.write("L2036" + ",");
 				// POS机编号
-				fw.write(saleData.getPosNo() + ",");
+				fw.write("8888" + ",");
 				// 销售单号
 				fw.write(saleData.getFlowNo() + ",");
 				// 货品明细ID
@@ -81,11 +81,11 @@ public class MShopFtpManager {
 				// 备注-默认为空
 				fw.write(",");
 				fw.write("\r\n");
-
-				fw.flush();
-
-				fw.close();
 			}
+
+			fw.flush();
+
+			fw.close();
 		} catch (IOException e) {
 			// e.printStackTrace();
 		}
@@ -118,10 +118,11 @@ public class MShopFtpManager {
 				fw.write(",");
 				fw.write("\r\n");
 
-				fw.flush();
-
-				fw.close();
 			}
+
+			fw.flush();
+
+			fw.close();
 		} catch (IOException e) {
 			// e.printStackTrace();
 		}
@@ -192,7 +193,7 @@ public class MShopFtpManager {
 				// 优惠金额
 				fw.write("0.0" + ",");
 				// 原交易流水号
-				fw.write( ",");
+				fw.write(",");
 				// 交易明细行数
 				fw.write(saleData.getRowNum() + ",");
 				// 付款明细行数-如此单只有现金付款则为1种付款方式，录入1，如此单有刷卡和现金2种付款方式，录入2，以此类推
@@ -203,10 +204,11 @@ public class MShopFtpManager {
 				fw.write(",");
 				fw.write("\r\n");
 
-				fw.flush();
-
-				fw.close();
 			}
+
+			fw.flush();
+
+			fw.close();
 		} catch (IOException e) {
 			// e.printStackTrace();
 		}
