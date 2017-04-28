@@ -11,7 +11,7 @@
 		<!-- 商品销售金额 -->
 		<result column="sale_price" property="salePrice" jdbcType="NUMERIC"/>
 		<!-- 商品销售数量 -->
-		<result column="sale_qnty" property="rsaleQnty" jdbcType="NUMERIC"/>
+		<result column="sale_qnty" property="saleQnty" jdbcType="NUMERIC"/>
 		<!-- 日期 -->
 		<result column="oper_date" property="operDate" jdbcType="VARCHAR"/>
 		<!-- 商品条码 -->
