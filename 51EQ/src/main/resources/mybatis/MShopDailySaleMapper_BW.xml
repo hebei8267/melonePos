@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.tjhx.daobw.MShopDailySaleMyBatisDao">
+	<!-- mybatis表结构与对象的映射关系 -->
+	<resultMap id="Result_Map_MShop_DailySale" type="com.tjhx.entity.bw.MShopDailySale">
+		<!-- 销售单号 -->
+		<result column="flow_no" property="flowNo" jdbcType="VARCHAR"/>
+		<!-- 机构编号 -->
+		<result column="branch_no" property="branchNo" jdbcType="VARCHAR"/>
+		<!-- 商品销售金额 -->
+		<result column="sale_price" property="salePrice" jdbcType="NUMERIC"/>
+		<!-- 商品销售数量 -->
+		<result column="sale_qnty" property="rsaleQnty" jdbcType="NUMERIC"/>
+		<!-- 日期 -->
+		<result column="oper_date" property="operDate" jdbcType="VARCHAR"/>
+		<!-- 商品条码 -->
+		<result column="item_barcode" property="itemBarcode" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<!-- 取得指定门店日销售流水信息 -->
+	<select id="getDailySaleList" parameterType="map" resultMap="Result_Map_MShop_DailySale">
+	<![CDATA[
+		SELECT
+		    a.flow_no,
+		    a.branch_no,
+		    CASE a.sell_way
+		        WHEN 'C'
+		        THEN 0
+		        ELSE 1
+		    END * a.sale_price AS sale_price,
+		    CASE a.sell_way
+		        WHEN 'B'
+		        THEN -1
+		        ELSE 1
+		    END * a.sale_qnty AS sale_qnty,
+		    a.oper_date,
+		    a.special_type,
+		    b.item_barcode
+		FROM
+		    pos_t_saleflow a
+		LEFT JOIN
+		    ic_t_branch_stock_target c
+		ON
+		    a.branch_no = c.branch_no
+		AND a.item_no = c.item_no,
+		    view_item_info b
+		WHERE
+		    (
+		        a.item_no = b.item_no )
+		AND (
+		        a.oper_date >= #{beginDate})
+		AND (
+		        a.oper_date < #{endDate})
+		AND (
+		        a.branch_no IN (#{bwBranchNo}, '*'))
+		AND special_type = 'O'
+		ORDER BY
+		    flow_no
+	]]>
+	</select>
+</mapper>
