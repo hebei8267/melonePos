@@ -2,7 +2,6 @@ package com.tjhx.service.accounts;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			// TODO
-			fw = new FileWriter("d:/DETAIL2222222.txt");
+			fw = new FileWriter("d:/L2036_" + fileName + "_DETAIL.txt");
 
 			for (MShopDailySale saleData : _saleDataList) {
 				// 店铺ID
@@ -99,7 +98,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			// TODO
-			fw = new FileWriter("d:/PAY2222222.txt");
+			fw = new FileWriter("d:/L2036_" + fileName + "_PAY.txt");
 
 			for (MShopDailySale saleData : fileList) {
 				// 店铺ID
@@ -175,7 +174,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			// TODO
-			fw = new FileWriter("d:/MAIN2222222.txt");
+			fw = new FileWriter("d:/L2036_" + fileName + "_MAIN.txt");
 
 			for (MShopDailySale saleData : fileList) {
 				// 店铺ID
