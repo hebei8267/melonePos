@@ -32,11 +32,10 @@ public class MShopFtpManager {
 	private MShopDailySaleMyBatisDao mShopDailySaleMyBatisDao;
 	// M+商场提供的参数
 	private final String ORG_ID = "WHTS2FL2036";
-	private final String POS_ID = "0000";
+	private final String POS_ID = "9013";
 	private final String GOOD_ID = "100178";
 	// M+商场内部编号
 	private final String EQ_ORG_ID = "1301";
-	private FTPClient ftp;
 
 	/**
 	 * M+商场销售数据同步FTP
@@ -59,7 +58,7 @@ public class MShopFtpManager {
 		createMainFile(dateTime, _saleDataList);
 		createDetailFile(dateTime, _saleDataList);
 
-		_synFtpFile(dateTime);
+		// _synFtpFile(dateTime);
 	}
 
 	/**
@@ -76,8 +75,7 @@ public class MShopFtpManager {
 			FileInputStream in = new FileInputStream(new File(sysConfig.getReportTmpPath() + "/" + mainFileName));
 			boolean flag = uploadFile("121.15.128.18", 21, "WHTS2FL2036", "m7Mre187", "test.txt", in);
 			System.out.println("MainFileName Upload File Result : " + flag);
-			
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -223,10 +221,12 @@ public class MShopFtpManager {
 
 		List<MShopDailySale> fileList = Lists.newArrayList();
 		for (MShopDailySale saleData : saleDataList) {
-			if (null == tmpFlowNo || !tmpFlowNo.equals(saleData.getBranchNo())) {
-				tmpFlowNo = saleData.getBranchNo();
+			if (null == tmpFlowNo || !tmpFlowNo.equals(saleData.getFlowNo())) {
+				tmpFlowNo = saleData.getFlowNo();
 				tmpMShopDailySale = new MShopDailySale();
 				tmpRowNum = 0;
+
+				fileList.add(tmpMShopDailySale);
 			}
 
 			// 店铺ID
@@ -238,17 +238,17 @@ public class MShopFtpManager {
 			// 交易类型 -1销售2红冲销售3退货4红冲退货
 			tmpMShopDailySale.setOperType("1");
 			// 日期
-			tmpMShopDailySale.setOperDate(saleData.getOperDate());
+			tmpMShopDailySale.setOperDate(DateUtils.transDateFormat(saleData.getOperDate(), "yyyy-MM-dd HH:mm:ss.SSS",
+					"yyyy-MM-dd HH:mm:ss"));
 			// 商品销售金额
 			tmpMShopDailySale.setSalePrice(tmpMShopDailySale.getSalePrice().add(saleData.getSalePrice()));
 			// 交易明细行数
 			tmpMShopDailySale.setRowNum(++tmpRowNum);
 
-			fileList.add(tmpMShopDailySale);
-
-			_writeMainFile(dateTime, fileList);
-			_writePayFile(dateTime, fileList);
 		}
+
+		_writeMainFile(dateTime, fileList);
+		_writePayFile(dateTime, fileList);
 	}
 
 	/**
