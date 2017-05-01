@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tjhx.service.accounts.MShopFtpManager;
 import com.tjhx.service.info.GoodsManager;
 import com.tjhx.service.info.SalesDayTotalGoodsManager;
 import com.tjhx.service.info.SalesDayTotalItemManager;
@@ -46,6 +47,8 @@ public class SaleInfoJob implements IJob {
 	private SalesOrdersDayTotalManager salesOrdersDayTotalManager;
 	@Resource
 	private SalesWeekTotalGoodsManager2 salesWeekTotalGoodsManager2;
+	@Autowired
+	private MShopFtpManager mShopFtpManager;
 
 	/*
 	 * (non-Javadoc)
@@ -137,6 +140,13 @@ public class SaleInfoJob implements IJob {
 		logger.info("根据销售信息计算补货信息 Begin");
 		salesWeekTotalGoodsManager2.saveWeekSalesTotalGoodsInfo();
 		logger.info("根据销售信息计算补货信息 Begin");
+
+		// =================================================================
+		// M+商场销售数据同步FTP File
+		// =================================================================
+		logger.info("M+商场销售数据同步FTP Begin");
+		mShopFtpManager.synFtpFile();
+		logger.info("M+商场销售数据同步FTP End");
 	}
 
 }

@@ -25,7 +25,7 @@
 		<property name="quartzProperties">
 			<props>
 				<!-- thread数量，不会动态增长(所有的JOB) -->
-				<prop key="org.quartz.threadPool.threadCount">3</prop>
+				<prop key="org.quartz.threadPool.threadCount">6</prop>
 			</props>
 		</property>
 		<!-- 启动时延期3秒开始任务 -->
@@ -180,8 +180,8 @@
 	<!-- Cron式Trigger定义 -->
 	<bean id="saleInfoJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="saleInfoJobDetail" />
-		<!-- 每天上午 8:45 触发 -->
-		<property name="cronExpression" value="0 0 5 * * ?" />
+		<!-- 每天上午 8:50 触发 -->
+		<property name="cronExpression" value="0 50 8 * * ?" />
 	</bean>
 
 	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
