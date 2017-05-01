@@ -138,7 +138,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + fileName + "_DETAIL.txt");
+			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + fileName + "_DETAIL.txt");
 
 			for (MShopDailySale saleData : _saleDataList) {
 				// 店铺ID
@@ -180,7 +180,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + dateTime + "_PAY.txt");
+			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_PAY.txt");
 
 			for (MShopDailySale saleData : fileList) {
 				// 店铺ID
@@ -258,7 +258,7 @@ public class MShopFtpManager {
 		FileWriter fw;
 		try {
 			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + dateTime + "_MAIN.txt");
+			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_MAIN.txt");
 
 			for (MShopDailySale saleData : fileList) {
 				// 店铺ID
