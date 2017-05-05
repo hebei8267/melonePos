@@ -67,11 +67,9 @@ public class MShopFtpManager {
 	 */
 	private void _synFtpFile(String dateTime) {
 
-		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-
-		String mainFileName = sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_MAIN.txt";
-		String detailFileName = sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_DETAIL.txt";
-		String payFileName = sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_PAY.txt";
+		String mainFileName = ORG_ID + "_" + dateTime + "_MAIN.txt";
+		String detailFileName = ORG_ID + "_" + dateTime + "_DETAIL.txt";
+		String payFileName = ORG_ID + "_" + dateTime + "_PAY.txt";
 
 		_synFtpFile(mainFileName, detailFileName, payFileName);
 
