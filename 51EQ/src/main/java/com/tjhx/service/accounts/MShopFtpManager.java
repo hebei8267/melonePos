@@ -2,18 +2,19 @@ package com.tjhx.service.accounts;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
@@ -58,74 +59,68 @@ public class MShopFtpManager {
 		createMainFile(dateTime, _saleDataList);
 		createDetailFile(dateTime, _saleDataList);
 
-		// _synFtpFile(dateTime);
+		_synFtpFile(dateTime);
 	}
 
 	/**
 	 * 同步FTP文件
 	 */
 	private void _synFtpFile(String dateTime) {
-		// TODO Auto-generated method stub
-		try {
-			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			String mainFileName = ORG_ID + "_" + dateTime + "_MAIN.txt";
-			String detailFileName = ORG_ID + "_" + dateTime + "_DETAIL.txt";
-			String payFileName = ORG_ID + "_" + dateTime + "_PAY.txt";
 
-			FileInputStream in = new FileInputStream(new File(sysConfig.getReportTmpPath() + "/" + mainFileName));
-			boolean flag = uploadFile("121.15.128.18", 21, "WHTS2FL2036", "m7Mre187", "test.txt", in);
-			System.out.println("MainFileName Upload File Result : " + flag);
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		String mainFileName = sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + dateTime + "_MAIN.txt";
+		String detailFileName = sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + dateTime + "_DETAIL.txt";
+		String payFileName = sysConfig.getReportTmpPath() + "/" + ORG_ID + "_" + dateTime + "_PAY.txt";
+
+		_synFtpFile(mainFileName, detailFileName, payFileName);
+
 	}
 
-	/**
-	 * Description: 向FTP服务器上传文件
-	 * 
-	 * @param url FTP服务器hostname
-	 * @param port FTP服务器端口
-	 * @param username FTP登录账号
-	 * @param password FTP登录密码
-	 * @param path FTP服务器保存目录
-	 * @param filename 上传到FTP服务器上的文件名
-	 * @param input 输入流
-	 * @return 成功返回true，否则返回false
-	 */
-	private boolean uploadFile(String url, int port, String username, String password, String filename, InputStream input) {
-		boolean success = false;
-		FTPClient ftp = new FTPClient();
+	private void _synFtpFile(String mainFileName, String detailFileName, String payFileName) {
+		FTPSClient ftpClient = new FTPSClient();
 		try {
-			int reply;
-			ftp.connect(url, port);// 连接FTP服务器
-			// 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
-			ftp.login(username, password);// 登录
-			reply = ftp.getReplyCode();
+			ftpClient.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+			// ftpClient.setAuthValue("SSL");
+			ftpClient.connect("121.15.128.18");
+			ftpClient.login("WHTS2FL2036", "m7Mre187");
+			ftpClient.setDefaultPort(21);
+
+			int reply = ftpClient.getReplyCode();
+
 			if (!FTPReply.isPositiveCompletion(reply)) {
-				ftp.disconnect();
-				return success;
+				ftpClient.disconnect();
+				System.err.println("FTP server refused connection.");
+				System.exit(1);
 			}
+			ftpClient.enterLocalPassiveMode();
 
-			// Enter local passive mode
-			ftp.enterLocalPassiveMode();
+			// 设置上传目录
+			ftpClient.changeWorkingDirectory("/");
+			// 设置文件类型（二进制）
+			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 
-			ftp.storeFile(filename, input);
+			boolean res_mainFileName = ftpClient.storeFile("test", new FileInputStream(new File(mainFileName)));
+			System.out.println("mainFileName" + res_mainFileName);
 
-			input.close();
-			ftp.logout();
-			success = true;
+			boolean res_detailFileName = ftpClient.storeFile("test", new FileInputStream(new File(detailFileName)));
+			System.out.println("detailFileName" + res_detailFileName);
+
+			boolean res_payFileName = ftpClient.storeFile("test", new FileInputStream(new File(payFileName)));
+			System.out.println("payFileName" + res_payFileName);
+
+			ftpClient.logout();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (ftp.isConnected()) {
+			if (ftpClient.isConnected()) {
 				try {
-					ftp.disconnect();
+					ftpClient.disconnect();
 				} catch (IOException ioe) {
+					// do nothing
 				}
 			}
 		}
-		return success;
 	}
 
 	/**
