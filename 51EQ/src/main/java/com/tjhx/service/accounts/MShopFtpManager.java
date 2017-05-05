@@ -78,6 +78,12 @@ public class MShopFtpManager {
 	}
 
 	private void _synFtpFile(String mainFileName, String detailFileName, String payFileName) {
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		String _mainFileName = sysConfig.getReportTmpPath() + "/M+/" + mainFileName;
+		String _detailFileName = sysConfig.getReportTmpPath() + "/M+/" + detailFileName;
+		String _payFileName = sysConfig.getReportTmpPath() + "/M+/" + payFileName;
+
 		FTPSClient ftpClient = new FTPSClient();
 		try {
 			ftpClient.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
@@ -100,13 +106,13 @@ public class MShopFtpManager {
 			// 设置文件类型（二进制）
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 
-			boolean res_mainFileName = ftpClient.storeFile("test", new FileInputStream(new File(mainFileName)));
+			boolean res_mainFileName = ftpClient.storeFile(mainFileName, new FileInputStream(new File(_mainFileName)));
 			System.out.println("mainFileName" + res_mainFileName);
 
-			boolean res_detailFileName = ftpClient.storeFile("test", new FileInputStream(new File(detailFileName)));
+			boolean res_detailFileName = ftpClient.storeFile(detailFileName, new FileInputStream(new File(_detailFileName)));
 			System.out.println("detailFileName" + res_detailFileName);
 
-			boolean res_payFileName = ftpClient.storeFile("test", new FileInputStream(new File(payFileName)));
+			boolean res_payFileName = ftpClient.storeFile(payFileName, new FileInputStream(new File(_payFileName)));
 			System.out.println("payFileName" + res_payFileName);
 
 			ftpClient.logout();
