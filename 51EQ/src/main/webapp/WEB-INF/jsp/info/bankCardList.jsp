@@ -2,6 +2,7 @@
 <%@	taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@	taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@	taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@	page import="com.tjhx.common.utils.DateUtils"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"	/>
 <c:set var="sc_ctx">
@@ -108,6 +109,9 @@
                                         银行帐号
                                     </th>
                                     <th>
+                                        开户人名称
+                                    </th>
+                                    <th>
                                         适用机构
                                     </th>
                                     <th	width="55">
@@ -132,7 +136,15 @@
                                             ${bankCard.bankCardNo}
                                         </td>
                                         <td>
-                                            ${bankCard.orgId}
+                                            ${bankCard.accountName}
+                                        </td>
+                                        <td>
+                                        	<c:if test="${fn:length(bankCard.orgId) > 4}">
+				             					${fn:substring(bankCard.orgId,3,6)}
+				             				</c:if>
+				             				<c:if test="${fn:length(bankCard.orgId) < 4}">
+				             					总部
+				             				</c:if>
                                         </td>
                                         <td>
                                             <a href="${sc_ctx}/bankCard/edit/${bankCard.uuid}" class="btn btn-warning"/>修改</a>

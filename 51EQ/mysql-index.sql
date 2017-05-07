@@ -29,3 +29,6 @@ ALTER TABLE t_cash_daily ADD (bw_wx_sale_amt DECIMAL(19,2));
 UPDATE t_cash_run SET wx_sale_amt = 0;
 UPDATE t_cash_daily SET wx_sale_amt = 0;
 UPDATE t_cash_daily SET bw_wx_sale_amt = 0;
+
+
+ALTER TABLE kafei_new.t_bank_card ADD (account_name VARCHAR(32))

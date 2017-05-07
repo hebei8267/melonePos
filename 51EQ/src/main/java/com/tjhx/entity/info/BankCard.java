@@ -8,8 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NaturalId;
-
 import com.tjhx.entity.IdEntity;
 
 /**
@@ -29,6 +27,8 @@ public class BankCard extends IdEntity {
 	private Bank bank;
 	/** 银行编号 */
 	private String bankId;
+	/** 开户人名称 */
+	private String accountName;
 
 	/**
 	 * 取得机构编号
@@ -54,7 +54,7 @@ public class BankCard extends IdEntity {
 	 * 
 	 * @return bankCardNo 银行卡号码
 	 */
-	//@NaturalId
+	// @NaturalId
 	@Column(nullable = false, length = 32)
 	public String getBankCardNo() {
 		return bankCardNo;
@@ -109,5 +109,24 @@ public class BankCard extends IdEntity {
 	 */
 	public void setBankId(String bankId) {
 		this.bankId = bankId;
+	}
+
+	/**
+	 * 取得accountName
+	 * 
+	 * @return accountName
+	 */
+	@Column(length = 32)
+	public String getAccountName() {
+		return accountName;
+	}
+
+	/**
+	 * 设置accountName
+	 * 
+	 * @param accountName accountName
+	 */
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 }
