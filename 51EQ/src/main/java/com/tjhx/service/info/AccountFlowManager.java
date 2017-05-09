@@ -103,7 +103,7 @@ public class AccountFlowManager {
 	 * 计算会计余额
 	 */
 	@Transactional(readOnly = false)
-	private void calBalanceAmt() {
+	public void calBalanceAmt() {
 
 		List<AccountFlow> _list = accountFlowJpaDao.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "optDate"), new Sort.Order(
 				Sort.Direction.ASC, "uuid")));
