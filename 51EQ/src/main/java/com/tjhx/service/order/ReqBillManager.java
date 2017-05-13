@@ -42,6 +42,7 @@ import com.tjhx.dao.order.ReqBillMyBatisDao;
 import com.tjhx.entity.order.ReqBill;
 import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.SysConfig;
+import com.tjhx.service.struct.OrganizationManager;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,6 +52,8 @@ public class ReqBillManager {
 	private ReqBillJpaDao reqBillJpaDao;
 	@Resource
 	private ReqBillMyBatisDao reqBillMyBatisDao;
+	@Resource
+	private OrganizationManager orgManager;
 
 	private final static String XML_CONFIG_READ_REQ_BILL = "/excel/Req_Bill_Org_Read_CFG.xml";
 	private final static String XML_CONFIG_WRITE_REQ_BILL = "/excel/Req_Bill_Supplier_Template.xlsx";
@@ -328,11 +331,34 @@ public class ReqBillManager {
 		List<ReqBill> _dataList = reqBillMyBatisDao.getReqBillListByBarcode(param);
 
 		for (ReqBill _data : _dataList) {
+			int eqAppNum = 0;
+			int inAppNum = 0;
 			for (ReqBill reqBill : orgReqBillList) {
 				if (_data.getOrgId().equals(reqBill.getOrgId())) {
 					reqBill.setAppNum(_data.getAppNum());
+
+					// 按门店品牌计算
+					Organization org = orgManager.getOrganizationByOrgIdInCache(reqBill.getOrgId());
+					if (null == org) {
+						continue;
+					}
+					if (org.getBrand().equals("EQ+")) {
+						eqAppNum += _data.getAppNum();
+					} else {
+						inAppNum += _data.getAppNum();
+					}
+				}
+			}
+
+			// 设置-按门店品牌计算-结果
+			for (ReqBill reqBill : orgReqBillList) {
+				if ("EQ+".equals(reqBill.getOrgId())) {
+					reqBill.setAppNum(eqAppNum);
+				} else if ("Infancy".equals(reqBill.getOrgId())) {
+					reqBill.setAppNum(inAppNum);
 				}
 			}
 		}
+
 	}
 }
