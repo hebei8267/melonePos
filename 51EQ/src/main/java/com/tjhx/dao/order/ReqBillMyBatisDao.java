@@ -1,6 +1,7 @@
 package com.tjhx.dao.order;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.order.ReqBill;
@@ -35,7 +36,7 @@ public interface ReqBillMyBatisDao {
 	 * @param reqBill
 	 * @return
 	 */
-	public List<ReqBill> getReqBillSumList(ReqBill reqBill);
+	public List<ReqBill> getReqBillSumList(Map<String, String> param);
 
 	/**
 	 * 根据参数(批次号、供应商名称)取得门店信息
@@ -44,4 +45,13 @@ public interface ReqBillMyBatisDao {
 	 * @return
 	 */
 	public List<ReqBill> getOrgListBySupplier(ReqBill reqBill);
+
+	/**
+	 * 根据参数(批次号、商品条码)取得门店要货单明细
+	 * 
+	 * @param batchId
+	 * @param barcode
+	 * @return
+	 */
+	public List<ReqBill> getReqBillListByBarcode(Map<String, String> param);
 }

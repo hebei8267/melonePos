@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,12 +18,16 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
 import org.springside.modules.utils.SpringContextHolder;
 import org.xml.sax.SAXException;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.order.ReqBillMyBatisDao;
 import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.order.ReqBill;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.SysConfig;
 import com.tjhx.service.order.ReqBillManager;
+import com.tjhx.service.struct.OrganizationManager;
 
 /**
  * 要货单
@@ -32,190 +37,58 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 	private ReqBillManager reqBillManager;
 	@Resource
 	private ReqBillMyBatisDao reqBillMyBatisDao;
+	@Resource
+	private OrganizationManager orgManager;
+	// ##############################################
+	private static String BATCH_ID = "20131228";
+	private static String INPUT_FILE_PATH = "/Users/tao_tao/Downloads/门店要货单-输入/";
 
 	// ##############################################
-	// ??????????????????????????????????????????????
-	private static String batchId = "20131228";
 
 	@Test
 	@Rollback(false)
-	public void test00() throws InvalidFormatException, IOException, SAXException {
-		// 处理编号
-		reqBillManager.cleanBatchInfo(batchId);
+	public void run() throws InvalidFormatException, IOException, SAXException {
+		// 清理既有数据-根据批次号
+		reqBillManager.cleanBatchInfo(BATCH_ID);
+
+		List<Organization> orgList = orgManager.getOpenSubOrganization();
+
+		saveReqBillFileData(orgList);
+
+		// 统计单个供应商本次供应多少个门店
+		supplier2OrgGoodListFile(orgList);
+
+		// 单个生产供应商商品汇总文件
+		supplierSumGoodListFile();
+		// 单个生产供应商商品汇总文件(合计)
+		supplierSumGoodListFile2(orgList);
 	}
 
-	@Test
-	@Rollback(false)
-	public void test01() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\01D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件????????????????");
+	/**
+	 * 将文件数据保存至数据库
+	 * 
+	 * @param orgList
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
+	private void saveReqBillFileData(List<Organization> orgList) throws InvalidFormatException, IOException, SAXException {
+		for (Organization org : orgList) {
+			List<ReqBill> reqBillList = reqBillManager.readReqBillFile(INPUT_FILE_PATH + org.getName() + ".xls");
+			if (null == reqBillList || reqBillList.size() == 0) {
+				System.out.println("############无效文件");
+				continue;
+			}
+			reqBillManager.saveReqBillFile(BATCH_ID, org.getId(), reqBillList);
 		}
-		reqBillManager.saveReqBillFile(batchId, "00001D", reqBillList);
 	}
 
-	@Test
-	@Rollback(false)
-	public void test02() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\02D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00002D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test03() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\03D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00003D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test04() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\04D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00004D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test05() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\05D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00005D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test06() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\06D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00006D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test07() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\07D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00007D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test08() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\08D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00008D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test09() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\09D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00009D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test10() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\10D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00010D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test11() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\11D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00011D", reqBillList);
-	}
-
-	// @Test
-	// @Rollback(false)
-	// public void test12() throws InvalidFormatException, IOException,
-	// SAXException {
-	//
-	// List<ReqBill> reqBillList =
-	// reqBillManager.readReqBillFile("D:\\门店要货单-输入\\12D.xls");
-	// if (null == reqBillList || reqBillList.size() == 0) {
-	// System.out.println("############无效文件");
-	// }
-	// reqBillManager.saveReqBillFile(batchId, "00012D", reqBillList);
-	// }
-
-	@Test
-	@Rollback(false)
-	public void test13() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\13D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00013D", reqBillList);
-	}
-
-	@Test
-	@Rollback(false)
-	public void test15() throws InvalidFormatException, IOException, SAXException {
-
-		List<ReqBill> reqBillList = reqBillManager.readReqBillFile("D:\\门店要货单-输入\\15D.xls");
-		if (null == reqBillList || reqBillList.size() == 0) {
-			System.out.println("############无效文件");
-		}
-		reqBillManager.saveReqBillFile(batchId, "00015D", reqBillList);
-	}
-
-	private List<String> getOrgIdList(List<ReqBill> list) {
+	private List<String> _getOrgIdList(List<ReqBill> list, List<Organization> orgList) {
 		List<String> defOrgIdArr = new ArrayList<String>();
-		defOrgIdArr.add("00001D");
-		defOrgIdArr.add("00002D");
-		defOrgIdArr.add("00003D");
-		defOrgIdArr.add("00004D");
-		defOrgIdArr.add("00005D");
-		defOrgIdArr.add("00006D");
-		defOrgIdArr.add("00007D");
-		defOrgIdArr.add("00008D");
-		defOrgIdArr.add("00009D");
-		defOrgIdArr.add("00010D");
-		defOrgIdArr.add("00011D");
-		defOrgIdArr.add("00012D");
-		defOrgIdArr.add("00013D");
-		defOrgIdArr.add("00015D");
+
+		for (Organization org : orgList) {
+			defOrgIdArr.add(org.getId());
+		}
 
 		List<String> orgIdArr = new ArrayList<String>();
 		for (ReqBill reqBill : list) {
@@ -234,17 +107,23 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 		return _orgList;
 	}
 
-	@Test
-	public void output1() throws ParsePropertyException, InvalidFormatException, IOException {
+	/**
+	 * 统计单个供应商本次供应多少个门店
+	 * 
+	 * @throws ParsePropertyException
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	private void supplier2OrgGoodListFile(List<Organization> orgList) throws ParsePropertyException, InvalidFormatException, IOException {
 
 		int _index = 0;
-		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(batchId);
+		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(BATCH_ID);
 
 		List<ReqBill> _list = new ArrayList<ReqBill>();
 		for (Supplier supplier : supList) {
 
 			ReqBill reqBill = new ReqBill();
-			reqBill.setBatchId(batchId);
+			reqBill.setBatchId(BATCH_ID);
 			reqBill.setSupplierName(supplier.getName());
 
 			List<ReqBill> list = reqBillMyBatisDao.getOrgListBySupplier(reqBill);
@@ -253,34 +132,40 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 			ReqBill _reqBill = new ReqBill(); // 最终统计单个供应商本次供应多少个门店
 			_reqBill.setIndex(_index);
 			_reqBill.setSupplierName(supplier.getName());
-			_reqBill.setOrgIdList(getOrgIdList(list));
+			_reqBill.setOrgIdList(_getOrgIdList(list, orgList));
 			_list.add(_reqBill);
 
-			reqBillManager.writeReqBillFileToHeadOffice(batchId, supplier.getName(), _list);
+			reqBillManager.writeReqBillFileToHeadOffice(BATCH_ID, supplier.getName(), _list);
 		}
 	}
 
-	// 生产供应商文件
-	@Test
-	public void output2() throws InvalidFormatException, IOException, SAXException {
+	/**
+	 * 单个生产供应商商品汇总文件
+	 * 
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
+	private void supplierSumGoodListFile() throws InvalidFormatException, IOException, SAXException {
 		int _index = 0;
-		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(batchId);
+		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(BATCH_ID);
+
 		for (Supplier supplier : supList) {
 
 			System.out.println(supplier.getName());
 
 			ReqBill reqBill = new ReqBill();
-			reqBill.setBatchId(batchId);
+			reqBill.setBatchId(BATCH_ID);
 			reqBill.setSupplierName(supplier.getName());
 			reqBill.setOptDate(DateUtils.getNextDateFormatDate(-1, "yyyyMMdd"));
-			List<ReqBill> list = reqBillMyBatisDao.getReqBillList(reqBill);
+			List<ReqBill> dataList = reqBillMyBatisDao.getReqBillList(reqBill);
 			// 计算建议采购数量
-			calPurchase(list);
+			calPurchase(dataList);
 
-			list = addBlankRow(list);
-			reqBillManager.writeReqBillFileToSupplier(batchId, supplier.getName(), list);
+			dataList = addBlankRow(dataList);
+			reqBillManager.writeReqBillFileToSupplier(BATCH_ID, supplier.getName(), dataList);
 
-			for (ReqBill reqBill2 : list) {
+			for (ReqBill reqBill2 : dataList) {
 				_index++;
 				System.out.print(reqBill2.getOrgId() + "\t");
 				System.out.print(reqBill2.getProductName() + "\t");
@@ -292,23 +177,33 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@全部数据行" + _index);
 	}
 
-	// 生产供应商文件(合计)
-	@Test
-	public void output22() throws InvalidFormatException, IOException, SAXException {
+	/**
+	 * 单个生产供应商商品汇总文件(合计)
+	 * 
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
+	private void supplierSumGoodListFile2(List<Organization> orgList) throws InvalidFormatException, IOException, SAXException {
 		int _index = 0;
-		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(batchId);
+		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(BATCH_ID);
 		for (Supplier supplier : supList) {
 
 			System.out.println(supplier.getName());
 
-			ReqBill reqBill = new ReqBill();
-			reqBill.setBatchId(batchId);
-			reqBill.setSupplierName(supplier.getName());
-			List<ReqBill> list = reqBillMyBatisDao.getReqBillSumList(reqBill);
+			Map<String, String> param = Maps.newHashMap();
+			param.put("batchId", BATCH_ID);
+			param.put("supplierName", supplier.getName());
+			param.put("optDate", DateUtils.getNextDateFormatDate(-30, "yyyyMMdd"));
 
-			reqBillManager.writeReqBillSumFileToSupplier(batchId, supplier.getName(), list);
+			List<ReqBill> dataList = reqBillMyBatisDao.getReqBillSumList(param);
 
-			for (ReqBill reqBill2 : list) {
+			// 初始化单商品全机构补货单明
+			initOrgReqBillList(dataList, orgList);
+
+			reqBillManager.writeReqBillSumFileToSupplier(BATCH_ID, supplier.getName(), dataList, orgList);
+
+			for (ReqBill reqBill2 : dataList) {
 				_index++;
 				System.out.print(reqBill2.getProductName() + "\t");
 				System.out.println();
@@ -323,37 +218,99 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 	 * 计算建议采购数量
 	 */
 	private void calPurchase(List<ReqBill> list) {
+
 		for (ReqBill reqBill : list) {
 			if (reqBill.getStockQty().compareTo(BigDecimal.ZERO) == -1) {// 小于零，负库存
 				continue;// 不处理
 			}
 
-			BigDecimal _posQty = reqBill.getPosQty1().add(reqBill.getPosQty2()).add(reqBill.getPosQty3())
-					.add(reqBill.getPosQty4());
+			BigDecimal _posQty = reqBill.getPosQty1().add(reqBill.getPosQty2()).add(reqBill.getPosQty3()).add(reqBill.getPosQty4());
 			_posQty = _posQty.divide(new BigDecimal(4), BigDecimal.ROUND_DOWN);
 
 			// 建议采购数量-低（平均值×1）
 			reqBill.setLowPurchase(_posQty.subtract(reqBill.getStockQty()));
 			// 建议采购数量-高（平均值×2）
 			reqBill.setHighPurchase(_posQty.multiply(new BigDecimal(2)).subtract(reqBill.getStockQty()));
+
+			// 库销比
+			if (_posQty.compareTo(BigDecimal.ZERO) != 0) {
+				reqBill.setStockRatio(reqBill.getStockQty().divide(_posQty));
+			}
 		}
 	}
 
+	/**
+	 * 初始化单商品全机构补货单明
+	 * 
+	 * @param list
+	 * @param orgList
+	 */
+	private void initOrgReqBillList(List<ReqBill> list, List<Organization> orgList) {
+		for (ReqBill reqBill : list) {
+			// 库销比
+			if (null == reqBill.getPosAmtTotal() && reqBill.getPosAmtTotal().compareTo(BigDecimal.ZERO) != 0) {
+				reqBill.setStockRatio(reqBill.getStockQty().divide(reqBill.getPosAmtTotal()));
+			}
+			// 初始化单商品全机构补货单明细
+			reqBill.setOrgReqBillList(_initOrgReqBillList(orgList, reqBill.getBarcode()));
+		}
+	}
+
+	/** 初始化单商品全机构补货单明细 */
+	private List<ReqBill> _initOrgReqBillList(List<Organization> orgList, String barcode) {
+		List<ReqBill> orgReqBillList = Lists.newArrayList();
+
+		// 区分品牌机构
+
+		// =========================================
+		// EQ+
+		// =========================================
+		ReqBill reqBill = new ReqBill();
+		reqBill.setOrgId("EQ+");
+		orgReqBillList.add(reqBill);
+		for (Organization organization : orgList) {
+			if (organization.getBrand().equals("EQ+")) {
+				reqBill = new ReqBill();
+				reqBill.setOrgId(organization.getId());
+				orgReqBillList.add(reqBill);
+			}
+
+		}
+
+		// =========================================
+		// EQ+
+		// =========================================
+		reqBill = new ReqBill();
+		reqBill.setOrgId("Infancy");
+		orgReqBillList.add(reqBill);
+		for (Organization organization : orgList) {
+			if (organization.getBrand().equals("Infancy")) {
+				reqBill = new ReqBill();
+				reqBill.setOrgId(organization.getId());
+				orgReqBillList.add(reqBill);
+			}
+
+		}
+
+		// 设置单商品全机构补货单明细
+		reqBillManager.insertGoodOrgReqBillList(barcode, BATCH_ID, orgReqBillList);
+
+		return orgReqBillList;
+	}
+
 	// 生产供应商文件-插入图片
-	@Test
-	public void output3() throws FileNotFoundException, IOException {
+	private void t_output4() throws FileNotFoundException, IOException {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
-		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(batchId);
+		List<Supplier> supList = reqBillMyBatisDao.getSupplierListByBatchId(BATCH_ID);
 		for (Supplier supplier : supList) {
 			ReqBill reqBill = new ReqBill();
-			reqBill.setBatchId(batchId);
+			reqBill.setBatchId(BATCH_ID);
 			reqBill.setSupplierName(supplier.getName());
 			List<ReqBill> list = reqBillMyBatisDao.getReqBillList(reqBill);
 
-			reqBillManager.writeReqBillImageFileToSupplier(
-					sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplier.getName() + "_" + batchId + ".xls",
-					getImagePathList(sysConfig.getProductImgPath(), list));
+			reqBillManager.writeReqBillImageFileToSupplier(sysConfig.getReqBillSupplierOutputPath() + BATCH_ID + "/" + supplier.getName()
+					+ "_" + BATCH_ID + ".xls", getImagePathList(sysConfig.getProductImgPath(), list));
 		}
 	}
 

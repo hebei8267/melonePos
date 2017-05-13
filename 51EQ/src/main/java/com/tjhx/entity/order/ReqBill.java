@@ -83,6 +83,11 @@ public class ReqBill extends IdEntity {
 	private BigDecimal stockAmt;
 	private BigDecimal inQty = new BigDecimal("0");
 	private BigDecimal outQty = new BigDecimal("0");
+	/** 库销比 */
+	private BigDecimal stockRatio = new BigDecimal("0");
+	/** 单商品全机构要货单明细 */
+	private List<ReqBill> orgReqBillList;
+
 	/**
 	 * 取得处理批次号
 	 * 
@@ -669,6 +674,44 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setOutQty(BigDecimal outQty) {
 		this.outQty = outQty;
+	}
+
+	/**
+	 * 取得stockRatio
+	 * 
+	 * @return stockRatio
+	 */
+	@Transient
+	public BigDecimal getStockRatio() {
+		return stockRatio;
+	}
+
+	/**
+	 * 设置stockRatio
+	 * 
+	 * @param stockRatio stockRatio
+	 */
+	public void setStockRatio(BigDecimal stockRatio) {
+		this.stockRatio = stockRatio;
+	}
+
+	/**
+	 * 取得orgReqBillList
+	 * 
+	 * @return orgReqBillList
+	 */
+	@Transient
+	public List<ReqBill> getOrgReqBillList() {
+		return orgReqBillList;
+	}
+
+	/**
+	 * 设置orgReqBillList
+	 * 
+	 * @param orgReqBillList orgReqBillList
+	 */
+	public void setOrgReqBillList(List<ReqBill> orgReqBillList) {
+		this.orgReqBillList = orgReqBillList;
 	}
 
 }

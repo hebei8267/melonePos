@@ -34,10 +34,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.utils.SpringContextHolder;
 import org.xml.sax.SAXException;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tjhx.common.utils.FileUtils;
 import com.tjhx.dao.order.ReqBillJpaDao;
 import com.tjhx.dao.order.ReqBillMyBatisDao;
 import com.tjhx.entity.order.ReqBill;
+import com.tjhx.entity.struct.Organization;
 import com.tjhx.globals.SysConfig;
 
 @Service
@@ -62,8 +65,8 @@ public class ReqBillManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public void writeReqBillFileToHeadOffice(String batchId, String supplierName, List<ReqBill> list)
-			throws ParsePropertyException, InvalidFormatException, IOException {
+	public void writeReqBillFileToHeadOffice(String batchId, String supplierName, List<ReqBill> list) throws ParsePropertyException,
+			InvalidFormatException, IOException {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
 		Map<String, List<ReqBill>> map = new HashMap<String, List<ReqBill>>();
@@ -85,19 +88,60 @@ public class ReqBillManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public void writeReqBillSumFileToSupplier(String batchId, String supplierName, List<ReqBill> list)
+	public void writeReqBillSumFileToSupplier(String batchId, String supplierName, List<ReqBill> dataList, List<Organization> orgNameList)
 			throws ParsePropertyException, InvalidFormatException, IOException {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
-		Map<String, List<ReqBill>> map = new HashMap<String, List<ReqBill>>();
-		map.put("reqBillList", list);
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reqBillList", dataList);
+		map.put("orgNameList", initOrgNameList(orgNameList));
 		// 自动建立文件夹
 		FileUtils.mkdir(sysConfig.getReqBillSupplierOutputPath() + batchId + "/");
 
 		XLSTransformer transformer = new XLSTransformer();
 		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_SUM, map,
 				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + supplierName + "_合计_" + batchId + ".xlsx");
+	}
+
+	private List<Organization> initOrgNameList(List<Organization> orgList) {
+		List<Organization> _orgNameList = Lists.newArrayList();
+		// 区分品牌机构
+
+		// =========================================
+		// EQ+
+		// =========================================
+		Organization org = new Organization();
+		org.setId("EQ+");
+		org.setName("EQ+");
+		_orgNameList.add(org);
+		for (Organization organization : orgList) {
+			if (organization.getBrand().equals("EQ+")) {
+				org = new Organization();
+				org.setId(organization.getId());
+				org.setName(organization.getName());
+				_orgNameList.add(org);
+			}
+
+		}
+
+		// =========================================
+		// Infancy
+		// =========================================
+		org = new Organization();
+		org.setId("Infancy");
+		org.setName("Infancy");
+		_orgNameList.add(org);
+		for (Organization organization : orgList) {
+			if (organization.getBrand().equals("Infancy")) {
+				org = new Organization();
+				org.setId(organization.getId());
+				org.setName(organization.getName());
+				_orgNameList.add(org);
+			}
+
+		}
+
+		return _orgNameList;
 	}
 
 	/**
@@ -108,13 +152,13 @@ public class ReqBillManager {
 	 * @throws InvalidFormatException
 	 * @throws IOException
 	 */
-	public void writeReqBillFileToSupplier(String batchId, String supplierName, List<ReqBill> list)
-			throws ParsePropertyException, InvalidFormatException, IOException {
+	public void writeReqBillFileToSupplier(String batchId, String supplierName, List<ReqBill> dataList) throws ParsePropertyException,
+			InvalidFormatException, IOException {
 
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
-		Map<String, List<ReqBill>> map = new HashMap<String, List<ReqBill>>();
-		map.put("reqBillList", list);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reqBillList", dataList);
 
 		// 自动建立文件夹
 		FileUtils.mkdir(sysConfig.getReqBillSupplierOutputPath() + batchId + "/");
@@ -133,8 +177,7 @@ public class ReqBillManager {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void writeReqBillImageFileToSupplier(String filePath, List<String> imagePathList) throws FileNotFoundException,
-			IOException {
+	public void writeReqBillImageFileToSupplier(String filePath, List<String> imagePathList) throws FileNotFoundException, IOException {
 		File xlsFile = new File(filePath);
 		if (!xlsFile.exists()) {// excel文件不存在
 			return;
@@ -175,11 +218,16 @@ public class ReqBillManager {
 	 */
 	public List<ReqBill> readReqBillFile(String filePath) throws IOException, SAXException, InvalidFormatException {
 
+		File _file = new File(filePath);
+		if (!_file.exists()) {
+			System.out.println("????????????????文件：" + filePath + " 不存在！");
+			return null;
+		}
+
+		InputStream inputXLS = new BufferedInputStream(new FileInputStream(_file));
+
 		InputStream inputXML = new BufferedInputStream(ReqBillManager.class.getResourceAsStream(XML_CONFIG_READ_REQ_BILL));
-
 		XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
-
-		InputStream inputXLS = new BufferedInputStream(new FileInputStream(filePath));
 
 		List<ReqBill> reqBillList = new ArrayList<ReqBill>();
 		Map<String, List<ReqBill>> map = new HashMap<String, List<ReqBill>>();
@@ -268,6 +316,23 @@ public class ReqBillManager {
 			System.out.print(reqBill.getRemarks() + "\t");
 			System.out.print(reqBill.getRemarks() == null);
 			System.out.println();
+		}
+	}
+
+	/** 设置单商品全机构补货单明细 */
+	public void insertGoodOrgReqBillList(String barcode, String batchId, List<ReqBill> orgReqBillList) {
+		Map<String, String> param = Maps.newHashMap();
+		param.put("batchId", batchId);
+		param.put("barcode", barcode);
+
+		List<ReqBill> _dataList = reqBillMyBatisDao.getReqBillListByBarcode(param);
+
+		for (ReqBill _data : _dataList) {
+			for (ReqBill reqBill : orgReqBillList) {
+				if (_data.getOrgId().equals(reqBill.getOrgId())) {
+					reqBill.setAppNum(_data.getAppNum());
+				}
+			}
 		}
 	}
 }
