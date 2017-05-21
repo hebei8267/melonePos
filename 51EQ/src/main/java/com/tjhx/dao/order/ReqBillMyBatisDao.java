@@ -23,6 +23,15 @@ public interface ReqBillMyBatisDao {
 	public List<Supplier> getSupplierListByBatchId(String batchId);
 
 	/**
+	 * 根据参数(批次号、门店号)取得门店要货单信息
+	 * 
+	 * @param batchId
+	 * @param orgId
+	 * @return
+	 */
+	public List<ReqBill> getReqBillListByOrgId(Map<String, String> param);
+
+	/**
 	 * 根据参数(批次号、门店号、供应商名称)取得门店要货单信息
 	 * 
 	 * @param reqBill

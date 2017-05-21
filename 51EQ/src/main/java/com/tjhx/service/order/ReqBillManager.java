@@ -59,6 +59,7 @@ public class ReqBillManager {
 	private final static String XML_CONFIG_WRITE_REQ_BILL = "/excel/Req_Bill_Supplier_Template.xlsx";
 	private final static String XML_CONFIG_WRITE_REQ_BILL_SUM = "/excel/Req_Bill_Sum_Supplier_Template.xlsx";
 	private final static String XML_CONFIG_WRITE_REQ_BILL_EQ = "/excel/Req_Bill_EQ_Template.xlsx";
+	private final static String XML_CONFIG_WRITE_REQ_BILL_ORG = "/excel/Req_Bill_Org_Template.xls";
 
 	/**
 	 * @param batchId
@@ -359,6 +360,32 @@ public class ReqBillManager {
 				}
 			}
 		}
+
+	}
+
+	/**
+	 * 生成单个门店要货单信息增强文件
+	 * 
+	 * @param batchId
+	 * @param orgName
+	 * @param reqBillDataList
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 * @throws ParsePropertyException
+	 */
+	public void writeReqBillByOrg(String batchId, String orgName, List<ReqBill> reqBillDataList) throws ParsePropertyException,
+			InvalidFormatException, IOException {
+		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reqBillList", reqBillDataList);
+
+		// 自动建立文件夹
+		FileUtils.mkdir(sysConfig.getReqBillSupplierOutputPath() + batchId + "/");
+
+		XLSTransformer transformer = new XLSTransformer();
+		transformer.transformXLS(sysConfig.getExcelTemplatePath() + XML_CONFIG_WRITE_REQ_BILL_ORG, map,
+				sysConfig.getReqBillSupplierOutputPath() + batchId + "/" + orgName + ".xls");
 
 	}
 }

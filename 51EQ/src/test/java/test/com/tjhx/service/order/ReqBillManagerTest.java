@@ -224,17 +224,19 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 				continue;// 不处理
 			}
 
-			BigDecimal _posQty = reqBill.getPosQty1().add(reqBill.getPosQty2()).add(reqBill.getPosQty3()).add(reqBill.getPosQty4());
-			_posQty = _posQty.divide(new BigDecimal(4), BigDecimal.ROUND_DOWN);
+			// 月销售
+			BigDecimal _posQty_m = reqBill.getPosQty1().add(reqBill.getPosQty2()).add(reqBill.getPosQty3()).add(reqBill.getPosQty4());
+			// 周销售
+			BigDecimal _posQty_w = _posQty_m.divide(new BigDecimal(4), BigDecimal.ROUND_DOWN);
 
 			// 建议采购数量-低（平均值×1）
-			reqBill.setLowPurchase(_posQty.subtract(reqBill.getStockQty()));
+			reqBill.setLowPurchase(_posQty_w.subtract(reqBill.getStockQty()));
 			// 建议采购数量-高（平均值×2）
-			reqBill.setHighPurchase(_posQty.multiply(new BigDecimal(2)).subtract(reqBill.getStockQty()));
+			reqBill.setHighPurchase(_posQty_w.multiply(new BigDecimal(2)).subtract(reqBill.getStockQty()));
 
-			// 库销比
-			if (_posQty.compareTo(BigDecimal.ZERO) != 0) {
-				reqBill.setStockRatio(reqBill.getStockQty().divide(_posQty));
+			// 30天库销比
+			if (_posQty_m.compareTo(BigDecimal.ZERO) != 0) {
+				reqBill.setStockRatio(reqBill.getStockQty().divide(_posQty_m, 2));
 			}
 		}
 	}
