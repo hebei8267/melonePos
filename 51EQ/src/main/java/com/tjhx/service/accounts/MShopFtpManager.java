@@ -139,6 +139,7 @@ public class MShopFtpManager {
 			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + fileName + "_DETAIL.txt");
 
+			int i = 1;
 			for (MShopDailySale saleData : _saleDataList) {
 				// 店铺ID
 				fw.write(ORG_ID + ",");
@@ -147,7 +148,7 @@ public class MShopFtpManager {
 				// 销售单号
 				fw.write(saleData.getFlowNo() + ",");
 				// 货品明细ID
-				fw.write("00001" + ",");
+				fw.write(String.format("%05d", i++) + ",");
 				// 货品编号（商铺自己销售的货品条码，由M+商场提供。）
 				fw.write(GOOD_ID + ",");
 				// 商品销售金额
@@ -159,7 +160,7 @@ public class MShopFtpManager {
 				// 明细优惠金额
 				fw.write("0.0" + ",");
 				// 备注-默认为空
-				fw.write(",");
+				fw.write("");
 				fw.write("\r\n");
 			}
 
@@ -195,7 +196,7 @@ public class MShopFtpManager {
 				// 商品销售金额
 				fw.write(saleData.getSalePrice() + ",");
 				// 备注-默认为空
-				fw.write(",");
+				fw.write("");
 				fw.write("\r\n");
 
 			}
@@ -283,7 +284,7 @@ public class MShopFtpManager {
 				// 已读标识一律写0
 				fw.write("0" + ",");
 				// 备注-默认为空
-				fw.write(",");
+				fw.write("");
 				fw.write("\r\n");
 
 			}

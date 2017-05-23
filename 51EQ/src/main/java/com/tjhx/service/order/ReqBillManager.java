@@ -223,6 +223,7 @@ public class ReqBillManager {
 	public List<ReqBill> readReqBillFile(String filePath) throws IOException, SAXException, InvalidFormatException {
 
 		File _file = new File(filePath);
+		System.out.println("####################文件：" + filePath);
 		if (!_file.exists()) {
 			System.out.println("????????????????文件：" + filePath + " 不存在！");
 			return null;

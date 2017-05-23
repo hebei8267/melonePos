@@ -68,6 +68,9 @@ public class MShopDailySale {
 	 * @return salePrice
 	 */
 	public BigDecimal getSalePrice() {
+		if (null != salePrice) {
+			return salePrice.setScale(2, BigDecimal.ROUND_HALF_UP);
+		}
 		return salePrice;
 	}
 
@@ -85,8 +88,8 @@ public class MShopDailySale {
 	 * 
 	 * @return saleQnty
 	 */
-	public BigDecimal getSaleQnty() {
-		return saleQnty;
+	public int getSaleQnty() {
+		return saleQnty.intValue();
 	}
 
 	/**
@@ -194,6 +197,9 @@ public class MShopDailySale {
 	 * @return disAmount
 	 */
 	public BigDecimal getDisAmount() {
+		if (null != disAmount) {
+			return disAmount.setScale(2, BigDecimal.ROUND_HALF_UP);
+		}
 		return disAmount;
 	}
 
