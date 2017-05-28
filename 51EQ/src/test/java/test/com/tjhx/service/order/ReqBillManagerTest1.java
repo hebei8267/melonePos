@@ -1,9 +1,7 @@
 package test.com.tjhx.service.order;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,17 +13,12 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
-import org.springside.modules.utils.SpringContextHolder;
 import org.xml.sax.SAXException;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.tjhx.common.utils.DateUtils;
 import com.tjhx.dao.order.ReqBillMyBatisDao;
-import com.tjhx.entity.info.Supplier;
 import com.tjhx.entity.order.ReqBill;
 import com.tjhx.entity.struct.Organization;
-import com.tjhx.globals.SysConfig;
 import com.tjhx.service.order.ReqBillManager;
 import com.tjhx.service.struct.OrganizationManager;
 
