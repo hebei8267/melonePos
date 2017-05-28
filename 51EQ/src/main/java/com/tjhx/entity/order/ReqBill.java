@@ -211,6 +211,9 @@ public class ReqBill extends IdEntity {
 	 * @return inventoryNum 库存数量
 	 */
 	public Integer getInventoryNum() {
+		if (null == inventoryNum) {
+			return 0;
+		}
 		return inventoryNum;
 	}
 
@@ -626,6 +629,9 @@ public class ReqBill extends IdEntity {
 	 */
 	@Transient
 	public BigDecimal getStockAmt() {
+		if (null == stockAmt) {
+			return new BigDecimal("0");
+		}
 		return stockAmt;
 	}
 
