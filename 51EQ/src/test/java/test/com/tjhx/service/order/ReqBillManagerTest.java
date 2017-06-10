@@ -280,7 +280,7 @@ public class ReqBillManagerTest extends SpringTransactionalTestCase {
 		}
 
 		// =========================================
-		// EQ+
+		// Infancy
 		// =========================================
 		reqBill = new ReqBill();
 		reqBill.setOrgId("Infancy");

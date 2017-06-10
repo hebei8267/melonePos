@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <workbook>
 	<worksheet name="Sheet1">
-		<section startRow="0" endRow="5">
+		<section startRow="0" endRow="6">
 
 		</section>
-		<loop startRow="6" endRow="6" items="reqBillList" var="reqBill"
+		<loop startRow="7" endRow="7" items="reqBillList" var="reqBill"
 			varType="com.tjhx.entity.order.ReqBill">
 			<section startRow="1" endRow="1">
 				<mapping row="1" col="1">reqBill.productNo</mapping><!-- 货号 -->

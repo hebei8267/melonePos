@@ -332,9 +332,11 @@ public class ReqBillManager {
 
 		List<ReqBill> _dataList = reqBillMyBatisDao.getReqBillListByBarcode(param);
 
+		int eqAppNum = 0;
+		int inAppNum = 0;
+
 		for (ReqBill _data : _dataList) {
-			int eqAppNum = 0;
-			int inAppNum = 0;
+
 			for (ReqBill reqBill : orgReqBillList) {
 				if (_data.getOrgId().equals(reqBill.getOrgId())) {
 					reqBill.setAppNum(_data.getAppNum());
@@ -352,13 +354,14 @@ public class ReqBillManager {
 				}
 			}
 
-			// 设置-按门店品牌计算-结果
-			for (ReqBill reqBill : orgReqBillList) {
-				if ("EQ+".equals(reqBill.getOrgId())) {
-					reqBill.setAppNum(eqAppNum);
-				} else if ("Infancy".equals(reqBill.getOrgId())) {
-					reqBill.setAppNum(inAppNum);
-				}
+		}
+
+		// 设置-按门店品牌计算-结果
+		for (ReqBill reqBill : orgReqBillList) {
+			if ("EQ+".equals(reqBill.getOrgId())) {
+				reqBill.setAppNum(eqAppNum);
+			} else if ("Infancy".equals(reqBill.getOrgId())) {
+				reqBill.setAppNum(inAppNum);
 			}
 		}
 
