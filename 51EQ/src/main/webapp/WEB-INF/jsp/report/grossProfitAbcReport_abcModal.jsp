@@ -41,7 +41,20 @@
                 <td class="center">-</td>
                 </c:if>
                 <c:if test="${good.posQty.compareTo(BigDecimal.ZERO) != 0}">
-                <td class="center">${good.stockQty / good.posQty}</td>
+                <td class="center">
+                <c:set var="_tmpA" value="${good.stockQty / good.posQty}"/>
+               	<c:if test="${_tmpA <= 0.5}">
+                <span style="color: red;">
+                </c:if>
+                <c:if test="${_tmpA > 0.5 && _tmpA <= 0.8}">
+                <span style="color: orange;">
+                </c:if>
+                <c:if test="${_tmpA > 0.8}">
+                <span>
+                </c:if>
+                ${_tmpA}
+                </span>
+                </td>
                 </c:if>
 	    	</tr>
 	    	</c:forEach>

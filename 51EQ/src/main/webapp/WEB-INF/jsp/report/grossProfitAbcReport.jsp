@@ -390,7 +390,8 @@
 	                                        <c:if test="${_tmpA > 0.8}">
 	                                        <span>
 	                                        </c:if>
-	                                        ${_tmpA}</span>
+	                                        ${_tmpA}
+	                                        </span>
 	                                        </td>
 	                                        </c:if>
 	                                        	                                        
