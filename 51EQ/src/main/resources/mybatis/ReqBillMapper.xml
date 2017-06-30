@@ -144,7 +144,7 @@
 		    bill.product_no,
 		    bill.product_name ,
 		    bill.ref_price ,
-		    SUM(bill.app_num) AS app_num ,
+		    bill.app_num AS app_num ,
 		    SUM(stock_qty) AS stock_qty ,
 		    SUM(good.pos_qty) AS pos_qty_total
 		FROM

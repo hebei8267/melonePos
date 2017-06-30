@@ -36,7 +36,7 @@ public class MShopFtpManager {
 	private final String POS_ID = "9013";
 	private final String GOOD_ID = "100178";
 	// M+商场内部编号
-	private final String EQ_ORG_ID = "1301";
+	private final String EQ_ORG_ID = "0801";
 
 	/**
 	 * M+商场销售数据同步FTP
