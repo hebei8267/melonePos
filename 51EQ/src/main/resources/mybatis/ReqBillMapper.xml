@@ -144,15 +144,27 @@
 		    bill.product_no,
 		    bill.product_name ,
 		    bill.ref_price ,
-		    bill.app_num AS app_num ,
-		    SUM(stock_qty) AS stock_qty ,
+		    SUM(bill.app_num) AS app_num ,
+		    SUM(stock_qty)    AS stock_qty ,
 		    SUM(good.pos_qty) AS pos_qty_total
 		FROM
 		    t_req_bill_tmp bill
-		LEFT JOIN 
-			t_store_detail_one_day store ON bill.barcode = store.item_barcode
 		LEFT JOIN
-		    t_sales_day_total_goods good ON bill.barcode = good.item_barcode AND good.opt_date >= #{optDate}
+		    (
+		        SELECT
+		            SUM(stock_qty) AS stock_qty,
+		            item_barcode
+		        FROM
+		            t_store_detail_one_day store
+		        GROUP BY
+		            item_barcode ) _store
+		ON
+		    bill.barcode = _store.item_barcode
+		LEFT JOIN
+		    t_sales_day_total_goods good
+		ON
+		    bill.barcode = good.item_barcode
+		AND good.opt_date >= #{optDate}
 		WHERE
 		    bill.batch_id = #{batchId}
 		AND bill.supplier_name = #{supplierName}
