@@ -21,10 +21,6 @@ public class MShopDailySale {
 	private String operDate;
 	/** 商品条码 */
 	private String itemBarcode;
-	/** 优惠金额 */
-	private BigDecimal disAmount = new BigDecimal("0");
-	/** 交易明细行数 */
-	private int rowNum;
 
 	/**
 	 * 取得flowNo
@@ -189,45 +185,6 @@ public class MShopDailySale {
 	 */
 	public void setOperType(String operType) {
 		this.operType = operType;
-	}
-
-	/**
-	 * 取得disAmount
-	 * 
-	 * @return disAmount
-	 */
-	public BigDecimal getDisAmount() {
-		if (null != disAmount) {
-			return disAmount.setScale(2, BigDecimal.ROUND_HALF_UP);
-		}
-		return disAmount;
-	}
-
-	/**
-	 * 设置disAmount
-	 * 
-	 * @param disAmount disAmount
-	 */
-	public void setDisAmount(BigDecimal disAmount) {
-		this.disAmount = disAmount;
-	}
-
-	/**
-	 * 取得rowNum
-	 * 
-	 * @return rowNum
-	 */
-	public int getRowNum() {
-		return rowNum;
-	}
-
-	/**
-	 * 设置rowNum
-	 * 
-	 * @param rowNum rowNum
-	 */
-	public void setRowNum(int rowNum) {
-		this.rowNum = rowNum;
 	}
 
 }

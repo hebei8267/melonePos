@@ -55,32 +55,17 @@ public class MShopFtpManager {
 		List<MShopDailySale> _saleDataList = mShopDailySaleMyBatisDao.getDailySaleList(param);
 
 		String dateTime = DateUtils.getCurFormatDate("yyyyMMddhhmmss");
+		String fileName = ORG_ID + "_" + dateTime + "_LIST.txt";
 
-		createMainFile(dateTime, _saleDataList);
-		createDetailFile(dateTime, _saleDataList);
+		createFtpFile(fileName, _saleDataList);
 
-		_synFtpFile(dateTime);
+		_uploadFtpFile(fileName);
 	}
 
-	/**
-	 * 同步FTP文件
-	 */
-	private void _synFtpFile(String dateTime) {
-
-		String mainFileName = ORG_ID + "_" + dateTime + "_MAIN.txt";
-		String detailFileName = ORG_ID + "_" + dateTime + "_DETAIL.txt";
-		String payFileName = ORG_ID + "_" + dateTime + "_PAY.txt";
-
-		_synFtpFile(mainFileName, detailFileName, payFileName);
-
-	}
-
-	private void _synFtpFile(String mainFileName, String detailFileName, String payFileName) {
+	private void _uploadFtpFile(String fileName) {
 		SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
 
-		String _mainFileName = sysConfig.getReportTmpPath() + "/M+/" + mainFileName;
-		String _detailFileName = sysConfig.getReportTmpPath() + "/M+/" + detailFileName;
-		String _payFileName = sysConfig.getReportTmpPath() + "/M+/" + payFileName;
+		String _fileName = sysConfig.getReportTmpPath() + "/M+/" + fileName;
 
 		FTPSClient ftpClient = new FTPSClient();
 		try {
@@ -104,14 +89,8 @@ public class MShopFtpManager {
 			// 设置文件类型（二进制）
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 
-			boolean res_mainFileName = ftpClient.storeFile(mainFileName, new FileInputStream(new File(_mainFileName)));
-			System.out.println("mainFileName" + res_mainFileName);
-
-			boolean res_detailFileName = ftpClient.storeFile(detailFileName, new FileInputStream(new File(_detailFileName)));
-			System.out.println("detailFileName" + res_detailFileName);
-
-			boolean res_payFileName = ftpClient.storeFile(payFileName, new FileInputStream(new File(_payFileName)));
-			System.out.println("payFileName" + res_payFileName);
+			boolean res_mainFileName = ftpClient.storeFile(fileName, new FileInputStream(new File(_fileName)));
+			System.out.println("upload file:" + res_mainFileName);
 
 			ftpClient.logout();
 		} catch (IOException e) {
@@ -128,163 +107,66 @@ public class MShopFtpManager {
 	}
 
 	/**
-	 * 销售小票商品明细DETAIL
-	 * 
-	 * @param fileName
-	 * @param _saleDataList
-	 */
-	private void createDetailFile(String fileName, List<MShopDailySale> _saleDataList) {
-		FileWriter fw;
-		try {
-			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + fileName + "_DETAIL.txt");
-
-			int i = 1;
-			for (MShopDailySale saleData : _saleDataList) {
-				// 店铺ID
-				fw.write(ORG_ID + ",");
-				// POS机编号
-				fw.write(POS_ID + ",");
-				// 销售单号
-				fw.write(saleData.getFlowNo() + ",");
-				// 货品明细ID
-				fw.write(String.format("%05d", i++) + ",");
-				// 货品编号（商铺自己销售的货品条码，由M+商场提供。）
-				fw.write(GOOD_ID + ",");
-				// 商品销售金额
-				fw.write(saleData.getSalePrice() + ",");
-				// 商品销售数量
-				fw.write(saleData.getSaleQnty() + ",");
-				// 明细实收金额
-				fw.write(saleData.getSalePrice() + ",");
-				// 明细优惠金额
-				fw.write("0.0" + ",");
-				// 备注-默认为空
-				fw.write("");
-				fw.write("\r\n");
-			}
-
-			fw.flush();
-
-			fw.close();
-		} catch (IOException e) {
-			// e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * 销售小票付款明细PAY
-	 */
-	private void _writePayFile(String dateTime, List<MShopDailySale> fileList) {
-		FileWriter fw;
-		try {
-			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_PAY.txt");
-
-			for (MShopDailySale saleData : fileList) {
-				// 店铺ID
-				fw.write(saleData.getOrgId() + ",");
-				// POS机编号
-				fw.write(saleData.getPosNo() + ",");
-				// 销售单号
-				fw.write(saleData.getFlowNo() + ",");
-				// 付款明细ID
-				fw.write("01" + ",");
-				// 付款方式
-				fw.write("01" + ",");
-				// 商品销售金额
-				fw.write(saleData.getSalePrice() + ",");
-				// 备注-默认为空
-				fw.write("");
-				fw.write("\r\n");
-
-			}
-
-			fw.flush();
-
-			fw.close();
-		} catch (IOException e) {
-			// e.printStackTrace();
-		}
-
-	}
-
-	/**
 	 * 销售小票主体文件MAIN
 	 */
-	private void createMainFile(String dateTime, List<MShopDailySale> saleDataList) {
-		// 商铺号_20170414235959_MAIN.txt
+	private void createFtpFile(String fileName, List<MShopDailySale> saleDataList) {
+		// 商铺号_20170414235959_LIST.txt
 		String tmpFlowNo = null;
 		MShopDailySale tmpMShopDailySale = null;
-		int tmpRowNum = 0;
 
 		List<MShopDailySale> fileList = Lists.newArrayList();
 		for (MShopDailySale saleData : saleDataList) {
 			if (null == tmpFlowNo || !tmpFlowNo.equals(saleData.getFlowNo())) {
 				tmpFlowNo = saleData.getFlowNo();
 				tmpMShopDailySale = new MShopDailySale();
-				tmpRowNum = 0;
 
 				fileList.add(tmpMShopDailySale);
 			}
 
-			// 店铺ID
-			tmpMShopDailySale.setOrgId(ORG_ID);
-			// POS机编号
+			// 1-收银机号
 			tmpMShopDailySale.setPosNo(POS_ID);
-			// 销售单号
+			// 2-交易流水号
 			tmpMShopDailySale.setFlowNo(saleData.getFlowNo());
-			// 交易类型 -1销售2红冲销售3退货4红冲退货
-			tmpMShopDailySale.setOperType("1");
-			// 日期
+			// 3-交易时间
 			tmpMShopDailySale.setOperDate(DateUtils.transDateFormat(saleData.getOperDate(), "yyyy-MM-dd HH:mm:ss.SSS",
 					"yyyy-MM-dd HH:mm:ss"));
-			// 商品销售金额
+			// 4-整单实收金额
 			tmpMShopDailySale.setSalePrice(tmpMShopDailySale.getSalePrice().add(saleData.getSalePrice()));
-			// 交易明细行数
-			tmpMShopDailySale.setRowNum(++tmpRowNum);
+			// 5-货品编码 NULL
+			// 6-付款方式
+			tmpMShopDailySale.setOperType("");
+			// 7-备注 NULL
 
 		}
 
-		_writeMainFile(dateTime, fileList);
-		_writePayFile(dateTime, fileList);
+		_writeFtpFile(fileName, fileList);
 	}
 
 	/**
 	 * 销售小票主体文件MAIN
 	 */
-	private void _writeMainFile(String dateTime, List<MShopDailySale> fileList) {
+	private void _writeFtpFile(String fileName, List<MShopDailySale> fileList) {
 		FileWriter fw;
 		try {
 			SysConfig sysConfig = SpringContextHolder.getBean("sysConfig");
-			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + ORG_ID + "_" + dateTime + "_MAIN.txt");
+			fw = new FileWriter(sysConfig.getReportTmpPath() + "/M+/" + fileName);
 
 			for (MShopDailySale saleData : fileList) {
-				// 店铺ID
-				fw.write(saleData.getOrgId() + ",");
-				// POS机编号
+
+				// 1-收银机号
 				fw.write(saleData.getPosNo() + ",");
-				// 销售单号
+				// 2-交易流水号
 				fw.write(saleData.getFlowNo() + ",");
-				// 交易类型 -1销售2红冲销售3退货4红冲退货
-				fw.write(saleData.getOperType() + ",");
-				// 日期
+				// 3-交易时间
 				fw.write(saleData.getOperDate() + ",");
-				// 商品销售金额
+				// 4-整单实收金额
 				fw.write(saleData.getSalePrice() + ",");
-				// 优惠金额
-				fw.write("0.0" + ",");
-				// 原交易流水号
-				fw.write(",");
-				// 交易明细行数
-				fw.write(saleData.getRowNum() + ",");
-				// 付款明细行数-如此单只有现金付款则为1种付款方式，录入1，如此单有刷卡和现金2种付款方式，录入2，以此类推
-				fw.write("2" + ",");
-				// 已读标识一律写0
-				fw.write("0" + ",");
-				// 备注-默认为空
-				fw.write("");
+				// 5-货品编码
+				fw.write(GOOD_ID + ",");
+				// 6-付款方式
+				fw.write(saleData.getOperType() + ",");
+				// 7-备注
+				fw.write("" + ",");
 				fw.write("\r\n");
 
 			}
