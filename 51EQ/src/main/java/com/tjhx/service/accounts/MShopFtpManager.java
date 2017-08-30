@@ -42,11 +42,26 @@ public class MShopFtpManager {
 	 * M+商场销售数据同步FTP
 	 * 
 	 * @throws ParseException
+	 * @throws InterruptedException
 	 */
-	public void synFtpFile() throws ParseException {
-		String endDate = DateUtils.getCurFormatDate("yyyy-MM-dd");
-		String beginDate = DateUtils.getNextDateFormatDate(endDate, -1, "yyyy-MM-dd");
+	public void synFtpFile() throws ParseException, InterruptedException {
 
+		String now = DateUtils.getCurFormatDate("yyyy-MM-dd");
+
+		for (int i = 0; i < 1; i++) {
+			String endDate = now;
+			String beginDate = DateUtils.getNextDateFormatDate(endDate, -1, "yyyy-MM-dd");
+
+			_synFtpFile(beginDate, endDate);
+
+			now = beginDate;
+
+			Thread.sleep(1000);
+		}
+
+	}
+
+	public void _synFtpFile(String beginDate, String endDate) {
 		Map<String, String> param = Maps.newHashMap();
 		param.put("beginDate", beginDate);
 		param.put("endDate", endDate);
@@ -54,7 +69,7 @@ public class MShopFtpManager {
 
 		List<MShopDailySale> _saleDataList = mShopDailySaleMyBatisDao.getDailySaleList(param);
 
-		String dateTime = DateUtils.getCurFormatDate("yyyyMMddhhmmss");
+		String dateTime = DateUtils.transDateFormat(beginDate, "yyyy-MM-dd", "yyyyMMdd") + DateUtils.getCurFormatDate("hhmmss");
 		String fileName = ORG_ID + "_" + dateTime + "_LIST.txt";
 
 		createFtpFile(fileName, _saleDataList);
