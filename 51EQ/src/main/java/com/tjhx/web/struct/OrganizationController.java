@@ -65,6 +65,7 @@ public class OrganizationController extends BaseController {
 		_brandList.put("", "");
 		_brandList.put("EQ+", "EQ+");
 		_brandList.put("Infancy", "Infancy");
+		_brandList.put("AmpleLife", "AmpleLife");
 
 		model.addAttribute("brandList", _brandList);
 	}
