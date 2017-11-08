@@ -209,18 +209,20 @@ public class ReportUtils {
 
 		Map<String, String> eqOrgList = new LinkedHashMap<String, String>();
 		Map<String, String> infOrgList = new LinkedHashMap<String, String>();
+		Map<String, String> amOrgList = new LinkedHashMap<String, String>();
 
 		for (Organization _org : _orgList) {
 			if (!Constants.ROOT_ORG_ID.equals(_org.getId()) && !_org.isClosedFlg() && "EQ+".equals(_org.getBrand())) {
-
 				eqOrgList.put(_org.getId(), _org.getName());
 			} else if (!Constants.ROOT_ORG_ID.equals(_org.getId()) && !_org.isClosedFlg() && "Infancy".equals(_org.getBrand())) {
-
 				infOrgList.put(_org.getId(), _org.getName());
+			} else if (!Constants.ROOT_ORG_ID.equals(_org.getId()) && !_org.isClosedFlg() && "AmpleLife".equals(_org.getBrand())) {
+				amOrgList.put(_org.getId(), _org.getName());
 			}
 		}
 
 		model.addAttribute("eqOrgList", eqOrgList);
 		model.addAttribute("infOrgList", infOrgList);
+		model.addAttribute("amOrgList", amOrgList);
 	}
 }

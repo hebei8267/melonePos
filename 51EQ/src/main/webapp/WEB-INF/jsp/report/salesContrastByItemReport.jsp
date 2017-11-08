@@ -189,6 +189,18 @@
 								</c:if>
 							</c:forEach>
 						</div>
+						
+						<div class="span12" style="margin-top: 10px;">
+							<input type="checkbox" id="infCheckAll"></input>AmpleLife门店
+							<c:forEach items="${amOrgList}" var="org">
+								<c:if test="${orgIdList.contains(org.key)}">
+								<input type="checkbox" name="amOrgId" value="${org.key }" checked></input>${org.value }
+								</c:if>
+								<c:if test="${!orgIdList.contains(org.key)}">
+								<input type="checkbox" name="amOrgId" value="${org.key }"></input>${org.value }
+								</c:if>
+							</c:forEach>
+						</div>
 					</c:if>
 					<c:if test="${sessionScope.__SESSION_USER_INFO.orgId != '000'}" >
 						<input type="hidden" name="orgId" value="${sessionScope.__SESSION_USER_INFO.orgId}">

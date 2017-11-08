@@ -95,6 +95,7 @@ public class StoreChartReportController extends BaseController {
 
 			List<StoreDayTotal> _storeDayTotalList_EQ = Lists.newArrayList();
 			List<StoreDayTotal> _storeDayTotalList_Infancy = Lists.newArrayList();
+			List<StoreDayTotal> _storeDayTotalList_Am = Lists.newArrayList();
 
 			for (StoreDayTotal _storeDayTotal : _dbStoreDayTotalList) {
 				String _brand = getOrgBrand(orgList, _storeDayTotal.getOrgId());
@@ -103,6 +104,8 @@ public class StoreChartReportController extends BaseController {
 					_storeDayTotalList_EQ.add(_storeDayTotal);
 				} else if ("Infancy".equals(_brand)) {
 					_storeDayTotalList_Infancy.add(_storeDayTotal);
+				} else if ("AmpleLife".equals(_brand)) {
+					_storeDayTotalList_Am.add(_storeDayTotal);
 				}
 			}
 
@@ -117,6 +120,10 @@ public class StoreChartReportController extends BaseController {
 			List<StoreDayTotal_Show> _list_In = formatStoreDayTotalInfo_list(_storeDayTotalList_Infancy);
 			_list.add(calTotal_StoreDayTotal(_list_In, "Infancy"));
 			_list.addAll(_list_In);
+
+			List<StoreDayTotal_Show> _list_Am = formatStoreDayTotalInfo_list(_storeDayTotalList_Am);
+			_list.add(calTotal_StoreDayTotal(_list_Am, "AmpleLife"));
+			_list.addAll(_list_Am);
 
 			model.addAttribute("storeDayTotalList", _list);
 

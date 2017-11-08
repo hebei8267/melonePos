@@ -89,8 +89,13 @@ public class SalesContrastByItemController extends BaseController {
 
 		String[] eqOrgId = ServletRequestUtils.getStringParameters(request, "eqOrgId");
 		String[] infOrgId = ServletRequestUtils.getStringParameters(request, "infOrgId");
+		String[] amOrgId = ServletRequestUtils.getStringParameters(request, "amOrgId");
+
 		String orgId = ServletRequestUtils.getStringParameter(request, "orgId");
+
 		String[] orgIds = ArrayUtils.addAll(eqOrgId, infOrgId);
+		orgIds = ArrayUtils.addAll(orgIds, amOrgId);
+
 		orgIds = ArrayUtils.add(orgIds, orgId);
 
 		String optDate2_start = ServletRequestUtils.getStringParameter(request, "optDate2_start");

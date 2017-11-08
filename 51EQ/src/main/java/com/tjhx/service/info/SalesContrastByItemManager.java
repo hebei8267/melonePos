@@ -311,6 +311,7 @@ public class SalesContrastByItemManager {
 
 		List<List<ItemSalesContrastVo>> _list_EQ = Lists.newArrayList();
 		List<List<ItemSalesContrastVo>> _list_Infancy = Lists.newArrayList();
+		List<List<ItemSalesContrastVo>> _list_Am = Lists.newArrayList();
 
 		List<ItemSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
@@ -334,6 +335,14 @@ public class SalesContrastByItemManager {
 					_list_Infancy.add(_subList);
 				}
 				_subList.add(vo);
+			} else if ("AmpleLife".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_Am.add(_subList);
+				}
+				_subList.add(vo);
 			}
 
 		}
@@ -345,7 +354,6 @@ public class SalesContrastByItemManager {
 			} else {// 排序方式-销售量
 				Collections.sort(_voList, new ItemSaleRqtyComparator());
 			}
-
 		}
 
 		// 排序-Infancy
@@ -355,7 +363,15 @@ public class SalesContrastByItemManager {
 			} else {// 排序方式-销售量
 				Collections.sort(_voList, new ItemSaleRqtyComparator());
 			}
+		}
 
+		// 排序-AmpleLife
+		for (List<ItemSalesContrastVo> _voList : _list_Am) {
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(_voList, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(_voList, new ItemSaleRqtyComparator());
+			}
 		}
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
@@ -377,8 +393,17 @@ public class SalesContrastByItemManager {
 				Collections.sort(voTotalList_In, new ItemSaleRqtyComparator());
 			}
 
+			// 计算合计-AmpleLife
+			List<ItemSalesContrastVo> voTotalList_Am = calTotal(_list_Am, itemNoArray, "AmpleLife");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList_Am, new ItemSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList_Am, new ItemSaleRqtyComparator());
+			}
+
 			_list.addAll(_list_EQ);
 			_list.addAll(_list_Infancy);
+			_list.addAll(_list_Am);
 
 			// 计算合计
 			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray, "合计");
@@ -390,6 +415,7 @@ public class SalesContrastByItemManager {
 
 			_list.add(0, voTotalList_EQ);
 			_list.add(0, voTotalList_In);
+			_list.add(0, voTotalList_Am);
 			_list.add(0, voTotalList);
 		}
 		return _list;
