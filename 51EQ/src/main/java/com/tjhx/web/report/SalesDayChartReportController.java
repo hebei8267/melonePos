@@ -195,6 +195,7 @@ public class SalesDayChartReportController extends BaseController {
 		List<Organization> orgList = orgManager.getOpenSubOrganization();
 		List<SalesDayTotal> _salesDayTotalList_EQ = Lists.newArrayList();
 		List<SalesDayTotal> _salesDayTotalList_Infancy = Lists.newArrayList();
+		List<SalesDayTotal> _salesDayTotalList_Am = Lists.newArrayList();
 
 		for (SalesDayTotal salesDayInfo : salesDayTotalList) {
 			String _brand = getOrgBrand(orgList, salesDayInfo.getOrgId());
@@ -203,20 +204,25 @@ public class SalesDayChartReportController extends BaseController {
 				_salesDayTotalList_EQ.add(salesDayInfo);
 			} else if ("Infancy".equals(_brand)) {
 				_salesDayTotalList_Infancy.add(salesDayInfo);
+			} else if ("AmpleLife".equals(_brand)) {
+				_salesDayTotalList_Am.add(salesDayInfo);
 			}
 		}
 
 		SalesDayTotal _eqTotal = calTotal(_salesDayTotalList_EQ, "EQ+");
 		SalesDayTotal _inTotal = calTotal(_salesDayTotalList_Infancy, "Infancy");
+		SalesDayTotal _amTotal = calTotal(_salesDayTotalList_Am, "AmpleLife");
 
 		_salesDayTotalList_EQ.add(0, _eqTotal);
 		_salesDayTotalList_Infancy.add(0, _inTotal);
+		_salesDayTotalList_Am.add(0, _amTotal);
 
 		List<SalesDayTotal> _list = Lists.newArrayList();
 		_list.addAll(_salesDayTotalList_EQ);
 		_list.addAll(_salesDayTotalList_Infancy);
+		_list.addAll(_salesDayTotalList_Am);
 
-		_list.add(0, calTotal(Lists.newArrayList(_eqTotal, _inTotal), "合计"));
+		_list.add(0, calTotal(Lists.newArrayList(_eqTotal, _inTotal, _amTotal), "合计"));
 
 		model.addAttribute("salesDayTotalList", _list);
 	}

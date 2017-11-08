@@ -54,6 +54,18 @@
 						}
                 	}); 
                 });
+                $("#amCheckAll").click(function() {
+            		var checked = $("#amCheckAll").is(":checked");
+                	$("input[name='amOrgId']").each(function(){
+                		if (checked) {
+							$(this).attr("checked", true);
+							$(this).prop("checked", true);
+						} else {
+							$(this).attr("checked", false);
+							$(this).prop("checked", false);
+						}
+                	}); 
+                });
                 
 				$("#listForm").validate({
 					rules : {
@@ -172,6 +184,18 @@
 								</c:if>
 								<c:if test="${!orgIdList.contains(org.key)}">
 								<input type="checkbox" name="infOrgId" value="${org.key }"></input>${org.value }
+								</c:if>
+							</c:forEach>
+						</div>
+						
+						<div class="span12" style="margin-top: 10px;">
+							<input type="checkbox" id="amCheckAll"></input>AmpleLife门店
+							<c:forEach items="${amOrgList}" var="org">
+								<c:if test="${orgIdList.contains(org.key)}">
+								<input type="checkbox" name="amOrgId" value="${org.key }" checked></input>${org.value }
+								</c:if>
+								<c:if test="${!orgIdList.contains(org.key)}">
+								<input type="checkbox" name="amOrgId" value="${org.key }"></input>${org.value }
 								</c:if>
 							</c:forEach>
 						</div>

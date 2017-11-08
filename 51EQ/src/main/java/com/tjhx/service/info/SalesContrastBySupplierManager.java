@@ -156,6 +156,7 @@ public class SalesContrastBySupplierManager {
 
 		List<List<SupplierSalesContrastVo>> _list_EQ = Lists.newArrayList();
 		List<List<SupplierSalesContrastVo>> _list_Infancy = Lists.newArrayList();
+		List<List<SupplierSalesContrastVo>> _list_Am = Lists.newArrayList();
 
 		List<SupplierSalesContrastVo> _subList = null;
 		String tmpOrgId = null;
@@ -178,6 +179,14 @@ public class SalesContrastBySupplierManager {
 					_list_Infancy.add(_subList);
 				}
 				_subList.add(vo);
+			} else if ("AmpleLife".equals(_brand)) {
+				if (null == tmpOrgId || !tmpOrgId.equals(vo.getOrgId())) {
+					tmpOrgId = vo.getOrgId();
+					_subList = Lists.newArrayList();
+
+					_list_Am.add(_subList);
+				}
+				_subList.add(vo);
 			}
 
 		}
@@ -192,6 +201,14 @@ public class SalesContrastBySupplierManager {
 
 		// 排序-Infancy
 		for (List<SupplierSalesContrastVo> _voList : _list_Infancy) {
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(_voList, new SupSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(_voList, new SupSaleRqtyComparator());
+			}
+		}
+		// 排序-AmpleLife
+		for (List<SupplierSalesContrastVo> _voList : _list_Am) {
 			if ("amt".equals(orderMode)) {// 排序方式-销售额
 				Collections.sort(_voList, new SupSaleRamtComparator());
 			} else {// 排序方式-销售量
@@ -219,8 +236,17 @@ public class SalesContrastBySupplierManager {
 				Collections.sort(voTotalList_In, new SupSaleRqtyComparator());
 			}
 
+			// 计算合计-Infancy
+			List<SupplierSalesContrastVo> voTotalList_Am = calTotal(_list_Am, supplierArray, "AmpleLife");
+			if ("amt".equals(orderMode)) {// 排序方式-销售额
+				Collections.sort(voTotalList_Am, new SupSaleRamtComparator());
+			} else {// 排序方式-销售量
+				Collections.sort(voTotalList_Am, new SupSaleRqtyComparator());
+			}
+
 			_list.addAll(_list_EQ);
 			_list.addAll(_list_Infancy);
+			_list.addAll(_list_Am);
 
 			// 计算合计
 			List<SupplierSalesContrastVo> voTotalList = calTotal(_list, supplierArray, "合计");
@@ -232,6 +258,7 @@ public class SalesContrastBySupplierManager {
 
 			_list.add(0, voTotalList_EQ);
 			_list.add(0, voTotalList_In);
+			_list.add(0, voTotalList_Am);
 			_list.add(0, voTotalList);
 		}
 		return _list;
