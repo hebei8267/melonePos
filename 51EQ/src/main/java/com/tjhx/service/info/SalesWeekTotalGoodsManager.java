@@ -323,11 +323,13 @@ public class SalesWeekTotalGoodsManager {
 		List<Organization> orgList = orgManager.getOpenSubOrganization();
 		List<ReqBill> _eqList = calSalesWeekGoodsTotalList_EQ(orgList, list);
 		List<ReqBill> _infancyList = calSalesWeekGoodsTotalList_Infancy(orgList, list);
+		List<ReqBill> _amList = calSalesWeekGoodsTotalList_Am(orgList, list);
 
 		List<ReqBill> _reList = Lists.newArrayList();
 		_reList.add(totalReqBill);
 		_reList.addAll(_eqList);
 		_reList.addAll(_infancyList);
+		_reList.addAll(_amList);
 		// 总部
 		_reList.add(list.get(list.size() - 1));
 
@@ -353,6 +355,26 @@ public class SalesWeekTotalGoodsManager {
 
 		return _eqList;
 
+	}
+
+	private List<ReqBill> calSalesWeekGoodsTotalList_Am(List<Organization> orgList, List<ReqBill> list) {
+
+		List<ReqBill> _infancyList = Lists.newArrayList();
+
+		ReqBill totalReqBill = new ReqBill();
+		for (ReqBill reqBill : list) {
+			for (Organization _org : orgList) {
+				if ("AmpleLife".equals(_org.getBrand()) && _org.getName().equals(reqBill.getOrgId())) {
+					_infancyList.add(reqBill);
+					calTotalReqBill(totalReqBill, reqBill.getBarcode(), "AmpleLife", reqBill);
+				}
+			}
+
+		}
+
+		_infancyList.add(0, totalReqBill);
+
+		return _infancyList;
 	}
 
 	private List<ReqBill> calSalesWeekGoodsTotalList_Infancy(List<Organization> orgList, List<ReqBill> list) {
