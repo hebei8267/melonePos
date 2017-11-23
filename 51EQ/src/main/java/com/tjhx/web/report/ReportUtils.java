@@ -86,6 +86,7 @@ public class ReportUtils {
 
 		List<Organization> _eqOrgList = Lists.newArrayList();
 		List<Organization> _infOrgList = Lists.newArrayList();
+		List<Organization> _amOrgList = Lists.newArrayList();
 		for (Organization _org : _orgList) {
 			if (Constants.ROOT_ORG_ID.equals(_org.getId())) {
 				continue;
@@ -94,7 +95,10 @@ public class ReportUtils {
 				_eqOrgList.add(_org);
 			} else if ("Infancy".equals(_org.getBrand())) {
 				_infOrgList.add(_org);
+			} else if ("AmpleLife".equals(_org.getBrand())) {
+				_amOrgList.add(_org);
 			}
+
 		}
 
 		Map<String, String> orgList = new LinkedHashMap<String, String>();
@@ -109,6 +113,12 @@ public class ReportUtils {
 		for (Organization _org : _infOrgList) {
 			orgList.put(_org.getId(), _org.getName());
 		}
+
+		orgList.put("AmpleLife", "AmpleLife");
+		for (Organization _org : _amOrgList) {
+			orgList.put(_org.getId(), _org.getName());
+		}
+
 		model.addAttribute("orgList", orgList);
 	}
 

@@ -199,6 +199,7 @@ public class GrossProfitAbcController extends BaseController {
 		// 分门店品牌
 		List<SalesDayTotalGoods> _eqList = calSalesDayTotalGoodsList_EQ(orgList, _tmplist);
 		List<SalesDayTotalGoods> _infancyList = calSalesDayTotalGoodsList_Infancy(orgList, _tmplist);
+		List<SalesDayTotalGoods> _amList = calSalesDayTotalGoodsList_AmpleLife(orgList, _tmplist);
 
 		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
 		for (SalesDayTotalGoods salesGoods : _tmplist) {
@@ -209,28 +210,49 @@ public class GrossProfitAbcController extends BaseController {
 		_reList.add(totalGoods);
 		_reList.addAll(_eqList);
 		_reList.addAll(_infancyList);
+		_reList.addAll(_amList);
 
 		return _reList;
 	}
 
+	private List<SalesDayTotalGoods> calSalesDayTotalGoodsList_AmpleLife(List<Organization> orgList, List<SalesDayTotalGoods> list) {
+		List<SalesDayTotalGoods> _amList = Lists.newArrayList();
+
+		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
+		for (SalesDayTotalGoods goods : list) {
+
+			for (Organization _org : orgList) {
+				if ("AmpleLife".equals(_org.getBrand()) && _org.getId().equals(goods.getOrgId())) {
+					_amList.add(goods);
+					calTotalGoods(totalGoods, "AmpleLife", goods);
+				}
+			}
+
+		}
+
+		_amList.add(0, totalGoods);
+
+		return _amList;
+	}
+
 	private List<SalesDayTotalGoods> calSalesDayTotalGoodsList_Infancy(List<Organization> orgList, List<SalesDayTotalGoods> list) {
-		List<SalesDayTotalGoods> _eqList = Lists.newArrayList();
+		List<SalesDayTotalGoods> _inList = Lists.newArrayList();
 
 		SalesDayTotalGoods totalGoods = new SalesDayTotalGoods();
 		for (SalesDayTotalGoods goods : list) {
 
 			for (Organization _org : orgList) {
 				if ("Infancy".equals(_org.getBrand()) && _org.getId().equals(goods.getOrgId())) {
-					_eqList.add(goods);
+					_inList.add(goods);
 					calTotalGoods(totalGoods, "Infancy", goods);
 				}
 			}
 
 		}
 
-		_eqList.add(0, totalGoods);
+		_inList.add(0, totalGoods);
 
-		return _eqList;
+		return _inList;
 	}
 
 	private List<SalesDayTotalGoods> calSalesDayTotalGoodsList_EQ(List<Organization> orgList, List<SalesDayTotalGoods> list) {
