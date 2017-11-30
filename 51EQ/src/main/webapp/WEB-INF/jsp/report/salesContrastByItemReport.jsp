@@ -309,7 +309,8 @@
 	            
 				<div class="span12">
 					
-					<table class="table	table-striped table-bordered table-condensed mytable" id="content-table" id="table_1">
+					<div class="table-scrollable">
+	                <table class="table table-striped table-bordered table-hover mytable1" id="table_1">
 						<thead>
 							<tr>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>
@@ -434,6 +435,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					</div>
 					
 				</div>
 			</div>
