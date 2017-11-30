@@ -16,6 +16,8 @@
 		<script src="${ctx}/static/js/select2.min.js"></script>
 		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
 		<script src="${ctx}/static/js/excelexport.js"></script>
+		<link href="${ctx}/assets/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <script src="${ctx}/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
 		<style>
 		.font2 {
 			font-family : "Microsoft YaHei" ! important;
@@ -25,6 +27,28 @@
 		</style>
 		<script>
 			$(function() {
+				var table = $('#table_1').dataTable({
+					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
+					],
+					"language" : {
+						"sProcessing" : "正在加载中......",
+						"sLengthMenu" : "显示 _MENU_ 条记录",
+						"sZeroRecords" : "对不起,查询不到相关数据!",
+						"sEmptyTable" : "无数据!",
+						"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+						"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+						"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+						"sSearch" : "搜索 ",
+						"paginate" : {
+							"previous" : "上一页",
+							"next" : "下一页",
+							"last" : "末页",
+							"first" : "首页"
+						}
+					},
+					"order" : [[0, "asc"]] // set first column as a default sort by asc
+				});
+				
 				var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
 	            $(".dl-xls-ext").click(function() {
 					ee.downloadXLS("${ctx}/excelFile", "excelexport.xls");
@@ -285,7 +309,7 @@
 	            
 				<div class="span12">
 					
-					<table class="table	table-striped table-bordered table-condensed mytable" id="content-table">
+					<table class="table	table-striped table-bordered table-condensed mytable" id="content-table" id="table_1">
 						<thead>
 							<tr>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>
