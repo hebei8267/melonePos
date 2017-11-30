@@ -18,9 +18,7 @@
 		<script src="${ctx}/static/js/select2.min.js"></script>
 		<script src="${ctx}/static/js/select2_locale_zh-CN.js"></script>
         <link href="${ctx}/assets/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-        
         <script src="${ctx}/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
 		<link href="${ctx}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     	<script>
     		var itemTypeListJson = ${itemTypeList};

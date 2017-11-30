@@ -28,7 +28,7 @@
 		</style>
 		<script>
 			$(function() {
-				var table = $('#table_1').dataTable({
+				var table = $('#content-table').dataTable({
 					"lengthMenu" : [[30,50,100,-1], [30,50, 100, "全部"] // change per page values here
 					],
 					"language" : {
@@ -50,7 +50,7 @@
 					"order" : [[0, "asc"]] // set first column as a default sort by asc
 				});
 				
-				var ee = excelExport("table_1").parseToCSV().parseToXLS("excelexport sheet");
+				var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
 	            $(".dl-xls-ext").click(function() {
 					ee.downloadXLS("${ctx}/excelFile", "excelexport.xls");
 				});
@@ -311,7 +311,7 @@
 				<div class="span12">
 					
 					<div class="table-scrollable">
-	                <table class="table table-striped table-bordered table-hover mytable1" id="table_1">
+	                <table class="table table-striped table-bordered table-hover mytable1" id="content-table">
 						<thead>
 							<tr>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 店号 </th>
