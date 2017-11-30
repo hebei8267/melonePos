@@ -429,9 +429,6 @@
 				                </c:if>
 							</tr>
 							</c:forEach>
-							<tr>
-							<td colspan="19"></td>
-							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
