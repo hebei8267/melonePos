@@ -429,7 +429,7 @@
 							</tr>
 							</c:forEach>
 							<tr>
-							<td colspan="17"></td>
+							<td colspan="19"></td>
 							</tr>
 							</c:forEach>
 						</tbody>
