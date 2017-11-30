@@ -50,7 +50,7 @@
 					"order" : [[0, "asc"]] // set first column as a default sort by asc
 				});
 				
-				var ee = excelExport("content-table").parseToCSV().parseToXLS("excelexport sheet");
+				var ee = excelExport("table_1").parseToCSV().parseToXLS("excelexport sheet");
 	            $(".dl-xls-ext").click(function() {
 					ee.downloadXLS("${ctx}/excelFile", "excelexport.xls");
 				});
