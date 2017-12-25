@@ -340,8 +340,11 @@
 							<tr>
 								<td class="center"> ${salesContrastVo.orgName} </td>
 								<td class="center"> ${salesContrastVo.itemName} </td>
-								<td class="center font2"> ${salesContrastVo.saleRqty1} </td>
-								<td class="center font2"> ${salesContrastVo.saleRqty2} </td>
+								
+								<fmt:parseNumber var="_saleRqty1" integerOnly="true" type="number" value="${salesContrastVo.saleRqty1}" />
+								<fmt:parseNumber var="_saleRqty2" integerOnly="true" type="number" value="${salesContrastVo.saleRqty2}" />
+								<td class="center font2"> <c:out value="${_saleRqty1}" /> </td>
+								<td class="center font2"> <c:out value="${_saleRqty2}" /> </td>
 								
 								<fmt:parseNumber var="saleRqty1" type="number" value="${salesContrastVo.saleRqty1}" />
 								<fmt:parseNumber var="saleRqty2" type="number" value="${salesContrastVo.saleRqty2}" />
@@ -355,8 +358,10 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
-								<td class="center"> ${salesContrastVo.saleRamt1} </td>
-								<td class="center"> ${salesContrastVo.saleRamt2} </td>
+								<fmt:parseNumber var="_saleRamt1" integerOnly="true" type="number" value="${salesContrastVo.saleRamt1}" />
+								<fmt:parseNumber var="_saleRamt2" integerOnly="true" type="number" value="${salesContrastVo.saleRamt2}" />
+								<td class="center"> <c:out value="${_saleRamt1}" /> </td>
+								<td class="center"> <c:out value="${_saleRamt2}" /> </td>
 								
 								<fmt:parseNumber var="saleRamt1" type="number" value="${salesContrastVo.saleRamt1}" />
 								<fmt:parseNumber var="saleRamt2" type="number" value="${salesContrastVo.saleRamt2}" />
@@ -386,8 +391,10 @@
 								<td class="center font2">－</td>
 								</c:if> -->
 								
-								<td class="center font2"> ${salesContrastVo.stockTotalQty1} </td>
-								<td class="center font2"> ${salesContrastVo.stockTotalQty2} </td>
+								<fmt:parseNumber var="_stockTotalQty1" integerOnly="true" type="number" value="${salesContrastVo.stockTotalQty1}" />
+								<fmt:parseNumber var="_stockTotalQty2" integerOnly="true" type="number" value="${salesContrastVo.stockTotalQty2}" />
+								<td class="center font2"> <c:out value="${_stockTotalQty1}" /> </td>
+								<td class="center font2"> <c:out value="${_stockTotalQty2}" /> </td>
 								
 								<fmt:parseNumber var="stockTotalQty1" type="number" value="${salesContrastVo.stockTotalQty1}" />
 								<fmt:parseNumber var="stockTotalQty2" type="number" value="${salesContrastVo.stockTotalQty2}" />
@@ -401,8 +408,10 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
-								<td class="center font2"> ${salesContrastVo.stockTotalAmt1} </td>
-								<td class="center font2"> ${salesContrastVo.stockTotalAmt2} </td>
+								<fmt:parseNumber var="_stockTotalAmt1" integerOnly="true" type="number" value="${salesContrastVo.stockTotalAmt1}" />
+								<fmt:parseNumber var="_stockTotalAmt2" integerOnly="true" type="number" value="${salesContrastVo.stockTotalAmt2}" />
+								<td class="center font2"> <c:out value="${_stockTotalAmt1}" /> </td>
+								<td class="center font2"> <c:out value="${_stockTotalAmt2}" /> </td>
 								
 								<fmt:parseNumber var="salesContrast" type="number" value="${salesContrastVo.salesContrast}" />
 								<c:if test="${salesContrast > 0}" >
