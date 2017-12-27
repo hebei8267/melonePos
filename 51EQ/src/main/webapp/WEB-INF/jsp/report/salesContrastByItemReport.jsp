@@ -321,9 +321,9 @@
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额一 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 销售额二 </th>
 								<th style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
-							<!-- 	<th class="center"> 均价一 </th>
+								<th class="center"> 均价一 </th>
 								<th class="center"> 均价二 </th>
-								<th class="center">趋势</th> -->
+								<th class="center">趋势</th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量一 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);"> 库存量二 </th>
 								<th class="center" style="background-image: linear-gradient(to bottom,#62c462,#51a351);">趋势</th>
@@ -375,7 +375,7 @@
 								<td class="center font2">－</td>
 								</c:if>
 								
-								<!-- 
+	
 								<td class="center  font2"> ${salesContrastVo.salePrice1} </td>
 								<td class="center  font2"> ${salesContrastVo.salePrice2} </td>
 								
@@ -389,7 +389,7 @@
 								</c:if>
 								<c:if test="${salePrice2 == salePrice1}" >
 								<td class="center font2">－</td>
-								</c:if> -->
+								</c:if>
 								
 								<fmt:parseNumber var="_stockTotalQty1" integerOnly="true" type="number" value="${salesContrastVo.stockTotalQty1}" />
 								<fmt:parseNumber var="_stockTotalQty2" integerOnly="true" type="number" value="${salesContrastVo.stockTotalQty2}" />
