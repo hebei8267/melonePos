@@ -342,7 +342,7 @@
 								</c:if>
 								
 								<fmt:parseNumber var="_saleRamt1" integerOnly="true" type="number" value="${salesContrastVo.saleRamt1}" />
-								<fmt:parseNumber var="_saleRamt2" integerOnly="true" type="number" value="${salesContrastVo.saleRamt1}" />
+								<fmt:parseNumber var="_saleRamt2" integerOnly="true" type="number" value="${salesContrastVo.saleRamt2}" />
 								<td class="center"> <c:out value="${_saleRamt1}" /> </td>
 								<td class="center"> <c:out value="${_saleRamt2}" /> </td>
 								
