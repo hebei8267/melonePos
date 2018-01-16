@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -151,6 +152,10 @@ public class StoreDetailManager {
 			for (Organization org : _orgList) {
 				// 日期
 				StoreDetail _param = new StoreDetail();
+
+				if (StringUtils.isBlank(org.getBwBranchNo()) || StringUtils.isBlank(optDate)) {
+					continue;
+				}
 				_param.setBwBranchNo(org.getBwBranchNo());
 				_param.setOptDate(optDate);
 				List<StoreDetail> _dbDayTotal = storeDetailMyBatisDao.getDayTotalList(_param);
