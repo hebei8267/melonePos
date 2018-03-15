@@ -77,9 +77,13 @@ public class ReqBillManagerTest1 extends SpringTransactionalTestCase {
 
 			List<ReqBill> _reqBillList = reqBillMyBatisDao.getReqBillListByOrgId(param);
 
-			String sd = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -31, "yyyy-MM-dd");
-			String sd3 = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -91, "yyyy-MM-dd");
-			String ed = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -1, "yyyy-MM-dd");
+			if (null == _reqBillList || _reqBillList.size() == 0) {
+				continue;
+			}
+			
+			String sd = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -32, "yyyy-MM-dd");
+			String sd3 = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -92, "yyyy-MM-dd");
+			String ed = DateUtils.getNextDateFormatDate(DateUtils.getCurFormatDate("yyyy-MM-dd"), -2, "yyyy-MM-dd");
 			// 门店ABC-近一月
 			Map<String, String> orgAbcMap = getOrgAbcMap(sd, ed, org.getId());
 			// 全店ABC-近一月
@@ -88,10 +92,6 @@ public class ReqBillManagerTest1 extends SpringTransactionalTestCase {
 			Map<String, String> orgAbc3Map = getOrgAbcMap(sd3, ed, org.getId());
 			// 全店ABC-近三月
 			Map<String, String> abc3Map = getOrgAbcMap(sd3, ed);
-
-			if (null == _reqBillList || _reqBillList.size() == 0) {
-				continue;
-			}
 
 			// 填充对象信息(计算建议采购数量/ABC排名)
 			fillObj(_reqBillList, orgAbcMap, abcMap, orgAbc3Map, abc3Map);
