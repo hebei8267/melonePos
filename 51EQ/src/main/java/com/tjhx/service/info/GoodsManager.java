@@ -69,6 +69,10 @@ public class GoodsManager {
 		_goods.setItemNo(_itemGoods.getItemClsno());
 		// 供应商编号
 		_goods.setSupplierBwId(_itemGoods.getSupcustNo());
+		// 商品售价
+		_goods.setSalePrice(_itemGoods.getItemPrice());
+		// 商品成本价
+		_goods.setCostPrice(_itemGoods.getCostPrice());
 
 		goodsJpaDao.save(_goods);
 

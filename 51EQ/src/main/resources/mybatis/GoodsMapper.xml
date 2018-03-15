@@ -19,6 +19,8 @@
         py_name VARCHAR(32),
         subno VARCHAR(16),
         supplier_bw_id VARCHAR(16),
+        cost_price DECIMAL(19,2),
+        sale_price DECIMAL(19,2),
         PRIMARY KEY (uuid),
         CONSTRAINT subno UNIQUE (subno),
         INDEX index_goods_sup_id (supplier_bw_id),

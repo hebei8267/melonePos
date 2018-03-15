@@ -1,5 +1,7 @@
 package com.tjhx.entity.info;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -30,6 +32,10 @@ public class Goods extends IdEntity {
 	private String itemNo;
 	/** 供应商编号-百威 */
 	private String supplierBwId;
+	/** 商品售价 */
+	private BigDecimal salePrice;
+	/** 商品成本价 */
+	private BigDecimal costPrice;
 
 	/**
 	 * 取得短条码
@@ -144,5 +150,41 @@ public class Goods extends IdEntity {
 	 */
 	public void setSupplierBwId(String supplierBwId) {
 		this.supplierBwId = supplierBwId;
+	}
+
+	/**
+	 * 取得商品售价
+	 * 
+	 * @return 商品售价
+	 */
+	public BigDecimal getSalePrice() {
+		return salePrice;
+	}
+
+	/**
+	 * 设置商品售价
+	 * 
+	 * @param salePrice 商品售价
+	 */
+	public void setSalePrice(BigDecimal salePrice) {
+		this.salePrice = salePrice;
+	}
+
+	/**
+	 * 取得商品成本价
+	 * 
+	 * @return 商品成本价
+	 */
+	public BigDecimal getCostPrice() {
+		return costPrice;
+	}
+
+	/**
+	 * 设置商品成本价
+	 * 
+	 * @param costPrice 商品成本价
+	 */
+	public void setCostPrice(BigDecimal costPrice) {
+		this.costPrice = costPrice;
 	}
 }

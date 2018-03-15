@@ -212,29 +212,23 @@
 	    	bill.org_id ,
 	    	bill.product_name ,
 	    	bill.product_no ,
-	    	bill.ref_price ,
+	    	gd.cost_price AS costPrice ,
 	    	bill.remarks ,
 	    	bill.supplier_name 
-		from t_req_bill_tmp bill
-		LEFT JOIN 
-			t_store_detail_one_day store ON bill.barcode = store.item_barcode AND bill.org_id = store.org_id 
-		LEFT JOIN
-		    t_sales_week_total_goods_1 good1 ON bill.barcode = good1.item_barcode AND bill.org_id = good1.org_id
-		LEFT JOIN
-		    t_sales_week_total_goods_2 good2 ON bill.barcode = good2.item_barcode AND bill.org_id = good2.org_id
-		LEFT JOIN
-		    t_sales_week_total_goods_3 good3 ON bill.barcode = good3.item_barcode AND bill.org_id = good3.org_id
-		LEFT JOIN
-		    t_sales_week_total_goods_4 good4 ON bill.barcode = good4.item_barcode AND bill.org_id = good4.org_id
+		from 
+			t_goods gd,
+			t_req_bill_tmp bill
+				LEFT JOIN t_store_detail_one_day store ON bill.barcode = store.item_barcode AND bill.org_id = store.org_id 
+				LEFT JOIN t_sales_week_total_goods_1 good1 ON bill.barcode = good1.item_barcode AND bill.org_id = good1.org_id
+				LEFT JOIN t_sales_week_total_goods_2 good2 ON bill.barcode = good2.item_barcode AND bill.org_id = good2.org_id
+				LEFT JOIN t_sales_week_total_goods_3 good3 ON bill.barcode = good3.item_barcode AND bill.org_id = good3.org_id
+				LEFT JOIN t_sales_week_total_goods_4 good4 ON bill.barcode = good4.item_barcode AND bill.org_id = good4.org_id
 		<where>
-  			<if test="batchId != null and batchId !='' ">
   			bill.batch_id = #{batchId}
-  			</if>
-  			<if test="orgId != null and orgId !='' ">
-  			AND bill.org_id = #{orgId}
-  			</if>
+  		AND bill.org_id = #{orgId}
+  		AND bill.barcode = gd.barcode
 	  	</where>
-	  	order by bill.supplier_name 
+	  	ORDER BY bill._index asc
 	</select>
 	
 </mapper>

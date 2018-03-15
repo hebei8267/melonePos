@@ -65,7 +65,8 @@ public class ReqBill extends IdEntity {
 	private BigDecimal highPurchase = new BigDecimal("0");
 	/** 销售数量-半月最高销售量 */
 	private BigDecimal hmPosQty = new BigDecimal("0");
-
+	/** 成本 */
+	private BigDecimal costPrice;
 	/** 销售金额-合计 */
 	private BigDecimal posAmtTotal = new BigDecimal("0");
 	/** 销售金额-近1周 */
@@ -87,6 +88,15 @@ public class ReqBill extends IdEntity {
 	private BigDecimal stockRatio = new BigDecimal("0");
 	/** 单商品全机构要货单明细 */
 	private List<ReqBill> orgReqBillList;
+
+	/** 门店ABC-近一月 */
+	private String orgAbc;
+	/** 全店ABC-近一月 */
+	private String abc;
+	/** 门店ABC-近三月 */
+	private String orgAbc3;
+	/** 全店ABC-近三月 */
+	private String abc3;
 
 	/**
 	 * 取得处理批次号
@@ -718,6 +728,101 @@ public class ReqBill extends IdEntity {
 	 */
 	public void setOrgReqBillList(List<ReqBill> orgReqBillList) {
 		this.orgReqBillList = orgReqBillList;
+	}
+
+	/**
+	 * 取得costPrice
+	 * 
+	 * @return costPrice
+	 */
+	@Transient
+	public BigDecimal getCostPrice() {
+		return costPrice;
+	}
+
+	/**
+	 * 设置costPrice
+	 * 
+	 * @param costPrice costPrice
+	 */
+	public void setCostPrice(BigDecimal costPrice) {
+		this.costPrice = costPrice;
+	}
+
+	/**
+	 * 取得orgAbc
+	 * 
+	 * @return orgAbc
+	 */
+	@Transient
+	public String getOrgAbc() {
+		return orgAbc;
+	}
+
+	/**
+	 * 设置orgAbc
+	 * 
+	 * @param orgAbc orgAbc
+	 */
+	public void setOrgAbc(String orgAbc) {
+		this.orgAbc = orgAbc;
+	}
+
+	/**
+	 * 取得abc
+	 * 
+	 * @return abc
+	 */
+	@Transient
+	public String getAbc() {
+		return abc;
+	}
+
+	/**
+	 * 设置abc
+	 * 
+	 * @param abc abc
+	 */
+	public void setAbc(String abc) {
+		this.abc = abc;
+	}
+
+	/**
+	 * 取得orgAbc3
+	 * 
+	 * @return orgAbc3
+	 */
+	@Transient
+	public String getOrgAbc3() {
+		return orgAbc3;
+	}
+
+	/**
+	 * 设置orgAbc3
+	 * 
+	 * @param orgAbc3 orgAbc3
+	 */
+	public void setOrgAbc3(String orgAbc3) {
+		this.orgAbc3 = orgAbc3;
+	}
+
+	/**
+	 * 取得abc3
+	 * 
+	 * @return abc3
+	 */
+	@Transient
+	public String getAbc3() {
+		return abc3;
+	}
+
+	/**
+	 * 设置abc3
+	 * 
+	 * @param abc3 abc3
+	 */
+	public void setAbc3(String abc3) {
+		this.abc3 = abc3;
 	}
 
 }

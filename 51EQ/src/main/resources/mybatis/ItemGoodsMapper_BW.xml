@@ -6,6 +6,10 @@
 	<resultMap id="Result_Map_ItemGoods" type="com.tjhx.entity.bw.ItemGoods">
 		<!-- 商品名称 -->
 		<result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+		<!-- 商品售价 -->
+		<result column="item_sale_price" property="itemPrice" jdbcType="NUMERIC"/>
+		<!-- 商品成本价 -->
+		<result column="item_price" property="costPrice" jdbcType="NUMERIC"/>
 		<!-- 短条码 -->
 		<result column="item_subno" property="itemSubno" jdbcType="VARCHAR"/>
 		<!-- 长条码 -->
@@ -24,6 +28,8 @@
 	<![CDATA[
 		SELECT
 		    vinfo.item_subno ,
+		    vinfo.item_sale_price ,
+		    vinfo.item_price ,
 		    vinfo.item_barcode ,
 		    vinfo.item_name ,
 		    vinfo.item_clsno ,
