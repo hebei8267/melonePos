@@ -358,6 +358,7 @@
 		FROM
 		    (
 		        SELECT
+		        	sgd.item_barcode,
 		            sgd.item_subno,
 		            SUM(sgd.pos_amt) 	AS pos_amt,
 		            SUM(sgd.pos_qty) 	AS pos_qty,
@@ -443,6 +444,7 @@
 		FROM
 		    (
 		        SELECT
+		        	sgd.item_barcode,
 		            sgd.item_subno,
 		            SUM(sgd.pos_amt) AS pos_amt,
 		            SUM(sgd.pos_qty) AS pos_qty,

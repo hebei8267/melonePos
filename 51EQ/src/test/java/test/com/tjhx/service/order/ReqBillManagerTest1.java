@@ -125,8 +125,8 @@ public class ReqBillManagerTest1 extends SpringTransactionalTestCase {
 	 */
 	private Map<String, String> getOrgAbcMap(String startDate, String endDate, String orgId) throws ParseException {
 		// (1个月门店)合计销售金额统计 - 1 0 - 隐藏D报表
-		GrossProfitAbcVo orgVo = grossProfitAbcManager.getGrossProfitAbcInfo("2016-01-01", "2016-01-31", orgId, null, null, null, "1", 70,
-				20, 10, null, "0");
+		GrossProfitAbcVo orgVo = grossProfitAbcManager.getGrossProfitAbcInfo(startDate, endDate, orgId, null, null, null, "1", 70, 20, 10,
+				null, "0");
 
 		Map<String, String> res = Maps.newHashMap();
 
