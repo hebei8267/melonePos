@@ -114,8 +114,10 @@
 		    bill.product_no ,
 		    bill.ref_price ,
 		    bill.remarks ,
+		    gd.cost_price AS costPrice ,
 		    bill.supplier_name
 		FROM
+			t_goods gd,
 		    t_req_bill_tmp bill
 		LEFT JOIN
 		    t_sales_week_total_goods_1 good1 ON bill.barcode = good1.item_barcode AND bill.org_id = good1.org_id
@@ -130,6 +132,7 @@
 		WHERE
 		    batch_id = #{batchId}
 		AND supplier_name = #{supplierName}
+		AND bill.barcode = gd.barcode
 		ORDER BY
 		    org_id
 	</select>
