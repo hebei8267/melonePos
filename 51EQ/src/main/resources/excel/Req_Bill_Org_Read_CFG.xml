@@ -12,9 +12,9 @@
 				<mapping row="1" col="3">reqBill.productName</mapping><!-- 商品名称 -->
 				<mapping row="1" col="4">reqBill.inventoryNum</mapping><!-- 库存数量 -->
 				<mapping row="1" col="5">reqBill.appNum</mapping><!-- 申请数量 -->
-				<mapping row="1" col="6">reqBill.refPrice</mapping><!-- 参考进价 -->
-				<mapping row="1" col="7">reqBill.supplierName</mapping><!-- 主供应商 -->
-				<mapping row="1" col="8">reqBill.remarks</mapping><!-- 备注 -->
+				<!-- <mapping row="1" col="6">reqBill.refPrice</mapping>参考进价 -->
+				<mapping row="1" col="6">reqBill.supplierName</mapping><!-- 主供应商 -->
+				<mapping row="1" col="7">reqBill.remarks</mapping><!-- 备注 -->
 			</section>
 			<loopbreakcondition>
 				<rowcheck offset="0">
