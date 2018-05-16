@@ -376,47 +376,66 @@ public class SalesContrastByItemManager {
 
 		List<List<ItemSalesContrastVo>> _list = Lists.newArrayList();
 
-		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length > 1) {
-			// 计算合计-EQ+
-			List<ItemSalesContrastVo> voTotalList_EQ = calTotal(_list_EQ, itemNoArray, "EQ+");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList_EQ, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList_EQ, new ItemSaleRqtyComparator());
+		int _brandCnt = 0;
+		if (ArrayUtils.isNotEmpty(orgIds) && orgIds.length >= 1) {
+
+			if (null != _list_EQ && _list_EQ.size() > 0) {
+				// 计算合计-EQ+
+				List<ItemSalesContrastVo> voTotalList_EQ = calTotal(_list_EQ, itemNoArray, "EQ+");
+				if ("amt".equals(orderMode)) {// 排序方式-销售额
+					Collections.sort(voTotalList_EQ, new ItemSaleRamtComparator());
+				} else {// 排序方式-销售量
+					Collections.sort(voTotalList_EQ, new ItemSaleRqtyComparator());
+				}
+
+				_list.addAll(_list_EQ);
+				_list.add(0, voTotalList_EQ);
+
+				_brandCnt++;
 			}
 
-			// 计算合计-Infancy
-			List<ItemSalesContrastVo> voTotalList_In = calTotal(_list_Infancy, itemNoArray, "Infancy");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList_In, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList_In, new ItemSaleRqtyComparator());
+			if (null != _list_Infancy && _list_Infancy.size() > 0) {
+				// 计算合计-Infancy
+				List<ItemSalesContrastVo> voTotalList_In = calTotal(_list_Infancy, itemNoArray, "Infancy");
+				if ("amt".equals(orderMode)) {// 排序方式-销售额
+					Collections.sort(voTotalList_In, new ItemSaleRamtComparator());
+				} else {// 排序方式-销售量
+					Collections.sort(voTotalList_In, new ItemSaleRqtyComparator());
+				}
+
+				_list.addAll(_list_Infancy);
+				_list.add(0, voTotalList_In);
+
+				_brandCnt++;
 			}
 
-			// 计算合计-AmpleLife
-			List<ItemSalesContrastVo> voTotalList_Am = calTotal(_list_Am, itemNoArray, "AmpleLife");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList_Am, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList_Am, new ItemSaleRqtyComparator());
+			if (null != _list_Am && _list_Am.size() > 0) {
+				// 计算合计-AmpleLife
+				List<ItemSalesContrastVo> voTotalList_Am = calTotal(_list_Am, itemNoArray, "AmpleLife");
+				if ("amt".equals(orderMode)) {// 排序方式-销售额
+					Collections.sort(voTotalList_Am, new ItemSaleRamtComparator());
+				} else {// 排序方式-销售量
+					Collections.sort(voTotalList_Am, new ItemSaleRqtyComparator());
+				}
+
+				_list.addAll(_list_Am);
+				_list.add(0, voTotalList_Am);
+
+				_brandCnt++;
 			}
 
-			_list.addAll(_list_EQ);
-			_list.addAll(_list_Infancy);
-			_list.addAll(_list_Am);
+			if (_brandCnt > 1) {
+				// 计算合计
+				List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray, "合计");
+				if ("amt".equals(orderMode)) {// 排序方式-销售额
+					Collections.sort(voTotalList, new ItemSaleRamtComparator());
+				} else {// 排序方式-销售量
+					Collections.sort(voTotalList, new ItemSaleRqtyComparator());
+				}
 
-			// 计算合计
-			List<ItemSalesContrastVo> voTotalList = calTotal(_list, itemNoArray, "合计");
-			if ("amt".equals(orderMode)) {// 排序方式-销售额
-				Collections.sort(voTotalList, new ItemSaleRamtComparator());
-			} else {// 排序方式-销售量
-				Collections.sort(voTotalList, new ItemSaleRqtyComparator());
+				_list.add(0, voTotalList);
 			}
 
-			_list.add(0, voTotalList_EQ);
-			_list.add(0, voTotalList_In);
-			_list.add(0, voTotalList_Am);
-			_list.add(0, voTotalList);
 		}
 		return _list;
 	}
