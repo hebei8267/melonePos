@@ -14,6 +14,7 @@
 				<ref bean="punchClockJobCronTrigger" />
 				<ref bean="bwSaleAmtJobCronTrigger" />
 				<ref bean="saleInfoJobCronTrigger" />
+				<ref bean="k11JobCronTrigger" />
 			<!-- <ref bean="orgStoreJobCronTrigger" />
 				<ref bean="goodsJobCronTrigger" />
 				<ref bean="orgSalesTotalItemJobCronTrigger" />
@@ -31,7 +32,27 @@
 		<!-- 启动时延期3秒开始任务 -->
 		<property name="startupDelay" value="3" />
 	</bean>
-
+	<!-- ##################################### K11商场数据同步  ###################################### -->
+	<!-- Cron式Trigger定义 -->
+	<bean id="k11JobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="k11JobDetail" />
+		<!-- 每天上午 3:00 触发 -->
+		<property name="cronExpression" value="0 0 3 * * ?" />
+	</bean>
+	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<bean id="k11JobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="k11Job" />
+		<property name="targetMethod" value="execute" />
+		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
+		<property name="concurrent" value="true" />
+	</bean>
+	<!-- 被Cron执行的普通Spring Bean -->
+	<bean id="k11Job" class="com.tjhx.schedule.K11Job" />
+	
+	
+	
+	
+	
 	<!-- ##################################### 打卡机  ###################################### -->
 	<!-- Cron式Trigger定义 -->
 	<bean id="punchClockJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
