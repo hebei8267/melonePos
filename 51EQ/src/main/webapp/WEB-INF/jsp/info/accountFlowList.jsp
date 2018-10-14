@@ -184,6 +184,9 @@
                                         日期
                                     </th>
                                     <th class="center">
+                                        业务编号
+                                    </th>
+                                    <th class="center">
                                         拨入来源
                                     </th>
                                     <th class="center">
@@ -220,6 +223,7 @@
 										<fmt:parseDate value="${accountFlow.optDate}" var="_optDate" pattern="yyyyMMdd" />
                             			<fmt:formatDate pattern="yyyy-MM-dd" value="${_optDate}" />
 									</td>
+									<td class="center">${accountFlow.bizCode}</td>
                             		<td class="center">${accountFlow.inAmtDesc}</td>
                             		<td class="center"><p class="font1">${accountFlow.inAmt}</p></td>
                             		<td class="center">${accountFlow.outAmt}</td>

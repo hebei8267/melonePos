@@ -1,3 +1,4 @@
+
 package com.tjhx.service.info;
 
 import java.io.BufferedInputStream;
@@ -264,6 +265,8 @@ public class AccountFlowManager {
 		}
 		// 日期
 		dbAccountFlow.setOptDate(DateUtils.transDateFormat(accountFlow.getOptDate(), "yyyy-MM-dd", "yyyyMMdd"));
+		// 业务编号
+		dbAccountFlow.setBizCode(accountFlow.getBizCode());
 		// 余额
 		dbAccountFlow.setBalanceAmt(accountFlow.getBalanceAmt());
 		// 拨入来源

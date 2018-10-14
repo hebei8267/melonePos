@@ -18,6 +18,8 @@ public class AccountFlow extends IdEntity {
 	private static final long serialVersionUID = 4934637793138775985L;
 	/** 日期 */
 	private String optDate;
+	/** 业务编号 */
+	private String bizCode;
 	/** 余额 */
 	private BigDecimal balanceAmt = new BigDecimal("0");
 	/** 拨入来源 */
@@ -52,6 +54,25 @@ public class AccountFlow extends IdEntity {
 	 */
 	public void setOptDate(String optDate) {
 		this.optDate = optDate;
+	}
+
+	/**
+	 * 取得bizCode
+	 * 
+	 * @return bizCode
+	 */
+	@Column(length = 64)
+	public String getBizCode() {
+		return bizCode;
+	}
+
+	/**
+	 * 设置bizCode
+	 * 
+	 * @param bizCode bizCode
+	 */
+	public void setBizCode(String bizCode) {
+		this.bizCode = bizCode;
 	}
 
 	/**

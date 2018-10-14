@@ -209,6 +209,10 @@
                             <label class="left-control-label">${accountFlow.optDate}</label>
                         </div>
                         <div class="control-group">
+                            <label class="control-label">业务编号 :</label>
+                            <label class="left-control-label">${accountFlow.bizCode}</label>
+                        </div>
+                        <div class="control-group">
                             <label class="control-label">拨入来源 :</label>
                             <label class="left-control-label">${accountFlow.inAmtDesc}</label>
                         </div>

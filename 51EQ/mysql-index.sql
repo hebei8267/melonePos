@@ -32,3 +32,19 @@ UPDATE t_cash_daily SET bw_wx_sale_amt = 0;
 
 
 ALTER TABLE kafei_new.t_bank_card ADD (account_name VARCHAR(32))
+
+
+
+
+
+
+
+ALTER TABLE
+    t_goods ADD (cost_price DECIMAL(19,2));
+ALTER TABLE
+    t_goods ADD (sale_price DECIMAL(19,2));
+    
+    
+    
+ALTER TABLE
+    t_account_flow ADD (biz_code VARCHAR(64))

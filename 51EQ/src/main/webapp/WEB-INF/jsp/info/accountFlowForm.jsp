@@ -30,6 +30,9 @@
                         required : true,
                         date : true
                     },
+                    bizCode : {
+                    	maxlength : 64
+                    },
                     inAmtDesc : {
                     	maxlength : 255
                     },
@@ -92,6 +95,12 @@
                             <label class="control-label">日期 :</label>
                             <div class="controls">
                           		<form:input	path="optDate" />
+                          	</div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">业务编号 :</label>
+                            <div class="controls">
+                          		<form:input	path="bizCode" />
                           	</div>
                         </div>
                         <div class="control-group">
