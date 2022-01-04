@@ -1,0 +1,16 @@
+FROM inovatrend/tomcat7-java7
+
+MAINTAINER "hebei <hebei@rawstonedu.com>"
+
+
+RUN mkdir -p /usr/work
+VOLUME /usr/work/
+WORKDIR /usr/work/
+
+COPY ./Docker.d/20220104_hr.xgpos.com.pfx /usr/work/20220104_hr.xgpos.com.pfx
+COPY ./Docker.d/server.xml /opt/tomcat/conf/server.xml
+COPY ./Docker.d/web.xml /opt/tomcat/conf/web.xml
+
+ENV JAVA_OPTS="-Dfile.encoding=UTF8 -Duser.timezone=GMT+08"
+ENV TZ=Asia/Shanghai
+EXPOSE 8080

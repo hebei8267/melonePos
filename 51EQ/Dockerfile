@@ -3,7 +3,6 @@ FROM inovatrend/tomcat7-java7
 MAINTAINER "hebei <hebei@rawstonedu.com>"
 
 
-
 COPY ./src/main/webapp/ /opt/tomcat/webapps/oa/
 
 
